@@ -3,7 +3,9 @@
 # רץ בריפו הציבורי Console, עם ה-GITHUB_TOKEN שלו בלבד — אפס סודות:
 #   1. render.mjs קורא את קו העוגנים מ-Steem ציבורי (חסר-מפתח, RPC גלוי)
 #   2. מבצע commit ל-status.json — היסטוריית הריפו היא המשואה
-#   3. מפרסם את האתר ל-GitHub Pages
+#   3. GitHub Pages מגיש את הענף main (תצורת Deploy from a branch;
+#      הפעלה חד-פעמית ע"י המפעיל בהגדרות הריפו — חסרה הרשאת
+#      Administration לטוקנים). דחיפה ל-main = בנייה אוטומטית.
 #
 # לוח הזמנים: פעימה ב-:00 (הלב, בריפו הפרטי) → עיגון ב-:20 (העוגן,
 # custom_json חינם לשרשרת) → קריאה-חזרה ופרסום כאן ב-:40.
@@ -19,8 +21,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: console-publish
@@ -30,7 +30,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: github-pages
     steps:
       - name: Checkout the public console
         uses: actions/checkout@v4
@@ -56,16 +55,3 @@ jobs:
             git commit -m "weave-console: $(date -u +%FT%TZ) · cp#${CP} · witness age ${AGE}h · keyless read from public chain"
             git push
           fi
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
