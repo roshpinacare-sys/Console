@@ -1,0 +1,71 @@
+# WEAVE-CONSOLE — המשואה הציבורית של THE WEAVE (G5)
+#
+# רץ בריפו הציבורי Console, עם ה-GITHUB_TOKEN שלו בלבד — אפס סודות:
+#   1. render.mjs קורא את קו העוגנים מ-Steem ציבורי (חסר-מפתח, RPC גלוי)
+#   2. מבצע commit ל-status.json — היסטוריית הריפו היא המשואה
+#   3. מפרסם את האתר ל-GitHub Pages
+#
+# לוח הזמנים: פעימה ב-:00 (הלב, בריפו הפרטי) → עיגון ב-:20 (העוגן,
+# custom_json חינם לשרשרת) → קריאה-חזרה ופרסום כאן ב-:40.
+# השרשרת הציבורית היא המקור: אין תלות בריפו פרטי, בסנדבוקס או בכל
+# פתח-מפתח. מוות של כל סביבה אחרת לא מפיל את הקונסולה.
+
+name: console-publish
+
+on:
+  schedule:
+    - cron: '40 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: console-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: github-pages
+    steps:
+      - name: Checkout the public console
+        uses: actions/checkout@v4
+
+      - name: Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Render status from the public chain (keyless)
+        run: bun render.mjs
+
+      - name: Commit the beacon
+        run: |
+          git config user.name "weave-console[bot]"
+          git config user.email "weave-console[bot]@users.noreply.github.com"
+          git add status.json
+          if git diff --cached --quiet; then
+            echo "no status change; the witness line is unchanged on-chain"
+          else
+            CP=$(jq -r '.witness.checkpoint' status.json)
+            AGE=$(jq -r '.freshness.ageHours' status.json)
+            git commit -m "weave-console: $(date -u +%FT%TZ) · cp#${CP} · witness age ${AGE}h · keyless read from public chain"
+            git push
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
