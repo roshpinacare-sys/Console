@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAOS Console: Proof Over Promises</title>
-<meta name="description" content="SAOS: a sovereign state machine that anchors every seal, every claim and every refusal to public blockchains. Every agent can claim anything. Only a public chain cannot lie. The WEAVE status panel refreshes from the sovereign ledger every 6 hours.">
+<meta name="description" content="SAOS: a sovereign state machine that anchors every seal, every claim and every refusal to public blockchains. Every agent can claim anything. Only a public chain cannot lie. The WEAVE status panel refreshes from the sovereign ledger every hour.">
 <meta property="og:title" content="SAOS Console, Proof Over Promises">
-<meta property="og:description" content="A sovereign ledger witnessed by 7 public chains. THE WEAVE network status on this page is published by the network itself, every 6 hours. $0.0000081 per permanent record. Self-heals in 36 seconds.">
+<meta property="og:description" content="A sovereign ledger witnessed by 7 public chains. THE WEAVE network status on this page is published by the network itself, every hour. $0.0000081 per permanent record. Self-heals in 36 seconds.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -243,7 +243,7 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
     <a href="#weave">THE WEAVE</a><a href="#proof">Live proofs</a><a href="#products">Products</a><a href="#clock">Atomic clock</a>
     <a href="#breakthroughs">Breakthroughs</a><a href="#econ">Economics</a><a href="#road">Roadmap</a>
   </div>
-  <a class="nav-cta" href="#proof">See receipts</a>
+  <a class="nav-cta" href="gate.html">Operator gate →</a>
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
@@ -253,6 +253,7 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
   <div class="hero-cta">
     <a class="btn btn-gold" href="#weave">THE WEAVE, live</a>
     <a class="btn btn-ghost" href="#proof">The receipts</a>
+    <a class="btn btn-ghost" href="gate.html">⟵ שער המפעיל · Operator gate</a>
   </div>
   <div class="stats rv">
     <div class="stat"><div class="v">133,259+ <small>blocks</small></div><div class="l">SAOS-NET · live past a planned fork @130,000, 4 kernel bugs fixed + anti-poison guards <span class="badge">measured</span></div></div>
@@ -265,7 +266,7 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
 <section id="weave"><div class="wrap">
   <div class="kicker">THE WEAVE · LIVE NETWORK STATUS, READ FROM THE CHAIN</div>
   <h2>The verification network, publishing itself</h2>
-  <p class="lead">THE WEAVE is the sovereign verification network of SAOS: a hash-chained ledger of signed attestations (EIP-191), checkpointed into Merkle roots (EIP-712) and witnessed on public chains. Every 6 hours its cloud heart beats on GitHub's own runners, and the latest checkpoint root is anchored on Steem as a free custom_json (posting authority, zero capital risk). This page does not ask GitHub for permission and holds no credentials: a keyless workflow in this public repository reads the anchor line back from the public chain and republishes the status file. The commit history of this repository is the publish beacon: anyone can watch it.</p>
+  <p class="lead">THE WEAVE is the sovereign verification network of SAOS: a hash-chained ledger of signed attestations (EIP-191), checkpointed into Merkle roots (EIP-712) and witnessed on public chains. Every hour its cloud heart beats on GitHub's own runners, and the latest checkpoint root is anchored on Steem as a free custom_json (posting authority, zero capital risk). The operator commands the network through the <a href="gate.html">gate</a>: a signed, on-chain command channel that works from any browser — the network reads it back from the public chain and obeys. This page asks GitHub for no permission and holds no credentials: a keyless workflow in this public repository reads the anchor line back from the public chain and republishes the status file. The commit history of this repository is the publish beacon: anyone can watch it.</p>
   <div class="wv-grid">
     <div class="wcard rv">
       <h3><span class="wv-st" id="wv-ledger-dot"><span class="wv-dot"></span><span id="wv-ledger-verdict">CHECKING</span></span><span class="k" style="margin-left:auto">LEDGER</span></h3>
@@ -300,7 +301,7 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
     <span class="pchip"><span class="pulse"></span><b>7 receipts</b>&nbsp;· all clickable</span>
     <span class="pchip"><b>6 networks</b>&nbsp;· independent witnesses</span>
     <span class="pchip"><b>$0</b>&nbsp;gas rails · Graphene + zero-net TRON</span>
-    <span class="pchip">static snapshot&nbsp;<b>2026-09-12</b>&nbsp;· live line every 6h ↑</span>
+    <span class="pchip">static snapshot&nbsp;<b>2026-09-12</b>&nbsp;· live line every hour ↑</span>
   </div>
   <div class="proof rv">
     <div class="prow phead"><div>Rail / status</div><div>Receipt (txid / signature) — copy &amp; compare</div><div>Location + self-verification</div></div>
@@ -539,6 +540,7 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
         <li><span class="m">[v]</span> <strong>Economy & market:</strong> ve(3,3) engine, 40% buy-&amp;-burn every 600 blocks capped by measured profit · structurally sandwich-immune CoW settlement · launchpad with live graduation (100% POL) · keeperless auto-trading (DCA+TP/SL) · 20 wraps supply==locked · 383,836 public refusals</li>
         <li><span class="m">[v]</span> <strong>Autonomy & recovery:</strong> 13 soldiers + 23 loops · intelligence swarm with an agents gate (first external agent passed) · 36s self-heal proven · full identity family restored from one root and signed anchor #12 on Ethereum · identity as a product: metered API + zero-dep SDK</li>
         <li><span class="m">[v]</span> <strong>Self-audit as method:</strong> chaos 13/13 · invariants caught phantom LP live (HALT @h20808) · 100+ truth gaps closed with live proofs · forked heights marked AMBIGUOUS instead of arbitrarily resolved · external-audit package staged and waiting</li>
+        <li><span class="m">[v]</span> <strong>THE WEAVE, 2026-09-15:</strong> hourly cloud heart (24 beats/day, up from 4) · triple anchor lines every hour (Steem · Hive · zero-gas EVM) · the sovereign brain (3 keys) sealed inside the ledger itself — any environment reset rebuilds it from git · <strong>the operator gate</strong>: the owner signs commands with his own key in any browser, the network reads them from the public chain and obeys — zero sandbox dependency, posting authority only</li>
       </ul>
     </div>
     <div class="col next rv">
@@ -568,7 +570,7 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
 
 <footer><div class="wrap foot">
   <div class="disclaimer">
-    SAOS is a sovereign technology infrastructure in active development. Nothing here is investment advice, an offer to sell securities, or a promise of yield. All figures are measured or anchored on-chain and independently verifiable; theoretical numbers are explicitly marked as such, and honest boundaries accompany every breakthrough. Use of public networks (Steem, Hive, Blurt, TRON, Ethereum, Solana, XRPL, plus BSC and Bitcoin where specifically noted) as verification layers does not imply partnership or endorsement by those networks. Trademarks belong to their owners. Static marketing figures on this page are a measured snapshot as of 2026-09-12; the WEAVE status panel refreshes from the sovereign ledger every 6 hours, and the commit history of this repository is the live receipt.
+    SAOS is a sovereign technology infrastructure in active development. Nothing here is investment advice, an offer to sell securities, or a promise of yield. All figures are measured or anchored on-chain and independently verifiable; theoretical numbers are explicitly marked as such, and honest boundaries accompany every breakthrough. Use of public networks (Steem, Hive, Blurt, TRON, Ethereum, Solana, XRPL, plus BSC and Bitcoin where specifically noted) as verification layers does not imply partnership or endorsement by those networks. Trademarks belong to their owners. Static marketing figures on this page are a measured snapshot as of 2026-09-12; the WEAVE status panel refreshes from the sovereign ledger every hour, and the commit history of this repository is the live receipt.
   </div>
   <div class="foot-links">
     <a href="https://github.com/roshpinacare-sys/Console">This repository (the public beacon)</a>
@@ -609,7 +611,7 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   function fail(msg){
     ['wv-ledger-verdict','wv-witness-verdict','wv-fresh-verdict'].forEach(i=>{if($(i))$(i).textContent='UNAVAILABLE'});
     ['wv-ledger-dot','wv-witness-dot','wv-fresh-dot'].forEach(d=>{if($(d))$(d).className='wv-dot dead'});
-    const n=$('wv-note');if(n)n.innerHTML='<span style="color:var(--yellow)">Live status unavailable ('+esc(msg)+').</span> This panel reads status.json, which the keyless publish workflow regenerates from the public chain every 6 hours. If it stays unavailable past one window, treat the live panel as unverified and check the <a href="https://github.com/roshpinacare-sys/Console/commits/main/">commit history</a> directly.';
+    const n=$('wv-note');if(n)n.innerHTML='<span style="color:var(--yellow)">Live status unavailable ('+esc(msg)+').</span> This panel reads status.json, which the keyless publish workflow regenerates from the public chain every hour. If it stays unavailable past one window, treat the live panel as unverified and check the <a href="https://github.com/roshpinacare-sys/Console/commits/main/">commit history</a> directly.';
   }
 
   fetch('status.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(s=>{

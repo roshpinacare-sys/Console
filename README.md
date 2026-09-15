@@ -9,7 +9,7 @@ dependencies, no CDN assets. Everything it serves lives in this repository.
 Nothing pushes to this repository from the outside. A workflow inside this
 repository runs every 6 hours and:
 
-1. reads THE WEAVE's anchor line back from a public Steem RPC node
+1. reads THE WEAVE's anchor line back from a public Steem RPC node (deduplicated by checkpoint — a re-anchored checkpoint is one row, its newest witness)
    (custom_json `saos.weave.core.v1` from the witness account, posting
    authority: free, zero capital risk, already public on-chain)
 2. renders `status.json` from what the chain returned
@@ -56,3 +56,32 @@ Site content derives from the ecosystem's approved public marketing
 materials (receipt-backed claims only). The live panel derives from the
 public chain. The site's canonical source lives in the ecosystem's
 sovereign repository. Operator: roshpinacare-sys.
+
+## The operator gate (gate.html)
+
+`gate.html` is the sovereign entrance for the operator of THE WEAVE:
+
+- the owner connects with his own key (Steem master password or a role WIF);
+  everything is derived and verified **in the browser** against the account's
+  on-chain keys (public RPC, keyless read) — the key never leaves the browser
+- signed commands (`ping` · `beat` · `anchor` · `console`) are broadcast as
+  free `custom_json` (op id `saos.weave.ops.v1`, posting authority only —
+  the chain itself forbids this key from moving funds)
+- the network's cloud heart reads the commands back from the public chain,
+  executes them, and records the execution in its signed ledger; the anchors
+  witness it at $0
+- the command history shown in the gate is read back from the public chain —
+  the chain is the receipt
+
+All gate cryptography is implemented locally in `gate-crypto.js` (pure JS:
+sha256 + RIPEMD-160 + secp256k1 over BigInt + Steem transaction
+serialization + compact ECDSA with recovery). No CDN, no external
+dependencies, nothing to trust but math anyone can audit.
+
+## What never enters this repository
+
+Keys, tokens, passphrases, wallet balances, treasury maps, internal
+documents, or personal information. The renderer runs a secret gate on
+every publish and refuses to commit anything matching key or token
+patterns. The operator's key lives only in the operator's browser session
+(memory), never in this repository or its history.
