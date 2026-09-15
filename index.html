@@ -985,7 +985,8 @@ function renderLive() {
 
   const saosSup = supply.SAOS ? SL.fmt(supply.SAOS, tokens.SAOS?.decimals ?? 3) : null;
   $("saos-sup-v1").textContent = saosSup ? Number(saosSup).toLocaleString("en") : "126,682";
-  if (supply.SAOS) $("st-sup").textContent = Number(saosSup).toLocaleString("en");
+  // עד הג'נזיס: מציגים את אמת v0 (126,682 — ההטבעה שהג'נזיס של v1 משקף 1:1)
+  $("st-sup").textContent = Number(saosSup || "126682").toLocaleString("en");
 
   // מחזיקים
   const holders = Object.entries(bal)
