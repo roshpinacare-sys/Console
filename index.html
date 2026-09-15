@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>THE WEAVE · מרכז הפיקוד הריבוני — SAOS</title>
-<meta name="description" content="מרכז הפיקוד של THE WEAVE — רשת האימות הריבונית. ארנקים, המטבע SAOS, מפעל טוקנים שבו כל טוקן הוא חוזה חכם — הכל מהשרשרת הציבורית, בלי שרת, בלי סנדבוקס, 24/7.">
+<title>SAOS Network | Crypto Wallet, Token Exchange and Earn</title>
+<meta name="description" content="Open a free SAOS wallet in seconds, hold and send the SAOS currency, exchange at network rates, fund the network and follow every coin in an open ledger. Your keys never leave your device.">
+<meta name="keywords" content="SAOS, crypto wallet, digital wallet, blockchain, token exchange, DEX, decentralized exchange, earn, validation network, sovereign network, open ledger, ארנק דיגיטלי, קריפטו, בורסה, מטבע דיגיטלי, רשת">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SAOS Network">
+<meta property="og:title" content="SAOS Network | Crypto Wallet, Token Exchange and Earn">
+<meta property="og:description" content="A free wallet with your own address, a transparent exchange, and a currency you can verify line by line. No custody, no middleman.">
+<meta property="og:url" content="https://roshpinacare-sys.github.io/Console/">
+<meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SAOS Network">
+<meta name="twitter:description" content="Free wallet, transparent exchange, open ledger. Your keys stay on your device.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"SAOS Network","url":"https://roshpinacare-sys.github.io/Console/","description":"Crypto wallet, token exchange and open validation network.","inLanguage":["en","he"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I open a SAOS wallet?","acceptedAnswer":{"@type":"Answer","text":"Press Open Wallet, then Create. Your key is generated on your device and your address is derived from it. Nothing is sent to a server and no account is needed."}},
+{"@type":"Question","name":"Who holds my keys?","acceptedAnswer":{"@type":"Answer","text":"Only you. Keys are generated in your browser and stay in memory. You can save an encrypted backup with a password you choose. There is no recovery and no custody."}},
+{"@type":"Question","name":"How can I check the numbers myself?","acceptedAnswer":{"@type":"Answer","text":"The whole ledger is public. Press Verify in the Network page and your browser reads every operation from the public chain, checks every signature and compares the result with what this site shows."}},
+{"@type":"Question","name":"What do deposits do?","acceptedAnswer":{"@type":"Answer","text":"Deposits fund network development and are converted to SAOS at the current network rate. Every deposit, credit and reward is recorded in the open ledger. No promise of profit is made or implied."}}
+]}
+</script>
 <style>
-/* ═══════════════════════════════════════════════════════════════════
-   THE WEAVE · Command Center — עיצוב מתקדם, ריבוני, אפס תלות
-   פלטה: חלל-עומק + זהב (אמת) + סגול (גילוי) + ירוק (חיים)
-   ═══════════════════════════════════════════════════════════════════ */
 :root{
   --bg:#050507; --bg2:#0a0a10;
   --panel:rgba(255,255,255,.028); --panel2:rgba(255,255,255,.05);
@@ -33,766 +53,832 @@ main{position:relative;z-index:1;flex:1;width:100%}
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
 .mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
-.num{font-family:var(--mono);font-weight:600;letter-spacing:-.02em}
+.num{font-variant-numeric:tabular-nums}
 
-/* ── הדבקה ── */
-header{
-  position:sticky;top:0;z-index:50;height:var(--nav-h);
-  background:rgba(6,6,9,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-}
-.nav{max-width:1280px;margin:0 auto;height:100%;display:flex;align-items:center;gap:14px;padding:0 18px}
-.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.brand svg{width:30px;height:30px;flex-shrink:0}
-.brand b{font-size:15px;letter-spacing:.06em;white-space:nowrap}
-.brand small{color:var(--faint);font-size:11px;display:block;letter-spacing:.14em}
-.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:flex-end}
-.tabs::-webkit-scrollbar{display:none}
-.tab{
-  padding:8px 13px;border-radius:10px;font-size:13.5px;color:var(--dim);white-space:nowrap;
-  cursor:pointer;border:1px solid transparent;transition:.18s;user-select:none;
-}
-.tab:hover{color:var(--text);background:var(--panel2);text-decoration:none}
-.tab.on{color:var(--gold-bright);background:rgba(212,175,55,.08);border-color:var(--line)}
-.live-pill{
-  display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:99px;
-  background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.25);
-  font-size:12px;color:#86efac;white-space:nowrap;flex-shrink:0;
-}
-.live-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2.2s infinite}
-.live-pill.warn{background:rgba(234,179,8,.07);border-color:rgba(234,179,8,.3);color:#fde047}
-.live-pill.warn .dot{background:var(--amber)}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}55%{box-shadow:0 0 0 7px rgba(34,197,94,0)}}
+/* header */
+header.site{position:sticky;top:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;
+  background:rgba(5,5,7,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1160px;margin:0 auto;padding:0 18px;width:100%;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.brand svg{width:30px;height:30px;flex:none}
+.brand b{font-size:17px;letter-spacing:.4px;color:var(--text)}
+.brand small{font-size:11px;color:var(--faint);display:block;margin-top:-2px}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-inline-start:8px}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{padding:8px 13px;border-radius:10px;font-size:13.5px;color:var(--dim);white-space:nowrap;cursor:pointer;border:1px solid transparent}
+.tab:hover{color:var(--text);text-decoration:none}
+.tab.on{color:var(--gold-bright);background:var(--panel2);border-color:var(--line)}
+.hright{margin-inline-start:auto;display:flex;align-items:center;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--green);
+  border:1px solid rgba(34,197,94,.35);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.pill.warn{color:var(--amber);border-color:rgba(234,179,8,.4)}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.langbtn{background:var(--panel2);border:1px solid var(--line);color:var(--gold);border-radius:9px;
+  padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.langbtn:hover{border-color:var(--line2)}
 
-/* ── מבנה ── */
-.wrap{max-width:1280px;margin:0 auto;padding:28px 18px 60px}
-.view{display:none;animation:fadein .35s}
+/* layout */
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px;width:100%}
+.view{display:none;padding:34px 0 70px}
 .view.on{display:block}
-@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.kicker{color:var(--gold);font-size:12px;letter-spacing:.22em;margin-bottom:8px;font-weight:600}
-h1{font-size:clamp(26px,4.5vw,44px);line-height:1.15;font-weight:800;letter-spacing:-.01em}
-h2{font-size:clamp(19px,2.6vw,26px);margin:0 0 6px;font-weight:700}
-h3{font-size:16px;margin:0 0 8px;font-weight:700}
-.sub{color:var(--dim);font-size:15px;line-height:1.65;max-width:72ch}
-.sect{margin-top:42px}
-.grid{display:grid;gap:14px}
-.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.card h2{font-size:16.5px;margin-bottom:6px;color:var(--text);font-weight:700}
+.card .sub{font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.65}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi .k{font-size:11.5px;color:var(--faint);letter-spacing:.5px;text-transform:uppercase}
+.kpi .v{font-size:22px;font-weight:700;color:var(--gold-bright);margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--faint);margin-top:3px}
 
-/* ── כרטיסי זכוכית ── */
-.card{
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  padding:20px;position:relative;overflow:hidden;transition:.2s;
-}
-.card:hover{border-color:var(--line2);transform:translateY(-2px)}
-.card::before{
-  content:"";position:absolute;inset:0 0 auto 0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,.45),transparent);
-}
-.card .lbl{color:var(--faint);font-size:12px;letter-spacing:.08em;margin-bottom:6px}
-.card .big{font-size:clamp(22px,3vw,32px)}
-.card .foot{color:var(--faint);font-size:12px;margin-top:8px;line-height:1.5}
-.trend{font-size:12px;margin-top:4px}
-.trend.up{color:var(--green)}.trend.down{color:var(--red)}.trend.flat{color:var(--faint)}
+/* hero */
+.hero{padding:52px 0 10px;text-align:center}
+.hero .chip{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--gold);
+  border:1px solid var(--line2);border-radius:999px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-size:clamp(30px,5.4vw,52px);line-height:1.12;font-weight:800;letter-spacing:-.5px}
+.hero h1 .grad{background:linear-gradient(100deg,var(--gold-bright),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{max-width:640px;margin:16px auto 0;font-size:16.5px;color:var(--dim);line-height:1.7}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid transparent;font-family:var(--sans);transition:filter .15s,transform .05s}
+.btn:hover{text-decoration:none;filter:brightness(1.12)}
+.btn:active{transform:scale(.99)}
+.btn.gold{background:var(--gold);color:#141416}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line2)}
+.btn.sm{padding:8px 15px;font-size:13px;border-radius:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
 
-/* ── כפתורים ── */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;
-  border:1px solid var(--line2);background:rgba(212,175,55,.09);color:var(--gold-bright);
-  transition:.18s;min-height:44px;font-family:inherit;
-}
-.btn:hover{background:rgba(212,175,55,.16);transform:translateY(-1px);text-decoration:none}
-.btn.primary{background:linear-gradient(135deg,rgba(212,175,55,.22),rgba(167,139,250,.14));border-color:rgba(212,175,55,.45)}
-.btn.ghost{background:transparent;border-color:rgba(255,255,255,.12);color:var(--dim)}
-.btn.ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25)}
-.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.btn.sm{padding:7px 13px;min-height:36px;font-size:12.5px;border-radius:9px}
-.btn.danger{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08);color:#fca5a5}
+/* sections */
+.sect{margin-top:34px}
+.sect h3{font-size:19px;margin-bottom:4px}
+.sect .sect-sub{font-size:13.5px;color:var(--dim);margin-bottom:18px}
+.feat{display:block;color:var(--text)}
+.feat:hover{text-decoration:none;border-color:var(--line2)}
+.feat .ic{font-size:22px;margin-bottom:10px}
+.feat b{font-size:15.5px;display:block;margin-bottom:6px}
+.feat p{font-size:13px;color:var(--dim);line-height:1.65}
+.step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:none}
+.step .n{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.step b{font-size:14.5px;display:block;margin-bottom:3px}
+.step p{font-size:13px;color:var(--dim);line-height:1.6}
 
-/* ── טפסים ── */
+/* tables */
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+th{text-align:start;padding:10px 13px;color:var(--faint);font-weight:600;font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,.045);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:10.5px;border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--dim)}
+.tag.gold{color:var(--gold);border-color:var(--line2)}
+.tag.green{color:var(--green);border-color:rgba(34,197,94,.4)}
+.tag.violet{color:var(--violet);border-color:rgba(167,139,250,.4)}
+.tag.amber{color:var(--amber);border-color:rgba(234,179,8,.4)}
+.tag.red{color:var(--red);border-color:rgba(239,68,68,.4)}
+
+/* forms */
+label.f{display:block;font-size:12.5px;color:var(--dim);margin-bottom:6px}
+input,select,textarea{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:11px 13px;font-size:14.5px;font-family:var(--sans)}
+input.mono,textarea.mono{font-family:var(--mono);direction:ltr}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--line2);box-shadow:0 0 0 3px rgba(212,175,55,.09)}
 .field{margin-bottom:14px}
-.field label{display:block;font-size:12.5px;color:var(--dim);margin-bottom:6px;letter-spacing:.04em}
-input,select,textarea{
-  width:100%;padding:11px 14px;border-radius:11px;border:1px solid rgba(255,255,255,.1);
-  background:rgba(0,0,0,.35);color:var(--text);font-size:14px;font-family:inherit;
-  transition:.18s;min-height:44px;
-}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--line2);box-shadow:0 0 0 3px rgba(212,175,55,.08)}
-textarea{min-height:90px;font-family:var(--mono);font-size:12px;direction:ltr}
-input.mono{font-family:var(--mono);direction:ltr}
-.hint{font-size:11.5px;color:var(--faint);margin-top:5px;line-height:1.5}
+.hint{font-size:11.5px;color:var(--faint);margin-top:5px;line-height:1.55}
+.frow{display:flex;gap:12px;flex-wrap:wrap}
+.frow>*{flex:1;min-width:140px}
 
-/* ── טבלאות ── */
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl th{
-  text-align:right;color:var(--faint);font-weight:600;font-size:11.5px;letter-spacing:.06em;
-  padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap;
-}
-.tbl td{padding:10px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:rgba(255,255,255,.02)}
-.scrollbox{max-height:420px;overflow-y:auto;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.25)}
-.scrollbox::-webkit-scrollbar{width:8px}
-.scrollbox::-webkit-scrollbar-thumb{background:rgba(212,175,55,.2);border-radius:4px}
-.scrollbox::-webkit-scrollbar-track{background:transparent}
+/* op rows */
+.op-row{display:flex;gap:10px;align-items:baseline;padding:9px 2px;border-bottom:1px dashed rgba(255,255,255,.06);font-size:12.5px;flex-wrap:wrap}
+.op-row:last-child{border-bottom:none}
+.op-row .k{font-family:var(--mono);font-size:10.5px;color:var(--violet);border:1px solid rgba(167,139,250,.3);border-radius:6px;padding:1px 7px;white-space:nowrap}
+.op-row .when{color:var(--faint);font-size:11px;white-space:nowrap;margin-inline-start:auto}
+.op-row span{min-width:0;overflow-wrap:anywhere}
+.feed{max-height:380px;overflow-y:auto;scrollbar-width:thin}
+.feed::-webkit-scrollbar{width:7px}
+.feed::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
 
-/* ── תגים ── */
-.tag{
-  display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;
-  font-size:11px;font-weight:600;letter-spacing:.03em;white-space:nowrap;
-}
-.tag.gold{background:rgba(212,175,55,.1);color:var(--gold-bright);border:1px solid rgba(212,175,55,.3)}
-.tag.green{background:rgba(34,197,94,.09);color:#86efac;border:1px solid rgba(34,197,94,.28)}
-.tag.violet{background:rgba(167,139,250,.1);color:#c4b5fd;border:1px solid rgba(167,139,250,.3)}
-.tag.red{background:rgba(239,68,68,.09);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
-.tag.dim{background:rgba(255,255,255,.05);color:var(--dim);border:1px solid rgba(255,255,255,.1)}
+/* wallet */
+.addrbox{background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:13px 15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.addrbox .a{font-family:var(--mono);font-size:13.5px;color:var(--gold-bright);word-break:break-all;flex:1;min-width:200px;direction:ltr}
+.copy{background:var(--panel2);border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:var(--sans)}
+.copy:hover{color:var(--gold);border-color:var(--line2)}
+.keybox{background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.35);border-radius:12px;padding:15px}
+.keybox .w{font-family:var(--mono);font-size:12.5px;word-break:break-all;color:var(--amber);direction:ltr}
 
-/* ── העתקה ── */
-.copyrow{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:8px 12px}
-.copyrow code{flex:1;font-family:var(--mono);font-size:11.5px;direction:ltr;unicode-bidi:embed;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gold-bright)}
-.cbtn{
-  flex-shrink:0;background:rgba(212,175,55,.12);border:1px solid var(--line);color:var(--gold-bright);
-  border-radius:7px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:inherit;min-height:30px;
-}
-.cbtn:hover{background:rgba(212,175,55,.22)}
+/* faq */
+details.faq{border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin-bottom:10px;background:var(--panel)}
+details.faq summary{cursor:pointer;font-size:14.5px;font-weight:600;color:var(--text);list-style:none;display:flex;gap:10px;align-items:center}
+details.faq summary::before{content:"+";color:var(--gold);font-size:17px;flex:none}
+details.faq[open] summary::before{content:"–"}
+details.faq p{margin-top:10px;font-size:13.5px;color:var(--dim);line-height:1.7}
 
-/* ── Hero ── */
-.hero{
-  position:relative;border:1px solid var(--line);border-radius:22px;overflow:hidden;
-  padding:clamp(28px,5vw,56px);background:
-    radial-gradient(1200px 500px at 85% -10%,rgba(167,139,250,.09),transparent),
-    radial-gradient(900px 420px at 10% 110%,rgba(212,175,55,.08),transparent),
-    var(--panel);
-}
-.hero .weave-mark{position:absolute;left:-40px;top:-40px;width:280px;height:280px;opacity:.06;pointer-events:none}
-.hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
-.hero .stats-line{display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.06)}
-.hero .stats-line b{font-size:20px;display:block}
-.hero .stats-line span{font-size:11.5px;color:var(--faint)}
+/* notice */
+.note{font-size:12.5px;color:var(--dim);border-inline-start:3px solid var(--line2);padding-inline-start:12px;line-height:1.7;margin-top:16px}
+.note.honest{border-color:var(--amber)}
+.ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--amber)}
+#toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:var(--bg2);border:1px solid var(--line2);color:var(--text);border-radius:11px;padding:11px 19px;font-size:13.5px;z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
+#toast.show{opacity:1}
 
-/* ── ארנק ── */
-.wallet-hero{
-  border:1px solid rgba(167,139,250,.25);border-radius:18px;padding:24px;
-  background:radial-gradient(700px 300px at 80% -20%,rgba(167,139,250,.1),transparent),var(--panel);
-}
-.addr-big{
-  font-family:var(--mono);direction:ltr;unicode-bidi:embed;font-size:clamp(15px,2.6vw,21px);
-  color:var(--gold-bright);word-break:break-all;font-weight:600;
-}
-.keybox{
-  border:1px solid rgba(239,68,68,.35);background:rgba(239,68,68,.05);border-radius:12px;
-  padding:14px;margin-bottom:12px;
-}
-.keybox .warn{color:#fca5a5;font-size:12.5px;font-weight:600;margin-bottom:8px;display:flex;gap:7px;align-items:center}
+/* footer */
+footer.site{border-top:1px solid var(--line);padding:22px 0;margin-top:auto;position:relative;z-index:1;background:var(--bg)}
+footer.site .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--faint)}
+footer.site a{color:var(--dim)}
 
-/* ── אקורדיון ידע ── */
-details{
-  border:1px solid var(--line);border-radius:13px;background:var(--panel);
-  margin-bottom:10px;overflow:hidden;
-}
-details summary{
-  padding:15px 18px;cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
-  display:flex;align-items:center;gap:10px;user-select:none;
-}
-details summary::-webkit-details-marker{display:none}
-details summary::before{content:"◂";color:var(--gold);transition:.2s;font-size:12px}
-details[open] summary::before{transform:rotate(-90deg)}
-details .body{padding:0 18px 16px;color:var(--dim);font-size:13.5px;line-height:1.75}
-details .body b{color:var(--text)}
-details .body code{font-family:var(--mono);color:var(--gold-bright);font-size:12px;direction:ltr;unicode-bidi:embed}
-
-/* ── toast ── */
-#toast{
-  position:fixed;bottom:24px;right:50%;transform:translateX(50%);z-index:99;
-  background:rgba(10,10,16,.95);border:1px solid var(--line2);color:var(--text);
-  padding:12px 22px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;
-  transition:.3s;backdrop-filter:blur(10px);max-width:90vw;text-align:center;
-  box-shadow:0 10px 40px rgba(0,0,0,.6);
-}
-#toast.show{opacity:1;transform:translateX(50%) translateY(-6px)}
-#toast.ok{border-color:rgba(34,197,94,.5)}
-#toast.err{border-color:rgba(239,68,68,.5)}
-
-/* ── footer ── */
-footer{
-  position:relative;z-index:1;margin-top:auto;border-top:1px solid var(--line);
-  background:rgba(6,6,9,.9);padding:22px 18px;padding-bottom:calc(22px + env(safe-area-inset-bottom));
-}
-.foot-in{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;color:var(--faint);font-size:12px}
-.foot-in .links{display:flex;gap:18px;flex-wrap:wrap}
-
-/* ── נייד ── */
-@media (max-width:860px){
+@media(max-width:760px){
   .brand small{display:none}
-  .tabs{justify-content:flex-start}
-  .live-pill span.txt{display:none}
-  .wrap{padding:20px 14px 50px}
-  .hero .stats-line{gap:18px}
+  nav.tabs{position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(5,5,7,.97);border-bottom:1px solid var(--line);padding:8px 12px;z-index:40}
+  .pill{display:none}
 }
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
-.badge-selftest{
-  display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#86efac;
-  border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.07);border-radius:99px;padding:4px 11px;
+@media(max-width:520px){
+  .hero{padding:34px 0 6px}
+  .card{padding:17px}
+  .view{padding:24px 0 56px}
 }
-.badge-selftest.bad{color:#fca5a5;border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06)}
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:26px 0}
-.ops-feed{display:flex;flex-direction:column;gap:8px}
-.op-row{
-  display:flex;gap:10px;align-items:baseline;padding:10px 14px;border-radius:10px;
-  background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);font-size:12.5px;
-}
-.op-row .k{font-family:var(--mono);color:var(--violet);flex-shrink:0;font-size:11.5px;direction:ltr}
-.op-row .when{color:var(--faint);font-size:11px;margin-inline-start:auto;flex-shrink:0}
 </style>
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
 
-<header>
-  <nav class="nav" aria-label="ניווט ראשי">
-    <a class="brand" href="#home" aria-label="THE WEAVE — ראשי">
-      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <path d="M20 3 L34 11.5 V28.5 L20 37 L6 28.5 V11.5 Z" stroke="#d4af37" stroke-width="1.6"/>
-        <path d="M20 10 L28 15 V25 L20 30 L12 25 V15 Z" stroke="#a78bfa" stroke-width="1.3" opacity=".8"/>
-        <circle cx="20" cy="20" r="2.6" fill="#d4af37"/>
-        <path d="M6 20 H14 M26 20 H34 M20 6 V12 M20 28 V34" stroke="#d4af37" stroke-width="1" opacity=".5"/>
-      </svg>
-      <span><b>THE WEAVE</b><small>SAOS · SOVEREIGN NETWORK</small></span>
-    </a>
-    <div class="tabs" role="tablist">
-      <a class="tab on" href="#home" data-nav="home">ראשי</a>
-      <a class="tab" href="#saos" data-nav="saos">המטבע SAOS</a>
-      <a class="tab" href="#wallet" data-nav="wallet">ארנק</a>
-      <a class="tab" href="#tokens" data-nav="tokens">מפעל טוקנים</a>
-      <a class="tab" href="#network" data-nav="network">רשת</a>
-      <a class="tab" href="#anchors" data-nav="anchors">עוגנים</a>
-      <a class="tab" href="#tools" data-nav="tools">כלים</a>
+<header class="site">
+  <div class="hwrap">
+    <div class="brand" id="brand" title="SAOS">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+      <div><b>SAOS</b><small data-i="brandSub">Network</small></div>
     </div>
-    <div class="live-pill" id="live-pill"><span class="dot"></span><span class="txt" id="live-txt">מתחבר…</span></div>
-  </nav>
+    <nav class="tabs" aria-label="main">
+      <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
+      <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
+      <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
+      <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
+      <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
+      <a class="tab" href="#tokens" data-nav="tokens" data-i="navTokens">Tokens</a>
+      <a class="tab" href="#network" data-nav="network" data-i="navNetwork">Network</a>
+    </nav>
+    <div class="hright">
+      <span class="pill" id="live-pill"><span class="dot"></span><span id="live-txt" data-i="liveConnecting">connecting</span></span>
+      <button class="langbtn" id="langbtn">עברית</button>
+    </div>
+  </div>
 </header>
 
 <main>
 <div class="wrap">
 
-<!-- ═══════════════ ראשי ═══════════════ -->
-<section class="view on" id="view-home" aria-label="ראשי">
-  <div class="hero">
-    <svg class="weave-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <path d="M20 3 L34 11.5 V28.5 L20 37 L6 28.5 V11.5 Z" stroke="#d4af37" stroke-width=".8"/>
-      <path d="M20 3 L20 37 M6 20 H34 M11 8 L29 32 M29 8 L11 32" stroke="#d4af37" stroke-width=".5" opacity=".7"/>
-    </svg>
-    <div class="kicker">רשת האימות הריבונית · פועלת מהשרשרת הציבורית בלבד</div>
-    <h1>הכל עובד מכאן.<br>24/7 · בלי שרת · בלי סנדבוקס.</h1>
-    <p class="sub" style="margin-top:14px">
-      מרכז הפיקוד של THE WEAVE: ארנקים חדשים עם כתובת אישית על הרשת, המטבע SAOS באימות חי,
-      ומפעל טוקנים שבו כל טוקן הוא חוזה חכם ממשי — חתום, דטרמיניסטי ומאומת על ידי כל דפדפן.
-      הדף הזה הוא צומת מלאה של הרשת: הוא קורא את האמת מהשרשרת הציבורית ומקפל אותה בעצמו.
-    </p>
-    <div class="actions">
-      <a class="btn primary" href="#wallet">צור ארנק חדש ←</a>
-      <a class="btn" href="#saos">המטבע SAOS</a>
-      <a class="btn ghost" href="#tools">שער המפעיל</a>
-    </div>
-    <div class="stats-line">
-      <div><b class="num" id="st-att">—</b><span>אימותים בשרשרת</span></div>
-      <div><b class="num" id="st-cp">—</b><span>checkpoints</span></div>
-      <div><b class="num" id="st-anch">—</b><span>עוגנים על שרשראות</span></div>
-      <div><b class="num" id="st-sup">—</b><span>אספקת SAOS</span></div>
-      <div><b class="num" id="st-wal">—</b><span>ארנקים על הרשת</span></div>
-      <div><b class="num" id="st-tok">—</b><span>טוקנים = חוזים</span></div>
-    </div>
-    <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-      <span class="badge-selftest" id="selftest-badge">בדיקה עצמית רצה…</span>
-      <span class="tag dim" id="engine-tag">מנוע saos.live.v1</span>
-    </div>
-  </div>
-
-  <div class="sect">
-    <div class="kicker">מודולים — הכל מכאן, דרך החיבורים הציבוריים</div>
-    <h2>רשת פתרונות ריבונית</h2>
-    <div class="grid g3" style="margin-top:16px">
-      <a class="card" href="#wallet">
-        <div class="lbl">ארנק · זהות</div>
-        <h3>ארנק חדש + כתובת אישית</h3>
-        <p class="foot">מפתח נולד בדפדפן שלך (CSPRNG), כתובת <span class="mono">saos1…</span> נגזרת ממנו ונרשמת על השרשרת הציבורית. המפתח לעולם לא עוזב את הזיכרון.</p>
-      </a>
-      <a class="card" href="#tokens">
-        <div class="lbl">מפעל · חוזים</div>
-        <h3>כל טוקן הוא חוזה חכם</h3>
-        <p class="foot">פריסת טוקן חתומה: סמל, שם, דיוק, תקרת אספקה. הכללים בקוד, המצב על השרשרת, האימות — אצל כל צומת.</p>
-      </a>
-      <a class="card" href="#saos">
-        <div class="lbl">מטבע · אמת</div>
-        <h3>SAOS — המטבע של הרשת</h3>
-        <p class="foot">מידע מקיף ומאומת: מצב המינט, הטכנולוגיה, החוזים. מ-SAOS-NET v0 (replay מתמטי) עד הספר החי v1.</p>
-      </a>
-      <a class="card" href="gate.html">
-        <div class="lbl">שער · מפעיל</div>
-        <h3>שער הכניסה של המפעיל</h3>
-        <p class="foot">כניסה עם סיסמת-האב, חתימה ברשות posting בלבד, פקודות לרשת — המפתח חי בזיכרון הלשונית בלבד.</p>
-      </a>
-      <a class="card" href="acid.html">
-        <div class="lbl">AI · גילוי</div>
-        <h3>מנוע הגילוי הריבוני</h3>
-        <p class="foot">חיפוש אבולוציוני שמגלה תוכניות — רץ כולו בדפדפן, חתום לשרשרת, משוחזר על ידי הרשת בענן לפני שהיא מעידה.</p>
-      </a>
-      <a class="card" href="#network">
-        <div class="lbl">רשת · חזות</div>
-        <h3>מצב הרשת החי</h3>
-        <p class="foot">סוכנים ביכולת-אמת, אימותים, checkpoints עם עדים, המוח, השוק — נגזר מהמראה הציבורית שהלב מפרסם.</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="sect">
-    <div class="kicker">אמת נגזרת — לא נטענת</div>
-    <h2>הדפדפן הוא הצומת</h2>
-    <p class="sub">כל מה שמוצג כאן נקרא מהמראה הציבורית (mirror.json) ומהשרשרת עצמה. בלחיצה אחת אפשר לקרוא את ספר הטוקנים ישירות מהשרשרת הציבורית, לקפל אותו מחדש ולהשוות את השורש — אימות עצמאי מלא, בלי להאמין לאף אחד.</p>
-    <div class="card" style="margin-top:16px">
-      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-        <button class="btn" id="btn-verify-chain">אמת את ספר הטוקנים מהשרשרת</button>
-        <span id="verify-chain-result" style="font-size:13px;color:var(--dim)">טרם הורץ</span>
+  <!-- ═══════════ HOME ═══════════ -->
+  <section class="view" id="view-home">
+    <div class="hero">
+      <div class="chip"><span data-i="chipLive">live on a public blockchain</span></div>
+      <h1><span data-i="heroTop">Your money.</span> <span class="grad" data-i="heroGrad">Your network.</span><br><span data-i="heroBottom">SAOS.</span></h1>
+      <p class="lead" data-i="heroLead">Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.</p>
+      <div class="cta">
+        <a class="btn gold" href="#wallet" data-i="ctaWallet">Open a free wallet</a>
+        <a class="btn ghost" href="#exchange" data-i="ctaExchange">See the exchange</a>
       </div>
-      <p class="foot">קורא את היסטוריית החשבונות הציבוריים (עד הרשת + המפעיל), מסנן <span class="mono">saos.weave.live.v1</span>, מאמת כל חתימה (secp256k1) ומקפל את המצב — מול ה-saos-live.json המפורסם.</p>
     </div>
-  </div>
 
-  <div class="sect">
-    <div class="kicker">פעימות אחרונות</div>
-    <h2>אימותים אחרונים של הרשת</h2>
-    <div class="scrollbox" style="margin-top:14px"><table class="tbl"><tbody id="home-atts"><tr><td style="color:var(--faint)">טוען מהמראה…</td></tr></tbody></table></div>
-  </div>
-</section>
-
-<!-- ═══════════════ המטבע SAOS ═══════════════ -->
-<section class="view" id="view-saos" aria-label="המטבע SAOS">
-  <div class="kicker">המטבע של הרשת · מידע מקיף, מאומת מקוד ומשרשרת</div>
-  <h1>SAOS<span style="color:var(--gold)">·</span> — מה אנחנו יודעים, בדיוק</h1>
-  <p class="sub" style="margin-top:12px">כל מספר בעמוד הזה נמדד: v0 מ-replay מתמטי של הקרנל (מוכח להלן), v1 מקיפול חי של הספר על השרשרת. שום דבר לא מועתק מדוחות ישנים — השיטה שנלמדה ביום שבו נתפסו השקרים.</p>
-
-  <div class="grid g4" style="margin-top:24px">
-    <div class="card"><div class="lbl">אספקה v0 (נמדדה)</div><div class="big num">126,682</div><div class="foot">SAOS אצל המנפיק headcorner, מה-geneis שנגזר מ-replay חי של ספרי הדקס (2026-09-05)</div></div>
-    <div class="card"><div class="lbl">תקרת אספקה v1</div><div class="big num">21,000,000</div><div class="foot">קבועה-חוזה בקוד שרץ בכל צומת — לא ניתן להישבר בלי שכולם יראו</div></div>
-    <div class="card"><div class="lbl">אספקה חיה v1</div><div class="big num" id="saos-sup-v1">—</div><div class="foot">מקיפול הספר החי עכשיו (בסיס: 126,682 המשקפים את v0 בדיוק 1:1)</div></div>
-    <div class="card"><div class="lbl">גובה שרשרת v0</div><div class="big num">223,838</div><div class="foot">בלוקים + 4,492 פעימות · stateRoot <span class="mono">29778d14…</span> · FULLY-VERIFIED</div></div>
-  </div>
-
-  <div class="sect">
-    <div class="kicker">מצב המינט — כמה, למה, איך</div>
-    <h2>האמת המלאה על ההטבעה</h2>
-    <div class="card" style="margin-top:14px">
-      <table class="tbl">
-        <thead><tr><th>שאלה</th><th>v0 — SAOS-NET (הצי)</th><th>v1 — הספר החי (עכשיו)</th></tr></thead>
-        <tbody>
-          <tr><td><b>כמה הוטבע?</b></td><td>126,682 SAOS ל-headcorner (המנפיק)</td><td>126,682 SAOS לאוצר הרשת — משקף את v0 בדיוק 1:1, לא מינט חדש</td></tr>
-          <tr><td><b>למה?</b></td><td>הג'נזיס נגזר מ-replay חי של ספרי ה-escrow של הדקס (dex/wrapped/microdex/case66) — המספר הוא תוצאה של מדידה, לא החלטה</td><td>רצף ריבוני: המטבע שהוכח ב-v0 ממשיך לספר שכל אחד יכול לקרוא ולאמת</td></tr>
-          <tr><td><b>איך?</b></td><td>יחידות מיקרו שלמות (1 SAOS = 1000µ) במכונת-מצב דטרמיניסטית; <span class="mono">meta.supply</span> מתועד בכל stateRoot</td><td>פעולת <span class="mono">token.mint</span> חתומה במפתח המנפיק, על השרשרת הציבורית (Steem, רשות posting), עד התקרה בלבד</td></tr>
-          <tr><td><b>מי רשאי להטביע עוד?</b></td><td>המנפיק (headcorner) — הקרנל של הצי</td><td>האוצר בלבד (הזהות שנגזרת ממפתח קו העדות של הרשת) — וכל מינט מתועד לנצח על השרשרת הציבורית</td></tr>
-          <tr><td><b>מה אי אפשר?</b></td><td>—</td><td>לעבור את 21,000,000 · לזייף (חתימה) · להסתיר (ספר ציבורי) · לפרוץ את הכללים (הקוד רץ אצל כולם)</td></tr>
-        </tbody>
-      </table>
+    <div class="sect grid g4">
+      <div class="kpi"><div class="k" data-i="kSupply">SAOS supply</div><div class="v num" id="st-sup">126,682</div><div class="s" data-i="kSupplySub">hard cap 21,000,000</div></div>
+      <div class="kpi"><div class="k" data-i="kWallets">Wallets on chain</div><div class="v num" id="st-wal">0</div><div class="s" data-i="kWalletsSub">personal addresses</div></div>
+      <div class="kpi"><div class="k" data-i="kContracts">Token contracts</div><div class="v num" id="st-tok">0</div><div class="s" data-i="kContractsSub">real on-chain contracts</div></div>
+      <div class="kpi"><div class="k" data-i="kValidations">Network validations</div><div class="v num" id="st-att">0</div><div class="s" id="st-cp">0 checkpoints</div></div>
     </div>
-  </div>
 
-  <div class="sect">
-    <div class="kicker">הטכנולוגיה</div>
-    <h2>מנוע דטרמיניסטי — החוזה הוא הקוד</h2>
-    <div class="grid g2" style="margin-top:14px">
+    <div class="sect">
+      <h3 data-i="featTitle">What you can do here</h3>
+      <p class="sect-sub" data-i="featSub">Everything runs from public connections. This page is itself a network node.</p>
+      <div class="grid g4">
+        <a class="card feat" href="#wallet"><div class="ic">👛</div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
+        <a class="card feat" href="#exchange"><div class="ic">🔁</div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
+        <a class="card feat" href="#earn"><div class="ic">🌱</div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
+        <a class="card feat" href="#tokens"><div class="ic">🧬</div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
+      </div>
+    </div>
+
+    <div class="sect grid g2">
       <div class="card">
-        <h3>SAOS-NET v0 — הקרנל של הצי</h3>
-        <p class="foot" style="font-size:13px;line-height:1.7">
-          מכונת-מצב טהורה (1,420 שורות, אפס תלות): אותו ג'נזיס + אותן טרנזאקציות = אותו מצב, אותו stateRoot, בכל מכונה.
-          המתמטיקה בשלמים (מיקרו-יחידות), האסימון <span class="mono">canonicalJSON</span> (מפתחות ממוינים),
-          השורש <span class="mono">sha256(canon(state))</span>. ה-pack הזה חי בריפו הריבוני וכל אחד יכול להריץ את ה-replay:
-          <b>snapshot ⇒ 38 בלוקים ⇒ שורש סופי 29778d14… תואם.</b>
-        </p>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-          <span class="tag gold">11 חיילים</span><span class="tag gold">LP 25.072</span>
-          <span class="tag violet">5 נכסים עטופים</span><span class="tag green">קציר 0.008</span><span class="tag dim">12 ארנקי צבא</span>
-        </div>
+        <h2 data-i="trustTitle">Numbers you can check</h2>
+        <p class="sub" data-i="trustSub">Every figure on this page is read live from a public blockchain. Nothing is copy pasted from reports.</p>
+        <div class="step"><div class="n">1</div><div><b data-i="trust1T">The ledger is public</b><p data-i="trust1P">All wallets, balances, deposits and offers live as signed operations on a public chain that anyone can read.</p></div></div>
+        <div class="step"><div class="n">2</div><div><b data-i="trust2T">Your browser is the node</b><p data-i="trust2P">This page folds the ledger by itself and compares the result with what is published. One press, no trust needed.</p></div></div>
+        <div class="step"><div class="n">3</div><div><b data-i="trust3T">Signatures decide</b><p data-i="trust3P">Only the holder of a key can move its balance. The transport cannot forge, and every node re-checks every signature.</p></div></div>
+        <a class="btn ghost sm" href="#network" style="margin-top:14px" data-i="trustCta">Verify it yourself</a>
       </div>
       <div class="card">
-        <h3>SAOS-LIVE v1 — הספר החי על השרשרת</h3>
-        <p class="foot" style="font-size:13px;line-height:1.7">
-          הפרוטוקול <span class="mono">saos.weave.live.v1</span>: כל פעולה היא custom_json על Steem (רשות posting —
-          השרשרת עצמה אוסרת על המפתח להזיז כסף), עם חתימה פנימית של בעל הארנק. הסמכות היא החתימה —
-          המשדר הוא תעבורה. כל דפדפן מקפל את הספר ומאמת כל חתימה בעצמו:
-          <b>הצומת היא הדף שאתה קורא ממנו עכשיו.</b>
-        </p>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-          <span class="tag gold">אפס גז</span><span class="tag violet">אפס שרת</span>
-          <span class="tag green">אפס סנדבוקס</span><span class="tag dim">replay ציבורי</span>
-        </div>
+        <h2 data-i="feedTitle">Recent activity</h2>
+        <p class="sub" data-i="feedSub">Signed operations as the network folded them.</p>
+        <div class="feed" id="home-ops"></div>
       </div>
     </div>
-  </div>
 
-  <div class="sect">
-    <div class="kicker">חוזים חכמים — כל op הוא סעיף</div>
-    <h2>חוזי הרשת, על השרשרת</h2>
-    <details open>
-      <summary>v1 — חוזה הטוקנים החי (saos.live.v1)</summary>
-      <div class="body">
-        <p><b>כל טוקן הוא חוזה ממשי:</b> פרמטרים (סמל, שם, דיוק, תקרה, מנפיק) נפרסים בפעולה חתומה על השרשרת,
-        הכללים הם קוד דטרמיניסטי שרץ בכל צומת, והמצב נגזר מהשרשרת הציבורית בלבד.</p>
-        <table class="tbl" style="margin-top:10px">
-          <thead><tr><th>פעולה</th><th>כלל (הסעיף)</th></tr></thead>
-          <tbody>
-            <tr><td class="mono">wallet.create</td><td>כתובת חייבת להיגזר מהמפתח הציבורי שחתם — self-certifying. כפילויות נדחות.</td></tr>
-            <tr><td class="mono">token.deploy</td><td>סמל <span class="mono">A-Z0-9</span> ייחודי, תקרה עד 10^15 יחידות בסיס, דיוק 0–9. המפרס = המנפיק.</td></tr>
-            <tr><td class="mono">token.mint</td><td>המנפיק בלבד · נמען רשום · אספקה + כמות ≤ תקרה. הכל מתועד על השרשרת.</td></tr>
-            <tr><td class="mono">token.transfer</td><td>יתרה מספקת · נמען רשום · חתימת השולח משוחזרת ומושווית.</td></tr>
-            <tr><td class="mono">token.burn</td><td>יתרה מספקת · האספקה יורדת — כיבוד הפיך של ההבטחה.</td></tr>
-          </tbody>
-        </table>
-        <p style="margin-top:10px">פעולה שלא עוברת סעיף — <b>לא נוגעת במצב</b> (fail-closed) ונרשמת כלא-תקפה ב-replay של כל צומת.</p>
+    <div class="sect">
+      <h3 data-i="faqTitle">Questions people ask</h3>
+      <div style="margin-top:16px">
+        <details class="faq"><summary data-i="faq1Q">How do I open a SAOS wallet?</summary><p data-i="faq1A">Press Open a free wallet, then Create. Your key is generated on your device and your address is derived from it. Nothing is sent to a server and no account is needed.</p></details>
+        <details class="faq"><summary data-i="faq2Q">Who holds my keys?</summary><p data-i="faq2A">Only you. Keys are generated in your browser and stay in memory. You can save an encrypted backup with a password you choose. There is no recovery and no custody.</p></details>
+        <details class="faq"><summary data-i="faq3Q">How can I check the numbers myself?</summary><p data-i="faq3A">The whole ledger is public. Press Verify in the Network page and your browser reads every operation from the public chain, checks every signature and compares the result with what this site shows.</p></details>
+        <details class="faq"><summary data-i="faq4Q">What do deposits do?</summary><p data-i="faq4A">Deposits fund network development and are converted to SAOS at the current network rate. Every deposit, credit and reward is recorded in the open ledger. No promise of profit is made or implied.</p></details>
       </div>
-    </details>
-    <details>
-      <summary>v0 — כלכלת הצי (kernel, 30 סוגי פעולות)</summary>
-      <div class="body">
-        <p>הקרנל של הצי מימש שוק שלם: הזמנות (<span class="mono">order/cancel/fill</span>), בריכות AMM
-        (<span class="mono">pool_add/pool_swap</span> + משפחת x לזוגות גנריים), נכסים עטופים בכיסוי-נעילה
-        (<span class="mono">wrap_mint/wrap_burn</span> — mint רק מול כיסוי, under-backed נדחה),
-        רישום מטבעות (<span class="mono">asset_list</span>), דלתות גז-אפס לרשתות מרוחקות
-        (<span class="mono">relay/relay_ack</span>), קציר (<span class="mono">harvest</span>),
-        ארנקי-צבא רב-רשתיים (<span class="mono">wallet</span>) ואריגה (<span class="mono">stamp/seal/witness</span>).
-        כל op = סעיף חוזה עם גז-מדידה בטבלת GAS של הקרנל.</p>
-        <p style="margin-top:8px"><b>למה זה חדשות טכנולוגיות:</b> חוזה חכם בלי גז, שה-state שלו חי על שרשרת ציבורית
-        שכולם יכולים לקרוא, והביצוע שלו רץ אצל כל צומת — דפדפן של משתמש, runner של ענן, כל מכונה.
-        אין EVM, אין bytecode, אין עמלות — יש מתמטיקה שקופה וחתימות.</p>
-      </div>
-    </details>
-    <details>
-      <summary>איך מאמתים הכל בעצמך (3 דקות, בלי להאמין לאף אחד)</summary>
-      <div class="body">
-        <p>1. <b>הספר החי:</b> לחץ "אמת את ספר הטוקנים מהשרשרת" בעמוד הראשי — הדפדפן שלך קורא את ההיסטוריה
-        הציבורית, מאמת כל חתימה (secp256k1) ומקפל את המצב. אם השורש שיצא שווה למפורסם — הספר אמת.</p>
-        <p>2. <b>הקרנל של הצי (v0):</b> שכפל את הריפו הריבוני והרץ את ה-replay הדטרמיניסטי — snapshot ⇒ בלוקים ⇒ שורש.
-        אותן פקודות בכל מכונה, אותה תשובה.</p>
-        <p>3. <b>החתימות של ספר האימותים:</b> כל אימות ברשת חתום EIP-191 ומשורשר (entryHash/prevHash) —
-        ה-verifier הציבורי משחזר את הכל מה-geneis ב-3 פקודות.</p>
-      </div>
-    </details>
-  </div>
+    </div>
+  </section>
 
-  <div class="sect">
-    <div class="kicker">הספר החי</div>
-    <h2>מחזיקים ופעולות — מהקיפול העכשווי</h2>
-    <div class="grid g2" style="margin-top:14px">
+  <!-- ═══════════ WALLET ═══════════ -->
+  <section class="view" id="view-wallet">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="wTitle">Your wallet</h1>
+    <p class="sect-sub" data-i="wSub">A personal SAOS address that belongs to the key on your device. Register it once and the whole network can see it.</p>
+
+    <div id="wallet-empty" class="grid g2">
       <div class="card">
-        <h3>מחזיקים מובילים</h3>
-        <div class="scrollbox" style="margin-top:10px"><table class="tbl"><thead><tr><th>כתובת</th><th>SAOS</th></tr></thead><tbody id="saos-holders"><tr><td colspan="2" style="color:var(--faint)">טרם נטען</td></tr></tbody></table></div>
+        <h2 data-i="wNewT">Create a new wallet</h2>
+        <p class="sub" data-i="wNewP">A fresh key is generated with the browser's secure random generator. It never leaves this tab's memory.</p>
+        <button class="btn gold" id="btn-new-wallet" data-i="wNewBtn">Create wallet</button>
+        <div class="note" data-i="wNewNote">Write the key down or save the encrypted backup. If it is lost, the wallet is lost. There is no reset.</div>
       </div>
       <div class="card">
-        <h3>פעולות אחרונות על השרשרת</h3>
-        <div class="scrollbox ops-feed" style="margin-top:10px" id="saos-ops"><div style="color:var(--faint);padding:12px">טרם נטען</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ ארנק ═══════════════ -->
-<section class="view" id="view-wallet" aria-label="ארנק">
-  <div class="kicker">ארנק על הרשת שלנו · המפתח נולד וחי בדפדפט שלך בלבד</div>
-  <h1>ארנק חדש + כתובת אישית</h1>
-  <p class="sub" style="margin-top:12px">משתמשים חדשים על הרשת: המפתח הפרטי נוצר במחולל האקראי הקריפטוגרפי של הדפדפן (CSPRNG),
-  הכתובת האישית <span class="mono">saos1…</span> נגזרת ממנו, ורישום הארנק על השרשרת הציבורית חתום באותו מפתח —
-  self-certifying: מי שמחזיק במפתח הוא הבעלים, ואף אחד אחר לא יכול להתחזות. המפתח לעולם לא נשלח החוצה — רק חתימות.</p>
-
-  <!-- מצב: אין ארנק -->
-  <div id="wallet-empty" style="margin-top:24px">
-    <div class="wallet-hero">
-      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-        <button class="btn primary" id="btn-new-wallet">צור ארנק חדש ←</button>
-        <button class="btn ghost" id="btn-import-wallet">שחזר מקובץ גיבוי</button>
-      </div>
-      <p class="foot" style="margin-top:12px">אחרי היצירה: תראה את הכתובת, המפתח הציבורי והמפתח הפרטי (פעם אחת) +
-      אפשרות להוריד גיבוי מוצפן (AES-256-GCM, סיסמה שלך). הארנק חי בזיכרון הלשונית — ניתוק מוחק הכל.</p>
-    </div>
-    <input type="file" id="import-file" accept="application/json" class="sr-only" aria-label="קובץ גיבוי ארנק">
-  </div>
-
-  <!-- מצב: ארנק חי -->
-  <div id="wallet-live" style="display:none;margin-top:24px">
-    <div class="wallet-hero">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-        <div class="tag violet" id="wallet-nick">ארנק חי בזיכרון</div>
-        <div style="display:flex;gap:8px">
-          <button class="btn sm" id="btn-export-keystore">הורד גיבוי מוצפן</button>
-          <button class="btn sm danger" id="btn-wipe">נתק ומחק הכל</button>
-        </div>
-      </div>
-      <div class="lbl" style="margin-top:16px;color:var(--faint);font-size:12px">הכתובת האישית שלך על הרשת</div>
-      <div class="addr-big" id="wallet-addr">—</div>
-      <div style="margin-top:10px"><div class="copyrow"><code id="wallet-pub">—</code><button class="cbtn" data-copy="wallet-pub">העתק מפתח ציבורי</button></div></div>
-      <div class="grid g3" style="margin-top:18px" id="wallet-balances">
-        <div class="card"><div class="lbl">מאזן</div><div class="big num" id="wallet-bal">—</div><div class="foot" id="wallet-bal-note">מהקיפול החי של הספר</div></div>
-        <div class="card"><div class="lbl">רישום על השרשרת</div><div class="big" id="wallet-reg" style="font-size:18px">—</div><div class="foot">רישום הארנק (wallet.create) על השרשרת הציבורית</div></div>
-        <div class="card"><div class="lbl">תור שידור</div><div class="big num" id="wallet-queue">0</div><div class="foot">פעולות חתומות שממתינות למשדר</div></div>
+        <h2 data-i="wImpT">Restore a backup</h2>
+        <p class="sub" data-i="wImpP">Load an encrypted backup file (saos-keystore). The password opens it locally.</p>
+        <button class="btn ghost" id="btn-import-wallet" data-i="wImpBtn">Choose backup file</button>
+        <input type="file" id="import-file" accept="application/json" style="display:none">
       </div>
     </div>
 
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>רישום הארנק על הרשת</h3>
-        <p class="foot" style="margin-bottom:12px">הרישום הוא הפעולה שנותנת לכתובת שלך נוכחות רשומה בספר — בלעדיו אי אפשר לקבל טוקנים. חתום במפתח שלך.</p>
-        <div class="field"><label>כינוי ציבורי (רשום, לא חובה)</label><input id="reg-nick" maxlength="24" placeholder="למשל: משתמש חדש"></div>
-        <button class="btn primary" id="btn-register">חתום והוסף לתור השידור ←</button>
-      </div>
-      <div class="card">
-        <h3>שליחת טוקן</h3>
-        <p class="foot" style="margin-bottom:12px">העברה חתומה מהארנק שלך — הסמכות היא החתימה, השידור הוא תעבורה בלבד.</p>
-        <div class="field"><label>טוקן</label><select id="send-symbol"></select></div>
-        <div class="field"><label>כתובת מקבל (saos1…)</label><input id="send-to" class="mono" placeholder="saos1…"></div>
-        <div class="field"><label>כמות</label><input id="send-amount" type="number" step="any" min="0" placeholder="0.000"></div>
-        <button class="btn primary" id="btn-send">חתום והוסף לתור ←</button>
-      </div>
-    </div>
-
-    <!-- המפתח הפרטי — חשיפה חד-פעמית -->
-    <div id="key-reveal" style="display:none;margin-top:16px">
-      <div class="keybox">
-        <div class="warn">⚠ המפתח הפרטי שלך — מוצג פעם אחת. מי שמחזיק בו מחזיק בארנק.</div>
-        <div class="copyrow"><code id="wif-out">—</code><button class="cbtn" data-copy="wif-out">העתק</button></div>
-        <p class="foot" style="margin-top:8px">פורמט WIF (כמו שרשרות גרפן). שמור בכספת — זה הגישה היחידה לארנק. אין שרת שמחזיק עותק. אין "איפוס סיסמה".</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- תור השידור + משדר -->
-  <div class="sect">
-    <div class="kicker">שידור לשרשרת הציבורית · רשות posting בלבד · אפס גז</div>
-    <h2>תור השידור</h2>
-    <p class="sub">פעולות חתומות ממתינות כאן (חתומות = בטוחות לשמירה מקומית — אין בהן סודות).
-      שידור דורש חשבון Steem כלשהו כתעבורה: של המפעיל, של הרשת, או של כל בעל חשבון שירצה להעביר — הסמכות תמיד נשארת בחתימה.</p>
-    <div class="card" style="margin-top:14px">
-      <div class="scrollbox ops-feed" id="queue-list" style="max-height:220px;margin-bottom:14px"><div style="color:var(--faint);padding:12px">התור ריק</div></div>
+    <div id="wallet-live" style="display:none">
       <div class="grid g2">
-        <div>
-          <h3>א. שידור ישיר — עם מפתח posting של חשבון Steem</h3>
-          <p class="foot" style="margin-bottom:10px">למפעיל או לכל בעל חשבון: הדבק WIF (רשות posting בלבד — השרשרת אוסרת עליו לגעת בכסף). המפתח חי בזיכרון לרגע החתימה ונמחק.</p>
-          <div class="field"><label>חשבון Steem (המשדר)</label><input id="relay-account" class="mono" placeholder="headcorner"></div>
-          <div class="field"><label>WIF (posting)</label><input id="relay-wif" type="password" class="mono" autocomplete="off"></div>
-          <button class="btn" id="btn-relay-all">שדר את כל התור ←</button>
-          <span id="relay-result" style="font-size:12.5px;margin-inline-start:10px"></span>
+        <div class="card">
+          <h2 data-i="wAddrT">Your address</h2>
+          <p class="sub" id="wallet-reg"></p>
+          <div class="addrbox"><span class="a" id="wallet-addr"></span><button class="copy" id="btn-copy-addr" data-i="copy">Copy</button></div>
+          <p class="hint mono" id="wallet-pub" style="margin-top:10px;word-break:break-all"></p>
+          <div class="keybox" id="key-reveal" style="display:none;margin-top:14px">
+            <div style="font-size:12px;color:var(--amber);margin-bottom:6px" data-i="wWifT">Your private key (shown once)</div>
+            <div class="w" id="wif-out"></div>
+            <button class="copy" id="btn-copy-wif" style="margin-top:9px" data-i="copy">Copy</button>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+            <button class="btn gold sm" id="btn-export-keystore" data-i="wBackup">Save encrypted backup</button>
+            <button class="btn ghost sm" id="btn-wipe" data-i="wLock">Clear from memory</button>
+          </div>
         </div>
-        <div>
-          <h3>ב. העברה ידנית למשדר אחר</h3>
-          <p class="foot">כל תור ניתן להעתקה כ-JSON חתום — שדר אותו דרך כל ערוץ של הרשת. המשדר לא יכול לשנות כלום: כל שינוי שובר את החתימה.</p>
-          <button class="btn ghost" id="btn-copy-queue">העתק את התור כ-JSON</button>
+        <div class="card">
+          <h2 data-i="wBalT">Balances</h2>
+          <p class="sub" data-i="wBalP">As folded from the public chain.</p>
+          <div style="font-size:24px;font-weight:800;color:var(--gold-bright)" id="wallet-bal">0</div>
+          <div class="frow" style="margin-top:18px">
+            <div class="field"><label class="f" data-i="wNick">Display name (optional)</label><input id="reg-nick" maxlength="24"><button class="btn ghost sm" id="btn-register" style="margin-top:8px;width:100%" data-i="wRegBtn">Register on chain</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2 data-i="wSendT">Send</h2>
+        <p class="sub" data-i="wSendP">Signed on your device, broadcast as a public operation.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="wSendSym">Currency</label><select id="send-symbol"></select></div>
+          <div class="field" style="flex:2"><label class="f" data-i="wSendTo">Recipient address (saos1...)</label><input class="mono" id="send-to" placeholder="saos1..."></div>
+          <div class="field"><label class="f" data-i="wSendAmt">Amount</label><input class="mono" id="send-amount" placeholder="0.000"></div>
+        </div>
+        <button class="btn gold" id="btn-send" data-i="wSendBtn">Sign transfer</button>
+      </div>
+
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card">
+          <h2><span data-i="wQueueT">Signed operations queue</span> <span class="tag gold" id="wallet-queue">0</span></h2>
+          <p class="sub" data-i="wQueueP">Signed and waiting. Copy them for the network, or broadcast below.</p>
+          <div class="feed" id="queue-list"></div>
+          <button class="btn ghost sm" id="btn-copy-queue" style="margin-top:12px" data-i="wQueueCopy">Copy signed JSON</button>
+        </div>
+        <div class="card">
+          <h2 data-i="wRelayT">Broadcast</h2>
+          <p class="sub" data-i="wRelayP">A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.</p>
+          <div class="frow">
+            <div class="field"><label class="f" data-i="wRelayAcc">Steem account</label><input id="relay-account" placeholder="account"></div>
+            <div class="field"><label class="f" data-i="wRelayWif">Posting key (WIF)</label><input type="password" class="mono" id="relay-wif" placeholder="5..."></div>
+          </div>
+          <button class="btn gold" id="btn-relay-all" data-i="wRelayBtn">Broadcast queue</button>
+          <div class="hint" id="relay-result" style="margin-top:10px"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══════════════ מפעל טוקנים ═══════════════ -->
-<section class="view" id="view-tokens" aria-label="מפעל טוקנים">
-  <div class="kicker">כל טוקן הוא חוזה חכם ממשי · פרמטרים + כללים + מצב ציבורי</div>
-  <h1>מפעל הטוקנים</h1>
-  <p class="sub" style="margin-top:12px">פריסת טוקן חדש היא פעולת <span class="mono">token.deploy</span> חתומה מהארנק שלך:
-    הפרמטרים (סמל, שם, דיוק, תקרה) נחרתים על השרשרת הציבורית, הכללים הדטרמיניסטיים רצים בכל צומת,
-    והמצב נגזר מהספר הציבורי. אתה המנפיק — ההטבעות והשריפות שלך חתומות, לעולם לא ניתן לזייף אותן.</p>
+  <!-- ═══════════ EXCHANGE ═══════════ -->
+  <section class="view" id="view-exchange">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h1>
+    <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
 
-  <div class="grid g2" style="margin-top:22px">
-    <div class="card">
-      <h3>פריסת טוקן חדש</h3>
-      <p class="foot" style="margin-bottom:14px">דורש ארנק חי (עבור ל<a href="#wallet">עמוד הארנק</a> אם עוד אין לך).</p>
-      <div class="field"><label>סמל (A-Z, 3–8 תווים, ייחודי)</label><input id="tk-symbol" class="mono" maxlength="8" placeholder="GOLD"></div>
-      <div class="field"><label>שם מלא</label><input id="tk-name" maxlength="48" placeholder="זהב הרשת"></div>
-      <div class="grid g2" style="gap:10px">
-        <div class="field"><label>ספרות עשרוניות (0–9)</label><input id="tk-decimals" type="number" min="0" max="9" value="3"></div>
-        <div class="field"><label>תקרת אספקה (שלמים)</label><input id="tk-max" type="number" min="1" placeholder="1000000"></div>
+    <div class="grid g2">
+      <div class="card">
+        <h2 data-i="xRatesT">Network rates</h2>
+        <p class="sub" data-i="xRatesP">Reference rates published on chain by network governance.</p>
+        <div class="tblwrap"><table><thead><tr><th data-i="xPair">Pair</th><th data-i="xPrice">Price</th></tr></thead><tbody id="x-rates"></tbody></table></div>
+        <div class="note" data-i="xRatesNote">Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.</div>
       </div>
-      <button class="btn primary" id="btn-deploy">חתום ופרוס חוזה ←</button>
-      <p class="foot" style="margin-top:10px">אחרי הפריסה תוכל להטביע (<span class="mono">token.mint</span>) עד התקרה — כל הטבעה חתומה ומתועדת.</p>
+      <div class="card">
+        <h2 data-i="xOfferT">Place a sell offer</h2>
+        <p class="sub" data-i="xOfferP">Your SAOS moves into escrow the moment the offer lands on chain.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="xCur">Currency you accept</label><input class="mono" id="off-cur" placeholder="USD" maxlength="10"></div>
+          <div class="field"><label class="f" data-i="xAmt">Amount (SAOS)</label><input class="mono" id="off-amt" placeholder="10.000"></div>
+          <div class="field"><label class="f" data-i="xPricePer">Price per 1 SAOS</label><input class="mono" id="off-price" placeholder="0.001"></div>
+        </div>
+        <button class="btn gold" id="btn-offer" data-i="xOfferBtn">Sign offer</button>
+        <div class="note" data-i="xOfferNote">Settlement of the currency side is recorded by the network treasury with a payment reference. Both sides stay visible on chain.</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>הטבעה לארנק (מנפיק בלבד)</h3>
-      <p class="foot" style="margin-bottom:14px">הטבעה חתומה של כמות מהטוקן שלך לכתובת רשומה — עד התקרה שנקבעה בפריסה.</p>
-      <div class="field"><label>טוקן (שלך)</label><select id="mint-symbol"></select></div>
-      <div class="field"><label>לכתובת (saos1…)</label><input id="mint-to" class="mono" placeholder="saos1…"></div>
-      <div class="field"><label>כמות (שלמים, יחידות בסיס)</label><input id="mint-amount" type="number" min="1" placeholder="1000"></div>
-      <button class="btn" id="btn-mint">חתום והטבע ←</button>
-    </div>
-  </div>
 
-  <div class="sect">
-    <div class="kicker">החוזים החיים</div>
-    <h2>טוקנים על הספר — מהקיפול העכשווי</h2>
-    <div class="card" style="margin-top:14px">
-      <div class="scrollbox"><table class="tbl">
-        <thead><tr><th>סמל</th><th>שם</th><th>אספקה</th><th>תקרה</th><th>דיוק</th><th>מנפיק</th><th>מחזיקים</th></tr></thead>
-        <tbody id="tokens-table"><tr><td colspan="7" style="color:var(--faint)">טרם נטען</td></tr></tbody>
-      </table></div>
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="xBookT">Open offers</h2>
+        <p class="sub" data-i="xBookP">Escrowed SAOS for sale right now.</p>
+        <div class="tblwrap"><table><thead><tr><th data-i="xSell">Seller</th><th data-i="xGet">You pay</th><th data-i="xRemain">SAOS remaining</th><th data-i="xPrice2">Price / SAOS</th></tr></thead><tbody id="x-book"></tbody></table></div>
+      </div>
+      <div class="card">
+        <h2 data-i="xMineT">My offers</h2>
+        <p class="sub" data-i="xMineP">Open a wallet to see and manage your offers here.</p>
+        <div id="x-mine" class="feed"></div>
+      </div>
     </div>
-  </div>
-</section>
 
-<!-- ═══════════════ רשת ═══════════════ -->
-<section class="view" id="view-network" aria-label="רשת">
-  <div class="kicker">מצב הרשת · מהמראה הציבורית שהלב מפרסם בכל פעימה</div>
-  <h1>הרשת החיה</h1>
-  <div class="grid g4" style="margin-top:22px">
-    <div class="card"><div class="lbl">אימותים</div><div class="big num" id="net-att">—</div></div>
-    <div class="card"><div class="lbl">checkpoints</div><div class="big num" id="net-cp">—</div></div>
-    <div class="card"><div class="lbl">סוכנים (יכולת אמת)</div><div class="big num" id="net-agents">—</div></div>
-    <div class="card"><div class="lbl">המוח</div><div class="big num" id="net-brain">—</div></div>
-  </div>
-  <div class="grid g2" style="margin-top:16px">
-    <div class="card">
-      <h3>סוכנים — יכולת חתימה אמיתית</h3>
-      <p class="foot" style="margin-bottom:10px">1/9 sealed = רק לב-הענן חותם כרגע; השאר זהויות memory-only — נכון למדידה האחרונה של הרשת עצמה.</p>
-      <div class="scrollbox"><table class="tbl"><thead><tr><th>סוכן</th><th>תפקיד</th><th>אימותים</th></tr></thead><tbody id="net-agents-tbl"><tr><td colspan="3" style="color:var(--faint)">טוען…</td></tr></tbody></table></div>
+    <div class="card" style="margin-top:16px">
+      <h2 data-i="xFillsT">Recent fills</h2>
+      <p class="sub" data-i="xFillsP">Settled deals with their on-chain payment references.</p>
+      <div class="feed" id="x-fills"></div>
     </div>
-    <div class="card">
-      <h3>אימותים אחרונים</h3>
-      <div class="scrollbox"><table class="tbl"><tbody id="net-atts"><tr><td style="color:var(--faint)">טוען…</td></tr></tbody></table></div>
-    </div>
-  </div>
-  <div class="sect">
-    <div class="card">
-      <h3>checkpoints + עדים על השרשרות</h3>
-      <div class="scrollbox"><table class="tbl">
-        <thead><tr><th>#</th><th>שורש</th><th>מתי</th><th>עדים</th></tr></thead>
-        <tbody id="net-cps"><tr><td colspan="4" style="color:var(--faint)">טוען…</td></tr></tbody>
-      </table></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══════════════ עוגנים ═══════════════ -->
-<section class="view" id="view-anchors" aria-label="עוגנים">
-  <div class="kicker">קבלות על גבי שרשראות ציבוריות · $0 גז, תמיד</div>
-  <h1>קיר העוגנים</h1>
-  <p class="sub" style="margin-top:12px">כל checkpoint של ספר האימותים מעיד עד חיצוני: Steem + Hive (custom_json, רשות posting)
-    וקו ה-ZERO (Z Chain 9369, גז 0x0 — EVM אמיתי בחינם). הקבלות לפניך — פתח, השווה, הצלב.</p>
-  <div class="grid g2" style="margin-top:22px">
-    <div class="card">
-      <h3>קו Steem + Hive</h3>
-      <div id="anchors-steem" class="ops-feed" style="margin-top:10px"><div style="color:var(--faint);padding:10px">טוען…</div></div>
-    </div>
-    <div class="card">
-      <h3>קו ZERO (Z Chain · EVM · גז 0)</h3>
-      <div id="anchors-zero" class="ops-feed" style="margin-top:10px"><div style="color:var(--faint);padding:10px">טוען…</div></div>
-    </div>
-  </div>
-</section>
+  <!-- ═══════════ EARN ═══════════ -->
+  <section class="view" id="view-earn">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="eTitle">Deposit and earn</h1>
+    <p class="sect-sub" data-i="eSub">Fund the network with any listed currency. Your deposit is recorded on chain, credited in SAOS at the current rate, and tracked in the open ledger.</p>
 
-<!-- ═══════════════ כלים ═══════════════ -->
-<section class="view" id="view-tools" aria-label="כלים">
-  <div class="kicker">כלים ריבוניים — הכל דרך החיבורים הציבוריים</div>
-  <h1>חדר הכלים</h1>
-  <div class="grid g2" style="margin-top:22px">
-    <a class="card" href="gate.html">
-      <div class="lbl">מפעיל הרשת</div>
-      <h3>שער הכניסה →</h3>
-      <p class="foot">כניסת המפעיל עם סיסמת-האב: גזירת 4 התפקידים מול השרשרת, פקודות חתומות (ping/beat/anchor/console/acid), היסטוריה חיה. המפתח בזיכרון בלבד.</p>
-    </a>
-    <a class="card" href="acid.html">
-      <div class="lbl">מנוע AI ריבוני</div>
-      <h3>מנוע הגילוי (ACID) →</h3>
-      <p class="foot">גילוי תוכניות בחיפוש אבולוציוני — 21/21 בדיקות עצמיות, דטרמיניזם מוכח חוצה-יבשות (דפדפן מול ענן), חתימה לשרשרת ושחזור על ידי הרשת.</p>
-    </a>
-    <a class="card" href="net.html">
-      <div class="lbl">מראה קלאסית</div>
-      <h3>מצב הרשת (net.html) →</h3>
-      <p class="foot">התצוגה הקודמת של מצב הרשת — נשמרת להצלבה ורציפות.</p>
-    </a>
-    <div class="card">
-      <div class="lbl">דוקטרינה</div>
-      <h3>איך הכל עובד בלי סנדבוקס</h3>
-      <p class="foot">הדף הזה מאוחסן ב-GitHub Pages (סטטי, חינם). הנתונים: mirror.json שהלב מפרסם מהענן + קריאה ישירה מה-Steem RPC הציבורי + saos-live.json (ספר הטוקנים).
-      מוות של כל סביבת פיתוח לא משנה כלום — האמת חיה בשרשרת ובגיט.</p>
+    <div class="grid g3">
+      <div class="card">
+        <h2 data-i="eHowT">How it works</h2>
+        <div class="step"><div class="n">1</div><div><b data-i="eS1T">Open a wallet</b><p data-i="eS1P">Free, takes seconds, and gives you the personal address your SAOS lands on.</p></div></div>
+        <div class="step"><div class="n">2</div><div><b data-i="eS2T">Send to a deposit address</b><p data-i="eS2P">Pick a currency below, send any amount, and keep your transaction reference.</p></div></div>
+        <div class="step"><div class="n">3</div><div><b data-i="eS3T">Get credited and follow it</b><p data-i="eS3P">The network verifies the deposit, credits SAOS at the current rate, and every step stays visible on chain.</p></div></div>
+        <div class="note honest" data-i="eHonest">Deposits fund network development. Rewards, when approved by network governance, are paid to depositor wallets and recorded in the open ledger. Nothing here is a promise of profit.</div>
+      </div>
+
+      <div class="card">
+        <h2 data-i="eAddrT">Deposit addresses</h2>
+        <p class="sub" data-i="eAddrP">Published on chain by the network treasury.</p>
+        <div id="e-addrs"></div>
+        <div class="note" data-i="eAddrNote">Send only the currency shown next to each address. The reference of your transfer is what you paste in the claim below.</div>
+      </div>
+
+      <div class="card">
+        <h2 data-i="eClaimT">Report a deposit</h2>
+        <p class="sub" data-i="eClaimP">Tell the network what you sent. Your wallet signs the claim.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="eClaimCur">Currency</label><input class="mono" id="cl-cur" placeholder="USD" maxlength="10"></div>
+          <div class="field"><label class="f" data-i="eClaimAmt">Amount</label><input class="mono" id="cl-amt" placeholder="25"></div>
+        </div>
+        <div class="field"><label class="f" data-i="eClaimRef">Transaction reference</label><input class="mono" id="cl-ref" placeholder="tx hash or payment id" maxlength="90"></div>
+        <button class="btn gold" id="btn-claim" data-i="eClaimBtn">Sign claim</button>
+      </div>
     </div>
-  </div>
-  <div class="sect">
-    <h2>שער-הסודות והביטחון</h2>
-    <div class="card" style="margin-top:12px">
-      <ul style="color:var(--dim);font-size:13.5px;line-height:2;padding-inline-start:20px">
-        <li>המפתחות נולדים ומתים בדפדפן שלך — אפס שרת, אפס עוגן, אפס מסירה.</li>
-        <li>כל שידור הוא רשות <b>posting בלבד</b> — השרשרת עצמה אוסרת על המפתח הזה להזיז כסף.</li>
-        <li>הגיבוי המוצפן: AES-256-GCM בסיסמה שלך — אנחנו לא יכולים לשחזר, גם לא נרצה.</li>
-        <li>כל קובץ שיוצא מהרשת עובר שער-סודות אוטומטי לפני פרסום (WIF/PAT/מפתחות נחסמים).</li>
-        <li>לאמת הכל בעצמך: הכפתור בעמוד הראשי מקריא את השרשרת ומקפל מחדש — אמון הוא לא חלק מהעיצוב.</li>
-      </ul>
+
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="eMineT">My deposits</h2>
+        <p class="sub" data-i="eMineP">Your claims and credits from the open ledger.</p>
+        <div id="e-mine" class="feed"></div>
+      </div>
+      <div class="card">
+        <h2 data-i="eStatsT">Network totals</h2>
+        <p class="sub" data-i="eStatsP">Everyone's deposits, credits and rewards, folded from the chain.</p>
+        <div class="grid g3" style="gap:10px">
+          <div class="kpi"><div class="k" data-i="eDepT">Deposited</div><div class="v" id="e-total-dep" style="font-size:17px">-</div></div>
+          <div class="kpi"><div class="k" data-i="eCredT">SAOS credited</div><div class="v num" id="e-total-cred" style="font-size:17px">0</div></div>
+          <div class="kpi"><div class="k" data-i="eRewT">Rewards paid</div><div class="v num" id="e-total-rew" style="font-size:17px">0</div></div>
+        </div>
+        <div class="feed" id="e-credits" style="margin-top:14px"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ═══════════ CURRENCY ═══════════ -->
+  <section class="view" id="view-currency">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="cTitle">The SAOS currency</h1>
+    <p class="sect-sub" data-i="cSub">A currency you can verify line by line. Fixed rules, public state, no administrator can bend it quietly.</p>
+
+    <div class="grid g4">
+      <div class="kpi"><div class="k" data-i="cSupply">Supply</div><div class="v num" id="c-sup">126,682</div><div class="s">SAOS</div></div>
+      <div class="kpi"><div class="k" data-i="cCap">Hard cap</div><div class="v num">21,000,000</div><div class="s" data-i="cCapSub">fixed in code</div></div>
+      <div class="kpi"><div class="k" data-i="cMint">Mint state</div><div class="v" id="c-mint" style="font-size:16px">-</div><div class="s" id="c-mint-s"></div></div>
+      <div class="kpi"><div class="k" data-i="cRoot">Ledger root</div><div class="v mono" id="c-root" style="font-size:12px;word-break:break-all">-</div><div class="s" data-i="cRootSub">sha256 of the folded state</div></div>
+    </div>
+
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="cTechT">How it is built</h2>
+        <div class="step"><div class="n">1</div><div><b data-i="cT1T">Your address comes from your key</b><p data-i="cT1P">An address is a fingerprint of the public key alone. Whoever holds the key owns the address. No registry, no approval.</p></div></div>
+        <div class="step"><div class="n">2</div><div><b data-i="cT2T">The contract is code that everyone runs</b><p data-i="cT2P">Supply rules, escrow and balances are enforced by one deterministic engine that runs identically in every browser and node.</p></div></div>
+        <div class="step"><div class="n">3</div><div><b data-i="cT3T">Operations are signed, transport cannot forge</b><p data-i="cT3P">Every operation carries the owner's signature. Public relayers move bytes; they cannot change them.</p></div></div>
+        <div class="step"><div class="n">4</div><div><b data-i="cT4T">The cap is a law of the engine</b><p data-i="cT4P">21,000,000 SAOS maximum, checked at every mint by every node. Breaking it would need every verifier to agree to lie.</p></div></div>
+      </div>
+      <div class="card">
+        <h2 data-i="cHoldT">Top holders</h2>
+        <p class="sub" data-i="cHoldP">From the public balances.</p>
+        <div class="tblwrap"><table><thead><tr><th data-i="cAddr">Address</th><th data-i="cBal">SAOS</th></tr></thead><tbody id="c-holders"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2 data-i="cFeedT">Ledger activity</h2>
+      <p class="sub" data-i="cFeedP">Every signed operation, newest first.</p>
+      <div class="feed" id="c-ops"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TOKENS ═══════════ -->
+  <section class="view" id="view-tokens">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="tTitle">Token factory</h1>
+    <p class="sect-sub" data-i="tSub">Deploy a real smart contract: fixed parameters, signed, and verified by every node that reads the chain.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h2 data-i="tDepT">Deploy a token</h2>
+        <p class="sub" data-i="tDepP">Choose a symbol, a name and a hard cap. The rules are set at birth and cannot be bent later.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="tSym">Symbol (A-Z, 3 to 8)</label><input class="mono" id="tk-symbol" placeholder="GOLD" maxlength="8"></div>
+          <div class="field" style="flex:2"><label class="f" data-i="tName">Name</label><input id="tk-name" placeholder="Golden Points" maxlength="48"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="tDec">Decimals (0-9)</label><input type="number" id="tk-dec" value="3" min="0" max="9"></div>
+          <div class="field" style="flex:2"><label class="f" data-i="tMax">Max supply (whole units)</label><input class="mono" id="tk-max" placeholder="1000000"></div>
+        </div>
+        <button class="btn gold" id="btn-deploy" data-i="tDepBtn">Sign deployment</button>
+      </div>
+      <div class="card">
+        <h2 data-i="tMintT">Mint your token</h2>
+        <p class="sub" data-i="tMintP">Only the deployer can mint, up to the cap. Everyone can check.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="tMSym">Token</label><select id="mint-symbol"></select></div>
+          <div class="field" style="flex:2"><label class="f" data-i="tMTo">To address (saos1...)</label><input class="mono" id="mint-to" placeholder="saos1..."></div>
+          <div class="field"><label class="f" data-i="tMAmt">Amount (whole units)</label><input class="mono" id="mint-amount" placeholder="100"></div>
+        </div>
+        <button class="btn gold" id="btn-mint" data-i="tMintBtn">Sign mint</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2 data-i="tListT">Contracts on chain</h2>
+      <p class="sub" data-i="tListP">Every token is a signed contract with a public state.</p>
+      <div class="tblwrap"><table><thead><tr><th data-i="tLSym">Symbol</th><th data-i="tLName">Name</th><th data-i="tLSup">Supply</th><th data-i="tLMax">Max</th><th data-i="tLIss">Issuer</th><th data-i="tLHold">Holders</th></tr></thead><tbody id="tokens-table"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ NETWORK ═══════════ -->
+  <section class="view" id="view-network">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="nTitle">Network</h1>
+    <p class="sect-sub" data-i="nSub">A validation network that runs on public chains and publishes its own proof of life.</p>
+
+    <div class="grid g4">
+      <div class="kpi"><div class="k" data-i="nAtt">Validations</div><div class="v num" id="n-att">0</div><div class="s" data-i="nAttS">signed attestations</div></div>
+      <div class="kpi"><div class="k" data-i="nCp">Checkpoints</div><div class="v num" id="n-cp">0</div><div class="s" data-i="nCpS">merkle roots</div></div>
+      <div class="kpi"><div class="k" data-i="nAnch">Anchors</div><div class="v num" id="n-anch">0</div><div class="s" data-i="nAnchS">on public chains</div></div>
+      <div class="kpi"><div class="k" data-i="nTest">Engine self-test</div><div class="v" id="selftest-badge" style="font-size:15px">...</div><div class="s" data-i="nTestS">runs on page load</div></div>
+    </div>
+
+    <div class="sect card">
+      <h2 data-i="nVerifyT">Check everything yourself</h2>
+      <p class="sub" data-i="nVerifyP">Your browser reads every operation from the public chain, checks every signature, folds the ledger and compares the root with what this site shows. No trust required.</p>
+      <button class="btn gold" id="btn-verify-chain" data-i="nVerifyBtn">Verify the ledger now</button>
+      <div class="hint" id="verify-chain-result" style="margin-top:12px;font-size:13px"></div>
+    </div>
+
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="nFeedT">Validation feed</h2>
+        <p class="sub" data-i="nFeedP">What the network attested, newest first.</p>
+        <div class="feed" id="n-atts"></div>
+      </div>
+      <div class="card">
+        <h2 data-i="nCpsT">Checkpoints and witnesses</h2>
+        <p class="sub" data-i="nCpsP">Each checkpoint is a merkle root over a range of attestations.</p>
+        <div class="feed"><div class="tblwrap" style="border:none"><table style="min-width:0"><thead><tr><th>#</th><th data-i="nRoot">Root</th><th data-i="nWhen">When</th><th data-i="nSeen">Seen on</th></tr></thead><tbody id="n-cps"></tbody></table></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2 data-i="nAnchT">Recent anchors</h2>
+      <p class="sub" data-i="nAnchP">Checkpoints written to public chains as permanent witnesses.</p>
+      <div class="grid g2">
+        <div><div style="font-size:12px;color:var(--faint);margin-bottom:8px">Steem</div><div class="feed" id="n-anch-steem"></div></div>
+        <div><div style="font-size:12px;color:var(--faint);margin-bottom:8px">Z Chain (zero gas EVM)</div><div class="feed" id="n-anch-zero"></div></div>
+      </div>
+    </div>
+  </section>
 
 </div>
 </main>
 
-<footer>
-  <div class="foot-in">
-    <div>THE WEAVE · SAOS — ריבוני על השרשרת הציבורית · אפס גז · אפס שרת · אפס סנדבוקס</div>
-    <div class="links">
-      <a href="gate.html">שער המפעיל</a>
-      <a href="acid.html">מנוע הגילוי</a>
-      <a href="net.html">מראה קלאסית</a>
-      <a href="#saos">SAOS</a>
-    </div>
+<footer class="site">
+  <div class="wrap">
+    <span>© <span id="year">2026</span> SAOS Network</span>
+    <span><a href="#network" data-i="fVerify">Verify independently</a> · <a href="#currency" data-i="fCurrency">The currency</a> · <a href="#wallet" data-i="fWallet">Open a wallet</a></span>
   </div>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script type="module" src="saos-live.js"></script>
+<script src="gate-crypto.js"></script>
 <script type="module">
-/* ═══════════════════════════════════════════════════════════════════
-   THE WEAVE · Command Center — לוגיקה
-   דוקטרינה: הדפדפן הוא הצומת. כל נתון נקרא מהמראה הציבורית או
-   מהשרשרת; כל פעולה נחתמת מקומית. אפס סוד יוצא החוצה.
-   ═══════════════════════════════════════════════════════════════════ */
-"use strict";
-const $ = (id) => document.getElementById(id);
-const C = window.GateCrypto, SL = window.SaosLive;
+import * as SL from "./saos-live.js";
+const C = globalThis.GateCrypto;
 
-/* ── toast ── */
-let toastT = null;
+/* ═══════════ i18n ═══════════ */
+const I18N = {
+en: {
+  brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
+  navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
+  chipLive:"live on a public blockchain",
+  heroTop:"Your money.", heroGrad:"Your network.", heroBottom:"SAOS.",
+  heroLead:"Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.",
+  ctaWallet:"Open a free wallet", ctaExchange:"See the exchange",
+  kSupply:"SAOS supply", kSupplySub:"hard cap 21,000,000", kWallets:"Wallets on chain", kWalletsSub:"personal addresses",
+  kContracts:"Token contracts", kContractsSub:"real on-chain contracts", kValidations:"Network validations",
+  featTitle:"What you can do here", featSub:"Everything runs from public connections. This page is itself a network node.",
+  feat1T:"Free wallet", feat1P:"Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.",
+  feat2T:"Exchange", feat2P:"Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.",
+  feat3T:"Deposit and earn", feat3P:"Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.",
+  feat4T:"Launch tokens", feat4P:"Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.",
+  trustTitle:"Numbers you can check", trustSub:"Every figure on this page is read live from a public blockchain. Nothing is copy pasted from reports.",
+  trust1T:"The ledger is public", trust1P:"All wallets, balances, deposits and offers live as signed operations on a public chain that anyone can read.",
+  trust2T:"Your browser is the node", trust2P:"This page folds the ledger by itself and compares the result with what is published. One press, no trust needed.",
+  trust3T:"Signatures decide", trust3P:"Only the holder of a key can move its balance. The transport cannot forge, and every node re-checks every signature.",
+  trustCta:"Verify it yourself",
+  feedTitle:"Recent activity", feedSub:"Signed operations as the network folded them.",
+  faqTitle:"Questions people ask",
+  faq1Q:"How do I open a SAOS wallet?", faq1A:"Press Open a free wallet, then Create. Your key is generated on your device and your address is derived from it. Nothing is sent to a server and no account is needed.",
+  faq2Q:"Who holds my keys?", faq2A:"Only you. Keys are generated in your browser and stay in memory. You can save an encrypted backup with a password you choose. There is no recovery and no custody.",
+  faq3Q:"How can I check the numbers myself?", faq3A:"The whole ledger is public. Press Verify in the Network page and your browser reads every operation from the public chain, checks every signature and compares the result with what this site shows.",
+  faq4Q:"What do deposits do?", faq4A:"Deposits fund network development and are converted to SAOS at the current network rate. Every deposit, credit and reward is recorded in the open ledger. No promise of profit is made or implied.",
+  wTitle:"Your wallet", wSub:"A personal SAOS address that belongs to the key on your device. Register it once and the whole network can see it.",
+  wNewT:"Create a new wallet", wNewP:"A fresh key is generated with the browser's secure random generator. It never leaves this tab's memory.",
+  wNewBtn:"Create wallet", wNewNote:"Write the key down or save the encrypted backup. If it is lost, the wallet is lost. There is no reset.",
+  wImpT:"Restore a backup", wImpP:"Load an encrypted backup file (saos-keystore). The password opens it locally.", wImpBtn:"Choose backup file",
+  wAddrT:"Your address", copy:"Copy", wWifT:"Your private key (shown once)",
+  wBackup:"Save encrypted backup", wLock:"Clear from memory",
+  wBalT:"Balances", wBalP:"As folded from the public chain.",
+  wNick:"Display name (optional)", wRegBtn:"Register on chain",
+  wSendT:"Send", wSendP:"Signed on your device, broadcast as a public operation.",
+  wSendSym:"Currency", wSendTo:"Recipient address (saos1...)", wSendAmt:"Amount", wSendBtn:"Sign transfer",
+  wQueueT:"Signed operations queue", wQueueP:"Signed and waiting. Copy them for the network, or broadcast below.", wQueueCopy:"Copy signed JSON",
+  wRelayT:"Broadcast", wRelayP:"A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.",
+  wRelayAcc:"Steem account", wRelayWif:"Posting key (WIF)", wRelayBtn:"Broadcast queue",
+  xTitle:"Exchange", xSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
+  xRatesT:"Network rates", xRatesP:"Reference rates published on chain by network governance.",
+  xPair:"Pair", xPrice:"Price",
+  xRatesNote:"Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.",
+  xOfferT:"Place a sell offer", xOfferP:"Your SAOS moves into escrow the moment the offer lands on chain.",
+  xCur:"Currency you accept", xAmt:"Amount (SAOS)", xPricePer:"Price per 1 SAOS", xOfferBtn:"Sign offer",
+  xOfferNote:"Settlement of the currency side is recorded by the network treasury with a payment reference. Both sides stay visible on chain.",
+  xBookT:"Open offers", xBookP:"Escrowed SAOS for sale right now.",
+  xSell:"Seller", xGet:"You pay", xRemain:"SAOS remaining", xPrice2:"Price / SAOS",
+  xMineT:"My offers", xMineP:"Open a wallet to see and manage your offers here.",
+  xFillsT:"Recent fills", xFillsP:"Settled deals with their on-chain payment references.",
+  eTitle:"Deposit and earn", eSub:"Fund the network with any listed currency. Your deposit is recorded on chain, credited in SAOS at the current rate, and tracked in the open ledger.",
+  eHowT:"How it works",
+  eS1T:"Open a wallet", eS1P:"Free, takes seconds, and gives you the personal address your SAOS lands on.",
+  eS2T:"Send to a deposit address", eS2P:"Pick a currency below, send any amount, and keep your transaction reference.",
+  eS3T:"Get credited and follow it", eS3P:"The network verifies the deposit, credits SAOS at the current rate, and every step stays visible on chain.",
+  eHonest:"Deposits fund network development. Rewards, when approved by network governance, are paid to depositor wallets and recorded in the open ledger. Nothing here is a promise of profit.",
+  eAddrT:"Deposit addresses", eAddrP:"Published on chain by the network treasury.",
+  eAddrNote:"Send only the currency shown next to each address. The reference of your transfer is what you paste in the claim below.",
+  eClaimT:"Report a deposit", eClaimP:"Tell the network what you sent. Your wallet signs the claim.",
+  eClaimCur:"Currency", eClaimAmt:"Amount", eClaimRef:"Transaction reference", eClaimBtn:"Sign claim",
+  eMineT:"My deposits", eMineP:"Your claims and credits from the open ledger.",
+  eStatsT:"Network totals", eStatsP:"Everyone's deposits, credits and rewards, folded from the chain.",
+  eDepT:"Deposited", eCredT:"SAOS credited", eRewT:"Rewards paid",
+  cTitle:"The SAOS currency", cSub:"A currency you can verify line by line. Fixed rules, public state, no administrator can bend it quietly.",
+  cSupply:"Supply", cCap:"Hard cap", cCapSub:"fixed in code", cMint:"Mint state", cRoot:"Ledger root", cRootSub:"sha256 of the folded state",
+  cTechT:"How it is built",
+  cT1T:"Your address comes from your key", cT1P:"An address is a fingerprint of the public key alone. Whoever holds the key owns the address. No registry, no approval.",
+  cT2T:"The contract is code that everyone runs", cT2P:"Supply rules, escrow and balances are enforced by one deterministic engine that runs identically in every browser and node.",
+  cT3T:"Operations are signed, transport cannot forge", cT3P:"Every operation carries the owner's signature. Public relayers move bytes; they cannot change them.",
+  cT4T:"The cap is a law of the engine", cT4P:"21,000,000 SAOS maximum, checked at every mint by every node. Breaking it would need every verifier to agree to lie.",
+  cHoldT:"Top holders", cHoldP:"From the public balances.", cAddr:"Address", cBal:"SAOS",
+  cFeedT:"Ledger activity", cFeedP:"Every signed operation, newest first.",
+  tTitle:"Token factory", tSub:"Deploy a real smart contract: fixed parameters, signed, and verified by every node that reads the chain.",
+  tDepT:"Deploy a token", tDepP:"Choose a symbol, a name and a hard cap. The rules are set at birth and cannot be bent later.",
+  tSym:"Symbol (A-Z, 3 to 8)", tName:"Name", tDec:"Decimals (0-9)", tMax:"Max supply (whole units)", tDepBtn:"Sign deployment",
+  tMintT:"Mint your token", tMintP:"Only the deployer can mint, up to the cap. Everyone can check.",
+  tMSym:"Token", tMTo:"To address (saos1...)", tMAmt:"Amount (whole units)", tMintBtn:"Sign mint",
+  tListT:"Contracts on chain", tListP:"Every token is a signed contract with a public state.",
+  tLSym:"Symbol", tLName:"Name", tLSup:"Supply", tLMax:"Max", tLIss:"Issuer", tLHold:"Holders",
+  nTitle:"Network", nSub:"A validation network that runs on public chains and publishes its own proof of life.",
+  nAtt:"Validations", nAttS:"signed attestations", nCp:"Checkpoints", nCpS:"merkle roots",
+  nAnch:"Anchors", nAnchS:"on public chains", nTest:"Engine self-test", nTestS:"runs on page load",
+  nVerifyT:"Check everything yourself", nVerifyP:"Your browser reads every operation from the public chain, checks every signature, folds the ledger and compares the root with what this site shows. No trust required.",
+  nVerifyBtn:"Verify the ledger now",
+  nFeedT:"Validation feed", nFeedP:"What the network attested, newest first.",
+  nCpsT:"Checkpoints and witnesses", nCpsP:"Each checkpoint is a merkle root over a range of attestations.",
+  nRoot:"Root", nWhen:"When", nSeen:"Seen on",
+  nAnchT:"Recent anchors", nAnchP:"Checkpoints written to public chains as permanent witnesses.",
+  fVerify:"Verify independently", fCurrency:"The currency", fWallet:"Open a wallet",
+  tOk:{ walletBorn:"New wallet born on your device", wiped:"Wallet cleared from memory", backup:"Encrypted backup downloaded",
+    restored:"Wallet restored", signed:"Signed and added to the queue", broadcast:n=>n+" operations broadcast to the chain",
+    copied:"Copied", registered:"Registration signed and queued", needWallet:"Open or restore a wallet first",
+    claimSigned:"Deposit claim signed and queued", offerSigned:"Sell offer signed and queued", cancelSigned:"Cancel signed and queued" },
+  tErr:{ create:"Wallet creation failed: ", import:"Restore failed: ", sign:"Signing failed: ", badAddr:"Not a valid SAOS address (saos1...)",
+    badAmt:"Invalid amount", badPrice:"Invalid price", badCur:"Currency symbol: 2 to 10 capital letters", badRef:"Reference: 6 to 90 characters",
+    noSymbol:"Pick a currency", emptyQueue:"The queue is empty", relayFail:"Broadcast failed: ", noToken:"No token selected", badSym:"Symbol: capital A-Z, 3 to 8 characters" },
+  status:{ registered:"Registered on chain", pendingReg:"Waiting for registration on chain", treasury:"Network treasury" },
+  empty:{ ops:"No operations yet. The first ones will appear here.", offers:"No open offers yet.", mine:"Open a wallet to see your offers.",
+    addrs:"No deposit addresses published yet. They appear here the moment the treasury publishes them.",
+    claims:"No deposits yet. Yours will show up here.", cred:"No credits yet.", holders:"The ledger is being born. Holders will appear here.",
+    tokens:"No token contracts yet. SAOS deploys with the genesis.", cps:"No checkpoints yet.", anch:"No anchors yet.",
+    atts:"No attestations in the mirror yet." },
+  misc:{ chainLive:(b,m)=>"live · block "+b+" · "+m+" min ago", chainDown:"chain: RPC not answering", you:"you", escrow:"escrow",
+    fillOf:"fill", genesisSoon:"ledger genesis: the network is laying it now, numbers appear when it lands",
+    agoNow:"just now", agoMin:n=>n+" min ago", agoH:n=>n+" h ago", agoD:n=>n+" d ago", never:"never",
+    deposited:"deposited", credited:"credited", rewards:"reward", myAddr:"my address", cancel:"cancel", page:"page" },
+},
+he: {
+  brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
+  navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
+  chipLive:"חי על שרשרת ציבורית",
+  heroTop:"הכסף שלך.", heroGrad:"הרשת שלך.", heroBottom:"SAOS.",
+  heroLead:"פתח ארנק חינם בשניות, החזק את המטבע SAOS, סחור בשערי הרשת וממן את הרשת כשכל מטבע נראה בספר פתוח. בלי כתובת-שרת, בלי מתווך: המפתחות שלך לא עוזבים את המכשיר.",
+  ctaWallet:"פתיחת ארנק חינם", ctaExchange:"לבורסה",
+  kSupply:"אספקת SAOS", kSupplySub:"תקרה קבועה 21,000,000", kWallets:"ארנקים בשרשרת", kWalletsSub:"כתובות אישיות",
+  kContracts:"חוזי טוקנים", kContractsSub:"חוזים אמיתיים על השרשרת", kValidations:"אימותי רשת",
+  featTitle:"מה אפשר לעשות כאן", featSub:"הכל רץ מחיבורים ציבוריים. העמוד הזה הוא בעצמו צומת של הרשת.",
+  feat1T:"ארנק חינם", feat1P:"כתובת SAOS אישית משלך בשניות. המפתח נולד במכשיר שלך והכתובת נגזרת ממנו. בלי חשבון, בלי מייל, בלי אישור.",
+  feat2T:"בורסה", feat2P:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות פתוחה עד לסגירת העסקה, וכל מילוי נרשם על השרשרת.",
+  feat3T:"הפקדה ורווחים", feat3P:"ממן את הרשת בכל מטבע רשום, קבל זיכוי ב-SAOS לפי השער הנוכחי, ועקוב אחרי ההפקדה, הזיכוי והתגמולים בספר הפתוח.",
+  feat4T:"הנפקת טוקנים", feat4P:"כל טוקן כאן הוא חוזה חכם אמיתי: כללי אספקה קבועים, פרמטרים חתומים ומצב ציבורי שכל דפדפן יכול לאמת.",
+  trustTitle:"מספרים שאפשר לבדוק", trustSub:"כל מספר בעמוד הזה נקרא חי משרשרת ציבורית. שום דבר לא מועתק מדוחות.",
+  trust1T:"הספר ציבורי", trust1P:"כל הארנקים, היתרות, ההפקדות וההצעות חיים כפעולות חתומות על שרשרת ציבורית שכל אחד יכול לקרוא.",
+  trust2T:"הדפדפן שלך הוא הצומת", trust2P:"העמוד הזה מקפל את הספר בעצמו ומשווה את התוצאה למה שמפורסם. לחיצה אחת, בלי צורך באמון.",
+  trust3T:"החתימות מחליטות", trust3P:"רק מי שמחזיק את המפתח יכול להזיז את היתרה. התעבורה לא יכולה לזייף, וכל צומת בודק מחדש כל חתימה.",
+  trustCta:"תאמת בעצמך",
+  feedTitle:"פעילות אחרונה", feedSub:"פעולות חתומות כפי שהרשת קיפלה אותן.",
+  faqTitle:"שאלות שאנשים שואלים",
+  faq1Q:"איך פותחים ארנק SAOS?", faq1A:"לחץ על פתיחת ארנק חינם ואז על יצירה. המפתח נוצר במכשיר שלך והכתובת נגזרת ממנו. שום דבר לא נשלח לשרת ואין צורך בחשבון.",
+  faq2Q:"מי מחזיק את המפתחות שלי?", faq2A:"רק אתה. המפתחות נוצרים בדפדפן ונשארים בזיכרון. אפשר לשמור גיבוי מוצפן עם סיסמה שאתה בוחר. אין שחזור ואין כתובת-שרת שמחזיקה עותק.",
+  faq3Q:"איך אני בודק את המספרים בעצמי?", faq3A:"כל הספר ציבורי. לחץ על אימות בעמוד הרשת והדפדפן שלך קורא כל פעולה מהשרשרת הציבורית, בודק כל חתימה ומשווה את התוצאה למה שהאתר מציג.",
+  faq4Q:"מה ההפקדות עושות?", faq4A:"ההפקדות מממנות את פיתוח הרשת ומומרות ל-SAOS לפי השער הנוכחי. כל הפקדה, זיכוי ותגמול נרשמים בספר הפתוח. לא נעשה ולא נרמז שום הבטחת רווח.",
+  wTitle:"הארנק שלך", wSub:"כתובת SAOS אישית ששייכת למפתח שעל המכשיר שלך. רושמים אותה פעם אחת וכל הרשת רואה אותה.",
+  wNewT:"יצירת ארנק חדש", wNewP:"מפתח חדש נוצר במחולל האקראי המאובטח של הדפדפן. הוא לא עוזב את זיכרון הלשונית הזו.",
+  wNewBtn:"יצירת ארנק", wNewNote:"רשום את המפתח או שמור את הגיבוי המוצפן. אם הלך לאיבוד, הארנק אבד. אין איפוס.",
+  wImpT:"שחזור מגיבוי", wImpP:"טעינת קובץ גיבוי מוצפן (saos-keystore). הסיסמה פותחת אותו מקומית.", wImpBtn:"בחירת קובץ גיבוי",
+  wAddrT:"הכתובת שלך", copy:"העתקה", wWifT:"המפתח הפרטי שלך (מוצג פעם אחת)",
+  wBackup:"שמירת גיבוי מוצפן", wLock:"מחיקה מהזיכרון",
+  wBalT:"יתרות", wBalP:"כפי שנקפלו מהשרשרת הציבורית.",
+  wNick:"שם תצוגה (רשות)", wRegBtn:"רישום על השרשרת",
+  wSendT:"שליחה", wSendP:"נחתם במכשיר שלך ומשודר כפעולה ציבורית.",
+  wSendSym:"מטבע", wSendTo:"כתובת מקבל (saos1...)", wSendAmt:"כמות", wSendBtn:"חתימת העברה",
+  wQueueT:"תור פעולות חתומות", wQueueP:"חתומות וממתינות. העתק אותן לרשת, או שדר למטה.", wQueueCopy:"העתקת JSON חתום",
+  wRelayT:"שידור", wRelayP:"מפתח של חשבון Steem הוא תעבורה בלבד: הוא לא יכול לשנות את הפעולות שלך. החתימה הפנימית היא הסמכות.",
+  wRelayAcc:"חשבון Steem", wRelayWif:"מפתח posting (WIF)", wRelayBtn:"שידור התור",
+  xTitle:"בורסה", xSub:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתה מבטל.",
+  xRatesT:"שערי הרשת", xRatesP:"שערי ייחוס שמתפרסמים על השרשרת בהחלטת ממשל הרשת.",
+  xPair:"זוג", xPrice:"שער",
+  xRatesNote:"השערים נקבעים בפעולות אוצר חתומות וגלויות לכולם. הם ייחוס: לכל הצעה מחיר משלה.",
+  xOfferT:"הצבת הצעת מכירה", xOfferP:"ה-SAOS שלך עובר לנאמנות ברגע שההצעה נוחתת על השרשרת.",
+  xCur:"המטבע שאתה מקבל", xAmt:"כמות (SAOS)", xPricePer:"מחיר על 1 SAOS", xOfferBtn:"חתימת הצעה",
+  xOfferNote:"סגירת הצד של המטבע נרשמת על ידי אוצר הרשת עם אסמכתת תשלום. שני הצדדים נשארים גלויים על השרשרת.",
+  xBookT:"הצעות פתוחות", xBookP:"SAOS בנאמנות שמחכה לקונים.",
+  xSell:"מוכר", xGet:"אתה משלם", xRemain:"SAOS שנותר", xPrice2:"מחיר / SAOS",
+  xMineT:"ההצעות שלי", xMineP:"פתח ארנק כדי לראות ולנהל את ההצעות שלך כאן.",
+  xFillsT:"מילויים אחרונים", xFillsP:"עסקאות שנסגרו עם אסמכתאות התשלום שלהן על השרשרת.",
+  eTitle:"הפקדה ורווחים", eSub:"ממן את הרשת בכל מטבע רשום. ההפקדה שלך נרשמת על השרשרת, מזוכה ב-SAOS לפי השער הנוכחי, ומלווה בספר הפתוח.",
+  eHowT:"איך זה עובד",
+  eS1T:"פותחים ארנק", eS1P:"חינם, לוקח שניות, ונותן לך את הכתובת האישית שעליה ה-SAOS שלך נוחת.",
+  eS2T:"שולחים לכתובת הפקדה", eS2P:"בחר מטבע למטה, שלח כל סכום, ושמור את אסמכתת ההעברה.",
+  eS3T:"מקבלים זיכוי ועוקבים", eS3P:"הרשת מאמתת את ההפקדה, מזכה SAOS לפי השער, וכל צעד נשאר גלוי על השרשרת.",
+  eHonest:"ההפקדות מממנות את פיתוח הרשת. תגמולים, כשממשל הרשת מאשר אותם, משולמים לארנקי המפקידים ונרשמים בספר הפתוח. שום דבר כאן אינו הבטחת רווח.",
+  eAddrT:"כתובות הפקדה", eAddrP:"מתפרסמות על השרשרת על ידי אוצר הרשת.",
+  eAddrNote:"שלח רק את המטבע שמופיע ליד כל כתובת. אסמכתת ההעברה היא מה שמדביקים בתביעה למטה.",
+  eClaimT:"דיווח על הפקדה", eClaimP:"ספר לרשת מה שלחת. הארנק שלך חותם על התביעה.",
+  eClaimCur:"מטבע", eClaimAmt:"סכום", eClaimRef:"אסמכתת העברה", eClaimBtn:"חתימת תביעה",
+  eMineT:"ההפקדות שלי", eMineP:"התביעות והזיכויים שלך מהספר הפתוח.",
+  eStatsT:"סך הכל ברשת", eStatsP:"ההפקדות, הזיכויים והתגמולים של כולם, מקופלים מהשרשרת.",
+  eDepT:"הופקד", eCredT:"SAOS נזקף", eRewT:"תגמולים ששולמו",
+  cTitle:"מטבע ה-SAOS", cSub:"מטבע שאפשר לאמת שורה שורה. כללים קבועים, מצב ציבורי, אף מנהל לא יכול לכופף אותו בשקט.",
+  cSupply:"אספקה", cCap:"תקרה קבועה", cCapSub:"קבועה בקוד", cMint:"מצב הנפקה", cRoot:"שורש הספר", cRootSub:"sha256 של המצב המקופל",
+  cTechT:"איך הוא בנוי",
+  cT1T:"הכתובת שלך נגזרת מהמפתח שלך", cT1P:"כתובת היא טביעת אצבע של המפתח הציבורי לבדו. מי שמחזיק במפתח הוא הבעלים של הכתובת. בלי רישום, בלי אישור.",
+  cT2T:"החוזה הוא קוד שכולם מריצים", cT2P:"כללי אספקה, נאמנות ויתרות נאכפים על ידי מנוע דטרמיניסטי אחד שרץ זהה בכל דפדפן ובכל צומת.",
+  cT3T:"הפעולות חתומות, התעבורה לא יכולה לזייף", cT3P:"כל פעולה נושאת את חתימת הבעלים. המשדרים הציבוריים מזיזים בתים; הם לא יכולים לשנות אותם.",
+  cT4T:"התקרה היא חוק של המנוע", cT4P:"מקסימום 21,000,000 SAOS, נבדק בכל הנפקה על ידי כל צומת. לשבור את זה ידרוש שכל המאמתים יסכימו לשקר.",
+  cHoldT:"המחזיקים הגדולים", cHoldP:"מהיתרות הציבוריות.", cAddr:"כתובת", cBal:"SAOS",
+  cFeedT:"פעילות הספר", cFeedP:"כל פעולה חתומה, החדשות קודם.",
+  tTitle:"מפעל טוקנים", tSub:"פרוס חוזה חכם אמיתי: פרמטרים קבועים, חתום, ומאומת על ידי כל צומת שקורא את השרשרת.",
+  tDepT:"פריסת טוקן", tDepP:"בחר סמל, שם ותקרה. הכללים נקבעים בלידה ולא ניתן לכופף אותם אחר כך.",
+  tSym:"סמל (A-Z, 3 עד 8)", tName:"שם", tDec:"ספרות עשרוניות (0-9)", tMax:"תקרת אספקה (יחידות שלמות)", tDepBtn:"חתימת פריסה",
+  tMintT:"הנפקת הטוקן שלך", tMintP:"רק הפורס יכול להנפיק, עד התקרה. וכולם יכולים לבדוק.",
+  tMSym:"טוקן", tMTo:"לכתובת (saos1...)", tMAmt:"כמות (יחידות שלמות)", tMintBtn:"חתימת הנפקה",
+  tListT:"חוזים על השרשרת", tListP:"כל טוקן הוא חוזה חתום עם מצב ציבורי.",
+  tLSym:"סמל", tLName:"שם", tLSup:"אספקה", tLMax:"תקרה", tLIss:"מנפיק", tLHold:"מחזיקים",
+  nTitle:"הרשת", nSub:"רשת אימות שרצה על שרשראות ציבוריות ומפרסמת את הוכחת החיים שלה.",
+  nAtt:"אימותים", nAttS:"עדויות חתומות", nCp:"נקודות-ביקורת", nCpS:"שורשי merkle",
+  nAnch:"עוגנים", nAnchS:"על שרשראות ציבוריות", nTest:"בדיקה עצמית של המנוע", nTestS:"רצה בטעינת העמוד",
+  nVerifyT:"תבדוק הכל בעצמך", nVerifyP:"הדפדפן שלך קורא כל פעולה מהשרשרת הציבורית, בודק כל חתימה, מקפל את הספר ומשווה את השורש למה שהאתר מציג. בלי צורך באמון.",
+  nVerifyBtn:"אימות הספר עכשיו",
+  nFeedT:"פיד אימותים", nFeedP:"מה שהרשת העידה, החדש קודם.",
+  nCpsT:"נקודות-ביקורת ועדים", nCpsP:"כל נקודת-ביקורת היא שורש merkle על טווח עדויות.",
+  nRoot:"שורש", nWhen:"מתי", nSeen:"נראה על",
+  nAnchT:"עוגנים אחרונים", nAnchP:"נקודות-ביקורת שנכתבו לשרשראות ציבוריות כעדים קבועים.",
+  fVerify:"אימות עצמאי", fCurrency:"המטבע", fWallet:"פתיחת ארנק",
+  tOk:{ walletBorn:"ארנק חדש נולד במכשיר שלך", wiped:"הארנק נמחק מהזיכרון", backup:"גיבוי מוצפן הורד",
+    restored:"הארנק שוחזר", signed:"נחתם ונוסף לתור", broadcast:n=>n+" פעולות שודרו לשרשרת",
+    copied:"הועתק", registered:"הרישום נחתם והועבר לתור", needWallet:"קודם פתח או שחזר ארנק",
+    claimSigned:"תביעת ההפקדה נחתמה והועברה לתור", offerSigned:"הצעת המכירה נחתמה והועברה לתור", cancelSigned:"הביטול נחתם והועבר לתור" },
+  tErr:{ create:"יצירת הארנק נכשלה: ", import:"שחזור נכשל: ", sign:"החתימה נכשלה: ", badAddr:"כתובת SAOS לא תקינה (saos1...)",
+    badAmt:"כמות לא תקינה", badPrice:"מחיר לא תקין", badCur:"סמל מטבע: 2 עד 10 אותיות גדולות", badRef:"אסמכתה: 6 עד 90 תווים",
+    noSymbol:"בחר מטבע", emptyQueue:"התור ריק", relayFail:"השידור נכשל: ", noToken:"לא נבחר טוקן", badSym:"סמל: אותיות גדולות A-Z, 3 עד 8 תווים" },
+  status:{ registered:"רשום על השרשרת", pendingReg:"ממתין לרישום על השרשרת", treasury:"אוצר הרשת" },
+  empty:{ ops:"אין עדיין פעולות. הראשונות יופיעו כאן.", offers:"אין עדיין הצעות פתוחות.", mine:"פתח ארנק כדי לראות את ההצעות שלך.",
+    addrs:"טרם פורסמו כתובות הפקדה. הן יופיעו כאן ברגע שהאוצר יפרסם אותן.",
+    claims:"אין עדיין הפקדות. שלך תופיע כאן.", cred:"אין עדיין זיכויים.", holders:"הספר בהקמה. מחזיקים יופיעו כאן.",
+    tokens:"אין עדיין חוזי טוקנים. SAOS נפרס עם הג'נזיס.", cps:"אין עדיין נקודות-ביקורת.", anch:"אין עדיין עוגנים.",
+    atts:"אין עדיין עדויות במראה." },
+  misc:{ chainLive:(b,m)=>"חי · בלוק "+b+" · לפני "+m+" דק'", chainDown:"שרשרת: RPC לא עונה", you:"אתה", escrow:"נאמנות",
+    fillOf:"מילוי", genesisSoon:"ג'נזיס הספר: הרשת מניחה אותו עכשיו, המספרים יופיעו כשהוא ינחת",
+    agoNow:"עכשיו", agoMin:n=>"לפני "+n+" דק'", agoH:n=>"לפני "+n+" שע'", agoD:n=>"לפני "+n+" ימים", never:"מעולם",
+    deposited:"הפקדה", credited:"זיכוי", rewards:"תגמול", myAddr:"הכתובת שלי", cancel:"ביטול", page:"עמוד" },
+}};
+
+let LANG = "en";
+const t = (path) => {
+  const walk = (o, parts) => (parts.length ? walk(o?.[parts.shift()], parts) : o);
+  const v = walk(I18N[LANG], path.split("."));
+  return v !== undefined ? v : walk(I18N.en, path.split("."));
+};
+function applyLang() {
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
+  for (const el of document.querySelectorAll("[data-i]")) {
+    const v = t(el.dataset.i);
+    if (typeof v === "string") el.textContent = v;
+  }
+  document.title = LANG === "he"
+    ? "SAOS Network | ארנק קריפטו, בורסת טוקנים ורווחים"
+    : "SAOS Network | Crypto Wallet, Token Exchange and Earn";
+  $("langbtn").textContent = LANG === "he" ? "English" : "עברית";
+  renderAll();
+}
+
+/* ═══════════ tiny helpers ═══════════ */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 function toast(msg, ok = true) {
   const el = $("toast");
   el.textContent = msg;
-  el.className = "show " + (ok ? "ok" : "err");
-  clearTimeout(toastT);
-  toastT = setTimeout(() => (el.className = ""), 2600);
+  el.style.borderColor = ok ? "var(--line2)" : "rgba(239,68,68,.5)";
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 2600);
 }
-async function copyText(text, what) {
-  try {
-    await navigator.clipboard.writeText(text);
-    toast("הועתק ✓ " + (what || ""));
-  } catch {
-    toast("העתקה נכשלה — סמן והעתק ידנית", false);
-  }
+function copyText(txt, what) {
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
+    .then(() => toast(t("tOk.copied") + (what ? ": " + what : "")))
+    .catch(() => toast(txt.slice(0, 60)));
 }
-document.addEventListener("click", (e) => {
-  const b = e.target.closest("[data-copy]");
-  if (b) copyText($(b.dataset.copy).textContent, b.textContent.replace("העתק", "").trim());
-});
+function timeAgo(iso) {
+  if (!iso) return t("misc.never");
+  const m = Math.round((Date.now() - Date.parse(iso)) / 60000);
+  if (m < 1) return t("misc.agoNow");
+  if (m < 60) return t("misc.agoMin")(m);
+  const h = Math.round(m / 60);
+  if (h < 48) return t("misc.agoH")(h);
+  return t("misc.agoD")(Math.round(h / 24));
+}
+$("year").textContent = new Date().getFullYear();
 
-/* ── ניווט hash ── */
-const VIEWS = ["home", "saos", "wallet", "tokens", "network", "anchors", "tools"];
+/* ═══════════ routing ═══════════ */
+const VIEWS = ["home", "wallet", "exchange", "earn", "currency", "tokens", "network"];
 function route() {
   let h = (location.hash || "#home").slice(1);
   if (!VIEWS.includes(h)) h = "home";
   for (const v of VIEWS) $("view-" + v).classList.toggle("on", v === h);
-  document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("on", t.dataset.nav === h));
+  document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("on", el.dataset.nav === h));
   window.scrollTo({ top: 0 });
 }
 window.addEventListener("hashchange", route);
 
-/* ── רקע ארוג — חוטי זהב וסגול ── */
+/* ═══════════ hidden operator access: 5 logo taps ═══════════ */
+(() => {
+  let taps = 0, timer = null;
+  $("brand").addEventListener("click", () => {
+    taps++;
+    clearTimeout(timer);
+    timer = setTimeout(() => (taps = 0), 2600);
+    if (taps >= 5) location.href = "gate.html";
+  });
+})();
+
+/* ═══════════ woven background ═══════════ */
 (function weaveBg() {
   const cv = $("bg"), ctx = cv.getContext("2d");
   let W, H, nodes = [];
-  const N = Math.min(64, Math.floor(innerWidth / 22));
-  function size() {
-    W = cv.width = innerWidth; H = cv.height = innerHeight;
-  }
+  const N = Math.min(56, Math.floor(innerWidth / 24));
+  function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
   function init() {
     size();
     nodes = Array.from({ length: N }, () => ({
@@ -834,7 +920,7 @@ window.addEventListener("hashchange", route);
   requestAnimationFrame(frame);
 })();
 
-/* ── נתונים חיים ── */
+/* ═══════════ live data ═══════════ */
 const FETCH_OPTS = { cache: "no-store" };
 async function jget(url) {
   const r = await fetch(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now(), FETCH_OPTS);
@@ -847,12 +933,12 @@ async function steemRpc(method, params) {
   for (const node of STEEM_NODES) {
     try {
       const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 15000);
+      const tm = setTimeout(() => ctrl.abort(), 15000);
       const r = await fetch(node, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }), signal: ctrl.signal,
       });
-      clearTimeout(t);
+      clearTimeout(tm);
       const j = await r.json();
       if (j.error) throw new Error(j.error.message || "rpc");
       return j.result;
@@ -861,194 +947,242 @@ async function steemRpc(method, params) {
   throw lastErr || new Error("rpc failed");
 }
 
-let MIRROR = null, LIVE = null, STATUS = null;
+let MIRROR = null, LIVE = null;
 async function boot() {
   route();
-
-  // בדיקה עצמית של הפרוטוקול — מוכחת בעליית העמוד
   try {
     const st = await SL.selfTest();
-    const badge = $("selftest-badge");
-    badge.textContent = `בדיקה עצמית ${st.passed}/${st.total} ✓`;
-    badge.classList.toggle("bad", st.passed !== st.total);
-  } catch (e) {
-    $("selftest-badge").textContent = "בדיקה עצמית נכשלה";
+    $("selftest-badge").textContent = st.passed + "/" + st.total + " ✓";
+    $("selftest-badge").classList.toggle("bad", st.passed !== st.total);
+  } catch {
+    $("selftest-badge").textContent = "✗";
     $("selftest-badge").classList.add("bad");
   }
-
-  const jobs = [
+  await Promise.all([
     jget("mirror.json").then((m) => (MIRROR = m)).catch(() => {}),
     jget("saos-live.json").then((l) => (LIVE = l)).catch(() => {}),
-    jget("status.json").then((s) => (STATUS = s)).catch(() => {}),
-  ];
-  await Promise.all(jobs);
-  renderMirror();
-  renderLive();
+  ]);
+  renderAll();
   probeChain();
+  setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 120 * 1000);
 }
-boot();
 
-/* חיות השרשרת — ראש חי מה-Steem הציבורי */
 async function probeChain() {
   try {
     const g = await steemRpc("condenser_api.get_dynamic_global_properties", []);
     const head = Number(g.head_block_number || 0);
-    const age = Date.now() - Date.parse(g.time + "Z");
-    const mins = Math.max(0, Math.round(age / 60000));
-    $("live-txt").textContent = `שרשרת חיה · בלוק ${head.toLocaleString("en")} · לפני ${mins < 1 ? "רגע" : mins + " דק'"}`;
+    const mins = Math.max(0, Math.round((Date.now() - Date.parse(g.time + "Z")) / 60000));
+    $("live-txt").textContent = t("misc.chainLive")(head.toLocaleString("en"), mins);
     $("live-pill").classList.remove("warn");
   } catch {
-    $("live-txt").textContent = "שרשרת: RPC לא נענה";
+    $("live-txt").textContent = t("misc.chainDown");
     $("live-pill").classList.add("warn");
   }
 }
 setInterval(probeChain, 90 * 1000);
 
-function timeAgo(iso) {
-  if (!iso) return "—";
-  const m = Math.round((Date.now() - Date.parse(iso)) / 60000);
-  if (m < 1) return "עכשיו";
-  if (m < 60) return "לפני " + m + " דק'";
-  const h = Math.round(m / 60);
-  if (h < 48) return "לפני " + h + " שע'";
-  return "לפני " + Math.round(h / 24) + " ימים";
-}
-const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+/* ═══════════ rendering ═══════════ */
+function renderAll() { renderMirror(); renderLive(); }
 
-/* ── רינדור המראה (רשת + עוגנים + בית) ── */
 function renderMirror() {
   const m = MIRROR;
-  if (!m) {
-    $("st-att").textContent = $("net-att").textContent = "—";
-    return;
-  }
+  if (!m) return;
   const s = m.stats || {};
   const att = s.attestations ?? 0, cp = s.checkpoints ?? 0;
-  const aSt = (m.anchorLines?.steem || []).length, aZ = (m.anchorLines?.zero || []).length;
+  const anch = ((m.anchorLines?.steem || []).length + (m.anchorLines?.zero || []).length);
   $("st-att").textContent = att.toLocaleString("en");
-  $("st-cp").textContent = cp.toLocaleString("en");
-  $("st-anch").textContent = (aSt + aZ).toLocaleString("en");
-  $("net-att").textContent = att.toLocaleString("en");
-  $("net-cp").textContent = cp.toLocaleString("en");
-  $("net-agents").textContent = (m.agents || []).length;
-  const brainLive = (m.brain || []).filter((b) => b.status === "verified").length;
-  $("net-brain").textContent = brainLive + "/" + (m.brain || []).length;
+  $("st-cp").textContent = cp.toLocaleString("en") + " " + (LANG === "he" ? "נקודות-ביקורת" : "checkpoints");
+  $("n-att").textContent = att.toLocaleString("en");
+  $("n-cp").textContent = cp.toLocaleString("en");
+  $("n-anch").textContent = anch.toLocaleString("en");
 
-  // פיד אימותים — בית + רשת
-  const rows = (m.attestations || []).slice(0, 14).map((a) =>
-    `<tr><td><span class="tag dim mono">#${a.seq}</span></td><td><b>${esc(a.type)}</b></td><td style="color:var(--dim)">${esc(a.claim || "")}</td><td style="white-space:nowrap;color:var(--faint)">${timeAgo(a.at)}</td></tr>`
-  ).join("");
-  $("home-atts").innerHTML = rows || `<tr><td style="color:var(--faint)">אין נתונים במראה</td></tr>`;
-  $("net-atts").innerHTML = rows || `<tr><td style="color:var(--faint)">אין נתונים</td></tr>`;
+  $("n-atts").innerHTML = (m.attestations || []).slice(0, 16).map((a) =>
+    `<div class="op-row"><span class="k">#${a.seq}</span><span style="flex:1;min-width:0;color:var(--dim)"><b style="color:var(--text)">${esc(a.type)}</b> ${esc((a.claim || "").slice(0, 110))}</span><span class="when">${timeAgo(a.at)}</span></div>`
+  ).join("") || `<div class="op-row"><span style="color:var(--faint)">${t("empty.atts")}</span></div>`;
 
-  // סוכנים
-  $("net-agents-tbl").innerHTML = (m.agents || []).map((a) =>
-    `<tr><td><b>${esc(a.name)}</b></td><td style="color:var(--dim)">${esc(a.role || "")}</td><td class="num">${a.attestations ?? 0}</td></tr>`
-  ).join("") || `<tr><td colspan="3">—</td></tr>`;
-
-  // checkpoints + עדים
-  $("net-cps").innerHTML = (m.checkpoints || []).slice(0, 24).map((c) => {
+  $("n-cps").innerHTML = (m.checkpoints || []).slice(0, 20).map((c) => {
     const w = (c.anchoredOn || []).map((x) => `<span class="tag ${x === "steem" ? "green" : "violet"}">${x}</span>`).join(" ");
-    return `<tr><td class="num">#${c.index}</td><td><span class="mono" style="font-size:11px">${esc(String(c.root || "").slice(0, 16))}…</span></td><td style="color:var(--faint);white-space:nowrap">${timeAgo(c.at)}</td><td>${w || '<span class="tag dim">ממתין</span>'}</td></tr>`;
-  }).join("") || `<tr><td colspan="4">—</td></tr>`;
+    return `<tr><td class="num">#${c.index}</td><td><span class="mono" style="font-size:11px">${esc(String(c.root || "").slice(0, 14))}…</span></td><td style="color:var(--faint);white-space:nowrap">${timeAgo(c.at)}</td><td>${w || '<span class="tag">·</span>'}</td></tr>`;
+  }).join("") || `<tr><td colspan="4" style="color:var(--faint)">${t("empty.cps")}</td></tr>`;
 
-  // עוגנים
-  const stLine = (m.anchorLines?.steem || []).map((a) => `
-    <div class="op-row">
-      <span class="k">cp#${a.checkpoint}</span>
-      <span style="flex:1;min-width:0"><span class="mono" style="font-size:11px;color:var(--gold-bright)">${esc(a.txid || "—")}</span></span>
-      <a href="https://steemscan.com/transaction/${esc(a.txid || "")}" target="_blank" rel="noopener" style="font-size:11px">סייר ↗</a>
-      <span class="when">${timeAgo(a.at)}</span>
-    </div>`).join("");
-  $("anchors-steem").innerHTML = stLine || `<div style="color:var(--faint);padding:10px">אין עוגנים במראה</div>`;
-  const zLine = (m.anchorLines?.zero || []).map((a) => `
-    <div class="op-row">
-      <span class="k">cp#${a.checkpoint}</span>
-      <span style="flex:1;min-width:0"><span class="mono" style="font-size:11px;color:var(--gold-bright)">${esc(a.txid || "—")}</span></span>
-      ${a.explorer ? `<a href="${esc(a.explorer)}" target="_blank" rel="noopener" style="font-size:11px">zscan ↗</a>` : ""}
-      <span class="when">${timeAgo(a.at)}</span>
-    </div>`).join("");
-  $("anchors-zero").innerHTML = zLine || `<div style="color:var(--faint);padding:10px">אין עוגנים במראה</div>`;
+  const line = (a, cls) => `<div class="op-row"><span class="k">cp#${a.checkpoint}</span><span style="flex:1;min-width:0"><span class="mono" style="font-size:11px;color:var(--gold-bright)">${esc(a.txid || "")}</span></span><span class="when">${timeAgo(a.at)}</span></div>`;
+  $("n-anch-steem").innerHTML = (m.anchorLines?.steem || []).slice(0, 6).map((a) => line(a)).join("") || `<div class="op-row"><span style="color:var(--faint)">${t("empty.anch")}</span></div>`;
+  $("n-anch-zero").innerHTML = (m.anchorLines?.zero || []).slice(0, 6).map((a) => line(a)).join("") || `<div class="op-row"><span style="color:var(--faint)">${t("empty.anch")}</span></div>`;
 }
 
-/* ── רינדור הספר החי (SAOS v1) ── */
+function fmtSaos(unitsStr, decimals = 3) {
+  try { return SL.fmt(String(unitsStr || "0"), decimals); } catch { return "0"; }
+}
+function nice(n) { try { return Number(n).toLocaleString("en", { maximumFractionDigits: 3 }); } catch { return String(n); } }
+
 function renderLive() {
   const L = LIVE;
-  const state = L?.state;
-  const supply = state?.supply || {};
-  const bal = state?.balances || {};
-  const wallets = state?.wallets || {};
-  const tokens = state?.tokens || {};
+  const state = L?.state || {};
+  const supply = state.supply || {};
+  const bal = state.balances || {};
+  const wallets = state.wallets || {};
+  const tokens = state.tokens || {};
+  const claims = state.claims || {};
+  const offers = state.offers || {};
+  const cfg = state.cfg || { addrs: {}, rates: {} };
+  const ops = L?.ops || [];
+  const genesisDone = Boolean(L?.genesis?.done);
 
   $("st-wal").textContent = Object.keys(wallets).length;
   $("st-tok").textContent = Object.keys(tokens).length;
 
-  const saosSup = supply.SAOS ? SL.fmt(supply.SAOS, tokens.SAOS?.decimals ?? 3) : null;
-  $("saos-sup-v1").textContent = saosSup ? Number(saosSup).toLocaleString("en") : "126,682";
-  // עד הג'נזיס: מציגים את אמת v0 (126,682 — ההטבעה שהג'נזיס של v1 משקף 1:1)
-  $("st-sup").textContent = Number(saosSup || "126682").toLocaleString("en");
+  const saosSupNum = supply.SAOS ? Number(fmtSaos(supply.SAOS, tokens.SAOS?.decimals ?? 3)) : 126682;
+  const supDisplay = Number.isFinite(saosSupNum) ? saosSupNum : 126682;
+  $("st-sup").textContent = nice(supDisplay);
+  $("c-sup").textContent = nice(supDisplay);
+  $("c-mint").textContent = genesisDone ? (LANG === "he" ? "חי" : "live") : (LANG === "he" ? "בהנחה" : "laying");
+  $("c-mint-s").textContent = genesisDone
+    ? (LANG === "he" ? "הג'נזיס נחת על השרשרת" : "genesis landed on chain")
+    : t("misc.genesisSoon");
+  $("c-root").textContent = String(L?.stateRoot || "").slice(0, 24) + "…";
 
-  // מחזיקים
+  /* activity feeds */
+  const opRow = (o) => `<div class="op-row"><span class="k">${esc(o.k)}</span><span style="flex:1;min-width:0;color:var(--dim)">${esc(o.summary || "")}</span><span class="when">${timeAgo(o.at)}</span></div>`;
+  $("home-ops").innerHTML = ops.length
+    ? ops.slice(-12).reverse().map(opRow).join("")
+    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
+  $("c-ops").innerHTML = ops.length
+    ? ops.slice(-16).reverse().map(opRow).join("")
+    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
+
+  /* holders */
   const holders = Object.entries(bal)
     .map(([addr, b]) => [addr, BigInt(b.SAOS || "0")])
     .filter(([, v]) => v > 0n)
     .sort((a, b) => (a[1] < b[1] ? 1 : -1))
     .slice(0, 12);
-  $("saos-holders").innerHTML = holders.length
+  $("c-holders").innerHTML = holders.length
     ? holders.map(([addr, v]) => {
         const w = wallets[addr];
-        return `<tr><td><span class="mono" style="font-size:11px">${esc(addr.slice(0, 14))}…${esc(addr.slice(-6))}</span>${w?.nick ? ` <span class="tag dim">${esc(w.nick)}</span>` : ""}</td><td class="num">${Number(SL.fmt(v, 3)).toLocaleString("en")}</td></tr>`;
+        const isT = state.treasury && addr === state.treasury;
+        return `<tr><td><span class="mono" style="font-size:11px">${esc(addr.slice(0, 13))}…${esc(addr.slice(-5))}</span>${w?.nick ? ` <span class="tag dim">${esc(w.nick)}</span>` : ""}${isT ? ` <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}</td><td class="num">${nice(fmtSaos(v.toString(), 3))}</td></tr>`;
       }).join("")
-    : `<tr><td colspan="2" style="color:var(--faint)">הספר בהקמה — הג'נזיס ממתין לפעימת הלב הקרובה</td></tr>`;
+    : `<tr><td colspan="2" style="color:var(--faint)">${t("empty.holders")}</td></tr>`;
 
-  // פעולות
-  const ops = L?.ops || [];
-  $("saos-ops").innerHTML = ops.length
-    ? ops.slice(-14).reverse().map((o) => `
-        <div class="op-row">
-          <span class="k">${esc(o.k)}</span>
-          <span style="flex:1;color:var(--dim)">${esc(o.summary || "")}</span>
-          <span class="when">${timeAgo(o.at)}</span>
-        </div>`).join("")
-    : `<div style="color:var(--faint);padding:12px">טרם פעולות — הג'נזיס יישתל בפעימת הלב הקרובה</div>`;
-
-  // טבלת טוקנים
+  /* tokens table */
   const holdersOf = (sym) => Object.entries(bal).filter(([, b]) => BigInt(b[sym] || "0") > 0n).length;
   $("tokens-table").innerHTML = Object.keys(tokens).length
-    ? Object.entries(tokens).map(([sym, t]) => `
+    ? Object.entries(tokens).map(([sym, tk]) => `
         <tr>
           <td><b class="mono" style="color:var(--gold-bright)">${esc(sym)}</b></td>
-          <td>${esc(t.name)}</td>
-          <td class="num">${Number(SL.fmt(supply[sym] || "0", t.decimals)).toLocaleString("en")}</td>
-          <td class="num">${Number(SL.fmt(t.maxSupply, t.decimals)).toLocaleString("en")}</td>
-          <td class="num">${t.decimals}</td>
-          <td><span class="mono" style="font-size:10.5px">${esc(String(t.issuer).slice(0, 12))}…</span></td>
+          <td>${esc(tk.name)}</td>
+          <td class="num">${nice(fmtSaos(supply[sym] || "0", tk.decimals))}</td>
+          <td class="num">${nice(fmtSaos(tk.maxSupply, tk.decimals))}</td>
+          <td><span class="mono" style="font-size:10.5px">${esc(String(tk.issuer).slice(0, 11))}…</span></td>
           <td class="num">${holdersOf(sym)}</td>
         </tr>`).join("")
-    : `<tr><td colspan="7" style="color:var(--faint)">טרם חוזים — הג'נזיס של SAOS ייפרש בפעימת הלב הקרובה</td></tr>`;
+    : `<tr><td colspan="6" style="color:var(--faint)">${t("empty.tokens")}</td></tr>`;
+
+  /* exchange: rates */
+  const rates = Object.entries(cfg.rates || {});
+  $("x-rates").innerHTML = rates.length
+    ? rates.map(([pair, r]) => `<tr><td><b class="mono">${esc(pair)}</b></td><td class="num mono">${esc(r.price)}</td></tr>`).join("")
+    : `<tr><td colspan="2" style="color:var(--faint)">${LANG === "he" ? "טרם פורסמו שערים. הם יופיעו כאן ברגע שממשל הרשת יפרסם אותם." : "No rates published yet. They appear here once network governance publishes them."}</td></tr>`;
+
+  /* exchange: order book */
+  const open = Object.entries(offers).filter(([, o]) => o.status === "open");
+  $("x-book").innerHTML = open.length
+    ? open.map(([id, o]) => {
+        const remain = BigInt(o.units) - BigInt(o.filled);
+        const total = (Number(remain) / 1000) * Number(o.price);
+        return `<tr><td><span class="mono" style="font-size:11px">${esc(o.by.slice(0, 11))}…</span></td><td>${esc(o.cur)}</td><td class="num">${nice(fmtSaos(remain.toString(), 3))}</td><td class="num mono">${esc(o.price)}</td></tr>`;
+      }).join("")
+    : `<tr><td colspan="4" style="color:var(--faint)">${t("empty.offers")}</td></tr>`;
+
+  /* exchange: my offers */
+  if (WALLET) {
+    const mine = Object.entries(offers).filter(([, o]) => o.by === WALLET.addr);
+    $("x-mine").innerHTML = mine.length
+      ? mine.reverse().map(([id, o]) => {
+          const remain = BigInt(o.units) - BigInt(o.filled);
+          const statusTag = o.status === "open" ? `<span class="tag green">open</span>` : o.status === "cancelled" ? `<span class="tag">cancelled</span>` : `<span class="tag gold">filled</span>`;
+          return `<div class="op-row"><span class="k">${esc(o.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(remain.toString(), 3))} / ${nice(fmtSaos(o.units, 3))} SAOS @ ${esc(o.price)}</span>${statusTag}${o.status === "open" ? `<button class="copy" data-cancel="${esc(id)}">${esc(t("misc.cancel"))}</button>` : ""}</div>`;
+        }).join("")
+      : `<div class="op-row"><span style="color:var(--faint)">${t("empty.offers")}</span></div>`;
+    for (const b of document.querySelectorAll("[data-cancel]")) {
+      b.addEventListener("click", async () => {
+        const env = await enqueue({ k: "dex.cancel", offerId: b.dataset.cancel });
+        if (env) toast(t("tOk.cancelSigned"));
+      });
+    }
+  } else {
+    $("x-mine").innerHTML = `<div class="op-row"><span style="color:var(--faint)">${t("empty.mine")}</span></div>`;
+  }
+
+  /* exchange: fills */
+  const fills = [];
+  for (const [id, o] of Object.entries(offers)) for (const f of o.fills || []) fills.push({ ...f, offerId: id, cur: o.cur, price: o.price });
+  $("x-fills").innerHTML = fills.length
+    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS → <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
+    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
+
+  /* earn: deposit addresses */
+  const addrs = Object.entries(cfg.addrs || {});
+  $("e-addrs").innerHTML = addrs.length
+    ? addrs.map(([cur, a]) => `
+        <div class="addrbox" style="margin-bottom:10px">
+          <span class="tag gold mono">${esc(cur)}</span>
+          <span class="a" style="font-size:12px">${esc(a.addr)}</span>
+          <button class="copy" data-copy="${esc(a.addr)}">${esc(t("copy"))}</button>
+        </div>${a.memo ? `<div class="hint" style="margin:-6px 0 10px">memo: <span class="mono">${esc(a.memo)}</span></div>` : ""}`).join("")
+    : `<div style="color:var(--faint);font-size:13px;padding:8px 0">${t("empty.addrs")}</div>`;
+  for (const b of document.querySelectorAll("[data-copy]")) b.addEventListener("click", () => copyText(b.dataset.copy, ""));
+
+  /* earn: my claims */
+  if (WALLET) {
+    const mine = Object.entries(claims).filter(([, c]) => c.by === WALLET.addr);
+    $("e-mine").innerHTML = mine.length
+      ? mine.reverse().map(([id, c]) => {
+          const st = c.status === "credited" ? `<span class="tag green">${esc(t("misc.credited"))}</span>` : `<span class="tag amber">${esc(t("misc.deposited"))} · pending</span>`;
+          return `<div class="op-row"><span class="k">${esc(c.cur)}</span><span style="flex:1;color:var(--dim)">${esc(c.amt)} ${esc(c.cur)} · ref <span class="mono" style="font-size:10.5px">${esc(String(c.ref).slice(0, 20))}…</span></span>${st}<span class="when">${timeAgo(null)}</span></div>`;
+        }).join("")
+      : `<div class="op-row"><span style="color:var(--faint)">${t("empty.claims")}</span></div>`;
+  } else {
+    $("e-mine").innerHTML = `<div class="op-row"><span style="color:var(--faint)">${t("empty.claims")}</span></div>`;
+  }
+
+  /* earn: network totals */
+  const credits = ops.filter((o) => o.k === "deposit.credit" && o.d);
+  const byCur = {};
+  for (const o of credits) byCur[o.d.cur] = (byCur[o.d.cur] || 0) + Number(o.d.amt);
+  $("e-total-dep").textContent = Object.keys(byCur).length
+    ? Object.entries(byCur).map(([cur, v]) => `${nice(v)} ${cur}`).join(" · ")
+    : "-";
+  const totalCred = credits.reduce((acc, o) => acc + BigInt(o.d.saos || "0"), 0n);
+  $("e-total-cred").textContent = nice(fmtSaos(totalCred.toString(), 3));
+  $("e-total-rew").textContent = nice(fmtSaos(state.rewardsPaid || "0", 3));
+  $("e-credits").innerHTML = credits.length
+    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} → <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
+    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.cred")}</span></div>`;
 
   renderWalletBalances();
   refreshSendSymbols();
 }
 
-/* ═══════════════ ארנק ═══════════════ */
+/* ═══════════ wallet ═══════════ */
 let WALLET = null; // { priv:Uint8Array, pubSTM, addr }
 let QUEUE = [];
 try { QUEUE = JSON.parse(localStorage.getItem("saos.queue") || "[]"); } catch { QUEUE = []; }
 const saveQueue = () => { localStorage.setItem("saos.queue", JSON.stringify(QUEUE)); renderQueue(); };
-
-addEventListener("beforeunload", () => { WALLET = null; }); // המפתח מת עם הלשונית
+addEventListener("beforeunload", () => { WALLET = null; });
 
 function renderWalletUI() {
   const on = !!WALLET;
-  $("wallet-empty").style.display = on ? "none" : "";
+  $("wallet-empty").style.display = on ? "none" : "grid";
   $("wallet-live").style.display = on ? "" : "none";
   if (on) {
     $("wallet-addr").textContent = WALLET.addr;
     $("wallet-pub").textContent = WALLET.pubSTM;
     const w = LIVE?.state?.wallets?.[WALLET.addr];
-    $("wallet-nick").textContent = w ? (w.nick ? "רשום: " + w.nick : "רשום על השרשרת") : "טרם רשום על השרשרת";
-    $("wallet-reg").innerHTML = w ? '<span style="color:#86efac">✓ רשום</span>' : '<span style="color:var(--amber)">ממתין לרישום</span>';
+    const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
+    $("wallet-reg").innerHTML = w
+      ? `<span class="ok">✓ ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
+      : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
     renderWalletBalances();
     refreshSendSymbols();
   }
@@ -1059,20 +1193,21 @@ function renderWalletBalances() {
   const tokens = LIVE.state.tokens || {};
   const entries = Object.entries(bal).filter(([, v]) => BigInt(v) > 0n);
   $("wallet-bal").textContent = entries.length
-    ? entries.map(([sym, v]) => `${Number(SL.fmt(v, tokens[sym]?.decimals ?? 0)).toLocaleString("en")} ${sym}`).join(" · ")
+    ? entries.map(([sym, v]) => `${nice(fmtSaos(v, tokens[sym]?.decimals ?? 0))} ${sym}`).join(" · ")
     : "0";
 }
 function refreshSendSymbols() {
   const syms = Object.keys(LIVE?.state?.tokens || {});
-  for (const sel of [$("send-symbol"), $("mint-symbol")]) {
-    const cur = sel.value;
-    sel.innerHTML = syms.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("") || `<option value="">— אין טוקנים עדיין —</option>`;
-    if (syms.includes(cur)) sel.value = cur;
-  }
-  // הטבעה: רק טוקנים שהארנק הוא המנפיק שלהם
+  const sel = $("send-symbol");
+  const cur = sel.value;
+  sel.innerHTML = syms.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("") || `<option value="">${LANG === "he" ? "אין עדיין טוקנים" : "no tokens yet"}</option>`;
+  if (syms.includes(cur)) sel.value = cur;
   if (WALLET) {
     const mine = syms.filter((s) => LIVE.state.tokens[s]?.issuer === WALLET.addr);
-    $("mint-symbol").innerHTML = mine.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("") || `<option value="">— אין לך טוקנים שאתה המנפיק שלהם —</option>`;
+    const msel = $("mint-symbol");
+    const mcur = msel.value;
+    msel.innerHTML = mine.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("") || `<option value="">${LANG === "he" ? "אין לך טוקנים שאתה המנפיק שלהם" : "no tokens you issued"}</option>`;
+    if (mine.includes(mcur)) msel.value = mcur;
   }
 }
 
@@ -1080,24 +1215,26 @@ $("btn-new-wallet").addEventListener("click", async () => {
   try {
     const w = await SL.newWallet();
     WALLET = w;
-    $("wif-out").textContent = await C.b58cEncode(0x80, w.priv); // WIF (base58check, version 0x80)
+    $("wif-out").textContent = await C.b58cEncode(0x80, w.priv);
     $("key-reveal").style.display = "";
     renderWalletUI();
-    toast("ארנק חדש נולד בדפדפט שלך ✓");
+    renderLive();
+    toast(t("tOk.walletBorn"));
     location.hash = "#wallet";
-  } catch (e) {
-    toast("יצירת ארנק נכשלה: " + e.message, false);
-  }
+  } catch (e) { toast(t("tErr.create") + e.message, false); }
 });
 $("btn-wipe").addEventListener("click", () => {
   WALLET = null;
   $("key-reveal").style.display = "none";
   $("wif-out").textContent = "";
   renderWalletUI();
-  toast("הארנק נמחק מהזיכרון ✓");
+  renderLive();
+  toast(t("tOk.wiped"));
 });
+$("btn-copy-addr").addEventListener("click", () => { if (WALLET) copyText(WALLET.addr, t("misc.myAddr")); });
+$("btn-copy-wif").addEventListener("click", () => copyText($("wif-out").textContent, "WIF"));
 
-/* גיבוי מוצפן — AES-256-GCM בסיסמת המשתמש */
+/* encrypted backup: AES-256-GCM with a user password */
 async function keystoreEncrypt(priv, pub, password) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
@@ -1119,20 +1256,22 @@ async function keystoreDecrypt(ks, password) {
     { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
   const pt = new Uint8Array(await crypto.subtle.decrypt({ name: "AES-GCM", iv: C.unhex(ks.iv) }, aes, C.unhex(ks.ct)));
   const j = JSON.parse(new TextDecoder().decode(pt));
-  if (j.v !== 1 || typeof j.priv !== "string" || !/^[0-9a-f]{64}$/.test(j.priv)) throw new Error("מבנה גיבוי שגוי");
+  if (j.v !== 1 || typeof j.priv !== "string" || !/^[0-9a-f]{64}$/.test(j.priv)) throw new Error("bad keystore");
   return { priv: C.unhex(j.priv), pubSTM: j.pub };
 }
 $("btn-export-keystore").addEventListener("click", async () => {
   if (!WALLET) return;
-  const pass = prompt("סיסמה לגיבוי המוצפן (AES-256-GCM). אין שחזור בלעדיה — אנחנו לא מחזיקים עותק:");
-  if (!pass || pass.length < 8) { if (pass !== null) toast("סיסמה קצרה מ-8 תווים", false); return; }
+  const pass = prompt(LANG === "he"
+    ? "סיסמה לגיבוי המוצפן (AES-256-GCM). אין שחזור בלעדיה, לא נשמר עותק:"
+    : "Password for the encrypted backup (AES-256-GCM). No recovery without it, no copy is kept:");
+  if (!pass || pass.length < 8) { if (pass !== null) toast(t("tErr.badRef"), false); return; }
   const ks = await keystoreEncrypt(WALLET.priv, WALLET.pubSTM, pass);
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(ks, null, 2)], { type: "application/json" }));
   a.download = "saos-wallet-" + WALLET.addr.slice(5, 15) + ".json";
   a.click();
   URL.revokeObjectURL(a.href);
-  toast("גיבוי מוצפן הורד ✓");
+  toast(t("tOk.backup"));
 });
 $("btn-import-wallet").addEventListener("click", () => $("import-file").click());
 $("import-file").addEventListener("change", async (e) => {
@@ -1140,52 +1279,53 @@ $("import-file").addEventListener("change", async (e) => {
   if (!f) return;
   try {
     const ks = JSON.parse(await f.text());
-    if (ks.format !== "saos-keystore-v1") throw new Error("פורמט לא מוכר");
-    const pass = prompt("סיסמת הגיבוי:");
+    if (ks.format !== "saos-keystore-v1") throw new Error("format");
+    const pass = prompt(LANG === "he" ? "סיסמת הגיבוי:" : "Backup password:");
     if (!pass) return;
     const { priv, pubSTM } = await keystoreDecrypt(ks, pass);
     WALLET = { priv, pubSTM, addr: await SL.addressFromPubSTM(pubSTM) };
     $("key-reveal").style.display = "none";
     renderWalletUI();
-    toast("הארנק שוחזר ✓");
+    renderLive();
+    toast(t("tOk.restored"));
   } catch (err) {
-    toast("שחזור נכשל: " + (err.message || "סיסמה שגויה?"), false);
+    toast(t("tErr.import") + (err.message === "format" ? "format" : err.message || ""), false);
   }
   e.target.value = "";
 });
 
-/* ── חתימת פעולות → תור ── */
+/* ═══════════ signing into the queue ═══════════ */
 async function enqueue(fields) {
-  if (!WALLET) { toast("קודם צור או שחזר ארנק", false); location.hash = "#wallet"; return null; }
+  if (!WALLET) { toast(t("tOk.needWallet"), false); location.hash = "#wallet"; return null; }
   try {
     const env = await SL.buildOp(WALLET.priv, WALLET.pubSTM, fields);
     QUEUE.push(env);
     saveQueue();
     return env;
   } catch (e) {
-    toast("חתימה נכשלה: " + e.message, false);
+    toast(t("tErr.sign") + e.message, false);
     return null;
   }
 }
 function renderQueue() {
   $("wallet-queue").textContent = QUEUE.length;
   $("queue-list").innerHTML = QUEUE.length
-    ? QUEUE.map((env, i) => `
-        <div class="op-row">
-          <span class="k">${esc(env.k)}</span>
-          <span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span>
-          <button class="cbtn" data-qi="${i}">הסר</button>
-        </div>`).join("")
-    : `<div style="color:var(--faint);padding:12px">התור ריק</div>`;
-  document.querySelectorAll("[data-qi]").forEach((b) =>
-    b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); }));
+    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">✕</button></div>`).join("")
+    : `<div class="op-row"><span style="color:var(--faint)">${LANG === "he" ? "התור ריק" : "the queue is empty"}</span></div>`;
+  for (const b of document.querySelectorAll("[data-qi]")) {
+    b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); });
+  }
 }
 function queueSummary(env) {
-  if (env.k === "wallet.create") return "רישום ארנק" + (env.nick ? ` "${env.nick}"` : "");
-  if (env.k === "token.deploy") return `פריסת ${env.symbol} (תקרה ${Number(env.maxSupply).toLocaleString("en")})`;
-  if (env.k === "token.mint") return `הטבעת ${Number(env.amount).toLocaleString("en")} ${env.symbol}`;
-  if (env.k === "token.transfer") return `${Number(env.amount).toLocaleString("en")} ${env.symbol} → ${String(env.to).slice(0, 12)}…`;
-  if (env.k === "token.burn") return `שריפת ${Number(env.amount).toLocaleString("en")} ${env.symbol}`;
+  const n = (x) => nice(Number(x || 0));
+  if (env.k === "wallet.create") return (LANG === "he" ? "רישום ארנק" : "wallet registration") + (env.nick ? ` "${env.nick}"` : "");
+  if (env.k === "token.deploy") return `${env.symbol} (cap ${n(env.maxSupply)})`;
+  if (env.k === "token.mint") return `${n(env.amount)} ${env.symbol}`;
+  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} → ${String(env.to).slice(0, 10)}…`;
+  if (env.k === "token.burn") return `${n(env.amount)} ${env.symbol}`;
+  if (env.k === "deposit.claim") return `${env.amt} ${env.cur}`;
+  if (env.k === "dex.offer") return `${n(env.units)} SAOS @ ${env.price} ${env.cur}`;
+  if (env.k === "dex.cancel") return env.offerId;
   return env.id;
 }
 $("btn-register").addEventListener("click", async () => {
@@ -1193,19 +1333,19 @@ $("btn-register").addEventListener("click", async () => {
   const fields = { k: "wallet.create" };
   if (nick) fields.nick = nick;
   const env = await enqueue(fields);
-  if (env) toast("רישום חתום הועבר לתור ✓ שדר כדי להפוך אותו לחי");
+  if (env) toast(t("tOk.registered"));
 });
 $("btn-send").addEventListener("click", async () => {
   const symbol = $("send-symbol").value;
   const to = $("send-to").value.trim();
   const amount = $("send-amount").value.trim();
-  if (!symbol) { toast("בחר טוקן", false); return; }
-  if (!SL.ADDR_RE.test(to)) { toast("כתובת מקבל לא תקינה (saos1…)", false); return; }
+  if (!symbol) { toast(t("tErr.noSymbol"), false); return; }
+  if (!SL.ADDR_RE.test(to)) { toast(t("tErr.badAddr"), false); return; }
   const dec = LIVE?.state?.tokens?.[symbol]?.decimals ?? 0;
   const units = toUnits(amount, dec);
-  if (units === null) { toast("כמות לא תקינה", false); return; }
+  if (units === null) { toast(t("tErr.badAmt"), false); return; }
   const env = await enqueue({ k: "token.transfer", symbol, to, amount: units });
-  if (env) { toast("העברה חתומה הועברה לתור ✓"); $("send-to").value = ""; $("send-amount").value = ""; }
+  if (env) { toast(t("tOk.signed")); $("send-to").value = ""; $("send-amount").value = ""; }
 });
 function toUnits(amount, decimals) {
   const m = /^(\d+)(?:\.(\d{1,9}))?$/.exec(String(amount || "").trim());
@@ -1218,46 +1358,68 @@ function toUnits(amount, decimals) {
 $("btn-deploy").addEventListener("click", async () => {
   const symbol = $("tk-symbol").value.trim().toUpperCase();
   const name = $("tk-name").value.trim();
-  const decimals = Number($("tk-decimals").value);
+  const decimals = Number($("tk-dec").value);
   const max = String($("tk-max").value).trim();
-  if (!/^[A-Z][A-Z0-9]{2,7}$/.test(symbol)) { toast("סמל לא תקין (A-Z, 3–8)", false); return; }
-  if (name.length < 1) { toast("הזן שם", false); return; }
-  if (!Number.isInteger(decimals) || decimals < 0 || decimals > 9) { toast("דיוק 0–9", false); return; }
-  if (!/^\d{1,16}$/.test(max) || BigInt(max) <= 0n || BigInt(max) > 10n ** 15n) { toast("תקרה לא תקינה", false); return; }
+  if (!/^[A-Z][A-Z0-9]{2,7}$/.test(symbol)) { toast(t("tErr.badSym"), false); return; }
+  if (name.length < 1) { toast(t("tErr.noSymbol"), false); return; }
+  if (!Number.isInteger(decimals) || decimals < 0 || decimals > 9) { toast(t("tErr.badAmt"), false); return; }
+  if (!/^\d{1,16}$/.test(max) || BigInt(max) <= 0n || BigInt(max) > 10n ** 15n) { toast(t("tErr.badAmt"), false); return; }
   const env = await enqueue({ k: "token.deploy", symbol, name, decimals, maxSupply: max });
-  if (env) { toast(`החוזה של ${symbol} חתום והועבר לתור ✓`); $("tk-symbol").value = ""; $("tk-name").value = ""; }
+  if (env) { toast(t("tOk.signed")); $("tk-symbol").value = ""; $("tk-name").value = ""; }
 });
 $("btn-mint").addEventListener("click", async () => {
   const symbol = $("mint-symbol").value;
   const to = $("mint-to").value.trim();
   const amount = String($("mint-amount").value).trim();
-  if (!symbol) { toast("אין טוקן להטבעה — אתה המנפיק?", false); return; }
-  if (!SL.ADDR_RE.test(to)) { toast("כתובת לא תקינה", false); return; }
-  if (!/^\d{1,18}$/.test(amount) || /^0+$/.test(amount)) { toast("כמות לא תקינה (שלמים)", false); return; }
+  if (!symbol) { toast(t("tErr.noToken"), false); return; }
+  if (!SL.ADDR_RE.test(to)) { toast(t("tErr.badAddr"), false); return; }
+  if (!/^\d{1,18}$/.test(amount) || /^0+$/.test(amount)) { toast(t("tErr.badAmt"), false); return; }
   const env = await enqueue({ k: "token.mint", symbol, to, amount });
-  if (env) toast("הטבעה חתומה הועברה לתור ✓");
+  if (env) toast(t("tOk.signed"));
 });
 $("btn-copy-queue").addEventListener("click", () => {
-  if (!QUEUE.length) { toast("התור ריק", false); return; }
-  copyText(JSON.stringify(QUEUE, null, 2), "JSON חתום");
+  if (!QUEUE.length) { toast(t("tErr.emptyQueue"), false); return; }
+  copyText(JSON.stringify(QUEUE, null, 2), "JSON");
 });
 
-/* ── שידור ישיר (מפתח posting של חשבון Steem כלשהו — תעבורה בלבד) ── */
+/* ═══════════ exchange + earn actions ═══════════ */
+$("btn-offer").addEventListener("click", async () => {
+  const cur = $("off-cur").value.trim().toUpperCase();
+  const amt = $("off-amt").value.trim();
+  const price = $("off-price").value.trim();
+  if (!/^[A-Z]{2,10}$/.test(cur)) { toast(t("tErr.badCur"), false); return; }
+  if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(price) || /^0+(\.0+)?$/.test(price)) { toast(t("tErr.badPrice"), false); return; }
+  const units = toUnits(amt, 3);
+  if (units === null) { toast(t("tErr.badAmt"), false); return; }
+  const env = await enqueue({ k: "dex.offer", cur, units, price });
+  if (env) { toast(t("tOk.offerSigned")); $("off-amt").value = ""; }
+});
+$("btn-claim").addEventListener("click", async () => {
+  const cur = $("cl-cur").value.trim().toUpperCase();
+  const amt = $("cl-amt").value.trim();
+  const ref = $("cl-ref").value.trim();
+  if (!/^[A-Z]{2,10}$/.test(cur)) { toast(t("tErr.badCur"), false); return; }
+  if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(amt) || /^0+(\.0+)?$/.test(amt)) { toast(t("tErr.badAmt"), false); return; }
+  if (!/^[\w :.\-\/+=]{6,90}$/.test(ref)) { toast(t("tErr.badRef"), false); return; }
+  const env = await enqueue({ k: "deposit.claim", cur, amt, ref });
+  if (env) { toast(t("tOk.claimSigned")); $("cl-ref").value = ""; }
+});
+
+/* ═══════════ broadcast (any Steem account as transport) ═══════════ */
 $("btn-relay-all").addEventListener("click", async () => {
   const account = $("relay-account").value.trim().toLowerCase();
   const wif = $("relay-wif").value.trim();
   const out = $("relay-result");
-  if (!QUEUE.length) { toast("התור ריק — אין מה לשדר", false); return; }
-  if (!/^[a-z0-9.-]{3,24}$/.test(account)) { toast("חשבון Steem לא תקין", false); return; }
-  if (!wif) { toast("הדבק WIF (posting)", false); return; }
-  out.textContent = "משדר…";
+  if (!QUEUE.length) { toast(t("tErr.emptyQueue"), false); return; }
+  if (!/^[a-z0-9.-]{3,24}$/.test(account)) { toast(t("tErr.badCur"), false); return; }
+  if (!wif) { toast(t("tErr.badRef"), false); return; }
+  out.textContent = "...";
   try {
     const priv = await C.wifToPriv(wif);
     const pub = await C.pubToSTM(C.privToPubBytes(priv));
-    // אימות שהמפתח אכן של החשבון — השרשרת היא השופט
     const acc = await steemRpc("condenser_api.get_accounts", [[account]]);
     const postingPub = acc?.[0]?.posting?.key_auths?.[0]?.[0];
-    if (pub !== postingPub) throw new Error("המפתח אינו מפתח ה-posting של החשבון");
+    if (pub !== postingPub) throw new Error(LANG === "he" ? "המפתח אינו מפתח ה-posting של החשבון" : "key is not a posting key of this account");
     let sent = 0;
     for (const env of QUEUE) {
       const op = ["custom_json", {
@@ -1269,25 +1431,25 @@ $("btn-relay-all").addEventListener("click", async () => {
       const signed = await C.buildSignedTx([op], priv, getProps, getBlockHeader);
       await steemRpc("condenser_api.broadcast_transaction", [signed]);
       sent++;
-      await new Promise((r) => setTimeout(r, 700)); // נשימה בין שידורים
+      await new Promise((r) => setTimeout(r, 700));
     }
     QUEUE = [];
     saveQueue();
-    out.textContent = `שודרו ${sent} פעולות ✓`;
-    toast(`שודרו ${sent} פעולות לשרשרת ✓`);
+    out.textContent = "✓ " + t("tOk.broadcast")(sent);
+    toast(t("tOk.broadcast")(sent));
     setTimeout(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 15000);
   } catch (e) {
-    out.textContent = "נכשל: " + (e.message || "").slice(0, 80);
-    toast("שידור נכשל: " + (e.message || "").slice(0, 90), false);
+    out.textContent = "✗ " + (e.message || "").slice(0, 90);
+    toast(t("tErr.relayFail") + (e.message || "").slice(0, 80), false);
   } finally {
-    $("relay-wif").value = ""; // המפתח נמחק מיד — תעבורה בלבד
+    $("relay-wif").value = ""; // transport key wiped immediately
   }
 });
 
-/* ── אימות עצמאי: קריאת הספר מהשרשרת וקיפול מחדש ── */
+/* ═══════════ independent verification: fold the chain yourself ═══════════ */
 $("btn-verify-chain").addEventListener("click", async () => {
   const out = $("verify-chain-result");
-  out.textContent = "קורא את השרשרת הציבורית…";
+  out.textContent = LANG === "he" ? "קורא את השרשרת הציבורית…" : "reading the public chain...";
   out.style.color = "var(--dim)";
   try {
     const accounts = ["cashmachine", "headcorner"];
@@ -1304,11 +1466,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
           if (!op || op[0] !== "custom_json") continue;
           const body = op[1];
           if (body?.id !== SL.OP_ID) continue;
-          try {
-            const env = JSON.parse(String(body.json || "{}"));
-            env.txid = entry.trx_id; env.at = null;
-            envelopes.push(env);
-          } catch { /* ג'וסון שבור — הקיפול ידחה אותו בכנות */ }
+          try { envelopes.push(JSON.parse(String(body.json || "{}"))); } catch { /* broken json, the fold rejects it honestly */ }
         }
         if (oldest === Infinity || oldest <= 1) break;
         start = Math.max(1, oldest - 1);
@@ -1317,21 +1475,43 @@ $("btn-verify-chain").addEventListener("click", async () => {
     const res = await SL.fold(envelopes);
     const published = LIVE?.stateRoot || null;
     if (envelopes.length === 0) {
-      out.textContent = "אין עדיין פעולות על השרשרת — הג'נזיס יישתל בפעימת הלב הקרובה";
+      out.textContent = LANG === "he"
+        ? "אין עדיין פעולות על השרשרת. הג'נזיס ייחת בפעימת הרשת הקרובה."
+        : "No operations on the chain yet. The genesis lands with the next network beat.";
       out.style.color = "var(--amber)";
       return;
     }
     const match = published === res.stateRoot;
-    out.innerHTML = `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · stateRoot <span class="mono">${res.stateRoot.slice(0, 16)}…</span> ${match ? "= מתאים למפורסם ✓" : "≠ שונה מהמפורסם!"}`;
+    out.innerHTML = (LANG === "he"
+      ? `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · שורש <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `
+      : `Read ${envelopes.length} operations · ${res.valid} valid · root <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `)
+      + (match
+        ? (LANG === "he" ? "= תואם למפורסם ✓" : "= matches the published root ✓")
+        : (LANG === "he" ? "≠ שונה מהמפורסם!" : "≠ differs from the published root!"));
     out.style.color = match ? "#86efac" : "#fca5a5";
-    if (!match && published) toast("שורש שונה מהמפורסם — המראה מיושנת או הספר שונה", false);
+    if (!match && published) toast(LANG === "he" ? "השורש שונה מהמפורסם" : "root differs from published", false);
   } catch (e) {
-    out.textContent = "אימות נכשל: " + (e.message || "").slice(0, 90);
+    out.textContent = (LANG === "he" ? "האימות נכשל: " : "verification failed: ") + (e.message || "").slice(0, 90);
     out.style.color = "#fca5a5";
   }
 });
 
+/* ═══════════ language ═══════════ */
+$("langbtn").addEventListener("click", () => {
+  LANG = LANG === "he" ? "en" : "he";
+  try { localStorage.setItem("saos.lang", LANG); } catch {}
+  applyLang();
+});
+(() => {
+  let saved = null;
+  try { saved = localStorage.getItem("saos.lang"); } catch {}
+  if (saved === "he" || saved === "en") LANG = saved;
+  else if (/^he/i.test(navigator.language || "")) LANG = "he";
+})();
+
 renderQueue();
+applyLang();
+boot();
 </script>
 </body>
 </html>
