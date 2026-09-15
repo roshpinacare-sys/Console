@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAOS · שער המפעיל — The Operator Gate</title>
-<meta name="description" content="השער הריבוני של THE WEAVE: התחברות עם המפתח הפרטי של המפעיל, ישירות מול השרשרת הציבורית. המפתח לעולם לא עוזב את הדפדפן. רשות posting בלבד — אפס סיכון הון.">
+<title>SAOS · שער המפעיל · Operator Gate</title>
+<meta name="description" content="כניסת המפעיל לרשת SAOS. המפתח לעולם לא עוזב את הדפדפן. רשות posting בלבד.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
 <style>
@@ -60,7 +60,6 @@ button{cursor:pointer;font-family:var(--sans)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px;vertical-align:0}
 .dot.g{background:var(--green);box-shadow:0 0 8px var(--green)}
 .dot.y{background:var(--yellow);box-shadow:0 0 8px var(--yellow)}
-.dot.r{background:var(--red);box-shadow:0 0 8px var(--red)}
 .cmds{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .cmd{background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:13px;text-align:right;transition:border-color .15s,background .15s;min-height:64px}
 .cmd:hover:not(:disabled){border-color:var(--gold-dim);background:#1a1a1f}
@@ -93,11 +92,15 @@ body.state-locked .locked-only{display:block}
 body.state-unlocked .unlocked-only{display:block}
 .gate-visual{display:flex;align-items:center;justify-content:center;margin-bottom:8px}
 .gate-visual svg{opacity:.9}
-.hidden{display:none!important}
 .copy-btn{background:none;border:1px solid var(--border2);color:var(--mut);border-radius:6px;padding:2px 9px;font-size:11px;font-family:var(--sans)}
 .copy-btn:hover{border-color:var(--gold-dim);color:var(--gold)}
 .toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:var(--panel);border:1px solid var(--gold-dim);color:var(--tx);border-radius:10px;padding:10px 18px;font-size:13.5px;z-index:100;opacity:0;transition:opacity .25s;pointer-events:none}
 .toast.show{opacity:1}
+.srow{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--border);font-size:12.5px;flex-wrap:wrap}
+.srow:last-child{border-bottom:none}
+.srow .k{font-family:var(--mono);font-size:11px;color:var(--purple);border:1px solid rgba(167,139,250,.3);border-radius:6px;padding:1px 7px;white-space:nowrap}
+.srow .when{color:var(--dim);font-size:11px;margin-inline-start:auto}
+.srow span{min-width:0;overflow-wrap:anywhere}
 @media(max-width:640px){
   .card{padding:20px 16px}
   main{padding:24px 0 44px}
@@ -112,7 +115,7 @@ body.state-unlocked .unlocked-only{display:block}
     <svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><path d="M12 7v3M12 11v3M12 15v3" stroke="#a78bfa" stroke-width="1.6" stroke-linecap="round"/></svg>
     <div>
       <h1>שער המפעיל <span style="color:var(--dim);font-weight:400;font-size:13px">Operator Gate</span></h1>
-      <div class="sub">THE WEAVE · כניסה ריבונית לרשת — מכל דפדפן, בלי תלות בשום סביבה</div>
+      <div class="sub">SAOS · כניסה ריבונית לרשת, מכל דפדפן, בלי תלות בשום סביבה</div>
     </div>
     <span class="badge" style="margin-inline-start:auto">רשות posting בלבד · אפס סיכון הון</span>
   </div>
@@ -131,23 +134,23 @@ body.state-unlocked .unlocked-only{display:block}
             <circle cx="12" cy="15.5" r="1.6" fill="#d4af37"/>
           </svg>
         </div>
-        <h2>כניסה עם המפתח הפרטי <span class="en">— connect with your key</span></h2>
+        <h2>כניסה עם המפתח הפרטי <span class="en">· connect with your key</span></h2>
         <div class="field">
           <label for="acc">חשבון Steem</label>
           <input type="text" id="acc" value="headcorner" autocomplete="off" spellcheck="false">
-          <div class="hint">החשבון הראשי של המפעיל — הרשת מזהה אותו מול המפתחות שבשרשרת</div>
+          <div class="hint">החשבון הראשי של המפעיל. הרשת מזהה אותו מול המפתחות שבשרשרת.</div>
         </div>
         <div class="field">
-          <label for="sec">סיסמת-האב או מפתח WIF <span style="color:var(--dim)">(posting)</span></label>
+          <label for="sec">סיסמת-אב או מפתח WIF <span style="color:var(--dim)">(posting)</span></label>
           <input type="password" id="sec" placeholder="P5… / 5…" autocomplete="off" spellcheck="false">
-          <div class="hint">המפתח נשאר בזיכרון הדפדפן בלבד — גזירה, חתימה ושידור קורים כאן, מקומית. שום דבר לא נשלח לשרת.</div>
+          <div class="hint">המפתח נשאר בזיכרון הדפדפן בלבד. גזירה, חתימה ושידור קורים כאן, מקומית. שום דבר לא נשלח לשרת.</div>
         </div>
         <button class="btn-main" id="connectBtn">התחבר לרשת</button>
         <div class="status" id="lockStatus" role="status" aria-live="polite"></div>
         <div class="roles" id="roleChips" aria-hidden="true"></div>
         <div class="sec-note">
           השער מאמת את המפתח מול <b>השרשרת הציבורית</b> (RPC גלוי): נגזרים המפתחות הציבוריים של כל ארבעת התפקידים ומושווים לרשומות החשבון.
-          פקודות הרשת נחתמות במפתח ה-posting ומשודרות כ-custom_json חינמי — <b>השרשרת עצמה</b> מאמתת את החתימה ואוסרת על המפתח הזה להזיז כסף.
+          פקודות הרשת נחתמות במפתח ה-posting ומשודרות כ-custom_json חינמי. <b>השרשרת עצמה</b> מאמתת את החתימה ואוסרת על המפתח הזה להזיז כסף.
         </div>
       </div>
     </section>
@@ -156,47 +159,129 @@ body.state-unlocked .unlocked-only{display:block}
     <section class="unlocked-only">
 
       <div class="card">
-        <h2><span class="dot g"></span>מחובר <span class="en">— session</span></h2>
-        <div class="kv"><span class="k">חשבון</span><span class="v" id="whoAcc">—</span></div>
-        <div class="kv"><span class="k">מפתח חותם</span><span class="v" id="whoPub">—</span></div>
-        <div class="kv"><span class="k">תפקידים שאומתו מול השרשרת</span><span class="v" id="whoRoles">—</span></div>
+        <h2><span class="dot g"></span>מחובר <span class="en">· session</span></h2>
+        <div class="kv"><span class="k">חשבון</span><span class="v" id="whoAcc">·</span></div>
+        <div class="kv"><span class="k">מפתח חותם</span><span class="v" id="whoPub">·</span></div>
+        <div class="kv"><span class="k">תפקידים שאומתו מול השרשרת</span><span class="v" id="whoRoles">·</span></div>
         <div style="margin-top:14px"><button class="copy-btn" id="lockBtn">נתק ומחק מהזיכרון</button></div>
       </div>
 
       <div class="card">
-        <h2>מצב הרשת עכשיו <span class="en">— live from the public chain</span></h2>
-        <div class="kv"><span class="k">checkpoint אחרון</span><span class="v" id="netCp">—</span></div>
-        <div class="kv"><span class="k">אימותים בספר</span><span class="v" id="netAtt">—</span></div>
-        <div class="kv"><span class="k">טריות העד החי</span><span class="v" id="netFresh">—</span></div>
-        <div class="kv"><span class="k">שורש אחרון</span><span class="v" id="netRoot">—</span></div>
+        <h2>מצב הרשת עכשיו <span class="en">· live from the public chain</span></h2>
+        <div class="kv"><span class="k">checkpoint אחרון</span><span class="v" id="netCp">·</span></div>
+        <div class="kv"><span class="k">אימותים בספר</span><span class="v" id="netAtt">·</span></div>
+        <div class="kv"><span class="k">טריות העד החי</span><span class="v" id="netFresh">·</span></div>
+        <div class="kv"><span class="k">שורש אחרון</span><span class="v" id="netRoot">·</span></div>
       </div>
 
       <div class="card">
-        <h2>פקודות רשת <span class="en">— signed commands to THE WEAVE</span></h2>
+        <h2>פקודות רשת <span class="en">· signed commands to the network</span></h2>
         <div class="cmds">
           <button class="cmd" data-cmd="ping"><b>איתות נוכחות</b><span>רישום חתום בספר</span><span class="en-t">ping</span></button>
           <button class="cmd" data-cmd="beat"><b>פעימה עכשיו</b><span>הלב יוצא מהמחזור</span><span class="en-t">beat</span></button>
           <button class="cmd" data-cmd="anchor"><b>עוגן עכשיו</b><span>קווי העדות לשרשרת</span><span class="en-t">anchor</span></button>
-          <button class="cmd" data-cmd="console"><b>רענון קונסולה</b><span>פרסום המשואה הציבורית</span><span class="en-t">console</span></button>
+          <button class="cmd" data-cmd="console"><b>רענון אתר</b><span>פרסום נכסי הקונסולה</span><span class="en-t">console</span></button>
         </div>
         <div style="margin-top:14px;padding:13px;background:var(--panel2);border:1px solid var(--border2);border-radius:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <span style="font-size:14px"><b>מנוע הגילוי הריבוני</b> — גילוי תוכניות בדפדפן, חתום לשרשרת ומשוחזר בענן</span>
+          <span style="font-size:14px"><b>מנוע הגילוי הריבוני</b> · גילוי תוכניות בדפדפן, חתום לשרשרת ומשוחזר בענן</span>
           <a href="acid.html" style="margin-inline-start:auto;font-size:13px">פתח את המנוע ←</a>
         </div>
         <div class="field" style="margin-top:14px">
-          <label for="note">הערה לפקודה (רשום — מועגן בשרשרת)</label>
+          <label for="note">הערה לפקודה (רשות, מועגן בשרשרת)</label>
           <textarea id="note" rows="2" maxlength="180" placeholder="רשום מהלב…"></textarea>
         </div>
         <div class="result" id="cmdResult"></div>
         <div class="sec-note">
-          כל פקודה נחתמת ומשודרת לשרשרת הציבורית מהחשבון שלך. הלב הענני של הרשת קורא אותה מהשרשרת, מאמת את החתימה (השרשרת כבר עשתה זאת בהכללה לבלוק) ומבצע.
-          ההיסטוריה של השרשרת היא הקבלה — אין דרך לזייף פקודה מהחשבון שלך.
+          כל פקודה נחתמת ומשודרת לשרשרת הציבורית מהחשבון שלך. הלב הענני של הרשת קורא אותה מהשרשרת, מאמת את החתימה ומבצע.
+          ההיסטוריה של השרשרת היא הקבלה, אין דרך לזייף פקודה מהחשבון שלך.
         </div>
       </div>
 
+      <!-- ═══════════ פאנל המטבע: הוראות האוצר ═══════════ -->
       <div class="card">
-        <h2>היסטוריית פקודות <span class="en">— your on-chain command log</span></h2>
+        <h2>פאנל המטבע <span class="en">· treasury operations, signed by the cloud treasury key</span></h2>
+        <p style="font-size:13px;color:var(--mut);margin-bottom:16px">
+          הפקודות שלהלן נחתמות כאן במפתח ה-posting שלך ומשודרות לערוץ הפקודות.
+          הלב בונה מהן פעולת SAOS חתומה במפתח האוצר (שבענן בלבד) ומשדר לשרשרת. משם כל צומת מקפל ומאמת.
+          הפקודות יתבצעו רק אחרי שהג'נזיס של הספר החי הושלם (אחרת הן ממתינות בכנות וחוזרות בפעימה הבאה).
+        </p>
+
+        <h2 style="font-size:14px;color:var(--tx)">פרסום כתובת הפקדה <span class="en" style="font-size:11px">saos.addr</span></h2>
+        <div class="grid2">
+          <div class="field"><label for="ad-cur">מטבע (2-10 אותיות גדולות)</label><input type="text" id="ad-cur" placeholder="USD" maxlength="10"></div>
+          <div class="field"><label for="ad-addr">כתובת הפקדה</label><input type="text" id="ad-addr" placeholder="כתובת לקבלת המטבע"></div>
+        </div>
+        <div class="field"><label for="ad-memo">מזהה נוסף / memo (רשות)</label><input type="text" id="ad-memo" maxlength="80"></div>
+        <button class="btn-main" data-saos="addr" style="margin-bottom:26px">שדר פרסום כתובת</button>
+
+        <h2 style="font-size:14px;color:var(--tx)">קביעת שער <span class="en" style="font-size:11px">saos.rate</span></h2>
+        <div class="grid2">
+          <div class="field"><label for="rt-pair">זוג (למשל SAOS/USD)</label><input type="text" id="rt-pair" placeholder="SAOS/USD"></div>
+          <div class="field"><label for="rt-price">מחיר (במטבע השני על 1 SAOS)</label><input type="text" id="rt-price" placeholder="0.001"></div>
+        </div>
+        <button class="btn-main" data-saos="rate" style="margin-bottom:26px">שדר קביעת שער</button>
+
+        <h2 style="font-size:14px;color:var(--tx)">זיכוי הפקדה <span class="en" style="font-size:11px">saos.credit</span></h2>
+        <div class="grid2">
+          <div class="field"><label for="cr-to">כתובת המפקיד (saos1…)</label><input type="text" id="cr-to" placeholder="saos1…"></div>
+          <div class="field"><label for="cr-saos">זיכוי ב-SAOS (שלמים, 1000 = 1 SAOS)</label><input type="text" id="cr-saos" placeholder="25000"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="cr-cur">מטבע שהופקד</label><input type="text" id="cr-cur" placeholder="USD" maxlength="10"></div>
+          <div class="field"><label for="cr-amt">סכום שהופקד</label><input type="text" id="cr-amt" placeholder="25"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="cr-ref">אסמכתת ההפקדה (txid)</label><input type="text" id="cr-ref" maxlength="90"></div>
+          <div class="field"><label for="cr-claim">מזהה תביעה (רשות, מחבר לתביעת המפקיד)</label><input type="text" id="cr-claim" maxlength="40"></div>
+        </div>
+        <button class="btn-main" data-saos="credit" style="margin-bottom:26px">שדר זיכוי</button>
+
+        <h2 style="font-size:14px;color:var(--tx)">מילוי הצעת מכירה <span class="en" style="font-size:11px">saos.fill</span></h2>
+        <div class="grid2">
+          <div class="field"><label for="fl-id">מזהה ההצעה</label><input type="text" id="fl-id" maxlength="40"></div>
+          <div class="field"><label for="fl-to">כתובת הקונה (saos1…)</label><input type="text" id="fl-to" placeholder="saos1…"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="fl-units">כמות SAOS לשחרור (שלמים)</label><input type="text" id="fl-units" placeholder="4000"></div>
+          <div class="field"><label for="fl-paid">סכום ששולם (רשות)</label><input type="text" id="fl-paid" placeholder="4.8"></div>
+        </div>
+        <div class="field"><label for="fl-ref">אסמכתת התשלום</label><input type="text" id="fl-ref" maxlength="90"></div>
+        <button class="btn-main" data-saos="fill" style="margin-bottom:26px">שדר מילוי</button>
+
+        <h2 style="font-size:14px;color:var(--tx)">תשלום תגמול <span class="en" style="font-size:11px">saos.reward</span></h2>
+        <div class="grid2">
+          <div class="field"><label for="rw-to">כתובת המקבל (saos1…)</label><input type="text" id="rw-to" placeholder="saos1…"></div>
+          <div class="field"><label for="rw-amt">כמות SAOS (שלמים, 1000 = 1 SAOS)</label><input type="text" id="rw-amt" placeholder="500"></div>
+        </div>
+        <div class="field"><label for="rw-note">הערה ציבורית (רשות)</label><input type="text" id="rw-note" maxlength="120"></div>
+        <button class="btn-main" data-saos="reward">שדר תגמול</button>
+
+        <div class="result" id="saosResult"></div>
+      </div>
+
+      <!-- ═══════════ ממסר פעולות חתומות של משתמשים ═══════════ -->
+      <div class="card">
+        <h2>ממסר פעולות חתומות <span class="en">· relay signed user operations</span></h2>
+        <p style="font-size:13px;color:var(--mut);margin-bottom:14px">
+          משתמשים בלי חשבון Steem יכולים להעתיק את הפעולות החתומות שלהם מהארנק ולשלוח אליך.
+          הדבק אותן כאן (JSON אחד או מערך) והן ישודרו מהחשבון שלך כתעבורה בלבד. החתימה הפנימית שלהן היא הסמכות.
+        </p>
+        <div class="field">
+          <label for="relay-json">פעולות חתומות (JSON)</label>
+          <textarea id="relay-json" rows="6" class="mono" placeholder='[{"v":1,"id":"…","k":"wallet.create","by":"saos1…","pub":"STM…","sig":"…"}]'></textarea>
+        </div>
+        <button class="btn-main" id="relayJsonBtn">שדר פעולות משתמש</button>
+        <div class="result" id="relayJsonResult"></div>
+      </div>
+
+      <div class="card">
+        <h2>היסטוריית פקודות <span class="en">· your on-chain command log</span></h2>
         <div class="hist" id="histBox"><div class="empty"><span class="spin"></span>קורא מהשרשרת…</div></div>
+      </div>
+
+      <div class="card">
+        <h2>ספר ה-SAOS החי <span class="en">· recent live ledger operations</span></h2>
+        <div class="hist" id="saosFeed"><div class="empty"><span class="spin"></span>קורא מהשרשרת…</div></div>
       </div>
 
     </section>
@@ -205,8 +290,8 @@ body.state-unlocked .unlocked-only{display:block}
 
 <footer>
   <div class="wrap">
-    <span>SAOS · THE WEAVE — השער חי בגיטהאב-פייג׳ס, מאומת מול השרשרת הציבורית, בלי CDN ובלי סודות</span>
-    <span><a href="./">← לקונסולה הציבורית</a></span>
+    <span>SAOS Network · השער חי בגיטהאב-פייג׳ס, מאומת מול השרשרת הציבורית, בלי CDN ובלי סודות</span>
+    <span><a href="./">← לאתר הציבורי</a></span>
   </div>
 </footer>
 
@@ -215,11 +300,10 @@ body.state-unlocked .unlocked-only{display:block}
 <script src="gate-crypto.js"></script>
 <script>
 "use strict";
-/* ─────────────────────────────────────────────────────────────────────
- * שער המפעיל — לוגיקת הדף. כל הקריפטו ב-gate-crypto.js (טהור, מאומת).
- * המפתח חי רק בזיכרון הלשונית; ההתנתקות מוחקת הכל.
- * ───────────────────────────────────────────────────────────────────── */
+/* Operator gate logic. All crypto in gate-crypto.js (pure, verified).
+ * The key lives only in this tab's memory; locking wipes everything. */
 const OP_ID = "saos.weave.ops.v1";
+const SAOS_LIVE_OP_ID = "saos.weave.live.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com", "https://steem.61bts.com"];
 const $ = (id) => document.getElementById(id);
 const state = { acc: null, posting: null, matched: [] };
@@ -249,7 +333,7 @@ async function rpc(method, params) {
       return j.result;
     } catch (e) { lastErr = e; }
   }
-  throw new Error("כל צמתי ה-RPC הציבוריים לא הגיבו — " + (lastErr ? lastErr.message : ""));
+  throw new Error("כל צמתי ה-RPC הציבוריים לא הגיבו: " + (lastErr ? lastErr.message : ""));
 }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function copyTxt(txt) {
@@ -259,7 +343,7 @@ function copyTxt(txt) {
 }
 function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
-/* ── התחברות ── */
+/* ── connect ── */
 async function connect() {
   const acc = $("acc").value.trim().toLowerCase();
   const sec = $("sec").value.trim();
@@ -267,13 +351,13 @@ async function connect() {
   $("connectBtn").disabled = true;
   try {
     setStatus('<span class="spin"></span>גוזר מפתחות מהקלט (מקומי, בזיכרון)…');
-    await sleep(30); // נותן ל-UI לרנדר לפני ה-BigInt הכבד
+    await sleep(30); // lets the UI render before the heavy BigInt math
     const roles = {};
     const chainRoles = {};
     for (const role of ["owner", "active", "posting", "memo"]) {
-      try { roles[role] = await GateCrypto.deriveAny(sec, acc, role); } catch (e) { /* קלט שאינו סיסמת-אב */ }
+      try { roles[role] = await GateCrypto.deriveAny(sec, acc, role); } catch (e) { /* input is not a master password */ }
     }
-    if (!roles.posting) { setStatus("הקלט לא התגלגל למפתח — נסה סיסמת-אב או WIF תקין", "err"); return; }
+    if (!roles.posting) { setStatus("הקלט לא התגלגל למפתח. נסה סיסמת-אב או WIF תקין", "err"); return; }
     setStatus('<span class="spin"></span>קורא את החשבון מהשרשרת הציבורית…');
     const accounts = await rpc("condenser_api.get_accounts", [[acc]]);
     if (!accounts || !accounts.length) { setStatus("החשבון @" + esc(acc) + " לא נמצא בשרשרת", "err"); return; }
@@ -287,7 +371,7 @@ async function connect() {
       if (roles[role] && chainRoles[role] && chainRoles[role].includes(roles[role].pub)) matched.push(role);
     }
     if (!matched.includes("posting")) {
-      setStatus("המפתח לא תואם לחשבון הזה — אימות נכשל (השער נשאר נעול)", "err");
+      setStatus("המפתח לא תואם לחשבון הזה. אימות נכשל, השער נשאר נעול", "err");
       $("sec").value = "";
       return;
     }
@@ -298,10 +382,11 @@ async function connect() {
     $("whoPub").textContent = roles.posting.pub;
     $("whoRoles").textContent = matched.join(" · ");
     document.body.className = "state-unlocked";
-    setStatus("מחובר ✓ — המפתח הציבורי תואם לרשומות השרשרת", "ok");
+    setStatus("מחובר ✓ המפתח הציבורי תואם לרשומות השרשרת", "ok");
     $("sec").value = "";
     loadNet();
     loadHistory();
+    loadSaosFeed();
     toast("ברוך שובך לרשת ✓");
   } catch (e) {
     setStatus(esc(e.message || String(e)), "err");
@@ -310,7 +395,7 @@ async function connect() {
   }
 }
 
-/* ── ניתוק ── */
+/* ── lock ── */
 function lock() {
   state.acc = null; state.posting = null; state.matched = [];
   document.body.className = "state-locked";
@@ -319,12 +404,12 @@ function lock() {
   toast("המפתח נמחק מהזיכרון ✓");
 }
 
-/* ── מצב רשת חי (status.json של הקונסולה) ── */
+/* ── live network state (status.json) ── */
 async function loadNet() {
   try {
     const s = await (await fetch("status.json", { cache: "no-store" })).json();
     $("netCp").textContent = "cp#" + s.witness.checkpoint;
-    $("netAtt").textContent = (s.witness.attestations != null ? s.witness.attestations : "—") + " אימותים";
+    $("netAtt").textContent = (s.witness.attestations != null ? s.witness.attestations : "·") + " אימותים";
     const h = s.freshness.ageHours;
     $("netFresh").innerHTML = '<span class="dot ' + (s.freshness.verdict === "FRESH" ? "g" : "y") + '"></span>' +
       s.freshness.verdict + " · " + h + "ש׳";
@@ -334,7 +419,16 @@ async function loadNet() {
   }
 }
 
-/* ── שידור פקודה ── */
+/* ── signed transaction helper ── */
+async function buildAndBroadcast(ops) {
+  const signed = await GateCrypto.buildSignedTx(ops, state.posting.priv,
+    () => rpc("condenser_api.get_dynamic_global_properties", []),
+    (n) => rpc("condenser_api.get_block_header", [n]));
+  await rpc("condenser_api.broadcast_transaction", [signed]);
+  return signed;
+}
+
+/* ── network commands ── */
 async function sendCmd(cmd) {
   if (!state.posting) return;
   const note = $("note").value.trim().slice(0, 180);
@@ -353,29 +447,171 @@ async function sendCmd(cmd) {
   const res = $("cmdResult");
   res.className = "result show";
   res.innerHTML = '<span class="spin"></span>בונה עסקה וחותם מקומית…';
-  document.querySelectorAll(".cmd").forEach((b) => (b.disabled = true));
+  setCmdsDisabled(true);
   try {
-    const signed = await GateCrypto.buildSignedTx([op], state.posting.priv,
-      () => rpc("condenser_api.get_dynamic_global_properties", []),
-      (n) => rpc("condenser_api.get_block_header", [n]));
-    res.innerHTML = '<span class="spin"></span>משודר לשרשרת הציבורית…';
-    await rpc("condenser_api.broadcast_transaction", [signed]);
-    const exp = signed.expiration;
+    const signed = await buildAndBroadcast([op]);
     res.innerHTML =
-      '<div style="color:var(--green)">✓ הפקודה שודרה — "' + esc(cmd) + '" חתומה מ-@' + esc(state.acc) + '</div>' +
+      '<div style="color:var(--green)">✓ הפקודה שודרה. "' + esc(cmd) + '" חתומה מ-@' + esc(state.acc) + '</div>' +
       '<div class="txid" style="margin-top:6px">sig ' + esc(signed.signatures[0].slice(0, 40)) + '…</div>' +
-      '<div class="links">ההיסטוריה של השרשרת היא הקבלה — הרשת תאסוף את הפקודה בפעימה הקרובה.</div>';
+      '<div class="links">ההיסטוריה של השרשרת היא הקבלה. הרשת תאסוף את הפקודה בפעימה הקרובה.</div>';
     toast('הפקודה "' + cmd + '" שודרה לשרשרת ✓');
     $("note").value = "";
     loadHistory();
   } catch (e) {
     res.innerHTML = '<div style="color:var(--red)">✗ השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
   } finally {
-    document.querySelectorAll(".cmd").forEach((b) => (b.disabled = false));
+    setCmdsDisabled(false);
   }
 }
 
-/* ── היסטוריית פקודות — קריאה חסרת-מפתח מההיסטוריה של החשבון ── */
+/* ── SAOS treasury commands ── */
+const SAOS_FORMS = {
+  addr: () => {
+    const cur = $("ad-cur").value.trim().toUpperCase();
+    const addr = $("ad-addr").value.trim();
+    const memo = $("ad-memo").value.trim();
+    if (!/^[A-Z]{2,10}$/.test(cur)) throw new Error("מטבע לא תקין");
+    if (addr.length < 8 || addr.length > 120) throw new Error("כתובת לא תקינה");
+    const saos = { cur, addr };
+    if (memo) saos.memo = memo;
+    return { cmd: "saos.addr", saos, label: "פרסום כתובת הפקדה ל" + cur };
+  },
+  rate: () => {
+    const pair = $("rt-pair").value.trim().toUpperCase();
+    const price = $("rt-price").value.trim();
+    if (!/^[A-Z]{2,10}\/[A-Z]{2,10}$/.test(pair)) throw new Error("זוג לא תקין (למשל SAOS/USD)");
+    if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(price) || /^0+(\.0+)?$/.test(price)) throw new Error("מחיר לא תקין");
+    return { cmd: "saos.rate", saos: { pair, price }, label: "קביעת שער " + pair + " = " + price };
+  },
+  credit: () => {
+    const to = $("cr-to").value.trim();
+    const saosAmt = $("cr-saos").value.trim();
+    const cur = $("cr-cur").value.trim().toUpperCase();
+    const amt = $("cr-amt").value.trim();
+    const ref = $("cr-ref").value.trim();
+    const claimId = $("cr-claim").value.trim();
+    if (!/^saos1[1-9A-HJ-NP-Za-km-z]{33,35}$/.test(to)) throw new Error("כתובת מפקיד לא תקינה");
+    if (!/^\d{1,18}$/.test(saosAmt) || /^0+$/.test(saosAmt)) throw new Error("כמות SAOS לא תקינה");
+    if (!/^[A-Z]{2,10}$/.test(cur)) throw new Error("מטבע לא תקין");
+    if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(amt) || /^0+(\.0+)?$/.test(amt)) throw new Error("סכום לא תקין");
+    if (ref && !/^[\w :.\-\/+=]{6,90}$/.test(ref)) throw new Error("אסמכתה לא תקינה");
+    const saos = { to, saos: saosAmt, cur, amt };
+    if (ref) saos.ref = ref;
+    if (claimId) saos.claimId = claimId;
+    return { cmd: "saos.credit", saos, label: "זיכוי " + (Number(saosAmt) / 1000) + " SAOS ל " + to.slice(0, 12) + "…" };
+  },
+  fill: () => {
+    const offerId = $("fl-id").value.trim();
+    const to = $("fl-to").value.trim();
+    const units = $("fl-units").value.trim();
+    const paid = $("fl-paid").value.trim();
+    const ref = $("fl-ref").value.trim();
+    if (!/^[0-9a-zA-Z._-]{6,40}$/.test(offerId)) throw new Error("מזהה הצעה לא תקין");
+    if (!/^saos1[1-9A-HJ-NP-Za-km-z]{33,35}$/.test(to)) throw new Error("כתובת קונה לא תקינה");
+    if (!/^\d{1,18}$/.test(units) || /^0+$/.test(units)) throw new Error("כמות לא תקינה");
+    if (paid && !/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(paid)) throw new Error("סכום ששולם לא תקין");
+    const saos = { offerId, to, units };
+    if (paid) saos.paid = paid;
+    if (ref) saos.ref = ref;
+    return { cmd: "saos.fill", saos, label: "מילוי הצעה " + offerId.slice(0, 14) + "…" };
+  },
+  reward: () => {
+    const to = $("rw-to").value.trim();
+    const amount = $("rw-amt").value.trim();
+    const note = $("rw-note").value.trim();
+    if (!/^saos1[1-9A-HJ-NP-Za-km-z]{33,35}$/.test(to)) throw new Error("כתובת מקבל לא תקינה");
+    if (!/^\d{1,18}$/.test(amount) || /^0+$/.test(amount)) throw new Error("כמות לא תקינה");
+    const saos = { to, amount };
+    if (note) saos.note = note;
+    return { cmd: "saos.reward", saos, label: "תגמול " + (Number(amount) / 1000) + " SAOS ל " + to.slice(0, 12) + "…" };
+  },
+};
+
+async function sendSaos(kind) {
+  if (!state.posting) return;
+  const res = $("saosResult");
+  res.className = "result show";
+  let form;
+  try {
+    form = SAOS_FORMS[kind]();
+  } catch (e) {
+    res.innerHTML = '<div style="color:var(--red)">✗ ' + esc(e.message) + "</div>";
+    return;
+  }
+  setCmdsDisabled(true);
+  try {
+    const payload = {
+      v: 1,
+      id: Array.from(crypto.getRandomValues(new Uint8Array(8)), (b) => b.toString(16).padStart(2, "0")).join(""),
+      cmd: form.cmd, at: new Date().toISOString(),
+      saos: form.saos,
+    };
+    const op = ["custom_json", {
+      required_auths: [],
+      required_posting_auths: [state.acc],
+      id: OP_ID,
+      json: JSON.stringify(payload),
+    }];
+    res.innerHTML = '<span class="spin"></span>חותם ומשדר את הוראת האוצר: ' + esc(form.label) + "…";
+    const signed = await buildAndBroadcast([op]);
+    res.innerHTML =
+      '<div style="color:var(--green)">✓ ההוראה שודרה: ' + esc(form.label) + '</div>' +
+      '<div class="txid" style="margin-top:6px">sig ' + esc(signed.signatures[0].slice(0, 40)) + '…</div>' +
+      '<div class="links">הלב יחתום את הפעולה במפתח האוצר שבענן וישדר לספר החי. אם הג׳נזיס טרם הושלם, ההוראה תמתין בכנות ותתבצע אחריו.</div>';
+    toast("הוראת האוצר שודרה ✓");
+    loadHistory();
+  } catch (e) {
+    res.innerHTML = '<div style="color:var(--red)">✗ השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
+  } finally {
+    setCmdsDisabled(false);
+  }
+}
+
+/* ── relay signed user operations (transport only) ── */
+async function relayUserOps() {
+  if (!state.posting) return;
+  const res = $("relayJsonResult");
+  res.className = "result show";
+  let list;
+  try {
+    const parsed = JSON.parse($("relay-json").value);
+    list = Array.isArray(parsed) ? parsed : [parsed];
+  } catch (e) {
+    res.innerHTML = '<div style="color:var(--red)">✗ JSON לא תקין: ' + esc(e.message) + "</div>";
+    return;
+  }
+  if (!list.length) { res.innerHTML = '<div style="color:var(--red)">✗ ריק</div>'; return; }
+  setCmdsDisabled(true);
+  let sent = 0;
+  const errs = [];
+  try {
+    for (const env of list) {
+      if (!env || typeof env !== "object" || typeof env.sig !== "string") { errs.push("skip: not a signed envelope"); continue; }
+      const op = ["custom_json", {
+        required_auths: [],
+        required_posting_auths: [state.acc],
+        id: SAOS_LIVE_OP_ID,
+        json: JSON.stringify(env),
+      }];
+      try {
+        await buildAndBroadcast([op]);
+        sent++;
+        await sleep(700);
+      } catch (e) {
+        errs.push(String(e.message || e).slice(0, 60));
+      }
+    }
+    res.innerHTML =
+      '<div style="color:' + (sent ? "var(--green)" : "var(--red)") + '">✓ שודרו ' + sent + " מתוך " + list.length + " פעולות חתומות מהחשבון שלך (תעבורה בלבד)</div>" +
+      (errs.length ? '<div style="color:var(--red);margin-top:6px;font-size:12px">' + errs.map(esc).join(" · ") + "</div>" : "") +
+      '<div class="links">הקיפול של הרשת יאמת את החתימות הפנימיות ויקבל רק את התקפות.</div>';
+    if (sent) { $("relay-json").value = ""; toast("פעולות המשתמש שודרו ✓"); }
+  } finally {
+    setCmdsDisabled(false);
+  }
+}
+
+/* ── command history from the public chain ── */
 async function loadHistory() {
   const box = $("histBox");
   try {
@@ -390,7 +626,7 @@ async function loadHistory() {
     }
     rows.reverse();
     if (!rows.length) {
-      box.innerHTML = '<div class="empty">אין עדיין פקודות על השרשרת — הראשונה שלך תירשם כאן לנצח.</div>';
+      box.innerHTML = '<div class="empty">אין עדיין פקודות על השרשרת. הראשונה שלך תירשם כאן לנצח.</div>';
       return;
     }
     box.innerHTML = rows.slice(0, 30).map((r) =>
@@ -406,11 +642,39 @@ async function loadHistory() {
   }
 }
 
-/* ── קשירה ── */
+/* ── SAOS live ledger feed (keyless read) ── */
+async function loadSaosFeed() {
+  const box = $("saosFeed");
+  try {
+    const l = await (await fetch("saos-live.json", { cache: "no-store" })).json();
+    const ops = (l.ops || []).slice(-20).reverse();
+    const genesis = l.genesis || {};
+    box.innerHTML =
+      '<div class="hrow"><span class="cmdname">genesis</span><span class="note">' +
+      (genesis.done ? '✓ הושלם · אוצר <span class="mono">' + esc(String(genesis.treasury || "").slice(0, 16)) + '…</span>' : "מונח בשלבים על ידי הלב (RC)") +
+      "</span></div>" +
+      (ops.length
+        ? ops.map((o) =>
+            '<div class="srow"><span class="k">' + esc(o.k) + "</span>" +
+            '<span style="flex:1;color:var(--mut);min-width:0">' + esc(o.summary || "") + "</span>" +
+            '<span class="when">' + esc(String(o.at || "").slice(0, 16).replace("T", " ")) + "</span></div>").join("")
+        : '<div class="empty">אין עדיין פעולות בספר החי.</div>');
+  } catch (e) {
+    box.innerHTML = '<div class="empty">קריאת הספר החי נכשלה: ' + esc(e.message || String(e)) + "</div>";
+  }
+}
+
+function setCmdsDisabled(dis) {
+  document.querySelectorAll(".cmd, [data-saos], #relayJsonBtn").forEach((b) => (b.disabled = dis));
+}
+
+/* ── wiring ── */
 $("connectBtn").addEventListener("click", connect);
 $("sec").addEventListener("keydown", (e) => { if (e.key === "Enter") connect(); });
 $("lockBtn").addEventListener("click", lock);
 document.querySelectorAll(".cmd").forEach((b) => b.addEventListener("click", () => sendCmd(b.dataset.cmd)));
+document.querySelectorAll("[data-saos]").forEach((b) => b.addEventListener("click", () => sendSaos(b.dataset.saos)));
+$("relayJsonBtn").addEventListener("click", relayUserOps);
 </script>
 </body>
 </html>
