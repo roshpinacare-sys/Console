@@ -66,21 +66,53 @@ h2{font-size:clamp(25px,3.5vw,37px);font-weight:800;letter-spacing:-.01em;margin
 .thesis blockquote{max-width:880px;font-size:clamp(22px,3.4vw,34px);font-weight:800;line-height:1.35}
 .thesis blockquote .gold{color:var(--gold)}
 .thesis .attr{font-size:13px;color:var(--dim);margin-top:16px;font-family:var(--mono)}
-.proof{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel2)}
-.prow{display:grid;grid-template-columns:210px 1fr 210px;gap:16px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--border);transition:.15s}
+section[id]{scroll-margin-top:78px}
+.proof-strip{display:flex;flex-wrap:wrap;gap:10px;margin:-24px 0 24px}
+.pchip{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mut);border:1px solid var(--border);background:var(--panel2);border-radius:999px;padding:6px 14px;display:inline-flex;align-items:center;gap:8px}
+.pchip b{color:var(--tx);font-weight:600}
+.pchip .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(34,197,94,.45);animation:pulse 2s infinite}
+.proof{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--panel2)}
+.prow{display:grid;grid-template-columns:minmax(196px,244px) 1fr minmax(172px,214px);gap:18px;align-items:center;padding:17px 22px;border-bottom:1px solid var(--border);transition:background .16s,box-shadow .16s}
 .prow:last-child{border-bottom:none}
-.prow:hover{background:var(--panel)}
-.phead{background:var(--panel);font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em}
-.chain{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14.5px}
-.chain .st{width:9px;height:9px;border-radius:50%;flex:none}
-.st.live{background:var(--green);box-shadow:0 0 8px rgba(34,197,94.5)}
-.st.armed{background:var(--purple)}
-.chain small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
-.tx{font-family:var(--mono);font-size:11.5px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tx a:hover{color:var(--gold)}
-.pmeta{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
-.pmeta a{color:var(--purple);border-bottom:1px dashed rgba(167,139,250.4)}
-@media(max-width:760px){.prow{grid-template-columns:1fr;gap:6px}.phead{display:none}}
+.prow:hover{background:rgba(39,39,42,.35);box-shadow:inset 0 0 0 1px var(--border2)}
+.phead{background:var(--panel);font-family:var(--mono);font-size:10.5px;color:var(--dim);letter-spacing:.11em;padding:10px 22px}
+.chain{display:flex;align-items:center;gap:12px;min-width:0}
+.glyph{flex:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,rgba(39,39,42,.7),var(--panel))}
+.glyph svg{width:20px;height:20px;display:block}
+.chain .cn{min-width:0}
+.chain .cn .nm{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;letter-spacing:.04em;color:var(--tx)}
+.chain .cn small{display:block;font-weight:400;font-size:10.5px;color:var(--dim);margin-top:3px;line-height:1.5}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#4ade80;border:1px solid rgba(34,197,94,.35);background:rgba(34,197,94,.06);border-radius:999px;padding:3px 8px;white-space:nowrap}
+.pill .st{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 7px rgba(34,197,94,.55);animation:pulse 2.4s infinite}
+.tx{min-width:0;display:flex;align-items:center;gap:9px}
+.tx .hash{font-family:var(--mono);font-size:12px;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tx a.hash:hover{color:#ecc95c}
+.tx .note{font-family:var(--mono);font-size:11.5px;color:var(--mut);line-height:1.55;white-space:normal;word-break:break-word}
+.copy{flex:none;width:30px;height:30px;border-radius:8px;border:1px solid var(--border2);background:var(--panel);color:var(--mut);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s}
+.copy:hover{color:var(--gold);border-color:var(--gold-dim);background:rgba(212,175,55,.07)}
+.copy:active{transform:scale(.94)}
+.copy svg{width:13px;height:13px}
+.pmeta{display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.pmeta .line{font-family:var(--mono);font-size:10.5px;color:var(--dim);letter-spacing:.02em}
+.pbtn{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--mut);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;transition:.15s;min-height:32px}
+.pbtn:hover{color:var(--gold);border-color:var(--gold-dim);background:rgba(212,175,55,.07)}
+.pbtn svg{width:11px;height:11px;opacity:.7}
+#copy-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);background:var(--panel);border:1px solid var(--gold-dim);color:var(--gold);font-family:var(--mono);font-size:12px;border-radius:10px;padding:9px 16px;opacity:0;pointer-events:none;transition:.25s;z-index:120;box-shadow:0 10px 34px rgba(0,0,0,.5)}
+#copy-toast.show{opacity:1;transform:translate(-50%,0)}
+.verify-how{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.vh{border:1px dashed var(--border2);border-radius:12px;padding:14px 16px;background:rgba(19,19,22,.6)}
+.vh .n{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.14em;margin-bottom:6px}
+.vh p{font-size:12.5px;color:var(--mut);line-height:1.6}
+.vh p b{color:var(--tx);font-weight:600}
+@media(max-width:860px){.verify-how{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .prow{grid-template-columns:1fr;gap:11px;padding:16px 18px}
+  .phead{display:none}
+  .tx .hash{white-space:normal;word-break:break-all}
+  .pbtn{width:100%;justify-content:center;min-height:44px}
+  .copy{width:44px;height:44px}
+  .proof-strip{margin-top:-18px}
+}
 .consistency{margin-top:24px;border:1px solid rgba(212,175,55.35);background:linear-gradient(135deg,rgba(212,175,55.06),rgba(167,139,250.04));border-radius:12px;padding:24px 26px;display:flex;gap:20px;align-items:flex-start}
 .consistency .icon{flex:none;width:42px;height:42px;border-radius:10px;background:rgba(212,175,55.12);border:1px solid rgba(212,175,55.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:var(--mono);font-weight:700}
 .consistency h3{font-size:16.5px;margin-bottom:6px}
@@ -264,43 +296,75 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
   <div class="kicker">PROOF, NOT PROMISES</div>
   <h2>The receipts. Public. Right now.</h2>
   <p class="lead">Every row below is a real transaction on a public network. Click it, open the explorer, compare it yourself. That's the whole model: you don't need to believe us, you need to read the chain.</p>
+  <div class="proof-strip rv">
+    <span class="pchip"><span class="pulse"></span><b>7 receipts</b>&nbsp;· all clickable</span>
+    <span class="pchip"><b>6 networks</b>&nbsp;· independent witnesses</span>
+    <span class="pchip"><b>$0</b>&nbsp;gas rails · Graphene + zero-net TRON</span>
+    <span class="pchip">static snapshot&nbsp;<b>2026-09-12</b>&nbsp;· live line every 6h ↑</span>
+  </div>
   <div class="proof rv">
-    <div class="prow phead"><div>Rail / status</div><div>Receipt (txid / signature)</div><div>Location + self-verification</div></div>
+    <div class="prow phead"><div>Rail / status</div><div>Receipt (txid / signature) — copy &amp; compare</div><div>Location + self-verification</div></div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>ETHEREUM<small>mainnet · EIP-1559 · native bytes32</small></div></div>
-      <div class="tx"><a href="https://etherscan.io/tx/0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" target="_blank" rel="noopener">0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41</a></div>
-      <div class="pmeta">block 25,929,261 · <a href="https://etherscan.io/tx/0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" target="_blank" rel="noopener">etherscan</a></div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 5.2 12.1 12 22l6.8-9.9L12 2Z" fill="#627EEA" opacity=".92"/><path d="M12 2 5.2 12.1 12 15.8V2Z" fill="#93A7F7"/><path d="M12 15.8 5.2 12.1 12 22v-6.2Z" fill="#4E63C8"/></svg></span>
+        <div class="cn"><div class="nm">ETHEREUM<span class="pill"><span class="st"></span>VERIFIED</span></div><small>mainnet · EIP-1559 · native bytes32</small></div>
+      </div>
+      <div class="tx"><a class="hash" href="https://etherscan.io/tx/0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" target="_blank" rel="noopener" title="0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" aria-label="Ethereum anchor transaction">0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41</a><button class="copy" data-copy="0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" aria-label="Copy Ethereum txid" title="Copy txid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+      <div class="pmeta"><span class="line">block 25,929,261</span><a class="pbtn" href="https://etherscan.io/tx/0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" target="_blank" rel="noopener">open on etherscan<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
     </div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>SOLANA<small>mainnet-beta · SPL Memo v2</small></div></div>
-      <div class="tx"><a href="https://solscan.com/tx/2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" target="_blank" rel="noopener">2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9</a></div>
-      <div class="pmeta"><a href="https://solscan.com/tx/2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" target="_blank" rel="noopener">solscan</a></div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4.6 20 4.6 14.9 9.4 4 9.4Z" fill="#9945FF"/><path d="M4 14.6 14.9 14.6 20 19.4 4 19.4Z" fill="#14F195"/><path d="M4 9.4 14.9 9.4 14.9 14.6 4 14.6Z" fill="#7A5CFF" opacity=".85"/></svg></span>
+        <div class="cn"><div class="nm">SOLANA<span class="pill"><span class="st"></span>VERIFIED</span></div><small>mainnet-beta · SPL Memo v2</small></div>
+      </div>
+      <div class="tx"><a class="hash" href="https://solscan.com/tx/2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" target="_blank" rel="noopener" title="2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" aria-label="Solana anchor transaction">2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9</a><button class="copy" data-copy="2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" aria-label="Copy Solana txid" title="Copy txid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+      <div class="pmeta"><span class="line">SPL memo · mainnet-beta</span><a class="pbtn" href="https://solscan.com/tx/2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" target="_blank" rel="noopener">open on solscan<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
     </div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>STEEM<small>every seal · custom_json · $0 (RC)</small></div></div>
-      <div class="tx"><a href="https://steemworld.org/tx/390bcfc2586def1ef02cc40a0e983c8dd8fce177" target="_blank" rel="noopener">390bcfc2586def1ef02cc40a0e983c8dd8fce177</a></div>
-      <div class="pmeta">block 10,937,394 · <a href="https://steemworld.org/tx/390bcfc2586def1ef02cc40a0e983c8dd8fce177" target="_blank" rel="noopener">steemworld</a></div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#4BA2F9" stroke-width="1.7"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.7M12 18.7v2.7M2.6 12h2.7M18.7 12h2.7M5.4 5.4l1.9 1.9M16.7 16.7l1.9 1.9M18.6 5.4l-1.9 1.9M7.3 16.7l-1.9 1.9" stroke-linecap="round"/></svg></span>
+        <div class="cn"><div class="nm">STEEM<span class="pill"><span class="st"></span>VERIFIED</span></div><small>every seal · custom_json · $0 (RC)</small></div>
+      </div>
+      <div class="tx"><a class="hash" href="https://steemworld.org/tx/390bcfc2586def1ef02cc40a0e983c8dd8fce177" target="_blank" rel="noopener" title="390bcfc2586def1ef02cc40a0e983c8dd8fce177" aria-label="Steem anchor transaction">390bcfc2586def1ef02cc40a0e983c8dd8fce177</a><button class="copy" data-copy="390bcfc2586def1ef02cc40a0e983c8dd8fce177" aria-label="Copy Steem txid" title="Copy txid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+      <div class="pmeta"><span class="line">block 10,937,394 · posting auth</span><a class="pbtn" href="https://steemworld.org/tx/390bcfc2586def1ef02cc40a0e983c8dd8fce177" target="_blank" rel="noopener">open on steemworld<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
     </div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>HIVE<small>live in RC-paced beats · 21 anchors in 22h (measured 09.09 00:29Z) · $0</small></div></div>
-      <div class="tx"><a href="https://hiveblocks.com/tx/d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" target="_blank" rel="noopener">d4cf936b0b5e1eff8dcc8a508532f67c95682bd5</a></div>
-      <div class="pmeta">block 109,708,562+ · <a href="https://hiveblocks.com/tx/d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" target="_blank" rel="noopener">hiveblocks</a></div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#E31337" stroke-width="1.7"><path d="M12 2.5 21 7.7v8.6L12 21.5 3 16.3V7.7L12 2.5Z" stroke-linejoin="round"/><path d="M12 7.6 16.4 10v4.9L12 17.4 7.6 14.9V10L12 7.6Z" stroke="#F0939F" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
+        <div class="cn"><div class="nm">HIVE<span class="pill"><span class="st"></span>VERIFIED</span></div><small>live in RC-paced beats · 21 anchors in 22h (measured 09.09) · $0</small></div>
+      </div>
+      <div class="tx"><a class="hash" href="https://hiveblocks.com/tx/d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" target="_blank" rel="noopener" title="d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" aria-label="Hive anchor transaction">d4cf936b0b5e1eff8dcc8a508532f67c95682bd5</a><button class="copy" data-copy="d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" aria-label="Copy Hive txid" title="Copy txid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+      <div class="pmeta"><span class="line">block 109,708,562+</span><a class="pbtn" href="https://hiveblocks.com/tx/d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" target="_blank" rel="noopener">open on hiveblocks<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
     </div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>TRON<small>zero net fee · bit-encoded · 6-address ring</small></div></div>
-      <div class="tx">cp#33612 → txid 1db5006b… (inside the block)</div>
-      <div class="pmeta"><a href="https://tronscan.org/#/block/86019974" target="_blank" rel="noopener">block 86,019,974</a> · 6/6 measured · tronscan</div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#EC0928" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4.5h15l-9.6 7.7h7.2L6 19.5"/></svg></span>
+        <div class="cn"><div class="nm">TRON<span class="pill"><span class="st"></span>VERIFIED</span></div><small>zero net fee · bit-encoded · 6-address ring</small></div>
+      </div>
+      <div class="tx"><span class="note">cp#33612 → txid 1db5006b… (inside the block)</span></div>
+      <div class="pmeta"><span class="line">block 86,019,974 · 6/6 measured</span><a class="pbtn" href="https://tronscan.org/#/block/86019974" target="_blank" rel="noopener">open on tronscan<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
     </div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>BLURT<small>live · anchor-pulse: seal→sign→broadcast→verify</small></div></div>
-      <div class="tx">computeTxId verified 64-hex against the node · zero silent-death</div>
-      <div class="pmeta">block 63,502,020 · fee 0.129 BLURT · STEEM pulse: 109,438,757+812</div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#2BB7A6" stroke-width="1.8" stroke-linecap="round"><path d="M6 6.5c3.2-1.6 8.8-1.6 12 0"/><path d="M6 12c3.2-1.6 8.8-1.6 12 0"/><path d="M6 17.5c3.2-1.6 8.8-1.6 12 0"/></svg></span>
+        <div class="cn"><div class="nm">BLURT<span class="pill"><span class="st"></span>VERIFIED</span></div><small>live · anchor-pulse: seal→sign→broadcast→verify</small></div>
+      </div>
+      <div class="tx"><span class="note">computeTxId verified 64-hex against the node · zero silent-death</span></div>
+      <div class="pmeta"><span class="line">block 63,502,020 · fee 0.129 BLURT</span><span class="line">STEEM pulse: 109,438,757+812</span></div>
     </div>
     <div class="prow">
-      <div class="chain"><span class="st live"></span><div>SOLANA<small>first cornerstone anchor · one seed → 5 ecosystems</small></div></div>
-      <div class="tx"><a href="https://solscan.com/tx/5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3S2gPVw2iBSphJhZsFUMwKZiADGbjAb841j8PoRUazic9Bqgjuu5RwZr5" target="_blank" rel="noopener">5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3…</a></div>
-      <div class="pmeta">slot 445,822,974 · err=null · verified from mainnet-beta · solscan</div>
+      <div class="chain">
+        <span class="glyph"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4.6 20 4.6 14.9 9.4 4 9.4Z" fill="#9945FF"/><path d="M4 14.6 14.9 14.6 20 19.4 4 19.4Z" fill="#14F195"/><path d="M4 9.4 14.9 9.4 14.9 14.6 4 14.6Z" fill="#7A5CFF" opacity=".85"/></svg></span>
+        <div class="cn"><div class="nm">SOLANA<span class="pill"><span class="st"></span>CORNERSTONE</span></div><small>first cornerstone anchor · one seed → 5 ecosystems</small></div>
+      </div>
+      <div class="tx"><a class="hash" href="https://solscan.com/tx/5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3S2gPVw2iBSphJhZsFUMwKZiADGbjAb841j8PoRUazic9Bqgjuu5RwZr5" target="_blank" rel="noopener" title="5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3S2gPVw2iBSphJhZsFUMwKZiADGbjAb841j8PoRUazic9Bqgjuu5RwZr5" aria-label="Solana cornerstone anchor transaction">5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3S2gPVw2iBSphJhZsFUMwKZiADGbjAb841j8PoRUazic9Bqgjuu5RwZr5</a><button class="copy" data-copy="5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3S2gPVw2iBSphJhZsFUMwKZiADGbjAb841j8PoRUazic9Bqgjuu5RwZr5" aria-label="Copy Solana cornerstone txid" title="Copy txid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+      <div class="pmeta"><span class="line">slot 445,822,974 · err=null</span><a class="pbtn" href="https://solscan.com/tx/5z46xVFc3cf8d6daeRhoe2VE1uxPtPQ3S2gPVw2iBSphJhZsFUMwKZiADGbjAb841j8PoRUazic9Bqgjuu5RwZr5" target="_blank" rel="noopener">open on solscan<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
     </div>
+  </div>
+  <div class="verify-how rv">
+    <div class="vh"><div class="n">STEP 1 · OPEN</div><p>Click <b>open on etherscan / solscan / steemworld</b> on any row. You are now looking at the raw public record — nothing between you and the chain.</p></div>
+    <div class="vh"><div class="n">STEP 2 · COMPARE</div><p>Match the anchored <b>root hash</b> in the transaction against the ledger root in <a href="#weave" style="color:var(--gold)">THE WEAVE panel</a>. They must be bit-for-bit identical.</p></div>
+    <div class="vh"><div class="n">STEP 3 · CROSS-CHECK</div><p>Repeat on a <b>second network</b>. Two independent chains carrying the same root is the consistency proof — that's the whole trust model.</p></div>
   </div>
   <div class="consistency rv">
     <div class="icon">1:1</div>
@@ -511,13 +575,26 @@ footer{border-top:1px solid var(--border);padding:38px 0 48px}
     <a href="status.json">Raw status file</a>
     <a href="#weave">THE WEAVE status</a>
     <a href="#proof">Live proofs</a>
-    <span class="mono" style="color:var(--dim);font-size:11px;margin-top:8px">SAOS· Console v1.0 · the public beacon of THE WEAVE · published by the network itself</span>
+    <span class="mono" style="color:var(--dim);font-size:11px;margin-top:8px">SAOS· Console v1.1 · receipts wall: chain glyphs · copy-to-verify · 3-step self-verification · published by the network itself</span>
   </div>
 </div></footer>
 
 <script>
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// ── receipts: copy-to-clipboard (sovereign, no deps) ──
+(function(){
+  const toast=document.createElement('div');toast.id='copy-toast';toast.setAttribute('role','status');toast.setAttribute('aria-live','polite');document.body.appendChild(toast);
+  let tm=null;
+  const show=()=>{toast.textContent='Receipt copied ✓';toast.classList.add('show');clearTimeout(tm);tm=setTimeout(()=>toast.classList.remove('show'),1600)};
+  const legacy=(v)=>{const t=document.createElement('textarea');t.value=v;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');show()}catch(e){}document.body.removeChild(t)};
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-copy]');if(!b)return;
+    const v=b.getAttribute('data-copy');
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(show).catch(()=>legacy(v))}else{legacy(v)}
+  });
+})();
 
 // ── THE WEAVE live status (keyless: status.json is rendered from the public Steem chain) ──
 (function(){
