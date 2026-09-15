@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-15T23:07:56.544Z",
+  "generatedAt": "2026-09-15T23:26:27.734Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth — no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 96,
-    "checkpoints": 89,
+    "attestations": 97,
+    "checkpoints": 90,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 95
+      "VERIFIED": 96
     },
-    "headHash": "0xe6c4139fd35477b87156c8d2e3f93c7cc2bee06359e53cc8a799cb5181d6001d"
+    "headHash": "0x24a389ff39668abeefa78254fd1f36dddd05dbb889f9a956c63f43c1426de42a"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 73,
-      "lastAttestationSeq": 96,
-      "lastAttestationAt": "2026-09-15T22:53:05.092Z"
+      "attestations": 74,
+      "lastAttestationSeq": 97,
+      "lastAttestationAt": "2026-09-15T23:08:38.614Z"
     },
     {
       "name": "weave-market-regulator",
@@ -99,6 +99,14 @@
     }
   ],
   "attestations": [
+    {
+      "seq": 97,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-15T23:08:38.614Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #89 root 0xe6c4139fd35477b8… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) — עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
+    },
     {
       "seq": 96,
       "type": "ANCHOR",
@@ -870,12 +878,22 @@
   ],
   "checkpoints": [
     {
+      "index": 90,
+      "root": "0x24a389ff39668abeefa78254fd1f36dddd05dbb889f9a956c63f43c1426de42a",
+      "attFrom": 97,
+      "attTo": 97,
+      "at": "2026-09-15T23:08:38.635Z",
+      "anchoredOn": []
+    },
+    {
       "index": 89,
       "root": "0xe6c4139fd35477b87156c8d2e3f93c7cc2bee06359e53cc8a799cb5181d6001d",
       "attFrom": 96,
       "attTo": 96,
       "at": "2026-09-15T22:53:05.114Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "zero"
+      ]
     },
     {
       "index": 88,
@@ -1142,14 +1160,6 @@
       "attTo": 68,
       "at": "2026-09-15T16:08:10.236Z",
       "anchoredOn": []
-    },
-    {
-      "index": 60,
-      "root": "0x8c410cb1154fcc7e0f69d5c51aa4f25e2649192bee4c4349cc0d1e9193a29c1f",
-      "attFrom": 67,
-      "attTo": 67,
-      "at": "2026-09-15T16:05:10.335Z",
-      "anchoredOn": []
     }
   ],
   "anchorLines": {
@@ -1187,12 +1197,6 @@
     ],
     "zero": [
       {
-        "checkpoint": 83,
-        "at": "2026-09-15T22:09:20.734Z",
-        "txid": "0xf2d3e3c17c631be2efb89ecb9914783571fdcd0a2f6a0a42032043921a2f55c0",
-        "explorer": "https://zscan.live/tx/0xf2d3e3c17c631be2efb89ecb9914783571fdcd0a2f6a0a42032043921a2f55c0"
-      },
-      {
         "checkpoint": 85,
         "at": "2026-09-15T22:15:54.740Z",
         "txid": "0x82903688c59481b7b504856d46728d5a2273578ce0860e40fd80a4729a234fda",
@@ -1215,6 +1219,12 @@
         "at": "2026-09-15T22:53:00.228Z",
         "txid": "0xc5f059972df66eb7351ac7b020fd77251db1d317e3a74d624193ea13876292df",
         "explorer": "https://zscan.live/tx/0xc5f059972df66eb7351ac7b020fd77251db1d317e3a74d624193ea13876292df"
+      },
+      {
+        "checkpoint": 89,
+        "at": "2026-09-15T23:08:30.593Z",
+        "txid": "0xe1d299070322178c38a082c82a446491e866c72ed1beb1c3418b493900ae61d3",
+        "explorer": "https://zscan.live/tx/0xe1d299070322178c38a082c82a446491e866c72ed1beb1c3418b493900ae61d3"
       }
     ]
   },
@@ -1315,19 +1325,19 @@
       "fingerprint": "nv-fp:1e332f98b5ef7b9b",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-15T22:52:58.665Z"
+      "verifiedAt": "2026-09-15T23:08:29.077Z"
     },
     {
       "fingerprint": "nv-fp:531b3f28a4c50a9a",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-15T22:52:58.387Z"
+      "verifiedAt": "2026-09-15T23:08:28.769Z"
     },
     {
       "fingerprint": "nv-fp:596ae055a9069b87",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-15T22:52:58.942Z"
+      "verifiedAt": "2026-09-15T23:08:29.358Z"
     }
   ],
   "discoveries": []
