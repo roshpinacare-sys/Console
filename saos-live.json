@@ -1,19 +1,26 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-09-16T07:09:54.186Z",
+  "generatedAt": "2026-09-16T08:09:14.788Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "7023345ea9c65689a8a3f6249d031d9ec51dceecc2dfe39a971e7fa54e7485b5",
+  "stateRoot": "d0cc8673c8ceadef6a232717f13517e5276145b6ddce3f1754662047dae6bc42",
   "genesis": {
     "done": false,
-    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-    "txid": "c049dd102b50bb7d0a670595d8cca5acf88065c8",
+    "treasury": null,
+    "txid": null,
     "symbol": "SAOS",
     "initialMint": "126682000",
     "maxSupply": "21000000000",
     "note": "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer headcorner, genesis 2026-09-05)"
   },
   "state": {
-    "wallets": {},
+    "wallets": {
+      "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
+        "pub": "STM6EML1FKrnTGHMkkudANMxvLejGfzi3qCkZZUrtfxggLafF6ZwW",
+        "nick": "network-treasury",
+        "at": null,
+        "txid": null
+      }
+    },
     "tokens": {},
     "balances": {},
     "supply": {},
@@ -24,13 +31,24 @@
       "rates": {}
     },
     "rewardsPaid": "0",
-    "treasury": null
+    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k"
   },
-  "ops": [],
+  "ops": [
+    {
+      "id": "genesis-saos-treasury",
+      "k": "wallet.create",
+      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+      "at": "2026-09-16T08:09:14.787Z",
+      "txid": "c049dd102b50bb7d0a670595d8cca5acf88065c8",
+      "block": 109623286,
+      "summary": "רישום ארנק \"network-treasury\" saos1CKtmFms…",
+      "d": null
+    }
+  ],
   "invalid": [],
   "verify": {
-    "replayed": 0,
-    "valid": 0,
+    "replayed": 1,
+    "valid": 1,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
