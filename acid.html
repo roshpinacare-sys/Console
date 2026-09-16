@@ -88,7 +88,7 @@ button{cursor:pointer;font-family:var(--sans)}
 .roles{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .role-chip{font-size:12px;font-family:var(--mono);border:1px solid var(--border2);border-radius:999px;padding:3px 12px;color:var(--dim)}
 .role-chip.on{border-color:var(--green);color:var(--green)}
-.role-chip.on::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:6px;vertical-align:middle}
+.role-chip.on::before{content:"✓ "}
 .disc-row{padding:12px 0;border-bottom:1px dashed var(--border);font-size:13px}
 .disc-row:last-child{border-bottom:none}
 .disc-row .dh{font-family:var(--mono);color:var(--gold);font-size:12px;direction:ltr}
@@ -276,12 +276,7 @@ var NODES = ["https://api.steemit.com", "https://api.justyy.com", "https://steem
 var $ = function (id) { return document.getElementById(id); };
 var state = { acc: null, posting: null, matched: [], discovery: null, verify: null, selfTest: null };
 
-/* סימני אישור/שלילה כ-SVG — מדיניות אפס-אימוג'י */
-var SVGO = '<svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.6l3.1 3.1L13 4.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-var SVGN = '<svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-
 function toast(msg) {
-
   var t = $("toast"); t.textContent = msg; t.classList.add("show");
   setTimeout(function () { t.classList.remove("show"); }, 2400);
 }
@@ -290,7 +285,7 @@ function setStat(el, msg, cls) { el.className = "status " + (cls || ""); el.inne
 var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
 function copyTxt(txt) {
   (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
-    .then(function () { toast("הועתק"); })
+    .then(function () { toast("הועתק ✓"); })
     .catch(function () { toast(txt); });
 }
 async function rpc(method, params) {
@@ -321,10 +316,10 @@ async function runSelfTest() {
     var all = st.pass === st.total;
     $("sttDot").className = "dot " + (all ? "g" : "r");
     $("sttSummary").innerHTML = all
-      ? '<span style="color:var(--green);font-weight:700">' + st.pass + "/" + st.total + " — המנוע אומת במלואו במחשב שלך</span> — <span class=\"mono\">" + esc(st.version) + "</span>"
+      ? '<span style="color:var(--green);font-weight:700">' + st.pass + "/" + st.total + " ✓ המנוע אומת במלואו במחשב שלך</span> — <span class=\"mono\">" + esc(st.version) + "</span>"
       : '<span style="color:var(--red);font-weight:700">' + st.pass + "/" + st.total + " — כשל במבחן עצמי!</span>";
     $("sttDetails").innerHTML = st.checks.map(function (c) {
-      return '<div class="stt-chk"><span class="' + (c.pass ? "p" : "f") + '">' + (c.pass ? '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.6l3.1 3.1L13 4.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>') + "</span><span>" + esc(c.name) + "</span></div>";
+      return '<div class="stt-chk"><span class="' + (c.pass ? "p" : "f") + '">' + (c.pass ? "✓" : "✗") + "</span><span>" + esc(c.name) + "</span></div>";
     }).join("");
     var sum = $("sttSummary");
     sum.style.cursor = "pointer";
@@ -397,8 +392,8 @@ async function runDiscovery() {
     $("progBar").style.width = "100%";
     if (res.found) {
       state.discovery = res;
-      setStat($("runStatus"), 'נמצא בדור ' + res.generations + " · " + res.evals + " הערכות · " + ms + "ms במחשב שלך", "ok");
-      $("resFound").textContent = "נמצא — " + taskId;
+      setStat($("runStatus"), '✓ נמצא בדור ' + res.generations + " · " + res.evals + " הערכות · " + ms + "ms במחשב שלך", "ok");
+      $("resFound").textContent = "✓ נמצא — " + taskId;
       $("resHash").textContent = res.hash;
       $("resGens").textContent = res.generations + " · " + res.evals;
       var proof = AcidEngine.proofBundle(res);
@@ -438,12 +433,12 @@ function runVerify() {
   var v = AcidEngine.verifyFull(state.discovery.program, state.discovery.taskId, state.discovery.seed);
   state.verify = v;
   $("verifyRows").innerHTML = v.tests.map(function (t) {
-    return '<div class="testrow"><span style="width:18px;flex:none" class="' + (t.pass ? "pass" : "fail") + '">' + (t.pass ? '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.6l3.1 3.1L13 4.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>') + '</span><span class="tname">' + esc(t.name) + '</span><span class="tdet">' + esc(t.detail) + "</span></div>";
+    return '<div class="testrow"><span style="width:18px;flex:none" class="' + (t.pass ? "pass" : "fail") + '">' + (t.pass ? "✓" : "✗") + '</span><span class="tname">' + esc(t.name) + '</span><span class="tdet">' + esc(t.detail) + "</span></div>";
   }).join("") +
   '<div class="testrow" style="border-top:1px solid var(--border);margin-top:4px"><span></span><span class="tname" style="font-weight:700;color:' + (v.verified ? "var(--green)" : "var(--red)") + '">' + (v.verified ? "מאומת — כל המבחנים עברו" : "לא מאומת — יש כשל") + "</span><span class=\"tdet\">" + v.passedCount + "/5</span></div>";
   $("verifyBox").className = "result-box show";
   updateAttestBtn();
-  if (v.verified) toast("התוכנית מאומתת 5/5");
+  if (v.verified) toast("התוכנית מאומתת 5/5 ✓");
 }
 
 /* ═══════════ שחזור — אותו זרע, אותה תוצאה ═══════════ */
@@ -458,12 +453,12 @@ async function runRepro() {
       generations: state.discovery.generations * 3, population: state.discovery.population,
     });
     if (res.found && res.hash === state.discovery.hash) {
-      setStat($("reproStatus"), SVGO + 'שוחזר בדיוק — אותו hash <span class="mono">' + esc(res.hash) + "</span> בדור " + res.generations + " (ריצה שנייה, אותו זרע)", "ok");
-      toast("שחזור מלא <svg width='11' height='11' viewBox='0 0 16 16' aria-hidden='true'><path d='M3 8.6l3.1 3.1L13 4.9' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg> — דטרמיניזם הוכח");
+      setStat($("reproStatus"), '✓ שוחזר בדיוק — אותו hash <span class="mono">' + esc(res.hash) + "</span> בדור " + res.generations + " (ריצה שנייה, אותו זרע)", "ok");
+      toast("שחזור מלא ✓ — דטרמיניזם הוכח");
     } else if (res.found) {
-      setStat($("reproStatus"), SVGN + 'hash שונה בריצה חוזרת — ' + esc(res.hash) + " — דווח למפעיל (באג דטרמיניזם!)", "err");
+      setStat($("reproStatus"), '✗ hash שונה בריצה חוזרת — ' + esc(res.hash) + " — דווח למפעיל (באג דטרמיניזם!)", "err");
     } else {
-      setStat($("reproStatus"), SVGN + "הריצה החוזרת לא מצאה — חוסר עקביות! דווח", "err");
+      setStat($("reproStatus"), "✗ הריצה החוזרת לא מצאה — חוסר עקביות! דווח", "err");
     }
   } catch (e) {
     setStat($("reproStatus"), "שגיאת שחזור: " + esc(e && e.message), "err");
@@ -514,7 +509,7 @@ async function connect() {
     $("sec").value = "";
     $("roleChips").innerHTML = matched.map(function (r) { return '<span class="role-chip on">' + r + "</span>"; }).join("");
     updateAttestBtn();
-    toast("מחובר לחתימה ");
+    toast("מחובר לחתימה ✓");
   } catch (e) {
     setStat($("lockStatus"), esc(e && e.message), "err");
   } finally {
@@ -526,7 +521,7 @@ function lock() {
   $("attLocked").className = "";
   $("attUnlocked").className = "hidden";
   setStat($("lockStatus"), "", "");
-  toast("המפתח נמחק מהזיכרון ");
+  toast("המפתח נמחק מהזיכרון ✓");
 }
 
 /* ═══════════ שידור הגילוי החתום ═══════════ */
@@ -558,8 +553,8 @@ async function attestDiscovery() {
       function (n) { return rpc("condenser_api.get_block_header", [n]); });
     setStat($("attestStatus"), '<span class="spin"></span>משודר לשרשרת הציבורית…');
     await rpc("condenser_api.broadcast_transaction", [signed]);
-    setStat($("attestStatus"), SVGO + "הגילוי שודר — חתום מ-@" + esc(state.acc) + " · מאתר את הקבלה בשרשרת…", "ok");
-    toast("הגילוי נחתם ושודר לשרשרת ");
+    setStat($("attestStatus"), "✓ הגילוי שודר — חתום מ-@" + esc(state.acc) + " · מאתר את הקבלה בשרשרת…", "ok");
+    toast("הגילוי נחתם ושודר לשרשרת ✓");
     $("note").value = "";
     $("attestResult").className = "result-box show";
     $("attestTxid").textContent = "sig " + signed.signatures[0].slice(0, 44) + "… · מחכה להכללה בבלוק…";
@@ -576,7 +571,7 @@ async function attestDiscovery() {
           try { pl = JSON.parse(String(hop[1].json || "{}")); } catch (e) { continue; }
           if (pl.id === payload.id) {
             $("attestTxid").innerHTML = 'txid <a href="https://steemscan.com/transaction/' + esc(entry.trx_id) + '" target="_blank" rel="noopener" style="color:var(--gold)">' + esc(entry.trx_id) + "</a> · block " + entry.block;
-            setStat($("attestStatus"), SVGO + "נקלט בשרשרת — בלוק " + entry.block + ". הלב ישחזר ויעיד בפעימה הקרובה.", "ok");
+            setStat($("attestStatus"), "✓ נקלט בשרשרת — בלוק " + entry.block + ". הלב ישחזר ויעיד בפעימה הקרובה.", "ok");
             return;
           }
         }
@@ -584,7 +579,7 @@ async function attestDiscovery() {
     }
     $("attestTxid").textContent = "sig " + signed.signatures[0].slice(0, 44) + "… · השידור עבר — הקבלה תופיע בהיסטוריית השער (gate.html)";
   } catch (e) {
-    setStat($("attestStatus"), SVGN + "השידור נכשל: " + esc(e && e.message), "err");
+    setStat($("attestStatus"), "✗ השידור נכשל: " + esc(e && e.message), "err");
   } finally {
     $("attestBtn").disabled = false;
     updateAttestBtn();
@@ -620,24 +615,24 @@ async function verifyDiscovery(i) {
   await sleep(30);
   try {
     if (d.ev && d.ev !== AcidEngine.ENGINE_VERSION) {
-      el.innerHTML = '<span class="fail"><svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> גרסת מנוע שונה (' + esc(d.ev) + " לעומת " + esc(AcidEngine.ENGINE_VERSION) + ") — לא ניתן לשחזר בגרסה זו</span>";
+      el.innerHTML = '<span class="fail">✗ גרסת מנוע שונה (' + esc(d.ev) + " לעומת " + esc(AcidEngine.ENGINE_VERSION) + ") — לא ניתן לשחזר בגרסה זו</span>";
       return;
     }
     var res = AcidEngine.discoverSync({ taskId: d.taskId, seed: d.seed, generations: Math.max(d.g * 3, 300), population: d.pop });
     if (!res.found) {
-      el.innerHTML = '<span class="fail"><svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> הריצה מחדש לא מצאה את הגילוי — אי-התאמה!</span>';
+      el.innerHTML = '<span class="fail">✗ הריצה מחדש לא מצאה את הגילוי — אי-התאמה!</span>';
       return;
     }
     if (res.hash !== d.hash) {
-      el.innerHTML = '<span class="fail"><svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> hash שונה: ' + esc(res.hash) + " ≠ " + esc(d.hash) + " — הגילוי לא שוחזר</span>";
+      el.innerHTML = '<span class="fail">✗ hash שונה: ' + esc(res.hash) + " ≠ " + esc(d.hash) + " — הגילוי לא שוחזר</span>";
       return;
     }
     var v = AcidEngine.verifyFull(res.program, d.taskId, d.seed);
     el.innerHTML = v.verified
-      ? '<span class="pass"><svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.6l3.1 3.1L13 4.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> שוחזר ואומת — אותה תוכנית (hash זהה) עברה 5/5 מבחנים במחשב שלך</span>'
-      : '<span class="fail"><svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> שוחזר אך האימות נכשל (' + v.passedCount + "/5)</span>";
+      ? '<span class="pass">✓ שוחזר ואומת — אותה תוכנית (hash זהה) עברה 5/5 מבחנים במחשב שלך</span>'
+      : '<span class="fail">✗ שוחזר אך האימות נכשל (' + v.passedCount + "/5)</span>";
   } catch (e) {
-    el.innerHTML = '<span class="fail"><svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> שגיאה: ' + esc(e && e.message) + "</span>";
+    el.innerHTML = '<span class="fail">✗ שגיאה: ' + esc(e && e.message) + "</span>";
   }
 }
 async function verifyPasted() {
@@ -658,10 +653,10 @@ async function verifyPasted() {
     if (res.found && res.hash === d.h) {
       var v = AcidEngine.verifyFull(res.program, d.t, d.s);
       setStat($("pasteStatus"), v.verified
-        ? SVGO + "שוחזר ואומת — אותה תוכנית, 5/5 מבחנים, במחשב שלך"
+        ? "✓ שוחזר ואומת — אותה תוכנית, 5/5 מבחנים, במחשב שלך"
         : "שוחזר אך האימות נכשל (" + v.passedCount + "/5)", v.verified ? "ok" : "err");
     } else {
-      setStat($("pasteStatus"), SVGN + "לא שוחזר — " + (res.found ? "hash שונה: " + res.hash : "החיפוש לא מצא"), "err");
+      setStat($("pasteStatus"), "✗ לא שוחזר — " + (res.found ? "hash שונה: " + res.hash : "החיפוש לא מצא"), "err");
     }
   } catch (e) {
     setStat($("pasteStatus"), "שגיאה: " + esc(e && e.message), "err");
