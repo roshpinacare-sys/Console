@@ -1,0 +1,48 @@
+# DEX-WATCH — צופה-ההפקדות הציבורי (Task 33)
+#
+# רץ בריפו הציבורי (דקות-Actions בלתי-מוגבלות) כל-20-דקות: סורק את
+# כתובות-ההפקדה האמיתיות (TRON/ETH/SOL/BTC) עם RPC ציבוריים, ומעדכן
+# את ספר-ההפקדות הפתוח שהאתר מציג ושלב-הדקס מאמת מולו תביעות-חתומות.
+# אפס-סודות, אפס-מפתחות, אפס-סנדבוקס — הציבור רואה בדיוק-את-מה-שהרשת רואה.
+
+name: dex-watch
+
+on:
+  schedule:
+    - cron: '7,27,47 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dex-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout the public console
+        uses: actions/checkout@v4
+
+      - name: Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Scan deposit addresses (keyless)
+        run: bun run dex/watch.mjs
+
+      - name: Publish the open deposit book
+        run: |
+          git config user.name "dex-watch[bot]"
+          git config user.email "dex-watch[bot]@users.noreply.github.com"
+          git add dex/deposits.json dex/watch.json
+          if git diff --cached --quiet; then
+            echo "no new deposits — the book is unchanged"
+          else
+            git commit -m "dex-watch: $(date -u +%FT%TZ) · $(jq -r '.depositsTotal' dex/watch.json) deposits · $(jq -r '.chains | to_entries | map("\(.key) \(.value)") | join(" · ")' dex/watch.json)"
+            for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done
+          fi
