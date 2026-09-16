@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-16T22:47:09Z",
+ "generatedAt": "2026-09-16T23:30:15Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -108,15 +108,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 7,
-    "success": 7,
+    "runs_sampled": 8,
+    "success": 8,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17
+    "avgDurS": 16.8
    },
    "lastRun": {
-    "at": "2026-09-16T22:36:52Z",
+    "at": "2026-09-16T23:27:58Z",
     "conclusion": "success"
    }
   },
@@ -141,15 +141,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 39,
-    "success": 38,
+    "runs_sampled": 40,
+    "success": 39,
     "failure": 1,
     "other": 0,
-    "successRate": 97.4,
+    "successRate": 97.5,
     "avgDurS": 15.8
    },
    "lastRun": {
-    "at": "2026-09-16T21:54:07Z",
+    "at": "2026-09-16T22:53:22Z",
     "conclusion": "success"
    }
   },
@@ -174,15 +174,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 64,
-    "success": 64,
+    "runs_sampled": 66,
+    "success": 66,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.4
+    "avgDurS": 13.3
    },
    "lastRun": {
-    "at": "2026-09-16T22:33:42Z",
+    "at": "2026-09-16T23:17:09Z",
     "conclusion": "success"
    }
   },
@@ -208,14 +208,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 81,
+    "success": 82,
     "failure": 0,
-    "other": 19,
-    "successRate": 81,
-    "avgDurS": 23.4
+    "other": 18,
+    "successRate": 82,
+    "avgDurS": 22.3
    },
    "lastRun": {
-    "at": "2026-09-16T22:37:07Z",
+    "at": "2026-09-16T23:28:11Z",
     "conclusion": "success"
    }
   },
@@ -385,6 +385,39 @@
    }
   },
   {
+   "id": "saos-sovereign-foundry-ci",
+   "name": "CI",
+   "repo": "saos-sovereign-foundry",
+   "visibility": "public",
+   "schedule": "push / PR",
+   "layer": "QA",
+   "role": {
+    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since - an honest red mark, kept visible until the foundry is either repaired or retired.",
+    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז - סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."
+   },
+   "input": {
+    "en": "push to main",
+    "he": "דחיפה ל-main"
+   },
+   "output": {
+    "en": "lint + typecheck + build + api + concurrency verdict",
+    "he": "פסק lint + typecheck + build + api + מקביליות"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 1,
+    "failure": 99,
+    "other": 0,
+    "successRate": 1,
+    "avgDurS": 137.7
+   },
+   "lastRun": {
+    "at": "2026-09-16T23:20:59Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "saos-sovereign-platform-platform-selftest",
    "name": "platform-selftest",
    "repo": "saos-sovereign-platform",
@@ -509,10 +542,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 62.8
+    "avgDurS": 63
    },
    "lastRun": {
-    "at": "2026-09-16T22:35:04Z",
+    "at": "2026-09-16T23:02:51Z",
     "conclusion": "success"
    }
   },
@@ -537,15 +570,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 72,
-    "success": 67,
+    "runs_sampled": 73,
+    "success": 68,
     "failure": 3,
     "other": 2,
-    "successRate": 93.1,
-    "avgDurS": 70.2
+    "successRate": 93.2,
+    "avgDurS": 71.5
    },
    "lastRun": {
-    "at": "2026-09-16T22:32:31Z",
+    "at": "2026-09-16T23:08:24Z",
     "conclusion": "success"
    }
   },
@@ -669,49 +702,16 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 59,
-    "success": 57,
+    "runs_sampled": 60,
+    "success": 58,
     "failure": 2,
     "other": 0,
-    "successRate": 96.6,
+    "successRate": 96.7,
     "avgDurS": 40
    },
    "lastRun": {
-    "at": "2026-09-16T22:07:59Z",
+    "at": "2026-09-16T23:07:48Z",
     "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-sovereign-foundry-ci",
-   "name": "CI",
-   "repo": "saos-sovereign-foundry",
-   "visibility": "public",
-   "schedule": "push / PR",
-   "layer": "QA",
-   "role": {
-    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since - an honest red mark, kept visible until the foundry is either repaired or retired.",
-    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז - סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "lint + typecheck + build + api + concurrency verdict",
-    "he": "פסק lint + typecheck + build + api + מקביליות"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 0,
-    "failure": 100,
-    "other": 0,
-    "successRate": 0,
-    "avgDurS": 137.8
-   },
-   "lastRun": {
-    "at": "2026-09-14T17:37:44Z",
-    "conclusion": "failure"
    }
   },
   {
@@ -768,15 +768,15 @@
    },
    "state": "dormant",
    "stats": {
-    "runs_sampled": 11,
-    "success": 10,
+    "runs_sampled": 12,
+    "success": 11,
     "failure": 0,
     "other": 1,
-    "successRate": 90.9,
-    "avgDurS": 30.1
+    "successRate": 91.7,
+    "avgDurS": 30.8
    },
    "lastRun": {
-    "at": "2026-09-16T22:46:37Z",
+    "at": "2026-09-16T23:29:49Z",
     "conclusion": null
    }
   }
