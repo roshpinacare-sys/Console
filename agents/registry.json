@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-16T23:36:08Z",
+ "generatedAt": "2026-09-16T23:38:10Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -121,6 +121,39 @@
    }
   },
   {
+   "id": "console-agents-watch",
+   "name": "agents-watch",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 14,
+    "success": 13,
+    "failure": 0,
+    "other": 1,
+    "successRate": 92.9,
+    "avgDurS": 31.4
+   },
+   "lastRun": {
+    "at": "2026-09-16T23:35:33Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "console-console-publish",
    "name": "console-publish",
    "repo": "Console",
@@ -208,14 +241,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 82,
+    "success": 81,
     "failure": 0,
-    "other": 18,
-    "successRate": 82,
+    "other": 19,
+    "successRate": 81,
     "avgDurS": 23.6
    },
    "lastRun": {
-    "at": "2026-09-16T23:35:22Z",
+    "at": "2026-09-16T23:36:10Z",
     "conclusion": "success"
    }
   },
@@ -679,39 +712,6 @@
    "lastRun": {
     "at": "2026-09-16T23:07:48Z",
     "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-agents-watch",
-   "name": "agents-watch",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
-   },
-   "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
-   },
-   "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
-   },
-   "state": "dormant",
-   "stats": {
-    "runs_sampled": 13,
-    "success": 12,
-    "failure": 0,
-    "other": 1,
-    "successRate": 92.3,
-    "avgDurS": 30.7
-   },
-   "lastRun": {
-    "at": "2026-09-16T23:35:33Z",
-    "conclusion": null
    }
   }
  ]
