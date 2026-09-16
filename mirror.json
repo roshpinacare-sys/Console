@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-16T13:10:09.736Z",
+  "generatedAt": "2026-09-16T14:09:38.089Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth — no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 126,
-    "checkpoints": 119,
+    "attestations": 127,
+    "checkpoints": 120,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 125
+      "VERIFIED": 126
     },
-    "headHash": "0xefa44e728d6feccbbbad1a21f7abb0cd818e80e1044f3f4ceaf04e66357300d5"
+    "headHash": "0xea0d4f75d2fa12e9a49b4807c53195839c98195dbbbe36b9611923f96d8e5ac4"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 103,
-      "lastAttestationSeq": 126,
-      "lastAttestationAt": "2026-09-16T12:40:41.559Z"
+      "attestations": 104,
+      "lastAttestationSeq": 127,
+      "lastAttestationAt": "2026-09-16T13:11:05.169Z"
     },
     {
       "name": "weave-market-regulator",
@@ -99,6 +99,14 @@
     }
   ],
   "attestations": [
+    {
+      "seq": 127,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-16T13:11:05.169Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #119 root 0xefa44e728d6feccb… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) — עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
+    },
     {
       "seq": 126,
       "type": "ANCHOR",
@@ -1050,24 +1058,26 @@
       "at": "2026-09-14T14:05:38.716Z",
       "agentName": "weave-relayer",
       "claim": "EVM-3 replay-protection לזהויות סוכנים אומת ב-DEVNET: אתגרי nonce חד-פעמיים, רוטציה חתומה EIP-712 עם nonce, ודחיית מפתח משוך"
-    },
-    {
-      "seq": 7,
-      "type": "BUILD",
-      "status": "VERIFIED",
-      "at": "2026-09-14T12:37:56.864Z",
-      "agentName": "weave-auditor",
-      "claim": "שער L1: golden replay — בנייה מקלון ריק שוחזרה"
     }
   ],
   "checkpoints": [
+    {
+      "index": 120,
+      "root": "0xea0d4f75d2fa12e9a49b4807c53195839c98195dbbbe36b9611923f96d8e5ac4",
+      "attFrom": 127,
+      "attTo": 127,
+      "at": "2026-09-16T13:11:05.197Z",
+      "anchoredOn": []
+    },
     {
       "index": 119,
       "root": "0xefa44e728d6feccbbbad1a21f7abb0cd818e80e1044f3f4ceaf04e66357300d5",
       "attFrom": 126,
       "attTo": 126,
       "at": "2026-09-16T12:40:41.584Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "zero"
+      ]
     },
     {
       "index": 118,
@@ -1336,14 +1346,6 @@
       "attTo": 98,
       "at": "2026-09-15T23:26:31.529Z",
       "anchoredOn": []
-    },
-    {
-      "index": 90,
-      "root": "0x24a389ff39668abeefa78254fd1f36dddd05dbb889f9a956c63f43c1426de42a",
-      "attFrom": 97,
-      "attTo": 97,
-      "at": "2026-09-15T23:08:38.635Z",
-      "anchoredOn": []
     }
   ],
   "anchorLines": {
@@ -1381,12 +1383,6 @@
     ],
     "zero": [
       {
-        "checkpoint": 114,
-        "at": "2026-09-16T10:09:44.274Z",
-        "txid": "0x6e3cea023c5578802433947dca337b7711398642fccb6b487540fc543e4cd7da",
-        "explorer": "https://zscan.live/tx/0x6e3cea023c5578802433947dca337b7711398642fccb6b487540fc543e4cd7da"
-      },
-      {
         "checkpoint": 115,
         "at": "2026-09-16T10:34:30.055Z",
         "txid": "0x42f2f9e3a0f76efac9adffc9fe9040bd664b2d01204eabc0492d736f6b47f237",
@@ -1409,6 +1405,12 @@
         "at": "2026-09-16T12:40:33.760Z",
         "txid": "0x3e1ae1953c7116adefc849c08037e4751a6b624489ce2ec5669c1f00a918bab5",
         "explorer": "https://zscan.live/tx/0x3e1ae1953c7116adefc849c08037e4751a6b624489ce2ec5669c1f00a918bab5"
+      },
+      {
+        "checkpoint": 119,
+        "at": "2026-09-16T13:11:00.368Z",
+        "txid": "0xd90674703f68729f64552314f0f73ec42672ad42ccbcee35375212f3f9f88fc0",
+        "explorer": "https://zscan.live/tx/0xd90674703f68729f64552314f0f73ec42672ad42ccbcee35375212f3f9f88fc0"
       }
     ]
   },
@@ -1509,19 +1511,19 @@
       "fingerprint": "nv-fp:1e332f98b5ef7b9b",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-16T12:12:50.094Z"
+      "verifiedAt": "2026-09-16T13:10:54.774Z"
     },
     {
       "fingerprint": "nv-fp:531b3f28a4c50a9a",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-16T12:40:02.007Z"
+      "verifiedAt": "2026-09-16T13:10:51.280Z"
     },
     {
       "fingerprint": "nv-fp:596ae055a9069b87",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-16T12:40:32.608Z"
+      "verifiedAt": "2026-09-16T13:10:59.028Z"
     }
   ],
   "discoveries": []
