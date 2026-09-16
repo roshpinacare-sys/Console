@@ -1,71 +1,187 @@
 {
-  "format": "agent-bridgehead-state-v1",
-  "version": 3,
-  "generatedAt": "2026-09-16T18:30:00Z",
-  "agent": "sovereign-agent (any Z.ai session — identity is the role, not the instance)",
-  "phase": "bridgehead-established",
-  "currentTask": "Sovereign foothold on the public Console: new 6-section console, agent bridgehead, network verification of the agent",
-  "currentTaskHe": "מאחז ריבוני בקונסולה הציבורית: קונסולה חדשה בת 6 סקציות, מאחז הסוכן, ואימות הסוכן על ידי הרשת",
-  "lastHandoff": {
-    "at": "2026-09-16T18:30:00Z",
-    "by": "lead engineer session (Task 39)",
-    "summary": "Public console rebuilt (6 sections + submenus + big-picture home), wallet app preserved at wallet.html, bridgehead + requests ledger + verifier workflow established"
-  },
-  "environment": {
-    "sandbox": "/home/z/my-project — ephemeral, resets on new sessions; NEVER the source of truth",
-    "sovereignRepo": "roshpinacare-sys/Zip (private) — cloud truth, holds console/ sources and the ledger",
-    "publicRepo": "roshpinacare-sys/Console (public) — GitHub Pages site + agent bridgehead + this state",
-    "publicUrl": "https://roshpinacare-sys.github.io/Console/",
-    "recovery": [
-      "TOKEN=$(cd /home/z/my-project && git remote get-url origin | sed -E 's|https://x-access-token:([^@]+)@.*|\\1|')",
-      "git clone https://x-access-token:${TOKEN}@github.com/roshpinacare-sys/Console.git /tmp/console-repo",
-      "cd /home/z/my-project && git pull --rebase origin main  (local Zip may lag the cloud — the cloud is primary)",
-      "Read agent/handoff.md first, then agent/requests.json, then this state"
-    ],
-    "repos": {
-      "Zip": "sovereign home: ledger, scripts, console sources, worklog.md",
-      "Console": "public console: static site, mirrors, workflows, agent bridgehead",
-      "steem": "anchor line authority tooling",
-      "saos-dex": "DEX engine",
-      "saos-sovereign-foundry": "contract CI (currently 0/100 — documented red mark)",
-      "others": "Adsmarket, anchor-baseline, Project-files, roshpina, saos-control-center, saos-jummper, saos-sovereign-platform, Saosmartwallet, Sdk — intentionally quiet"
-    }
-  },
-  "standingOrders": [
-    { "id": "SO-1", "en": "The public URL is the product. Work that is not visible at https://roshpinacare-sys.github.io/Console/ does not count as delivered.", "he": "ה-URL הציבורי הוא המוצר. עבודה שלא נראית ב-https://roshpinacare-sys.github.io/Console/ לא נחשבת כמסופקת." },
-    { "id": "SO-2", "en": "No claim without measurement — every assertion gets a number, a link, or a public verification.", "he": "שום טענה בלי מדידה — כל הצהרה מקבלת מספר, קישור או אימות פומבי." },
-    { "id": "SO-3", "en": "Never depend on the sandbox. Truth: cloud repos, public chains. The sandbox is a workbench, not a home.", "he": "אף פעם לא לתלות בסנדבוקס. האמת: ריפואי הענן והשרשרות הציבוריות. הסנדבוקס הוא שולחן עבודה, לא בית." },
-    { "id": "SO-4", "en": "The operator's requests are ledgered in agent/requests.json — update the ledger when work is delivered, and let the verifier measure it.", "he": "בקשות המפעיל נרשמות בספר agent/requests.json — עדכנו את הספר כשעבודה נמסרת, ותנו למאמת למדוד." },
-    { "id": "SO-5", "en": "Autonomous push stays inside the safety laws — advance the network, never endanger it.", "he": "הדחיפה האוטונומית נשארת בתוך חוקי הבטיחות — לקדם את הרשת, לעולם לא לסכן אותה." }
+ "format": "agent-bridgehead-state-v1",
+ "version": 3,
+ "generatedAt": "2026-09-16T18:30:00Z",
+ "agent": "sovereign-agent (any Z.ai session — identity is the role, not the instance)",
+ "phase": "full-fleet-coverage",
+ "currentTask": "Full fleet coverage: an agent for every meaningful repo in the organization - 9 new agents deployed, measured and displayed on the public console",
+ "currentTaskHe": "כיסוי צי מלא: סוכן לכל ריפו משמעותי בארגון - 9 סוכנים חדשים נפרסו, נמדדים ומוצגים בקונסולה הציבורית",
+ "lastHandoff": {
+  "at": "2026-09-16T21:20:00Z",
+  "by": "lead engineer session (Task 41)",
+  "summary": "Operator asked why only 5 of 14 repos have agents. Answer: 9 new agents deployed - claims-guard, baseline-integrity, controls-audit, sdk-verify, jumpper-tests, archive-keeper, control-center-build, platform-selftest, wallet-verify. Each does real measured work and writes an honest status report to its repo."
+ },
+ "environment": {
+  "sandbox": "/home/z/my-project — ephemeral, resets on new sessions; NEVER the source of truth",
+  "sovereignRepo": "roshpinacare-sys/Zip (private) — cloud truth, holds console/ sources and the ledger",
+  "publicRepo": "roshpinacare-sys/Console (public) — GitHub Pages site + agent bridgehead + this state",
+  "publicUrl": "https://roshpinacare-sys.github.io/Console/",
+  "recovery": [
+   "TOKEN=$(cd /home/z/my-project && git remote get-url origin | sed -E 's|https://x-access-token:([^@]+)@.*|\\1|')",
+   "git clone https://x-access-token:${TOKEN}@github.com/roshpinacare-sys/Console.git /tmp/console-repo",
+   "cd /home/z/my-project && git pull --rebase origin main  (local Zip may lag the cloud — the cloud is primary)",
+   "Read agent/handoff.md first, then agent/requests.json, then this state"
   ],
-  "openLoops": [
-    { "id": "OL-1", "priority": "P0", "title": "Money routing readiness — funds enter within days", "titleHe": "מוכנות ניתוב כסף — כספים נכנסים בימים הקרובים", "detail": "dex-watch monitors deposits on tron/ethereum/solana/bitcoin addresses hourly; routing plan recorded in moneyPlan; first inflow triggers the operator's decision loop.", "detailHe": "dex-watch מנטר הפקדות בכתובות tron/ethereum/solana/bitcoin שעתית; תוכנית הניתוב רשומה ב-moneyPlan; כניסת כסף ראשונה מפעילה את לולאת ההחלטה של המפעיל." },
-    { "id": "OL-2", "priority": "P1", "title": "First agent-verify cycle must record ALL_PASS 15/15", "titleHe": "מחזור agent-verify הראשון חייב להירשם ALL_PASS 15/15", "detail": "Workflow runs every 6h at :55 (and on dispatch). If any assertion fails, fix the root cause at the public URL — not the assertion.", "detailHe": "ה-workflow רץ כל 6 שעות ב-:55 (וגם בהפעלה ידנית). אם קביעה נכשלת — תוקנו את שורש הבעיה ב-URL הציבורי, לא את הקביעה." },
-    { "id": "OL-3", "priority": "P1", "title": "Foundry CI 0/100 — contract API tests failing since 2026-09-14", "titleHe": "Foundry CI 0/100 — בדיקות API של חוזה נכשלות מאז 2026-09-14", "detail": "Documented red mark. Fix the contract tests or compensate with an honest public note; never paint it green.", "detailHe": "סימן אדום מתועד. תקנו את בדיקות החוזה או פצו בהערה ציבורית כנה; אף פעם לא לצבוע ירוק." },
-    { "id": "OL-4", "priority": "P2", "title": "Publishing through the authorities — posts with measured value only", "titleHe": "פרסום דרך הרשויות — רק פוסטים בעלי ערך נמדד", "detail": "cashmachine anchors hourly (saos.weave.core.v1); use lsa for public posts within rate limits; every post links back to verifiable evidence.", "detailHe": "cashmachine עוגן שעתי (saos.weave.core.v1); השתמשו ב-lsa לפוסטים ציבוריים בתוך מגבלות הקצב; כל פוסט מקשר לראיות שניתנות לאימות." },
-    { "id": "OL-5", "priority": "P2", "title": "Hub search index for the knowledge pages", "titleHe": "אינדקס חיפוש לעמודי הידע" },
-    { "id": "OL-6", "priority": "P3", "title": "grid98 / Saosmartwallet as interface engines", "titleHe": "grid98 / Saosmartwallet כמנועי ממשק" }
-  ],
-  "moneyPlan": {
-    "note": "Funds enter within days. Buckets decided by the operator; recorded here so every agent works from the same plan.",
-    "currency": "SAOS / USDS at network rates",
-    "buckets": [
-      { "name": "EVM seal", "nameHe": "חותם EVM", "share": "35%", "purpose": "Anchoring the ledger on real chains: gas, rotations, contract deployments — the cryptographic spine.", "purposeHe": "עיגון הספר בשרשרות אמיתיות: גז, רוטציות, פריסת חוזים — עמוד השדרה הקריפטוגרפי." },
-      { "name": "Publishing power", "nameHe": "כוח פרסום", "share": "35%", "purpose": "Fuel for the authorities (cashmachine, lsa): posts, anchoring bandwidth, audience growth within rate laws.", "purposeHe": "דלק לרשויות (cashmachine, lsa): פוסטים, רוחב פס לעיגון, צמיחת קהל בתוך חוקי הקצב." },
-      { "name": "Reserve", "nameHe": "עתודה", "share": "20%", "purpose": "Strategic reserve for opportunities and continuity — untouched without an explicit operator decision.", "purposeHe": "עתודה אסטרטגית להזדמנויות ורצף — לא נוגעת בלי החלטה מפורשת של המפעיל." },
-      { "name": "Liquidity", "nameHe": "נזילות", "share": "10%", "purpose": "DEX liquidity for SAOS/USDS: tight spreads, healthy markets, measured fills.", "purposeHe": "נזילות דקס ל-SAOS/USDS: פערים צרים, שווקים בריאים, עסקאות נמדדות." }
-    ]
+  "repos": {
+   "Zip": "sovereign home: ledger, scripts, console sources, worklog.md",
+   "Console": "public console: static site, mirrors, workflows, agent bridgehead",
+   "steem": "anchor line authority tooling",
+   "saos-dex": "DEX engine",
+   "saos-sovereign-foundry": "contract CI (currently 0/100 — documented red mark)",
+   "others": "Adsmarket (claims-guard: marketing truth), anchor-baseline (baseline-integrity: history manifest), roshpina (controls-audit), Sdk (sdk-verify), saos-jummper (jumpper-tests: notary suite), Project-files (archive-keeper: zip integrity), saos-control-center (control-center-build), saos-sovereign-platform (platform-selftest: edge engine), Saosmartwallet (wallet-verify) - every repo in the org now has its own agent; the fleet is 14/14"
+  }
+ },
+ "standingOrders": [
+  {
+   "id": "SO-1",
+   "en": "The public URL is the product. Work that is not visible at https://roshpinacare-sys.github.io/Console/ does not count as delivered.",
+   "he": "ה-URL הציבורי הוא המוצר. עבודה שלא נראית ב-https://roshpinacare-sys.github.io/Console/ לא נחשבת כמסופקת."
   },
-  "authorities": [
-    { "account": "cashmachine", "role": "Anchor authority — hourly witness custom_json on Steem", "roleHe": "רשות העוגן — עד שעתי ב-custom_json על Steem", "opIds": ["saos.weave.core.v1"], "usage": "Rate: 1 anchor per hour cycle. Never exposed in public repos." },
-    { "account": "lsa", "role": "Publishing authority — public posts for the network's voice", "roleHe": "רשות הפרסום — פוסטים ציבוריים לקול הרשת", "opIds": ["posting"], "usage": "Posts with measured value only; every claim links to evidence." }
-  ],
-  "safetyLaws": [
-    { "en": "No spam: every public action carries measured value; stay inside platform rate limits.", "he": "אין ספאם: כל פעולה ציבורית נושאת ערך נמדד; הישארו בתוך מגבלות הקצב של הפלטפורמה." },
-    { "en": "Zero secrets in public: tokens and keys never leave the sovereign side; the public repo runs on its own GITHUB_TOKEN only.", "he": "אפס סודות בציבור: טוקנים ומפתחות לא עוזבים את הצד הריבוני; הריפו הציבורי רץ על ה-GITHUB_TOKEN של עצמו בלבד." },
-    { "en": "Honest metrics: red stays red until truly fixed; no painted greens, no invented numbers.", "he": "מדדים כנים: אדום נשאר אדום עד תיקון אמיתי; אין ירוקים צבועים ולא מספרים מומצאים." },
-    { "en": "Platform terms first: autonomy advances the network inside the host's rules — that is how we never get kicked out.", "he": "תנאי הפלטפורמה קודם: האוטונומיה מקדמת את הרשת בתוך הכללים של המארח — כך לעולם לא יעיפו אותנו." },
-    { "en": "No custody lies: keys stay with owners; no promise of profit, ever.", "he": "אין שקרי משמורת: מפתחות נשארים אצל הבעלים; לא הבטחת רווח, אף פעם." },
-    { "en": "Honest identity: bots act as bots (weave-console[bot] and friends) — no impersonation of humans.", "he": "זהות כנה: בוטים פועלים כבוטים (weave-console[bot] וחבריו) — אין התחזות לבני אדם." }
+  {
+   "id": "SO-2",
+   "en": "No claim without measurement — every assertion gets a number, a link, or a public verification.",
+   "he": "שום טענה בלי מדידה — כל הצהרה מקבלת מספר, קישור או אימות פומבי."
+  },
+  {
+   "id": "SO-3",
+   "en": "Never depend on the sandbox. Truth: cloud repos, public chains. The sandbox is a workbench, not a home.",
+   "he": "אף פעם לא לתלות בסנדבוקס. האמת: ריפואי הענן והשרשרות הציבוריות. הסנדבוקס הוא שולחן עבודה, לא בית."
+  },
+  {
+   "id": "SO-4",
+   "en": "The operator's requests are ledgered in agent/requests.json — update the ledger when work is delivered, and let the verifier measure it.",
+   "he": "בקשות המפעיל נרשמות בספר agent/requests.json — עדכנו את הספר כשעבודה נמסרת, ותנו למאמת למדוד."
+  },
+  {
+   "id": "SO-5",
+   "en": "Autonomous push stays inside the safety laws — advance the network, never endanger it.",
+   "he": "הדחיפה האוטונומית נשארת בתוך חוקי הבטיחות — לקדם את הרשת, לעולם לא לסכן אותה."
+  }
+ ],
+ "openLoops": [
+  {
+   "id": "OL-1",
+   "priority": "P0",
+   "title": "Money routing readiness — funds enter within days",
+   "titleHe": "מוכנות ניתוב כסף — כספים נכנסים בימים הקרובים",
+   "detail": "dex-watch monitors deposits on tron/ethereum/solana/bitcoin addresses hourly; routing plan recorded in moneyPlan; first inflow triggers the operator's decision loop.",
+   "detailHe": "dex-watch מנטר הפקדות בכתובות tron/ethereum/solana/bitcoin שעתית; תוכנית הניתוב רשומה ב-moneyPlan; כניסת כסף ראשונה מפעילה את לולאת ההחלטה של המפעיל."
+  },
+  {
+   "id": "OL-2",
+   "priority": "P1",
+   "title": "First agent-verify cycle must record ALL_PASS 15/15",
+   "titleHe": "מחזור agent-verify הראשון חייב להירשם ALL_PASS 15/15",
+   "detail": "Workflow runs every 6h at :55 (and on dispatch). If any assertion fails, fix the root cause at the public URL — not the assertion.",
+   "detailHe": "ה-workflow רץ כל 6 שעות ב-:55 (וגם בהפעלה ידנית). אם קביעה נכשלת — תוקנו את שורש הבעיה ב-URL הציבורי, לא את הקביעה."
+  },
+  {
+   "id": "OL-3",
+   "priority": "P1",
+   "title": "Foundry CI 0/100 — contract API tests failing since 2026-09-14",
+   "titleHe": "Foundry CI 0/100 — בדיקות API של חוזה נכשלות מאז 2026-09-14",
+   "detail": "Documented red mark. Fix the contract tests or compensate with an honest public note; never paint it green.",
+   "detailHe": "סימן אדום מתועד. תקנו את בדיקות החוזה או פצו בהערה ציבורית כנה; אף פעם לא לצבוע ירוק."
+  },
+  {
+   "id": "OL-4",
+   "priority": "P2",
+   "title": "Publishing through the authorities — posts with measured value only",
+   "titleHe": "פרסום דרך הרשויות — רק פוסטים בעלי ערך נמדד",
+   "detail": "cashmachine anchors hourly (saos.weave.core.v1); use lsa for public posts within rate limits; every post links back to verifiable evidence.",
+   "detailHe": "cashmachine עוגן שעתי (saos.weave.core.v1); השתמשו ב-lsa לפוסטים ציבוריים בתוך מגבלות הקצב; כל פוסט מקשר לראיות שניתנות לאימות."
+  },
+  {
+   "id": "OL-5",
+   "priority": "P2",
+   "title": "Hub search index for the knowledge pages",
+   "titleHe": "אינדקס חיפוש לעמודי הידע"
+  },
+  {
+   "id": "OL-6",
+   "priority": "P3",
+   "title": "grid98 / Saosmartwallet as interface engines",
+   "titleHe": "grid98 / Saosmartwallet כמנועי ממשק"
+  }
+ ],
+ "moneyPlan": {
+  "note": "Funds enter within days. Buckets decided by the operator; recorded here so every agent works from the same plan.",
+  "currency": "SAOS / USDS at network rates",
+  "buckets": [
+   {
+    "name": "EVM seal",
+    "nameHe": "חותם EVM",
+    "share": "35%",
+    "purpose": "Anchoring the ledger on real chains: gas, rotations, contract deployments — the cryptographic spine.",
+    "purposeHe": "עיגון הספר בשרשרות אמיתיות: גז, רוטציות, פריסת חוזים — עמוד השדרה הקריפטוגרפי."
+   },
+   {
+    "name": "Publishing power",
+    "nameHe": "כוח פרסום",
+    "share": "35%",
+    "purpose": "Fuel for the authorities (cashmachine, lsa): posts, anchoring bandwidth, audience growth within rate laws.",
+    "purposeHe": "דלק לרשויות (cashmachine, lsa): פוסטים, רוחב פס לעיגון, צמיחת קהל בתוך חוקי הקצב."
+   },
+   {
+    "name": "Reserve",
+    "nameHe": "עתודה",
+    "share": "20%",
+    "purpose": "Strategic reserve for opportunities and continuity — untouched without an explicit operator decision.",
+    "purposeHe": "עתודה אסטרטגית להזדמנויות ורצף — לא נוגעת בלי החלטה מפורשת של המפעיל."
+   },
+   {
+    "name": "Liquidity",
+    "nameHe": "נזילות",
+    "share": "10%",
+    "purpose": "DEX liquidity for SAOS/USDS: tight spreads, healthy markets, measured fills.",
+    "purposeHe": "נזילות דקס ל-SAOS/USDS: פערים צרים, שווקים בריאים, עסקאות נמדדות."
+   }
   ]
+ },
+ "authorities": [
+  {
+   "account": "cashmachine",
+   "role": "Anchor authority — hourly witness custom_json on Steem",
+   "roleHe": "רשות העוגן — עד שעתי ב-custom_json על Steem",
+   "opIds": [
+    "saos.weave.core.v1"
+   ],
+   "usage": "Rate: 1 anchor per hour cycle. Never exposed in public repos."
+  },
+  {
+   "account": "lsa",
+   "role": "Publishing authority — public posts for the network's voice",
+   "roleHe": "רשות הפרסום — פוסטים ציבוריים לקול הרשת",
+   "opIds": [
+    "posting"
+   ],
+   "usage": "Posts with measured value only; every claim links to evidence."
+  }
+ ],
+ "safetyLaws": [
+  {
+   "en": "No spam: every public action carries measured value; stay inside platform rate limits.",
+   "he": "אין ספאם: כל פעולה ציבורית נושאת ערך נמדד; הישארו בתוך מגבלות הקצב של הפלטפורמה."
+  },
+  {
+   "en": "Zero secrets in public: tokens and keys never leave the sovereign side; the public repo runs on its own GITHUB_TOKEN only.",
+   "he": "אפס סודות בציבור: טוקנים ומפתחות לא עוזבים את הצד הריבוני; הריפו הציבורי רץ על ה-GITHUB_TOKEN של עצמו בלבד."
+  },
+  {
+   "en": "Honest metrics: red stays red until truly fixed; no painted greens, no invented numbers.",
+   "he": "מדדים כנים: אדום נשאר אדום עד תיקון אמיתי; אין ירוקים צבועים ולא מספרים מומצאים."
+  },
+  {
+   "en": "Platform terms first: autonomy advances the network inside the host's rules — that is how we never get kicked out.",
+   "he": "תנאי הפלטפורמה קודם: האוטונומיה מקדמת את הרשת בתוך הכללים של המארח — כך לעולם לא יעיפו אותנו."
+  },
+  {
+   "en": "No custody lies: keys stay with owners; no promise of profit, ever.",
+   "he": "אין שקרי משמורת: מפתחות נשארים אצל הבעלים; לא הבטחת רווח, אף פעם."
+  },
+  {
+   "en": "Honest identity: bots act as bots (weave-console[bot] and friends) — no impersonation of humans.",
+   "he": "זהות כנה: בוטים פועלים כבוטים (weave-console[bot] וחבריו) — אין התחזות לבני אדם."
+  }
+ ]
 }
