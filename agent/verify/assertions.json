@@ -1,118 +1,174 @@
 {
-  "format": "agent-verify-assertions-v1",
-  "baseUrl": "https://roshpinacare-sys.github.io/Console/",
-  "notes": {
-    "en": "The network's machine-checkable contract with the agent. Each assertion is measured against the LIVE site, never against the repo. No claim without measurement.",
-    "he": "החוזה הנבדק-מכונה של הרשת עם הסוכן. כל טענה נמדדת מול האתר החי, לעולם לא מול הריפו. שום טענה בלי מדידה."
+ "format": "agent-verify-assertions-v1",
+ "baseUrl": "https://roshpinacare-sys.github.io/Console/",
+ "notes": {
+  "en": "The network's machine-checkable contract with the agent. Each assertion is measured against the LIVE site, never against the repo. No claim without measurement.",
+  "he": "החוזה הנבדק-מכונה של הרשת עם הסוכן. כל טענה נמדדת מול האתר החי, לעולם לא מול הריפו. שום טענה בלי מדידה."
+ },
+ "assertions": [
+  {
+   "id": "A01",
+   "desc": {
+    "en": "Console home page is reachable (HTTP 200)",
+    "he": "דף הבית של הקונסולה זמין (HTTP 200)"
+   },
+   "kind": "http_ok",
+   "target": ""
   },
-  "assertions": [
-    {
-      "id": "A01",
-      "desc": { "en": "Console home page is reachable (HTTP 200)", "he": "דף הבית של הקונסולה זמין (HTTP 200)" },
-      "kind": "http_ok",
-      "target": ""
-    },
-    {
-      "id": "A02",
-      "desc": { "en": "At least 6 console sections marked data-console-section on the home page", "he": "לפחות 6 סקציות קונסולה המסומנות data-console-section בדף הבית" },
-      "kind": "contains_min",
-      "target": "",
-      "value": "data-console-section",
-      "min": 6
-    },
-    {
-      "id": "A03",
-      "desc": { "en": "At least one submenu marked data-submenu on the home page", "he": "לפחות תת-תפריט אחד המסומן data-submenu בדף הבית" },
-      "kind": "contains_min",
-      "target": "",
-      "value": "data-submenu",
-      "min": 1
-    },
-    {
-      "id": "A04",
-      "desc": { "en": "Big-picture hero block (hero-bigpicture) present on the home page", "he": "בלוק התמונה הגדולה (hero-bigpicture) קיים בדף הבית" },
-      "kind": "contains",
-      "target": "",
-      "value": "hero-bigpicture"
-    },
-    {
-      "id": "A05",
-      "desc": { "en": "Live fleet section (fleet-live) present on the home page", "he": "סקציית הצי החי (fleet-live) קיימת בדף הבית" },
-      "kind": "contains",
-      "target": "",
-      "value": "fleet-live"
-    },
-    {
-      "id": "A06",
-      "desc": { "en": "Admin area (admin-area) present on the home page", "he": "אזור האדמין (admin-area) קיים בדף הבית" },
-      "kind": "contains",
-      "target": "",
-      "value": "admin-area"
-    },
-    {
-      "id": "A07",
-      "desc": { "en": "Legacy wallet app preserved and reachable (wallet.html)", "he": "אפליקציית הארנק הוותיקה נשמרת וזמינה (wallet.html)" },
-      "kind": "http_ok",
-      "target": "wallet.html"
-    },
-    {
-      "id": "A08",
-      "desc": { "en": "Agents registry holds at least 13 agents", "he": "רישום הסוכנים מכיל לפחות 13 סוכנים" },
-      "kind": "json_min",
-      "target": "agents/registry.json",
-      "field": "agents.length",
-      "min": 13
-    },
-    {
-      "id": "A09",
-      "desc": { "en": "Public mirror holds at least 100 attestations", "he": "המראה הציבורית מכילה לפחות 100 אימותים" },
-      "kind": "json_min",
-      "target": "mirror.json",
-      "field": "stats.attestations",
-      "min": 100
-    },
-    {
-      "id": "A10",
-      "desc": { "en": "Network freshness verdict is FRESH in status.json", "he": "פסק הדין של טריות הרשת הוא FRESH ב-status.json" },
-      "kind": "json_field",
-      "target": "status.json",
-      "field": "freshness.verdict",
-      "value": "FRESH"
-    },
-    {
-      "id": "A11",
-      "desc": { "en": "Agent bridgehead state is reachable (agent/state.json)", "he": "מצב נקודת-הגשר של הסוכן זמין (agent/state.json)" },
-      "kind": "http_ok",
-      "target": "agent/state.json"
-    },
-    {
-      "id": "A12",
-      "desc": { "en": "Agent handoff protocol is reachable (agent/handoff.md)", "he": "פרוטוקול המסירה של הסוכן זמין (agent/handoff.md)" },
-      "kind": "http_ok",
-      "target": "agent/handoff.md"
-    },
-    {
-      "id": "A13",
-      "desc": { "en": "Requests ledger holds at least 12 requests", "he": "ספר הבקשות מכיל לפחות 12 בקשות" },
-      "kind": "json_min",
-      "target": "agent/requests.json",
-      "field": "requests.length",
-      "min": 12
-    },
-    {
-      "id": "A14",
-      "desc": { "en": "No emoji, dingbat or arrow characters in the home page (SVG icons only)", "he": "אין תווי אימוג'י, דינגבט או חץ בדף הבית (אייקוני SVG בלבד)" },
-      "kind": "regex_absent",
-      "target": "",
-      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}]",
-      "flag": "u"
-    },
-    {
-      "id": "A15",
-      "desc": { "en": "Verification results (verify-results) are visible on the home page", "he": "תוצאות האימות (verify-results) גלויות בדף הבית" },
-      "kind": "contains",
-      "target": "",
-      "value": "verify-results"
-    }
-  ]
+  {
+   "id": "A02",
+   "desc": {
+    "en": "At least 6 console sections marked data-console-section on the home page",
+    "he": "לפחות 6 סקציות קונסולה המסומנות data-console-section בדף הבית"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "data-console-section",
+   "min": 6
+  },
+  {
+   "id": "A03",
+   "desc": {
+    "en": "At least one submenu marked data-submenu on the home page",
+    "he": "לפחות תת-תפריט אחד המסומן data-submenu בדף הבית"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "data-submenu",
+   "min": 1
+  },
+  {
+   "id": "A04",
+   "desc": {
+    "en": "Big-picture hero block (hero-bigpicture) present on the home page",
+    "he": "בלוק התמונה הגדולה (hero-bigpicture) קיים בדף הבית"
+   },
+   "kind": "contains",
+   "target": "",
+   "value": "hero-bigpicture"
+  },
+  {
+   "id": "A05",
+   "desc": {
+    "en": "Live fleet section (fleet-live) present on the home page",
+    "he": "סקציית הצי החי (fleet-live) קיימת בדף הבית"
+   },
+   "kind": "contains",
+   "target": "",
+   "value": "fleet-live"
+  },
+  {
+   "id": "A06",
+   "desc": {
+    "en": "Admin area (admin-area) present on the home page",
+    "he": "אזור האדמין (admin-area) קיים בדף הבית"
+   },
+   "kind": "contains",
+   "target": "",
+   "value": "admin-area"
+  },
+  {
+   "id": "A07",
+   "desc": {
+    "en": "Legacy wallet app preserved and reachable (wallet.html)",
+    "he": "אפליקציית הארנק הוותיקה נשמרת וזמינה (wallet.html)"
+   },
+   "kind": "http_ok",
+   "target": "wallet.html"
+  },
+  {
+   "id": "A08",
+   "desc": {
+    "en": "Agents registry holds at least 13 agents",
+    "he": "רישום הסוכנים מכיל לפחות 13 סוכנים"
+   },
+   "kind": "json_min",
+   "target": "agents/registry.json",
+   "field": "agents.length",
+   "min": 13
+  },
+  {
+   "id": "A09",
+   "desc": {
+    "en": "Public mirror holds at least 100 attestations",
+    "he": "המראה הציבורית מכילה לפחות 100 אימותים"
+   },
+   "kind": "json_min",
+   "target": "mirror.json",
+   "field": "stats.attestations",
+   "min": 100
+  },
+  {
+   "id": "A10",
+   "desc": {
+    "en": "Network freshness verdict is FRESH in status.json",
+    "he": "פסק הדין של טריות הרשת הוא FRESH ב-status.json"
+   },
+   "kind": "json_field",
+   "target": "status.json",
+   "field": "freshness.verdict",
+   "value": "FRESH"
+  },
+  {
+   "id": "A11",
+   "desc": {
+    "en": "Agent bridgehead state is reachable (agent/state.json)",
+    "he": "מצב נקודת-הגשר של הסוכן זמין (agent/state.json)"
+   },
+   "kind": "http_ok",
+   "target": "agent/state.json"
+  },
+  {
+   "id": "A12",
+   "desc": {
+    "en": "Agent handoff protocol is reachable (agent/handoff.md)",
+    "he": "פרוטוקול המסירה של הסוכן זמין (agent/handoff.md)"
+   },
+   "kind": "http_ok",
+   "target": "agent/handoff.md"
+  },
+  {
+   "id": "A13",
+   "desc": {
+    "en": "Requests ledger holds at least 12 requests",
+    "he": "ספר הבקשות מכיל לפחות 12 בקשות"
+   },
+   "kind": "json_min",
+   "target": "agent/requests.json",
+   "field": "requests.length",
+   "min": 12
+  },
+  {
+   "id": "A14",
+   "desc": {
+    "en": "No emoji, dingbat or arrow characters in the home page (SVG icons only)",
+    "he": "אין תווי אימוג'י, דינגבט או חץ בדף הבית (אייקוני SVG בלבד)"
+   },
+   "kind": "regex_absent",
+   "target": "",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}]",
+   "flag": "u"
+  },
+  {
+   "id": "A15",
+   "desc": {
+    "en": "Verification results (verify-results) are visible on the home page",
+    "he": "תוצאות האימות (verify-results) גלויות בדף הבית"
+   },
+   "kind": "contains",
+   "target": "",
+   "value": "verify-results"
+  },
+  {
+   "id": "A16",
+   "desc": {
+    "en": "The achievement loop renders on the home page (container plus five gates)",
+    "he": "לולאת ההישגיות מוצגת בדף הבית (מיכל וחמישה שערים)"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "loop-gate",
+   "min": 5
+  }
+ ]
 }

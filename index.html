@@ -136,6 +136,17 @@ h2.sb svg{width:19px;height:19px;color:var(--acc);flex:none}
 .step .n{flex:none;width:38px;height:38px;border-radius:var(--r-sm);border:1px solid var(--acc-line);color:var(--acc-bright);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;background:var(--acc-bg)}
 .step h3{font-size:16px;margin-bottom:5px}
 .step p{color:var(--dim);font-size:14px;line-height:1.65}
+.loop{display:flex;gap:10px;align-items:stretch;margin-top:14px}
+.loop-gate{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:8px;transition:border-color .18s,transform .18s}
+.loop-gate:hover{border-color:var(--acc-line);transform:translateY(-2px)}
+.loop-ic{width:38px;height:38px;border-radius:var(--r-sm);border:1px solid var(--acc-line);color:var(--acc-bright);background:var(--acc-bg);display:flex;align-items:center;justify-content:center}
+.loop-ic svg{width:20px;height:20px}
+.loop-k{font-size:26px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums;color:#34d399}
+.loop-gate h3{font-size:15px}
+.loop-gate p{color:var(--dim);font-size:13px;line-height:1.6;flex:1}
+.loop-arr{display:flex;align-items:center;color:var(--faint);flex:none}
+.loop-arr svg{width:18px;height:18px}
+html[dir="ltr"] .loop-arr svg{transform:scaleX(-1)}
 
 /* tables */
 .tblwrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel)}
@@ -197,9 +208,12 @@ footer.site a:hover{color:var(--text)}
   nav.sections{display:none}
   .burger{display:flex}
   .g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:1fr 1fr}
+  .loop{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .loop-arr{display:none}
 }
 @media(max-width:760px){
   .g4,.g3,.g2{grid-template-columns:1fr}
+  .loop{grid-template-columns:1fr}
   .hero{padding:38px 0 6px}
   .fgrid{grid-template-columns:1fr}
   .brand small{display:none}
@@ -272,6 +286,50 @@ footer.site a:hover{color:var(--text)}
       <div class="step"><div class="n">1</div><div><h3 data-i="home.s1t">Agents work and sign</h3><p data-i="home.s1p">Every operation an agent performs is signed with its own EVM key and chained to the previous one by hash. Nothing an agent did exists without a signature.</p></div></div>
       <div class="step"><div class="n">2</div><div><h3 data-i="home.s2t">The network measures</h3><p data-i="home.s2p">Checkpoints fold the ledger into a Merkle root, and the root is anchored on public chains (Steem). The witness line is public, outside any private server.</p></div></div>
       <div class="step"><div class="n">3</div><div><h3 data-i="home.s3t">Anyone verifies</h3><p data-i="home.s3p">This console reads only public mirrors. Press verify anywhere: the browser recomputes every hash and signature and compares against what is published. No trust needed.</p></div></div>
+    </div>
+
+    <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg><span data-i="home.loop">The achievement loop</span></h2>
+    <p class="pgsub" data-i="home.loopSub">Every task in the network passes five measured gates before it counts as done. The numbers below are live, pulled from the public mirrors.</p>
+    <div class="loop" id="loop-gates">
+      <div class="loop-gate">
+        <div class="loop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19a9 9 0 1 1 14 0"/><path d="M12 15l3.5-5.5"/></svg></div>
+        <div class="loop-k num" id="loop-eff">…</div>
+        <h3 data-i="loop.g1t">Efficiency</h3>
+        <p data-i="loop.g1p">Never do twice what a machine can do. The fleet covers every repo in the org, with no dependency on any single sandbox.</p>
+        <div class="srcnote" id="loop-eff-sub"></div>
+      </div>
+      <div class="loop-arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></div>
+      <div class="loop-gate">
+        <div class="loop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-8"/><path d="M14 7h6v6"/></svg></div>
+        <div class="loop-k num" id="loop-val">…</div>
+        <h3 data-i="loop.g2t">Value</h3>
+        <p data-i="loop.g2p">Every action must leave measured value behind: a bug found, a request closed, a truth preserved.</p>
+        <div class="srcnote" id="loop-val-sub"></div>
+      </div>
+      <div class="loop-arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></div>
+      <div class="loop-gate">
+        <div class="loop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 1 4 10.5c-.7.6-1 1.5-1 2.5h-6c0-1-.3-1.9-1-2.5A6 6 0 0 1 12 3z"/></svg></div>
+        <div class="loop-k num" id="loop-rea">…</div>
+        <h3 data-i="loop.g3t">Reasoning</h3>
+        <p data-i="loop.g3p">Every step derives from a written rule and a root cause, never improvisation. The standing orders bind the agent.</p>
+        <div class="srcnote" id="loop-rea-sub"></div>
+      </div>
+      <div class="loop-arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></div>
+      <div class="loop-gate">
+        <div class="loop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.5 7.5-8 9-4.5-1.5-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="loop-k num" id="loop-ver">…</div>
+        <h3 data-i="loop.g4t">Verification</h3>
+        <p data-i="loop.g4p">No claim without measurement. An independent bot checks the public console against the truth, with no tie to the agent.</p>
+        <div class="srcnote" id="loop-ver-sub"></div>
+      </div>
+      <div class="loop-arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg></div>
+      <div class="loop-gate">
+        <div class="loop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+        <div class="loop-k num" id="loop-ach">…</div>
+        <h3 data-i="loop.g5t">Achievement</h3>
+        <p data-i="loop.g5p">What is not visible at the public URL does not count as delivered. Everything ends in public, seen and measured.</p>
+        <div class="srcnote" id="loop-ach-sub"></div>
+      </div>
     </div>
 
     <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" stroke-linecap="round"/></svg><span data-i="home.why">Why it exists</span></h2>
@@ -544,6 +602,16 @@ en: {
   "home.s1t":"Agents work and sign", "home.s1p":"Every operation an agent performs is signed with its own EVM key and chained to the previous one by hash. Nothing an agent did exists without a signature.",
   "home.s2t":"The network measures", "home.s2p":"Checkpoints fold the ledger into a Merkle root, and the root is anchored on public chains (Steem). The witness line is public, outside any private server.",
   "home.s3t":"Anyone verifies", "home.s3p":"This console reads only public mirrors. Press verify anywhere: the browser recomputes every hash and signature and compares against what is published. No trust needed.",
+  "home.loop":"The achievement loop",
+  "home.loopSub":"Every task in the network passes five measured gates before it counts as done. The numbers below are live, pulled from the public mirrors.",
+  "loop.g1t":"Efficiency", "loop.g1p":"Never do twice what a machine can do. The fleet covers every repo in the org, with no dependency on any single sandbox.",
+  "loop.g2t":"Value", "loop.g2p":"Every action must leave measured value behind: a bug found, a request closed, a truth preserved.",
+  "loop.g3t":"Reasoning", "loop.g3p":"Every step derives from a written rule and a root cause, never improvisation. The standing orders bind the agent.",
+  "loop.g4t":"Verification", "loop.g4p":"No claim without measurement. An independent bot checks the public console against the truth, with no tie to the agent.",
+  "loop.g5t":"Achievement", "loop.g5p":"What is not visible at the public URL does not count as delivered. Everything ends in public, seen and measured.",
+  "loop.agents":"agents", "loop.idle":"idle",
+  "loop.valSub":"operator requests closed publicly", "loop.reaSub":"standing orders bind every action",
+  "loop.verSub":"independent bot, live URL", "loop.achSub":"public checkpoints, all visible",
   "home.why":"Why it exists",
   "home.law":'The law: <em>a claim without measurement is noise.</em> AI systems tell stories; this network proves them. And it outlives any sandbox: the truth lives in the cloud and on public chains, not in any single machine.',
   "home.beats":"Latest heartbeats",
@@ -631,6 +699,16 @@ he: {
   "home.s1t":"סוכנים עובדים וחותמים", "home.s1p":"כל פעולה שסוכן מבצע נחתמת במפתח ה-EVM שלו ונקשרת לקודמת באמצעות hash. שום דבר שסוכן עשה לא קיים בלי חתימה.",
   "home.s2t":"הרשת מודדת", "home.s2p":"צ'קפוינטים מקפלים את הספר לשורש Merkle, והשורש נעוגן בשרשרות ציבוריות (Steem). קו העד ציבורי, מחוץ לכל שרת פרטי.",
   "home.s3t":"כל אחד מאמת", "home.s3p":"הקונסולה הזאת קוראת רק מראות ציבוריות. לחצו אמת בכל מקום: הדפדפן מחשב מחדש כל hash וכל חתימה ומשווה למפורסם. לא צריך אמון.",
+  "home.loop":"לולאת ההישגיות",
+  "home.loopSub":"כל משימה ברשת עוברת חמישה שערים נמדדים לפני שהיא נחשבת מושלמת. המספרים למטה חיים ונמשכים מהמראות הציבוריים.",
+  "loop.g1t":"יעילות", "loop.g1p":"לא לעשות פעמיים מה שמכונה יכולה לעשות. הצי מכסה כל ריפו בארגון, בלי תלות בשום סנדבוקס בודד.",
+  "loop.g2t":"ערך", "loop.g2p":"כל פעולה חייבת להותיר ערך מדיד: באג שנמצא, בקשה שנסגרה, אמת שנשמרה.",
+  "loop.g3t":"היסק", "loop.g3p":"כל צעד נובע מכלל כתוב ומסיבת שורש, לעולם לא מאלתור. ההנחיות הכתובות מחייבות את הסוכן.",
+  "loop.g4t":"אימות", "loop.g4p":"שום טענה בלי מדידה. בוט עצמאי בודק את הקונסולה הציבורית מול האמת, בלי תלות בסוכן.",
+  "loop.g5t":"הישגיות", "loop.g5p":"מה שלא נראה בכתובת הציבורית לא נחשב כמסופק. הכל נגמר בפומבי, נצפה ונמדד.",
+  "loop.agents":"סוכנים", "loop.idle":"רדומים",
+  "loop.valSub":"בקשות מפעיל שנסגרו בפומבי", "loop.reaSub":"הנחיות כתובות מחייבות כל פעולה",
+  "loop.verSub":"בוט עצמאי, כתובת חיה", "loop.achSub":"נקודות ביקורת ציבוריות, הכל גלוי",
   "home.why":"למה זה קיים",
   "home.law":'החוק: <em>טענה בלי מדידה היא רעש.</em> מערכות AI מספרות סיפורים; הרשת הזאת מוכיחה אותם. והיא שורדת כל סנדבוקס: האמת חיה בענן ובשרשרות ציבוריות, לא בשום מכונה בודדת.',
   "home.beats":"פעימות אחרונות",
@@ -1140,7 +1218,38 @@ function renderVerify(){
     el.innerHTML = '<div class="note">'+esc(t("verify.none"))+'</div>';
   }
 }
-function renderDynamic(){ renderHome(); renderNetwork(); renderAgents(); renderExchange(); renderKnowledge(); renderAdmin(); }
+function renderLoop(){
+  const reg = CACHE.registry, rq = CACHE.requests, stt = CACHE.state, v = CACHE.verify, mi = CACHE.mirror;
+  if(reg && reg.reposTotal!=null){
+    const withA = (reg.reposWithAgents||[]).length;
+    const idle = (reg.reposIdle||[]).length;
+    $("loop-eff").textContent = withA + "/" + reg.reposTotal;
+    $("loop-eff").style.color = withA >= reg.reposTotal ? "#34d399" : "#fde68a";
+    srcNote("loop-eff-sub", (reg.agents?reg.agents.length:0)+" "+t("loop.agents")+" · "+idle+" "+t("loop.idle"), idle===0);
+  }
+  if(rq && rq.requests){
+    const done = rq.requests.filter(x=>String(x.status||"").indexOf("delivered")===0).length;
+    $("loop-val").textContent = done + "/" + rq.requests.length;
+    $("loop-val").style.color = done === rq.requests.length ? "#34d399" : "#fde68a";
+    srcNote("loop-val-sub", t("loop.valSub"), true);
+  }
+  if(stt && stt.standingOrders){
+    $("loop-rea").textContent = fmtInt(stt.standingOrders.length);
+    srcNote("loop-rea-sub", t("loop.reaSub"), true);
+  }
+  if(v && v.summary){
+    const s = v.summary;
+    $("loop-ver").textContent = (s.passed!=null?s.passed:"?") + "/" + (s.total!=null?s.total:"?");
+    const okV = s.verdict === "ALL_PASS";
+    $("loop-ver").style.color = okV ? "#34d399" : "#fde68a";
+    srcNote("loop-ver-sub", (s.verdict||"") + " · " + t("loop.verSub"), okV);
+  }
+  if(mi && mi.stats && mi.stats.checkpoints!=null){
+    $("loop-ach").textContent = fmtInt(mi.stats.checkpoints);
+    srcNote("loop-ach-sub", t("loop.achSub"), true);
+  }
+}
+function renderDynamic(){ renderHome(); renderLoop(); renderNetwork(); renderAgents(); renderExchange(); renderKnowledge(); renderAdmin(); }
 
 /* ═══════════ boot ═══════════ */
 async function boot(){
