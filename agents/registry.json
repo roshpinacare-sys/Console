@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-16T15:15:19Z",
+ "generatedAt": "2026-09-16T15:16:08Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -85,39 +85,6 @@
    },
    "lastRun": {
     "at": "2026-09-16T14:54:51Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-pages-build-deployment",
-   "name": "pages-build-deployment",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
-   },
-   "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
-   },
-   "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 77,
-    "failure": 0,
-    "other": 23,
-    "successRate": 77,
-    "avgDurS": 27.7
-   },
-   "lastRun": {
-    "at": "2026-09-16T15:12:48Z",
     "conclusion": "success"
    }
   },
@@ -416,6 +383,72 @@
    "lastRun": {
     "at": "2026-09-15T11:09:00Z",
     "conclusion": "failure"
+   }
+  },
+  {
+   "id": "console-agents-watch",
+   "name": "agents-watch",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "dormant",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 0,
+    "other": 1,
+    "successRate": 0,
+    "avgDurS": 5
+   },
+   "lastRun": {
+    "at": "2026-09-16T15:15:41Z",
+    "conclusion": null
+   }
+  },
+  {
+   "id": "console-pages-build-deployment",
+   "name": "pages-build-deployment",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "dormant",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 76,
+    "failure": 0,
+    "other": 24,
+    "successRate": 76,
+    "avgDurS": 27.2
+   },
+   "lastRun": {
+    "at": "2026-09-16T15:15:22Z",
+    "conclusion": null
    }
   }
  ]
