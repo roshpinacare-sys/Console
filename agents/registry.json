@@ -1,27 +1,92 @@
 {
  "ok": true,
- "generatedAt": "2026-09-16T20:48:48Z",
+ "generatedAt": "2026-09-16T21:39:49Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
-  "Console",
-  "saos-dex",
-  "saos-sovereign-foundry",
-  "steem",
-  "Zip"
- ],
- "reposIdle": [
   "Adsmarket",
   "anchor-baseline",
+  "Console",
   "Project-files",
   "roshpina",
   "saos-control-center",
+  "saos-dex",
   "saos-jummper",
+  "saos-sovereign-foundry",
   "saos-sovereign-platform",
   "Saosmartwallet",
-  "Sdk"
+  "Sdk",
+  "steem",
+  "Zip"
  ],
+ "reposIdle": [],
  "agents": [
+  {
+   "id": "adsmarket-claims-guard",
+   "name": "claims-guard",
+   "repo": "Adsmarket",
+   "visibility": "public",
+   "schedule": "daily 06:11 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "Marketing truth guard - enforces the repo iron principle: landing pages complete, zero forbidden glyphs per operator policy, live links (a dead link to our own network is a failure), and counts the txid receipts backing the claims.",
+    "he": "שומר האמת של השיווק - אוכף את עקרון הברזל של הריפו: עמודי נחיתה שלמים, אפס גליפים אסורים לפי מדיניות המפעיל, קישורים חיים (קישור מת של הרשת שלנו הוא כשל), וספירת קבלות ה-txid שמגבות את הטענות."
+   },
+   "input": {
+    "en": "marketing pages + documents",
+    "he": "עמודי שיווק + מסמכים"
+   },
+   "output": {
+    "en": "agent/status.json truth report",
+    "he": "דוח אמת agent/status.json"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 4,
+    "success": 1,
+    "failure": 3,
+    "other": 0,
+    "successRate": 25,
+    "avgDurS": 9
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:35:48Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "anchor-baseline-baseline-integrity",
+   "name": "baseline-integrity",
+   "repo": "anchor-baseline",
+   "visibility": "public",
+   "schedule": "daily 07:13 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "Baseline history keeper - builds a SHA-256 manifest of all broadcasts, docs and downloads, compares to the previous manifest, reports additions and changes, and fails when history files are deleted.",
+    "he": "שומר ההיסטוריה של קו הבסיס - בונה מניפסט SHA-256 של כל השידורים, המסמכים וההורדות, משווה לקודם, מדווח תוספות ושינויים, ונכשל כשקבצי היסטוריה נמחקים."
+   },
+   "input": {
+    "en": "broadcasts + docs + download",
+    "he": "שידורים + מסמכים + הורדות"
+   },
+   "output": {
+    "en": "agent/status.json + manifest.sha256",
+    "he": "דוח agent/status.json + מניפסט SHA-256"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 1,
+    "failure": 1,
+    "other": 0,
+    "successRate": 50,
+    "avgDurS": 6.5
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:11:35Z",
+    "conclusion": "success"
+   }
+  },
   {
    "id": "console-agent-verify",
    "name": "agent-verify",
@@ -76,15 +141,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 37,
-    "success": 36,
+    "runs_sampled": 38,
+    "success": 37,
     "failure": 1,
     "other": 0,
-    "successRate": 97.3,
+    "successRate": 97.4,
     "avgDurS": 15.9
    },
    "lastRun": {
-    "at": "2026-09-16T19:52:57Z",
+    "at": "2026-09-16T20:54:56Z",
     "conclusion": "success"
    }
   },
@@ -109,15 +174,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 58,
-    "success": 58,
+    "runs_sampled": 61,
+    "success": 61,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.6
+    "avgDurS": 14.4
    },
    "lastRun": {
-    "at": "2026-09-16T20:34:29Z",
+    "at": "2026-09-16T21:34:22Z",
     "conclusion": "success"
    }
   },
@@ -143,14 +208,113 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 77,
+    "success": 76,
     "failure": 0,
-    "other": 23,
-    "successRate": 77,
-    "avgDurS": 26.8
+    "other": 24,
+    "successRate": 76,
+    "avgDurS": 24.6
    },
    "lastRun": {
-    "at": "2026-09-16T20:34:40Z",
+    "at": "2026-09-16T21:34:32Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "project-files-archive-keeper",
+   "name": "archive-keeper",
+   "repo": "Project-files",
+   "visibility": "public",
+   "schedule": "weekly Mon 11:31 UTC",
+   "layer": "ARCHIVE",
+   "role": {
+    "en": "Archive keeper - opens every canonical zip archive end to end to prove it is not corrupt, builds a SHA-256 manifest and a size catalog. A corrupt archive is a red mark.",
+    "he": "שומר הארכיון - פותח כל ארכיון קנוני מקצה לקצה כדי להוכיח שאינו מושחת, בונה מניפסט SHA-256 וקטלוג גדלים. ארכיון מושחת הוא סימן אדום."
+   },
+   "input": {
+    "en": "canonical zip archives",
+    "he": "ארכיוני zip קנוניים"
+   },
+   "output": {
+    "en": "agent/status.json + archives.sha256",
+    "he": "דוח agent/status.json + מניפסט ארכיונים"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 1,
+    "failure": 1,
+    "other": 0,
+    "successRate": 50,
+    "avgDurS": 7
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:11:56Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "roshpina-controls-audit",
+   "name": "controls-audit",
+   "repo": "roshpina",
+   "visibility": "public",
+   "schedule": "daily 08:17 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "Controls auditor - verifies the controls-that-exist document is present and substantial, every control documented in its own section, the agent briefing and patch specs exist, and counts the broadcasts archive.",
+    "he": "מבקר הבקרות - מוודה שמסמך הבקרות-שקיימות נוכח ומהותי, שכל בקרה מתועדת בסעיף משלה, שתדריך הסוכן ומפרטי הפאטץ' קיימים, וסופר את ארכיון השידורים."
+   },
+   "input": {
+    "en": "controls + briefing + patch specs",
+    "he": "בקרות + תדריך + מפרטי פאטץ'"
+   },
+   "output": {
+    "en": "agent/status.json audit report",
+    "he": "דוח ביקורת agent/status.json"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 1,
+    "failure": 1,
+    "other": 0,
+    "successRate": 50,
+    "avgDurS": 6
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:11:41Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "saos-control-center-control-center-build",
+   "name": "control-center-build",
+   "repo": "saos-control-center",
+   "visibility": "public",
+   "schedule": "daily 12:37 UTC",
+   "layer": "QA",
+   "role": {
+    "en": "Control center quality gate - installs dependencies from the frozen lockfile, generates the Prisma client, runs a full typecheck and a production build. Every failed step is recorded honestly.",
+    "he": "שעת איכות של מרכז הבקרה - מתקין תלויות מהנעילה הקפואה, מייצר לקוח Prisma, מריץ בדיקת טיפוסים מלאה ובילד ייצור. כל שלב שנכשל נרשם בכנות."
+   },
+   "input": {
+    "en": "source + lockfile",
+    "he": "קוד + נעילה"
+   },
+   "output": {
+    "en": "agent/status.json build verdict",
+    "he": "פסק בילד ב-agent/status.json"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 3,
+    "success": 1,
+    "failure": 2,
+    "other": 0,
+    "successRate": 33.3,
+    "avgDurS": 36.3
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:27:39Z",
     "conclusion": "success"
    }
   },
@@ -158,7 +322,7 @@
    "id": "saos-dex-dex-beat",
    "name": "dex-beat",
    "repo": "saos-dex",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "every 2h :23",
    "layer": "ALWAYS-UP",
    "role": {
@@ -188,10 +352,142 @@
    }
   },
   {
+   "id": "saos-jummper-jumpper-tests",
+   "name": "jumpper-tests",
+   "repo": "saos-jummper",
+   "visibility": "public",
+   "schedule": "daily 10:29 UTC",
+   "layer": "QA",
+   "role": {
+    "en": "Notary test suite - runs the full unit tests of the cross-chain proof notary (the hard gate), compiles the whole package, and attempts the live read-only witness demo with honest reporting of network failures.",
+    "he": "מבחני הנוטריון - מריץ את מלוא מבחני היחידה של נוטריון ההוכחות חוצה-השרשרות (השער הקשה), מקמפל את החבילה כולה, ומנסה את הדמו החי של עד הראייה הקריא עם דיווח כנה על כשלי רשת."
+   },
+   "input": {
+    "en": "test suite + package source",
+    "he": "מבחנים + קוד החבילה"
+   },
+   "output": {
+    "en": "agent/status.json with test counts",
+    "he": "דוח agent/status.json עם מספרי מבחנים"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 3,
+    "success": 1,
+    "failure": 2,
+    "other": 0,
+    "successRate": 33.3,
+    "avgDurS": 14
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:27:35Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "saos-sovereign-platform-platform-selftest",
+   "name": "platform-selftest",
+   "repo": "saos-sovereign-platform",
+   "visibility": "public",
+   "schedule": "daily 13:41 UTC",
+   "layer": "QA",
+   "role": {
+    "en": "Edge engine selftest - runs the deterministic selftest of the dual-layer irrigation engine (no network, no randomness) and loads the frozen rule layer. The engine must answer identical answers always - that is the parity promise.",
+    "he": "מבחן-עצמי של מנוע הקצה - מריץ את המבחן הדטרמיניסטי של מנוע ההשקיה דו-השכבתי (אפס רשת, אפס אקראיות) וטוען את שכבת הכללים הקפואה. המנוע חייב לענות תשובות זהות תמיד - זו הבטחת הפריטיות."
+   },
+   "input": {
+    "en": "python/irrigation_engine.py",
+    "he": "מנוע ההשקיה בפייתון"
+   },
+   "output": {
+    "en": "agent/status.json selftest verdict",
+    "he": "פסק מבחן-עצמי ב-agent/status.json"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 3,
+    "success": 1,
+    "failure": 2,
+    "other": 0,
+    "successRate": 33.3,
+    "avgDurS": 10
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:27:43Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "saosmartwallet-wallet-verify",
+   "name": "wallet-verify",
+   "repo": "Saosmartwallet",
+   "visibility": "public",
+   "schedule": "daily 14:43 UTC",
+   "layer": "QA",
+   "role": {
+    "en": "Wallet quality gate - installs dependencies, generates the Prisma client, runs a full typecheck and a production build of the seven-network wallet, and confirms the system-status reports exist.",
+    "he": "שעת איכות של הארנק - מתקין תלויות, מייצר לקוח Prisma, מריץ בדיקת טיפוסים מלאה ובילד ייצור של ארנק שבע-הרשתות, ומאשר שדוחות מצב-המערכת קיימים."
+   },
+   "input": {
+    "en": "source + lockfile",
+    "he": "קוד + נעילה"
+   },
+   "output": {
+    "en": "agent/status.json verify verdict",
+    "he": "פסק אימות ב-agent/status.json"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 4,
+    "success": 1,
+    "failure": 3,
+    "other": 0,
+    "successRate": 25,
+    "avgDurS": 67.5
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:35:53Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "sdk-sdk-verify",
+   "name": "sdk-verify",
+   "repo": "Sdk",
+   "visibility": "public",
+   "schedule": "daily 09:23 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "SDK content verifier - confirms the docs and broadcasts directories exist and are not empty, builds a SHA-256 manifest and counts the document inventory.",
+    "he": "מאמת תוכן ה-SDK - מאשר שתיקיות התיעוד והשידורים קיימות ולא ריקות, בונה מניפסט SHA-256 וסופר את מלאי המסמכים."
+   },
+   "input": {
+    "en": "docs + broadcasts",
+    "he": "תיעוד + שידורים"
+   },
+   "output": {
+    "en": "agent/status.json + manifest.sha256",
+    "he": "דוח agent/status.json + מניפסט SHA-256"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 1,
+    "failure": 1,
+    "other": 0,
+    "successRate": 50,
+    "avgDurS": 7.5
+   },
+   "lastRun": {
+    "at": "2026-09-16T21:11:46Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "steem-cloud-heart",
    "name": "cloud-heart",
    "repo": "steem",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "every 30 min",
    "layer": "ALWAYS-UP",
    "role": {
@@ -213,10 +509,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 62.3
+    "avgDurS": 62.5
    },
    "lastRun": {
-    "at": "2026-09-16T20:35:57Z",
+    "at": "2026-09-16T21:35:50Z",
     "conclusion": "success"
    }
   },
@@ -224,7 +520,7 @@
    "id": "zip-weave-anchor-lines",
    "name": "weave-anchor-lines",
    "repo": "Zip",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "bi-hourly :20 + on every beat",
    "layer": "WITNESS",
    "role": {
@@ -241,15 +537,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 69,
-    "success": 64,
+    "runs_sampled": 70,
+    "success": 65,
     "failure": 3,
     "other": 2,
-    "successRate": 92.8,
-    "avgDurS": 63.3
+    "successRate": 92.9,
+    "avgDurS": 65.9
    },
    "lastRun": {
-    "at": "2026-09-16T20:33:15Z",
+    "at": "2026-09-16T21:08:55Z",
     "conclusion": "success"
    }
   },
@@ -257,7 +553,7 @@
    "id": "zip-weave-anchor-zero",
    "name": "weave-anchor-zero",
    "repo": "Zip",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "dispatch (driven by lines)",
    "layer": "WITNESS",
    "role": {
@@ -290,7 +586,7 @@
    "id": "zip-weave-brain-restore",
    "name": "weave-brain-restore",
    "repo": "Zip",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "one-shot (manual)",
    "layer": "RECOVERY",
    "role": {
@@ -323,7 +619,7 @@
    "id": "zip-weave-ecosystem",
    "name": "weave-ecosystem",
    "repo": "Zip",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "daily 05:30",
    "layer": "ENFORCEMENT",
    "role": {
@@ -356,7 +652,7 @@
    "id": "zip-weave-heart",
    "name": "weave-heart",
    "repo": "Zip",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "hourly :00",
    "layer": "ALWAYS-UP",
    "role": {
@@ -373,15 +669,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 57,
-    "success": 55,
+    "runs_sampled": 58,
+    "success": 56,
     "failure": 2,
     "other": 0,
-    "successRate": 96.5,
-    "avgDurS": 40
+    "successRate": 96.6,
+    "avgDurS": 39.8
    },
    "lastRun": {
-    "at": "2026-09-16T20:09:08Z",
+    "at": "2026-09-16T21:08:27Z",
     "conclusion": "success"
    }
   },
@@ -393,8 +689,8 @@
    "schedule": "push / PR",
    "layer": "QA",
    "role": {
-    "en": "Foundry quality gate — lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since — an honest red mark, kept visible until the foundry is either repaired or retired.",
-    "he": "שעת איכות של ה-foundry — lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז — סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."
+    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since - an honest red mark, kept visible until the foundry is either repaired or retired.",
+    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז - סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."
    },
    "input": {
     "en": "push to main",
@@ -422,7 +718,7 @@
    "id": "zip-weave-anchor",
    "name": "weave-anchor",
    "repo": "Zip",
-   "visibility": "private",
+   "visibility": "public",
    "schedule": "dispatch (driven by lines)",
    "layer": "WITNESS",
    "role": {
@@ -472,15 +768,15 @@
    },
    "state": "dormant",
    "stats": {
-    "runs_sampled": 8,
-    "success": 7,
+    "runs_sampled": 9,
+    "success": 8,
     "failure": 0,
     "other": 1,
-    "successRate": 87.5,
-    "avgDurS": 28.9
+    "successRate": 88.9,
+    "avgDurS": 29.1
    },
    "lastRun": {
-    "at": "2026-09-16T20:48:22Z",
+    "at": "2026-09-16T21:39:20Z",
     "conclusion": null
    }
   }
