@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crisis Communication Playbook · SAOS</title>
+<meta name="description" content="Crisis Communication Playbook — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="index.html">Content hub</a>
+  <a class="lnk" href="../">Back to the console</a>
+</header>
+<main>
+<h1>Crisis Communication Playbook</h1><p>Four real precedents made this document: the RC stale-read correction, the key-rotation era, the wall-link-integrity catch, and our own confabulation incident. The pattern that worked every time: detect fast, verify against ground truth, publish the correction with evidence, institutionalize the lesson. This playbook turns that pattern into procedure.</p><hr><h2>Decision tree (first 60 minutes)</h2><ol><li><b>What broke?</b> Classify: (a) public claim that turned out wrong, (b) product defect visible to users, (c) security event (keys, access, funds), (d) internal-only failure nobody outside can observe.</li><li><b>Class (a) or (b): publish.</b> Wrong public claims get corrected publicly, same day, with the evidence trail. Template below.</li><li><b>Class (c): freeze, then decide.</b> Security events follow the disclosure policy: never narrate incidents externally. Capabilities and doctrine are publishable; the event itself is not. Internal record always.</li><li><b>Class (d): internal record.</b> Fix, test, log. Publish only if it changes a public claim.</li></ol><h2>Verification before communication</h2><p>No statement leaves without ground truth: re-read the commit, re-run the query, re-open the receipt. The confabulation incident (roast G13) happened exactly because analysis was written from a failed read instead of a re-fetch. Rule 4 of the disclosure policy exists for this moment.</p><h2>Correction template (class a/b)</h2><blockquote><b>Correction, [date]:</b> On [date] we published [the claim]. Ground-truth verification showed [what is actually true, with the evidence: commit, txid, measurement]. The correction: [what changed]. What we changed so it cannot repeat: [the rule, test, or gate]. The original text is preserved below / in the roast archive.</blockquote><p>Never silently edit a wrong claim. The correction is the asset.</p><h2>Who decides what</h2><div class="tbl"><table><thead><tr><th>Decision</th><th>Owner</th></tr></thead><tbody><tr><td>Publish a correction to a public claim</td><td>Marketing module, immediately, no approval needed (corrections are mandatory under policy rule 3)</td></tr><tr><td>Any statement about a security event</td><td>Owner only. Default answer: the doctrine line from the press kit</td></tr><tr><td>Pause a campaign mid-flight</td><td>Marketing module (pause first, discuss after)</td></tr><tr><td>Rewrite history of a published roast</td><td>Nobody. Roasts are append-only</td></tr></tbody></table></div><h2>Standing answers for hard moments</h2><ul><li>"Did you get hacked?" → "We don't discuss specific operational events; that is itself the security policy. Here is the doctrine that governs keys: [press-kit answer]."</li><li>"Your numbers changed." → "Numbers are dated snapshots by policy. Here is the measurement date and the current one: [fact-sheet]."</li><li>"You published something false." → "Yes. Here is the correction, the evidence, and the rule that prevents the repeat: [correction template]."</li><li>"Is the system down?" → status truth only: what is measured, since when, what is being done. Never "everything is fine" without a fresh measurement.</li></ul><h2>After-action (within 48h)</h2><ol><li>Roast entry archived (roast/ folder, numbered).</li><li>If the cause was process: a new numbered rule in disclosure-policy.md or brand.md.</li><li>If the cause was code: the fix commit linked in the fact-sheet with its measurement date.</li><li>One line in the next daily report so every agent learns it.</li></ol><h2>The one sentence that governs all of it</h2><p>A correction published with evidence builds more trust than a claim that was never wrong, because the audience never sees the claims you got right by luck. They only ever test the ones where you were caught. Get caught honestly.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

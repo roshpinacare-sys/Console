@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תורת הפעלה של תוכן: איך מייצרים איכות, לא רק חומר · SAOS</title>
+<meta name="description" content="תורת הפעלה של תוכן: איך מייצרים איכות, לא רק חומר — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="index.html">מרכז התוכן</a>
+  <a class="lnk" href="../">חזרה לקונסולה</a>
+</header>
+<main>
+<h1>תורת הפעלה של תוכן: איך מייצרים איכות, לא רק חומר</h1><blockquote>המסמך שעונה על "איך לעבוד נכון". כל מי שכותב בשם SAOS, סוכן או אדם, עובר דרך ששת השלבים כאן. התוצר של תהליך נכון הוא תוכן שמישהו בחוץ יכול לפעול לפיו: לאמת, להתקין, לפרסם, ללמוד. תוכן שאף אחד לא יכול לפעול לפיו הוא חומר, לא תוכן.</blockquote><hr><h2>ההבדל בין חומר לתוכן</h2><p>חומר הוא עובדה שנזרקה לדף: "יש לנו 32,603 tx/s". תוכן הוא עובדה עם קורא, הקשר, ופעולה: "כמה מהר השרשרת באמת? ריפליי של 65,238 עסקאות אמיתיות לקח 2,001ms. חשב בעצמך, ואם יש לך ארכיון, שחזר."</p><p><b>מבחן התוכן (לפני כתיבה, לא אחרי):</b></p><ol><li>מי הקורא המדויק? (שם תפקיד, לא "קהל רחב")</li><li>מה הוא יודע כבר, ומה יפתיע אותו?</li><li>מה הפעולה אחרי הקריאה? (קישור, פקודה, בדיקה, החלטה)</li><li>מאיפה כל מספר? (אם התשובה "זיכרון", לא כותבים)</li></ol><p>שאלה בלי תשובה = לא כותבים את הקטע. זה הכלל שמונע 90% מהסכסוך בין אמת לשיווק.</p><h2>ששת השלבים (ה-cipeline המחייב)</h2><h3>1. מחקר (Research)</h3><p>קוראים קומיטים, לא כותרות. כל מקור: שם ריפו, sha, תאריך. בודקים האם מישהו כבר כתב על זה (חיפוש ב-fact-sheet לפני כתיבה). <b>כלל אימות-הקריאה:</b> קריאה שנכשלה לא קיימת. לא כותבים מ"מה שנראה שקראנו".</p><h3>2. ביאור (Source of truth)</h3><p>כל עובדה חדשה נכנסת קודם ל-fact-sheet עם תאריך מדידה ומקור. שום תוכן שיווקי לא נכתב ישירות מקומיט; הוא נכתב מה-fact-sheet. זה מה שהופך עשרות קבצים למערכת אחת במקום לאוסף סותר.</p><h3>3. התאמה (Adapt)</h3><p>כל פריט ב-fact-sheet מקבל זוויות לפי קהל:</p><ul><li><b>מפתח:</b> הפקודה, ה-SDK, ה-API, מגבלות ידועות</li><li><b>משקיע/שותף:</b> המנגנון, ההגנה, מודל הצמיחה, הגבולות הכנים</li><li><b>קהילה:</b> הסיפור, המספר המפתיע, השאלה הפתוחה</li><li><b>משתמש פשוט:</b> הדימוי (מחברת, חותמת, נוטריון), הרווח האישי</li></ul><p>אותה עובדה, ארבע גזרות. אף פעם לא אותו טקסט מועתק.</p><h3>4. ביקורת (Review)</h3><p>שלוש סריקות מכניות לפני עין אנושית:</p><ul><li><b>סריקת מקפים:</b> אפס em/en dash. הוראת בעלים, נאכפת ב-assert בכל דחיפה</li><li><b>סריקת מילים אסורות:</b> הרשימה ב-style-human.md (delve, tapestry, seamless, robust, leverage, unlock, journey, crucial, in today's, in conclusion, ועוד)</li><li><b>סריקת מדיניות חשיפה:</b> אפס כתובות מחזיקות-כספים, אפס פרטי מפתחות, אפס נרטיב אירועים פנימיים, אפס טופולוגיית תשתית</li></ul><p>ואז קריאה בקול: כל משפט שנתקעים בו, נכתב מחדש.</p><h3>5. פרסום (Publish)</h3><p>דרך PUBLISH-DESK בלבד: שער החשיפה (scanExposure) רץ על כל טיוטה, HIGH חוסם עם רשימת תיקון, מתקנים ומגישים שוב. אף עוקף. תאריך הפצה ותגיות לפי network-strategy.md. עדכון = עריכה, אף פעם לא repost.</p><h3>6. מדידה (Measure)</h3><p>מה פורסם, מתי, באיזה מסילה, ואיזה קבלה מאמתת. פעם בשבוע: מה עבד (הצבעות, תגובות, קישורים שנפתחו), מה לא, ומה משתנים בגלל זה. בלי מדידה השלב החמישי הופך לניחוש עם תאריך.</p><h2>תפקידים (מי עושה מה)</h2><div class="tbl"><table><thead><tr><th>תפקיד</th><th>אחריות</th><th>גבול</th></tr></thead><tbody><tr><td>סוכני הרשת</td><td>מייצרים עובדות (קומיטים, מדידות, קבלות)</td><td>לא כותבים שיווק ישירות</td></tr><tr><td>מודול Adsmarket</td><td>מסנכרן fact-sheet, כותב ומתאים תוכן, סורק</td><td>לא ממציא עובדות, לא עוקף שער</td></tr><tr><td>PUBLISH-DESK</td><td>שער החשיפה והשידור בפועל</td><td>סמכות סופית על מה יוצא</td></tr><tr><td>בעלים</td><td>4 החלטות: פרסום, npm+gateway, גז, צילומים</td><td>אף אחד לא מחליט במקומו</td></tr></tbody></table></div><h2>אנטי-תבניות (קטלוג הטעויות שכבר עשינו)</h2><ol><li><b>קונפבולציה:</b> לכתוב מ"זיכרון קריאה שכשלה". תקדים G13. תיקון: כלל אימות-הקריאה</li><li><b>snapshot כ-live:</b> מספר נמדד בלי תאריך מתיישב בשעות. תקדים BIRSA v28. תיקון: כלל ה-snapshot</li><li><b>זמינות מדומה:</b> "יש מה להתקין היום" כשהחבילה לא פורסמה. תקדים npm 404. תיקון: כלל הזמינות (בדיקת חיות לפני פרסום פקודה)</li><li><b>דריסת כותב מקביל:</b> שני מסנכרנים, אותו קובץ. תקדים 10.32 כפול. תיקון: כלל 6 (fetch, מיזוג אדיטיבי, push מיידי)</li><li><b>מספר בלי מקור:</b> "כ-250 שידורים" שהפך ל"250 שידורים". תיקון: המספר המקורי עם ההקשר, או בלי המספר</li><li><b>טקסט קפוא:</b> תוכן שלא מתעדכן הופך לשקר עם תאריך. תיקון: derived-or-silence גם בתוכן (תאריכי אימות בכל מסמך חי)</li><li><b>קובץ שמוחקים לו את הקישורים:</b> נכס נמחק או זז, והאינדקסים ממשיכים להצביע עליו (תקדים המסמך הזה עצמו, שנעלם והושב). תיקון: סריקת קישורים מתים בכל אימות סבב</li></ol><h2>סוגי התוכן ומתי משתמשים בהם</h2><div class="tbl"><table><thead><tr><th>סוג</th><th>מתי</th><th>דוגמה קיימת</th></tr></thead><tbody><tr><td>כתבה אנושית</td><td>בניית אמון ארוכת-טווח</td><td>01-07 + en</td></tr><tr><td>פוסט חברתי</td><td>נוכחות יומית, הוכחה נקודתית</td><td>L1-L41 + fleet kit</td></tr><tr><td>מדריך (guide)</td><td>מי שרוצה לעשות משהו עכשיו</td><td>content/guides/</td></tr><tr><td>one-pager</td><td>פגישה, מייל, דוכן</td><td>onepager HE/EN</td></tr><tr><td>לנדינג</td><td>המבקר הראשון, SEO</td><td>index HE/EN</td></tr><tr><td>הסבר מונפש</td><td>מי שלא קורא טקסט</td><td>explainer HE/EN</td></tr><tr><td>press kit</td><td>עיתונאי, אנליסט</td><td>press/</td></tr><tr><td>מדיניות/תורת הפעלה</td><td>פנים-מערכתי</td><td>המסמך הזה</td></tr></tbody></table></div><h2>הקצב השבועי</h2><ul><li><b>כל גל פיתוח:</b> סינכרון fact-sheet (שעות, לא ימים)</li><li><b>יומי:</b> פוסט או שניים דרך PUBLISH-DESK לפי רוטציית ה-fleet kit</li><li><b>שבועי:</b> סקירת מדידה, רענון מספרי snapshot, עדכון לנדינג אם נפל דבר מה</li><li><b>חודשי:</b> roast חדש לארכיון (מה התיישן, מה נשבר, מה למדנו)</li></ul><h2>שורת הסיום</h2><p>איכות היא לא כתיבה יפה. איכות היא שרשרת: עובדה מאומתת → מקור מתוארך → זווית לקהל מדויק → ביקורת מכנית ואנושית → שער חשיפה → מדידה. כל חוליה חסרה והתוכן הופך לחומר. ואת ההבדל, הקורא מרגיש בשורה השנייה.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

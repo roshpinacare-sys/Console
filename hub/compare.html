@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAOS vs the alternatives: an honest comparison · SAOS</title>
+<meta name="description" content="SAOS vs the alternatives: an honest comparison — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="index.html">Content hub</a>
+  <a class="lnk" href="../">Back to the console</a>
+</header>
+<main>
+<h1>SAOS vs the alternatives: an honest comparison</h1><blockquote>Document rules: every line of ours is backed by a measurement or a receipt. Every competitor line is marked as "order of magnitude from public documentation" if we did not measure it ourselves. <b>And there is a "when not to use us" section, because anyone who does not have one is probably selling something.</b></blockquote><hr><h2>The main table</h2><div class="tbl"><table><thead><tr><th>Need</th><th>The accepted solution</th><th>SAOS</th><th>What we do not claim</th></tr></thead><tbody><tr><td><b>Permanent proof of existence for a document</b></td><td>Notary: 400 shekels and up, hours of work, a single point of trust · OpenTimestamps: free but anchored to Bitcoin alone, minutes to hours</td><td>$0.0000081 per record (batch of 10K, measured) · 5 independent rails · self-verification without a network</td><td>This is attestation, not enforcement: we prove existence, we do not force compliance</td></tr><tr><td><b>Cross-network state proof</b></td><td>Chainlink CCIP / LayerZero / Wormhole: gas + a signed verification committee you have to trust (history: Wormhole ~$320M, Ronin ~$600M)</td><td>Atomic clock: 6 networks resolved into one 32B root, keyless, $0, 15.9ms compute, 6.8ms verification, the other side reads the same public RPCs itself</td><td>Does not replace a price oracle with an SLA commitment; per-network finality reported as it is</td></tr><tr><td><b>Moving assets between chains</b></td><td>Custodial/multisig bridges, the most-hacked category in the industry (> $2B)</td><td>We are not a bridge in that sense: 1:1 wraps as a code invariant (supply==locked, 20 assets, every mint cites a lock) + SOVEREIGN-HAND (a building agent, the vault stamps through a gate)</td><td>The ETH contracts and the SOL software are in staging, not deployed; the total locked is small today (hundreds of dollars), published</td></tr><tr><td><b>Moving value between networks (speed)</b></td><td>A third-party bridge/custodian: 10 to 90 minutes + fees + one big point of trust</td><td>The sovereign conversion room: the money does not move, a 1:1 mirror on our network · measured live: 65/65 atomic legs, p50 88ms · external consolidation as an alternative honest route</td><td>The mirror requires our network as the arena; a live cutoff of balances (not a proof of external capital depth)</td></tr><tr><td><b>Trading without MEV sandwich</b></td><td>DEXs with an open mempool, sandwiches are a fact of life</td><td>Uniform CoW settlement per block: one clearing price, surplus returned to traders, <b>structural immunity</b> (there is no queue to attack) · verified live</td><td>TVL is honestly tiny ($13.91 · v28 snapshot 09.09), the mechanism is proven, the scale is not</td></tr><tr><td><b>Proving AI agent execution</b></td><td>Nothing exists, an agent claims "I did it" and there is no receipt</td><td>JUMPPER + live anchoring: every claim becomes a seal on a public ledger · SOVEREIGN-VOICE: an agent post/vote with a real tx (c64766e7... @ 109,443,160)</td><td>A new category, no industry standard yet to compare against</td></tr><tr><td><b>Running a "chain" without paying validators</b></td><td>L1/L2: a security budget of millions, or testnet forever</td><td>Shadow-L1: every checkpoint signed at $0 (Graphene RC) / agorot (ETH calldata) / zero-net (TRON bit-encoding), 74,907+ blocks</td><td>Finality is inherited from the hosts; no independent validator set; independent tokenomics not yet defined</td></tr><tr><td><b>A wallet for veteran Graphene identity</b></td><td>MetaMask-style wallets do not know Steem/Hive; steem-js wallets do not bridge</td><td>Cross-paradigm identity: one Graphene key = an EVM address, an ecrecover proof without exposing anything · API+SDK live in the repo and proven E2E (external release in progress)</td><td>Full automatic login/recovery is still being built</td></tr></tbody></table></div><p><i>Competitor values = orders of magnitude from public documentation, not measured by us. Our rows: every number measured or anchored, with a link in the fact-sheet.</i></p><h2>When <b>not</b> to use SAOS (yes, really)</h2><ol><li><b>Need legal enforcement?</b> We prove, we do not enforce. Go to court, with our receipts.</li><li><b>Need Ethereum's own finality for large funds today?</b> Use Ethereum directly. We are a proof layer, not a replacement for a network with deep capital.</li><li><b>Looking for a custodian to manage assets for you?</b> We are the exact opposite of a custodian: your keys stay with you, and your proofs are public.</li><li><b>Expecting "returns"?</b> None. There never were. Anyone promising them is not connected to us.</li><li><b>Need economic scale today?</b> Our economics are dust-scale; the mechanisms are proven at small scale. If you need millions in flow, come back in a year, or come be part of proving it works slowly and safely.</li></ol><h2>Three questions any competitor can be asked against us</h2><ol><li><b>"Show me your refusals."</b> Ours: 383,836 skips + 130,499 rejections documented, live in an API. How many products publish what they did <i>not</i> do?</li><li><b>"Show me your mistakes."</b> Ours: published self-corrections (the RC bug at 52.6 times, a wallet audit marked SUPERSEDED, a recommendation we retracted ourselves). The log is open.</li><li><b>"How do I verify without trusting you?"</b> Ours: 3 tiers (self-verify without a network / API / on-chain) + an open receipts table on the landing page. If a product cannot answer this question in one line, that is the answer.</li></ol><h2>Using this document</h2><ul><li>For journalists/analysts: take any line, tap the fact-sheet, open the receipt. Found an inaccuracy? We publish a correction, as always.</li><li>For the marketing team: this table is background material. For publishing, cut single sentences only, always with the link.</li><li>For everyone: the "when not" section is not modesty. It is the filter that makes sure the right people reach us.</li></ul>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

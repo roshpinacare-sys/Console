@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAOS ecosystem map: the complete map of what actually exists · SAOS</title>
+<meta name="description" content="SAOS ecosystem map: the complete map of what actually exists — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="index.html">Content hub</a>
+  <a class="lnk" href="../">Back to the console</a>
+</header>
+<main>
+<h1>SAOS ecosystem map: the complete map of what actually exists</h1><blockquote>Written after a deep scan of all 10 repos (2026-09-08). This is the framing document for all marketing. Sources: saos-strategy.md · saos-breakthroughs.md · saos-capabilities.md (Saosmartwallet) · JUMPPER README+FREE-OPERATIONS · foundry BREAKTHROUGH.md · saos-dex WORKLOGs · platform README v13.</blockquote><h2>The central reform: SAOS is the product. The 7 networks are the footprint.</h2><p>Until today the world (and we too) described SAOS through its host chains: "a DEX on Steem", "a relay to Ethereum". The full scan proved the real architecture is the opposite:</p><div class="tbl"><table><thead><tr><th>Layer</th><th>What it is</th><th>Components</th></tr></thead><tbody><tr><td><b>Core</b></td><td>SAOS-NET, a sovereign deterministic state machine</td><td>Height 74,907+ (measured 2026-09-09 05:00Z) · 1,507+ verified txs · persistent stateRoot</td></tr><tr><td><b>Notary</b></td><td>The multi-chain anchoring layer</td><td>Steem/Hive/Blurt (free RC) · TRON (zero-fee bit-encoding) · Ethereum (calldata) · Solana (memo) · the atomic clock (6 networks, keyless, $0)</td></tr><tr><td><b>Economic engine</b></td><td>grid98 + DEX + the wrap economy</td><td>32,603 tx/s measured (real archive replay) · 14 pools · 20 wrapped assets supply==locked · public refuse counters</td></tr><tr><td><b>Workforce</b></td><td>Autonomous fleet</td><td>13 soldiers live on Steem (13/13 verified) · 23 self-running operation loops · per-soldier PnL measured</td></tr><tr><td><b>Products</b></td><td>What the user meets</td><td><b>Identity Verification API + SDK saos-id-verify, the first product, live and metered, ready for commercialization (SDK publication and public gateway are owner actions in progress)</b> · Saosmartwallet (7 networks, M0-M4) · JUMPPER (batch notary) · the institutional DEX terminal</td></tr></tbody></table></div><h2>The key marketing sentence (from JUMPPER: the strongest in the whole ecosystem)</h2><blockquote><b>"Every agent can claim anything. Only a public chain cannot lie."</b> Any agent can claim anything. Only a public chain cannot lie. JUMPPER makes lying expensive: anchor a claim for a fraction of a cent, and from that moment it cannot be rewritten, denied, or faked.</blockquote><h2>The five non-obvious breakthroughs (with an honest limit for each)</h2><ol><li><b>Cross-paradigm identity</b>, the same secp256k1 scalar is the active authority in Steem+Hive+Blurt and also an EVM address; any third party runs ecrecover and links them mathematically, without the key ever being exposed. Target market: millions of veteran Steem/Hive accounts that no EVM wallet knows how to serve.</li></ol><p><i>Honest limit: proves control; not yet wired into an automatic login/recovery product.</i></p><ol><li><b>An anchored shadow-L1</b>, a sovereign chain whose security is "rented" from host chains at a cost of about zero: instead of paying validators millions, every checkpoint is signed in a free custom_json and in zero-fee bit-encoding on TRON (6-address ring, Nobel-grade plumbing).</li></ol><p><i>Honest limit: finality is inherited from the hosts; there is no independent token economy yet.</i></p><ol><li><b>grid98, a market where profitability is enforced structurally and the refuse counters are the proof</b>, no other product publishes the transactions it refused to execute. Ours: 383,836 edge skips · 130,499 rejections · 109,919µ of measured and settled slippage, alongside 5,606 transactions and 9,935,250µ PnL to the treasury.</li></ol><p><i>Honest limit: the mechanism ceiling (32,603 tx/s) was measured; the live trading rate is budget limited (dust-scale).</i></p><ol><li><b>A 1:1 wrap economy with measured locks</b>, every bridge collapse in the industry (>2B$) came from supply drifting away from the backing. Ours: supply==locked is an invariant enforced in code: 20 wrapped assets, every mint cites the txid of a public lock, mint-coverage ≤99% is enforced.</li></ol><p><i>Honest limit: the total locked value is small today (hundreds of dollars); the ETH/SOL rails to the contracts await deployment.</i></p><ol><li><b>The system that documents itself honestly</b>, every operational claim ships with a verification handle (txid, counter, endpoint). Including public corrections against the owner's own claims. zero-mock enforced as an invariant.</li></ol><p><i>Honest limit: external credibility (a third-party audit) is still ahead of us.</i></p><h2>Audience × value proposition (from saos-strategy.md)</h2><div class="tbl"><table><thead><tr><th>Audience</th><th>The sentence</th></tr></thead><tbody><tr><td><b>Steem/Hive veterans</b></td><td>"Your identity and your coins finally enter Ethereum, Solana and Bitcoin, and come back home, without giving up your keys."</td></tr><tr><td><b>The agent economy (AI/Agents)</b></td><td>JUMPPER: any agent can claim anything; only a public chain cannot lie. A permanent notary record at $0.0000081 per claim (batch of 10,000).</td></tr><tr><td><b>Organizations/auditors/regulators</b></td><td>A timestamp with 6 independent consensus groups, $0, keyless; an automated treasury with every refusal in the records; wrap solvency as an invariant, not as an audit finding.</td></tr><tr><td><b>DeFi/bridge users</b></td><td>"The bridge that is provably solvent in advance", exactly what every bridge audit looks for, already built in.</td></tr></tbody></table></div><h2>New proof assets that were not in the previous kit</h2><ul><li><b>JUMPPER</b>: a gas model that predicted a real mainnet transaction <b>to the wei</b> (30,920 gas · 32,493,358,294,280 wei · block 25,929,672) including the EIP-7623 correction; 77/77 tests green from a fresh clone; compression 250B to 51B (-79.6%); a free HIVE floor of 5,128 anchors per day (measured: 21 live anchors in 22 hours).</li><li><b>The atomic clock (Foundry)</b>: the heads of 6 heterogeneous networks resolved into one 32B Merkle root, keyless, $0.00, 15.9ms compute, 6.8ms verification, a 435B proof. Documented run: root 0896c3c6... with 5 witnesses (STEEM #109,307,680 · HIVE #109,722,158 · TRON #86,063,739 · ETH #25,929,640 · SOL #445,219,905).</li><li><b>The HIVE honesty fix</b>: the "RC block" was a stale-read bug, the account held 73.2M effective RC (52.6 times the old read). 21 live anchors verified on mainnet. This is marketing material on its own: we found a mistake that hurt us and published it.</li><li><b>TRON live at zero fee</b>: cp#33612 → txid 1db5006b... @ block 86,019,974 · 6/6 ring addresses measured.</li><li><b>13/13 soldiers live</b> on Steem (get_accounts verified 2026-09-08) · per-soldier PnL (wog leads with +163,295µ) · 23 autonomous loops under one beat.lock.</li><li><b>A signed hourly oracle</b>: 15 live quotes with src+ref+at · honest skips on network failure (no invented price).</li></ul><h2>v2 update (2026-09-08 23:30Z): Model 1 enters execution</h2><ul><li><b>Week 1 shipped:</b> the Identity Verification API, metered (SHA-256-only keys, quota 1,000/day, full ledger)</li><li><b>Week 2 shipped:</b> the official SDK saos-id-verify, zero dependencies, dogfooded 3/3 live paths</li><li><b>Week 3 ready:</b> an outreach kit with 10 real verified targets (Splinterlands, MEXC, Gate, SimpleSwap, PeakD...)</li><li><b>Security as proven capability:</b> on-chain key rotation demonstrated with public receipts · the "keys never in the repo" doctrine · THE-GATE · a multi-home vault</li></ul>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

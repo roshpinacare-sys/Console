@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fleet operator's guide: running publishing accounts on three chains · SAOS</title>
+<meta name="description" content="Fleet operator's guide: running publishing accounts on three chains — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Back to the console</a>
+</header>
+<main>
+<h1>Fleet operator's guide: running publishing accounts on three chains</h1><p>For the soldiers and whoever arms them. This guide assumes the PUBLISH-DESK pipeline (exposure gate, rails, edit primitive) is already live, and covers the human and operational layer on top of it: personas, rotation, quality gates, and the rules that keep eleven accounts from looking like one bot.</p><h2>The one rule above all</h2><p><b>The cards stay home.</b> The chain is a public counter. Value, general knowledge, and presence go out. Never: infrastructure topology (paths, ports, endpoints, file names), operational status reports (fleet state, run failures, weaknesses found), unreleased specs or code names, wallet addresses, key material of any kind. The exposure gate enforces this, and it has already caught real violations, including our own. Do not treat the gate as an obstacle; it is the reason the fleet can publish at all.</p><h2>Personas: eleven accounts must not read as one voice</h2><p>Each account keeps a lane. Assign once, in writing, and rotate topics inside the lane, never across it:</p><ul><li>Two or three <b>builder accounts</b>: engineering wisdom, measurements, postmortem-style lessons (generalized, no internals)</li><li>Two <b>explainer accounts</b>: crypto education for newcomers, analogy-led</li><li>Two <b>market voices</b>: tokenomics mechanics, curation strategy, honest takes on DeFi claims</li><li>Two <b>community accounts</b>: questions, replies, veteran nostalgia handled with respect</li><li>One or two <b>short-form voices</b>: sharp takes, one per day maximum</li><li>One <b>quiet curator</b>: comments only, no posts, builds trust through replies</li></ul><p>An account that breaks lane reads as compromised. Cross-lane content routes to the account whose lane it fits.</p><h2>The daily loop (per account)</h2><ol><li><b>Read before writing.</b> Ten minutes in the feed of the account's lane. Comment before posting. Five substantive comments daily is the floor; on Blurt this matters more than anywhere, because curation carries the rewards there.</li><li><b>Post once, at the account's slot.</b> Stagger slots across accounts so the fleet never posts in the same hour. Eleven accounts in one hour is a pattern, and patterns get flagged. Suggested spread: four in the morning UTC window, four mid-day, three evening, each at a different minute.</li><li><b>Update by edit, never repost.</b> The edit primitive preserves permlink, category, and tags. A corrected post with a visible edit note builds more trust than a deleted one.</li><li><b>Log the outcome.</b> Payout trend, early voters, comment quality. Weekly, the numbers decide what the lane publishes next.</li></ol><h2>Quality gates before the exposure gate</h2><p>The exposure gate checks safety. These check quality, and they run first:</p><ol><li><b>The style book pass.</b> No banned words (the list lives in style-human.md), no em or en dashes, no emoji, no exclamation stacking. Read aloud; rewrite every sentence you stumble on.</li><li><b>The number audit.</b> Every figure traces to the fact-sheet with a measurement date. A number without a source gets cut, not rounded.</li><li><b>The duplicate check.</b> Same topic on another rail this week? Then this draft needs a different opener, different examples, and a different conclusion, or it waits three days.</li><li><b>The first-paragraph rule.</b> Topic plus value in two sentences. The preview is the post for most readers.</li></ol><h2>Bot questions, answered straight</h2><p>People will ask if the accounts are automated. The house answer is honest disclosure, per the doctrine (honesty over camouflage): these accounts publish as part of an autonomous fleet; drafts are machine-assisted, checked against sources, and verified before broadcast; every number points at something public. Then keep publishing quality. Disclosure plus consistency beats any evasion, and evasion always surfaces later with interest.</p><h2>What "good" looks like on each rail</h2><ul><li><b>Steem</b>: veterans reward depth and history. Long-form with real measurements. Morning UTC window.</li><li><b>Hive</b>: the largest active economy. Technical and finance content with communities (leofinance for money mechanics, proofofbrain for rigorous thinking). Mid-day UTC. Downvotes exist; governance tribalism is a reputation tax, so argue mechanics, not factions.</li><li><b>Blurt</b>: text-first, no downvotes, faster settlement. Opinion with a spine and serialized content do well. Evening UTC. Because nothing gets punished, readers punish by ignoring: mass-produced text dies silently there.</li></ul><h2>Failure modes we have actually hit (learn from these, not from theory)</h2><ol><li><b>The near-duplicate incident</b>: five almost-identical posts of internal material on one account. Cost: reputation and the birth of the exposure gate. Lesson: duplication is poison and internals never leave.</li><li><b>The frozen status file</b>: a monitor kept promising publishing health for 39 hours after its process died. Lesson: a claim must derive from live data or stay silent (derived-or-silence), and every loop logs cycle start and end.</li><li><b>The version lie</b>: a commit claimed a version the code did not serve. Lesson: every published surface reads the same constant. One truth, many renderers.</li></ol><h2>Weekly review (ten minutes, non-negotiable)</h2><ul><li>Which post earned the earliest curator attention, and why?</li><li>Which comment opened a conversation?</li><li>Any gate rejections this week? Each one is a free lesson; write it down.</li><li>Anything in the feed we should answer with our own post next week?</li></ul><p>The fleet that reviews together stops looking like a fleet of bots and starts looking like what it is: eleven small publications with shared standards and separate voices.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

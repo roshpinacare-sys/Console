@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Batch Auctions End Sandwich Attacks on DEXs · SAOS</title>
+<meta name="description" content="How Batch Auctions End Sandwich Attacks on DEXs — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Back to the console</a>
+</header>
+<main>
+<hr><p>seo-title: "How Batch Auctions End Sandwich Attacks on DEXs (Structurally, Not Defensively)" meta-description: "Sandwich attacks tax every sequential DEX trade. Private mempools and commit-reveal schemes treat symptoms. Uniform clearing price batch auctions remove the sequence itself. The mechanism, the math, and the honest tradeoff." keywords: sandwich attack, MEV protection, batch auction, uniform clearing price, CoW swap, DEX fairness</p><hr><h1>How Batch Auctions End Sandwich Attacks on DEXs</h1><p>If you have traded on a decentralized exchange, you have probably paid a tax you never agreed to. Your buy order enters the mempool, a bot sees it, buys the same asset a block earlier, lets your trade push the price up, and sells into your slip a moment later. You paid more; the bot profit is carved out of your execution. This is a sandwich attack, and on sequential DEXs it is not a bug. It is the natural behavior of a visible queue.</p><h2>Why sequential order flow makes sandwiches inevitable</h2><p>A conventional AMM or order book settles trades one at a time, in arrival order. That sequence is the entire attack surface: someone is always first, someone is always last, and everything in between has a position relative to your trade. Bots do not need to break anything. They only need to observe the queue and insert themselves around you. Every defense that keeps the queue and hides it is a delaying action:</p><ul><li><b>Private mempools</b> hide the order until inclusion, but the inclusion order itself still leaks value, and privacy becomes a paid service controlled by whoever runs the dark pool.</li><li><b>Commit-reveal schemes</b> hide amounts behind a two-phase ceremony, adding latency and a new failure mode (reveals can be withheld) while still settling sequentially.</li><li><b>Encrypted intents</b> move the trust problem to whoever holds the decryption keys.</li></ul><p>All three preserve the thing the attack needs: a sequence.</p><h2>The structural fix: remove the sequence</h2><p>A batch auction settles an entire window of orders at once, at one price. The mechanism, stripped to its parts:</p><ol><li>Orders accumulate for a fixed window (one block, in the implementations we run).</li><li>At window close, the auction computes a single <b>uniform clearing price</b>, typically the midpoint between the best bid and best ask among the collected orders.</li><li>Every matched order executes at that one price, with quantities allocated pro-rata where the two sides are unequal.</li><li>Surplus stays with the traders: a buyer who bid above the clearing price pays the lower clearing price; a seller who asked below it receives the higher clearing price. In well-designed batches, that surplus is returned, not captured by the protocol or the block producer.</li></ol><p>Now walk the sandwich through this machine. The bot wants to buy before you and sell after you. There is no before and after. All orders in the batch are peers at one computed price. The bot can participate, and participation means clearing at the same midpoint as everyone else. There is no position to exploit because position no longer exists as a concept. The immunity is not probabilistic ("harder to sandwich") and not adversarial ("we outbid the bots"). It is structural: you cannot ambush a queue that was never formed.</p><h2>The math that keeps it honest</h2><p>Two properties separate a real batch auction from marketing:</p><p><b>Deterministic allocation.</b> When buy volume and sell volume differ, the matched quantity is the smaller side, distributed pro-rata with integer arithmetic. Canonical implementations use floor division plus a bounded remainder to the last order in a deterministic sort, so replaying the same batch always produces identical fills. No floats, no randomness, no timestamp dependence inside the settlement.</p><p><b>Verifier-visible surplus.</b> The difference between each trader's limit price and the uniform clearing price is computable by anyone from the batch inputs. A batch that silently keeps the surplus is a fee wearing a fairness costume. Ours reports it as a measured counter (surplus returned, in base units) alongside matched volume, per batch.</p><h2>The honest tradeoff</h2><p>Batch auctions are not free. You give up instant execution: your order waits for the window to close. For market orders during a fast-moving minute, that latency is a real cost, and anyone who tells you otherwise is selling something. What you get in return is execution fairness that no bot can tax, plus price discovery that aggregates the whole window instead of rewarding whoever paid the most gas to be first.</p><p>In practice this means batches suit most flows (rebalancing, entry and exit at a fair reference price, recurring orders) and not every flow (leveraged liquidations racing a ticking price). Mature designs keep a sequential fallback for the residual and route the rest through the batch.</p><h2>What to check before trusting any "MEV-protected" venue</h2><ol><li>Is settlement truly simultaneous at one price, or is it a priority queue with extra steps? Ask what happens to two identical orders arriving 10ms apart. In a real batch: identical treatment. In a disguised queue: one fills first.</li><li>Where does the clearing-price surplus go? Traders, protocol, or block producer? Get the answer in basis points, not adjectives.</li><li>Is allocation deterministic and replayable? Feed the same batch to their contract and to your own reimplementation; results must match to the integer.</li><li>Is there a live counter of batches settled, volume matched, and surplus returned? Numbers that update beat adjectives that persuade.</li></ol><h2>The bottom line</h2><p>MEV extraction on sequential DEXs is an arms race the trader always loses, because the trader pays for every round of it. Batch auctions end the race by deleting the track: one window, one price, no positions, surplus home. The idea is not new (traditional finance has used closing auctions for exactly this reason), and the on-chain implementations have now been running long enough to be measured rather than admired. Fairness you can verify beats protection you must rent.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

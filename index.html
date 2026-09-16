@@ -196,6 +196,35 @@ footer.site a{color:var(--dim)}
   .card{padding:17px}
   .view{padding:24px 0 56px}
 }
+/* ═══ live DEX strip + terminal ═══ */
+.dx-strip{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:16px 20px}
+.dx-strip .px{font-size:26px;font-weight:800;color:var(--gold-bright);line-height:1.1}
+.dx-strip .m{font-size:12px;color:var(--faint);margin-bottom:2px}
+.dx-strip .cell{text-align:center}
+.dx-strip .cell span{display:block;font-size:11px;color:var(--faint)}
+.dx-strip .cell b{font-size:15px}
+.dxm{cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.dxm:hover{border-color:var(--line2)}
+.dxm.on{border-color:rgba(212,175,55,.55);box-shadow:0 0 0 1px rgba(212,175,55,.25) inset}
+.dxm-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.dxm-px{font-size:22px;font-weight:800;color:var(--gold-bright);margin-bottom:2px}
+.dxm-px small{font-size:11px;color:var(--faint);font-weight:400}
+.dxm canvas{width:100%;height:86px;display:block;margin:8px 0 10px}
+.dxm-g{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px;font-size:12px}
+.dxm-g div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed rgba(255,255,255,.07);padding-bottom:3px}
+.dxm-g span{color:var(--faint)}
+.dxb-row{position:relative;display:grid;grid-template-columns:1.2fr 1fr .6fr;gap:10px;padding:5px 8px;font-size:12px}
+.dxb-row i{position:absolute;top:0;bottom:0;left:0;opacity:.1;background:currentColor;pointer-events:none;border-radius:3px}
+.dxb-row.b{color:var(--green)}
+.dxb-row.a{color:var(--red)}
+.dxb-row .p{font-weight:700}
+.dxb-head{display:grid;grid-template-columns:1.2fr 1fr .6fr;gap:10px;padding:0 8px 6px;font-size:11px;color:var(--faint);border-bottom:1px solid var(--line)}
+.dxb-mid{display:flex;justify-content:space-between;padding:7px 8px;margin:4px 0;border-top:1px dashed var(--line2);border-bottom:1px dashed var(--line2);font-size:13px}
+.dxb-mid b{color:var(--gold-bright)}
+.dxb-mid span:last-child{color:var(--faint);font-size:11px}
+.dx-kv{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,.07);font-size:12.5px;align-items:baseline}
+.dx-kv .k2{color:var(--faint);flex-shrink:0}
+.dx-kv .v2{word-break:break-all;text-align:end}
 </style>
 </head>
 <body>
@@ -211,6 +240,7 @@ footer.site a{color:var(--dim)}
       <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
       <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
       <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
+      <a class="tab" href="#dex" data-nav="dex" data-i="navDex">Live DEX</a>
       <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
       <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
       <a class="tab" href="#tokens" data-nav="tokens" data-i="navTokens">Tokens</a>
@@ -234,7 +264,7 @@ footer.site a{color:var(--dim)}
       <p class="lead" data-i="heroLead">Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.</p>
       <div class="cta">
         <a class="btn gold" href="#wallet" data-i="ctaWallet">Open a free wallet</a>
-        <a class="btn ghost" href="#exchange" data-i="ctaExchange">See the exchange</a>
+        <a class="btn ghost" href="#dex" data-i="ctaExchange">See the exchange</a>
       </div>
     </div>
 
@@ -243,6 +273,21 @@ footer.site a{color:var(--dim)}
       <div class="kpi"><div class="k" data-i="kWallets">Wallets on chain</div><div class="v num" id="st-wal">0</div><div class="s" data-i="kWalletsSub">personal addresses</div></div>
       <div class="kpi"><div class="k" data-i="kContracts">Token contracts</div><div class="v num" id="st-tok">0</div><div class="s" data-i="kContractsSub">real on-chain contracts</div></div>
       <div class="kpi"><div class="k" data-i="kValidations">Network validations</div><div class="v num" id="st-att">0</div><div class="s" id="st-cp">0 checkpoints</div></div>
+    </div>
+
+    <div class="sect" id="dex-strip" style="display:none">
+      <div class="card dx-strip">
+        <div>
+          <div class="m mono" id="dxs-pair">SAOS/USDS</div>
+          <div class="px num mono"><span id="dxs-price">-</span> <small style="font-size:12px;color:var(--faint)">USDS</small></div>
+        </div>
+        <div class="num" id="dxs-chg" style="font-size:13px">-</div>
+        <div style="flex:1"></div>
+        <div class="cell"><span data-i="dxsH">DEX height</span><b class="mono num" id="dxs-h">-</b></div>
+        <div class="cell"><span data-i="dxsF">Fills</span><b class="mono num" id="dxs-fills">-</b></div>
+        <div class="cell"><span data-i="dxsP">AMM pools</span><b class="mono num" id="dxs-pools">-</b></div>
+        <a class="btn gold sm" href="#dex" data-i="dxsCta">Open the live DEX</a>
+      </div>
     </div>
 
     <div class="sect">
@@ -407,6 +452,47 @@ footer.site a{color:var(--dim)}
     </div>
   </section>
 
+  <!-- ═══════════ LIVE DEX ═══════════ -->
+  <section class="view" id="view-dex">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="dxTitle">Live DEX — the sovereign exchange</h1>
+    <p class="sect-sub" data-i="dxSub">The sovereign exchange engine: deterministic order matching, an AMM at x·y=k and a treasury that publishes every number. This page reads the live state the network commits to the public repo — nothing here is hand-written.</p>
+
+    <div class="sect grid g4">
+      <div class="kpi"><div class="k" data-i="dxKHeight">Chain height</div><div class="v num" id="dx-height">-</div><div class="s mono" id="dx-age">-</div></div>
+      <div class="kpi"><div class="k" data-i="dxKTps">Throughput</div><div class="v num" id="dx-tps">-</div><div class="s" data-i="dxKTpsS">transactions per second</div></div>
+      <div class="kpi"><div class="k" data-i="dxKFills">Fills · swaps</div><div class="v num" id="dx-fills">-</div><div class="s" id="dx-swaps">-</div></div>
+      <div class="kpi"><div class="k" data-i="dxKRoot">State root</div><div class="v mono" id="dx-root" style="font-size:12px;word-break:break-all">-</div><div class="s" id="dx-halt">-</div></div>
+    </div>
+
+    <div class="sect" id="dx-markets"></div>
+
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="dxBookT">Order book</h2>
+        <p class="sub" id="dx-book-sub">-</p>
+        <div id="dx-book"></div>
+      </div>
+      <div class="card">
+        <h2 data-i="dxTapeT">Live tape</h2>
+        <p class="sub" data-i="dxTapeP">Every fill and swap as the engine printed them, newest first.</p>
+        <div class="feed" id="dx-tape" style="max-height:430px;overflow-y:auto"></div>
+      </div>
+    </div>
+
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="dxPoolsT">AMM pools — x·y=k</h2>
+        <p class="sub" data-i="dxPoolsP">Reserves, mid price and fees, folded from pool state.</p>
+        <div class="tblwrap"><table><thead><tr><th data-i="dxPrPair">Pair</th><th data-i="dxPrA">Reserve A</th><th data-i="dxPrB">Reserve B</th><th data-i="dxPrMid">Mid</th><th data-i="dxPrSwaps">Swaps</th><th data-i="dxPrFee">Treasury fees</th><th data-i="dxPrYield">LP yield</th></tr></thead><tbody id="dx-pools"></tbody></table></div>
+        <div class="note" data-i="dxPoolsNote">30 bps on every swap: 70% to liquidity providers, 30% to the network treasury. Every number is folded from the public pool state.</div>
+      </div>
+      <div class="card">
+        <h2 data-i="dxSealT">Last seal, rail and engine</h2>
+        <div id="dx-seal"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════ EARN ═══════════ -->
   <section class="view" id="view-earn">
     <h1 style="font-size:26px;margin-bottom:6px" data-i="eTitle">Deposit and earn</h1>
@@ -437,6 +523,18 @@ footer.site a{color:var(--dim)}
         </div>
         <div class="field"><label class="f" data-i="eClaimRef">Transaction reference</label><input class="mono" id="cl-ref" placeholder="tx hash or payment id" maxlength="90"></div>
         <button class="btn gold" id="btn-claim" data-i="eClaimBtn">Sign claim</button>
+      </div>
+    </div>
+
+    <div class="sect card" id="e-xwrap" style="display:none">
+      <h2 data-i="eXTitle">Cross-chain deposits — watched live</h2>
+      <p class="sub" data-i="eXSub">Real addresses on public chains. A keyless public watcher scans them every 20 minutes and writes the open deposit book; the exchange heart matches signed claims against that book and credits USDS.</p>
+      <div class="grid g2">
+        <div id="e-xaddrs"></div>
+        <div>
+          <div class="kpi" style="padding:14px"><div class="k" data-i="eXBook">Open deposit book</div><div class="v num" id="e-xstats">-</div><div class="s mono" id="e-xlast">-</div></div>
+          <div class="note" data-i="eXNote">Send only to the address of its chain. After sending, report the deposit with your transaction reference — the network verifies it against the public book before crediting.</div>
+        </div>
       </div>
     </div>
 
@@ -579,7 +677,7 @@ footer.site a{color:var(--dim)}
 <footer class="site">
   <div class="wrap">
     <span>© <span id="year">2026</span> SAOS Network</span>
-    <span><a href="#network" data-i="fVerify">Verify independently</a> · <a href="#currency" data-i="fCurrency">The currency</a> · <a href="#wallet" data-i="fWallet">Open a wallet</a></span>
+    <span><a href="#network" data-i="fVerify">Verify independently</a> · <a href="#currency" data-i="fCurrency">The currency</a> · <a href="#wallet" data-i="fWallet">Open a wallet</a> · <a href="hub/" data-i="fLearn">Learn</a> · <a href="deck/" data-i="fDeck">Partners deck</a></span>
   </div>
 </footer>
 
@@ -593,7 +691,7 @@ const C = globalThis.GateCrypto;
 /* ═══════════ i18n ═══════════ */
 const I18N = {
 en: {
-  brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
+  brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navDex:"Live DEX", navEarn:"Deposit and Earn",
   navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
   chipLive:"live on a public blockchain",
   heroTop:"Your money.", heroGrad:"Your network.", heroBottom:"SAOS.",
@@ -641,6 +739,18 @@ en: {
   xSell:"Seller", xGet:"You pay", xRemain:"SAOS remaining", xPrice2:"Price / SAOS",
   xMineT:"My offers", xMineP:"Open a wallet to see and manage your offers here.",
   xFillsT:"Recent fills", xFillsP:"Settled deals with their on-chain payment references.",
+  dxsH:"DEX height", dxsF:"Fills", dxsP:"AMM pools", dxsCta:"Open the live DEX",
+  dxTitle:"Live DEX — the sovereign exchange", dxSub:"The sovereign exchange engine: deterministic order matching, an AMM at x·y=k and a treasury that publishes every number. This page reads the live state the network commits to the public repo — nothing here is hand-written.",
+  dxKHeight:"Chain height", dxKTps:"Throughput", dxKTpsS:"transactions per second", dxKFills:"Fills · swaps", dxKRoot:"State root",
+  dxBookT:"Order book", dxTapeT:"Live tape", dxTapeP:"Every fill and swap as the engine printed them, newest first.",
+  dxPoolsT:"AMM pools — x·y=k", dxPoolsP:"Reserves, mid price and fees, folded from pool state.",
+  dxPrPair:"Pair", dxPrA:"Reserve A", dxPrB:"Reserve B", dxPrMid:"Mid", dxPrSwaps:"Swaps", dxPrFee:"Treasury fees", dxPrYield:"LP yield",
+  dxPoolsNote:"30 bps on every swap: 70% to liquidity providers, 30% to the network treasury. Every number is folded from the public pool state.",
+  dxSealT:"Last seal, rail and engine",
+  eXTitle:"Cross-chain deposits — watched live", eXSub:"Real addresses on public chains. A keyless public watcher scans them every 20 minutes and writes the open deposit book; the exchange heart matches signed claims against that book and credits USDS.",
+  eXBook:"Open deposit book",
+  eXNote:"Send only to the address of its chain. After sending, report the deposit with your transaction reference — the network verifies it against the public book before crediting.",
+  fLearn:"Learn", fDeck:"Partners deck",
   eTitle:"Deposit and earn", eSub:"Fund the network with any listed currency. Your deposit is recorded on chain, credited in SAOS at the current rate, and tracked in the open ledger.",
   eHowT:"How it works",
   eS1T:"Open a wallet", eS1P:"Free, takes seconds, and gives you the personal address your SAOS lands on.",
@@ -699,7 +809,7 @@ en: {
     deposited:"deposited", credited:"credited", rewards:"reward", myAddr:"my address", cancel:"cancel", page:"page" },
 },
 he: {
-  brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
+  brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navDex:"בורסה חיה", navEarn:"הפקדה ורווחים",
   navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
   chipLive:"חי על שרשרת ציבורית",
   heroTop:"הכסף שלך.", heroGrad:"הרשת שלך.", heroBottom:"SAOS.",
@@ -747,6 +857,18 @@ he: {
   xSell:"מוכר", xGet:"אתה משלם", xRemain:"SAOS שנותר", xPrice2:"מחיר / SAOS",
   xMineT:"ההצעות שלי", xMineP:"פתח ארנק כדי לראות ולנהל את ההצעות שלך כאן.",
   xFillsT:"מילויים אחרונים", xFillsP:"עסקאות שנסגרו עם אסמכתאות התשלום שלהן על השרשרת.",
+  dxsH:"גובה הדקס", dxsF:"מילויים", dxsP:"בריכות AMM", dxsCta:"פתיחת הבורסה החיה",
+  dxTitle:"בורסה חיה — הבורסה הריבונית", dxSub:"מנוע הבורסה הריבוני: התאמת הזמנות דטרמיניסטית, בריכת AMM ב-x·y=k ואוצר שמפרסם כל מספר. העמוד קורא את המצב החי שהרשת כותבת לריפו הציבורי — שום דבר כאן לא נכתב ביד.",
+  dxKHeight:"גובה שרשרת", dxKTps:"תפוקה", dxKTpsS:"פעולות בשנייה", dxKFills:"מילויים · החלפות", dxKRoot:"שורש מצב",
+  dxBookT:"ספר הזמנות", dxTapeT:"טייפ חי", dxTapeP:"כל מילוי והחלפה כפי שהמנוע הדפיס אותם, החדשים קודם.",
+  dxPoolsT:"בריכות AMM — x·y=k", dxPoolsP:"רזרבות, מחיר אמצע ועמלות, מקופלים ממצב הבריכות.",
+  dxPrPair:"זוג", dxPrA:"רזרבה A", dxPrB:"רזרבה B", dxPrMid:"אמצע", dxPrSwaps:"החלפות", dxPrFee:"עמלות אוצר", dxPrYield:"תשואת LP",
+  dxPoolsNote:"30 בסיס-נקודה על כל החלפה: 70% לספקי הנזילות, 30% לאוצר הרשת. כל מספר מקופל ממצב הבריכות הציבורי.",
+  dxSealT:"חותם אחרון, מסילה ומנוע",
+  eXTitle:"הפקדות חוצות-שרשרות — במעקב חי", eXSub:"כתובות אמיתיות על שרשרות ציבוריות. צופה ציבורי חסר-מפתח סורק אותן כל 20 דקות וכותב את ספר ההפקדות הפתוח; לב הבורסה מתאים תביעות חתומות מול הספר הזה ומזכה USDS.",
+  eXBook:"ספר הפקדות פתוח",
+  eXNote:"שלח רק לכתובת של אותה שרשרת. אחרי השליחה, דווח על ההפקדה עם אסמכתת ההעברה — הרשת מאמתת אותה מול הספר הציבורי לפני הזיכוי.",
+  fLearn:"למידה", fDeck:"מצגת שותפים",
   eTitle:"הפקדה ורווחים", eSub:"ממן את הרשת בכל מטבע רשום. ההפקדה שלך נרשמת על השרשרת, מזוכה ב-SAOS לפי השער הנוכחי, ומלווה בספר הפתוח.",
   eHowT:"איך זה עובד",
   eS1T:"פותחים ארנק", eS1P:"חינם, לוקח שניות, ונותן לך את הכתובת האישית שעליה ה-SAOS שלך נוחת.",
@@ -852,7 +974,7 @@ function timeAgo(iso) {
 $("year").textContent = new Date().getFullYear();
 
 /* ═══════════ routing ═══════════ */
-const VIEWS = ["home", "wallet", "exchange", "earn", "currency", "tokens", "network"];
+const VIEWS = ["home", "wallet", "exchange", "dex", "earn", "currency", "tokens", "network"];
 function route() {
   let h = (location.hash || "#home").slice(1);
   if (!VIEWS.includes(h)) h = "home";
@@ -964,7 +1086,9 @@ async function boot() {
   ]);
   renderAll();
   probeChain();
+  loadDex();
   setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 120 * 1000);
+  setInterval(loadDex, 60 * 1000);
 }
 
 async function probeChain() {
@@ -982,7 +1106,7 @@ async function probeChain() {
 setInterval(probeChain, 90 * 1000);
 
 /* ═══════════ rendering ═══════════ */
-function renderAll() { renderMirror(); renderLive(); }
+function renderAll() { renderMirror(); renderLive(); renderDex(); }
 
 function renderMirror() {
   const m = MIRROR;
@@ -1163,6 +1287,215 @@ function renderLive() {
   renderWalletBalances();
   refreshSendSymbols();
 }
+
+/* ═══════════ live DEX (sovereign exchange, from dex/state.json) ═══════════ */
+let DEX = null, WATCH = null, DX_PAIR = null;
+function muFmt(v, dec = 3) {
+  try { return (Number(v || 0) / 1000).toLocaleString("en", { maximumFractionDigits: dec }); } catch { return "0"; }
+}
+function agoMs(ms) {
+  const m = Math.max(0, Math.round((Date.now() - ms) / 60000));
+  if (m < 1) return t("misc.agoNow");
+  if (m < 60) return t("misc.agoMin")(m);
+  const h = Math.round(m / 60);
+  if (h < 48) return t("misc.agoH")(h);
+  return t("misc.agoD")(Math.round(h / 24));
+}
+async function loadDex() {
+  try { DEX = await jget("dex/state.json"); } catch { DEX = null; }
+  try { WATCH = await jget("dex/watch.json"); } catch { WATCH = null; }
+  renderDex();
+}
+function drawDxChart(cv, pts, active) {
+  try {
+    const dpr = window.devicePixelRatio || 1;
+    const W = cv.clientWidth || 300, H = 86;
+    cv.width = W * dpr; cv.height = H * dpr;
+    const ctx = cv.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    if (!pts || pts.length < 2) return;
+    /* median filter (window 5) — strips the price-evidence ring's cross-pair samples */
+    const raw = pts.map((p) => p.p);
+    const med = raw.map((_, i) => {
+      const s = raw.slice(Math.max(0, i - 2), i + 3).slice().sort((a, b) => a - b);
+      return s[Math.floor(s.length / 2)];
+    });
+    const arr = med.slice(-260);
+    let mn = Infinity, mx = -Infinity;
+    for (const v of arr) { if (v < mn) mn = v; if (v > mx) mx = v; }
+    if (mx - mn < 1e-9) { mx += 1; mn -= 1; }
+    const pad = (mx - mn) * 0.12; mn -= pad; mx += pad;
+    const X = (i) => (i / (arr.length - 1)) * (W - 4) + 2;
+    const Y = (v) => H - 3 - ((v - mn) / (mx - mn)) * (H - 6);
+    const col = active ? "#d4af37" : "#a78bfa";
+    ctx.beginPath(); ctx.moveTo(X(0), Y(arr[0]));
+    arr.forEach((v, i) => ctx.lineTo(X(i), Y(v)));
+    ctx.lineTo(X(arr.length - 1), H); ctx.lineTo(X(0), H); ctx.closePath();
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, active ? "rgba(212,175,55,.18)" : "rgba(167,139,250,.13)");
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(X(0), Y(arr[0]));
+    arr.forEach((v, i) => ctx.lineTo(X(i), Y(v)));
+    ctx.strokeStyle = col; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.beginPath(); ctx.arc(X(arr.length - 1), Y(arr[arr.length - 1]), 2.4, 0, 7);
+    ctx.fillStyle = col; ctx.fill();
+  } catch {}
+}
+function renderDxHome() {
+  const strip = $("dex-strip");
+  if (!strip) return;
+  if (!DEX || !DEX.ok) { strip.style.display = "none"; return; }
+  strip.style.display = "";
+  const st = DEX.state || {};
+  const saos = (DEX.markets || []).find((m) => m.key === "SAOS/USDS") || (DEX.markets || [])[0];
+  if (saos) {
+    $("dxs-pair").textContent = saos.key;
+    $("dxs-price").textContent = muFmt(saos.fair, 4);
+    const pts = saos.chart || [];
+    if (pts.length > 4) {
+      /* median of the first window — immune to the price-evidence ring's cross-pair samples */
+      const head = pts.slice(0, 5).map((p) => p.p).sort((a, b) => a - b);
+      const base = head[Math.floor(head.length / 2)];
+      const chgEl = $("dxs-chg");
+      if (base > 0) {
+        const chg = ((saos.fair - base) / base) * 100;
+        chgEl.textContent = (chg >= 0 ? "+" : "") + chg.toFixed(2) + "%";
+        chgEl.style.color = chg >= 0 ? "var(--green)" : "var(--red)";
+      }
+    }
+  }
+  $("dxs-h").textContent = nice(st.height);
+  $("dxs-fills").textContent = nice(st.fills);
+  $("dxs-pools").textContent = (DEX.pools || []).length;
+}
+function renderDxBook() {
+  const m = (DEX.markets || []).find((x) => x.key === DX_PAIR);
+  if (!m) { $("dx-book").innerHTML = `<div style="color:var(--faint)">-</div>`; return; }
+  $("dx-book-sub").textContent = m.key + " — " + (LANG === "he" ? "ספר חי מהמנוע, מחיר ב" + m.quote : "live book from the engine, price in " + m.quote);
+  const asks = (m.asks || []).slice(0, 7), bids = (m.bids || []).slice(0, 7);
+  const maxT = Math.max(1, ...[...asks, ...bids].map((x) => x.total));
+  const row = (x, side) =>
+    `<div class="dxb-row ${side}"><span class="mono num p">${muFmt(x.price)}</span><span class="mono num">${nice(x.total)}</span><span class="mono num">${x.orders}</span><i style="width:${Math.round((x.total / maxT) * 100)}%"></i></div>`;
+  $("dx-book").innerHTML =
+    `<div class="dxb-head"><span>${LANG === "he" ? "מחיר (" + m.quote + ")" : "price (" + m.quote + ")"}</span><span>${m.base}</span><span>${LANG === "he" ? "הזמנות" : "orders"}</span></div>` +
+    asks.slice().reverse().map((x) => row(x, "a")).join("") +
+    `<div class="dxb-mid"><b class="mono num">${muFmt(m.fair, 4)}</b><span>fair${m.spreadBps != null ? " · " + (m.spreadBps / 100).toFixed(2) + "%" : ""}</span></div>` +
+    bids.map((x) => row(x, "b")).join("");
+}
+function renderDex() {
+  renderDxHome();
+  if (!$("view-dex")) return;
+  if (!DEX || !DEX.ok) return;
+  const he = LANG === "he";
+  const st = DEX.state || {};
+  const beat = DEX.beat || {};
+
+  $("dx-height").textContent = nice(st.height);
+  $("dx-tps").textContent = nice(st.tps);
+  $("dx-fills").textContent = nice(st.fills);
+  $("dx-swaps").textContent = nice(st.swaps) + " " + (he ? "החלפות" : "swaps");
+  $("dx-root").textContent = String(st.stateRoot || "").slice(0, 20) + "…";
+  const halted = !!st.halted;
+  const haltEl = $("dx-halt");
+  haltEl.textContent = halted
+    ? (st.haltReason || "HALTED")
+    : (he ? "רצה · חותמת כל " + (st.sealEvery || 12) + " בלוקים" : "running · sealing every " + (st.sealEvery || 12) + " blocks");
+  haltEl.style.color = halted ? "var(--red)" : "var(--green)";
+  $("dx-age").textContent = beat.runAt
+    ? (he ? "פעימה " : "beat ") + timeAgo(beat.runAt) + (beat.nextEtaMin ? " · " + (he ? "הבאה בעוד ~" : "next in ~") + beat.nextEtaMin + "m" : "")
+    : "-";
+
+  /* market cards */
+  const mkts = DEX.markets || [];
+  if (!DX_PAIR || !mkts.some((m) => m.key === DX_PAIR)) DX_PAIR = (mkts[0] || {}).key || null;
+  $("dx-markets").innerHTML = `<div class="grid g3">` + mkts.map((m, i) => `
+    <div class="card dxm${m.key === DX_PAIR ? " on" : ""}" data-dxpair="${esc(m.key)}" role="button" tabindex="0" aria-label="${esc(m.key)}">
+      <div class="dxm-top"><b class="mono">${esc(m.key)}</b>${m.key === DX_PAIR ? `<span class="tag gold">${he ? "ספר" : "book"}</span>` : `<span class="tag">${he ? "בחר לספר" : "select"}</span>`}</div>
+      <div class="dxm-px num mono">${muFmt(m.fair, 4)} <small>${esc(m.quote)}</small></div>
+      <canvas id="dxm-chart-${i}" height="86" aria-hidden="true"></canvas>
+      <div class="dxm-g">
+        <div><span>${he ? "קנייה" : "bid"}</span><b class="mono num">${muFmt(m.bestBid)}</b></div>
+        <div><span>${he ? "מכירה" : "ask"}</span><b class="mono num">${muFmt(m.bestAsk)}</b></div>
+        <div><span>${he ? "פער" : "spread"}</span><b class="mono num">${(m.spreadBps / 100).toFixed(2)}%</b></div>
+        <div><span>TWAP</span><b class="mono num">${muFmt(m.twap)}</b></div>
+      </div>
+    </div>`).join("") + `</div>`;
+  mkts.forEach((m, i) => { const cv = $("dxm-chart-" + i); if (cv) drawDxChart(cv, m.chart || [], m.key === DX_PAIR); });
+  for (const el of document.querySelectorAll("[data-dxpair]")) {
+    const pick = () => { DX_PAIR = el.dataset.dxpair; renderDex(); };
+    el.addEventListener("click", pick);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+  }
+  renderDxBook();
+
+  /* tape */
+  $("dx-tape").innerHTML = (DEX.tape || []).slice(0, 42).map((e) => {
+    const kind = e.kind === "fill" ? `<span class="tag green">fill</span>` : `<span class="tag gold">swap</span>`;
+    const who = e.maker ? esc(e.taker) + " → " + esc(e.maker) : esc(e.taker);
+    return `<div class="op-row"><span class="k">${kind}</span><span class="mono" style="font-size:11px;min-width:86px">${esc(e.base)}/${esc(e.quote)}</span><span class="mono num" style="min-width:64px">${muFmt(e.price)}</span><span class="mono num" style="color:var(--dim);min-width:90px">${muFmt(e.amountMu)} ${esc(e.base)}</span><span style="color:var(--faint);font-size:11px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${who} · h${e.h}</span><span class="when">${agoMs(e.at)}</span></div>`;
+  }).join("") || `<div class="op-row"><span style="color:var(--faint)">${he ? "אין עסקאות בטייפ." : "No trades in the tape."}</span></div>`;
+
+  /* pools */
+  $("dx-pools").innerHTML = (DEX.pools || []).map((p) => `
+    <tr>
+      <td><b class="mono" style="color:var(--gold-bright)">${esc(p.key)}</b></td>
+      <td class="num mono">${muFmt(p.ra)} ${esc(p.a)}</td>
+      <td class="num mono">${muFmt(p.rb)} ${esc(p.b)}</td>
+      <td class="num mono">${muFmt(p.mid, 4)}</td>
+      <td class="num">${nice(p.swaps)}</td>
+      <td class="num mono">${muFmt(p.feeAccruedTreasury)}</td>
+      <td class="num mono">${(p.lpYieldBps / 100).toFixed(2)}%</td>
+    </tr>`).join("") || `<tr><td colspan="7" style="color:var(--faint)">-</td></tr>`;
+
+  /* seal + rail + ladder + engine */
+  const s = DEX.seal || {}, rail = st.rail || {}, lad = st.ladder || {}, inc = st.income || {};
+  const kv = (k, v, cls) => `<div class="dx-kv"><span class="k2">${k}</span><span class="v2 ${cls || ""}">${v}</span></div>`;
+  $("dx-seal").innerHTML =
+    kv(he ? "טווח החותם" : "seal range", `h${s.fromHeight} → h${s.toHeight}`, "mono num") +
+    kv(he ? "בלוקים בחותם" : "blocks sealed", `${s.leaves} · ${he ? "הבא בעוד" : "next in"} ${st.nextSealIn ?? "-"}`, "mono num") +
+    kv("seal root", `<span class="mono" style="font-size:10.5px;color:var(--gold-bright)">${esc(String(s.root || "").slice(0, 30))}…</span>`) +
+    kv("state root", `<span class="mono" style="font-size:10.5px">${esc(String(s.stateRoot || "").slice(0, 30))}…</span>`) +
+    kv(he ? "מסילת המיקרו — הון" : "micro-rail — equity", `${muFmt(rail.equityMu)} USDS`, "mono num") +
+    kv(he ? "מנות שבוצעו" : "doses executed", `${nice(rail.doses)} · ${he ? "מתוכם" : "of which"} ${rail.funding?.committed ?? 0} ${he ? "מומנו" : "funded"}`, "mono num") +
+    kv(he ? "סולם נזילות — הרמות" : "liquidity ladder — lifts", `${nice(lad.lifts)} · ${he ? "הוצאו" : "spent"} ${muFmt(lad.spentMu)} USDS`, "mono num") +
+    kv(he ? "רווח אוצר" : "treasury profit", `${muFmt(inc.treasuryProfitMu ?? st.treasuryProfit)} USDS`, "mono num") +
+    kv(he ? "עמלות בריכות" : "pool fees", `${muFmt(inc.poolFeesMu)} · ${he ? "מונה-עמלות" : "fee meter"} ${muFmt(inc.feeMeterMu ?? st.feeMeter)}`, "mono num") +
+    kv(he ? "מנוע" : "engine", `<span class="mono" style="font-size:11px">${esc(beat.engine || "-")}</span>`) +
+    kv(he ? "טיקים בפעימה" : "ticks this run", `${nice(beat.ticks)} · ${(beat.cadenceMin || "-") + "m " + (he ? "קצב" : "cadence")}`, "mono num") +
+    kv(he ? "זיכויים" : "credits", `${nice(DEX.creditsTotal)} ${he ? "סה״כ" : "total"} · ${nice(beat.creditsThisRun)} ${he ? "בפעימה" : "this run"}`, "mono num") +
+    kv(he ? "ריליי" : "relay", `<span style="font-size:11px;color:var(--dim)">${esc(String(beat.relayLabel || "-").slice(0, 64))}</span>`);
+
+  /* cross-chain deposits (earn view) */
+  const xw = $("e-xwrap");
+  if (xw) {
+    if (!WATCH) { xw.style.display = "none"; }
+    else {
+      xw.style.display = "";
+      const w = WATCH.watching || {}, chains = WATCH.chains || {};
+      const names = { tron: "USDT — TRON (TRC-20)", evm: "USDT / USDC — Ethereum & L2s", sol: "USDT / USDC — Solana", btc: "BTC — Bitcoin" };
+      const order = ["tron", "evm", "sol", "btc"];
+      $("e-xaddrs").innerHTML = order.filter((k) => w[k]).map((k) => {
+        const ok = String(chains[k] || "").startsWith("ok");
+        return `<div class="addrbox" style="margin-bottom:10px">
+          <span class="tag ${ok ? "green" : "amber"} mono">${k.toUpperCase()}</span>
+          <span class="a" style="font-size:12px">${esc(w[k])}</span>
+          <button class="copy" data-copy="${esc(w[k])}">${esc(t("copy"))}</button>
+        </div>
+        <div class="hint" style="margin:-6px 0 10px">${esc(names[k] || k)} · ${he ? "נצפה כל " + (WATCH.cadenceMin || 20) + " דק׳ · " : "watched every " + (WATCH.cadenceMin || 20) + " min · "}${esc(chains[k] || "?")}</div>`;
+      }).join("");
+      for (const b of document.querySelectorAll("[data-copy]")) b.addEventListener("click", () => copyText(b.dataset.copy, ""));
+      $("e-xstats").textContent = `${nice(WATCH.depositsTotal)} ${he ? "הפקדות שנצפו" : "deposits seen"} · ${he ? "מינימום" : "min"} $${WATCH.minDepositUsd}`;
+      $("e-xlast").textContent = WATCH.publishedAt ? (he ? "נסרק " : "scanned ") + timeAgo(WATCH.publishedAt) : "-";
+    }
+  }
+}
+let dxResizeT = null;
+addEventListener("resize", () => {
+  clearTimeout(dxResizeT);
+  dxResizeT = setTimeout(() => { if (DEX && DEX.ok && $("view-dex")) { const mkts = DEX.markets || []; mkts.forEach((m, i) => { const cv = $("dxm-chart-" + i); if (cv) drawDxChart(cv, m.chart || [], m.key === DX_PAIR); }); } }, 180);
+});
 
 /* ═══════════ wallet ═══════════ */
 let WALLET = null; // { priv:Uint8Array, pubSTM, addr }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Disclosure policy: what we publish, what we never publish, and why · SAOS</title>
+<meta name="description" content="Disclosure policy: what we publish, what we never publish, and why — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="index.html">Content hub</a>
+  <a class="lnk" href="../">Back to the console</a>
+</header>
+<main>
+<h1>Disclosure policy: what we publish, what we never publish, and why</h1><blockquote>The binding document for anyone writing in SAOS's name. It was born from this understanding: <b>Honesty means every claim we publish is a verifiable truth. Honesty is not broadcasting every internal event.</b></blockquote><hr><h2>The guiding principle</h2><p>Our brand is "receipts, not promises", and that applies to <b>product claims</b>. But security is the one domain where silence is part of the defense. Publishing a security event is not honesty, it is handing attackers a map: what was breached, when, how, and what is still exposed.</p><h2>What we publish: and why</h2><div class="tbl"><table><thead><tr><th>We publish</th><th>Why</th></tr></thead><tbody><tr><td>Capabilities + receipts (txids, measurements, charts)</td><td>The heart of the brand: every claim is independently verifiable</td></tr><tr><td>Product status including limitations ("awaiting funding", "small TVL", "not yet deployed")</td><td>Prevents over-promising and builds long-term trust</td></tr><tr><td>Correction of a technical claim we ourselves published (like the RC read bug)</td><td>We published a wrong claim, the correction is part of honesty</td></tr><tr><td>Operational failures that are product lessons (self-healing, chaos, HALT in development)</td><td>Shows resilience as a feature without exposing an attack vector</td></tr><tr><td>Security doctrine as a design principle ("keys never in the repo")</td><td>Strengthens trust without telling what led to it</td></tr></tbody></table></div><h2>What we never publish: and why</h2><div class="tbl"><table><thead><tr><th>We never publish</th><th>Why</th></tr></thead><tbody><tr><td>Security events: key leaks, loss of access, intrusions, emergency rotations</td><td>A map for an attacker + damage to trust even when the event is resolved</td></tr><tr><td>Recovery details, forensics, or restoration methods</td><td>The same map, in more detail</td></tr><tr><td>Wallet addresses holding funds, key structure, internal operating procedures</td><td>Painting a target</td></tr><tr><td>An ongoing event of any kind</td><td>A partial picture creates misleading panic</td></tr><tr><td>Any personal detail of the owner (seeds, passwords, chat contents)</td><td>Self-explanatory</td></tr></tbody></table></div><h2>How much do we reveal?</h2><p><b>Up to the capability level, not the event level.</b></p><ul><li>Allowed: "The keys were never in the repo, the whole history was checked and clean (0 keys in 32 commits)."</li><li>Forbidden: "...because we lost the keys on a Tuesday."</li><li>Allowed: "On-chain key rotation is a proven capability with public receipts."</li><li>Forbidden: the story of what made the rotation necessary.</li><li>The numbers that demonstrate strength are published (14/14 verifications, 3 homes for the vault, THE-GATE). The story behind them is not.</li></ul><h2>How do we phrase it? (phrasing laws)</h2><ol><li><b>Positive, not scarred:</b> doctrine as a design principle from day one, "keys never touch the repo", not "after the leak we removed the keys".</li><li><b>Capability, not event:</b> rotation, recovery and purging are shown as tested muscles, without a trigger.</li><li><b>A direct journalist question:</b> the press-kit answer is the doctrine + "we do not comment on specific operational events, that is itself the security policy."</li><li><b>The internal fact-sheet records everything</b> (including events, tagged internally as warning items), so the team learns and no lesson is lost, and so no marketing cut touches the tagged sections.</li></ol><h2>The three-question test before every publication</h2><ol><li><b>Is the claim true and verified?</b> No, we do not publish.</li><li><b>Does the publication expose a weakness, timing, or method to an attacker?</b> Yes, we do not publish.</li><li><b>Is this a correction of something we ourselves published?</b> Yes, we must publish. That is honesty.</li></ol><h2>Three new rules (born in the roast of 2026-09-10: roast/2026-09-10-truth-gaps.md)</h2><ol><li><b>The availability rule:</b> we do not publish an install command, URL, or endpoint without a real liveness check against an external user (npm registry / browser / curl). A published command that returns 404 is a false claim at the brand level, exactly the sin the brand speaks against.</li><li><b>The snapshot rule:</b> every measured number is attached to a measurement date. A version-tagged number (v28) or a monotonic counter is marked "as of X". A snapshot presented as live is a lie waiting to be measured again.</li><li><b>The inside/outside rule:</b> "live and proven inside the system" is not "available today to anyone". The phrasing must distinguish the two explicitly, always.</li></ol><ol><li><b>The read-verification rule (added after the confabulation event, 2026-09-10):</b> when a tool read fails or returns an error, <b>no content from the read's "memory" is written and no conclusion drawn from it is published</b>. Pull again, or do not write. Text written from a failed read is an invention, however good the intention. (Zero damage to the repo, reported to the operator as self-correction #3, see fact-sheet 10.31.)</li></ol><h2>Retroactive</h2><p>Event content already published in the kit was deleted or rephrased according to the policy (done upon adopting the document: article 07 was deleted, post L12 was removed, L2 was rephrased as doctrine, the press-kit and the landing pages were corrected). What was not published will not be published.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

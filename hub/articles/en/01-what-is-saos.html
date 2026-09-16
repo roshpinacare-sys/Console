@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What Is SAOS, and Why Should You Care · SAOS</title>
+<meta name="description" content="What Is SAOS, and Why Should You Care — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../../">Content hub</a>
+  <a class="lnk" href="../../../">Back to the console</a>
+</header>
+<main>
+<h1>What Is SAOS, and Why Should You Care</h1><p><i>Reading time: 3 minutes · technical background required: none</i></p><hr><h2>Start with a story</h2><p>Imagine you run a small business. You keep a notebook. Everything that happens, money in, money out, who paid, who promised what, goes in the notebook.</p><p>One day someone claims they paid you. You open the notebook, nothing there. They say: "I swear I paid!" You say: "I swear I never received it!"</p><p>Who's right? Nobody knows. <b>This is the oldest problem on the internet: everyone makes claims, and no one can prove anything.</b></p><h2>So we invented witnesses</h2><p>Humanity's classic fix: witnesses. A notary. An accountant. A court. Someone trusted stamps a document: "I saw this happen, on this date."</p><p>The problem: witnesses cost money, witnesses are slow, and witnesses, how to put this gently, can be compromised.</p><h2>The SAOS idea, in one sentence</h2><p><b>SAOS photographs your notebook every 36 seconds and files the photograph with five independent public registries in different parts of the world, for less than a cent.</b></p><p>Let's unpack that:</p><ul><li><b>The notebook</b> is the system's journal. Every action gets recorded.</li><li><b>The photograph</b> is a mathematical fingerprint of the entire notebook, unique, like a real fingerprint. Change a single comma and the fingerprint changes completely.</li><li><b>The five registries</b> are public blockchains: Ethereum, Solana, Steem, Hive, TRON. Think of them as giant public record offices that nobody can erase, run by thousands of independent strangers who don't coordinate with each other or with us.</li><li><b>Less than a cent</b>, some registries are completely free (Steem and Hive run on stake-based resource credits), and the rest cost fractions of a cent, measured on real transactions.</li></ul><h2>Why can't anyone cheat if there are photographs?</h2><p>That's exactly the beauty of it. <b>Once the fingerprint is filed with five registries, you cannot alter the notebook without getting caught.</b> To fake history, an attacker would have to break into five independent systems at once, each guarded by thousands of computers worldwide. That's not hard. That's impossible.</p><p>And if someone tries anyway? The fingerprints won't match. Everyone sees it. Immediately.</p><h2>"Okay: what do I get from this?"</h2><p>Depends who you are:</p><p><b>If you're a regular user</b>, when someone promises "your money is safe," "the transaction went through," "the product exists," you no longer have to believe them. You can check it yourself, with a link, for free, in a minute.</p><p><b>If you run a business</b>, every promise to a customer becomes an unerasable receipt. You said "we shipped at 14:32"? There's a stamp. No competitor can claim your customer "misremembers."</p><p><b>If you work with AI agents</b>, today every agent can claim "task completed." With SAOS there's a receipt. Our whole thesis fits in one line: <i>every agent can claim anything; only a public chain cannot lie.</i></p><p><b>If you're a developer</b>, there's a zero-dependency SDK, live in the repo and verified end to end: one API call proves whether a legacy Steem/Hive account and an EVM address belong to the same key. <code>saos-id-verify</code> (npm publish in progress). Runs anywhere JavaScript runs.</p><p><b>If you have an old Steem or Hive account</b>, your identity can finally work in the new world too, without ever exposing your keys (article 05 covers this).</p><h2>And the cost?</h2><p>Here's the real, unrounded number: one permanent notarized record costs <b>eight millionths of a dollar</b> in a 10,000-claim batch. Less than a grain of sand. And it's not a promotional price, it's measured against real mainnet transactions, exact to the wei.</p><h2>The bottom line</h2><p>SAOS isn't "another coin." It's a <b>truth layer</b>, the place where claims become facts. Instead of "trust me," you get "verify me."</p><p>And we mean that literally: everything written here is backed by links to real records anyone can open. Don't trust us, check. That's the whole point.</p><hr><p><i>SAOS is technology infrastructure in active development. Nothing here is investment advice or a promise of yield.</i></p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

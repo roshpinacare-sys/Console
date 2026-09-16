@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Identity Verification API: reference and integration guide · SAOS</title>
+<meta name="description" content="Identity Verification API: reference and integration guide — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Back to the console</a>
+</header>
+<main>
+<h1>Identity Verification API: reference and integration guide</h1><blockquote>Status (honest, as of 2026-09-11): the API and SDK are live, metered and dogfooded end-to-end (PROVEN, FAILED and 401 paths all executed against the running service). Two owner actions are in progress before external self-serve: publishing the SDK to the npm registry and opening a public gateway. Until then, integrators run against an instance URL provided by the team.</blockquote><hr><h2>What it proves</h2><p>One question, one mathematical answer: <b>does this Steem/Hive account and this EVM address belong to the same secp256k1 key?</b></p><p>The proof is read from the chains themselves, not from our database:</p><ol><li>The user published an identity anchor once: a <code>saos.id.v1</code> custom_json on Steem/Hive, signed per EIP-191 with the same scalar that is their live active authority.</li><li>The service recovers the signing point (ecrecover) from that anchor.</li><li>It matches the recovered point against the account's <b>live active authority</b> on each chain, and against the EVM address derived from the same scalar.</li><li>All match: <code>PROVEN</code>. Any link missing: <code>FAILED</code>. Both are honest, metered results.</li></ol><p>No key ever touches the service. No KYC. No custody. The user can revoke by rotating their on-chain authority, and the next verification fails accordingly.</p><hr><h2>Quickstart (SDK)</h2><p>The official client is <code>saos-id-verify</code>: zero dependencies, plain fetch, runs on Node 18+, Bun, Deno, browsers and edge runtimes.</p><pre><code>npm i saos-id-verify    # live in the repo now; npm registry publish pending (owner action)</code></pre><pre><code>import { verifyIdentity } from &quot;saos-id-verify&quot;;
+
+const r = await verifyIdentity({
+  baseUrl: &quot;https://&lt;your-saos-gateway&gt;&quot;,   // required; the client refuses to invent an endpoint
+  apiKey: process.env.SAOS_API_KEY!,        // saos_live_... from the developer console
+  username: &quot;someaccount&quot;
+});
+
+if (r.ok) {
+  console.log(r.meta.outcome);        // &quot;PROVEN&quot;
+  console.log(r.verify.sameScalarProof);
+  console.log(r.anchor.block, r.anchor.explorer);
+} else {
+  console.log(r.meta?.outcome, r.error);   // &quot;FAILED&quot; is a real answer, not an exception
+}</code></pre><p>Client form, when you want to reuse the connection:</p><pre><code>import { SaosIdentity } from &quot;saos-id-verify&quot;;
+
+const client = new SaosIdentity({ baseUrl, apiKey });
+const r = await client.verify(&quot;someaccount&quot;);
+if (r.ok) {
+  r.chains.forEach((c) =&gt; console.log(c.chain, c.sameKeyAsSteem));
+}</code></pre><p>Options: <code>timeoutMs</code> (default 30000), injectable <code>fetch</code> (custom agents, edge runtimes, proxies).</p><hr><h2>Endpoint reference</h2><pre><code>POST /api/v1/identity/verify
+Authorization: Bearer saos_live_...
+Content-Type: application/json
+
+{ &quot;username&quot;: &quot;someaccount&quot; }</code></pre><h3>Outcomes</h3><div class="tbl"><table><thead><tr><th>HTTP</th><th>outcome</th><th>meaning</th><th>metered</th></tr></thead><tbody><tr><td>200</td><td><code>PROVEN</code></td><td>full chain: on-chain anchor found, EIP-191 recovery matches the live active authority per chain</td><td>yes</td></tr><tr><td>200</td><td><code>FAILED</code></td><td>real work happened and honestly failed (no anchor, or no matching active key). Not an error</td><td>yes</td></tr><tr><td>401</td><td><code>SaosAuthError</code></td><td>key missing, malformed or revoked. Fail-closed</td><td>no</td></tr><tr><td>429</td><td><code>SaosQuotaError</code></td><td>UTC-day quota exhausted; <code>e.retryAt</code> is the epoch second of the next UTC midnight</td><td>no</td></tr></tbody></table></div><h3>Every 200 carries</h3><ul><li><code>meta.quota</code>: <code>{ used, limit, remaining, resetAt }</code> straight from the metering ledger</li><li><code>meta.latencyMs</code>: server-measured end-to-end latency</li><li><code>rateLimit</code>: parsed <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code>, <code>X-RateLimit-Reset</code> headers</li><li><code>anchor</code>: <code>{ block, explorer, txid }</code> for the on-chain anchor the proof was read from</li></ul><h3>Authentication model</h3><p>Keys are created in the SAOS DEVELOPER console with the <code>saos_live_</code> prefix. The plaintext is shown <b>exactly once</b>; the server stores only its SHA-256. Revocation is immediate and fail-closed: a revoked key gets 401 from that moment on.</p><hr><h2>Integration guide: the 30-minute path</h2><h3>For games (anti-sybil)</h3><p>Reward farming dies when one human cannot claim to be many. Gate rewards, airdrops or ranked ladders behind <code>verifyIdentity</code>: each game account must PROVEN-link to a distinct on-chain identity. Cost per check: one metered call. Cheaters pay real keys, not email addresses.</p><h3>For exchanges and swap services (deposit attribution)</h3><p>Deposits arriving from Graphene accounts carry a memo, not an address. When a user proves <code>username ↔ EVM address</code> once, every future Graphene deposit from that username maps deterministically to their account. Fewer support tickets, fewer attribution frauds.</p><h3>For social frontends and communities</h3><p>"I am really @account" as a verified badge that cannot be forged and cannot be taken down by us: the badge is math against live chain state. If the user loses the key, the badge dies with it. That is the point.</p><h3>Step-by-step</h3><ol><li>Get a <code>baseUrl</code> and an API key (team-issued until the public gateway opens).</li><li>Install the SDK from the repo (npm publish pending) or call the endpoint with plain fetch.</li><li>Call <code>verify</code> for a known-anchored account and confirm <code>PROVEN</code> with the anchor block in an explorer.</li><li>Call for an unanchored account and confirm you handle <code>FAILED</code> as a normal result.</li><li>Wire the 401 and 429 paths (key rotation and <code>retryAt</code> backoff).</li><li>Ship. Total time with our tests: under 30 minutes.</li></ol><hr><h2>Independent verification (don't trust the API either)</h2><p>Any PROVEN response names the anchor block and explorer link. A skeptical integrator can:</p><ol><li>Open the anchor transaction in a public explorer (steemworld / hiveblocks).</li><li>Extract the <code>saos.id.v1</code> payload and signature.</li><li>Run ecrecover locally and compare against the account's active authority from a public RPC.</li></ol><p>If our answer and yours disagree, ours is wrong and we want the report. The reference PROVEN capture (2026-09-08, Steem block 109,389,994) was verified this way.</p><hr><h2>Honest limitations</h2><ul><li><code>baseUrl</code> is required by design: the client refuses to invent or default an endpoint.</li><li>The 429 branch is coded and unit-tested per spec but was never live-burned (burning it costs 1,000 real calls). We say so instead of claiming full path coverage.</li><li>Blurt participation follows the on-chain claim; per-chain coverage depends on what the user actually anchored.</li><li>npm registry install and a public self-serve gateway are pending owner actions. Everything else above runs today.</li></ul><hr><p><i>This document is derived from the shipped SDK and the live metered service, verified 2026-09-11. Corrections welcome and will be published like everything else.</i></p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

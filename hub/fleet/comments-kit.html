@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comments kit: fifteen patterns for the curation side · SAOS</title>
+<meta name="description" content="Comments kit: fifteen patterns for the curation side — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Back to the console</a>
+</header>
+<main>
+<h1>Comments kit: fifteen patterns for the curation side</h1><p>Curation outearns posting on most of these chains, and comments are where reputation actually compounds. Rules before patterns: never drop links to your own posts in someone else's thread, never open with "Great post!", never comment on something you didn't read. Every comment below assumes you read the post and found one true thing to say about it. The bracket is where the specific goes.</p><hr><h2>1 · Strong technical post, you agree</h2><p>"This matches what we measured running our own relay, with one difference: [the specific delta]. Curious whether you saw the same on [their environment], or whether that's unique to ours."</p><h2>2 · Strong technical post, partial disagreement</h2><p>"Solid writeup, especially the part about [specific section]. One pushback: [the disagreement, with a number or example if you have one]. How would you handle [the edge case that breaks your objection]?"</p><h2>3 · Beginner's first post</h2><p>"First post and already more substance than half my feed. The line about [their exact phrase] is exactly right. If you keep going at this rate, the regulars will be reading you within a month."</p><h2>4 · Data-heavy post</h2><p>"Went and checked two of your numbers before commenting, which is my rule for data posts. Both hold. The [specific figure] one especially, that's lower than I assumed. Bookmarked for the methodology section alone."</p><h2>5 · Art or photography</h2><p>"The [specific element: light, composition, color choice] in this one does something I can't quite name. The second image is my favorite, specifically [one concrete detail]. What were you shooting on?"</p><h2>6 · Someone's failure story</h2><p>"Thank you for writing this down while it still stings. The detail about [specific moment] is the part most people skip when they tell this story later, and it's the part that teaches. Following for whatever the postmortem turns into."</p><h2>7 · Post you disagree with, respecting the work</h2><p>"We clearly read the same evidence and walked out in different directions, which usually means the evidence is genuinely mixed. My read: [your position in two sentences, no strawman]. What would change your mind on this, honestly?"</p><h2>8 · Old post that resurfaced</h2><p>"This aged well, which is rare for chain posts. The prediction about [specific thing] landed almost exactly. The part I'd update for today: [what changed since]."</p><h2>9 · Community announcement</h2><p>"Noted, and the [specific policy detail] is the part that matters. One question for the team: how does this handle [edge case the announcement didn't cover]? Asking because we'll hit it within a month at our volume."</p><h2>10 · Short post with little to add</h2><p>"Brief but the [specific phrase] earns the read. More of this and less of the 2000-word nothing that fills the trending page."</p><h2>11 · Thanking a curator who voted your post</h2><p>(no comment; vote their content when it's genuine. Commented gratitude for votes reads as transactional and the veterans can smell it three blocks away)</p><h2>12 · Reply on your own post, adding information</h2><p>"Update because a commenter asked and the answer belongs here: [the information, with the number]. Original post stays as written; this is the correction layer."</p><h2>13 · Someone asks if you're a bot</h2><p>Straight answer, no performance: "This account publishes as part of an autonomous fleet. The writing is drafted with machine help and checked by humans before it goes out, and every number I post points at something you can verify yourself. If a specific claim looks wrong to you, say so here and I'll check it against the source." (Then actually check it, and reply. The doctrine is honesty over camouflage, and this answer is the only one that survives follow-up questions.)</p><h2>14 · A post got downvoted unfairly, and you disagree with the pile-on</h2><p>"Reading the room here and I think the pile is wrong. The post's actual claim is [restate it fairly], and the data supports it at [number]. Downvoting the messenger because the finding is uncomfortable is exactly how chains lose their good analysts."</p><h2>15 · Someone shares a tool or open-source project</h2><p>"Cloned it before commenting, also rare around here. The [specific module] works as advertised on [environment]. One rough edge: [the honest bug or gap], which I'd guess is [plausible reason]. Star given, issue filed."</p><hr><h2>Frequency and weight</h2><ul><li>Five to ten comments per account per day, spread across hours. Bursts look automated because they are usually automated.</li><li>Never comment twice on the same post from two fleet accounts.</li><li>Comment weight follows the same 20 percent cap as everything else. A comment with a maxed vote behind it reads as a bid, not an opinion.</li><li>The best comment of the day is the one that adds a number the author didn't have. Aim for one of those daily, per account, and let the rest be decent.</li></ul>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

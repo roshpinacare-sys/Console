@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to verify anything we claim, in about 60 seconds · SAOS</title>
+<meta name="description" content="How to verify anything we claim, in about 60 seconds — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Back to the console</a>
+</header>
+<main>
+<h1>How to verify anything we claim, in about 60 seconds</h1><p>This guide exists because "trust me" is not evidence, and we would rather hand you the tools to check us than ask you to believe us. Everything here works with a browser. No accounts, no installs, no technical background.</p><h2>What a receipt looks like</h2><p>Every claim we make about something being "live on-chain" comes with one of these:</p><ul><li>A <b>transaction id</b> (txid): a long string of letters and numbers, unique to one transaction on one chain</li><li>A <b>block number or slot</b>: where that transaction sits in the chain's history</li><li>An <b>explorer link</b>: a public website that renders the raw chain data for humans</li></ul><p>If a claim has no receipt attached, treat it as marketing. Including ours.</p><h2>The 60-second check</h2><p><b>Step 1: Click the explorer link</b> (or paste the txid into the right explorer: etherscan.io for Ethereum, solscan.com for Solana, steemworld.org for Steem, hiveblocks.com for Hive, tronscan.org for TRON).</p><p><b>Step 2: Confirm the transaction exists.</b> The explorer shows a status (Success / confirmed / tesSUCCESS), a block number, and a timestamp. If the page says "not found," the claim is dead. Stop here.</p><p><b>Step 3: Compare one detail.</b> We always cite a block number or slot next to the receipt. If the explorer shows a different block than the claim states, something is wrong: either the claim is stale or it was never true.</p><p><b>Step 4 (advanced, still 60 seconds): Check the payload.</b> For anchor transactions, open the input data or memo field. Our anchors carry a small JSON or hex payload containing a height and a state root. You should see a structure, not gibberish, and if we quoted a root prefix in the claim, the payload should start with those same characters.</p><h2>The cross-chain check (the strongest one)</h2><p>Some of our claims say the <i>same</i> state root was anchored on two different chains. Verify it like this:</p><ol><li>Open the first receipt (say, on Etherscan). Find the root in the input data.</li><li>Open the second receipt (say, on Solscan). Find the root in the memo.</li><li>Compare character by character. Identical roots on two independent chains mean two things happened: the same state was committed twice, and neither chain can retroactively edit it.</li></ol><p>This check requires nothing from us. That is the point.</p><h2>Tricks to watch for (from anyone, including us)</h2><ol><li><b>Screenshots without links.</b> A screenshot proves someone can edit images. A link proves the chain agrees with you.</li><li><b>Testnet receipts presented as mainnet.</b> Check the explorer's network label. Sepolia is not Ethereum. Devnet is not Solana.</li><li><b>Stale dates.</b> "We anchored 500 times" means nothing without "as of [date], verifiable at [link]." Numbers on live systems age in hours.</li><li><b>Truncated ids that don't resolve.</b> A txid shortened with "…" should still link somewhere real. If the link is just the explorer homepage, ask for the full id.</li><li><b>Round numbers.</b> Real measurements are ugly: 32,680 gas, not "about 33,000." Suspiciously round "measured" numbers are usually estimates wearing a costume.</li></ol><h2>What to do when a check fails</h2><p>Tell us, publicly, with the link you checked. Our track record on this is published in our roast archives: when a claim of ours turned out wrong (a version number, a gas estimate, a blocked-chain report), the correction went out with the same visibility as the original claim. A failed check that gets a real correction is the system working. A failed check that gets silence is your answer.</p><h2>One last thing</h2><p>You never need our permission, our software, or our node to verify a public chain. That is the entire philosophy in one sentence: the receipts do not live on our servers, so you never have to trust our servers.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

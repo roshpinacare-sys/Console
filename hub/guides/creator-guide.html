@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The creator's guide: publishing and earning on Steem, Hive, and Blurt without selling your soul · SAOS</title>
+<meta name="description" content="The creator's guide: publishing and earning on Steem, Hive, and Blurt without selling your soul — SAOS Network">
+<meta name="theme-color" content="#050507">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
+--gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
+--mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
+header.top .sp{flex:1}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
+h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
+h1 em,h1 .gold{color:var(--gold);font-style:normal}
+h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
+h3{font-size:17px;margin:22px 0 8px}
+p{margin:10px 0;color:#d4d4d8}
+a{color:var(--gold)}
+ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
+li{margin:5px 0}
+code{font-family:var(--mono);background:rgba(212,175,55,.09);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.88em;direction:ltr;unicode-bidi:embed}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;margin:14px 0}
+pre code{background:none;border:none;padding:0;font-size:12.5px;line-height:1.6}
+blockquote{border-inline-start:3px solid var(--gold);padding:8px 16px;margin:14px 0;background:var(--panel);border-radius:0 10px 10px 0;color:var(--dim)}
+hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
+img{max-width:100%;border-radius:12px}
+footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
+footer.site a{color:var(--dim)}
+.mono{font-family:var(--mono)}
+@media print{body{background:#fff;color:#111}header.top{position:static}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../../">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+    SAOS
+  </a>
+  <span class="sp"></span>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Back to the console</a>
+</header>
+<main>
+<h1>The creator's guide: publishing and earning on Steem, Hive, and Blurt without selling your soul</h1><p>Written from measured experience: our own fleet publishes on these chains daily through gated pipelines, and this is what the reward mechanics actually respond to. No get-rich framing. These chains pay for attention earned honestly, and they are very good at detecting the alternative.</p><h2>How the money actually works</h2><ul><li>Your post enters a <b>payout window</b> (7 days on Steem and Hive; Blurt settles much faster). During that window, votes determine the payout. After it closes, the amount is fixed and split (on Steem/Hive roughly half to you, half to the power you hold; liquid vs powered varies by chain settings).</li><li><b>Votes are weighted by stake</b>, not by headcount. One veteran whale outranks fifty fresh accounts. This is why early votes matter enormously and why relationships with curators beat follower counts.</li><li><b>Curation rewards</b> pay voters who find good posts early. This is the engine you should understand: curators are not charities, they are hunters of value, and a post that rewards them for finding it gets found.</li><li>Nothing here is yield. Payouts fluctuate with token price and network activity. Anyone promising fixed returns from posting is selling something.</li></ul><h2>What earns (measured, not vibes)</h2><ol><li><b>Specificity.</b> "I ran the numbers: a 247-byte custom_json costs about 1.36 billion RC, and the account regenerates its pool every 5 days" beats "gas fees are low on these chains" every single time. Numbers are anchors for votes because they are rare and checkable.</li><li><b>A real moment.</b> "At 23:58 the process died. At 23:59 it was back, without anyone touching it." Time-stamped reality reads like nothing else in a feed of abstractions.</li><li><b>Usefulness with a takeaway.</b> The reader should finish with something they can do: a command, a checklist, a mistake to avoid.</li><li><b>Consistency over bursts.</b> The payout window rewards accounts curators recognize. One strong post per day beats seven on Sunday and silence after.</li><li><b>Voice.</b> Pick a lane and keep it. An account that posts photography Monday and gas economics Tuesday reads as compromised, and veterans can smell a repurposed account.</li></ol><h2>What kills rewards</h2><ol><li><b>Duplicate content.</b> The same article on three chains, or five near-identical posts on one account. Communities flag it, curators blacklist it, and the algorithmic feed bury it. Adapt the angle per network or stagger by days.</li><li><b>Tag stuffing.</b> First tag is the post's permanent category. One umbrella tag (steem / hive / blurt), one or two precise niche tags, optionally one community tag. Five random tags is a spam signature.</li><li><b>Begging.</b> "Upvote me," "resteem for resteem," vote-begging in comments. Instant reputation damage with the exact people who decide your payouts.</li><li><b>AI slop.</b> These communities have developed antibodies. The tells: em dashes everywhere, "in today's fast-paced world," triple-point lists in every section, summaries that restate the post. If your draft has any of these, rewrite or don't post.</li><li><b>Clickbait titles.</b> The title is the whole CTR, and a lying title burns reputation the seven-day window cannot repay. Curiosity without deception.</li><li><b>Editing after payout.</b> Fixing errors inside the window with a visible edit note is respected. Rewriting history after the money settled is remembered.</li></ol><h2>The first paragraph rule</h2><p>On every frontend, the first paragraph becomes the preview in feeds. Topic plus value in two sentences. No warm-up laps, no "Hello everyone, today I want to talk about." Start mid-substance: "A 247-byte memo costs about 1.36 billion RC. Here is how to check that yourself."</p><h2>The curation side (where steady money actually is)</h2><p>Posting is the visible half. The measured half: on these chains, <b>thoughtful curation often outearns posting</b> for consistent accounts, because curator rewards compound on every good post you find early, not just your own.</p><ul><li>Follow 5 to 10 accounts whose taste you trust and read what they vote before the crowd arrives.</li><li>Comment with substance: add a number, a correction, an edge case. A comment that teaches is a reputation asset; "great post" is noise.</li><li>Keep vote weight sane (we cap ours at 20% per vote). Maxing every vote burns mana and trains curators to see you as a bidder, not a reader.</li><li>Blurt has no downvotes, which changes the game: nobody can punish a post, so readers punish by ignoring. Quality filtering moved into human attention, which makes genuine comments worth more there, not less.</li></ul><h2>A realistic first month</h2><ul><li>Week 1: one post daily in one lane, five substantive comments daily. No expectations. You are calibrating voice and learning who curates your niche.</li><li>Week 2: note which posts got early curator attention and why. Double down on that format. Start engaging the curators' own threads.</li><li>Week 3: your first payout lands (7-day window from week 1). It will be small. The number that matters is trend, not total.</li><li>Week 4: decide your sustainable cadence. Most accounts that quit do it here, right before compounding starts.</li></ul><h2>The honest bottom line</h2><p>These chains pay real money for real attention, slowly, with a seven-day feedback loop that punishes fakes and rewards patience. If you want a casino, there are other chains. If you want to build a publishing reputation that is verifiable forever (every post you ever wrote, immutably on a public ledger, including the ones you wish you could delete), there is nowhere else like this. Write accordingly.</p>
+</main>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+</body>
+</html>

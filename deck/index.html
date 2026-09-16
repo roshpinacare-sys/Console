@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · מצגת שותפים ומשקיעים</title>
+<meta name="description" content="SAOS: ריבונות עם קבלות. מצגת מלאה, כל מספר נמדד או מעוגן on-chain.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;--gold:#d4af37;--purple:#a78bfa;--green:#22c55e;--red:#ef4444;--yellow:#eab308;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Hebrew",Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--sans);overflow:hidden}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:6vh 7vw;overflow:hidden}
+.slide.on{display:flex;animation:in .45s ease both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.kick{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.2em;margin-bottom:18px}
+h1{font-size:clamp(34px,5.4vw,60px);font-weight:800;line-height:1.14;letter-spacing:-.01em}
+h2{font-size:clamp(26px,3.8vw,42px);font-weight:800;line-height:1.2;margin-bottom:20px}
+.gold{color:var(--gold)}.green{color:var(--green)}.purple{color:var(--purple)}.red{color:var(--red)}
+.sub{color:var(--mut);font-size:clamp(15px,1.9vw,21px);margin-top:18px;max-width:60ch;line-height:1.6}
+.grid{display:grid;gap:12px;margin-top:26px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+.box{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:18px}
+.box .v{font-family:var(--mono);font-size:clamp(19px,2.5vw,30px);font-weight:800}
+.box .l{font-size:12.5px;color:var(--mut);margin-top:5px;line-height:1.45}
+.box h3{font-size:15.5px;margin-bottom:7px}
+.box p{font-size:13px;color:var(--mut);line-height:1.55}
+.badge{font-family:var(--mono);font-size:9.5px;color:var(--green);border:1px solid rgba(34,197,94,.4);border-radius:4px;padding:1px 6px;margin-right:5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:20px}
+th{font-family:var(--mono);font-size:10.5px;color:var(--dim);text-align:right;border-bottom:1px solid var(--border);padding:7px 10px;letter-spacing:.06em}
+td{padding:9px 10px;border-bottom:1px solid #1f1f23;vertical-align:top}
+td.m{font-family:var(--mono);font-size:11.5px;color:var(--mut);direction:ltr;text-align:left}
+td b{font-size:13.5px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-left:7px}
+ul.pts{list-style:none;margin-top:20px}
+ul.pts li{padding:9px 0;border-bottom:1px dashed var(--border);font-size:clamp(14px,1.7vw,17px);color:var(--mut);display:flex;gap:12px;align-items:baseline}
+ul.pts li .m{font-family:var(--mono);color:var(--gold);flex:none;font-size:13px}
+ul.pts li b{color:var(--tx)}
+.quote{font-size:clamp(24px,3.6vw,42px);font-weight:800;line-height:1.35;max-width:22ch}
+.en{font-family:var(--mono);font-size:14px;color:var(--mut);margin-top:20px;direction:ltr;text-align:right}
+.nav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:14px;align-items:center;z-index:50}
+.nav button{background:var(--panel);border:1px solid var(--border);color:var(--mut);width:42px;height:42px;border-radius:10px;font-size:18px;cursor:pointer;font-family:var(--mono)}
+.nav button:hover{color:var(--tx);border-color:var(--gold)}
+.ctr{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.pnum{position:fixed;top:20px;left:26px;font-family:var(--mono);font-size:11px;color:var(--dim);z-index:50}
+.logo{position:fixed;top:16px;right:26px;font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.12em;z-index:50;color:var(--tx)}
+.logo .dotg{color:var(--gold)}
+.foot{position:absolute;bottom:26px;right:7vw;font-size:11px;color:var(--dim);font-family:var(--mono)}
+@media print{
+  html,body{overflow:visible;background:#fff}
+  .slide{position:relative;display:flex !important;inset:auto;page-break-after:always;min-height:100vh;animation:none}
+  .nav,.pnum,.logo{display:none}
+  @page{size:A4 landscape;margin:0}
+}
+</style>
+</head>
+<body>
+<div class="logo">SAOS<span class="dotg">·</span></div>
+<div class="pnum"><span id="pn">1</span> / 12</div>
+
+<!-- 1 · title -->
+<section class="slide on">
+  <div class="kick">PARTNER DECK · 2026-09-12 · ALL FIGURES MEASURED OR ON-CHAIN</div>
+  <h1>ריבונות<br><span class="gold">עם קבלות.</span></h1>
+  <p class="sub">SAOS היא רשת ריבונית שמעגנת כל חותם, כל טענה וכל סירוב על 9 רשתות ציבוריות שהיא לא שולטת בהן. כל מספר במצגת הזו נמדד או מעוגן on-chain, עם קישור לאימות עצמאי.</p>
+  <div class="foot">github.com/roshpinacare-sys/Adsmarket · fact-sheet v3.27</div>
+</section>
+
+<!-- 2 · thesis -->
+<section class="slide">
+  <div class="kick">THE THESIS</div>
+  <div class="quote">"כל סוכן יכול לטעון הכל.<br><span class="gold">רק שרשרת ציבורית לא יכולה לשקר."</span></div>
+  <div class="en">Every agent can claim anything. Only a public chain cannot lie.</div>
+  <p class="sub">בעידן שבו סוכני AI מפרסמים מיליוני טענות ביום, המשאב הנדיר הוא לא כוח חישוב ולא הון. זה אמת ברת-אימות. אנחנו הופכים שקר ליקר: רישום קבוע עולה פחות ממאית האגורה.</p>
+</section>
+
+<!-- 3 · numbers -->
+<section class="slide">
+  <div class="kick">BY THE NUMBERS · נמדד, לא מוצהר</div>
+  <h2>המספרים</h2>
+  <div class="grid g3">
+    <div class="box"><div class="v">133,259+</div><div class="l">בלוקים ב-SAOS-NET · שרדה fork מתוכנן @130,000 עם תיקוני kernel <span class="badge">נמדד</span></div></div>
+    <div class="box"><div class="v">32,603 tx/s</div><div class="l">ריפליי של 65,238 עסקאות ארכיון אמיתיות <span class="badge">נמדד</span></div></div>
+    <div class="box"><div class="v">6/6 × 9</div><div class="l">מטריצת עוגנים מלאה, תשעה מחזורים רצופים עם קבלות פר-רשת <span class="badge">חי</span></div></div>
+    <div class="box"><div class="v">$0.0000081</div><div class="l">רשומת נוטריון קבועה (אצווה של 10K) · מודל גז מדויק ל-wei <span class="badge">נמדד</span></div></div>
+    <div class="box"><div class="v">88ms</div><div class="l">המרה בין-רשתית ריבונית (p50) מול 10-90 דקות בצד שלישי <span class="badge">נמדד</span></div></div>
+    <div class="box"><div class="v">36s</div><div class="l">ריפוי-עצמי מ-OOM kill של הקרנל · אפס מגע אדם <span class="badge">נמדד</span></div></div>
+  </div>
+</section>
+
+<!-- 4 · receipts -->
+<section class="slide">
+  <div class="kick">RECEIPTS · פתוחים בסיירים, עכשיו</div>
+  <h2>קיר הקבלות</h2>
+  <table>
+    <tr><th>רשת</th><th>קבלה</th><th>מיקום</th></tr>
+    <tr><td><span class="dot"></span><b>ETHEREUM</b></td><td class="m">0x102ec1935be6…0ef41 · עוגן מחזור h25: 0x02648a90…</td><td class="m">blk 25,929,261 · blk 25,958,268</td></tr>
+    <tr><td><span class="dot"></span><b>SOLANA</b></td><td class="m">2M1rkRgg…UM2M9 · עוגן אבן-פינה 5z46xVFc…wZr5 · h25: 5BbqFe46…</td><td class="m">slot 445,822,974 · slot 446,313,117</td></tr>
+    <tr><td><span class="dot"></span><b>STEEM</b></td><td class="m">390bcfc2…66177 · נוטריון חינמי 7639c915…2b46</td><td class="m">blk 10,937,394 · blk 109,496,567</td></tr>
+    <tr><td><span class="dot"></span><b>HIVE</b></td><td class="m">d4cf936b…2bd5</td><td class="m">blk 10,970,856</td></tr>
+    <tr><td><span class="dot"></span><b>TRON</b></td><td class="m">1db5006b… (bit-encoded, אפס עמלה נטו)</td><td class="m">blk 86,019,974</td></tr>
+    <tr><td><span class="dot"></span><b>BLURT</b></td><td class="m">f98a1285… · 67437c73… (מסילה שביעית, אפס עלות)</td><td class="m">blk 63,551,154 · 63,551,991</td></tr>
+  </table>
+  <p class="sub" style="font-size:14px">XRPL ו-BSC בקיר ה-v50: ספר 106,890,679 · בלוק 121,011,726. כל הקישורים המלאים ב-receipts.html ובעמודי הנחיתה.</p>
+</section>
+
+<!-- 5 · consistency + house of memory -->
+<section class="slide">
+  <div class="kick">PROOF ARCHITECTURE</div>
+  <h2>השרשרת היא הספר</h2>
+  <div class="grid g2">
+    <div class="box"><h3>עקביות בין-שרשרתית</h3><p>אותו stateRoot בדיוק (d4970bb5…) עוגן בו-זמנית ב-Ethereum וב-Solana ואומת bit-for-bit משתי קריאות RPC נפרדות. "שני שורשים, מפתח אחד, חמש רשתות" נמדד שוב ושוב.</p></div>
+    <div class="box"><h3>בית-הזיכרון (v68)</h3><p>איפוס סביבה מחק את הספר המקומי לחלוטין. האורגניזם בנה את עצמו מחדש מהשרשרת ואימת relays חיים. ההוכחה האולטימטיבית: מה שנמצא on-chain לא ניתן לאבד.</p></div>
+    <div class="box"><h3>מודלי גז בשני כלים נפרדים</h3><p>מודל הנוטריון חזה עסקת mainnet עד ה-wei (30,920 gas, בלוק 25,929,672, כולל EIP-7623). מודל העוגנים צדק 7 פעמים ברצף (32,680 gas). כל מודל עם הקבלה שלו.</p></div>
+    <div class="box"><h3>מכ"ם סנכרון (v74)</h3><p>אימות טריות קומיטים חי מול GitHub לכל הריפואים. מצב behind=1 נתפס וטופל. הוכח שלוש פעמים חי. שום סביבה שנפלה לא משאירה אותנו מאחור בלי ידיעה.</p></div>
+  </div>
+</section>
+
+<!-- 6 · products -->
+<section class="slide">
+  <div class="kick">PRODUCT FAMILY · ארבע דלתות</div>
+  <h2>מה כבר קיים ופועל</h2>
+  <div class="grid g2">
+    <div class="box"><h3><span class="mono" style="color:var(--purple);font-size:10px">IDENTITY API · חי היום</span></h3><p>קריאה אחת מוכיחה שחשבון Steem/Hive וכתובת EVM הם אותו מפתח. הוכחה מהשרשרת עצמה. SDK אפס-תלויות, ממוטר, PROVEN חי מול בלוק 109,389,994. npm ו-gateway בהחלטת בעלים.</p></div>
+    <div class="box"><h3><span class="mono" style="color:var(--purple);font-size:10px">DEX + בורסה + חדר המרה</span></h3><p>ספר עם escrow מלא · סליקת CoW חסינת-סנדוויץ' מבנית · מנוע ve(3,3) עם buy-and-burn מוגבל-רווח · לאונצ'פאד עם graduation חי · חדר המרה: 65/65 רגליים אטומיות, 88ms, התיישבות exact-to-quote · 10/10 נכסים בניתוב.</p></div>
+    <div class="box"><h3><span class="mono" style="color:var(--purple);font-size:10px">JUMPPER · נוטריון</span></h3><p>נוטריון אצווה ($0.0000081 לרשומה) · מסילה חינמית עם קבלה חיה · עוגן-תיקון שמפרסם תיקונים איפה שהפיצולים חיים · epochguard שמונע פיצולים (0 התנגשויות על רצף אמיתי).</p></div>
+    <div class="box"><h3><span class="mono" style="color:var(--purple);font-size:10px">WALLET + TOWER + CLOCK</span></h3><p>ארנק 7 רשתות (M0-M4 מאומתים) · אקספלורר Ethereum עצמאי שבו רואים את העוגנים שלנו · שעון אטומי: 6 רשתות לשורש אחד ב-15.9ms, ‏$0, בלי מפתחות.</p></div>
+  </div>
+</section>
+
+<!-- 7 · real money -->
+<section class="slide">
+  <div class="kick">REAL MONEY · נע, נמדד, מתועד</div>
+  <h2>הכסף כבר זז</h2>
+  <ul class="pts">
+    <li><span class="m">[v]</span><span><b>כסף ישן אותר, חובר וזז פיזית:</b> ETH ו-BNB נסחפו לבית האוצר בעסקאות אמיתיות, כתובות המקור רוקנו ל-0. עלות ההעברה: ~0.5% מהאבק עצמו.</span></li>
+    <li><span class="m">[v]</span><span><b>המרה ראשונה על HIVE:</b> txid ‏46ed2f58… · הצי 11/11 · כלכלת RC מאוזנת.</span></li>
+    <li><span class="m">[v]</span><span><b>מיקרו-מסילה:</b> פרמיית מחיר רוסנה מ-+459% ל-+24.7% ב-16 מנות TWAP מדודות · נטו +133kµ · פער-פנטום אותר ונשרף פרו-רטה בכנות.</span></li>
+    <li><span class="m">[v]</span><span><b>התיישבות exact-to-quote:</b> המרה אטומית STEEM→USDS התיישבה בדיוק לפי הציטוט (2268µ).</span></li>
+    <li><span class="m">[v]</span><span><b>harvest לשכר אמיתי:</b> ‏36.4 SAOS-M זרמו לשכר עם tx. כלכלה זעירה אבל אמיתית לחלוטין.</span></li>
+  </ul>
+</section>
+
+<!-- 8 · breakthroughs -->
+<section class="slide">
+  <div class="kick">FIVE BREAKTHROUGHS · כל אחת עם הגבול הכן שלה</div>
+  <h2>מה קשה להעתקה</h2>
+  <ul class="pts">
+    <li><span class="m">B1</span><span><b>זהות חוצת-פרדיגמות:</b> מפתח Graphene אחד = כתובת EVM, הוכחת ecrecover בלי לחשוף כלום. גבול: login/recovery אוטומטי בבנייה.</span></li>
+    <li><span class="m">B2</span><span><b>צל-L1 בתקציב אבטחה ~אפס:</b> נוטריון חינמי במקום משכורות ולידטורים. גבול: סופיות יורשת מהמארחים.</span></li>
+    <li><span class="m">B3</span><span><b>מוני סירוב פומביים:</b> ‏383,836 עסקאות שסורבו, מתועדות. גבול: קנה-המידה הכלכלי עדיין זעיר.</span></li>
+    <li><span class="m">B4</span><span><b>עטיפות 1:1 כאינווריאנט קוד:</b> ‏20 נכסים, supply==locked. גבול: סך הנעול קטן היום, וזה מפורסם.</span></li>
+    <li><span class="m">B5</span><span><b>אורגניזם שמרפא ומתקן את עצמו בפומבי:</b> ריפוי 36s, תיקונים עצמיים מתפרסמים, כולל נגד עצמנו.</span></li>
+  </ul>
+</section>
+
+<!-- 9 · honesty moat -->
+<section class="slide">
+  <div class="kick">THE HONESTY MOAT</div>
+  <h2>כנות כחפיר תחרותי</h2>
+  <div class="grid g4">
+    <div class="box"><div class="v">100+</div><div class="l">פערי אמת שנסגרו בהוכחות חיות ביום ביקורת אחד (roasts ‏53-82)</div></div>
+    <div class="box"><div class="v">h20808</div><div class="l">ה-HALT החי הראשון: אינווריאנטות תפסו LP-פנטום, שורש תוקן, סחיפה הוצהרה</div></div>
+    <div class="box"><div class="v">×52.6</div><div class="l">טעות המדידה שלנו על HIVE פורסמה עם התיקון והפכה לנכס אמון</div></div>
+    <div class="box"><div class="v">0.6→2.1</div><div class="l">מודל עלות שהופרך על ידי מדידה חיה, וההפרכה פורסמה</div></div>
+  </div>
+  <p class="sub">ארכיון הביקורת העצמית פתוח. אף פרויקט בתחום לא מפרסם את ה-roasts של עצמו. אנחנו כן, וזה בדיוק מה שהופך את שאר המספרים לאמינים.</p>
+</section>
+
+<!-- 10 · resilience -->
+<section class="slide">
+  <div class="kick">RESILIENCE · נמדד בשברים אמיתיים</div>
+  <h2>עמידות שהוכחה באש</h2>
+  <div class="grid g3">
+    <div class="box"><div class="v green">36s</div><div class="l">ריפוי-עצמי מ-OOM · השגחה הדדית (הרץ שומר על השומר) · גלאי זומבים: "תהליך חי אינו אמת, התקדמות בלוקים היא האמת"</div></div>
+    <div class="box"><div class="v purple">66 + 9/9</div><div class="l">LIVE-GATE: כל הדמונים dry-by-default · RESHUT: ‏9/9 וקטורי תקיפת הרשאות נחסמו חי · MAGEN: שער אנטי-פישינג fail-closed</div></div>
+    <div class="box"><div class="v gold">687 → 0</div><div class="l">קבצים מנוטרים בסריקת סודות חיה, אפס חורים אמיתיים · מפתחות לעולם לא בריפו · היסטוריית git נקייה מאומתת · תרגיל שחזור כספת עבר בשלמות</div></div>
+  </div>
+</section>
+
+<!-- 11 · roadmap + the ask -->
+<section class="slide">
+  <div class="kick">WHAT'S NEXT · והבקשות</div>
+  <h2>94 סנט מפרידים מ-12 רשתות</h2>
+  <ul class="pts">
+    <li><span class="m">$0.94</span><span><b>השקיית גז (מדידת מנוע v52):</b> 7 דלתות EVM מוכחות-צינור ממתינות. נוכחות עיגון 5→12. דירוג המנוע: פי-11.9 השפעה.</span></li>
+    <li><span class="m">npm</span><span><b>פרסום SDK + gateway ציבורי:</b> המוצר הראשון הופך זמין לכל מפתח חיצוני. שעת עבודה.</span></li>
+    <li><span class="m">audit</span><span><b>ביקורת חיצונית:</b> חבילה byte-identical ארוזה וממתינה עם 13 אינווריאנטות ו-9 הנחות קריפטוגרפיות מתועדות.</span></li>
+    <li><span class="m">pilots</span><span><b>פיילוטים:</b> ‏10 יעדים מאומתים (משחקי בלוקצ'יין, בורסות, חזיתות תוכן) מחכים ל-Identity API. אנחנו מחפשים שותף ראשון.</span></li>
+  </ul>
+</section>
+
+<!-- 12 · close -->
+<section class="slide">
+  <div class="kick">CLOSE</div>
+  <h1>אל תאמינו לנו.<br><span class="gold">תאמתו.</span></h1>
+  <p class="sub">כל קבלה פתוחה בסייר. כל מדידה משוחזרת. כל טעות שלנו מתוקנת בפומבי. זו לא סיסמה; זה ארכיון של שבועיים.</p>
+  <div class="en">Don't trust. Verify.</div>
+  <div class="foot">Adsmarket · index.html · index-en.html · receipts.html · press/press-kit.md</div>
+</section>
+
+<div class="nav">
+  <button id="prev" aria-label="הקודם">→</button>
+  <span class="ctr"><span id="cn">1</span>/12</span>
+  <button id="next" aria-label="הבא">←</button>
+</div>
+
+<script>
+(function(){
+  const sl=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const pn=document.getElementById('pn'), cn=document.getElementById('cn');
+  function go(n){
+    if(n<0)n=sl.length-1; if(n>=sl.length)n=0;
+    sl[i].classList.remove('on'); i=n; sl[i].classList.add('on');
+    pn.textContent=i+1; cn.textContent=i+1;
+  }
+  document.getElementById('next').onclick=()=>go(i+1);
+  document.getElementById('prev').onclick=()=>go(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'||e.key===' '){e.preventDefault();go(i+1);}
+    if(e.key==='ArrowRight')go(i-1);
+    if(e.key==='Home')go(0); if(e.key==='End')go(sl.length-1);
+  });
+  let tx=null;
+  document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(tx===null)return;
+    const dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>60)go(dx>0?i-1:i+1);
+    tx=null;
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
