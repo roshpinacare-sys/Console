@@ -50,7 +50,7 @@ button{cursor:pointer;font-family:var(--sans)}
 .roles{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .role-chip{font-size:12px;font-family:var(--mono);border:1px solid var(--border2);border-radius:999px;padding:3px 12px;color:var(--dim)}
 .role-chip.on{border-color:var(--green);color:var(--green)}
-.role-chip.on::before{content:"OK "}
+.role-chip.on::before{content:"✓ "}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:640px){.grid2{grid-template-columns:1fr}}
 .kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border);font-size:13.5px}
@@ -184,7 +184,7 @@ body.state-unlocked .unlocked-only{display:block}
         </div>
         <div style="margin-top:14px;padding:13px;background:var(--panel2);border:1px solid var(--border2);border-radius:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
           <span style="font-size:14px"><b>מנוע הגילוי הריבוני</b> · גילוי תוכניות בדפדפן, חתום לשרשרת ומשוחזר בענן</span>
-          <a href="acid.html" style="margin-inline-start:auto;font-size:13px">פתח את המנוע &lt;-</a>
+          <a href="acid.html" style="margin-inline-start:auto;font-size:13px">פתח את המנוע ←</a>
         </div>
         <div class="field" style="margin-top:14px">
           <label for="note">הערה לפקודה (רשות, מועגן בשרשרת)</label>
@@ -291,7 +291,7 @@ body.state-unlocked .unlocked-only{display:block}
 <footer>
   <div class="wrap">
     <span>SAOS Network · השער חי בגיטהאב-פייג׳ס, מאומת מול השרשרת הציבורית, בלי CDN ובלי סודות</span>
-    <span><a href="./">&lt;- לאתר הציבורי</a></span>
+    <span><a href="./">← לאתר הציבורי</a></span>
   </div>
 </footer>
 
@@ -338,7 +338,7 @@ async function rpc(method, params) {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function copyTxt(txt) {
   (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
-    .then(() => toast("הועתק"))
+    .then(() => toast("הועתק ✓"))
     .catch(() => toast(txt));
 }
 function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
@@ -382,12 +382,12 @@ async function connect() {
     $("whoPub").textContent = roles.posting.pub;
     $("whoRoles").textContent = matched.join(" · ");
     document.body.className = "state-unlocked";
-    setStatus("מחובר המפתח הציבורי תואם לרשומות השרשרת", "ok");
+    setStatus("מחובר ✓ המפתח הציבורי תואם לרשומות השרשרת", "ok");
     $("sec").value = "";
     loadNet();
     loadHistory();
     loadSaosFeed();
-    toast("ברוך שובך לרשת");
+    toast("ברוך שובך לרשת ✓");
   } catch (e) {
     setStatus(esc(e.message || String(e)), "err");
   } finally {
@@ -401,7 +401,7 @@ function lock() {
   document.body.className = "state-locked";
   setStatus("", "");
   $("cmdResult").className = "result";
-  toast("המפתח נמחק מהזיכרון OK");
+  toast("המפתח נמחק מהזיכרון ✓");
 }
 
 /* ── live network state (status.json) ── */
@@ -451,14 +451,14 @@ async function sendCmd(cmd) {
   try {
     const signed = await buildAndBroadcast([op]);
     res.innerHTML =
-      '<div style="color:var(--green)">OK הפקודה שודרה. "' + esc(cmd) + '" חתומה מ-@' + esc(state.acc) + '</div>' +
+      '<div style="color:var(--green)">✓ הפקודה שודרה. "' + esc(cmd) + '" חתומה מ-@' + esc(state.acc) + '</div>' +
       '<div class="txid" style="margin-top:6px">sig ' + esc(signed.signatures[0].slice(0, 40)) + '…</div>' +
       '<div class="links">ההיסטוריה של השרשרת היא הקבלה. הרשת תאסוף את הפקודה בפעימה הקרובה.</div>';
-    toast('הפקודה "' + cmd + '" שודרה לשרשרת OK');
+    toast('הפקודה "' + cmd + '" שודרה לשרשרת ✓');
     $("note").value = "";
     loadHistory();
   } catch (e) {
-    res.innerHTML = '<div style="color:var(--red)">FAIL השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
+    res.innerHTML = '<div style="color:var(--red)">✗ השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
   } finally {
     setCmdsDisabled(false);
   }
@@ -535,7 +535,7 @@ async function sendSaos(kind) {
   try {
     form = SAOS_FORMS[kind]();
   } catch (e) {
-    res.innerHTML = '<div style="color:var(--red)">FAIL ' + esc(e.message) + "</div>";
+    res.innerHTML = '<div style="color:var(--red)">✗ ' + esc(e.message) + "</div>";
     return;
   }
   setCmdsDisabled(true);
@@ -555,13 +555,13 @@ async function sendSaos(kind) {
     res.innerHTML = '<span class="spin"></span>חותם ומשדר את הוראת האוצר: ' + esc(form.label) + "…";
     const signed = await buildAndBroadcast([op]);
     res.innerHTML =
-      '<div style="color:var(--green)">OK ההוראה שודרה: ' + esc(form.label) + '</div>' +
+      '<div style="color:var(--green)">✓ ההוראה שודרה: ' + esc(form.label) + '</div>' +
       '<div class="txid" style="margin-top:6px">sig ' + esc(signed.signatures[0].slice(0, 40)) + '…</div>' +
       '<div class="links">הלב יחתום את הפעולה במפתח האוצר שבענן וישדר לספר החי. אם הג׳נזיס טרם הושלם, ההוראה תמתין בכנות ותתבצע אחריו.</div>';
-    toast("הוראת האוצר שודרה OK");
+    toast("הוראת האוצר שודרה ✓");
     loadHistory();
   } catch (e) {
-    res.innerHTML = '<div style="color:var(--red)">FAIL השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
+    res.innerHTML = '<div style="color:var(--red)">✗ השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
   } finally {
     setCmdsDisabled(false);
   }
@@ -577,10 +577,10 @@ async function relayUserOps() {
     const parsed = JSON.parse($("relay-json").value);
     list = Array.isArray(parsed) ? parsed : [parsed];
   } catch (e) {
-    res.innerHTML = '<div style="color:var(--red)">FAIL JSON לא תקין: ' + esc(e.message) + "</div>";
+    res.innerHTML = '<div style="color:var(--red)">✗ JSON לא תקין: ' + esc(e.message) + "</div>";
     return;
   }
-  if (!list.length) { res.innerHTML = '<div style="color:var(--red)">FAIL ריק</div>'; return; }
+  if (!list.length) { res.innerHTML = '<div style="color:var(--red)">✗ ריק</div>'; return; }
   setCmdsDisabled(true);
   let sent = 0;
   const errs = [];
@@ -602,10 +602,10 @@ async function relayUserOps() {
       }
     }
     res.innerHTML =
-      '<div style="color:' + (sent ? "var(--green)" : "var(--red)") + '">OK שודרו ' + sent + " מתוך " + list.length + " פעולות חתומות מהחשבון שלך (תעבורה בלבד)</div>" +
+      '<div style="color:' + (sent ? "var(--green)" : "var(--red)") + '">✓ שודרו ' + sent + " מתוך " + list.length + " פעולות חתומות מהחשבון שלך (תעבורה בלבד)</div>" +
       (errs.length ? '<div style="color:var(--red);margin-top:6px;font-size:12px">' + errs.map(esc).join(" · ") + "</div>" : "") +
       '<div class="links">הקיפול של הרשת יאמת את החתימות הפנימיות ויקבל רק את התקפות.</div>';
-    if (sent) { $("relay-json").value = ""; toast("פעולות המשתמש שודרו OK"); }
+    if (sent) { $("relay-json").value = ""; toast("פעולות המשתמש שודרו ✓"); }
   } finally {
     setCmdsDisabled(false);
   }
@@ -651,7 +651,7 @@ async function loadSaosFeed() {
     const genesis = l.genesis || {};
     box.innerHTML =
       '<div class="hrow"><span class="cmdname">genesis</span><span class="note">' +
-      (genesis.done ? 'OK הושלם · אוצר <span class="mono">' + esc(String(genesis.treasury || "").slice(0, 16)) + '…</span>' : "מונח בשלבים על ידי הלב (RC)") +
+      (genesis.done ? '✓ הושלם · אוצר <span class="mono">' + esc(String(genesis.treasury || "").slice(0, 16)) + '…</span>' : "מונח בשלבים על ידי הלב (RC)") +
       "</span></div>" +
       (ops.length
         ? ops.map((o) =>
