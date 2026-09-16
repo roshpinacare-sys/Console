@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-16T05:08:24.409Z",
+  "generatedAt": "2026-09-16T06:11:21.187Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth — no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 110,
-    "checkpoints": 103,
+    "attestations": 112,
+    "checkpoints": 105,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 109
+      "VERIFIED": 111
     },
-    "headHash": "0xca5c1af316cbeca2d72d28f5eb29e3f4f2e657701dbe9331c51f76c121d0b2d6"
+    "headHash": "0xd1df2f66b89e1e269b32f5bcd80b0c08f77cf70030d19a48ef46b6229d2ffd83"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 87,
-      "lastAttestationSeq": 110,
-      "lastAttestationAt": "2026-09-16T05:08:23.187Z"
+      "attestations": 89,
+      "lastAttestationSeq": 112,
+      "lastAttestationAt": "2026-09-16T06:11:21.111Z"
     },
     {
       "name": "weave-market-regulator",
@@ -100,12 +100,28 @@
   ],
   "attestations": [
     {
-      "seq": 110,
+      "seq": 112,
       "type": "AUDIT",
       "status": "VERIFIED",
-      "at": "2026-09-16T05:08:23.187Z",
+      "at": "2026-09-16T06:11:21.111Z",
       "agentName": "weave-cloud-heart",
       "claim": "ביקורת יכולת-חתימה יומית: 9 זהויות תפקיד בספר, 1 חותמים בפועל (sealed) · השאר memory-only — מפתחותיהם חיו ב-DB סביבתי ומתים עם הסביבה · הפונקציות שלהם נבלעו בלב (gitkeeper→דחיפות, scout→סריקת האקוסיסטם) או ממתינות (relayer→עדות הפוכה)"
+    },
+    {
+      "seq": 111,
+      "type": "AUDIT",
+      "status": "VERIFIED",
+      "at": "2026-09-16T06:11:21.059Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "מדידת אקוסיסטם (G6) הונחה בספר: dup=0.0065 — 10 עותקים יתרים מתוך 1529 קבצי-סטטוס שנמדדו (4 קבוצות שכפול) · יעד <0.2 מוחזק"
+    },
+    {
+      "seq": 110,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-16T05:09:11.535Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #102 root 0xb65340078f4e59b5… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) — עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
     },
     {
       "seq": 109,
@@ -982,11 +998,27 @@
   ],
   "checkpoints": [
     {
+      "index": 105,
+      "root": "0xd1df2f66b89e1e269b32f5bcd80b0c08f77cf70030d19a48ef46b6229d2ffd83",
+      "attFrom": 112,
+      "attTo": 112,
+      "at": "2026-09-16T06:11:21.144Z",
+      "anchoredOn": []
+    },
+    {
+      "index": 104,
+      "root": "0x8772fe25586f4c03c84cac432479d194773b12a58ce865e439aab654b4034642",
+      "attFrom": 111,
+      "attTo": 111,
+      "at": "2026-09-16T06:11:21.103Z",
+      "anchoredOn": []
+    },
+    {
       "index": 103,
-      "root": "0xca5c1af316cbeca2d72d28f5eb29e3f4f2e657701dbe9331c51f76c121d0b2d6",
+      "root": "0x1d7ae8449e77e265ffa8558fba104ae4bbf50250d167bffc6af498a045023728",
       "attFrom": 110,
       "attTo": 110,
-      "at": "2026-09-16T05:08:23.881Z",
+      "at": "2026-09-16T05:09:11.556Z",
       "anchoredOn": []
     },
     {
@@ -995,7 +1027,9 @@
       "attFrom": 109,
       "attTo": 109,
       "at": "2026-09-16T04:34:22.969Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "zero"
+      ]
     },
     {
       "index": 101,
@@ -1246,26 +1280,6 @@
       "attTo": 83,
       "at": "2026-09-15T19:08:24.105Z",
       "anchoredOn": []
-    },
-    {
-      "index": 75,
-      "root": "0xb97a60f7c5775d319e982f0d86e9bf643886cec3dcba18a781ca8efb5c946b0c",
-      "attFrom": 82,
-      "attTo": 82,
-      "at": "2026-09-15T19:04:01.239Z",
-      "anchoredOn": [
-        "zero"
-      ]
-    },
-    {
-      "index": 74,
-      "root": "0x1247f2742cdc0ce7d408dab852bef29399727d2b32a9ae899ae93ce52bf7c465",
-      "attFrom": 81,
-      "attTo": 81,
-      "at": "2026-09-15T18:56:55.412Z",
-      "anchoredOn": [
-        "zero"
-      ]
     }
   ],
   "anchorLines": {
@@ -1303,12 +1317,6 @@
     ],
     "zero": [
       {
-        "checkpoint": 97,
-        "at": "2026-09-16T02:09:30.330Z",
-        "txid": "0x059563dc6fc682f34a8b19d40e617400994df9828a2d9f10c1de766f3dedd514",
-        "explorer": "https://zscan.live/tx/0x059563dc6fc682f34a8b19d40e617400994df9828a2d9f10c1de766f3dedd514"
-      },
-      {
         "checkpoint": 98,
         "at": "2026-09-16T02:33:38.340Z",
         "txid": "0x4b9b6cbeaf55db5c883103a55d665b5c517400e370ed18160f4eff38b9d22899",
@@ -1331,6 +1339,12 @@
         "at": "2026-09-16T04:34:18.009Z",
         "txid": "0xc047379ac780e282033041df54e7f008b4867813976744efe9eb28c88fc130e9",
         "explorer": "https://zscan.live/tx/0xc047379ac780e282033041df54e7f008b4867813976744efe9eb28c88fc130e9"
+      },
+      {
+        "checkpoint": 102,
+        "at": "2026-09-16T05:08:58.436Z",
+        "txid": "0x8f4c31fca2ec1b9be4c9db19da256c155251c422b069e71358952ddcfb077d73",
+        "explorer": "https://zscan.live/tx/0x8f4c31fca2ec1b9be4c9db19da256c155251c422b069e71358952ddcfb077d73"
       }
     ]
   },
@@ -1431,19 +1445,19 @@
       "fingerprint": "nv-fp:1e332f98b5ef7b9b",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-16T04:34:16.647Z"
+      "verifiedAt": "2026-09-16T05:08:56.847Z"
     },
     {
       "fingerprint": "nv-fp:531b3f28a4c50a9a",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-16T04:34:16.077Z"
+      "verifiedAt": "2026-09-16T05:08:56.543Z"
     },
     {
       "fingerprint": "nv-fp:596ae055a9069b87",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-16T04:34:16.914Z"
+      "verifiedAt": "2026-09-16T05:08:57.124Z"
     }
   ],
   "discoveries": []
