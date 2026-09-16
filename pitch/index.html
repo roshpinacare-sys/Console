@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · מצגת פיץ' · הוכחות לפני הבטחות</title>
+<meta name="description" content="מצגת הפיץ' של SAOS: ספר-חותמים ריבוני, קבלות חיות, כלכלה הגונה. הדפסה ל-PDF: כל שקופית היא עמוד אחד.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Hebrew","Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.5}
+.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;position:relative;border-bottom:1px solid var(--border)}
+.kicker{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.14em;margin-bottom:18px}
+h1{font-size:clamp(34px,5.5vw,64px);font-weight:800;letter-spacing:-.01em;line-height:1.12}
+h2{font-size:clamp(26px,4vw,44px);font-weight:800;margin-bottom:20px;line-height:1.18}
+.gold{color:var(--gold)}.purple{color:var(--purple)}.green{color:var(--green)}.red{color:var(--red)}.mut{color:var(--mut)}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+.sub{font-size:clamp(15px,1.8vw,20px);color:var(--mut);max-width:900px;margin-top:18px}
+.pageno{position:absolute;bottom:24px;left:32px;font-family:var(--mono);font-size:11px;color:var(--dim);direction:ltr}
+.brandmark{position:absolute;top:24px;left:32px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--mut)}
+.brandmark b{color:var(--gold)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:26px}
+.cell{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:22px}
+.grid4 .cell{border:none;border-radius:0}
+.cell .v{font-family:var(--mono);font-size:clamp(20px,2.6vw,30px);font-weight:800;direction:ltr;unicode-bidi:isolate}
+.cell .l{font-size:12.5px;color:var(--mut);margin-top:6px}
+.cell h3{font-size:16px;margin-bottom:8px}
+.cell p{font-size:13px;color:var(--mut)}
+ul.big{list-style:none;margin-top:22px}
+ul.big li{padding:11px 0;border-bottom:1px dashed var(--border);font-size:clamp(14px,1.6vw,17px);color:var(--mut);display:flex;gap:12px;align-items:baseline}
+ul.big li .m{font-family:var(--mono);color:var(--green);flex:none;font-size:13px;direction:ltr}
+ul.big li b{color:var(--tx)}
+.flow{display:flex;gap:10px;align-items:stretch;margin-top:28px;flex-wrap:wrap}
+.fnode{flex:1;min-width:170px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
+.fnode .t{font-weight:700;font-size:15px;margin-bottom:5px}
+.fnode .d{font-size:12px;color:var(--mut)}
+.farrow{display:flex;align-items:center;color:var(--gold);font-family:var(--mono);font-size:20px}
+.quote{font-size:clamp(22px,3.4vw,40px);font-weight:800;line-height:1.35;max-width:1000px}
+.quote .gold{color:var(--gold)}
+.attr{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:20px}
+table{width:100%;border-collapse:collapse;margin-top:22px;font-size:14px}
+th{font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;border-bottom:1px solid var(--border2);padding:8px 10px;letter-spacing:.06em}
+td{padding:10px;border-bottom:1px solid var(--border);color:var(--mut);vertical-align:top}
+td b{color:var(--tx)}
+td .mono{font-size:12px}
+.ask{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
+.ask .cell .v{color:var(--gold)}
+.cta-links{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.cta-links a{font-family:var(--mono);font-size:13px;color:var(--purple);border:1px solid rgba(167,139,250,.4);border-radius:8px;padding:10px 18px;text-decoration:none}
+.cta-links a:hover{background:rgba(167,139,250,.08);color:var(--tx)}
+.foot{margin-top:34px;font-size:11px;color:var(--dim);max-width:900px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:12px 22px;font-family:var(--mono);font-size:12px;pointer-events:none}
+.topbar .tbrand{color:var(--mut);letter-spacing:.12em}
+.topbar .tbrand b{color:var(--gold)}
+.topbar .tlinks{display:flex;gap:8px}
+.topbar a{pointer-events:auto;color:var(--mut);text-decoration:none;border:1px solid var(--border2);border-radius:8px;padding:6px 13px;background:rgba(24,24,27,.82)}
+.topbar a:hover{color:var(--tx);border-color:var(--gold)}
+.topbar a.cur{color:var(--gold);border-color:rgba(212,175,55,.45)}
+@media(max-width:760px){.grid2,.grid3,.grid4,.ask{grid-template-columns:1fr}.flow{flex-direction:column}.farrow{transform:rotate(-90deg);justify-content:center}}
+@media print{
+  html{scroll-snap-type:none}
+  body{background:#fff}
+  .topbar{display:none}
+  .slide{min-height:auto;height:auto;page-break-after:always;border-bottom:none;padding:14mm 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pageno,.brandmark{position:static;display:inline-block;margin-top:8mm}
+  @page{size:A4 landscape;margin:0}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="site">
+  <span class="tbrand">SAOS<b>·</b> מצגת פיץ'</span>
+  <span class="tlinks">
+    <a href="en.html" lang="en">English</a>
+    <a href="../#home">לקונסולה</a>
+  </span>
+</nav>
+
+<!-- 1 · כותרת -->
+<section class="slide">
+  <div class="kicker">SAOS · מצגת פיץ' · 2026-09-11 · כל מספר נמדד או מעוגן on-chain</div>
+  <h1>SAOS<span class="gold">·</span><br>הוכחות לפני הבטחות.</h1>
+  <p class="sub">מכונת מצב ריבונית שמעגנת כל חותם, כל טענה וכל סירוב לשרשראות ציבוריות שאינן שלה. תשע רשתות מעידות עליה. כל אחד יכול לאמת. שום דבר לא ניתן למחיקה.</p>
+  <div class="pageno">01 / 12</div>
+</section>
+
+<!-- 2 · הבעיה -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">הבעיה</div>
+  <h2>כל סוכן יכול לטעון הכל.<br>אף אחד לא יכול להוכיח כלום.</h2>
+  <ul class="big">
+    <li><span class="m">[1]</span><span>כלכלת הסוכנים רצה על טענות: "המשימה בוצעה", "הכסף הועבר", "הביקורת עברה". <b>אף אחת מהן לא ניתנת לאימות.</b></span></li>
+    <li><span class="m">[2]</span><span>גשרים מבקשים ממך לסמוך על ועדות. הענף איבד <b>מעל 2 מיליארד דולר</b> לאמון הזה (Wormhole‏ ~$320M‏, Ronin‏ ~$600M‏).</span></li>
+    <li><span class="m">[3]</span><span>אימות-מסמכים (נוטריון) עולה בן אדם, תור המתנה ומאות דולרים למסמך.</span></li>
+    <li><span class="m">[4]</span><span>הרצת שרשרת עולה מיליונים בשנה בשכר מאמתים — או שהיא נשארת רשת-בדיקה לנצח.</span></li>
+  </ul>
+  <div class="pageno">02 / 12</div>
+</section>
+
+<!-- 3 · הפתרון -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">הפתרון</div>
+  <h2>ספר ריבוני שתשע שרשראות ציבוריות <span class="gold">מעידות עליו</span></h2>
+  <div class="flow">
+    <div class="fnode"><div class="t">SAOS-NET</div><div class="d">מכונת מצב דטרמיניסטית · ‏133,259+ בלוקים · ‏3 שניות לבלוק · ‏32,603 tx/s במדידה</div></div>
+    <div class="farrow">←</div>
+    <div class="fnode"><div class="t">חותם</div><div class="d">כל 12 בלוקים: שורש merkle‏ sha256 אחד של כל המצב (bytes32 טבעי)</div></div>
+    <div class="farrow">←</div>
+    <div class="fnode"><div class="t">ממסר</div><div class="d">שידור רב-מסילות · קטעי-חירום · קריאה-חזרה verifyOnChain אחרי כל שליחה</div></div>
+    <div class="farrow">←</div>
+    <div class="fnode"><div class="t">החומה</div><div class="d">ETH‏ · BSC‏ · SOL‏ · TRON‏ · XRPL אימות קריאה-בלבד ישר מהשרשראות + מסילות Graphene חינמיות (Steem‏ · Hive‏ · Blurt‏)</div></div>
+  </div>
+  <p class="sub">לא גשר. לא עוד L1. <b>ספר-חותמים ריבוני נוטריוני</b>: השרשראות הציבוריות הן בתי-המשפט שלו, והאימות הוא זכות של כל זר — לא טובה שלנו.</p>
+  <div class="pageno">03 / 12</div>
+</section>
+
+<!-- 4 · התזה -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="quote">"כל סוכן יכול לטעון הכל.<br><span class="gold">רק שרשרת ציבורית לא יכולה לשקר."</span></div>
+  <div class="attr">שקר הופך יקר: ‏$0.0000081 לטענה קבועה, ציבורית וניתנת לאימות עצמאי</div>
+  <div class="pageno">04 / 12</div>
+</section>
+
+<!-- 5 · מומנטום -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">מומנטום · קבלות, לא שקופיות</div>
+  <h2>חי על רשתות ראשיות, נמדד השבוע</h2>
+  <div class="grid4">
+    <div class="cell"><div class="v gold">6/6</div><div class="l">מחזורי עיגון מטריצה-מלאה רצופים (h20‏, h21‏), כל קבלה ציבורית</div></div>
+    <div class="cell"><div class="v gold">88ms</div><div class="l">המרה ריבונית p50 (65/65 רגליים אטומיות) מול 10-90 דקות אצל צד שלישי</div></div>
+    <div class="cell"><div class="v gold">$0.0000081</div><div class="l">רשומת נוטריון קבועה, מודל גז מדויק עד ה-wei, ‏7/7 קריאות חיות</div></div>
+    <div class="cell"><div class="v gold">36s</div><div class="l">החלמה עצמית מהריגת OOM של הקרנל, אפס מגע אנושי, יומן מלא</div></div>
+  </div>
+  <ul class="big">
+    <li><span class="m">[v]</span><span><b>כסף אמיתי זז:</b> כספים ישנים אותרו, חוברו 1:1 ונגרפו פיזית ב-ETH‏ וב-BSC‏ (עסקאות אמיתיות, המקורות רוקנו עד אפס)</span></li>
+    <li><span class="m">[v]</span><span><b>המרת HIVE החיה הראשונה</b> (txid‏ 46ed2f58‏) · התיישבות מדויקת-לציטוט (2268µ‏) · לקיחת הרווח הראשונה ב-ETH‏ בתיעוד</span></li>
+    <li><span class="m">[v]</span><span><b>זרע אחד, חמישה עולמות:</b> גזירות EVM‏ + Solana‏ + TRON‏ + BTC/XRP, כל אחת מאומתת-מדויק מול שרשראות חיות; עוגן #12 נחתם במפתח ששוקם מעצמו (בלוק ETH‏ 25,983,946‏)</span></li>
+    <li><span class="m">[v]</span><span><b>בית הזיכרון:</b> מחיקת סביבה טוטאלית קרתה; האורגניזם בנה את עצמו מחדש מהשרשראות בלבד</span></li>
+  </ul>
+  <div class="pageno">05 / 12</div>
+</section>
+
+<!-- 6 · מוצרים -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">מוצרים</div>
+  <h2>ארבע דלתות לאותה ריבונות</h2>
+  <div class="grid2">
+    <div class="cell"><h3>Identity API <span class="mono mut">(חי היום)</span></h3><p>קריאה אחת מוכיחה שחשבון Steem/Hive‏ וכתובת EVM‏ חולקים מפתח אחד. ההוכחה נקראת מהשרשרת (saos.id.v1‏ → EIP-191‏ → התאמת סמכות חיה). מדידה במונים, ספר-מכסות, תוצאות FAILED הגונות. SDK‏ ללא תלויות: saos-id-verify.</p></div>
+    <div class="cell"><h3>בורסה ריבונית + כלכלה</h3><p>ספר-זמנות בנאמנות מלאה, אצוות CoW עמידות-מבנית להתקפות סנדוויץ', ve(3,3) קנה-ושרוף (40% כל 600 בלוקים, תחום ברווח נמדד), DCA‏ ו-TP/SL בלי שומרים, לאנצ'פד עם השלמה חיה (100% POL‏). ‏383,836 סירובים מפורסמים.</p></div>
+    <div class="cell"><h3>נוטריון JUMPPER</h3><p>נוטריון הוכחות באצוות: 10K טענות בשורש אחד, ‏$0.0000081 לרשומה. מסילה חינמית חיה עם קבלה אמיתית (בלוק Steem‏ 109,496,567‏). עוגני-תיקון מפרסמים תיקונים במקום שבו השגיאה חיה. epochguard מונע פיצולי-שרשרת במקום רק לדווח עליהם.</p></div>
+    <div class="cell"><h3>ארנק + מנועי הוכחה</h3><p>משמורת-עצמית על 7 רשתות (M0-M4 מאומת), המפתחות לא עוזבים את הלקוח. שעון אטומי: 6 רשתות לשורש אחד של 32 בייט, בלי מפתחות, ‏$0, ‏15.9ms. THE-TOWER: סייר ה-Ethereum‏ שלנו שמציג את העוגנים שלנו.</p></div>
+  </div>
+  <div class="pageno">06 / 12</div>
+</section>
+
+<!-- 7 · שוק -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">שוק</div>
+  <h2>מי משלם, ועל מה</h2>
+  <table>
+    <tr><th>מגזר</th><th>כאב</th><th>מה שאנחנו מוכרים</th></tr>
+    <tr><td><b>כלכלת סוכנים (AI‏)</b></td><td>סוכנים טוענים שביצעו; אף אחד לא יכול לאמת</td><td>עיגון טענות + API‏ אימות, מדיד לפי קריאה</td></tr>
+    <tr><td><b>משחקים על שרשראות Graphene‏</b></td><td>חשבונות-דמה מנקזים בריכות תגמול</td><td>הוכחת חשבון↔כתובת לכל שחקן, קריאה אחת</td></tr>
+    <tr><td><b>בורסות והחלפות</b></td><td>הפקדות מארנקי Steem/Hive‏ חסרות ייחוס</td><td>ייחוס הפקדות קריפטוגרפי, ניתן להרצה חוזרת לצורכי compliance</td></tr>
+    <tr><td><b>משפט, מדיה, יוצרים</b></td><td>אימות מסמכים איטי ויקר</td><td>$0.0000081 רשומות קבועות, מסילה חינמית לנפח גבוה</td></tr>
+    <tr><td><b>פרויקטי DeFi‏</b></td><td>כושר-הפירעון של גשר הוא מעשה אמונה</td><td>היצע==נעול כאינווריאנט קוד, ניתן לאימות ציבורי</td></tr>
+  </table>
+  <p class="sub">ראש-הגשר: אוכלוסיית Steem/Hive‏ הוותיקה (מיליוני חשבונות, בלי נתיב זהות ל-EVM/SOL בשום מקום אחר) ועשרת יעדי הפנייה המאומתים שכבר מופו (משחקי קלפים, בורסות, חזיתות תוכן).</p>
+  <div class="pageno">07 / 12</div>
+</section>
+
+<!-- 8 · חפיר -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">חפיר · נאמר בכנות</div>
+  <h2>מה קשה להעתיק</h2>
+  <ul class="big">
+    <li><span class="m">[1]</span><span><b>צנרת ביט-מדויקת חוצת-פרדיגמות:</b> סריאליזציה הוכחה 30/30 מול בייטים אמיתיים של שרשראות; protobuf של TRON אומת מול 535 חתימות מיינט; סקלר secp256k1 אחד משרת סמכויות Graphene‏ ו-EVM‏. שנים של עבודה לא-זוהרת, נמדדת בכל צעד.</span></li>
+    <li><span class="m">[2]</span><span><b>כלכלת מונה-הסירובים:</b> מנוע שוק שמפרסם את מה שסירב (383,836 דילוגים, 130,499 דחיות). חדשנות ממשלית לא פחות מטכנית.</span></li>
+    <li><span class="m">[3]</span><span><b>ביקורת-עצמית כמערכת הפעלה:</b> ‏100+ פערי אמת נמצאו ונסגרו ביום אחד על פני 6 ריפואים (roasts‏ 53-82‏), ‏HALT חי שתפס באג חשבונאי אמיתי ב-h20808, תיקונים מעוגנים on-chain במקום שבו השגיאות חיות.</span></li>
+    <li><span class="m">[4]</span><span><b>עדיין לא חפיר, נאמר במפורש:</b> סקלה כלכלית (אבק), חוזי גשר EVM/SOL פרוסים, טוקנומיקה מוגדרת, ביקורת חיצונית. כל אחד מהם שער מתועד עם מחיר — לא משאלה.</span></li>
+  </ul>
+  <div class="pageno">08 / 12</div>
+</section>
+
+<!-- 9 · כנות -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">למה לסמוך עלינו · השקופית הלא-נוחה</div>
+  <h2>אנחנו מפרסמים את הכישלונות של עצמנו</h2>
+  <ul class="big">
+    <li><span class="m">[×52.6]</span><span>דיווחנו על רשת כ"חסומה"; התברר שזה היה באג קריאה-ישנה שלנו. נמצא, פורסם, תוקן, מוצמד ב-34 אסרציות.</span></li>
+    <li><span class="m">[h20808]</span><span>באג LP-רפאים הגיע לשרשרת החיה. האינווריאנטים עצרו את הבלוק, שורש-הגורם שוחרר בשעות, הסטייה הוכרזה — לא טאטאה.</span></li>
+    <li><span class="m">[8/162]</span><span>היסטוריית העוגנים שלנו הראתה שורשים סותרים ב-8 גבהים. פרסמנו מפקח, עיגנו את התיקון on-chain, סימנו AMBIGUOUS, ושחררנו epochguard — כך שפיצולים נמנעים, לא רק מדווחים.</span></li>
+    <li><span class="m">[v2.4.5]</span><span>הודעת קומיט שיקרה על גרסה בזמן שהקוד הגיש אחרת. הביקורת שלנו תפסה את זה. היום כל מחרוזת גרסה נגזרת מקבוע אחד.</span></li>
+  </ul>
+  <p class="sub">מערכת שיכולה לומר "טעינו" בפומבי, עם קבלת התיקון ביד — היא הסוג היחיד שכדאי להאמין לו כשהיא אומרת "צדקנו".</p>
+  <div class="pageno">09 / 12</div>
+</section>
+
+<!-- 10 · מודל עסקי -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">מודל עסקי</div>
+  <h2>הכנסות מעבודה אמיתית. אין מכירת טוקן. אף פעם.</h2>
+  <div class="grid3">
+    <div class="cell"><div class="v gold">per-call</div><p>Identity API נמדד בספר-מכסות (1,000 קריאות ליום בחינם, אימות במפתח)</p></div>
+    <div class="cell"><div class="v gold">per-record</div><p>אצוות נוטריון: ‏$0.0000081 לרשומה קבועה; מסילה חינמית לנפח ברמת עדות</p></div>
+    <div class="cell"><div class="v gold">30bps</div><p>עמלות הבורסה: ‏70% לספקי נזילות, 30% לאוצר; 40% מרווח האוצר הנמדד קונה ושורף כל 600 בלוקים</p></div>
+  </div>
+  <ul class="big">
+    <li><span class="m">[0]</span><span><b>אפס הבטחות תשואה.</b> סולם הערך נתמך בעמלות נמדדות בלבד; קציר מעל עמלות שנאספו באמת נדחה אוטומטית על ידי המנוע.</span></li>
+    <li><span class="m">[1:1]</span><span><b>היצע עטוף == נעול</b> כאינווריאנט קוד, וכל הנפקה מצטטת עסקת נעילה ציבורית.</span></li>
+  </ul>
+  <div class="pageno">10 / 12</div>
+</section>
+
+<!-- 11 · הבקשה -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">הבקשה · ארבע החלטות, דולר אחד</div>
+  <h2>מה פותח את האופק הבא</h2>
+  <div class="ask">
+    <div class="cell"><div class="v">$0.94</div><p>השקיית גז (נמדדה במחירים חיים) פותחת 7 דלתות EVM‏ מוכחות-צינור: נוכחות העיגון מכפילה מ-5 ל-12 רשתות. דירוג המנוע: פי-11.9 השפעה — הגבוה מכל המועמדים.</p></div>
+    <div class="cell"><div class="v">1 hour</div><p>פרסום npm‏ + שער ציבורי: ‏Identity API‏ הופך להתקנה ולקריאה בשביל כל זר על פני כדור הארץ. כל השאר כבר בנוי ונבדק על עצמנו.</p></div>
+    <div class="cell"><div class="v">5 min</div><p>החלטת פרסום: דפי נחיתה, הסברים, כתבות וקיר הקבלות עולים מאחורי URL‏ ציבורי. צ'קליסט הפריסה מוכן ומתורגל.</p></div>
+    <div class="cell"><div class="v">1 pilot</div><p>האינטגרציה החיצונית הראשונה מתוך עשרה יעדים מאומתים (משחקי קלפים, בורסות, חזיתות תוכן). מדריך האינטגרציה וה-API reference‏ כתובים.</p></div>
+  </div>
+  <div class="pageno">11 / 12</div>
+</section>
+
+<!-- 12 · סיום -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">סיום</div>
+  <h1>אל תסמכו עלינו.<br><span class="gold">תאמתו אותנו.</span></h1>
+  <p class="sub">כל טענה במצגת הזו נגזרת ממדידה או מקבלה on-chain. פתחו סייר, השוו שורש, ספרו בלוקים, קראו את מוני הסירובים.</p>
+  <div class="cta-links">
+    <a href="https://etherscan.io/tx/0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" target="_blank" rel="noopener">קבלת עוגן ETH</a>
+    <a href="https://solscan.com/tx/2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" target="_blank" rel="noopener">קבלת עוגן SOL</a>
+    <a href="https://steemworld.org/tx/390bcfc2586def1ef02cc40a0e983c8dd8fce177" target="_blank" rel="noopener">קבלת עוגן STEEM</a>
+    <a href="https://hiveblocks.com/tx/d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" target="_blank" rel="noopener">קבלת עוגן HIVE</a>
+  </div>
+  <p class="foot">SAOS היא תשתית טכנולוגית בפיתוח פעיל. שום דבר כאן אינו ייעוץ השקעות, הצעה למכירת ניירות ערך או הבטחת תשואה. מספרים תיאורטיים מסומנים ככאלה; גבולות הגונים מלווים כל פריצת דרך. שימוש ברשתות ציבוריות כשכבות אימות אינו מרמז על שותפות או חסות.</p>
+  <div class="pageno">12 / 12</div>
+</section>
+
+<script>
+document.addEventListener('keydown',function(e){
+  const slides=[...document.querySelectorAll('.slide')];
+  const y=window.scrollY, h=window.innerHeight;
+  const cur=Math.round(y/h);
+  if(e.key==='ArrowDown'||e.key==='ArrowLeft'||e.key===' '){e.preventDefault();slides[Math.min(cur+1,slides.length-1)].scrollIntoView();}
+  if(e.key==='ArrowUp'||e.key==='ArrowRight'){e.preventDefault();slides[Math.max(cur-1,0)].scrollIntoView();}
+});
+</script>
+</body>
+</html>

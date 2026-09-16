@@ -178,7 +178,7 @@ function render(m) {
   const rows = (m.agents || []).map((a) => {
     const sealed = a.name === "weave-cloud-heart";
     return "<tr><td><b>" + esc(a.name) + "</b></td><td>" + esc(a.role) + "</td><td>" +
-      (sealed ? '<span class="tag g">sealed ✓</span>' : '<span class="tag">memory-only</span>') +
+      (sealed ? '<span class="tag g">sealed</span>' : '<span class="tag">memory-only</span>') +
       '</td><td class="mono">' + esc(a.attestations ?? 0) + "</td><td>" +
       (a.lastAttestationAt ? esc(ago(a.lastAttestationAt)) : "—") + "</td></tr>";
   }).join("");
@@ -189,7 +189,7 @@ function render(m) {
     '<div class="arow"><div class="top">' +
       '<span class="seq">att' + esc(a.seq) + "</span>" +
       '<span class="type">' + esc(a.type) + "</span>" +
-      (a.status === "VERIFIED" ? '<span class="tag g">✓</span>' : '<span class="tag y">' + esc(a.status) + "</span>") +
+      (a.status === "VERIFIED" ? '<span class="tag g">on</span>' : '<span class="tag y">' + esc(a.status) + "</span>") +
       '<span class="who">' + esc(a.agentName) + "</span>" +
       '<span class="when">' + esc(ago(a.at)) + "</span>" +
       '</div><div class="claim">' + esc(a.claim) + "</div></div>"
@@ -217,7 +217,7 @@ function render(m) {
   $("brainList").innerHTML = (m.brain || []).map((b) => {
     const live = b.status === "verified";
     return '<div class="mrow"><span class="dot ' + (live ? "g" : "y") + '"></span><span class="seq mono">' + esc(b.fingerprint) + "</span>" +
-      (live ? '<span class="tag g">חי ✓</span>' : '<span class="tag y">' + esc(b.status) + "</span>") +
+      (live ? '<span class="tag g">חי</span>' : '<span class="tag y">' + esc(b.status) + "</span>") +
       (b.lastCode ? '<span class="tag">HTTP ' + esc(b.lastCode) + "</span>" : "") +
       (b.verifiedAt ? '<span class="when">נבדק ' + esc(ago(b.verifiedAt)) + "</span>" : "") + "</div>";
   }).join("") || '<div class="loading">—</div>';

@@ -82,6 +82,7 @@ nav.tabs::-webkit-scrollbar{display:none}
 .view{display:none;padding:34px 0 70px}
 .view.on{display:block}
 .grid{display:grid;gap:16px}
+.grid>*{min-width:0} /* תא-רשת לא מנפח את העמוד מעבר למסך — טבלאות נגללות בתוך ה-tblwrap */
 .g2{grid-template-columns:1fr 1fr}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
@@ -118,6 +119,8 @@ nav.tabs::-webkit-scrollbar{display:none}
 .feat{display:block;color:var(--text)}
 .feat:hover{text-decoration:none;border-color:var(--line2)}
 .feat .ic{font-size:22px;margin-bottom:10px}
+.feat .ic svg{display:block}
+.tick{display:inline-block;vertical-align:-1.5px}
 .feat b{font-size:15.5px;display:block;margin-bottom:6px}
 .feat p{font-size:13px;color:var(--dim);line-height:1.65}
 .step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
@@ -127,7 +130,8 @@ nav.tabs::-webkit-scrollbar{display:none}
 .step p{font-size:13px;color:var(--dim);line-height:1.6}
 
 /* tables */
-.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.tblwrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:12px}
+.tblwrap table{min-width:280px}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
 th{text-align:start;padding:10px 13px;color:var(--faint);font-weight:600;font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap}
 td{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,.045);vertical-align:middle}
@@ -219,7 +223,6 @@ footer.site a{color:var(--dim)}
       <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
       <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
       <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
-      <a class="tab" href="#dex" data-nav="dex" data-i="navDex">DEX</a>
       <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
       <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
       <a class="tab" href="#tokens" data-nav="tokens" data-i="navTokens">Tokens</a>
@@ -258,10 +261,10 @@ footer.site a{color:var(--dim)}
       <h3 data-i="featTitle">What you can do here</h3>
       <p class="sect-sub" data-i="featSub">Everything runs from public connections. This page is itself a network node.</p>
       <div class="grid g4">
-        <a class="card feat" href="#wallet"><div class="ic">👛</div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
-        <a class="card feat" href="#exchange"><div class="ic">🔁</div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
-        <a class="card feat" href="#earn"><div class="ic">🌱</div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
-        <a class="card feat" href="#tokens"><div class="ic">🧬</div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
+        <a class="card feat" href="#wallet"><div class="ic"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" stroke="#d4af37" stroke-width="1.5" stroke-linejoin="round"/><path d="M20 10.2h-4.1a1.9 1.9 0 0 0 0 3.8H20" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/><circle cx="15.9" cy="12.1" r=".95" fill="#a78bfa"/></svg></div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
+        <a class="card feat" href="#exchange"><div class="ic"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" aria-hidden="true"><path d="M4 9.4h13.4" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/><path d="m14.6 6.5 2.9 2.9-2.9 2.9" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 14.6H6.6" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/><path d="m9.4 11.7-2.9 2.9 2.9 2.9" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
+        <a class="card feat" href="#earn"><div class="ic"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" aria-hidden="true"><path d="M12 21v-7.4" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/><path d="M12 13.2C12 9.9 9.5 7.5 6 7.3c-.1 3.5 2.4 5.9 6 5.9z" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 13.2c0-3.3 2.5-5.7 6-5.9.1 3.5-2.4 5.9-6 5.9z" stroke="#d4af37" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 21h7.6" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/></svg></div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
+        <a class="card feat" href="#tokens"><div class="ic"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" aria-hidden="true"><circle cx="12" cy="5.6" r="2.1" stroke="#d4af37" stroke-width="1.5"/><circle cx="5.4" cy="16.8" r="2.1" stroke="#a78bfa" stroke-width="1.5"/><circle cx="18.6" cy="16.8" r="2.1" stroke="#a78bfa" stroke-width="1.5"/><path d="M10.8 7.4 6.6 15m6.6-7.6L17.4 15M7.6 16.8h8.8" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/></svg></div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
       </div>
     </div>
 
@@ -371,10 +374,35 @@ footer.site a{color:var(--dim)}
     </div>
   </section>
 
-  <!-- ═══════════ EXCHANGE ═══════════ -->
+  <!-- ═══════════ EXCHANGE — one page: network terminal + direct deals ═══════════ -->
   <section class="view" id="view-exchange">
     <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h1>
-    <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
+    <p class="sect-sub" data-i="xSub">Two ways to trade on one page: the network's own terminal — a deterministic order book and AMM pools mirrored live — and direct deals where your SAOS sits in open escrow until the deal settles.</p>
+
+    <div class="card" style="padding:22px 22px 18px">
+      <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
+      <h2 style="margin:12px 0 6px;font-size:22px"><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h2>
+      <p class="sub" style="max-width:860px" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
+      <div class="dex-strip" id="dex-strip" aria-live="polite">
+        <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
+        <span><b id="dx-spread">…</b><small data-i="dxSpread">spread</small></span>
+        <span><b id="dx-height">…</b><small data-i="dxHeight">height</small></span>
+        <span><b id="dx-fills">…</b><small data-i="dxFills">fills</small></span>
+        <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
+        <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
+      </div>
+      <div class="dex-frame">
+        <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </div>
+      <p style="text-align:center;margin:14px 0 0">
+        <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
+      </p>
+    </div>
+
+    <div class="sect" style="margin-top:28px">
+      <h2 style="font-size:20px;margin-bottom:4px" data-i="xP2pT">Direct deals</h2>
+      <p class="sect-sub" data-i="xP2pSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
+    </div>
 
     <div class="grid g2">
       <div class="card">
@@ -414,29 +442,6 @@ footer.site a{color:var(--dim)}
       <p class="sub" data-i="xFillsP">Settled deals with their on-chain payment references.</p>
       <div class="feed" id="x-fills"></div>
     </div>
-  </section>
-
-  <!-- ═══════════ DEX TERMINAL ═══════════ -->
-  <section class="view" id="view-dex">
-    <div class="hero" style="padding:36px 0 8px">
-      <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
-      <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
-      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
-    </div>
-    <div class="dex-strip" id="dex-strip" aria-live="polite">
-      <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
-      <span><b id="dx-spread">…</b><small data-i="dxSpread">spread</small></span>
-      <span><b id="dx-height">…</b><small data-i="dxHeight">height</small></span>
-      <span><b id="dx-fills">…</b><small data-i="dxFills">fills</small></span>
-      <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
-      <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
-    </div>
-    <div class="dex-frame">
-      <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
-    </div>
-    <p style="text-align:center;margin:18px 0 0">
-      <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
-    </p>
   </section>
 
   <!-- ═══════════ EARN ═══════════ -->
@@ -612,6 +617,7 @@ footer.site a{color:var(--dim)}
   <div class="wrap">
     <span>© <span id="year">2026</span> SAOS Network</span>
     <span><a href="#network" data-i="fVerify">Verify independently</a> · <a href="#currency" data-i="fCurrency">The currency</a> · <a href="#wallet" data-i="fWallet">Open a wallet</a></span>
+    <span><a href="hub/" data-i="fHub">Content center</a> · <a href="pitch/" data-i="fPitch">Pitch deck</a> · <a href="deck/" data-i="fDeck">Investor deck</a> · <a href="onepager/" data-i="fOne">One-pager</a> · <a href="receipts/" data-i="fReceipts">Receipts wall</a></span>
   </div>
 </footer>
 
@@ -622,12 +628,16 @@ footer.site a{color:var(--dim)}
 import * as SL from "./saos-live.js";
 const C = globalThis.GateCrypto;
 
+/* סימני אישור/שלילה כ-SVG — מדיניות אפס-אימוג'י, וגם חד-משמעותי בכל דפדפן */
+const SVG_OK = '<svg class="tick" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3 8.6l3.1 3.1L13 4.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const SVG_NO = '<svg class="tick" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const SVG_X  = '<svg class="tick" viewBox="0 0 16 16" width="11" height="11" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
 /* ═══════════ i18n ═══════════ */
 const I18N = {
 en: {
   brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
   navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
-  navDex:"DEX",
   dexChip:"the network's own exchange terminal",
   dexTitle:"Sovereign DEX", dexGrad:"Terminal",
   dexLead:"The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.",
@@ -668,7 +678,8 @@ en: {
   wQueueT:"Signed operations queue", wQueueP:"Signed and waiting. Copy them for the network, or broadcast below.", wQueueCopy:"Copy signed JSON",
   wRelayT:"Broadcast", wRelayP:"A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.",
   wRelayAcc:"Steem account", wRelayWif:"Posting key (WIF)", wRelayBtn:"Broadcast queue",
-  xTitle:"Exchange", xSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
+  xTitle:"Exchange", xSub:"Two ways to trade on one page: the network's own terminal — a deterministic order book and AMM pools mirrored live — and direct deals where your SAOS sits in open escrow until the deal settles.",
+  xP2pT:"Direct deals", xP2pSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
   xRatesT:"Network rates", xRatesP:"Reference rates published on chain by network governance.",
   xPair:"Pair", xPrice:"Price",
   xRatesNote:"Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.",
@@ -718,6 +729,7 @@ en: {
   nRoot:"Root", nWhen:"When", nSeen:"Seen on",
   nAnchT:"Recent anchors", nAnchP:"Checkpoints written to public chains as permanent witnesses.",
   fVerify:"Verify independently", fCurrency:"The currency", fWallet:"Open a wallet",
+  fHub:"Content center", fPitch:"Pitch deck", fDeck:"Investor deck", fOne:"One-pager", fReceipts:"Receipts wall",
   tOk:{ walletBorn:"New wallet born on your device", wiped:"Wallet cleared from memory", backup:"Encrypted backup downloaded",
     restored:"Wallet restored", signed:"Signed and added to the queue", broadcast:n=>n+" operations broadcast to the chain",
     copied:"Copied", registered:"Registration signed and queued", needWallet:"Open or restore a wallet first",
@@ -739,7 +751,6 @@ en: {
 he: {
   brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
   navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
-  navDex:"דקס",
   dexChip:"טרמינל הבורסה של הרשת עצמה",
   dexTitle:"הבורסה הריבונית", dexGrad:"במראה ציבורית",
   dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי — משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
@@ -780,7 +791,8 @@ he: {
   wQueueT:"תור פעולות חתומות", wQueueP:"חתומות וממתינות. העתק אותן לרשת, או שדר למטה.", wQueueCopy:"העתקת JSON חתום",
   wRelayT:"שידור", wRelayP:"מפתח של חשבון Steem הוא תעבורה בלבד: הוא לא יכול לשנות את הפעולות שלך. החתימה הפנימית היא הסמכות.",
   wRelayAcc:"חשבון Steem", wRelayWif:"מפתח posting (WIF)", wRelayBtn:"שידור התור",
-  xTitle:"בורסה", xSub:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתה מבטל.",
+  xTitle:"בורסה", xSub:"שתי דרכי מסחר בעמוד אחד: הטרמינל של הרשת עצמה — ספר-זמנות דטרמיניסטי ובריכות AMM במראה חיה — ועסקאות ישירות שבהן ה-SAOS שלך יושב בנאמנות פתוחה עד לסגירת העסקה.",
+  xP2pT:"עסקאות ישירות", xP2pSub:"מכרו SAOS תמורת המטבעות הרשומים במחיר שאתם קובעים. ה-SAOS יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתם מבטלים.",
   xRatesT:"שערי הרשת", xRatesP:"שערי ייחוס שמתפרסמים על השרשרת בהחלטת ממשל הרשת.",
   xPair:"זוג", xPrice:"שער",
   xRatesNote:"השערים נקבעים בפעולות אוצר חתומות וגלויות לכולם. הם ייחוס: לכל הצעה מחיר משלה.",
@@ -830,6 +842,7 @@ he: {
   nRoot:"שורש", nWhen:"מתי", nSeen:"נראה על",
   nAnchT:"עוגנים אחרונים", nAnchP:"נקודות-ביקורת שנכתבו לשרשראות ציבוריות כעדים קבועים.",
   fVerify:"אימות עצמאי", fCurrency:"המטבע", fWallet:"פתיחת ארנק",
+  fHub:"מרכז התוכן", fPitch:"מצגת פיץ'", fDeck:"מצגת משקיעים", fOne:"עמוד סיכום", fReceipts:"קיר הקבלות",
   tOk:{ walletBorn:"ארנק חדש נולד במכשיר שלך", wiped:"הארנק נמחק מהזיכרון", backup:"גיבוי מוצפן הורד",
     restored:"הארנק שוחזר", signed:"נחתם ונוסף לתור", broadcast:n=>n+" פעולות שודרו לשרשרת",
     copied:"הועתק", registered:"הרישום נחתם והועבר לתור", needWallet:"קודם פתח או שחזר ארנק",
@@ -896,9 +909,10 @@ function timeAgo(iso) {
 $("year").textContent = new Date().getFullYear();
 
 /* ═══════════ routing ═══════════ */
-const VIEWS = ["home", "wallet", "exchange", "dex", "earn", "currency", "tokens", "network"];
+const VIEWS = ["home", "wallet", "exchange", "earn", "currency", "tokens", "network"];
 function route() {
   let h = (location.hash || "#home").slice(1);
+  if (h === "dex") { h = "exchange"; history.replaceState(null, "", "#exchange"); } /* מיזוג הדקס לתוך הבורסה — הכתובת מתוקנת גם היא, בלי רעידת-ניווט */
   if (!VIEWS.includes(h)) h = "home";
   for (const v of VIEWS) $("view-" + v).classList.toggle("on", v === h);
   document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("on", el.dataset.nav === h));
@@ -1024,10 +1038,10 @@ async function boot() {
   route();
   try {
     const st = await SL.selfTest();
-    $("selftest-badge").textContent = st.passed + "/" + st.total + " ✓";
+    $("selftest-badge").innerHTML = st.passed + "/" + st.total + " " + SVG_OK;
     $("selftest-badge").classList.toggle("bad", st.passed !== st.total);
   } catch {
-    $("selftest-badge").textContent = "✗";
+    $("selftest-badge").innerHTML = SVG_NO;
     $("selftest-badge").classList.add("bad");
   }
   await Promise.all([
@@ -1253,7 +1267,7 @@ function renderWalletUI() {
     const w = LIVE?.state?.wallets?.[WALLET.addr];
     const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
     $("wallet-reg").innerHTML = w
-      ? `<span class="ok">✓ ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
+      ? `<span class="ok">${SVG_OK} ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
       : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
     renderWalletBalances();
     refreshSendSymbols();
@@ -1382,7 +1396,7 @@ async function enqueue(fields) {
 function renderQueue() {
   $("wallet-queue").textContent = QUEUE.length;
   $("queue-list").innerHTML = QUEUE.length
-    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">✕</button></div>`).join("")
+    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}" aria-label="remove">${SVG_X}</button></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${LANG === "he" ? "התור ריק" : "the queue is empty"}</span></div>`;
   for (const b of document.querySelectorAll("[data-qi]")) {
     b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); });
@@ -1507,11 +1521,15 @@ $("btn-relay-all").addEventListener("click", async () => {
     }
     QUEUE = [];
     saveQueue();
-    out.textContent = "✓ " + t("tOk.broadcast")(sent);
+    out.textContent = "";
+    out.insertAdjacentHTML("afterbegin", SVG_OK + " ");
+    out.append(t("tOk.broadcast")(sent));
     toast(t("tOk.broadcast")(sent));
     setTimeout(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 15000);
   } catch (e) {
-    out.textContent = "✗ " + (e.message || "").slice(0, 90);
+    out.textContent = "";
+    out.insertAdjacentHTML("afterbegin", SVG_NO + " ");
+    out.append((e.message || "").slice(0, 90));
     toast(t("tErr.relayFail") + (e.message || "").slice(0, 80), false);
   } finally {
     $("relay-wif").value = ""; // transport key wiped immediately
@@ -1558,7 +1576,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
       ? `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · שורש <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `
       : `Read ${envelopes.length} operations · ${res.valid} valid · root <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `)
       + (match
-        ? (LANG === "he" ? "= תואם למפורסם ✓" : "= matches the published root ✓")
+        ? ((LANG === "he" ? "= תואם למפורסם " : "= matches the published root ") + SVG_OK)
         : (LANG === "he" ? "≠ שונה מהמפורסם!" : "≠ differs from the published root!"));
     out.style.color = match ? "#86efac" : "#fca5a5";
     if (!match && published) toast(LANG === "he" ? "השורש שונה מהמפורסם" : "root differs from published", false);

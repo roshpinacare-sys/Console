@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · Pitch Deck · Proof Over Promises</title>
+<meta name="description" content="SAOS pitch deck: sovereign notarized ledger, live receipts, honest economics. Print to PDF: every slide is one page.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.5}
+.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw;position:relative;border-bottom:1px solid var(--border)}
+.kicker{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.2em;margin-bottom:18px}
+h1{font-size:clamp(34px,5.5vw,64px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+h2{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-.01em;margin-bottom:20px;line-height:1.15}
+.gold{color:var(--gold)}.purple{color:var(--purple)}.green{color:var(--green)}.red{color:var(--red)}.mut{color:var(--mut)}
+.mono{font-family:var(--mono)}
+.sub{font-size:clamp(15px,1.8vw,20px);color:var(--mut);max-width:900px;margin-top:18px}
+.pageno{position:absolute;bottom:24px;right:32px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+.brandmark{position:absolute;top:24px;right:32px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--mut)}
+.brandmark b{color:var(--gold)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:26px}
+.cell{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:22px}
+.grid4 .cell{border:none;border-radius:0}
+.cell .v{font-family:var(--mono);font-size:clamp(20px,2.6vw,30px);font-weight:800}
+.cell .l{font-size:12.5px;color:var(--mut);margin-top:6px}
+.cell h3{font-size:16px;margin-bottom:8px}
+.cell p{font-size:13px;color:var(--mut)}
+ul.big{list-style:none;margin-top:22px}
+ul.big li{padding:11px 0;border-bottom:1px dashed var(--border);font-size:clamp(14px,1.6vw,17px);color:var(--mut);display:flex;gap:12px;align-items:baseline}
+ul.big li .m{font-family:var(--mono);color:var(--green);flex:none;font-size:13px}
+ul.big li b{color:var(--tx)}
+.flow{display:flex;gap:10px;align-items:stretch;margin-top:28px;flex-wrap:wrap}
+.fnode{flex:1;min-width:170px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
+.fnode .t{font-weight:700;font-size:15px;margin-bottom:5px}
+.fnode .d{font-size:12px;color:var(--mut)}
+.farrow{display:flex;align-items:center;color:var(--gold);font-family:var(--mono);font-size:20px}
+.quote{font-size:clamp(22px,3.4vw,40px);font-weight:800;line-height:1.3;max-width:1000px}
+.quote .gold{color:var(--gold)}
+.attr{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:20px}
+table{width:100%;border-collapse:collapse;margin-top:22px;font-size:14px}
+th{font-family:var(--mono);font-size:11px;color:var(--dim);text-align:left;border-bottom:1px solid var(--border2);padding:8px 10px;letter-spacing:.08em}
+td{padding:10px;border-bottom:1px solid var(--border);color:var(--mut);vertical-align:top}
+td b{color:var(--tx)}
+td .mono{font-size:12px}
+.ask{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
+.ask .cell .v{color:var(--gold)}
+.cta-links{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.cta-links a{font-family:var(--mono);font-size:13px;color:var(--purple);border:1px solid rgba(167,139,250,.4);border-radius:8px;padding:10px 18px;text-decoration:none}
+.cta-links a:hover{background:rgba(167,139,250,.08);color:var(--tx)}
+.foot{margin-top:34px;font-size:11px;color:var(--dim);max-width:900px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:12px 22px;font-family:var(--mono);font-size:12px;pointer-events:none}
+.topbar .tbrand{color:var(--mut);letter-spacing:.12em}
+.topbar .tbrand b{color:var(--gold)}
+.topbar .tlinks{display:flex;gap:8px}
+.topbar a{pointer-events:auto;color:var(--mut);text-decoration:none;border:1px solid var(--border2);border-radius:8px;padding:6px 13px;background:rgba(24,24,27,.82)}
+.topbar a:hover{color:var(--tx);border-color:var(--gold)}
+.topbar a.cur{color:var(--gold);border-color:rgba(212,175,55,.45)}
+@media(max-width:760px){.grid2,.grid3,.grid4,.ask{grid-template-columns:1fr}.flow{flex-direction:column}.farrow{transform:rotate(90deg);justify-content:center}}
+@media print{
+  html{scroll-snap-type:none}
+  body{background:#fff}
+  .topbar{display:none}
+  .slide{min-height:auto;height:auto;page-break-after:always;border-bottom:none;padding:14mm 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pageno,.brandmark{position:static;display:inline-block;margin-top:8mm}
+  @page{size:A4 landscape;margin:0}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="site">
+  <span class="tbrand">SAOS<b>·</b> PITCH</span>
+  <span class="tlinks">
+    <a href="index.html" lang="he">עברית</a>
+    <a href="../#home">Console</a>
+  </span>
+</nav>
+
+<!-- 1 · TITLE -->
+<section class="slide">
+  <div class="kicker">SAOS · PITCH DECK · 2026-09-11 · ALL FIGURES MEASURED OR ON-CHAIN</div>
+  <h1>SAOS<span class="gold">·</span><br>Proof over promises.</h1>
+  <p class="sub">A sovereign state machine that anchors every seal, every claim and every refusal to public blockchains it does not own. Nine networks witness it. Anyone can verify it. Nothing can be erased.</p>
+  <div class="pageno">01 / 12</div>
+</section>
+
+<!-- 2 · PROBLEM -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">THE PROBLEM</div>
+  <h2>Every agent can claim anything.<br>Nobody can prove anything.</h2>
+  <ul class="big">
+    <li><span class="m">[1]</span><span>The agent economy runs on claims: "task done", "money moved", "audit passed". <b>None of them verifiable.</b></span></li>
+    <li><span class="m">[2]</span><span>Bridges ask you to trust committees. The industry lost <b>over $2B</b> to that trust (Wormhole ~$320M, Ronin ~$600M).</span></li>
+    <li><span class="m">[3]</span><span>Notarization costs a human, a queue, and hundreds of dollars per document.</span></li>
+    <li><span class="m">[4]</span><span>Running a chain costs millions a year in validator payroll, or it stays a testnet forever.</span></li>
+  </ul>
+  <div class="pageno">02 / 12</div>
+</section>
+
+<!-- 3 · SOLUTION -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">THE SOLUTION</div>
+  <h2>A sovereign ledger witnessed by <span class="gold">nine public chains</span></h2>
+  <div class="flow">
+    <div class="fnode"><div class="t">SAOS-NET</div><div class="d">deterministic state machine · 133,259+ blocks · 3s blocks · 32,603 tx/s measured</div></div>
+    <div class="farrow">→</div>
+    <div class="fnode"><div class="t">Seal</div><div class="d">every 12 blocks: one sha256 merkle root of all state (native bytes32)</div></div>
+    <div class="farrow">→</div>
+    <div class="fnode"><div class="t">Relay</div><div class="d">multi-rail broadcast · circuit breakers · verifyOnChain read-back after every send</div></div>
+    <div class="farrow">→</div>
+    <div class="fnode"><div class="t">The wall</div><div class="d">ETH · BSC · SOL · TRON · XRPL verified read-only from the chains + free Graphene rails (Steem · Hive · Blurt)</div></div>
+  </div>
+  <p class="sub">Not a bridge. Not another L1. A <b>sovereign notarized ledger</b>: the public chains are its courts, and verification is a stranger's right, not our favor.</p>
+  <div class="pageno">03 / 12</div>
+</section>
+
+<!-- 4 · THESIS -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="quote">"Every agent can claim anything.<br><span class="gold">Only a public chain cannot lie."</span></div>
+  <div class="attr">lying becomes expensive: $0.0000081 per permanent, public, independently verifiable claim</div>
+  <div class="pageno">04 / 12</div>
+</section>
+
+<!-- 5 · TRACTION -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">TRACTION · RECEIPTS, NOT SLIDES</div>
+  <h2>Live on mainnets, measured this week</h2>
+  <div class="grid4">
+    <div class="cell"><div class="v gold">6/6</div><div class="l">full-matrix anchor cycles, consecutive (h20, h21), every receipt public</div></div>
+    <div class="cell"><div class="v gold">88ms</div><div class="l">p50 sovereign conversion (65/65 atomic legs) vs 10-90 min third-party</div></div>
+    <div class="cell"><div class="v gold">$0.0000081</div><div class="l">permanent notary record, gas model exact to the wei, 7/7 live calls</div></div>
+    <div class="cell"><div class="v gold">36s</div><div class="l">self-heal from a kernel OOM kill, zero human touch, full journal</div></div>
+  </div>
+  <ul class="big">
+    <li><span class="m">[v]</span><span><b>Real money moved:</b> legacy funds found, connected 1:1 and physically swept on ETH and BSC (real txs, sources emptied to zero)</span></li>
+    <li><span class="m">[v]</span><span><b>First live HIVE conversion</b> (txid 46ed2f58) · exact-to-quote settlement (2268µ) · first ETH profit-take on record</span></li>
+    <li><span class="m">[v]</span><span><b>One seed, five ecosystems:</b> EVM + Solana + TRON + BTC/XRP derivations, each exact-verified against live chains; anchor #12 signed with a self-restored key (ETH block 25,983,946)</span></li>
+    <li><span class="m">[v]</span><span><b>House of memory:</b> a total environment wipe happened; the organism rebuilt itself from the chains alone</span></li>
+  </ul>
+  <div class="pageno">05 / 12</div>
+</section>
+
+<!-- 6 · PRODUCTS -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">PRODUCTS</div>
+  <h2>Four doors into the same sovereignty</h2>
+  <div class="grid2">
+    <div class="cell"><h3>Identity API <span class="mono mut">(live today)</span></h3><p>One call proves a Steem/Hive account and an EVM address share one key. Proof read from the chain (saos.id.v1 → EIP-191 → live authority match). Metered, quota-ledger, honest FAILED outcomes. Zero-dependency SDK: saos-id-verify.</p></div>
+    <div class="cell"><h3>Sovereign DEX + economy</h3><p>Full-escrow order book, structurally sandwich-immune CoW batches, ve(3,3) buy-and-burn (40% every 600 blocks, capped by measured profit), keeperless DCA and TP/SL, launchpad with live graduation (100% POL). 383,836 refusals published.</p></div>
+    <div class="cell"><h3>JUMPPER notary</h3><p>Batched proof notary: 10K claims in one root, $0.0000081 per record. Free rail live with a real receipt (Steem block 109,496,567). Correction anchors publish fixes where the error lives. epochguard prevents forks instead of reporting them.</p></div>
+    <div class="cell"><h3>Wallet + proof engines</h3><p>Self-custodial across 7 networks (M0-M4 verified), keys never leave the client. Atomic Clock: 6 networks into one 32-byte root, keyless, $0, 15.9ms. THE-TOWER: our own Ethereum explorer showing our own anchors.</p></div>
+  </div>
+  <div class="pageno">06 / 12</div>
+</section>
+
+<!-- 7 · MARKET -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">MARKET</div>
+  <h2>Who pays, and for what</h2>
+  <table>
+    <tr><th>SEGMENT</th><th>PAIN</th><th>WHAT WE SELL</th></tr>
+    <tr><td><b>Agent economy (AI)</b></td><td>agents claim work done; nobody can verify</td><td>claim anchoring + verification API, per-call metered</td></tr>
+    <tr><td><b>Games on Graphene chains</b></td><td>sybil accounts drain reward pools</td><td>account↔address proof per player, one call</td></tr>
+    <tr><td><b>Exchanges and swaps</b></td><td>deposits from Steem/Hive wallets lack attribution</td><td>cryptographic deposit attribution, re-runnable by compliance</td></tr>
+    <tr><td><b>Legal, media, creators</b></td><td>notarization is slow and expensive</td><td>$0.0000081 permanent records, free rail for high volume</td></tr>
+    <tr><td><b>DeFi projects</b></td><td>bridge solvency is an act of faith</td><td>supply==locked as a code invariant, publicly verifiable</td></tr>
+  </table>
+  <p class="sub">Beachhead: the legacy Steem/Hive population (millions of accounts, no identity path to EVM/SOL anywhere else) and the ten verified outreach targets already mapped (card games, exchanges, content frontends).</p>
+  <div class="pageno">07 / 12</div>
+</section>
+
+<!-- 8 · MOAT -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">MOAT · STATED HONESTLY</div>
+  <h2>What is hard to copy</h2>
+  <ul class="big">
+    <li><span class="m">[1]</span><span><b>Bit-exact cross-paradigm plumbing:</b> serialization proven 30/30 against real chain bytes; TRON protobuf validated against 535 mainnet signatures; one secp256k1 scalar serving Graphene and EVM authorities. Years of unglamorous work, measured at every step.</span></li>
+    <li><span class="m">[2]</span><span><b>The refuse-counter economy:</b> a market engine that publishes what it refused (383,836 skips, 130,499 rejections). Governance innovation as much as technical.</span></li>
+    <li><span class="m">[3]</span><span><b>Self-audit as an operating system:</b> 100+ truth gaps found and closed in one day across 6 repos (roasts 53-82), a live HALT that caught a real accounting bug at h20808, corrections anchored on-chain where the errors live.</span></li>
+    <li><span class="m">[4]</span><span><b>Not a moat yet, stated plainly:</b> economic scale (dust), deployed EVM/SOL bridge contracts, defined tokenomics, external audit. Each is a documented gate with a price, not a wish.</span></li>
+  </ul>
+  <div class="pageno">08 / 12</div>
+</section>
+
+<!-- 9 · HONESTY -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">WHY TRUST US · THE UNCOMFORTABLE SLIDE</div>
+  <h2>We publish our own failures</h2>
+  <ul class="big">
+    <li><span class="m">[×52.6]</span><span>reported a network as "blocked"; it was our stale-read bug. Found, published, fixed, pinned by 34 assertions.</span></li>
+    <li><span class="m">[h20808]</span><span>a phantom-LP bug reached the live chain. The invariants HALTed the block, the root cause shipped within hours, the drift was declared, not swept.</span></li>
+    <li><span class="m">[8/162]</span><span>our own anchor history showed contradictory roots at 8 heights. We published the census, anchored the correction on-chain, marked them AMBIGUOUS, and shipped epochguard so forks are prevented, not just reported.</span></li>
+    <li><span class="m">[v2.4.5]</span><span>a commit message lied about a version while the code served another. Our audit caught it. Now every version string derives from one constant.</span></li>
+  </ul>
+  <p class="sub">A system that can say "we were wrong" in public, with the receipt of the fix, is the only kind worth believing when it says "we were right".</p>
+  <div class="pageno">09 / 12</div>
+</section>
+
+<!-- 10 · BUSINESS MODEL -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">BUSINESS MODEL</div>
+  <h2>Revenue from real work. No token sale. Ever.</h2>
+  <div class="grid3">
+    <div class="cell"><div class="v gold">per-call</div><p>Identity API metered with a quota ledger (1,000/day free tier, key-authenticated)</p></div>
+    <div class="cell"><div class="v gold">per-record</div><p>Notary batches: $0.0000081 per permanent record; free rail for attestation-class volume</p></div>
+    <div class="cell"><div class="v gold">30bps</div><p>DEX fees: 70% liquidity providers, 30% treasury; 40% of measured treasury profit buys and burns every 600 blocks</p></div>
+  </div>
+  <ul class="big">
+    <li><span class="m">[0]</span><span><b>Zero yield promises.</b> The value ladder is backed by measured fees only; harvest above real collected fees is auto-rejected by the engine.</span></li>
+    <li><span class="m">[1:1]</span><span><b>Wrapped supply == locked</b> as a code invariant, every mint citing a public lock tx.</span></li>
+  </ul>
+  <div class="pageno">10 / 12</div>
+</section>
+
+<!-- 11 · THE ASK -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">THE ASK · FOUR DECISIONS, ONE DOLLAR</div>
+  <h2>What unlocks the next horizon</h2>
+  <div class="ask">
+    <div class="cell"><div class="v">$0.94</div><p>gas seeding (measured at live prices) opens 7 pipeline-proven EVM doors: anchored presence doubles from 5 to 12 networks. Engine ranking: ×11.9 impact, the highest of all candidates.</p></div>
+    <div class="cell"><div class="v">1 hour</div><p>npm publish + public gateway: the Identity API becomes installable and callable by any stranger on earth. Everything else is already built and dogfooded.</p></div>
+    <div class="cell"><div class="v">5 min</div><p>publish decision: landing pages, explainers, articles and the receipt wall go live behind a public URL. Deployment checklist is ready and drilled.</p></div>
+    <div class="cell"><div class="v">1 pilot</div><p>first external integration from ten verified targets (card games, exchanges, content frontends). Integration guide and API reference are written.</p></div>
+  </div>
+  <div class="pageno">11 / 12</div>
+</section>
+
+<!-- 12 · CTA -->
+<section class="slide">
+  <div class="brandmark">SAOS<b>·</b></div>
+  <div class="kicker">CLOSE</div>
+  <h1>Don't trust us.<br><span class="gold">Verify us.</span></h1>
+  <p class="sub">Every claim in this deck derives from a measurement or an on-chain receipt. Open an explorer, compare a root, count the blocks, read the refusal counters.</p>
+  <div class="cta-links">
+    <a href="https://etherscan.io/tx/0x102ec1935be6cb3ff3acc20189a85377cf57486515f3121472c6611b20e0ef41" target="_blank" rel="noopener">ETH anchor receipt</a>
+    <a href="https://solscan.com/tx/2M1rkRggRcaePk6vMZpgSaM3WVWQU92RZAs1v7PtNeMLsxLmZoqBNCeEtuY7Rkj5aPbs4jS1g2wUQXCnoejUM2M9" target="_blank" rel="noopener">SOL anchor receipt</a>
+    <a href="https://steemworld.org/tx/390bcfc2586def1ef02cc40a0e983c8dd8fce177" target="_blank" rel="noopener">STEEM anchor receipt</a>
+    <a href="https://hiveblocks.com/tx/d4cf936b0b5e1eff8dcc8a508532f67c95682bd5" target="_blank" rel="noopener">HIVE anchor receipt</a>
+  </div>
+  <p class="foot">SAOS is technology infrastructure in active development. Nothing here is investment advice, an offer to sell securities, or a promise of yield. Theoretical figures are marked as such; honest boundaries accompany every breakthrough. Use of public networks as verification layers implies no partnership or endorsement.</p>
+  <div class="pageno">12 / 12</div>
+</section>
+
+<script>
+document.addEventListener('keydown',function(e){
+  const slides=[...document.querySelectorAll('.slide')];
+  const y=window.scrollY, h=window.innerHeight;
+  const cur=Math.round(y/h);
+  if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '){e.preventDefault();slides[Math.min(cur+1,slides.length-1)].scrollIntoView();}
+  if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();slides[Math.max(cur-1,0)].scrollIntoView();}
+});
+</script>
+</body>
+</html>
