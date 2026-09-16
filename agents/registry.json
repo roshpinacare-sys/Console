@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-16T23:30:15Z",
+ "generatedAt": "2026-09-16T23:36:08Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -174,15 +174,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 66,
-    "success": 66,
+    "runs_sampled": 67,
+    "success": 67,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 13.3
    },
    "lastRun": {
-    "at": "2026-09-16T23:17:09Z",
+    "at": "2026-09-16T23:33:26Z",
     "conclusion": "success"
    }
   },
@@ -212,10 +212,10 @@
     "failure": 0,
     "other": 18,
     "successRate": 82,
-    "avgDurS": 22.3
+    "avgDurS": 23.6
    },
    "lastRun": {
-    "at": "2026-09-16T23:28:11Z",
+    "at": "2026-09-16T23:35:22Z",
     "conclusion": "success"
    }
   },
@@ -392,8 +392,8 @@
    "schedule": "push / PR",
    "layer": "QA",
    "role": {
-    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since - an honest red mark, kept visible until the foundry is either repaired or retired.",
-    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז - סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."
+    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Repaired at the root (Task 43): the recovery drill is self-sufficient (fresh verified backup then restore dry-run with chain-proof) and owner-held-token assertions skip honestly - api-check 182 passed / 0 failed / 7 environment-held skips, green run 35161896260.",
+    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. תוקן מהשורש (Task 43): תרגיל ההתאוששות עצמאי (גיבוי מאומת טרי ואז שחזור dry-run עם הוכחת-שרשרת) וקביעות הטוקנים שבידי הבעלים מדלגות בכנות - api-check 182 עבר / 0 נכשלו / 7 דילוגים סביבתיים, ריצה ירוקה 35161896260."
    },
    "input": {
     "en": "push to main",
@@ -542,10 +542,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 63
+    "avgDurS": 63.2
    },
    "lastRun": {
-    "at": "2026-09-16T23:02:51Z",
+    "at": "2026-09-16T23:34:29Z",
     "conclusion": "success"
    }
   },
@@ -557,8 +557,8 @@
    "schedule": "bi-hourly :20 + on every beat",
    "layer": "WITNESS",
    "role": {
-    "en": "Sequences both witness lines as one run — anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once.",
-    "he": "מריץ את שני קווי העדות כרצף אחד — מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת."
+    "en": "Sequences both witness lines as one run — anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",
+    "he": "מריץ את שני קווי העדות כרצף אחד — מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."
    },
    "input": {
     "en": "latest checkpoint root",
@@ -579,39 +579,6 @@
    },
    "lastRun": {
     "at": "2026-09-16T23:08:24Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "zip-weave-anchor-zero",
-   "name": "weave-anchor-zero",
-   "repo": "Zip",
-   "visibility": "public",
-   "schedule": "dispatch (driven by lines)",
-   "layer": "WITNESS",
-   "role": {
-    "en": "Zero-gas EVM witness line — writes the checkpoint root as a real transaction on Z Chain (chainId 9369, gas 0x0) using the network key from the seal.",
-    "he": "קו עדות EVM בגז-אפס — כותב את root הצ'קפוינט כטרנזקציה אמיתית ב-Z Chain‏ (chainId 9369, גז 0x0) במפתח הרשת מה-seal."
-   },
-   "input": {
-    "en": "checkpoint root + sealed network key",
-    "he": "root של צ'קפוינט + מפתח רשת חתום"
-   },
-   "output": {
-    "en": "on-chain EVM anchor, cost 0.000000",
-    "he": "עיגון EVM on-chain, עלות 0.000000"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 8,
-    "success": 4,
-    "failure": 4,
-    "other": 0,
-    "successRate": 50,
-    "avgDurS": 36
-   },
-   "lastRun": {
-    "at": "2026-09-15T11:09:07Z",
     "conclusion": "success"
    }
   },
@@ -715,39 +682,6 @@
    }
   },
   {
-   "id": "zip-weave-anchor",
-   "name": "weave-anchor",
-   "repo": "Zip",
-   "visibility": "public",
-   "schedule": "dispatch (driven by lines)",
-   "layer": "WITNESS",
-   "role": {
-    "en": "Steem/Hive witness line — publishes the checkpoint root as custom_json (posting authority, zero capital risk) on both public chains.",
-    "he": "קו עדות Steem/Hive — מפרסם את root הצ'קפוינט כ-custom_json‏ (סמכות posting, אפס סיכון הון) בשתי הרשתות הציבוריות."
-   },
-   "input": {
-    "en": "checkpoint root",
-    "he": "root של צ'קפוינט"
-   },
-   "output": {
-    "en": "Steem + Hive txids recorded in the ledger",
-    "he": "מזהי Steem + Hive נרשמים בספר"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 9,
-    "success": 5,
-    "failure": 4,
-    "other": 0,
-    "successRate": 55.6,
-    "avgDurS": 43.9
-   },
-   "lastRun": {
-    "at": "2026-09-15T11:09:00Z",
-    "conclusion": "failure"
-   }
-  },
-  {
    "id": "console-agents-watch",
    "name": "agents-watch",
    "repo": "Console",
@@ -768,15 +702,15 @@
    },
    "state": "dormant",
    "stats": {
-    "runs_sampled": 12,
-    "success": 11,
+    "runs_sampled": 13,
+    "success": 12,
     "failure": 0,
     "other": 1,
-    "successRate": 91.7,
-    "avgDurS": 30.8
+    "successRate": 92.3,
+    "avgDurS": 30.7
    },
    "lastRun": {
-    "at": "2026-09-16T23:29:49Z",
+    "at": "2026-09-16T23:35:33Z",
     "conclusion": null
    }
   }
