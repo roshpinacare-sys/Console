@@ -57,7 +57,7 @@ const CATALOG = {
     input:{en:"push to main",he:"דחיפה ל-main"},
     output:{en:"live console pages",he:"דפי קונסולה חיים"}},
   "saos-sovereign-foundry|CI": { layer:"QA", schedule:"push / PR",
-    role:{en:"Foundry quality gate — lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since. Branch filter typo fixed — now scoped to main.",he:"שעת איכות של ה-foundry — lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז. שגיאת מסנן הענף תוקנה — כעת מיועד ל-main בלבד."},
+    role:{en:"Foundry quality gate — lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since — an honest red mark, kept visible until the foundry is either repaired or retired.",he:"שעת איכות של ה-foundry — lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז — סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."},
     input:{en:"push to main",he:"דחיפה ל-main"},
     output:{en:"lint + typecheck + build + api + concurrency verdict",he:"פסק lint + typecheck + build + api + מקביליות"}},
 };

@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-16T15:10:00Z",
+ "generatedAt": "2026-09-16T15:15:19Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -89,6 +89,39 @@
    }
   },
   {
+   "id": "console-pages-build-deployment",
+   "name": "pages-build-deployment",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 77,
+    "failure": 0,
+    "other": 23,
+    "successRate": 77,
+    "avgDurS": 27.7
+   },
+   "lastRun": {
+    "at": "2026-09-16T15:12:48Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "saos-dex-dex-beat",
    "name": "dex-beat",
    "repo": "saos-dex",
@@ -151,6 +184,39 @@
    },
    "lastRun": {
     "at": "2026-09-16T15:03:34Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "zip-weave-anchor-lines",
+   "name": "weave-anchor-lines",
+   "repo": "Zip",
+   "visibility": "private",
+   "schedule": "bi-hourly :20 + on every beat",
+   "layer": "WITNESS",
+   "role": {
+    "en": "Sequences both witness lines as one run — anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once.",
+    "he": "מריץ את שני קווי העדות כרצף אחד — מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת."
+   },
+   "input": {
+    "en": "latest checkpoint root",
+    "he": "root של הצ'קפוינט האחרון"
+   },
+   "output": {
+    "en": "anchor txids recorded back into the ledger",
+    "he": "מזהי טרנזקציות העיגון חוזרים לספר"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 61,
+    "success": 56,
+    "failure": 3,
+    "other": 2,
+    "successRate": 91.8,
+    "avgDurS": 55
+   },
+   "lastRun": {
+    "at": "2026-09-16T15:09:12Z",
     "conclusion": "success"
    }
   },
@@ -294,8 +360,8 @@
    "schedule": "push / PR",
    "layer": "QA",
    "role": {
-    "en": "Foundry quality gate — lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since. Branch filter typo fixed — now scoped to main.",
-    "he": "שעת איכות של ה-foundry — lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז. שגיאת מסנן הענף תוקנה — כעת מיועד ל-main בלבד."
+    "en": "Foundry quality gate — lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since — an honest red mark, kept visible until the foundry is either repaired or retired.",
+    "he": "שעת איכות של ה-foundry — lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז — סימן אדום כן, נשאר גלוי עד שה-foundry יתוקן או ייצא לגמלאות."
    },
    "input": {
     "en": "push to main",
@@ -350,72 +416,6 @@
    "lastRun": {
     "at": "2026-09-15T11:09:00Z",
     "conclusion": "failure"
-   }
-  },
-  {
-   "id": "console-pages-build-deployment",
-   "name": "pages-build-deployment",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
-   },
-   "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
-   },
-   "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
-   },
-   "state": "dormant",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 76,
-    "failure": 0,
-    "other": 24,
-    "successRate": 76,
-    "avgDurS": 27
-   },
-   "lastRun": {
-    "at": "2026-09-16T15:09:09Z",
-    "conclusion": null
-   }
-  },
-  {
-   "id": "zip-weave-anchor-lines",
-   "name": "weave-anchor-lines",
-   "repo": "Zip",
-   "visibility": "private",
-   "schedule": "bi-hourly :20 + on every beat",
-   "layer": "WITNESS",
-   "role": {
-    "en": "Sequences both witness lines as one run — anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once.",
-    "he": "מריץ את שני קווי העדות כרצף אחד — מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת."
-   },
-   "input": {
-    "en": "latest checkpoint root",
-    "he": "root של הצ'קפוינט האחרון"
-   },
-   "output": {
-    "en": "anchor txids recorded back into the ledger",
-    "he": "מזהי טרנזקציות העיגון חוזרים לספר"
-   },
-   "state": "dormant",
-   "stats": {
-    "runs_sampled": 61,
-    "success": 55,
-    "failure": 3,
-    "other": 3,
-    "successRate": 90.2,
-    "avgDurS": 53.7
-   },
-   "lastRun": {
-    "at": "2026-09-16T15:09:12Z",
-    "conclusion": null
    }
   }
  ]
