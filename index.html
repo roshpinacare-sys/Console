@@ -196,6 +196,14 @@ footer.site a{color:var(--dim)}
   .card{padding:17px}
   .view{padding:24px 0 56px}
 }
+/* ═══ DEX terminal view ═══ */
+.dex-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:4px 0 16px}
+.dex-strip>span{display:flex;flex-direction:column;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:9px 16px;min-width:92px}
+.dex-strip b{font-family:var(--mono);font-size:15px;color:var(--gold-bright)}
+.dex-strip small{opacity:.6;font-size:11px;color:var(--dim)}
+.dex-frame{border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:#09090b;box-shadow:0 24px 70px -30px rgba(0,0,0,.8)}
+.dex-frame iframe{display:block;width:100%;height:min(84vh,900px);border:0}
+@media(max-width:520px){.dex-frame iframe{height:70vh}.dex-strip>span{padding:7px 10px;min-width:74px}}
 </style>
 </head>
 <body>
@@ -211,6 +219,7 @@ footer.site a{color:var(--dim)}
       <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
       <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
       <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
+      <a class="tab" href="#dex" data-nav="dex" data-i="navDex">DEX</a>
       <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
       <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
       <a class="tab" href="#tokens" data-nav="tokens" data-i="navTokens">Tokens</a>
@@ -407,6 +416,29 @@ footer.site a{color:var(--dim)}
     </div>
   </section>
 
+  <!-- ═══════════ DEX TERMINAL ═══════════ -->
+  <section class="view" id="view-dex">
+    <div class="hero" style="padding:36px 0 8px">
+      <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
+      <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
+      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
+    </div>
+    <div class="dex-strip" id="dex-strip" aria-live="polite">
+      <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
+      <span><b id="dx-spread">…</b><small data-i="dxSpread">spread</small></span>
+      <span><b id="dx-height">…</b><small data-i="dxHeight">height</small></span>
+      <span><b id="dx-fills">…</b><small data-i="dxFills">fills</small></span>
+      <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
+      <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
+    </div>
+    <div class="dex-frame">
+      <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+    <p style="text-align:center;margin:18px 0 0">
+      <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
+    </p>
+  </section>
+
   <!-- ═══════════ EARN ═══════════ -->
   <section class="view" id="view-earn">
     <h1 style="font-size:26px;margin-bottom:6px" data-i="eTitle">Deposit and earn</h1>
@@ -595,6 +627,12 @@ const I18N = {
 en: {
   brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
   navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
+  navDex:"DEX",
+  dexChip:"the network's own exchange terminal",
+  dexTitle:"Sovereign DEX", dexGrad:"Terminal",
+  dexLead:"The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.",
+  dxSpread:"spread", dxHeight:"height", dxFills:"fills", dxPools:"pools", dxAge:"data age",
+  dexOpen:"Open full terminal",
   chipLive:"live on a public blockchain",
   heroTop:"Your money.", heroGrad:"Your network.", heroBottom:"SAOS.",
   heroLead:"Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.",
@@ -701,6 +739,12 @@ en: {
 he: {
   brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
   navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
+  navDex:"דקס",
+  dexChip:"טרמינל הבורסה של הרשת עצמה",
+  dexTitle:"הבורסה הריבונית", dexGrad:"במראה ציבורית",
+  dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי — משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
+  dxSpread:"ספרד", dxHeight:"גובה", dxFills:"מילויים", dxPools:"בריכות", dxAge:"גיל נתונים",
+  dexOpen:"פתיחת הטרמינל המלא",
   chipLive:"חי על שרשרת ציבורית",
   heroTop:"הכסף שלך.", heroGrad:"הרשת שלך.", heroBottom:"SAOS.",
   heroLead:"פתח ארנק חינם בשניות, החזק את המטבע SAOS, סחור בשערי הרשת וממן את הרשת כשכל מטבע נראה בספר פתוח. בלי כתובת-שרת, בלי מתווך: המפתחות שלך לא עוזבים את המכשיר.",
@@ -852,7 +896,7 @@ function timeAgo(iso) {
 $("year").textContent = new Date().getFullYear();
 
 /* ═══════════ routing ═══════════ */
-const VIEWS = ["home", "wallet", "exchange", "earn", "currency", "tokens", "network"];
+const VIEWS = ["home", "wallet", "exchange", "dex", "earn", "currency", "tokens", "network"];
 function route() {
   let h = (location.hash || "#home").slice(1);
   if (!VIEWS.includes(h)) h = "home";
@@ -861,6 +905,34 @@ function route() {
   window.scrollTo({ top: 0 });
 }
 window.addEventListener("hashchange", route);
+
+/* ═══════════ DEX mirror strip ═══════════ */
+(() => {
+  const el = (id) => document.getElementById(id);
+  const fmtInt = (n) => Number(n || 0).toLocaleString("en-US");
+  const ago = (iso) => {
+    const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+    return m < 60 ? m + "m" : Math.round(m / 60) + "h";
+  };
+  async function pull() {
+    try {
+      const r = await fetch("dex/world.json?t=" + Date.now(), { cache: "no-store" });
+      const j = await r.json();
+      if (!j || !j.ok) return;
+      const m = (j.markets || []).find((x) => x.key === "SAOS/USDS") || (j.markets || [])[0];
+      if (m) {
+        el("dx-price").textContent = (m.fair / 1000).toFixed(3);
+        el("dx-spread").textContent = (m.spreadBps ?? 0) + " bps";
+      }
+      el("dx-height").textContent = "h" + fmtInt(j.state && j.state.height);
+      el("dx-fills").textContent = fmtInt(j.state && j.state.fills);
+      el("dx-pools").textContent = fmtInt((j.pools || []).length);
+      el("dx-age").textContent = j.publishedAt ? ago(j.publishedAt) : "—";
+    } catch { /* המראה מחזיקה את המסגרת האחרונה — הסבב הבא ינסה שוב */ }
+  }
+  pull();
+  setInterval(pull, 60000);
+})();
 
 /* ═══════════ hidden operator access: 5 logo taps ═══════════ */
 (() => {
