@@ -171,7 +171,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--line2);b
 details.faq{border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin-bottom:10px;background:var(--panel)}
 details.faq summary{cursor:pointer;font-size:14.5px;font-weight:600;color:var(--text);list-style:none;display:flex;gap:10px;align-items:center}
 details.faq summary::before{content:"+";color:var(--gold);font-size:17px;flex:none}
-details.faq[open] summary::before{content:"–"}
+details.faq[open] summary::before{content:"-"}
 details.faq p{margin-top:10px;font-size:13.5px;color:var(--dim);line-height:1.7}
 
 /* notice */
@@ -259,10 +259,10 @@ footer.site a{color:var(--dim)}
       <h3 data-i="featTitle">What you can do here</h3>
       <p class="sect-sub" data-i="featSub">Everything runs from public connections. This page is itself a network node.</p>
       <div class="grid g4">
-        <a class="card feat" href="#wallet"><div class="ic">👛</div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
-        <a class="card feat" href="#exchange"><div class="ic">🔁</div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
-        <a class="card feat" href="#earn"><div class="ic">🌱</div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
-        <a class="card feat" href="#tokens"><div class="ic">🧬</div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
+        <a class="card feat" href="#wallet"><div class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-6"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
+        <a class="card feat" href="#exchange"><div class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
+        <a class="card feat" href="#earn"><div class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
+        <a class="card feat" href="#tokens"><div class="ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3c0 5 8 5 8 9s-8 4-8 9"/><path d="M16 3c0 5-8 5-8 9s8 4 8 9"/><path d="M9.5 6.5h5M9.5 17.5h5"/></svg></div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
       </div>
     </div>
 
@@ -422,7 +422,7 @@ footer.site a{color:var(--dim)}
     <div class="hero" style="padding:36px 0 8px">
       <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
       <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
-      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
+      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape, mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
     </div>
     <div class="dex-strip" id="dex-strip" aria-live="polite">
       <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
@@ -631,7 +631,7 @@ en: {
   navDex:"DEX",
   dexChip:"the network's own exchange terminal",
   dexTitle:"Sovereign DEX", dexGrad:"Terminal",
-  dexLead:"The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.",
+  dexLead:"The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape, mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.",
   dxSpread:"spread", dxHeight:"height", dxFills:"fills", dxPools:"pools", dxAge:"data age",
   dexOpen:"Open full terminal",
   chipLive:"live on a public blockchain",
@@ -743,7 +743,7 @@ he: {
   navDex:"דקס",
   dexChip:"טרמינל הבורסה של הרשת עצמה",
   dexTitle:"הבורסה הריבונית", dexGrad:"במראה ציבורית",
-  dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי — משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
+  dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי, משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
   dxSpread:"ספרד", dxHeight:"גובה", dxFills:"מילויים", dxPools:"בריכות", dxAge:"גיל נתונים",
   dexOpen:"פתיחת הטרמינל המלא",
   chipLive:"חי על שרשרת ציבורית",
@@ -928,8 +928,8 @@ window.addEventListener("hashchange", route);
       el("dx-height").textContent = "h" + fmtInt(j.state && j.state.height);
       el("dx-fills").textContent = fmtInt(j.state && j.state.fills);
       el("dx-pools").textContent = fmtInt((j.pools || []).length);
-      el("dx-age").textContent = j.publishedAt ? ago(j.publishedAt) : "—";
-    } catch { /* המראה מחזיקה את המסגרת האחרונה — הסבב הבא ינסה שוב */ }
+      el("dx-age").textContent = j.publishedAt ? ago(j.publishedAt) : "…";
+    } catch { /* המראה מחזיקה את המסגרת האחרונה - הסבב הבא ינסה שוב */ }
   }
   pull();
   setInterval(pull, 60000);
@@ -1025,10 +1025,10 @@ async function boot() {
   route();
   try {
     const st = await SL.selfTest();
-    $("selftest-badge").textContent = st.passed + "/" + st.total + " ✓";
+    $("selftest-badge").textContent = st.passed + "/" + st.total;
     $("selftest-badge").classList.toggle("bad", st.passed !== st.total);
   } catch {
-    $("selftest-badge").textContent = "✗";
+    $("selftest-badge").textContent = "FAIL";
     $("selftest-badge").classList.add("bad");
   }
   await Promise.all([
@@ -1191,7 +1191,7 @@ function renderLive() {
   const fills = [];
   for (const [id, o] of Object.entries(offers)) for (const f of o.fills || []) fills.push({ ...f, offerId: id, cur: o.cur, price: o.price });
   $("x-fills").innerHTML = fills.length
-    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS → <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
+    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS -> <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
 
   /* earn: deposit addresses */
@@ -1230,7 +1230,7 @@ function renderLive() {
   $("e-total-cred").textContent = nice(fmtSaos(totalCred.toString(), 3));
   $("e-total-rew").textContent = nice(fmtSaos(state.rewardsPaid || "0", 3));
   $("e-credits").innerHTML = credits.length
-    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} → <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
+    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} -> <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${t("empty.cred")}</span></div>`;
 
   renderWalletBalances();
@@ -1254,7 +1254,7 @@ function renderWalletUI() {
     const w = LIVE?.state?.wallets?.[WALLET.addr];
     const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
     $("wallet-reg").innerHTML = w
-      ? `<span class="ok">✓ ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
+      ? `<span class="ok">${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
       : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
     renderWalletBalances();
     refreshSendSymbols();
@@ -1383,7 +1383,7 @@ async function enqueue(fields) {
 function renderQueue() {
   $("wallet-queue").textContent = QUEUE.length;
   $("queue-list").innerHTML = QUEUE.length
-    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">✕</button></div>`).join("")
+    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">x</button></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${LANG === "he" ? "התור ריק" : "the queue is empty"}</span></div>`;
   for (const b of document.querySelectorAll("[data-qi]")) {
     b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); });
@@ -1394,7 +1394,7 @@ function queueSummary(env) {
   if (env.k === "wallet.create") return (LANG === "he" ? "רישום ארנק" : "wallet registration") + (env.nick ? ` "${env.nick}"` : "");
   if (env.k === "token.deploy") return `${env.symbol} (cap ${n(env.maxSupply)})`;
   if (env.k === "token.mint") return `${n(env.amount)} ${env.symbol}`;
-  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} → ${String(env.to).slice(0, 10)}…`;
+  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} -> ${String(env.to).slice(0, 10)}…`;
   if (env.k === "token.burn") return `${n(env.amount)} ${env.symbol}`;
   if (env.k === "deposit.claim") return `${env.amt} ${env.cur}`;
   if (env.k === "dex.offer") return `${n(env.units)} SAOS @ ${env.price} ${env.cur}`;
@@ -1508,11 +1508,11 @@ $("btn-relay-all").addEventListener("click", async () => {
     }
     QUEUE = [];
     saveQueue();
-    out.textContent = "✓ " + t("tOk.broadcast")(sent);
+    out.textContent = t("tOk.broadcast")(sent);
     toast(t("tOk.broadcast")(sent));
     setTimeout(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 15000);
   } catch (e) {
-    out.textContent = "✗ " + (e.message || "").slice(0, 90);
+    out.textContent = (e.message || "").slice(0, 90);
     toast(t("tErr.relayFail") + (e.message || "").slice(0, 80), false);
   } finally {
     $("relay-wif").value = ""; // transport key wiped immediately
@@ -1559,7 +1559,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
       ? `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · שורש <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `
       : `Read ${envelopes.length} operations · ${res.valid} valid · root <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `)
       + (match
-        ? (LANG === "he" ? "= תואם למפורסם ✓" : "= matches the published root ✓")
+        ? (LANG === "he" ? "= תואם למפורסם" : "= matches the published root")
         : (LANG === "he" ? "≠ שונה מהמפורסם!" : "≠ differs from the published root!"));
     out.style.color = match ? "#86efac" : "#fca5a5";
     if (!match && published) toast(LANG === "he" ? "השורש שונה מהמפורסם" : "root differs from published", false);
