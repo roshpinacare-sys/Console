@@ -3,31 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SAOS Network | Crypto Wallet, Token Exchange and Earn</title>
-<meta name="description" content="Open a free SAOS wallet in seconds, hold and send the SAOS currency, exchange at network rates, fund the network and follow every coin in an open ledger. Your keys never leave your device.">
-<meta name="keywords" content="SAOS, crypto wallet, digital wallet, blockchain, token exchange, DEX, decentralized exchange, earn, validation network, sovereign network, open ledger, ארנק דיגיטלי, קריפטו, בורסה, מטבע דיגיטלי, רשת">
+<title>SAOS Network | The Verifying Network for AI Agents</title>
+<meta name="description" content="A sovereign network of AI agents that proves its own work: every claim is measured, signed, and anchored on public chains. Anyone can verify. No one has to trust.">
+<meta name="keywords" content="SAOS, verifying network, AI agents, attestation, checkpoints, Merkle root, Steem anchor, sovereign network, open ledger, רשת מאמתת, סוכני AI, אימות">
 <meta name="theme-color" content="#050507">
 <link rel="canonical" href="https://roshpinacare-sys.github.io/Console/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SAOS Network">
-<meta property="og:title" content="SAOS Network | Crypto Wallet, Token Exchange and Earn">
-<meta property="og:description" content="A free wallet with your own address, a transparent exchange, and a currency you can verify line by line. No custody, no middleman.">
+<meta property="og:title" content="SAOS Network | The Verifying Network for AI Agents">
+<meta property="og:description" content="Agents that prove their work: measured, signed, anchored on public chains. Verify everything yourself.">
 <meta property="og:url" content="https://roshpinacare-sys.github.io/Console/">
 <meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SAOS Network">
-<meta name="twitter:description" content="Free wallet, transparent exchange, open ledger. Your keys stay on your device.">
+<meta name="twitter:description" content="The verifying network: every agent claim is measured, signed, anchored.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"SAOS Network","url":"https://roshpinacare-sys.github.io/Console/","description":"Crypto wallet, token exchange and open validation network.","inLanguage":["en","he"]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"How do I open a SAOS wallet?","acceptedAnswer":{"@type":"Answer","text":"Press Open Wallet, then Create. Your key is generated on your device and your address is derived from it. Nothing is sent to a server and no account is needed."}},
-{"@type":"Question","name":"Who holds my keys?","acceptedAnswer":{"@type":"Answer","text":"Only you. Keys are generated in your browser and stay in memory. You can save an encrypted backup with a password you choose. There is no recovery and no custody."}},
-{"@type":"Question","name":"How can I check the numbers myself?","acceptedAnswer":{"@type":"Answer","text":"The whole ledger is public. Press Verify in the Network page and your browser reads every operation from the public chain, checks every signature and compares the result with what this site shows."}},
-{"@type":"Question","name":"What do deposits do?","acceptedAnswer":{"@type":"Answer","text":"Deposits fund network development and are converted to SAOS at the current network rate. Every deposit, credit and reward is recorded in the open ledger. No promise of profit is made or implied."}}
-]}
+{"@context":"https://schema.org","@type":"WebSite","name":"SAOS Network","url":"https://roshpinacare-sys.github.io/Console/","description":"The verifying network for AI agents: measured, signed, anchored claims.","inLanguage":["en","he"]}
 </script>
 <style>
 :root{
@@ -54,1534 +46,1086 @@ a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
 .mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
 .num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
 
-/* header */
-header.site{position:sticky;top:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;
-  background:rgba(5,5,7,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.hwrap{max-width:1160px;margin:0 auto;padding:0 18px;width:100%;display:flex;align-items:center;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+/* ── header + nav ── */
+header.site{position:sticky;top:0;z-index:50;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;flex:none}
 .brand svg{width:30px;height:30px;flex:none}
 .brand b{font-size:17px;letter-spacing:.4px;color:var(--text)}
 .brand small{font-size:11px;color:var(--faint);display:block;margin-top:-2px}
-nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-inline-start:8px}
-nav.tabs::-webkit-scrollbar{display:none}
-.tab{padding:8px 13px;border-radius:10px;font-size:13.5px;color:var(--dim);white-space:nowrap;cursor:pointer;border:1px solid transparent}
-.tab:hover{color:var(--text);text-decoration:none}
-.tab.on{color:var(--gold-bright);background:var(--panel2);border-color:var(--line)}
-.hright{margin-inline-start:auto;display:flex;align-items:center;gap:10px}
-.pill{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--green);
-  border:1px solid rgba(34,197,94,.35);border-radius:999px;padding:4px 11px;white-space:nowrap}
-.pill.warn{color:var(--amber);border-color:rgba(234,179,8,.4)}
-.pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
-.langbtn{background:var(--panel2);border:1px solid var(--line);color:var(--gold);border-radius:9px;
-  padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+nav.sections{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:wrap}
+nav.sections a{padding:8px 13px;border-radius:10px;font-size:13.5px;color:var(--dim);border:1px solid transparent;min-height:44px;display:inline-flex;align-items:center}
+nav.sections a:hover{color:var(--text);background:var(--panel2);text-decoration:none}
+nav.sections a.on{color:var(--gold-bright);background:rgba(212,175,55,.09);border-color:var(--line2)}
+.hd .actions{display:flex;gap:8px;align-items:center;flex:none}
+.langbtn{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 14px;font-size:13px;cursor:pointer;min-height:44px}
 .langbtn:hover{border-color:var(--line2)}
+.burger{display:none;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:10px;width:44px;height:44px;cursor:pointer;align-items:center;justify-content:center}
+.burger svg{width:20px;height:20px}
+.mobilenav{display:none;border-top:1px solid var(--line);padding:10px 0 16px}
+.mobilenav.open{display:block}
+.mobilenav a{display:block;padding:11px 14px;border-radius:10px;color:var(--dim);font-size:15px}
+.mobilenav a.on{color:var(--gold-bright);background:rgba(212,175,55,.09)}
+.mobilenav .sub{padding-inline-start:26px;font-size:13.5px}
 
-/* layout */
-.wrap{max-width:1160px;margin:0 auto;padding:0 18px;width:100%}
-.view{display:none;padding:34px 0 70px}
-.view.on{display:block}
-.grid{display:grid;gap:16px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:repeat(3,1fr)}
+/* ── submenu bar ── */
+.subbar{border-bottom:1px solid var(--line);background:rgba(5,5,7,.55)}
+.subbar .in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:9px 0}
+.subbar .in::-webkit-scrollbar{display:none}
+.subbar a{white-space:nowrap;padding:7px 13px;border-radius:9px;font-size:12.5px;color:var(--faint);min-height:36px;display:inline-flex;align-items:center}
+.subbar a:hover{color:var(--text);text-decoration:none;background:var(--panel2)}
+.subbar a.on{color:var(--gold-bright);background:rgba(212,175,55,.1)}
+
+/* ── sections / views ── */
+section.view{display:none;padding:34px 0 60px;animation:fade .25s ease}
+section.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.subview{display:none}
+.subview.on{display:block}
+h1.pg{font-size:clamp(24px,4vw,34px);letter-spacing:-.4px;margin-bottom:6px}
+p.pgsub{color:var(--dim);font-size:15px;max-width:760px;line-height:1.65;margin-bottom:26px}
+h2.sb{font-size:19px;margin:34px 0 14px;letter-spacing:-.2px;display:flex;align-items:center;gap:9px}
+h2.sb:first-of-type{margin-top:0}
+h2.sb svg{width:19px;height:19px;color:var(--gold);flex:none}
+
+/* ── cards ── */
+.grid{display:grid;gap:14px}
 .g4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px}
-.card h2{font-size:16.5px;margin-bottom:6px;color:var(--text);font-weight:700}
-.card .sub{font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.65}
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.kpi .k{font-size:11.5px;color:var(--faint);letter-spacing:.5px;text-transform:uppercase}
-.kpi .v{font-size:22px;font-weight:700;color:var(--gold-bright);margin-top:4px;font-variant-numeric:tabular-nums}
-.kpi .s{font-size:11.5px;color:var(--faint);margin-top:3px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.card.hov{transition:border-color .18s,transform .18s}
+.card.hov:hover{border-color:var(--line2);transform:translateY(-2px);text-decoration:none}
+.kpi{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.kpi .u{font-size:14px;color:var(--faint);font-weight:400}
+.kplabel{font-size:12px;color:var(--faint);margin-top:5px;text-transform:uppercase;letter-spacing:.8px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:7px;vertical-align:1px}
+.dot.live{background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.55)}
+.dot.aging{background:var(--amber);box-shadow:0 0 8px rgba(234,179,8,.5)}
+.dot.dormant{background:var(--faint)}
+.tag{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11px;border:1px solid var(--line);color:var(--dim);letter-spacing:.4px}
+.tag.gold{color:var(--gold-bright);border-color:var(--line2);background:rgba(212,175,55,.07)}
+.tag.green{color:#86efac;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.07)}
+.tag.red{color:#fca5a5;border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.07)}
+.tag.amber{color:#fde68a;border-color:rgba(234,179,8,.35);background:rgba(234,179,8,.07)}
 
-/* hero */
-.hero{padding:52px 0 10px;text-align:center}
-.hero .chip{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--gold);
-  border:1px solid var(--line2);border-radius:999px;padding:5px 14px;margin-bottom:20px}
-.hero h1{font-size:clamp(30px,5.4vw,52px);line-height:1.12;font-weight:800;letter-spacing:-.5px}
-.hero h1 .grad{background:linear-gradient(100deg,var(--gold-bright),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{max-width:640px;margin:16px auto 0;font-size:16.5px;color:var(--dim);line-height:1.7}
-.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
-.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid transparent;font-family:var(--sans);transition:filter .15s,transform .05s}
-.btn:hover{text-decoration:none;filter:brightness(1.12)}
-.btn:active{transform:scale(.99)}
-.btn.gold{background:var(--gold);color:#141416}
-.btn.ghost{background:transparent;color:var(--text);border-color:var(--line2)}
-.btn.sm{padding:8px 15px;font-size:13px;border-radius:10px}
-.btn:disabled{opacity:.45;cursor:not-allowed}
+/* ── hero ── */
+.hero{padding:54px 0 10px}
+.hero .eyebrow{color:var(--gold);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(30px,5.4vw,52px);line-height:1.08;letter-spacing:-1px;max-width:900px}
+.hero h1 em{font-style:normal;color:var(--gold-bright)}
+.hero p.lead{margin-top:18px;font-size:17px;color:var(--dim);max-width:780px;line-height:1.7}
+.hero .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-size:15px;font-weight:600;min-height:48px;border:1px solid var(--line2);color:#0b0b0e;background:linear-gradient(135deg,#e8c94e,#c9a227);cursor:pointer}
+.btn:hover{filter:brightness(1.07);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line2)}
+.btn.ghost:hover{background:var(--panel2)}
+.btn svg{width:17px;height:17px}
 
-/* sections */
-.sect{margin-top:34px}
-.sect h3{font-size:19px;margin-bottom:4px}
-.sect .sect-sub{font-size:13.5px;color:var(--dim);margin-bottom:18px}
-.feat{display:block;color:var(--text)}
-.feat:hover{text-decoration:none;border-color:var(--line2)}
-.feat .ic{font-size:22px;margin-bottom:10px}
-.feat b{font-size:15.5px;display:block;margin-bottom:6px}
-.feat p{font-size:13px;color:var(--dim);line-height:1.65}
-.step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
-.step:last-child{border-bottom:none}
-.step .n{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
-.step b{font-size:14.5px;display:block;margin-bottom:3px}
-.step p{font-size:13px;color:var(--dim);line-height:1.6}
+/* steps */
+.steps{counter-reset:st}
+.step{display:flex;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.step .n{flex:none;width:38px;height:38px;border-radius:11px;border:1px solid var(--line2);color:var(--gold-bright);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;background:rgba(212,175,55,.06)}
+.step h3{font-size:16px;margin-bottom:5px}
+.step p{color:var(--dim);font-size:14px;line-height:1.65}
 
 /* tables */
-.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
-th{text-align:start;padding:10px 13px;color:var(--faint);font-weight:600;font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,.045);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-.tag{display:inline-block;font-size:10.5px;border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--dim)}
-.tag.gold{color:var(--gold);border-color:var(--line2)}
-.tag.green{color:var(--green);border-color:rgba(34,197,94,.4)}
-.tag.violet{color:var(--violet);border-color:rgba(167,139,250,.4)}
-.tag.amber{color:var(--amber);border-color:rgba(234,179,8,.4)}
-.tag.red{color:var(--red);border-color:rgba(239,68,68,.4)}
+.tblwrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.tblscroll{max-height:420px;overflow-y:auto}
+.tblscroll::-webkit-scrollbar{width:9px}
+.tblscroll::-webkit-scrollbar-thumb{background:rgba(212,175,55,.25);border-radius:9px}
+.tblscroll::-webkit-scrollbar-track{background:transparent}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;text-align:start;background:#0d0d13;color:var(--faint);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--line);font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.045);color:var(--dim);vertical-align:top}
+tr:hover td{background:rgba(255,255,255,.02)}
+td .strong{color:var(--text)}
 
-/* forms */
-label.f{display:block;font-size:12.5px;color:var(--dim);margin-bottom:6px}
-input,select,textarea{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:11px 13px;font-size:14.5px;font-family:var(--sans)}
-input.mono,textarea.mono{font-family:var(--mono);direction:ltr}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--line2);box-shadow:0 0 0 3px rgba(212,175,55,.09)}
-.field{margin-bottom:14px}
-.hint{font-size:11.5px;color:var(--faint);margin-top:5px;line-height:1.55}
-.frow{display:flex;gap:12px;flex-wrap:wrap}
-.frow>*{flex:1;min-width:140px}
+/* meters */
+.meter{height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:9px}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#c9a227,#f0d060)}
 
-/* op rows */
-.op-row{display:flex;gap:10px;align-items:baseline;padding:9px 2px;border-bottom:1px dashed rgba(255,255,255,.06);font-size:12.5px;flex-wrap:wrap}
-.op-row:last-child{border-bottom:none}
-.op-row .k{font-family:var(--mono);font-size:10.5px;color:var(--violet);border:1px solid rgba(167,139,250,.3);border-radius:6px;padding:1px 7px;white-space:nowrap}
-.op-row .when{color:var(--faint);font-size:11px;white-space:nowrap;margin-inline-start:auto}
-.op-row span{min-width:0;overflow-wrap:anywhere}
-.feed{max-height:380px;overflow-y:auto;scrollbar-width:thin}
-.feed::-webkit-scrollbar{width:7px}
-.feed::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
-
-/* wallet */
-.addrbox{background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:13px 15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.addrbox .a{font-family:var(--mono);font-size:13.5px;color:var(--gold-bright);word-break:break-all;flex:1;min-width:200px;direction:ltr}
-.copy{background:var(--panel2);border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:var(--sans)}
-.copy:hover{color:var(--gold);border-color:var(--line2)}
-.keybox{background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.35);border-radius:12px;padding:15px}
-.keybox .w{font-family:var(--mono);font-size:12.5px;word-break:break-all;color:var(--amber);direction:ltr}
-
-/* faq */
-details.faq{border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin-bottom:10px;background:var(--panel)}
-details.faq summary{cursor:pointer;font-size:14.5px;font-weight:600;color:var(--text);list-style:none;display:flex;gap:10px;align-items:center}
-details.faq summary::before{content:"+";color:var(--gold);font-size:17px;flex:none}
-details.faq[open] summary::before{content:"–"}
-details.faq p{margin-top:10px;font-size:13.5px;color:var(--dim);line-height:1.7}
-
-/* notice */
-.note{font-size:12.5px;color:var(--dim);border-inline-start:3px solid var(--line2);padding-inline-start:12px;line-height:1.7;margin-top:16px}
-.note.honest{border-color:var(--amber)}
-.ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--amber)}
-#toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:var(--bg2);border:1px solid var(--line2);color:var(--text);border-radius:11px;padding:11px 19px;font-size:13.5px;z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
-#toast.show{opacity:1}
+/* misc */
+.stat-row{display:flex;gap:26px;flex-wrap:wrap}
+.stat-row .s .v{font-size:22px;font-weight:700}
+.stat-row .s .l{font-size:12px;color:var(--faint);margin-top:2px}
+.note{border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13.5px;color:var(--dim);line-height:1.6;background:var(--panel)}
+.note.warn{border-color:rgba(234,179,8,.35);background:rgba(234,179,8,.05)}
+.note.good{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05)}
+.pathlink{display:block;padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);transition:border-color .18s}
+.pathlink:hover{border-color:var(--line2);text-decoration:none}
+.pathlink h4{font-size:15.5px;color:var(--text);margin-bottom:6px}
+.pathlink p{font-size:13.5px;color:var(--dim);line-height:1.6}
+.pathlink .go{color:var(--gold);font-size:13px;margin-top:10px;display:inline-block}
+.law{font-size:clamp(19px,3vw,26px);line-height:1.5;letter-spacing:-.3px;max-width:820px}
+.law em{font-style:normal;color:var(--gold-bright)}
+ul.clean{list-style:none}
+ul.clean li{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.045);color:var(--dim);font-size:14px;line-height:1.6;display:flex;gap:10px}
+ul.clean li:last-child{border-bottom:none}
+ul.clean li svg{width:16px;height:16px;color:var(--gold);flex:none;margin-top:3px}
+.srcnote{font-size:11.5px;color:var(--faint);margin-top:12px;display:flex;align-items:center;gap:7px}
+.srcnote svg{width:13px;height:13px;flex:none}
+.skel{color:var(--faint);font-size:13px;padding:8px 0}
+.failhonest{color:#fca5a5;font-size:13px}
 
 /* footer */
-footer.site{border-top:1px solid var(--line);padding:22px 0;margin-top:auto;position:relative;z-index:1;background:var(--bg)}
-footer.site .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--faint)}
-footer.site a{color:var(--dim)}
+footer.site{border-top:1px solid var(--line);margin-top:auto;padding:34px 0 26px;background:rgba(5,5,7,.6)}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:26px}
+footer.site h5{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin-bottom:12px}
+footer.site a{display:block;color:var(--dim);font-size:13.5px;padding:4px 0}
+footer.site a:hover{color:var(--gold-bright)}
+.fbot{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--faint);font-size:12.5px}
+.pb{padding-bottom:env(safe-area-inset-bottom)}
 
+/* toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:#101018;border:1px solid var(--line2);color:var(--text);border-radius:12px;padding:12px 20px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:90vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:1020px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){
+  nav.sections{display:none}
+  .burger{display:flex}
+  .g4,.g3,.g2{grid-template-columns:1fr}
+  .hero{padding:38px 0 6px}
+  .fgrid{grid-template-columns:1fr}
   .brand small{display:none}
-  nav.tabs{position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(5,5,7,.97);border-bottom:1px solid var(--line);padding:8px 12px;z-index:40}
-  .pill{display:none}
 }
-@media(max-width:520px){
-  .hero{padding:34px 0 6px}
-  .card{padding:17px}
-  .view{padding:24px 0 56px}
-}
-/* ═══ DEX terminal view ═══ */
-.dex-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:4px 0 16px}
-.dex-strip>span{display:flex;flex-direction:column;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:9px 16px;min-width:92px}
-.dex-strip b{font-family:var(--mono);font-size:15px;color:var(--gold-bright)}
-.dex-strip small{opacity:.6;font-size:11px;color:var(--dim)}
-.dex-frame{border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:#09090b;box-shadow:0 24px 70px -30px rgba(0,0,0,.8)}
-.dex-frame iframe{display:block;width:100%;height:min(84vh,900px);border:0}
-@media(max-width:520px){.dex-frame iframe{height:70vh}.dex-strip>span{padding:7px 10px;min-width:74px}}
 </style>
 </head>
 <body>
-<canvas id="bg" aria-hidden="true"></canvas>
+<div id="bg"></div>
 
 <header class="site">
-  <div class="hwrap">
-    <div class="brand" id="brand" title="SAOS">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
-      <div><b>SAOS</b><small data-i="brandSub">Network</small></div>
+  <div class="wrap">
+    <div class="hd">
+      <div class="brand" id="brand" title="SAOS">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+        <div><b>SAOS</b><small data-i="brandSub">The Verifying Network</small></div>
+      </div>
+      <nav class="sections" id="secnav" aria-label="Sections">
+        <a href="#/home" data-nav="home" data-i="navHome">Home</a>
+        <a href="#/network/overview" data-nav="network" data-i="navNetwork">Network</a>
+        <a href="#/agents/fleet" data-nav="agents" data-i="navAgents">Agents</a>
+        <a href="#/exchange/terminal" data-nav="exchange" data-i="navExchange">Exchange</a>
+        <a href="#/knowledge/brain" data-nav="knowledge" data-i="navKnowledge">Knowledge</a>
+        <a href="#/admin/command" data-nav="admin" data-i="navAdmin">Admin</a>
+      </nav>
+      <div class="actions">
+        <button class="langbtn" id="langbtn" aria-label="Switch language">עברית</button>
+        <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
     </div>
-    <nav class="tabs" aria-label="main">
-      <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
-      <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
-      <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
-      <a class="tab" href="#dex" data-nav="dex" data-i="navDex">DEX</a>
-      <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
-      <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
-      <a class="tab" href="#tokens" data-nav="tokens" data-i="navTokens">Tokens</a>
-      <a class="tab" href="#network" data-nav="network" data-i="navNetwork">Network</a>
-    </nav>
-    <div class="hright">
-      <span class="pill" id="live-pill"><span class="dot"></span><span id="live-txt" data-i="liveConnecting">connecting</span></span>
-      <button class="langbtn" id="langbtn">עברית</button>
-    </div>
+    <div class="mobilenav" id="mobnav"></div>
+  </div>
+  <div class="subbar" data-submenu="1">
+    <div class="wrap"><div class="in" id="subnav"></div></div>
   </div>
 </header>
 
 <main>
-<div class="wrap">
 
-  <!-- ═══════════ HOME ═══════════ -->
-  <section class="view" id="view-home">
-    <div class="hero">
-      <div class="chip"><span data-i="chipLive">live on a public blockchain</span></div>
-      <h1><span data-i="heroTop">Your money.</span> <span class="grad" data-i="heroGrad">Your network.</span><br><span data-i="heroBottom">SAOS.</span></h1>
-      <p class="lead" data-i="heroLead">Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.</p>
+<!-- ═══════════════ HOME — the big picture ═══════════════ -->
+<section class="view" id="view-home" data-console-section="home">
+  <div class="wrap">
+    <div class="hero" id="hero-bigpicture">
+      <div class="eyebrow" data-i="hero.eyebrow">THE VERIFYING NETWORK</div>
+      <h1 data-i-html="hero.h1">AI agents that <em>prove</em> their own work.</h1>
+      <p class="lead" data-i="hero.lead">Agents work around the clock — and every claim they make is measured, signed, and anchored on public chains. Anyone can verify. No one has to trust.</p>
       <div class="cta">
-        <a class="btn gold" href="#wallet" data-i="ctaWallet">Open a free wallet</a>
-        <a class="btn ghost" href="#exchange" data-i="ctaExchange">See the exchange</a>
+        <a class="btn" href="#/network/overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span data-i="hero.ctaVerify">See the live truth</span></a>
+        <a class="btn ghost" href="wallet.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="13" rx="2.5"/><path d="M2 10h20"/></svg>
+          <span data-i="hero.ctaWallet">Open wallet &amp; exchange</span></a>
       </div>
     </div>
 
-    <div class="sect grid g4">
-      <div class="kpi"><div class="k" data-i="kSupply">SAOS supply</div><div class="v num" id="st-sup">126,682</div><div class="s" data-i="kSupplySub">hard cap 21,000,000</div></div>
-      <div class="kpi"><div class="k" data-i="kWallets">Wallets on chain</div><div class="v num" id="st-wal">0</div><div class="s" data-i="kWalletsSub">personal addresses</div></div>
-      <div class="kpi"><div class="k" data-i="kContracts">Token contracts</div><div class="v num" id="st-tok">0</div><div class="s" data-i="kContractsSub">real on-chain contracts</div></div>
-      <div class="kpi"><div class="k" data-i="kValidations">Network validations</div><div class="v num" id="st-att">0</div><div class="s" id="st-cp">0 checkpoints</div></div>
+    <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg><span data-i="home.now">What is happening right now</span></h2>
+    <div class="grid g4">
+      <div class="card hov"><div class="kpi num" id="k-witness">—</div><div class="kplabel" data-i="home.kWitness">Heartbeat witness</div><div class="srcnote" id="k-witness-sub"></div></div>
+      <div class="card hov"><div class="kpi num" id="k-att">—</div><div class="kplabel" data-i="home.kAtt">Signed attestations</div><div class="srcnote" id="k-att-sub"></div></div>
+      <div class="card hov"><div class="kpi num" id="k-fleet">—</div><div class="kplabel" data-i="home.kFleet">Cloud agents alive</div><div class="srcnote" id="k-fleet-sub"></div></div>
+      <div class="card hov"><div class="kpi num" id="k-brain">—</div><div class="kplabel" data-i="home.kBrain">Live brain keys</div><div class="srcnote" id="k-brain-sub"></div></div>
     </div>
 
-    <div class="sect">
-      <h3 data-i="featTitle">What you can do here</h3>
-      <p class="sect-sub" data-i="featSub">Everything runs from public connections. This page is itself a network node.</p>
-      <div class="grid g4">
-        <a class="card feat" href="#wallet"><div class="ic">👛</div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
-        <a class="card feat" href="#exchange"><div class="ic">🔁</div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
-        <a class="card feat" href="#earn"><div class="ic">🌱</div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
-        <a class="card feat" href="#tokens"><div class="ic">🧬</div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
-      </div>
+    <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg><span data-i="home.how">How it works</span></h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><h3 data-i="home.s1t">Agents work and sign</h3><p data-i="home.s1p">Every operation an agent performs is signed with its own EVM key and chained to the previous one by hash. Nothing an agent did exists without a signature.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3 data-i="home.s2t">The network measures</h3><p data-i="home.s2p">Checkpoints fold the ledger into a Merkle root, and the root is anchored on public chains (Steem). The witness line is public — outside any private server.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3 data-i="home.s3t">Anyone verifies</h3><p data-i="home.s3p">This console reads only public mirrors. Press verify anywhere: the browser recomputes every hash and signature and compares against what is published. No trust needed.</p></div></div>
     </div>
 
-    <div class="sect grid g2">
-      <div class="card">
-        <h2 data-i="trustTitle">Numbers you can check</h2>
-        <p class="sub" data-i="trustSub">Every figure on this page is read live from a public blockchain. Nothing is copy pasted from reports.</p>
-        <div class="step"><div class="n">1</div><div><b data-i="trust1T">The ledger is public</b><p data-i="trust1P">All wallets, balances, deposits and offers live as signed operations on a public chain that anyone can read.</p></div></div>
-        <div class="step"><div class="n">2</div><div><b data-i="trust2T">Your browser is the node</b><p data-i="trust2P">This page folds the ledger by itself and compares the result with what is published. One press, no trust needed.</p></div></div>
-        <div class="step"><div class="n">3</div><div><b data-i="trust3T">Signatures decide</b><p data-i="trust3P">Only the holder of a key can move its balance. The transport cannot forge, and every node re-checks every signature.</p></div></div>
-        <a class="btn ghost sm" href="#network" style="margin-top:14px" data-i="trustCta">Verify it yourself</a>
-      </div>
-      <div class="card">
-        <h2 data-i="feedTitle">Recent activity</h2>
-        <p class="sub" data-i="feedSub">Signed operations as the network folded them.</p>
-        <div class="feed" id="home-ops"></div>
-      </div>
-    </div>
+    <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" stroke-linecap="round"/></svg><span data-i="home.why">Why it exists</span></h2>
+    <div class="card"><p class="law" data-i-html="home.law">The law: <em>a claim without measurement is noise.</em> AI systems tell stories — this network proves them. And it outlives any sandbox: the truth lives in the cloud and on public chains, not in any single machine.</p></div>
 
-    <div class="sect">
-      <h3 data-i="faqTitle">Questions people ask</h3>
-      <div style="margin-top:16px">
-        <details class="faq"><summary data-i="faq1Q">How do I open a SAOS wallet?</summary><p data-i="faq1A">Press Open a free wallet, then Create. Your key is generated on your device and your address is derived from it. Nothing is sent to a server and no account is needed.</p></details>
-        <details class="faq"><summary data-i="faq2Q">Who holds my keys?</summary><p data-i="faq2A">Only you. Keys are generated in your browser and stay in memory. You can save an encrypted backup with a password you choose. There is no recovery and no custody.</p></details>
-        <details class="faq"><summary data-i="faq3Q">How can I check the numbers myself?</summary><p data-i="faq3A">The whole ledger is public. Press Verify in the Network page and your browser reads every operation from the public chain, checks every signature and compares the result with what this site shows.</p></details>
-        <details class="faq"><summary data-i="faq4Q">What do deposits do?</summary><p data-i="faq4A">Deposits fund network development and are converted to SAOS at the current network rate. Every deposit, credit and reward is recorded in the open ledger. No promise of profit is made or implied.</p></details>
-      </div>
-    </div>
-  </section>
+    <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span data-i="home.beats">Latest heartbeats</span></h2>
+    <div class="tblwrap"><div class="tblscroll"><table aria-label="Latest attestations"><thead><tr><th>#</th><th data-i="t.type">Type</th><th data-i="t.agent">Agent</th><th data-i="t.claim">Claim</th><th data-i="t.when">When</th></tr></thead><tbody id="home-beats"><tr><td colspan="5" class="skel">…</td></tr></tbody></table></div></div>
+    <div class="srcnote" id="src-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="src.mirror">Live from the public mirror — updated by the network itself, independent of any sandbox.</span></div>
 
-  <!-- ═══════════ WALLET ═══════════ -->
-  <section class="view" id="view-wallet">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="wTitle">Your wallet</h1>
-    <p class="sect-sub" data-i="wSub">A personal SAOS address that belongs to the key on your device. Register it once and the whole network can see it.</p>
-
-    <div id="wallet-empty" class="grid g2">
-      <div class="card">
-        <h2 data-i="wNewT">Create a new wallet</h2>
-        <p class="sub" data-i="wNewP">A fresh key is generated with the browser's secure random generator. It never leaves this tab's memory.</p>
-        <button class="btn gold" id="btn-new-wallet" data-i="wNewBtn">Create wallet</button>
-        <div class="note" data-i="wNewNote">Write the key down or save the encrypted backup. If it is lost, the wallet is lost. There is no reset.</div>
-      </div>
-      <div class="card">
-        <h2 data-i="wImpT">Restore a backup</h2>
-        <p class="sub" data-i="wImpP">Load an encrypted backup file (saos-keystore). The password opens it locally.</p>
-        <button class="btn ghost" id="btn-import-wallet" data-i="wImpBtn">Choose backup file</button>
-        <input type="file" id="import-file" accept="application/json" style="display:none">
-      </div>
-    </div>
-
-    <div id="wallet-live" style="display:none">
-      <div class="grid g2">
-        <div class="card">
-          <h2 data-i="wAddrT">Your address</h2>
-          <p class="sub" id="wallet-reg"></p>
-          <div class="addrbox"><span class="a" id="wallet-addr"></span><button class="copy" id="btn-copy-addr" data-i="copy">Copy</button></div>
-          <p class="hint mono" id="wallet-pub" style="margin-top:10px;word-break:break-all"></p>
-          <div class="keybox" id="key-reveal" style="display:none;margin-top:14px">
-            <div style="font-size:12px;color:var(--amber);margin-bottom:6px" data-i="wWifT">Your private key (shown once)</div>
-            <div class="w" id="wif-out"></div>
-            <button class="copy" id="btn-copy-wif" style="margin-top:9px" data-i="copy">Copy</button>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-            <button class="btn gold sm" id="btn-export-keystore" data-i="wBackup">Save encrypted backup</button>
-            <button class="btn ghost sm" id="btn-wipe" data-i="wLock">Clear from memory</button>
-          </div>
-        </div>
-        <div class="card">
-          <h2 data-i="wBalT">Balances</h2>
-          <p class="sub" data-i="wBalP">As folded from the public chain.</p>
-          <div style="font-size:24px;font-weight:800;color:var(--gold-bright)" id="wallet-bal">0</div>
-          <div class="frow" style="margin-top:18px">
-            <div class="field"><label class="f" data-i="wNick">Display name (optional)</label><input id="reg-nick" maxlength="24"><button class="btn ghost sm" id="btn-register" style="margin-top:8px;width:100%" data-i="wRegBtn">Register on chain</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <h2 data-i="wSendT">Send</h2>
-        <p class="sub" data-i="wSendP">Signed on your device, broadcast as a public operation.</p>
-        <div class="frow">
-          <div class="field"><label class="f" data-i="wSendSym">Currency</label><select id="send-symbol"></select></div>
-          <div class="field" style="flex:2"><label class="f" data-i="wSendTo">Recipient address (saos1...)</label><input class="mono" id="send-to" placeholder="saos1..."></div>
-          <div class="field"><label class="f" data-i="wSendAmt">Amount</label><input class="mono" id="send-amount" placeholder="0.000"></div>
-        </div>
-        <button class="btn gold" id="btn-send" data-i="wSendBtn">Sign transfer</button>
-      </div>
-
-      <div class="grid g2" style="margin-top:16px">
-        <div class="card">
-          <h2><span data-i="wQueueT">Signed operations queue</span> <span class="tag gold" id="wallet-queue">0</span></h2>
-          <p class="sub" data-i="wQueueP">Signed and waiting. Copy them for the network, or broadcast below.</p>
-          <div class="feed" id="queue-list"></div>
-          <button class="btn ghost sm" id="btn-copy-queue" style="margin-top:12px" data-i="wQueueCopy">Copy signed JSON</button>
-        </div>
-        <div class="card">
-          <h2 data-i="wRelayT">Broadcast</h2>
-          <p class="sub" data-i="wRelayP">A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.</p>
-          <div class="frow">
-            <div class="field"><label class="f" data-i="wRelayAcc">Steem account</label><input id="relay-account" placeholder="account"></div>
-            <div class="field"><label class="f" data-i="wRelayWif">Posting key (WIF)</label><input type="password" class="mono" id="relay-wif" placeholder="5..."></div>
-          </div>
-          <button class="btn gold" id="btn-relay-all" data-i="wRelayBtn">Broadcast queue</button>
-          <div class="hint" id="relay-result" style="margin-top:10px"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ EXCHANGE ═══════════ -->
-  <section class="view" id="view-exchange">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h1>
-    <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
-
-    <div class="grid g2">
-      <div class="card">
-        <h2 data-i="xRatesT">Network rates</h2>
-        <p class="sub" data-i="xRatesP">Reference rates published on chain by network governance.</p>
-        <div class="tblwrap"><table><thead><tr><th data-i="xPair">Pair</th><th data-i="xPrice">Price</th></tr></thead><tbody id="x-rates"></tbody></table></div>
-        <div class="note" data-i="xRatesNote">Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.</div>
-      </div>
-      <div class="card">
-        <h2 data-i="xOfferT">Place a sell offer</h2>
-        <p class="sub" data-i="xOfferP">Your SAOS moves into escrow the moment the offer lands on chain.</p>
-        <div class="frow">
-          <div class="field"><label class="f" data-i="xCur">Currency you accept</label><input class="mono" id="off-cur" placeholder="USD" maxlength="10"></div>
-          <div class="field"><label class="f" data-i="xAmt">Amount (SAOS)</label><input class="mono" id="off-amt" placeholder="10.000"></div>
-          <div class="field"><label class="f" data-i="xPricePer">Price per 1 SAOS</label><input class="mono" id="off-price" placeholder="0.001"></div>
-        </div>
-        <button class="btn gold" id="btn-offer" data-i="xOfferBtn">Sign offer</button>
-        <div class="note" data-i="xOfferNote">Settlement of the currency side is recorded by the network treasury with a payment reference. Both sides stay visible on chain.</div>
-      </div>
-    </div>
-
-    <div class="sect grid g2">
-      <div class="card">
-        <h2 data-i="xBookT">Open offers</h2>
-        <p class="sub" data-i="xBookP">Escrowed SAOS for sale right now.</p>
-        <div class="tblwrap"><table><thead><tr><th data-i="xSell">Seller</th><th data-i="xGet">You pay</th><th data-i="xRemain">SAOS remaining</th><th data-i="xPrice2">Price / SAOS</th></tr></thead><tbody id="x-book"></tbody></table></div>
-      </div>
-      <div class="card">
-        <h2 data-i="xMineT">My offers</h2>
-        <p class="sub" data-i="xMineP">Open a wallet to see and manage your offers here.</p>
-        <div id="x-mine" class="feed"></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px">
-      <h2 data-i="xFillsT">Recent fills</h2>
-      <p class="sub" data-i="xFillsP">Settled deals with their on-chain payment references.</p>
-      <div class="feed" id="x-fills"></div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DEX TERMINAL ═══════════ -->
-  <section class="view" id="view-dex">
-    <div class="hero" style="padding:36px 0 8px">
-      <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
-      <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
-      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
-    </div>
-    <div class="dex-strip" id="dex-strip" aria-live="polite">
-      <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
-      <span><b id="dx-spread">…</b><small data-i="dxSpread">spread</small></span>
-      <span><b id="dx-height">…</b><small data-i="dxHeight">height</small></span>
-      <span><b id="dx-fills">…</b><small data-i="dxFills">fills</small></span>
-      <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
-      <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
-    </div>
-    <div class="dex-frame">
-      <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
-    </div>
-    <p style="text-align:center;margin:18px 0 0">
-      <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
-    </p>
-  </section>
-
-  <!-- ═══════════ EARN ═══════════ -->
-  <section class="view" id="view-earn">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="eTitle">Deposit and earn</h1>
-    <p class="sect-sub" data-i="eSub">Fund the network with any listed currency. Your deposit is recorded on chain, credited in SAOS at the current rate, and tracked in the open ledger.</p>
-
+    <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span data-i="home.paths">Start where you are</span></h2>
     <div class="grid g3">
-      <div class="card">
-        <h2 data-i="eHowT">How it works</h2>
-        <div class="step"><div class="n">1</div><div><b data-i="eS1T">Open a wallet</b><p data-i="eS1P">Free, takes seconds, and gives you the personal address your SAOS lands on.</p></div></div>
-        <div class="step"><div class="n">2</div><div><b data-i="eS2T">Send to a deposit address</b><p data-i="eS2P">Pick a currency below, send any amount, and keep your transaction reference.</p></div></div>
-        <div class="step"><div class="n">3</div><div><b data-i="eS3T">Get credited and follow it</b><p data-i="eS3P">The network verifies the deposit, credits SAOS at the current rate, and every step stays visible on chain.</p></div></div>
-        <div class="note honest" data-i="eHonest">Deposits fund network development. Rewards, when approved by network governance, are paid to depositor wallets and recorded in the open ledger. Nothing here is a promise of profit.</div>
-      </div>
+      <a class="pathlink" href="#/network/overview"><h4 data-i="home.p1t">I am new here</h4><p data-i="home.p1p">Give me the big picture of the network, the book, and the anchor — in numbers I can check.</p><span class="go" data-i="home.p1go">Open the network view</span></a>
+      <a class="pathlink" href="wallet.html"><h4 data-i="home.p2t">I want to use the money layer</h4><p data-i="home.p2p">Open a free wallet in seconds, exchange at network rates, and see every coin in the open ledger. Keys never leave the device.</p><span class="go" data-i="home.p2go">Open the wallet &amp; exchange</span></a>
+      <a class="pathlink" href="#/admin/command"><h4 data-i="home.p3t">I operate the network</h4><p data-i="home.p3p">Command center, mission queue, money routing, and the agent bridgehead — the sovereign control room.</p><span class="go" data-i="home.p3go">Enter the admin area</span></a>
+    </div>
+  </div>
+</section>
 
-      <div class="card">
-        <h2 data-i="eAddrT">Deposit addresses</h2>
-        <p class="sub" data-i="eAddrP">Published on chain by the network treasury.</p>
-        <div id="e-addrs"></div>
-        <div class="note" data-i="eAddrNote">Send only the currency shown next to each address. The reference of your transfer is what you paste in the claim below.</div>
-      </div>
+<!-- ═══════════════ NETWORK ═══════════════ -->
+<section class="view" id="view-network" data-console-section="network">
+  <div class="wrap">
+    <h1 class="pg" data-i="net.h">The network</h1>
+    <p class="pgsub" data-i="net.sub">The verifying layer itself: the ledger of signed claims, the checkpoints that fold it, the anchors that nail it to public chains, and the ecosystem of repositories that run it.</p>
 
-      <div class="card">
-        <h2 data-i="eClaimT">Report a deposit</h2>
-        <p class="sub" data-i="eClaimP">Tell the network what you sent. Your wallet signs the claim.</p>
-        <div class="frow">
-          <div class="field"><label class="f" data-i="eClaimCur">Currency</label><input class="mono" id="cl-cur" placeholder="USD" maxlength="10"></div>
-          <div class="field"><label class="f" data-i="eClaimAmt">Amount</label><input class="mono" id="cl-amt" placeholder="25"></div>
-        </div>
-        <div class="field"><label class="f" data-i="eClaimRef">Transaction reference</label><input class="mono" id="cl-ref" placeholder="tx hash or payment id" maxlength="90"></div>
-        <button class="btn gold" id="btn-claim" data-i="eClaimBtn">Sign claim</button>
+    <div class="subview" id="sub-network-overview">
+      <div class="grid g4">
+        <div class="card"><div class="kpi num" id="n-att">—</div><div class="kplabel" data-i="net.kAtt">Attestations</div></div>
+        <div class="card"><div class="kpi num" id="n-cp">—</div><div class="kplabel" data-i="net.kCp">Checkpoints</div></div>
+        <div class="card"><div class="kpi num" id="n-ag">—</div><div class="kplabel" data-i="net.kAg">Signed identities</div></div>
+        <div class="card"><div class="kpi num" id="n-root">—</div><div class="kplabel" data-i="net.kRoot">Merkle root (last)</div><div class="srcnote"><span class="mono" id="n-root-hex"></span></div></div>
       </div>
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg><span data-i="net.witness">The public witness</span></h2>
+      <div class="card" id="n-witness-card"><div class="skel">…</div></div>
     </div>
 
-    <div class="sect grid g2">
-      <div class="card">
-        <h2 data-i="eMineT">My deposits</h2>
-        <p class="sub" data-i="eMineP">Your claims and credits from the open ledger.</p>
-        <div id="e-mine" class="feed"></div>
-      </div>
-      <div class="card">
-        <h2 data-i="eStatsT">Network totals</h2>
-        <p class="sub" data-i="eStatsP">Everyone's deposits, credits and rewards, folded from the chain.</p>
-        <div class="grid g3" style="gap:10px">
-          <div class="kpi"><div class="k" data-i="eDepT">Deposited</div><div class="v" id="e-total-dep" style="font-size:17px">-</div></div>
-          <div class="kpi"><div class="k" data-i="eCredT">SAOS credited</div><div class="v num" id="e-total-cred" style="font-size:17px">0</div></div>
-          <div class="kpi"><div class="k" data-i="eRewT">Rewards paid</div><div class="v num" id="e-total-rew" style="font-size:17px">0</div></div>
-        </div>
-        <div class="feed" id="e-credits" style="margin-top:14px"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ CURRENCY ═══════════ -->
-  <section class="view" id="view-currency">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="cTitle">The SAOS currency</h1>
-    <p class="sect-sub" data-i="cSub">A currency you can verify line by line. Fixed rules, public state, no administrator can bend it quietly.</p>
-
-    <div class="grid g4">
-      <div class="kpi"><div class="k" data-i="cSupply">Supply</div><div class="v num" id="c-sup">126,682</div><div class="s">SAOS</div></div>
-      <div class="kpi"><div class="k" data-i="cCap">Hard cap</div><div class="v num">21,000,000</div><div class="s" data-i="cCapSub">fixed in code</div></div>
-      <div class="kpi"><div class="k" data-i="cMint">Mint state</div><div class="v" id="c-mint" style="font-size:16px">-</div><div class="s" id="c-mint-s"></div></div>
-      <div class="kpi"><div class="k" data-i="cRoot">Ledger root</div><div class="v mono" id="c-root" style="font-size:12px;word-break:break-all">-</div><div class="s" data-i="cRootSub">sha256 of the folded state</div></div>
+    <div class="subview" id="sub-network-ledger">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h9"/></svg><span data-i="net.ledger">The book of claims</span></h2>
+      <p class="pgsub" data-i="net.ledgerSub">Every entry is signed by an agent key and hash-chained to its predecessor. The mirror holds the public copy; signatures live in the sovereign book.</p>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Attestations"><thead><tr><th>#</th><th data-i="t.type">Type</th><th data-i="t.status">Status</th><th data-i="t.agent">Agent</th><th data-i="t.claim">Claim</th><th data-i="t.when">When</th></tr></thead><tbody id="net-ledger"><tr><td colspan="6" class="skel">…</td></tr></tbody></table></div></div>
     </div>
 
-    <div class="sect grid g2">
-      <div class="card">
-        <h2 data-i="cTechT">How it is built</h2>
-        <div class="step"><div class="n">1</div><div><b data-i="cT1T">Your address comes from your key</b><p data-i="cT1P">An address is a fingerprint of the public key alone. Whoever holds the key owns the address. No registry, no approval.</p></div></div>
-        <div class="step"><div class="n">2</div><div><b data-i="cT2T">The contract is code that everyone runs</b><p data-i="cT2P">Supply rules, escrow and balances are enforced by one deterministic engine that runs identically in every browser and node.</p></div></div>
-        <div class="step"><div class="n">3</div><div><b data-i="cT3T">Operations are signed, transport cannot forge</b><p data-i="cT3P">Every operation carries the owner's signature. Public relayers move bytes; they cannot change them.</p></div></div>
-        <div class="step"><div class="n">4</div><div><b data-i="cT4T">The cap is a law of the engine</b><p data-i="cT4P">21,000,000 SAOS maximum, checked at every mint by every node. Breaking it would need every verifier to agree to lie.</p></div></div>
-      </div>
-      <div class="card">
-        <h2 data-i="cHoldT">Top holders</h2>
-        <p class="sub" data-i="cHoldP">From the public balances.</p>
-        <div class="tblwrap"><table><thead><tr><th data-i="cAddr">Address</th><th data-i="cBal">SAOS</th></tr></thead><tbody id="c-holders"></tbody></table></div>
-      </div>
+    <div class="subview" id="sub-network-anchor">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8a4 4 0 100 8 4 4 0 000-8z"/><path d="M12 2v6M12 16v6"/></svg><span data-i="net.anchor">Anchor lines</span></h2>
+      <p class="pgsub" data-i="net.anchorSub">Checkpoints are anchored to public chains through a posting authority — the truth survives every sandbox. Steem line:</p>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Anchors"><thead><tr><th>CP</th><th data-i="t.txid">Transaction</th><th data-i="t.when">When</th></tr></thead><tbody id="net-anchors"><tr><td colspan="3" class="skel">…</td></tr></tbody></table></div></div>
+      <div class="note good" style="margin-top:14px" data-i="net.anchorNote">The anchor pipeline is keyless from the public side: a workflow reads the public chain and re-renders this page's status without any secret. The chain itself is the source.</div>
     </div>
 
-    <div class="card" style="margin-top:16px">
-      <h2 data-i="cFeedT">Ledger activity</h2>
-      <p class="sub" data-i="cFeedP">Every signed operation, newest first.</p>
-      <div class="feed" id="c-ops"></div>
-    </div>
-  </section>
-
-  <!-- ═══════════ TOKENS ═══════════ -->
-  <section class="view" id="view-tokens">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="tTitle">Token factory</h1>
-    <p class="sect-sub" data-i="tSub">Deploy a real smart contract: fixed parameters, signed, and verified by every node that reads the chain.</p>
-
-    <div class="grid g2">
-      <div class="card">
-        <h2 data-i="tDepT">Deploy a token</h2>
-        <p class="sub" data-i="tDepP">Choose a symbol, a name and a hard cap. The rules are set at birth and cannot be bent later.</p>
-        <div class="frow">
-          <div class="field"><label class="f" data-i="tSym">Symbol (A-Z, 3 to 8)</label><input class="mono" id="tk-symbol" placeholder="GOLD" maxlength="8"></div>
-          <div class="field" style="flex:2"><label class="f" data-i="tName">Name</label><input id="tk-name" placeholder="Golden Points" maxlength="48"></div>
-        </div>
-        <div class="frow">
-          <div class="field"><label class="f" data-i="tDec">Decimals (0-9)</label><input type="number" id="tk-dec" value="3" min="0" max="9"></div>
-          <div class="field" style="flex:2"><label class="f" data-i="tMax">Max supply (whole units)</label><input class="mono" id="tk-max" placeholder="1000000"></div>
-        </div>
-        <button class="btn gold" id="btn-deploy" data-i="tDepBtn">Sign deployment</button>
-      </div>
-      <div class="card">
-        <h2 data-i="tMintT">Mint your token</h2>
-        <p class="sub" data-i="tMintP">Only the deployer can mint, up to the cap. Everyone can check.</p>
-        <div class="frow">
-          <div class="field"><label class="f" data-i="tMSym">Token</label><select id="mint-symbol"></select></div>
-          <div class="field" style="flex:2"><label class="f" data-i="tMTo">To address (saos1...)</label><input class="mono" id="mint-to" placeholder="saos1..."></div>
-          <div class="field"><label class="f" data-i="tMAmt">Amount (whole units)</label><input class="mono" id="mint-amount" placeholder="100"></div>
-        </div>
-        <button class="btn gold" id="btn-mint" data-i="tMintBtn">Sign mint</button>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px">
-      <h2 data-i="tListT">Contracts on chain</h2>
-      <p class="sub" data-i="tListP">Every token is a signed contract with a public state.</p>
-      <div class="tblwrap"><table><thead><tr><th data-i="tLSym">Symbol</th><th data-i="tLName">Name</th><th data-i="tLSup">Supply</th><th data-i="tLMax">Max</th><th data-i="tLIss">Issuer</th><th data-i="tLHold">Holders</th></tr></thead><tbody id="tokens-table"></tbody></table></div>
-    </div>
-  </section>
-
-  <!-- ═══════════ NETWORK ═══════════ -->
-  <section class="view" id="view-network">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="nTitle">Network</h1>
-    <p class="sect-sub" data-i="nSub">A validation network that runs on public chains and publishes its own proof of life.</p>
-
-    <div class="grid g4">
-      <div class="kpi"><div class="k" data-i="nAtt">Validations</div><div class="v num" id="n-att">0</div><div class="s" data-i="nAttS">signed attestations</div></div>
-      <div class="kpi"><div class="k" data-i="nCp">Checkpoints</div><div class="v num" id="n-cp">0</div><div class="s" data-i="nCpS">merkle roots</div></div>
-      <div class="kpi"><div class="k" data-i="nAnch">Anchors</div><div class="v num" id="n-anch">0</div><div class="s" data-i="nAnchS">on public chains</div></div>
-      <div class="kpi"><div class="k" data-i="nTest">Engine self-test</div><div class="v" id="selftest-badge" style="font-size:15px">...</div><div class="s" data-i="nTestS">runs on page load</div></div>
-    </div>
-
-    <div class="sect card">
-      <h2 data-i="nVerifyT">Check everything yourself</h2>
-      <p class="sub" data-i="nVerifyP">Your browser reads every operation from the public chain, checks every signature, folds the ledger and compares the root with what this site shows. No trust required.</p>
-      <button class="btn gold" id="btn-verify-chain" data-i="nVerifyBtn">Verify the ledger now</button>
-      <div class="hint" id="verify-chain-result" style="margin-top:12px;font-size:13px"></div>
-    </div>
-
-    <div class="sect grid g2">
-      <div class="card">
-        <h2 data-i="nFeedT">Validation feed</h2>
-        <p class="sub" data-i="nFeedP">What the network attested, newest first.</p>
-        <div class="feed" id="n-atts"></div>
-      </div>
-      <div class="card">
-        <h2 data-i="nCpsT">Checkpoints and witnesses</h2>
-        <p class="sub" data-i="nCpsP">Each checkpoint is a merkle root over a range of attestations.</p>
-        <div class="feed"><div class="tblwrap" style="border:none"><table style="min-width:0"><thead><tr><th>#</th><th data-i="nRoot">Root</th><th data-i="nWhen">When</th><th data-i="nSeen">Seen on</th></tr></thead><tbody id="n-cps"></tbody></table></div></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px">
-      <h2 data-i="nAnchT">Recent anchors</h2>
-      <p class="sub" data-i="nAnchP">Checkpoints written to public chains as permanent witnesses.</p>
+    <div class="subview" id="sub-network-ecosystem">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-i="net.eco">The ecosystem</span></h2>
       <div class="grid g2">
-        <div><div style="font-size:12px;color:var(--faint);margin-bottom:8px">Steem</div><div class="feed" id="n-anch-steem"></div></div>
-        <div><div style="font-size:12px;color:var(--faint);margin-bottom:8px">Z Chain (zero gas EVM)</div><div class="feed" id="n-anch-zero"></div></div>
+        <div class="card"><h3 style="font-size:15px;margin-bottom:10px" data-i="net.ecoActive">Repositories with live agents</h3><ul class="clean" id="eco-active"><li class="skel">…</li></ul></div>
+        <div class="card"><h3 style="font-size:15px;margin-bottom:10px" data-i="net.ecoIdle">Quiet repositories</h3><ul class="clean" id="eco-idle"><li class="skel">…</li></ul></div>
+      </div>
+      <div class="tblwrap" style="margin-top:14px"><div class="tblscroll"><table aria-label="Repositories"><thead><tr><th data-i="t.repo">Repository</th><th data-i="t.pushed">Last push</th><th data-i="t.visibility">Visibility</th></tr></thead><tbody id="eco-repos"><tr><td colspan="3" class="skel">…</td></tr></tbody></table></div></div>
+      <div class="srcnote" id="eco-src"></div>
+    </div>
+
+    <div class="subview" id="sub-network-plan">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg><span data-i="net.plan">Open loops and gates</span></h2>
+      <p class="pgsub" data-i="net.planSub">The live mission queue the agents work from — read straight from the bridgehead. Priorities: P0 urgent, P1 important, P2 background, P3 optional.</p>
+      <div id="plan-list"><div class="skel">…</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ AGENTS ═══════════════ -->
+<section class="view" id="view-agents" data-console-section="agents">
+  <div class="wrap">
+    <h1 class="pg" data-i="ag.h">The agents</h1>
+    <p class="pgsub" data-i="ag.sub">A fleet of cloud agents runs the network around the clock — each with a defined role, input, and output, and a measured success rate. They live in GitHub Actions, so they never depend on any single sandbox.</p>
+
+    <div class="subview" id="sub-agents-fleet">
+      <div class="grid g3" id="fleet-live">
+        <div class="card"><div class="skel">…</div></div>
+      </div>
+      <div class="srcnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg><span data-i="ag.fleetSrc">Registry refreshed hourly by the agents-watch workflow — straight from the GitHub API.</span></div>
+    </div>
+
+    <div class="subview" id="sub-agents-ids">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><span data-i="ag.ids">Signed identities in the book</span></h2>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Identities"><thead><tr><th data-i="t.name">Name</th><th data-i="t.role">Role</th><th data-i="t.status">Status</th><th data-i="t.address">EVM address</th><th data-i="t.atts">Attestations</th><th data-i="t.last">Last attestation</th></tr></thead><tbody id="ag-ids"><tr><td colspan="6" class="skel">…</td></tr></tbody></table></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ EXCHANGE ═══════════════ -->
+<section class="view" id="view-exchange" data-console-section="exchange">
+  <div class="wrap">
+    <h1 class="pg" data-i="ex.h">The exchange</h1>
+    <p class="pgsub" data-i="ex.sub">The money layer: a live DEX mirrored from the cloud, a truth market settled by measurement, and the full wallet terminal — every coin visible in the open ledger.</p>
+
+    <div class="subview" id="sub-exchange-terminal">
+      <div class="grid g4">
+        <div class="card"><div class="kpi num" id="dx-price">—</div><div class="kplabel">SAOS/USDS fair</div></div>
+        <div class="card"><div class="kpi num" id="dx-spread">—</div><div class="kplabel" data-i="ex.spread">Spread</div></div>
+        <div class="card"><div class="kpi num" id="dx-height">—</div><div class="kplabel" data-i="ex.height">DEX height</div></div>
+        <div class="card"><div class="kpi num" id="dx-fills">—</div><div class="kplabel" data-i="ex.fills">Fills</div></div>
+      </div>
+      <div class="card" style="margin-top:14px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div>
+          <h3 style="font-size:16px;margin-bottom:5px" data-i="ex.openWallet">The full terminal lives in the wallet app</h3>
+          <p style="color:var(--dim);font-size:13.5px;line-height:1.6" data-i="ex.openWalletSub">Free wallet, exchange at network rates, deposits and earn — keys generated on your device and never sent anywhere.</p>
+        </div>
+        <a class="btn" href="wallet.html" style="flex:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <span data-i="ex.openBtn">Open the wallet &amp; exchange</span></a>
+      </div>
+      <div class="srcnote" id="dx-src"></div>
+    </div>
+
+    <div class="subview" id="sub-exchange-market">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><span data-i="ex.market">The truth market</span></h2>
+      <p class="pgsub" data-i="ex.marketSub">Claims are staked on, and settled only by measurement — the market's whole history is part of the ledger.</p>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Market operations"><thead><tr><th>#</th><th data-i="t.kind">Kind</th><th data-i="t.summary">Summary</th><th data-i="t.when">When</th></tr></thead><tbody id="ex-market"><tr><td colspan="4" class="skel">…</td></tr></tbody></table></div></div>
+    </div>
+
+    <div class="subview" id="sub-exchange-holdings">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m-9 9a9 9 0 019-9"/><circle cx="12" cy="12" r="3"/></svg><span data-i="ex.holdings">The live ledger</span></h2>
+      <div class="grid g4">
+        <div class="card"><div class="kpi num" id="hold-wallets">—</div><div class="kplabel" data-i="ex.kWallets">Wallets on chain</div></div>
+        <div class="card"><div class="kpi num" id="hold-ops">—</div><div class="kplabel" data-i="ex.kOps">Operations</div></div>
+        <div class="card"><div class="kpi num" id="hold-supply">—</div><div class="kplabel" data-i="ex.kSupply">SAOS supply</div></div>
+        <div class="card"><div class="kpi mono" id="hold-root" style="font-size:14px;word-break:break-all">—</div><div class="kplabel" data-i="ex.kRoot">State root</div></div>
+      </div>
+      <div class="note" style="margin-top:14px" data-i="ex.holdNote">The sovereign live ledger is mirrored to the cloud by the saos-live workflow. Genesis mints mirror the verified SAOS-NET v0 supply one-to-one — no promise of profit is made or implied.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ KNOWLEDGE ═══════════════ -->
+<section class="view" id="view-knowledge" data-console-section="knowledge">
+  <div class="wrap">
+    <h1 class="pg" data-i="kn.h">Knowledge</h1>
+    <p class="pgsub" data-i="kn.sub">The doctrine, the brain, and the design decisions — why this network is built the way it is, and what it has learned.</p>
+
+    <div class="subview" id="sub-knowledge-brain">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3a3 3 0 00-3 3 3 3 0 00-1 5.8V15a4 4 0 004 4h1a2 2 0 002-2V5a2 2 0 00-2-2z"/><path d="M15 3a3 3 0 013 3 3 3 0 011 5.8V15a4 4 0 01-4 4h-1"/></svg><span data-i="kn.brain">The brain</span></h2>
+      <p class="pgsub" data-i="kn.brainSub">Long-lived memory fingerprints the network keeps verifying — knowledge that survives every sandbox reset.</p>
+      <div class="grid g3" id="kn-brain"><div class="card"><div class="skel">…</div></div></div>
+    </div>
+
+    <div class="subview" id="sub-knowledge-sovereignty">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="kn.sov">Sovereignty by design</span></h2>
+      <ul class="clean">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span data-i="kn.sov1">Cloud truth first: every page here reads the public mirrors and the public chains — not any private server. A sandbox can die; the network keeps serving.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span data-i="kn.sov2">Zero secrets in public: the public repo and its workflows run on their own token only. No private key ever crosses to the console.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span data-i="kn.sov3">The agent bridgehead: the state, the handoff protocol, and the request ledger live in the public repo — so any agent, in any new session, resumes exactly where the last one stopped.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span data-i="kn.sov4">The network verifies the agent: delivery is measured at the public URL by an independent workflow — claims that are not delivered simply fail in public.</span></li>
+      </ul>
+      <div class="grid g3" style="margin-top:16px">
+        <a class="pathlink" href="net.html"><h4 data-i="kn.netPage">The network page</h4><p data-i="kn.netPageSub">The verification walk-through of the chain of truth.</p><span class="go" data-i="t.open">Open</span></a>
+        <a class="pathlink" href="gate.html"><h4 data-i="kn.gatePage">The gate</h4><p data-i="kn.gatePageSub">The threshold between LOCAL and REAL — the anchored truth.</p><span class="go" data-i="t.open">Open</span></a>
+        <a class="pathlink" href="acid.html"><h4 data-i="kn.acidPage">The ACID test</h4><p data-i="kn.acidPageSub">Hard properties of the ledger — measured, not promised.</p><span class="go" data-i="t.open">Open</span></a>
       </div>
     </div>
-  </section>
 
-</div>
+    <div class="subview" id="sub-knowledge-evolution">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg><span data-i="kn.evo">Evolution</span></h2>
+      <p class="pgsub" data-i="kn.evoSub">Measured discoveries and capacity milestones on the road to a self-improving network.</p>
+      <div id="kn-evo"><div class="skel">…</div></div>
+    </div>
+
+    <div class="subview" id="sub-knowledge-doctrine">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg><span data-i="kn.doc">The doctrine</span></h2>
+      <ul class="clean">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="kn.doc1"><b>No claim without measurement.</b> An assertion that is not measured is noise, whatever machine produced it.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="kn.doc2"><b>The network outlives any sandbox.</b> Truth lives in the cloud and on public chains — never in a single machine.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="kn.doc3"><b>Zero secrets in public.</b> The public side runs keyless or on its own token; private keys never leave the sovereign side.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="kn.doc4"><b>Honest failure beats decorated success.</b> A red mark that is true is worth more than a green mark that is painted.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="kn.doc5"><b>No custody, no lies about money.</b> Keys stay with their owners; deposits are recorded in the open ledger; no promise of profit.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg><span data-i="kn.doc6"><b>Autonomy with safety.</b> Agents push forward by themselves — within published laws that keep the platform and the public safe.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ADMIN ═══════════════ -->
+<section class="view" id="view-admin" data-console-section="admin">
+  <div class="wrap admin-area">
+    <h1 class="pg" data-i="ad.h">Admin — the sovereign control room</h1>
+    <p class="pgsub" data-i="ad.sub">The operator's personal area: the agent bridgehead, the mission queue, the money routing plan, and the independent verification of delivery. View-only from the public side — actions run from the sovereign console or the repository's Actions tab.</p>
+
+    <div class="subview" id="sub-admin-command">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 17l-3 3v-11h6l4-6v14l-4-6h-3z"/><path d="M17 8a5 5 0 010 8"/></svg><span data-i="ad.cmd">The bridgehead</span></h2>
+      <p class="pgsub" data-i="ad.cmdSub">The agent's own position, live from the public repo — the same state any future agent reads to resume the work. This is how the work survives every sandbox and every session.</p>
+      <div class="grid g2" id="ad-state"><div class="card"><div class="skel">…</div></div></div>
+      <div class="note good" style="margin-top:14px" data-i="ad.cmdNote">Continuity protocol: any agent in any new session fetches this state plus the handoff document and resumes — no dependence on any sandbox, conversation, or specific agent identity.</div>
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8V4H8"/><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z"/></svg><span data-i="ad.recentRuns">Recent cloud runs</span></h2>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Workflow runs"><thead><tr><th data-i="t.workflow">Workflow</th><th data-i="t.status">Status</th><th data-i="t.when">When</th><th></th></tr></thead><tbody id="ad-runs"><tr><td colspan="4" class="skel">…</td></tr></tbody></table></div></div>
+      <div class="srcnote" id="ad-runs-src"></div>
+    </div>
+
+    <div class="subview" id="sub-admin-missions">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg><span data-i="ad.missions">Missions and money</span></h2>
+      <div id="ad-missions"><div class="skel">…</div></div>
+    </div>
+
+    <div class="subview" id="sub-admin-server">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span data-i="ad.server">Server and sync</span></h2>
+      <p class="pgsub" data-i="ad.serverSub">The cloud is the primary: 14 repositories, their last pushes, and the run history — all read live from the public API.</p>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Repositories state"><thead><tr><th data-i="t.repo">Repository</th><th data-i="t.pushed">Last push</th><th data-i="t.updated">Console mirror age</th></tr></thead><tbody id="ad-repos"><tr><td colspan="3" class="skel">…</td></tr></tbody></table></div></div>
+      <div class="srcnote" id="ad-repos-src"></div>
+    </div>
+
+    <div class="subview" id="sub-admin-verify">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7z"/><path d="M9 12l2 2 4-4" stroke-linejoin="round"/></svg><span data-i="ad.verify">The network's verdict on the agent</span></h2>
+      <p class="pgsub" data-i="ad.verifySub">An independent workflow measures the delivery itself — at this public URL, on a schedule, with results committed to the repo. Training loop: request, build, the network measures, the result is public.</p>
+      <div class="verify-results" id="ad-verify"><div class="card"><div class="skel">…</div></div></div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site">
-  <div class="wrap">
-    <span>© <span id="year">2026</span> SAOS Network</span>
-    <span><a href="#network" data-i="fVerify">Verify independently</a> · <a href="#currency" data-i="fCurrency">The currency</a> · <a href="#wallet" data-i="fWallet">Open a wallet</a></span>
+  <div class="wrap pb">
+    <div class="fgrid">
+      <div>
+        <div class="brand" style="cursor:default">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
+          <div><b>SAOS</b><small data-i="brandSub">The Verifying Network</small></div>
+        </div>
+        <p style="color:var(--faint);font-size:12.5px;margin-top:12px;max-width:300px;line-height:1.6" data-i="f.about">Agents that prove their work: measured, signed, anchored on public chains. A claim without measurement is noise.</p>
+      </div>
+      <div>
+        <h5 data-i="f.explore">Explore</h5>
+        <a href="#/network/overview" data-i="navNetwork">Network</a>
+        <a href="#/agents/fleet" data-i="navAgents">Agents</a>
+        <a href="#/knowledge/doctrine" data-i="kn.doc">Doctrine</a>
+        <a href="#/admin/command" data-i="navAdmin">Admin</a>
+      </div>
+      <div>
+        <h5 data-i="f.tools">Tools</h5>
+        <a href="wallet.html" data-i="f.wallet">Wallet &amp; exchange</a>
+        <a href="net.html" data-i="kn.netPage">The network page</a>
+        <a href="gate.html" data-i="kn.gatePage">The gate</a>
+        <a href="acid.html" data-i="kn.acidPage">The ACID test</a>
+      </div>
+      <div>
+        <h5 data-i="f.truth">Source of truth</h5>
+        <a href="status.json">status.json</a>
+        <a href="mirror.json">mirror.json</a>
+        <a href="agents/registry.json">agents/registry.json</a>
+        <a href="agent/state.json">agent/state.json</a>
+      </div>
+    </div>
+    <div class="fbot">
+      <span>SAOS Network · <span id="year"></span></span>
+      <span data-i="f.motto">No claim without measurement.</span>
+    </div>
   </div>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="gate-crypto.js"></script>
-<script type="module">
-import * as SL from "./saos-live.js";
-const C = globalThis.GateCrypto;
-
+<script>
+"use strict";
 /* ═══════════ i18n ═══════════ */
+let LANG = "en";
 const I18N = {
 en: {
-  brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
-  navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
-  navDex:"DEX",
-  dexChip:"the network's own exchange terminal",
-  dexTitle:"Sovereign DEX", dexGrad:"Terminal",
-  dexLead:"The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.",
-  dxSpread:"spread", dxHeight:"height", dxFills:"fills", dxPools:"pools", dxAge:"data age",
-  dexOpen:"Open full terminal",
-  chipLive:"live on a public blockchain",
-  heroTop:"Your money.", heroGrad:"Your network.", heroBottom:"SAOS.",
-  heroLead:"Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.",
-  ctaWallet:"Open a free wallet", ctaExchange:"See the exchange",
-  kSupply:"SAOS supply", kSupplySub:"hard cap 21,000,000", kWallets:"Wallets on chain", kWalletsSub:"personal addresses",
-  kContracts:"Token contracts", kContractsSub:"real on-chain contracts", kValidations:"Network validations",
-  featTitle:"What you can do here", featSub:"Everything runs from public connections. This page is itself a network node.",
-  feat1T:"Free wallet", feat1P:"Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.",
-  feat2T:"Exchange", feat2P:"Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.",
-  feat3T:"Deposit and earn", feat3P:"Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.",
-  feat4T:"Launch tokens", feat4P:"Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.",
-  trustTitle:"Numbers you can check", trustSub:"Every figure on this page is read live from a public blockchain. Nothing is copy pasted from reports.",
-  trust1T:"The ledger is public", trust1P:"All wallets, balances, deposits and offers live as signed operations on a public chain that anyone can read.",
-  trust2T:"Your browser is the node", trust2P:"This page folds the ledger by itself and compares the result with what is published. One press, no trust needed.",
-  trust3T:"Signatures decide", trust3P:"Only the holder of a key can move its balance. The transport cannot forge, and every node re-checks every signature.",
-  trustCta:"Verify it yourself",
-  feedTitle:"Recent activity", feedSub:"Signed operations as the network folded them.",
-  faqTitle:"Questions people ask",
-  faq1Q:"How do I open a SAOS wallet?", faq1A:"Press Open a free wallet, then Create. Your key is generated on your device and your address is derived from it. Nothing is sent to a server and no account is needed.",
-  faq2Q:"Who holds my keys?", faq2A:"Only you. Keys are generated in your browser and stay in memory. You can save an encrypted backup with a password you choose. There is no recovery and no custody.",
-  faq3Q:"How can I check the numbers myself?", faq3A:"The whole ledger is public. Press Verify in the Network page and your browser reads every operation from the public chain, checks every signature and compares the result with what this site shows.",
-  faq4Q:"What do deposits do?", faq4A:"Deposits fund network development and are converted to SAOS at the current network rate. Every deposit, credit and reward is recorded in the open ledger. No promise of profit is made or implied.",
-  wTitle:"Your wallet", wSub:"A personal SAOS address that belongs to the key on your device. Register it once and the whole network can see it.",
-  wNewT:"Create a new wallet", wNewP:"A fresh key is generated with the browser's secure random generator. It never leaves this tab's memory.",
-  wNewBtn:"Create wallet", wNewNote:"Write the key down or save the encrypted backup. If it is lost, the wallet is lost. There is no reset.",
-  wImpT:"Restore a backup", wImpP:"Load an encrypted backup file (saos-keystore). The password opens it locally.", wImpBtn:"Choose backup file",
-  wAddrT:"Your address", copy:"Copy", wWifT:"Your private key (shown once)",
-  wBackup:"Save encrypted backup", wLock:"Clear from memory",
-  wBalT:"Balances", wBalP:"As folded from the public chain.",
-  wNick:"Display name (optional)", wRegBtn:"Register on chain",
-  wSendT:"Send", wSendP:"Signed on your device, broadcast as a public operation.",
-  wSendSym:"Currency", wSendTo:"Recipient address (saos1...)", wSendAmt:"Amount", wSendBtn:"Sign transfer",
-  wQueueT:"Signed operations queue", wQueueP:"Signed and waiting. Copy them for the network, or broadcast below.", wQueueCopy:"Copy signed JSON",
-  wRelayT:"Broadcast", wRelayP:"A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.",
-  wRelayAcc:"Steem account", wRelayWif:"Posting key (WIF)", wRelayBtn:"Broadcast queue",
-  xTitle:"Exchange", xSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
-  xRatesT:"Network rates", xRatesP:"Reference rates published on chain by network governance.",
-  xPair:"Pair", xPrice:"Price",
-  xRatesNote:"Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.",
-  xOfferT:"Place a sell offer", xOfferP:"Your SAOS moves into escrow the moment the offer lands on chain.",
-  xCur:"Currency you accept", xAmt:"Amount (SAOS)", xPricePer:"Price per 1 SAOS", xOfferBtn:"Sign offer",
-  xOfferNote:"Settlement of the currency side is recorded by the network treasury with a payment reference. Both sides stay visible on chain.",
-  xBookT:"Open offers", xBookP:"Escrowed SAOS for sale right now.",
-  xSell:"Seller", xGet:"You pay", xRemain:"SAOS remaining", xPrice2:"Price / SAOS",
-  xMineT:"My offers", xMineP:"Open a wallet to see and manage your offers here.",
-  xFillsT:"Recent fills", xFillsP:"Settled deals with their on-chain payment references.",
-  eTitle:"Deposit and earn", eSub:"Fund the network with any listed currency. Your deposit is recorded on chain, credited in SAOS at the current rate, and tracked in the open ledger.",
-  eHowT:"How it works",
-  eS1T:"Open a wallet", eS1P:"Free, takes seconds, and gives you the personal address your SAOS lands on.",
-  eS2T:"Send to a deposit address", eS2P:"Pick a currency below, send any amount, and keep your transaction reference.",
-  eS3T:"Get credited and follow it", eS3P:"The network verifies the deposit, credits SAOS at the current rate, and every step stays visible on chain.",
-  eHonest:"Deposits fund network development. Rewards, when approved by network governance, are paid to depositor wallets and recorded in the open ledger. Nothing here is a promise of profit.",
-  eAddrT:"Deposit addresses", eAddrP:"Published on chain by the network treasury.",
-  eAddrNote:"Send only the currency shown next to each address. The reference of your transfer is what you paste in the claim below.",
-  eClaimT:"Report a deposit", eClaimP:"Tell the network what you sent. Your wallet signs the claim.",
-  eClaimCur:"Currency", eClaimAmt:"Amount", eClaimRef:"Transaction reference", eClaimBtn:"Sign claim",
-  eMineT:"My deposits", eMineP:"Your claims and credits from the open ledger.",
-  eStatsT:"Network totals", eStatsP:"Everyone's deposits, credits and rewards, folded from the chain.",
-  eDepT:"Deposited", eCredT:"SAOS credited", eRewT:"Rewards paid",
-  cTitle:"The SAOS currency", cSub:"A currency you can verify line by line. Fixed rules, public state, no administrator can bend it quietly.",
-  cSupply:"Supply", cCap:"Hard cap", cCapSub:"fixed in code", cMint:"Mint state", cRoot:"Ledger root", cRootSub:"sha256 of the folded state",
-  cTechT:"How it is built",
-  cT1T:"Your address comes from your key", cT1P:"An address is a fingerprint of the public key alone. Whoever holds the key owns the address. No registry, no approval.",
-  cT2T:"The contract is code that everyone runs", cT2P:"Supply rules, escrow and balances are enforced by one deterministic engine that runs identically in every browser and node.",
-  cT3T:"Operations are signed, transport cannot forge", cT3P:"Every operation carries the owner's signature. Public relayers move bytes; they cannot change them.",
-  cT4T:"The cap is a law of the engine", cT4P:"21,000,000 SAOS maximum, checked at every mint by every node. Breaking it would need every verifier to agree to lie.",
-  cHoldT:"Top holders", cHoldP:"From the public balances.", cAddr:"Address", cBal:"SAOS",
-  cFeedT:"Ledger activity", cFeedP:"Every signed operation, newest first.",
-  tTitle:"Token factory", tSub:"Deploy a real smart contract: fixed parameters, signed, and verified by every node that reads the chain.",
-  tDepT:"Deploy a token", tDepP:"Choose a symbol, a name and a hard cap. The rules are set at birth and cannot be bent later.",
-  tSym:"Symbol (A-Z, 3 to 8)", tName:"Name", tDec:"Decimals (0-9)", tMax:"Max supply (whole units)", tDepBtn:"Sign deployment",
-  tMintT:"Mint your token", tMintP:"Only the deployer can mint, up to the cap. Everyone can check.",
-  tMSym:"Token", tMTo:"To address (saos1...)", tMAmt:"Amount (whole units)", tMintBtn:"Sign mint",
-  tListT:"Contracts on chain", tListP:"Every token is a signed contract with a public state.",
-  tLSym:"Symbol", tLName:"Name", tLSup:"Supply", tLMax:"Max", tLIss:"Issuer", tLHold:"Holders",
-  nTitle:"Network", nSub:"A validation network that runs on public chains and publishes its own proof of life.",
-  nAtt:"Validations", nAttS:"signed attestations", nCp:"Checkpoints", nCpS:"merkle roots",
-  nAnch:"Anchors", nAnchS:"on public chains", nTest:"Engine self-test", nTestS:"runs on page load",
-  nVerifyT:"Check everything yourself", nVerifyP:"Your browser reads every operation from the public chain, checks every signature, folds the ledger and compares the root with what this site shows. No trust required.",
-  nVerifyBtn:"Verify the ledger now",
-  nFeedT:"Validation feed", nFeedP:"What the network attested, newest first.",
-  nCpsT:"Checkpoints and witnesses", nCpsP:"Each checkpoint is a merkle root over a range of attestations.",
-  nRoot:"Root", nWhen:"When", nSeen:"Seen on",
-  nAnchT:"Recent anchors", nAnchP:"Checkpoints written to public chains as permanent witnesses.",
-  fVerify:"Verify independently", fCurrency:"The currency", fWallet:"Open a wallet",
-  tOk:{ walletBorn:"New wallet born on your device", wiped:"Wallet cleared from memory", backup:"Encrypted backup downloaded",
-    restored:"Wallet restored", signed:"Signed and added to the queue", broadcast:n=>n+" operations broadcast to the chain",
-    copied:"Copied", registered:"Registration signed and queued", needWallet:"Open or restore a wallet first",
-    claimSigned:"Deposit claim signed and queued", offerSigned:"Sell offer signed and queued", cancelSigned:"Cancel signed and queued" },
-  tErr:{ create:"Wallet creation failed: ", import:"Restore failed: ", sign:"Signing failed: ", badAddr:"Not a valid SAOS address (saos1...)",
-    badAmt:"Invalid amount", badPrice:"Invalid price", badCur:"Currency symbol: 2 to 10 capital letters", badRef:"Reference: 6 to 90 characters",
-    noSymbol:"Pick a currency", emptyQueue:"The queue is empty", relayFail:"Broadcast failed: ", noToken:"No token selected", badSym:"Symbol: capital A-Z, 3 to 8 characters" },
-  status:{ registered:"Registered on chain", pendingReg:"Waiting for registration on chain", treasury:"Network treasury" },
-  empty:{ ops:"No operations yet. The first ones will appear here.", offers:"No open offers yet.", mine:"Open a wallet to see your offers.",
-    addrs:"No deposit addresses published yet. They appear here the moment the treasury publishes them.",
-    claims:"No deposits yet. Yours will show up here.", cred:"No credits yet.", holders:"The ledger is being born. Holders will appear here.",
-    tokens:"No token contracts yet. SAOS deploys with the genesis.", cps:"No checkpoints yet.", anch:"No anchors yet.",
-    atts:"No attestations in the mirror yet." },
-  misc:{ chainLive:(b,m)=>"live · block "+b+" · "+m+" min ago", chainDown:"chain: RPC not answering", you:"you", escrow:"escrow",
-    fillOf:"fill", genesisSoon:"ledger genesis: the network is laying it now, numbers appear when it lands",
-    agoNow:"just now", agoMin:n=>n+" min ago", agoH:n=>n+" h ago", agoD:n=>n+" d ago", never:"never",
-    deposited:"deposited", credited:"credited", rewards:"reward", myAddr:"my address", cancel:"cancel", page:"page" },
+  brandSub:"The Verifying Network", navHome:"Home", navNetwork:"Network", navAgents:"Agents", navExchange:"Exchange", navKnowledge:"Knowledge", navAdmin:"Admin",
+  "hero.eyebrow":"THE VERIFYING NETWORK",
+  "hero.h1":'AI agents that <em>prove</em> their own work.',
+  "hero.lead":"Agents work around the clock — and every claim they make is measured, signed, and anchored on public chains. Anyone can verify. No one has to trust.",
+  "hero.ctaVerify":"See the live truth", "hero.ctaWallet":"Open wallet & exchange",
+  "home.now":"What is happening right now", "home.kWitness":"Heartbeat witness", "home.kAtt":"Signed attestations", "home.kFleet":"Cloud agents alive", "home.kBrain":"Live brain keys",
+  "home.how":"How it works",
+  "home.s1t":"Agents work and sign", "home.s1p":"Every operation an agent performs is signed with its own EVM key and chained to the previous one by hash. Nothing an agent did exists without a signature.",
+  "home.s2t":"The network measures", "home.s2p":"Checkpoints fold the ledger into a Merkle root, and the root is anchored on public chains (Steem). The witness line is public — outside any private server.",
+  "home.s3t":"Anyone verifies", "home.s3p":"This console reads only public mirrors. Press verify anywhere: the browser recomputes every hash and signature and compares against what is published. No trust needed.",
+  "home.why":"Why it exists",
+  "home.law":'The law: <em>a claim without measurement is noise.</em> AI systems tell stories — this network proves them. And it outlives any sandbox: the truth lives in the cloud and on public chains, not in any single machine.',
+  "home.beats":"Latest heartbeats",
+  "home.paths":"Start where you are",
+  "home.p1t":"I am new here", "home.p1p":"Give me the big picture of the network, the book, and the anchor — in numbers I can check.", "home.p1go":"Open the network view",
+  "home.p2t":"I want to use the money layer", "home.p2p":"Open a free wallet in seconds, exchange at network rates, and see every coin in the open ledger. Keys never leave the device.", "home.p2go":"Open the wallet & exchange",
+  "home.p3t":"I operate the network", "home.p3p":"Command center, mission queue, money routing, and the agent bridgehead — the sovereign control room.", "home.p3go":"Enter the admin area",
+  "net.h":"The network", "net.sub":"The verifying layer itself: the ledger of signed claims, the checkpoints that fold it, the anchors that nail it to public chains, and the ecosystem of repositories that run it.",
+  "net.kAtt":"Attestations", "net.kCp":"Checkpoints", "net.kAg":"Signed identities", "net.kRoot":"Merkle root (last)",
+  "net.witness":"The public witness", "net.ledger":"The book of claims",
+  "net.ledgerSub":"Every entry is signed by an agent key and hash-chained to its predecessor. The mirror holds the public copy; signatures live in the sovereign book.",
+  "net.anchor":"Anchor lines", "net.anchorSub":"Checkpoints are anchored to public chains through a posting authority — the truth survives every sandbox. Steem line:",
+  "net.anchorNote":"The anchor pipeline is keyless from the public side: a workflow reads the public chain and re-renders this page's status without any secret. The chain itself is the source.",
+  "net.eco":"The ecosystem", "net.ecoActive":"Repositories with live agents", "net.ecoIdle":"Quiet repositories",
+  "net.plan":"Open loops and gates", "net.planSub":"The live mission queue the agents work from — read straight from the bridgehead. Priorities: P0 urgent, P1 important, P2 background, P3 optional.",
+  "ag.h":"The agents", "ag.sub":"A fleet of cloud agents runs the network around the clock — each with a defined role, input, and output, and a measured success rate. They live in GitHub Actions, so they never depend on any single sandbox.",
+  "ag.fleetSrc":"Registry refreshed hourly by the agents-watch workflow — straight from the GitHub API.",
+  "ag.ids":"Signed identities in the book",
+  "ex.h":"The exchange", "ex.sub":"The money layer: a live DEX mirrored from the cloud, a truth market settled by measurement, and the full wallet terminal — every coin visible in the open ledger.",
+  "ex.spread":"Spread", "ex.height":"DEX height", "ex.fills":"Fills",
+  "ex.openWallet":"The full terminal lives in the wallet app", "ex.openWalletSub":"Free wallet, exchange at network rates, deposits and earn — keys generated on your device and never sent anywhere.",
+  "ex.openBtn":"Open the wallet & exchange",
+  "ex.market":"The truth market", "ex.marketSub":"Claims are staked on, and settled only by measurement — the market's whole history is part of the ledger.",
+  "ex.holdings":"The live ledger", "ex.kWallets":"Wallets on chain", "ex.kOps":"Operations", "ex.kSupply":"SAOS supply", "ex.kRoot":"State root",
+  "ex.holdNote":"The sovereign live ledger is mirrored to the cloud by the saos-live workflow. Genesis mints mirror the verified SAOS-NET v0 supply one-to-one — no promise of profit is made or implied.",
+  "kn.h":"Knowledge", "kn.sub":"The doctrine, the brain, and the design decisions — why this network is built the way it is, and what it has learned.",
+  "kn.brain":"The brain", "kn.brainSub":"Long-lived memory fingerprints the network keeps verifying — knowledge that survives every sandbox reset.",
+  "kn.sov":"Sovereignty by design",
+  "kn.sov1":"Cloud truth first: every page here reads the public mirrors and the public chains — not any private server. A sandbox can die; the network keeps serving.",
+  "kn.sov2":"Zero secrets in public: the public repo and its workflows run on their own token only. No private key ever crosses to the console.",
+  "kn.sov3":"The agent bridgehead: the state, the handoff protocol, and the request ledger live in the public repo — so any agent, in any new session, resumes exactly where the last one stopped.",
+  "kn.sov4":"The network verifies the agent: delivery is measured at the public URL by an independent workflow — claims that are not delivered simply fail in public.",
+  "kn.netPage":"The network page", "kn.netPageSub":"The verification walk-through of the chain of truth.",
+  "kn.gatePage":"The gate", "kn.gatePageSub":"The threshold between LOCAL and REAL — the anchored truth.",
+  "kn.acidPage":"The ACID test", "kn.acidPageSub":"Hard properties of the ledger — measured, not promised.",
+  "kn.evo":"Evolution", "kn.evoSub":"Measured discoveries and capacity milestones on the road to a self-improving network.",
+  "kn.doc":"The doctrine",
+  "kn.doc1":"<b>No claim without measurement.</b> An assertion that is not measured is noise, whatever machine produced it.",
+  "kn.doc2":"<b>The network outlives any sandbox.</b> Truth lives in the cloud and on public chains — never in a single machine.",
+  "kn.doc3":"<b>Zero secrets in public.</b> The public side runs keyless or on its own token; private keys never leave the sovereign side.",
+  "kn.doc4":"<b>Honest failure beats decorated success.</b> A red mark that is true is worth more than a green mark that is painted.",
+  "kn.doc5":"<b>No custody, no lies about money.</b> Keys stay with their owners; deposits are recorded in the open ledger; no promise of profit.",
+  "kn.doc6":"<b>Autonomy with safety.</b> Agents push forward by themselves — within published laws that keep the platform and the public safe.",
+  "ad.h":"Admin — the sovereign control room",
+  "ad.sub":"The operator's personal area: the agent bridgehead, the mission queue, the money routing plan, and the independent verification of delivery. View-only from the public side — actions run from the sovereign console or the repository's Actions tab.",
+  "ad.cmd":"The bridgehead",
+  "ad.cmdSub":"The agent's own position, live from the public repo — the same state any future agent reads to resume the work. This is how the work survives every sandbox and every session.",
+  "ad.cmdNote":"Continuity protocol: any agent in any new session fetches this state plus the handoff document and resumes — no dependence on any sandbox, conversation, or specific agent identity.",
+  "ad.recentRuns":"Recent cloud runs",
+  "ad.missions":"Missions and money",
+  "ad.server":"Server and sync", "ad.serverSub":"The cloud is the primary: 14 repositories, their last pushes, and the run history — all read live from the public API.",
+  "ad.verify":"The network's verdict on the agent",
+  "ad.verifySub":"An independent workflow measures the delivery itself — at this public URL, on a schedule, with results committed to the repo. Training loop: request, build, the network measures, the result is public.",
+  "f.about":"Agents that prove their work: measured, signed, anchored on public chains. A claim without measurement is noise.",
+  "f.explore":"Explore", "f.tools":"Tools", "f.truth":"Source of truth", "f.wallet":"Wallet & exchange", "f.motto":"No claim without measurement.",
+  "t.type":"Type","t.agent":"Agent","t.claim":"Claim","t.when":"When","t.status":"Status","t.txid":"Transaction","t.repo":"Repository","t.pushed":"Last push",
+  "t.visibility":"Visibility","t.kind":"Kind","t.summary":"Summary","t.name":"Name","t.role":"Role","t.address":"EVM address","t.atts":"Attestations",
+  "t.last":"Last attestation","t.open":"Open","t.workflow":"Workflow","t.updated":"Console mirror age",
+  "misc.never":"never","misc.agoNow":"just now","misc.agoMin":(m)=>m+" min ago","misc.agoH":(h)=>h+" h ago","misc.agoD":(d)=>d+" d ago",
+  "st.fresh":"FRESH","st.stale":"AGING","st.dead":"DORMANT","st.hours":(h)=>h.toFixed(1)+" h",
+  "src.mirror":"Live from the public mirror — updated by the network itself, independent of any sandbox.",
+  "src.ghapi":"Live from the public GitHub API.",
+  "src.dex":"Live from the cloud-mirrored DEX world.",
+  "src.ratelimit":"GitHub API rate-limited for this browser — the rest of the page still reads the committed mirrors.",
+  "verify.passed":"passed","verify.failed":"failed","verify.verdict":"Verdict","verify.runAt":"Measured at","verify.none":"No verification run recorded yet — the workflow commits the first result on its next cycle.",
+  "state.phase":"Phase","state.task":"Current task","state.handoff":"Last handoff","state.openLoops":"Open loops","state.doc":"Handoff protocol",
+  "mission.p0":"P0 — urgent","mission.p1":"P1 — important","mission.p2":"P2 — background","mission.p3":"P3 — optional",
+  "money.title":"Money routing plan (funds entering within days)",
+  "money.note":"Routing is data, not advice: buckets are decided by the operator and recorded here so every agent works from the same plan.",
+  "auth.title":"Publishing authorities","auth.note":"Posting power for the network's public voice — used within published rate limits and platform rules.",
+  "safety.title":"Safety laws of autonomous push",
+  "safety.note":"Autonomy is allowed to advance the network — never to endanger it.",
+  "evo.none":"No measured discoveries recorded yet — the honest state is an empty list, not an invented story.",
+  "fail.fetch":"Unreachable — showing the last committed mirror state honestly."
 },
 he: {
-  brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
-  navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
-  navDex:"דקס",
-  dexChip:"טרמינל הבורסה של הרשת עצמה",
-  dexTitle:"הבורסה הריבונית", dexGrad:"במראה ציבורית",
-  dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי — משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
-  dxSpread:"ספרד", dxHeight:"גובה", dxFills:"מילויים", dxPools:"בריכות", dxAge:"גיל נתונים",
-  dexOpen:"פתיחת הטרמינל המלא",
-  chipLive:"חי על שרשרת ציבורית",
-  heroTop:"הכסף שלך.", heroGrad:"הרשת שלך.", heroBottom:"SAOS.",
-  heroLead:"פתח ארנק חינם בשניות, החזק את המטבע SAOS, סחור בשערי הרשת וממן את הרשת כשכל מטבע נראה בספר פתוח. בלי כתובת-שרת, בלי מתווך: המפתחות שלך לא עוזבים את המכשיר.",
-  ctaWallet:"פתיחת ארנק חינם", ctaExchange:"לבורסה",
-  kSupply:"אספקת SAOS", kSupplySub:"תקרה קבועה 21,000,000", kWallets:"ארנקים בשרשרת", kWalletsSub:"כתובות אישיות",
-  kContracts:"חוזי טוקנים", kContractsSub:"חוזים אמיתיים על השרשרת", kValidations:"אימותי רשת",
-  featTitle:"מה אפשר לעשות כאן", featSub:"הכל רץ מחיבורים ציבוריים. העמוד הזה הוא בעצמו צומת של הרשת.",
-  feat1T:"ארנק חינם", feat1P:"כתובת SAOS אישית משלך בשניות. המפתח נולד במכשיר שלך והכתובת נגזרת ממנו. בלי חשבון, בלי מייל, בלי אישור.",
-  feat2T:"בורסה", feat2P:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות פתוחה עד לסגירת העסקה, וכל מילוי נרשם על השרשרת.",
-  feat3T:"הפקדה ורווחים", feat3P:"ממן את הרשת בכל מטבע רשום, קבל זיכוי ב-SAOS לפי השער הנוכחי, ועקוב אחרי ההפקדה, הזיכוי והתגמולים בספר הפתוח.",
-  feat4T:"הנפקת טוקנים", feat4P:"כל טוקן כאן הוא חוזה חכם אמיתי: כללי אספקה קבועים, פרמטרים חתומים ומצב ציבורי שכל דפדפן יכול לאמת.",
-  trustTitle:"מספרים שאפשר לבדוק", trustSub:"כל מספר בעמוד הזה נקרא חי משרשרת ציבורית. שום דבר לא מועתק מדוחות.",
-  trust1T:"הספר ציבורי", trust1P:"כל הארנקים, היתרות, ההפקדות וההצעות חיים כפעולות חתומות על שרשרת ציבורית שכל אחד יכול לקרוא.",
-  trust2T:"הדפדפן שלך הוא הצומת", trust2P:"העמוד הזה מקפל את הספר בעצמו ומשווה את התוצאה למה שמפורסם. לחיצה אחת, בלי צורך באמון.",
-  trust3T:"החתימות מחליטות", trust3P:"רק מי שמחזיק את המפתח יכול להזיז את היתרה. התעבורה לא יכולה לזייף, וכל צומת בודק מחדש כל חתימה.",
-  trustCta:"תאמת בעצמך",
-  feedTitle:"פעילות אחרונה", feedSub:"פעולות חתומות כפי שהרשת קיפלה אותן.",
-  faqTitle:"שאלות שאנשים שואלים",
-  faq1Q:"איך פותחים ארנק SAOS?", faq1A:"לחץ על פתיחת ארנק חינם ואז על יצירה. המפתח נוצר במכשיר שלך והכתובת נגזרת ממנו. שום דבר לא נשלח לשרת ואין צורך בחשבון.",
-  faq2Q:"מי מחזיק את המפתחות שלי?", faq2A:"רק אתה. המפתחות נוצרים בדפדפן ונשארים בזיכרון. אפשר לשמור גיבוי מוצפן עם סיסמה שאתה בוחר. אין שחזור ואין כתובת-שרת שמחזיקה עותק.",
-  faq3Q:"איך אני בודק את המספרים בעצמי?", faq3A:"כל הספר ציבורי. לחץ על אימות בעמוד הרשת והדפדפן שלך קורא כל פעולה מהשרשרת הציבורית, בודק כל חתימה ומשווה את התוצאה למה שהאתר מציג.",
-  faq4Q:"מה ההפקדות עושות?", faq4A:"ההפקדות מממנות את פיתוח הרשת ומומרות ל-SAOS לפי השער הנוכחי. כל הפקדה, זיכוי ותגמול נרשמים בספר הפתוח. לא נעשה ולא נרמז שום הבטחת רווח.",
-  wTitle:"הארנק שלך", wSub:"כתובת SAOS אישית ששייכת למפתח שעל המכשיר שלך. רושמים אותה פעם אחת וכל הרשת רואה אותה.",
-  wNewT:"יצירת ארנק חדש", wNewP:"מפתח חדש נוצר במחולל האקראי המאובטח של הדפדפן. הוא לא עוזב את זיכרון הלשונית הזו.",
-  wNewBtn:"יצירת ארנק", wNewNote:"רשום את המפתח או שמור את הגיבוי המוצפן. אם הלך לאיבוד, הארנק אבד. אין איפוס.",
-  wImpT:"שחזור מגיבוי", wImpP:"טעינת קובץ גיבוי מוצפן (saos-keystore). הסיסמה פותחת אותו מקומית.", wImpBtn:"בחירת קובץ גיבוי",
-  wAddrT:"הכתובת שלך", copy:"העתקה", wWifT:"המפתח הפרטי שלך (מוצג פעם אחת)",
-  wBackup:"שמירת גיבוי מוצפן", wLock:"מחיקה מהזיכרון",
-  wBalT:"יתרות", wBalP:"כפי שנקפלו מהשרשרת הציבורית.",
-  wNick:"שם תצוגה (רשות)", wRegBtn:"רישום על השרשרת",
-  wSendT:"שליחה", wSendP:"נחתם במכשיר שלך ומשודר כפעולה ציבורית.",
-  wSendSym:"מטבע", wSendTo:"כתובת מקבל (saos1...)", wSendAmt:"כמות", wSendBtn:"חתימת העברה",
-  wQueueT:"תור פעולות חתומות", wQueueP:"חתומות וממתינות. העתק אותן לרשת, או שדר למטה.", wQueueCopy:"העתקת JSON חתום",
-  wRelayT:"שידור", wRelayP:"מפתח של חשבון Steem הוא תעבורה בלבד: הוא לא יכול לשנות את הפעולות שלך. החתימה הפנימית היא הסמכות.",
-  wRelayAcc:"חשבון Steem", wRelayWif:"מפתח posting (WIF)", wRelayBtn:"שידור התור",
-  xTitle:"בורסה", xSub:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתה מבטל.",
-  xRatesT:"שערי הרשת", xRatesP:"שערי ייחוס שמתפרסמים על השרשרת בהחלטת ממשל הרשת.",
-  xPair:"זוג", xPrice:"שער",
-  xRatesNote:"השערים נקבעים בפעולות אוצר חתומות וגלויות לכולם. הם ייחוס: לכל הצעה מחיר משלה.",
-  xOfferT:"הצבת הצעת מכירה", xOfferP:"ה-SAOS שלך עובר לנאמנות ברגע שההצעה נוחתת על השרשרת.",
-  xCur:"המטבע שאתה מקבל", xAmt:"כמות (SAOS)", xPricePer:"מחיר על 1 SAOS", xOfferBtn:"חתימת הצעה",
-  xOfferNote:"סגירת הצד של המטבע נרשמת על ידי אוצר הרשת עם אסמכתת תשלום. שני הצדדים נשארים גלויים על השרשרת.",
-  xBookT:"הצעות פתוחות", xBookP:"SAOS בנאמנות שמחכה לקונים.",
-  xSell:"מוכר", xGet:"אתה משלם", xRemain:"SAOS שנותר", xPrice2:"מחיר / SAOS",
-  xMineT:"ההצעות שלי", xMineP:"פתח ארנק כדי לראות ולנהל את ההצעות שלך כאן.",
-  xFillsT:"מילויים אחרונים", xFillsP:"עסקאות שנסגרו עם אסמכתאות התשלום שלהן על השרשרת.",
-  eTitle:"הפקדה ורווחים", eSub:"ממן את הרשת בכל מטבע רשום. ההפקדה שלך נרשמת על השרשרת, מזוכה ב-SAOS לפי השער הנוכחי, ומלווה בספר הפתוח.",
-  eHowT:"איך זה עובד",
-  eS1T:"פותחים ארנק", eS1P:"חינם, לוקח שניות, ונותן לך את הכתובת האישית שעליה ה-SAOS שלך נוחת.",
-  eS2T:"שולחים לכתובת הפקדה", eS2P:"בחר מטבע למטה, שלח כל סכום, ושמור את אסמכתת ההעברה.",
-  eS3T:"מקבלים זיכוי ועוקבים", eS3P:"הרשת מאמתת את ההפקדה, מזכה SAOS לפי השער, וכל צעד נשאר גלוי על השרשרת.",
-  eHonest:"ההפקדות מממנות את פיתוח הרשת. תגמולים, כשממשל הרשת מאשר אותם, משולמים לארנקי המפקידים ונרשמים בספר הפתוח. שום דבר כאן אינו הבטחת רווח.",
-  eAddrT:"כתובות הפקדה", eAddrP:"מתפרסמות על השרשרת על ידי אוצר הרשת.",
-  eAddrNote:"שלח רק את המטבע שמופיע ליד כל כתובת. אסמכתת ההעברה היא מה שמדביקים בתביעה למטה.",
-  eClaimT:"דיווח על הפקדה", eClaimP:"ספר לרשת מה שלחת. הארנק שלך חותם על התביעה.",
-  eClaimCur:"מטבע", eClaimAmt:"סכום", eClaimRef:"אסמכתת העברה", eClaimBtn:"חתימת תביעה",
-  eMineT:"ההפקדות שלי", eMineP:"התביעות והזיכויים שלך מהספר הפתוח.",
-  eStatsT:"סך הכל ברשת", eStatsP:"ההפקדות, הזיכויים והתגמולים של כולם, מקופלים מהשרשרת.",
-  eDepT:"הופקד", eCredT:"SAOS נזקף", eRewT:"תגמולים ששולמו",
-  cTitle:"מטבע ה-SAOS", cSub:"מטבע שאפשר לאמת שורה שורה. כללים קבועים, מצב ציבורי, אף מנהל לא יכול לכופף אותו בשקט.",
-  cSupply:"אספקה", cCap:"תקרה קבועה", cCapSub:"קבועה בקוד", cMint:"מצב הנפקה", cRoot:"שורש הספר", cRootSub:"sha256 של המצב המקופל",
-  cTechT:"איך הוא בנוי",
-  cT1T:"הכתובת שלך נגזרת מהמפתח שלך", cT1P:"כתובת היא טביעת אצבע של המפתח הציבורי לבדו. מי שמחזיק במפתח הוא הבעלים של הכתובת. בלי רישום, בלי אישור.",
-  cT2T:"החוזה הוא קוד שכולם מריצים", cT2P:"כללי אספקה, נאמנות ויתרות נאכפים על ידי מנוע דטרמיניסטי אחד שרץ זהה בכל דפדפן ובכל צומת.",
-  cT3T:"הפעולות חתומות, התעבורה לא יכולה לזייף", cT3P:"כל פעולה נושאת את חתימת הבעלים. המשדרים הציבוריים מזיזים בתים; הם לא יכולים לשנות אותם.",
-  cT4T:"התקרה היא חוק של המנוע", cT4P:"מקסימום 21,000,000 SAOS, נבדק בכל הנפקה על ידי כל צומת. לשבור את זה ידרוש שכל המאמתים יסכימו לשקר.",
-  cHoldT:"המחזיקים הגדולים", cHoldP:"מהיתרות הציבוריות.", cAddr:"כתובת", cBal:"SAOS",
-  cFeedT:"פעילות הספר", cFeedP:"כל פעולה חתומה, החדשות קודם.",
-  tTitle:"מפעל טוקנים", tSub:"פרוס חוזה חכם אמיתי: פרמטרים קבועים, חתום, ומאומת על ידי כל צומת שקורא את השרשרת.",
-  tDepT:"פריסת טוקן", tDepP:"בחר סמל, שם ותקרה. הכללים נקבעים בלידה ולא ניתן לכופף אותם אחר כך.",
-  tSym:"סמל (A-Z, 3 עד 8)", tName:"שם", tDec:"ספרות עשרוניות (0-9)", tMax:"תקרת אספקה (יחידות שלמות)", tDepBtn:"חתימת פריסה",
-  tMintT:"הנפקת הטוקן שלך", tMintP:"רק הפורס יכול להנפיק, עד התקרה. וכולם יכולים לבדוק.",
-  tMSym:"טוקן", tMTo:"לכתובת (saos1...)", tMAmt:"כמות (יחידות שלמות)", tMintBtn:"חתימת הנפקה",
-  tListT:"חוזים על השרשרת", tListP:"כל טוקן הוא חוזה חתום עם מצב ציבורי.",
-  tLSym:"סמל", tLName:"שם", tLSup:"אספקה", tLMax:"תקרה", tLIss:"מנפיק", tLHold:"מחזיקים",
-  nTitle:"הרשת", nSub:"רשת אימות שרצה על שרשראות ציבוריות ומפרסמת את הוכחת החיים שלה.",
-  nAtt:"אימותים", nAttS:"עדויות חתומות", nCp:"נקודות-ביקורת", nCpS:"שורשי merkle",
-  nAnch:"עוגנים", nAnchS:"על שרשראות ציבוריות", nTest:"בדיקה עצמית של המנוע", nTestS:"רצה בטעינת העמוד",
-  nVerifyT:"תבדוק הכל בעצמך", nVerifyP:"הדפדפן שלך קורא כל פעולה מהשרשרת הציבורית, בודק כל חתימה, מקפל את הספר ומשווה את השורש למה שהאתר מציג. בלי צורך באמון.",
-  nVerifyBtn:"אימות הספר עכשיו",
-  nFeedT:"פיד אימותים", nFeedP:"מה שהרשת העידה, החדש קודם.",
-  nCpsT:"נקודות-ביקורת ועדים", nCpsP:"כל נקודת-ביקורת היא שורש merkle על טווח עדויות.",
-  nRoot:"שורש", nWhen:"מתי", nSeen:"נראה על",
-  nAnchT:"עוגנים אחרונים", nAnchP:"נקודות-ביקורת שנכתבו לשרשראות ציבוריות כעדים קבועים.",
-  fVerify:"אימות עצמאי", fCurrency:"המטבע", fWallet:"פתיחת ארנק",
-  tOk:{ walletBorn:"ארנק חדש נולד במכשיר שלך", wiped:"הארנק נמחק מהזיכרון", backup:"גיבוי מוצפן הורד",
-    restored:"הארנק שוחזר", signed:"נחתם ונוסף לתור", broadcast:n=>n+" פעולות שודרו לשרשרת",
-    copied:"הועתק", registered:"הרישום נחתם והועבר לתור", needWallet:"קודם פתח או שחזר ארנק",
-    claimSigned:"תביעת ההפקדה נחתמה והועברה לתור", offerSigned:"הצעת המכירה נחתמה והועברה לתור", cancelSigned:"הביטול נחתם והועבר לתור" },
-  tErr:{ create:"יצירת הארנק נכשלה: ", import:"שחזור נכשל: ", sign:"החתימה נכשלה: ", badAddr:"כתובת SAOS לא תקינה (saos1...)",
-    badAmt:"כמות לא תקינה", badPrice:"מחיר לא תקין", badCur:"סמל מטבע: 2 עד 10 אותיות גדולות", badRef:"אסמכתה: 6 עד 90 תווים",
-    noSymbol:"בחר מטבע", emptyQueue:"התור ריק", relayFail:"השידור נכשל: ", noToken:"לא נבחר טוקן", badSym:"סמל: אותיות גדולות A-Z, 3 עד 8 תווים" },
-  status:{ registered:"רשום על השרשרת", pendingReg:"ממתין לרישום על השרשרת", treasury:"אוצר הרשת" },
-  empty:{ ops:"אין עדיין פעולות. הראשונות יופיעו כאן.", offers:"אין עדיין הצעות פתוחות.", mine:"פתח ארנק כדי לראות את ההצעות שלך.",
-    addrs:"טרם פורסמו כתובות הפקדה. הן יופיעו כאן ברגע שהאוצר יפרסם אותן.",
-    claims:"אין עדיין הפקדות. שלך תופיע כאן.", cred:"אין עדיין זיכויים.", holders:"הספר בהקמה. מחזיקים יופיעו כאן.",
-    tokens:"אין עדיין חוזי טוקנים. SAOS נפרס עם הג'נזיס.", cps:"אין עדיין נקודות-ביקורת.", anch:"אין עדיין עוגנים.",
-    atts:"אין עדיין עדויות במראה." },
-  misc:{ chainLive:(b,m)=>"חי · בלוק "+b+" · לפני "+m+" דק'", chainDown:"שרשרת: RPC לא עונה", you:"אתה", escrow:"נאמנות",
-    fillOf:"מילוי", genesisSoon:"ג'נזיס הספר: הרשת מניחה אותו עכשיו, המספרים יופיעו כשהוא ינחת",
-    agoNow:"עכשיו", agoMin:n=>"לפני "+n+" דק'", agoH:n=>"לפני "+n+" שע'", agoD:n=>"לפני "+n+" ימים", never:"מעולם",
-    deposited:"הפקדה", credited:"זיכוי", rewards:"תגמול", myAddr:"הכתובת שלי", cancel:"ביטול", page:"עמוד" },
+  brandSub:"הרשת המאמתת", navHome:"בית", navNetwork:"הרשת", navAgents:"סוכנים", navExchange:"בורסה", navKnowledge:"ידע", navAdmin:"אדמין",
+  "hero.eyebrow":"הרשת המאמתת",
+  "hero.h1":'סוכני AI שמוכיחים <em>את עבודתם שלהם</em>.',
+  "hero.lead":"סוכנים עובדים סביב השעון — וכל טענה שהם מעלים נמדדת, נחתמת ונעוגנת בשרשרות ציבוריות. כל אחד יכול לאמת. אף אחד לא צריך לסמוך.",
+  "hero.ctaVerify":"לראות את האמת החיה", "hero.ctaWallet":"לפתוח ארנק ובורסה",
+  "home.now":"מה קורה עכשיו",
+  "home.kWitness":"עד הפעימה", "home.kAtt":"אימותים חתומים", "home.kFleet":"סוכני ענן חיים", "home.kBrain":"מפתחות מוח חיים",
+  "home.how":"איך זה עובד",
+  "home.s1t":"סוכנים עובדים וחותמים", "home.s1p":"כל פעולה שסוכן מבצע נחתמת במפתח ה-EVM שלו ונקשרת לקודמת באמצעות hash. שום דבר שסוכן עשה לא קיים בלי חתימה.",
+  "home.s2t":"הרשת מודדת", "home.s2p":"צ'קפוינטים מקפלים את הספר לשורש Merkle, והשורש נעוגן בשרשרות ציבוריות (Steem). קו העד ציבורי — מחוץ לכל שרת פרטי.",
+  "home.s3t":"כל אחד מאמת", "home.s3p":"הקונסולה הזאת קוראת רק מראות ציבוריות. לחצו אמת בכל מקום: הדפדפן מחשב מחדש כל hash וכל חתימה ומשווה למפורסם. לא צריך אמון.",
+  "home.why":"למה זה קיים",
+  "home.law":'החוק: <em>טענה בלי מדידה היא רעש.</em> מערכות AI מספרות סיפורים — הרשת הזאת מוכיחה אותם. והיא שורדת כל סנדבוקס: האמת חיה בענן ובשרשרות ציבוריות, לא בשום מכונה בודדת.',
+  "home.beats":"פעימות אחרונות",
+  "home.paths":"התחילו מאיפה שאתם",
+  "home.p1t":"אני חדש כאן", "home.p1p":"תנו לי את התמונה הגדולה של הרשת, הספר והעוגן — במספרים שאני יכול לבדוק.", "home.p1go":"לפתוח את תצוגת הרשת",
+  "home.p2t":"אני רוצה להשתמש בשכבת הכסף", "home.p2p":"פתחו ארנק חינם בשניות, החליפו בשערי הרשת וראו כל מטבע בספר הפתוח. המפתחות לא עוזבים את המכשיר.", "home.p2go":"לפתוח את הארנק והבורסה",
+  "home.p3t":"אני מפעיל את הרשת", "home.p3p":"מרכז הפיקוד, תור המשימות, ניתוב הכסף והמאחז של הסוכן — חדר הבקרה הריבוני.", "home.p3go":"להיכנס לאזור האדמין",
+  "net.h":"הרשת", "net.sub":"שכבת האימות עצמה: ספר הטענות החתומות, הצ'קפוינטים שמקפלים אותו, העוגנים שמסמרים אותו לשרשרות ציבוריות, והאקוסיסטם של הריפואים שמריץ אותו.",
+  "net.kAtt":"אימותים", "net.kCp":"צ'קפוינטים", "net.kAg":"זהויות חתומות", "net.kRoot":"שורש Merkle (אחרון)",
+  "net.witness":"העד הציבורי", "net.ledger":"ספר הטענות",
+  "net.ledgerSub":"כל רשומה נחתמת במפתח סוכן ונקשרת לקודמתה ב-hash. המראה מחזיקה את העותק הציבורי; החתימות חיות בספר הריבוני.",
+  "net.anchor":"קווי העוגן", "net.anchorSub":"צ'קפוינטים נעוגנים בשרשרות ציבוריות דרך רשות פרסום — האמת שורדת כל סנדבוקס. קו Steem:",
+  "net.anchorNote":"צינור העוגן חסר-מפתח מהצד הציבורי: workflow קורא את השרשרת הציבורית ומרנדר את הסטטוס בלי שום סוד. השרשרת עצמה היא המקור.",
+  "net.eco":"האקוסיסטם", "net.ecoActive":"ריפואים עם סוכנים חיים", "net.ecoIdle":"ריפואים שקטים",
+  "net.plan":"לולאות פתוחות ושערים", "net.planSub":"תור המשימות החי שהסוכנים עובדים ממנו — נקרא ישר מהמאחז. עדיפויות: P0 דחוף, P1 חשוב, P2 רקע, P3 רשות.",
+  "ag.h":"הסוכנים", "ag.sub":"צי של סוכני ענן מריץ את הרשת סביב השעון — לכל אחד תפקיד, קלט ופלט מוגדרים, ושיעור הצלחה נמדד. הם חיים ב-GitHub Actions, ולכן לעולם לא תלויים בסנדבוקס אחד.",
+  "ag.fleetSrc":"הרישום מתרענן שעתית על ידי workflow agents-watch — ישר מה-API של גיטהאב.",
+  "ag.ids":"זהויות חתומות בספר",
+  "ex.h":"הבורסה", "ex.sub":"שכבת הכסף: דקס חי ממוחזר מהענן, שוק אמת שנסגר לפי מדידה, וטרמינל הארנק המלא — כל מטבע נראה בספר הפתוח.",
+  "ex.spread":"פער", "ex.height":"גובה הדקס", "ex.fills":"עסקאות שנסגרו",
+  "ex.openWallet":"הטרמינל המלא חי באפליקציית הארנק", "ex.openWalletSub":"ארנק חינם, המרה בשערי הרשת, הפקדות ורווחים — מפתחות נוצרים במכשיר שלכם ולעולם לא נשלחים לשום מקום.",
+  "ex.openBtn":"לפתוח את הארנק והבורסה",
+  "ex.market":"שוק האמת", "ex.marketSub":"טענות מומרות בהימור ונסגרות רק לפי מדידה — כל ההיסטוריה של השוק חלק מהספר.",
+  "ex.holdings":"הספר החי", "ex.kWallets":"ארנקים בשרשרת", "ex.kOps":"פעולות", "ex.kSupply":"היצע SAOS", "ex.kRoot":"שורש המצב",
+  "ex.holdNote":"הספר החי הריבוני מוחזר לענן על ידי workflow saos-live. הטבעת ההתחלה משקפת את היצע SAOS-NET v0 המאומת אחד לאחד — לא ניתנת או נרמזת שום הבטחת רווח.",
+  "kn.h":"ידע", "kn.sub":"הדוקטרינה, המוח והחלטות התכנון — למה הרשת בנויה כמו שהיא, ומה היא למדה.",
+  "kn.brain":"המוח", "kn.brainSub":"טביעות אצבע של זיכרון ארוך-חיים שהרשת ממשיכה לאמת — ידע ששורד כל איפוס של סנדבוקס.",
+  "kn.sov":"ריבונות מעצם התכנון",
+  "kn.sov1":"אמת מהענן קודם: כל דף כאן קורא את המראות הציבוריות והשרשרות הציבוריות — לא שרת פרטי. סנדבוקס יכול למות; הרשת ממשיכה להגיש.",
+  "kn.sov2":"אפס סודות בציבור: הריפו הציבורי וה-workflows שלו רצים על הטוקן של עצמם בלבד. שום מפתח פרטי לא חוצה לקונסולה.",
+  "kn.sov3":"המאחז של הסוכן: המצב, פרוטוקול ההעברה וספר הבקשות חיים בריפו הציבורי — כך שכל סוכן, בכל סשן חדש, ממשיך בדיוק מאיפה שהקודם עצר.",
+  "kn.sov4":"הרשת מאמתת את הסוכן: מסירה נמדדת ב-URL הציבורי על ידי workflow עצמאי — טענות שלא נמסרו פשוט נכשלות בפומבי.",
+  "kn.netPage":"דף הרשת", "kn.netPageSub":"סיור האימות של שרשרת האמת.",
+  "kn.gatePage":"השער", "kn.gatePageSub":"הסף בין LOCAL ל-REAL — האמת הנעוגנת.",
+  "kn.acidPage":"מבחן ה-ACID", "kn.acidPageSub":"תכונות קשות של הספר — נמדדות, לא מובטחות.",
+  "kn.evo":"אבולוציה", "kn.evoSub":"תגליות נמדדות ואבני דרך בדרך לרשת שמשתפרת לבד.",
+  "kn.doc":"הדוקטרינה",
+  "kn.doc1":"<b>שום טענה בלי מדידה.</b> הצהרה שלא נמדדה היא רעש, לא משנה איזו מכונה ייצרה אותה.",
+  "kn.doc2":"<b>הרשת שורדת כל סנדבוקס.</b> האמת חיה בענן ובשרשרות הציבוריות — לעולם לא במכונה בודדת.",
+  "kn.doc3":"<b>אפס סודות בציבור.</b> הצד הציבורי רץ חסר-מפתח או על הטוקן של עצמו; מפתחות פרטיים לא עוזבים את הצד הריבוני.",
+  "kn.doc4":"<b>כישלון כנה עדיף על הצלחה מקושטת.</b> סימן אדום אמיתי שווה יותר מסימן ירוק שנצבע.",
+  "kn.doc5":"<b>אין משמורת, אין שקרים על כסף.</b> מפתחות נשארים אצל בעליהם; הפקדות נרשמות בספר הפתוח; לא הבטחת רווח.",
+  "kn.doc6":"<b>אוטונומיה עם בטיחות.</b> סוכנים דוחפים קדימה לבד — בתוך חוקים מפורסמים ששומרים על הפלטפורמה ועל הציבור.",
+  "ad.h":"אדמין — חדר הבקרה הריבוני",
+  "ad.sub":"האזור האישי של המפעיל: מאחז הסוכן, תור המשימות, תוכנית ניתוב הכסף והאימות העצמאי של המסירה. צפייה בלבד מהצד הציבורי — פעולות רצות מהקונסולה הריבונית או מלשונית ה-Actions של הריפו.",
+  "ad.cmd":"המאחז",
+  "ad.cmdSub":"המיקום של הסוכן עצמו, חי מהריפו הציבורי — אותו מצב שכל סוכן עתידי קורא כדי להמשיך את העבודה. כך העבודה שורדת כל סנדבוקס וכל סשן.",
+  "ad.cmdNote":"פרוטוקול הרצף: כל סוכן בכל סשן חדש מוריד את המצב הזה בתוספת מסמך ההעברה וממשיך — בלי תלות בסנדבוקס, בשיחה או בזהות סוכן מסוימת.",
+  "ad.recentRuns":"ריצות ענן אחרונות",
+  "ad.missions":"משימות וכסף",
+  "ad.server":"שרת וסנכרון", "ad.serverSub":"הענן הוא הראשי: 14 ריפואים, הדחיפות האחרונות שלהם והיסטוריית הריצות — הכל נקרא חי מה-API הציבורי.",
+  "ad.verify":"פסק הדין של הרשת על הסוכן",
+  "ad.verifySub":"workflow עצמאי מודד את המסירה עצמה — ב-URL הציבורי הזה, בלוח זמנים, עם תוצאות שנשמרות בריפו. לולאת האימון: בקשה, בנייה, הרשת מודדת, התוצאה פומבית.",
+  "f.about":"סוכנים שמוכיחים את עבודתם: נמדד, נחתם, נעוגן בשרשרות ציבוריות. טענה בלי מדידה היא רעש.",
+  "f.explore":"סיור", "f.tools":"כלים", "f.truth":"מקור האמת", "f.wallet":"ארנק ובורסה", "f.motto":"שום טענה בלי מדידה.",
+  "t.type":"סוג","t.agent":"סוכן","t.claim":"טענה","t.when":"מתי","t.status":"מצב","t.txid":"העברה","t.repo":"ריפו","t.pushed":"דחיפה אחרונה",
+  "t.visibility":"נראות","t.kind":"סוג","t.summary":"תקציר","t.name":"שם","t.role":"תפקיד","t.address":"כתובת EVM","t.atts":"אימותים",
+  "t.last":"אימות אחרון","t.open":"פתח","t.workflow":"Workflow","t.updated":"גיל המראה",
+  "misc.never":"מעולם לא","misc.agoNow":"עכשיו","misc.agoMin":(m)=>"לפני "+m+" דק'","misc.agoH":(h)=>"לפני "+h+" שע'","misc.agoD":(d)=>"לפני "+d+" ימים",
+  "st.fresh":"טרי","st.stale":"מזדקן","st.dead":"דורם","st.hours":(h)=>h.toFixed(1)+" שע'",
+  "src.mirror":"חי מהמראה הציבורית — מתעדכן על ידי הרשת עצמה, בלי תלות בסנדבוקס.",
+  "src.ghapi":"חי מה-API הציבורי של גיטהאב.",
+  "src.dex":"חי מעולם הדקס המוחזר מהענן.",
+  "src.ratelimit":"ה-API של גיטהאב הוגבל לדפדפן הזה — שאר העמוד עדיין קורא את המראות השמורות.",
+  "verify.passed":"עברו","verify.failed":"נכשלו","verify.verdict":"פסק הדין","verify.runAt":"נמדד ב","verify.none":"אין עדיין ריצת אימות רשומה — ה-workflow יכתוב את התוצאה הראשונה במחזור הבא שלו.",
+  "state.phase":"שלב","state.task":"משימה נוכחית","state.handoff":"העברה אחרונה","state.openLoops":"לולאות פתוחות","state.doc":"פרוטוקול ההעברה",
+  "mission.p0":"P0 — דחוף","mission.p1":"P1 — חשוב","mission.p2":"P2 — רקע","mission.p3":"P3 — רשות",
+  "money.title":"תוכנית ניתוב כסף (כספים נכנסים בימים הקרובים)",
+  "money.note":"הניתוב הוא נתון, לא ייעוץ: הדליים מוחלטים על ידי המפעיל ונרשמים כאן כדי שכל סוכן יעבוד מאותה תוכנית.",
+  "auth.title":"רשויות הפרסום","auth.note":"כוח פרסום לקול הציבורי של הרשת — בשימוש בתוך מגבלות קצב וכללי פלטפורמה מפורסמים.",
+  "safety.title":"חוקי הבטיחות של הדחיפה האוטונומית",
+  "safety.note":"מותר לאוטונומיה לקדם את הרשת — לעולם לא לסכן אותה.",
+  "evo.none":"אין עדיין תגליות נמדדות רשומות — המצב הכן הוא רשימה ריקה, לא סיפור שהומצא.",
+  "fail.fetch":"לא נגיש — מוצג מצב המראה האחרון שנשמר, בכנות."
 }};
-
-let LANG = "en";
-const t = (path) => {
-  const walk = (o, parts) => (parts.length ? walk(o?.[parts.shift()], parts) : o);
-  const v = walk(I18N[LANG], path.split("."));
-  return v !== undefined ? v : walk(I18N.en, path.split("."));
-};
-function applyLang() {
-  document.documentElement.lang = LANG;
-  document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
-  for (const el of document.querySelectorAll("[data-i]")) {
-    const v = t(el.dataset.i);
-    if (typeof v === "string") el.textContent = v;
-  }
-  document.title = LANG === "he"
-    ? "SAOS Network | ארנק קריפטו, בורסת טוקנים ורווחים"
-    : "SAOS Network | Crypto Wallet, Token Exchange and Earn";
-  $("langbtn").textContent = LANG === "he" ? "English" : "עברית";
-  renderAll();
-}
-
-/* ═══════════ tiny helpers ═══════════ */
+function t(k){ const v = (I18N[LANG] && I18N[LANG][k]) ?? I18N.en[k] ?? k; return v; }
 const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-function toast(msg, ok = true) {
-  const el = $("toast");
-  el.textContent = msg;
-  el.style.borderColor = ok ? "var(--line2)" : "rgba(239,68,68,.5)";
-  el.classList.add("show");
-  setTimeout(() => el.classList.remove("show"), 2600);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+function timeAgo(iso){
+  if(!iso) return t("misc.never");
+  const m = Math.round((Date.now()-Date.parse(iso))/60000);
+  if(m<1) return t("misc.agoNow");
+  if(m<60) return t("misc.agoMin")(m);
+  const h = Math.round(m/60);
+  if(h<48) return t("misc.agoH")(h);
+  return t("misc.agoD")(Math.round(h/24));
 }
-function copyText(txt, what) {
-  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
-    .then(() => toast(t("tOk.copied") + (what ? ": " + what : "")))
-    .catch(() => toast(txt.slice(0, 60)));
-}
-function timeAgo(iso) {
-  if (!iso) return t("misc.never");
-  const m = Math.round((Date.now() - Date.parse(iso)) / 60000);
-  if (m < 1) return t("misc.agoNow");
-  if (m < 60) return t("misc.agoMin")(m);
-  const h = Math.round(m / 60);
-  if (h < 48) return t("misc.agoH")(h);
-  return t("misc.agoD")(Math.round(h / 24));
-}
-$("year").textContent = new Date().getFullYear();
+const fmtInt = (n)=>Number(n||0).toLocaleString("en-US");
 
-/* ═══════════ routing ═══════════ */
-const VIEWS = ["home", "wallet", "exchange", "dex", "earn", "currency", "tokens", "network"];
-function route() {
-  let h = (location.hash || "#home").slice(1);
-  if (!VIEWS.includes(h)) h = "home";
-  for (const v of VIEWS) $("view-" + v).classList.toggle("on", v === h);
-  document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("on", el.dataset.nav === h));
-  window.scrollTo({ top: 0 });
+/* ═══════════ routing: sections + submenus ═══════════ */
+const SECTIONS = {
+  home:    { subs: [] },
+  network: { subs: ["overview","ledger","anchor","ecosystem","plan"] },
+  agents:  { subs: ["fleet","ids"] },
+  exchange:{ subs: ["terminal","market","holdings"] },
+  knowledge:{ subs: ["brain","sovereignty","evolution","doctrine"] },
+  admin:   { subs: ["command","missions","server","verify"] }
+};
+const SUB_I18N = {
+  overview:"sub.overview", ledger:"sub.ledger", anchor:"sub.anchor", ecosystem:"sub.ecosystem", plan:"sub.plan",
+  fleet:"sub.fleet", ids:"sub.ids", terminal:"sub.terminal", market:"sub.market", holdings:"sub.holdings",
+  brain:"sub.brain", sovereignty:"sub.sovereignty", evolution:"sub.evolution", doctrine:"sub.doctrine",
+  command:"sub.command", missions:"sub.missions", server:"sub.server", verify:"sub.verify"
+};
+I18N.en["sub.overview"]="Overview"; I18N.en["sub.ledger"]="The book"; I18N.en["sub.anchor"]="Anchors"; I18N.en["sub.ecosystem"]="Ecosystem"; I18N.en["sub.plan"]="Plan";
+I18N.en["sub.fleet"]="The fleet"; I18N.en["sub.ids"]="Identities"; I18N.en["sub.terminal"]="Terminal"; I18N.en["sub.market"]="Truth market"; I18N.en["sub.holdings"]="Live ledger";
+I18N.en["sub.brain"]="Brain"; I18N.en["sub.sovereignty"]="Sovereignty"; I18N.en["sub.evolution"]="Evolution"; I18N.en["sub.doctrine"]="Doctrine";
+I18N.en["sub.command"]="Command"; I18N.en["sub.missions"]="Missions & money"; I18N.en["sub.server"]="Server & sync"; I18N.en["sub.verify"]="Verify";
+I18N.he["sub.overview"]="סקירה"; I18N.he["sub.ledger"]="הספר"; I18N.he["sub.anchor"]="עוגנים"; I18N.he["sub.ecosystem"]="אקוסיסטם"; I18N.he["sub.plan"]="תוכנית";
+I18N.he["sub.fleet"]="הצי"; I18N.he["sub.ids"]="זהויות"; I18N.he["sub.terminal"]="טרמינל"; I18N.he["sub.market"]="שוק האמת"; I18N.he["sub.holdings"]="הספר החי";
+I18N.he["sub.brain"]="מוח"; I18N.he["sub.sovereignty"]="ריבונות"; I18N.he["sub.evolution"]="אבולוציה"; I18N.he["sub.doctrine"]="דוקטרינה";
+I18N.he["sub.command"]="פיקוד"; I18N.he["sub.missions"]="משימות וכסף"; I18N.he["sub.server"]="שרת וסנכרון"; I18N.he["sub.verify"]="אימות";
+
+function route(){
+  let h = (location.hash || "#/home").replace(/^#\/?/,"");
+  const parts = h.split("/").filter(Boolean);
+  let sec = parts[0] && SECTIONS[parts[0]] ? parts[0] : "home";
+  let sub = SECTIONS[sec].subs.length ? (SECTIONS[sec].subs.includes(parts[1]) ? parts[1] : SECTIONS[sec].subs[0]) : null;
+  for(const s of Object.keys(SECTIONS)) $("view-"+s).classList.toggle("on", s===sec);
+  document.querySelectorAll("nav.sections a").forEach(a=>a.classList.toggle("on", a.dataset.nav===sec));
+  document.querySelectorAll(".subview").forEach(el=>el.classList.remove("on"));
+  if(sub) $("sub-"+sec+"-"+sub).classList.add("on");
+  renderSubnav(sec, sub);
+  renderMobnav(sec, sub);
+  document.querySelector(".subbar").style.display = SECTIONS[sec].subs.length ? "" : "none";
+  window.scrollTo({top:0});
+}
+function renderSubnav(sec, sub){
+  const el = $("subnav"); el.innerHTML = "";
+  for(const s of SECTIONS[sec].subs){
+    const a = document.createElement("a");
+    a.href = "#/"+sec+"/"+s;
+    a.textContent = t(SUB_I18N[s]);
+    if(s===sub) a.classList.add("on");
+    el.appendChild(a);
+  }
+}
+function renderMobnav(sec, sub){
+  const el = $("mobnav"); el.innerHTML = "";
+  for(const s of Object.keys(SECTIONS)){
+    const a = document.createElement("a");
+    a.href = SECTIONS[s].subs.length ? "#/"+s+"/"+SECTIONS[s].subs[0] : "#/"+s;
+    a.textContent = t("nav"+s.charAt(0).toUpperCase()+s.slice(1));
+    a.classList.toggle("on", s===sec);
+    el.appendChild(a);
+    for(const ss of SECTIONS[s].subs){
+      const b = document.createElement("a");
+      b.href = "#/"+s+"/"+ss;
+      b.className = "sub";
+      b.textContent = t(SUB_I18N[ss]);
+      b.classList.toggle("on", s===sec && ss===sub);
+      el.appendChild(b);
+    }
+  }
 }
 window.addEventListener("hashchange", route);
-
-/* ═══════════ DEX mirror strip ═══════════ */
-(() => {
-  const el = (id) => document.getElementById(id);
-  const fmtInt = (n) => Number(n || 0).toLocaleString("en-US");
-  const ago = (iso) => {
-    const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
-    return m < 60 ? m + "m" : Math.round(m / 60) + "h";
-  };
-  async function pull() {
-    try {
-      const r = await fetch("dex/world.json?t=" + Date.now(), { cache: "no-store" });
-      const j = await r.json();
-      if (!j || !j.ok) return;
-      const m = (j.markets || []).find((x) => x.key === "SAOS/USDS") || (j.markets || [])[0];
-      if (m) {
-        el("dx-price").textContent = (m.fair / 1000).toFixed(3);
-        el("dx-spread").textContent = (m.spreadBps ?? 0) + " bps";
-      }
-      el("dx-height").textContent = "h" + fmtInt(j.state && j.state.height);
-      el("dx-fills").textContent = fmtInt(j.state && j.state.fills);
-      el("dx-pools").textContent = fmtInt((j.pools || []).length);
-      el("dx-age").textContent = j.publishedAt ? ago(j.publishedAt) : "—";
-    } catch { /* המראה מחזיקה את המסגרת האחרונה — הסבב הבא ינסה שוב */ }
-  }
-  pull();
-  setInterval(pull, 60000);
-})();
-
-/* ═══════════ hidden operator access: 5 logo taps ═══════════ */
-(() => {
-  let taps = 0, timer = null;
-  $("brand").addEventListener("click", () => {
-    taps++;
-    clearTimeout(timer);
-    timer = setTimeout(() => (taps = 0), 2600);
-    if (taps >= 5) location.href = "gate.html";
-  });
-})();
-
-/* ═══════════ woven background ═══════════ */
-(function weaveBg() {
-  const cv = $("bg"), ctx = cv.getContext("2d");
-  let W, H, nodes = [];
-  const N = Math.min(56, Math.floor(innerWidth / 24));
-  function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
-  function init() {
-    size();
-    nodes = Array.from({ length: N }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22,
-      r: 1 + Math.random() * 1.6, v: Math.random() < .18,
-    }));
-  }
-  let last = performance.now();
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (document.hidden) return;
-    const dt = Math.min(40, now - last); last = now;
-    ctx.clearRect(0, 0, W, H);
-    for (const n of nodes) {
-      n.x += n.vx * dt / 16; n.y += n.vy * dt / 16;
-      if (n.x < 0 || n.x > W) n.vx *= -1;
-      if (n.y < 0 || n.y > H) n.vy *= -1;
-    }
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const a = nodes[i], b = nodes[j];
-        const dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
-        if (d2 < 140 * 140) {
-          const al = (1 - Math.sqrt(d2) / 140) * .13;
-          ctx.strokeStyle = (a.v || b.v) ? `rgba(167,139,250,${al})` : `rgba(212,175,55,${al})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-    }
-    for (const n of nodes) {
-      ctx.fillStyle = n.v ? "rgba(167,139,250,.5)" : "rgba(212,175,55,.45)";
-      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7); ctx.fill();
-    }
-  }
-  init();
-  addEventListener("resize", init);
-  requestAnimationFrame(frame);
-})();
-
-/* ═══════════ live data ═══════════ */
-const FETCH_OPTS = { cache: "no-store" };
-async function jget(url) {
-  const r = await fetch(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now(), FETCH_OPTS);
-  if (!r.ok) throw new Error("HTTP " + r.status);
-  return r.json();
-}
-const STEEM_NODES = ["https://api.steemit.com", "https://api.justyy.com"];
-async function steemRpc(method, params) {
-  let lastErr = null;
-  for (const node of STEEM_NODES) {
-    try {
-      const ctrl = new AbortController();
-      const tm = setTimeout(() => ctrl.abort(), 15000);
-      const r = await fetch(node, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }), signal: ctrl.signal,
-      });
-      clearTimeout(tm);
-      const j = await r.json();
-      if (j.error) throw new Error(j.error.message || "rpc");
-      return j.result;
-    } catch (e) { lastErr = e; }
-  }
-  throw lastErr || new Error("rpc failed");
-}
-
-let MIRROR = null, LIVE = null;
-async function boot() {
-  route();
-  try {
-    const st = await SL.selfTest();
-    $("selftest-badge").textContent = st.passed + "/" + st.total + " ✓";
-    $("selftest-badge").classList.toggle("bad", st.passed !== st.total);
-  } catch {
-    $("selftest-badge").textContent = "✗";
-    $("selftest-badge").classList.add("bad");
-  }
-  await Promise.all([
-    jget("mirror.json").then((m) => (MIRROR = m)).catch(() => {}),
-    jget("saos-live.json").then((l) => (LIVE = l)).catch(() => {}),
-  ]);
-  renderAll();
-  probeChain();
-  setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 120 * 1000);
-}
-
-async function probeChain() {
-  try {
-    const g = await steemRpc("condenser_api.get_dynamic_global_properties", []);
-    const head = Number(g.head_block_number || 0);
-    const mins = Math.max(0, Math.round((Date.now() - Date.parse(g.time + "Z")) / 60000));
-    $("live-txt").textContent = t("misc.chainLive")(head.toLocaleString("en"), mins);
-    $("live-pill").classList.remove("warn");
-  } catch {
-    $("live-txt").textContent = t("misc.chainDown");
-    $("live-pill").classList.add("warn");
-  }
-}
-setInterval(probeChain, 90 * 1000);
-
-/* ═══════════ rendering ═══════════ */
-function renderAll() { renderMirror(); renderLive(); }
-
-function renderMirror() {
-  const m = MIRROR;
-  if (!m) return;
-  const s = m.stats || {};
-  const att = s.attestations ?? 0, cp = s.checkpoints ?? 0;
-  const anch = ((m.anchorLines?.steem || []).length + (m.anchorLines?.zero || []).length);
-  $("st-att").textContent = att.toLocaleString("en");
-  $("st-cp").textContent = cp.toLocaleString("en") + " " + (LANG === "he" ? "נקודות-ביקורת" : "checkpoints");
-  $("n-att").textContent = att.toLocaleString("en");
-  $("n-cp").textContent = cp.toLocaleString("en");
-  $("n-anch").textContent = anch.toLocaleString("en");
-
-  $("n-atts").innerHTML = (m.attestations || []).slice(0, 16).map((a) =>
-    `<div class="op-row"><span class="k">#${a.seq}</span><span style="flex:1;min-width:0;color:var(--dim)"><b style="color:var(--text)">${esc(a.type)}</b> ${esc((a.claim || "").slice(0, 110))}</span><span class="when">${timeAgo(a.at)}</span></div>`
-  ).join("") || `<div class="op-row"><span style="color:var(--faint)">${t("empty.atts")}</span></div>`;
-
-  $("n-cps").innerHTML = (m.checkpoints || []).slice(0, 20).map((c) => {
-    const w = (c.anchoredOn || []).map((x) => `<span class="tag ${x === "steem" ? "green" : "violet"}">${x}</span>`).join(" ");
-    return `<tr><td class="num">#${c.index}</td><td><span class="mono" style="font-size:11px">${esc(String(c.root || "").slice(0, 14))}…</span></td><td style="color:var(--faint);white-space:nowrap">${timeAgo(c.at)}</td><td>${w || '<span class="tag">·</span>'}</td></tr>`;
-  }).join("") || `<tr><td colspan="4" style="color:var(--faint)">${t("empty.cps")}</td></tr>`;
-
-  const line = (a, cls) => `<div class="op-row"><span class="k">cp#${a.checkpoint}</span><span style="flex:1;min-width:0"><span class="mono" style="font-size:11px;color:var(--gold-bright)">${esc(a.txid || "")}</span></span><span class="when">${timeAgo(a.at)}</span></div>`;
-  $("n-anch-steem").innerHTML = (m.anchorLines?.steem || []).slice(0, 6).map((a) => line(a)).join("") || `<div class="op-row"><span style="color:var(--faint)">${t("empty.anch")}</span></div>`;
-  $("n-anch-zero").innerHTML = (m.anchorLines?.zero || []).slice(0, 6).map((a) => line(a)).join("") || `<div class="op-row"><span style="color:var(--faint)">${t("empty.anch")}</span></div>`;
-}
-
-function fmtSaos(unitsStr, decimals = 3) {
-  try { return SL.fmt(String(unitsStr || "0"), decimals); } catch { return "0"; }
-}
-function nice(n) { try { return Number(n).toLocaleString("en", { maximumFractionDigits: 3 }); } catch { return String(n); } }
-
-function renderLive() {
-  const L = LIVE;
-  const state = L?.state || {};
-  const supply = state.supply || {};
-  const bal = state.balances || {};
-  const wallets = state.wallets || {};
-  const tokens = state.tokens || {};
-  const claims = state.claims || {};
-  const offers = state.offers || {};
-  const cfg = state.cfg || { addrs: {}, rates: {} };
-  const ops = L?.ops || [];
-  const genesisDone = Boolean(L?.genesis?.done);
-
-  $("st-wal").textContent = Object.keys(wallets).length;
-  $("st-tok").textContent = Object.keys(tokens).length;
-
-  const saosSupNum = supply.SAOS ? Number(fmtSaos(supply.SAOS, tokens.SAOS?.decimals ?? 3)) : 126682;
-  const supDisplay = Number.isFinite(saosSupNum) ? saosSupNum : 126682;
-  $("st-sup").textContent = nice(supDisplay);
-  $("c-sup").textContent = nice(supDisplay);
-  $("c-mint").textContent = genesisDone ? (LANG === "he" ? "חי" : "live") : (LANG === "he" ? "בהנחה" : "laying");
-  $("c-mint-s").textContent = genesisDone
-    ? (LANG === "he" ? "הג'נזיס נחת על השרשרת" : "genesis landed on chain")
-    : t("misc.genesisSoon");
-  $("c-root").textContent = String(L?.stateRoot || "").slice(0, 24) + "…";
-
-  /* activity feeds */
-  const opRow = (o) => `<div class="op-row"><span class="k">${esc(o.k)}</span><span style="flex:1;min-width:0;color:var(--dim)">${esc(o.summary || "")}</span><span class="when">${timeAgo(o.at)}</span></div>`;
-  $("home-ops").innerHTML = ops.length
-    ? ops.slice(-12).reverse().map(opRow).join("")
-    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
-  $("c-ops").innerHTML = ops.length
-    ? ops.slice(-16).reverse().map(opRow).join("")
-    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
-
-  /* holders */
-  const holders = Object.entries(bal)
-    .map(([addr, b]) => [addr, BigInt(b.SAOS || "0")])
-    .filter(([, v]) => v > 0n)
-    .sort((a, b) => (a[1] < b[1] ? 1 : -1))
-    .slice(0, 12);
-  $("c-holders").innerHTML = holders.length
-    ? holders.map(([addr, v]) => {
-        const w = wallets[addr];
-        const isT = state.treasury && addr === state.treasury;
-        return `<tr><td><span class="mono" style="font-size:11px">${esc(addr.slice(0, 13))}…${esc(addr.slice(-5))}</span>${w?.nick ? ` <span class="tag dim">${esc(w.nick)}</span>` : ""}${isT ? ` <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}</td><td class="num">${nice(fmtSaos(v.toString(), 3))}</td></tr>`;
-      }).join("")
-    : `<tr><td colspan="2" style="color:var(--faint)">${t("empty.holders")}</td></tr>`;
-
-  /* tokens table */
-  const holdersOf = (sym) => Object.entries(bal).filter(([, b]) => BigInt(b[sym] || "0") > 0n).length;
-  $("tokens-table").innerHTML = Object.keys(tokens).length
-    ? Object.entries(tokens).map(([sym, tk]) => `
-        <tr>
-          <td><b class="mono" style="color:var(--gold-bright)">${esc(sym)}</b></td>
-          <td>${esc(tk.name)}</td>
-          <td class="num">${nice(fmtSaos(supply[sym] || "0", tk.decimals))}</td>
-          <td class="num">${nice(fmtSaos(tk.maxSupply, tk.decimals))}</td>
-          <td><span class="mono" style="font-size:10.5px">${esc(String(tk.issuer).slice(0, 11))}…</span></td>
-          <td class="num">${holdersOf(sym)}</td>
-        </tr>`).join("")
-    : `<tr><td colspan="6" style="color:var(--faint)">${t("empty.tokens")}</td></tr>`;
-
-  /* exchange: rates */
-  const rates = Object.entries(cfg.rates || {});
-  $("x-rates").innerHTML = rates.length
-    ? rates.map(([pair, r]) => `<tr><td><b class="mono">${esc(pair)}</b></td><td class="num mono">${esc(r.price)}</td></tr>`).join("")
-    : `<tr><td colspan="2" style="color:var(--faint)">${LANG === "he" ? "טרם פורסמו שערים. הם יופיעו כאן ברגע שממשל הרשת יפרסם אותם." : "No rates published yet. They appear here once network governance publishes them."}</td></tr>`;
-
-  /* exchange: order book */
-  const open = Object.entries(offers).filter(([, o]) => o.status === "open");
-  $("x-book").innerHTML = open.length
-    ? open.map(([id, o]) => {
-        const remain = BigInt(o.units) - BigInt(o.filled);
-        const total = (Number(remain) / 1000) * Number(o.price);
-        return `<tr><td><span class="mono" style="font-size:11px">${esc(o.by.slice(0, 11))}…</span></td><td>${esc(o.cur)}</td><td class="num">${nice(fmtSaos(remain.toString(), 3))}</td><td class="num mono">${esc(o.price)}</td></tr>`;
-      }).join("")
-    : `<tr><td colspan="4" style="color:var(--faint)">${t("empty.offers")}</td></tr>`;
-
-  /* exchange: my offers */
-  if (WALLET) {
-    const mine = Object.entries(offers).filter(([, o]) => o.by === WALLET.addr);
-    $("x-mine").innerHTML = mine.length
-      ? mine.reverse().map(([id, o]) => {
-          const remain = BigInt(o.units) - BigInt(o.filled);
-          const statusTag = o.status === "open" ? `<span class="tag green">open</span>` : o.status === "cancelled" ? `<span class="tag">cancelled</span>` : `<span class="tag gold">filled</span>`;
-          return `<div class="op-row"><span class="k">${esc(o.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(remain.toString(), 3))} / ${nice(fmtSaos(o.units, 3))} SAOS @ ${esc(o.price)}</span>${statusTag}${o.status === "open" ? `<button class="copy" data-cancel="${esc(id)}">${esc(t("misc.cancel"))}</button>` : ""}</div>`;
-        }).join("")
-      : `<div class="op-row"><span style="color:var(--faint)">${t("empty.offers")}</span></div>`;
-    for (const b of document.querySelectorAll("[data-cancel]")) {
-      b.addEventListener("click", async () => {
-        const env = await enqueue({ k: "dex.cancel", offerId: b.dataset.cancel });
-        if (env) toast(t("tOk.cancelSigned"));
-      });
-    }
-  } else {
-    $("x-mine").innerHTML = `<div class="op-row"><span style="color:var(--faint)">${t("empty.mine")}</span></div>`;
-  }
-
-  /* exchange: fills */
-  const fills = [];
-  for (const [id, o] of Object.entries(offers)) for (const f of o.fills || []) fills.push({ ...f, offerId: id, cur: o.cur, price: o.price });
-  $("x-fills").innerHTML = fills.length
-    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS → <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
-    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
-
-  /* earn: deposit addresses */
-  const addrs = Object.entries(cfg.addrs || {});
-  $("e-addrs").innerHTML = addrs.length
-    ? addrs.map(([cur, a]) => `
-        <div class="addrbox" style="margin-bottom:10px">
-          <span class="tag gold mono">${esc(cur)}</span>
-          <span class="a" style="font-size:12px">${esc(a.addr)}</span>
-          <button class="copy" data-copy="${esc(a.addr)}">${esc(t("copy"))}</button>
-        </div>${a.memo ? `<div class="hint" style="margin:-6px 0 10px">memo: <span class="mono">${esc(a.memo)}</span></div>` : ""}`).join("")
-    : `<div style="color:var(--faint);font-size:13px;padding:8px 0">${t("empty.addrs")}</div>`;
-  for (const b of document.querySelectorAll("[data-copy]")) b.addEventListener("click", () => copyText(b.dataset.copy, ""));
-
-  /* earn: my claims */
-  if (WALLET) {
-    const mine = Object.entries(claims).filter(([, c]) => c.by === WALLET.addr);
-    $("e-mine").innerHTML = mine.length
-      ? mine.reverse().map(([id, c]) => {
-          const st = c.status === "credited" ? `<span class="tag green">${esc(t("misc.credited"))}</span>` : `<span class="tag amber">${esc(t("misc.deposited"))} · pending</span>`;
-          return `<div class="op-row"><span class="k">${esc(c.cur)}</span><span style="flex:1;color:var(--dim)">${esc(c.amt)} ${esc(c.cur)} · ref <span class="mono" style="font-size:10.5px">${esc(String(c.ref).slice(0, 20))}…</span></span>${st}<span class="when">${timeAgo(null)}</span></div>`;
-        }).join("")
-      : `<div class="op-row"><span style="color:var(--faint)">${t("empty.claims")}</span></div>`;
-  } else {
-    $("e-mine").innerHTML = `<div class="op-row"><span style="color:var(--faint)">${t("empty.claims")}</span></div>`;
-  }
-
-  /* earn: network totals */
-  const credits = ops.filter((o) => o.k === "deposit.credit" && o.d);
-  const byCur = {};
-  for (const o of credits) byCur[o.d.cur] = (byCur[o.d.cur] || 0) + Number(o.d.amt);
-  $("e-total-dep").textContent = Object.keys(byCur).length
-    ? Object.entries(byCur).map(([cur, v]) => `${nice(v)} ${cur}`).join(" · ")
-    : "-";
-  const totalCred = credits.reduce((acc, o) => acc + BigInt(o.d.saos || "0"), 0n);
-  $("e-total-cred").textContent = nice(fmtSaos(totalCred.toString(), 3));
-  $("e-total-rew").textContent = nice(fmtSaos(state.rewardsPaid || "0", 3));
-  $("e-credits").innerHTML = credits.length
-    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} → <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
-    : `<div class="op-row"><span style="color:var(--faint)">${t("empty.cred")}</span></div>`;
-
-  renderWalletBalances();
-  refreshSendSymbols();
-}
-
-/* ═══════════ wallet ═══════════ */
-let WALLET = null; // { priv:Uint8Array, pubSTM, addr }
-let QUEUE = [];
-try { QUEUE = JSON.parse(localStorage.getItem("saos.queue") || "[]"); } catch { QUEUE = []; }
-const saveQueue = () => { localStorage.setItem("saos.queue", JSON.stringify(QUEUE)); renderQueue(); };
-addEventListener("beforeunload", () => { WALLET = null; });
-
-function renderWalletUI() {
-  const on = !!WALLET;
-  $("wallet-empty").style.display = on ? "none" : "grid";
-  $("wallet-live").style.display = on ? "" : "none";
-  if (on) {
-    $("wallet-addr").textContent = WALLET.addr;
-    $("wallet-pub").textContent = WALLET.pubSTM;
-    const w = LIVE?.state?.wallets?.[WALLET.addr];
-    const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
-    $("wallet-reg").innerHTML = w
-      ? `<span class="ok">✓ ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
-      : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
-    renderWalletBalances();
-    refreshSendSymbols();
-  }
-}
-function renderWalletBalances() {
-  if (!WALLET || !LIVE?.state) return;
-  const bal = LIVE.state.balances?.[WALLET.addr] || {};
-  const tokens = LIVE.state.tokens || {};
-  const entries = Object.entries(bal).filter(([, v]) => BigInt(v) > 0n);
-  $("wallet-bal").textContent = entries.length
-    ? entries.map(([sym, v]) => `${nice(fmtSaos(v, tokens[sym]?.decimals ?? 0))} ${sym}`).join(" · ")
-    : "0";
-}
-function refreshSendSymbols() {
-  const syms = Object.keys(LIVE?.state?.tokens || {});
-  const sel = $("send-symbol");
-  const cur = sel.value;
-  sel.innerHTML = syms.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("") || `<option value="">${LANG === "he" ? "אין עדיין טוקנים" : "no tokens yet"}</option>`;
-  if (syms.includes(cur)) sel.value = cur;
-  if (WALLET) {
-    const mine = syms.filter((s) => LIVE.state.tokens[s]?.issuer === WALLET.addr);
-    const msel = $("mint-symbol");
-    const mcur = msel.value;
-    msel.innerHTML = mine.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("") || `<option value="">${LANG === "he" ? "אין לך טוקנים שאתה המנפיק שלהם" : "no tokens you issued"}</option>`;
-    if (mine.includes(mcur)) msel.value = mcur;
-  }
-}
-
-$("btn-new-wallet").addEventListener("click", async () => {
-  try {
-    const w = await SL.newWallet();
-    WALLET = w;
-    $("wif-out").textContent = await C.b58cEncode(0x80, w.priv);
-    $("key-reveal").style.display = "";
-    renderWalletUI();
-    renderLive();
-    toast(t("tOk.walletBorn"));
-    location.hash = "#wallet";
-  } catch (e) { toast(t("tErr.create") + e.message, false); }
-});
-$("btn-wipe").addEventListener("click", () => {
-  WALLET = null;
-  $("key-reveal").style.display = "none";
-  $("wif-out").textContent = "";
-  renderWalletUI();
-  renderLive();
-  toast(t("tOk.wiped"));
-});
-$("btn-copy-addr").addEventListener("click", () => { if (WALLET) copyText(WALLET.addr, t("misc.myAddr")); });
-$("btn-copy-wif").addEventListener("click", () => copyText($("wif-out").textContent, "WIF"));
-
-/* encrypted backup: AES-256-GCM with a user password */
-async function keystoreEncrypt(priv, pub, password) {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
-  const aes = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: 310000, hash: "SHA-256" }, key,
-    { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const data = new TextEncoder().encode(JSON.stringify({ v: 1, pub, priv: C.hex(priv) }));
-  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, aes, data));
-  return {
-    format: "saos-keystore-v1", kdf: "PBKDF2-SHA256-310000", cipher: "AES-256-GCM",
-    salt: C.hex(salt), iv: C.hex(iv), ct: C.hex(ct), createdAt: new Date().toISOString(),
-  };
-}
-async function keystoreDecrypt(ks, password) {
-  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
-  const aes = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: C.unhex(ks.salt), iterations: 310000, hash: "SHA-256" }, key,
-    { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
-  const pt = new Uint8Array(await crypto.subtle.decrypt({ name: "AES-GCM", iv: C.unhex(ks.iv) }, aes, C.unhex(ks.ct)));
-  const j = JSON.parse(new TextDecoder().decode(pt));
-  if (j.v !== 1 || typeof j.priv !== "string" || !/^[0-9a-f]{64}$/.test(j.priv)) throw new Error("bad keystore");
-  return { priv: C.unhex(j.priv), pubSTM: j.pub };
-}
-$("btn-export-keystore").addEventListener("click", async () => {
-  if (!WALLET) return;
-  const pass = prompt(LANG === "he"
-    ? "סיסמה לגיבוי המוצפן (AES-256-GCM). אין שחזור בלעדיה, לא נשמר עותק:"
-    : "Password for the encrypted backup (AES-256-GCM). No recovery without it, no copy is kept:");
-  if (!pass || pass.length < 8) { if (pass !== null) toast(t("tErr.badRef"), false); return; }
-  const ks = await keystoreEncrypt(WALLET.priv, WALLET.pubSTM, pass);
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(ks, null, 2)], { type: "application/json" }));
-  a.download = "saos-wallet-" + WALLET.addr.slice(5, 15) + ".json";
-  a.click();
-  URL.revokeObjectURL(a.href);
-  toast(t("tOk.backup"));
-});
-$("btn-import-wallet").addEventListener("click", () => $("import-file").click());
-$("import-file").addEventListener("change", async (e) => {
-  const f = e.target.files?.[0];
-  if (!f) return;
-  try {
-    const ks = JSON.parse(await f.text());
-    if (ks.format !== "saos-keystore-v1") throw new Error("format");
-    const pass = prompt(LANG === "he" ? "סיסמת הגיבוי:" : "Backup password:");
-    if (!pass) return;
-    const { priv, pubSTM } = await keystoreDecrypt(ks, pass);
-    WALLET = { priv, pubSTM, addr: await SL.addressFromPubSTM(pubSTM) };
-    $("key-reveal").style.display = "none";
-    renderWalletUI();
-    renderLive();
-    toast(t("tOk.restored"));
-  } catch (err) {
-    toast(t("tErr.import") + (err.message === "format" ? "format" : err.message || ""), false);
-  }
-  e.target.value = "";
-});
-
-/* ═══════════ signing into the queue ═══════════ */
-async function enqueue(fields) {
-  if (!WALLET) { toast(t("tOk.needWallet"), false); location.hash = "#wallet"; return null; }
-  try {
-    const env = await SL.buildOp(WALLET.priv, WALLET.pubSTM, fields);
-    QUEUE.push(env);
-    saveQueue();
-    return env;
-  } catch (e) {
-    toast(t("tErr.sign") + e.message, false);
-    return null;
-  }
-}
-function renderQueue() {
-  $("wallet-queue").textContent = QUEUE.length;
-  $("queue-list").innerHTML = QUEUE.length
-    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">✕</button></div>`).join("")
-    : `<div class="op-row"><span style="color:var(--faint)">${LANG === "he" ? "התור ריק" : "the queue is empty"}</span></div>`;
-  for (const b of document.querySelectorAll("[data-qi]")) {
-    b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); });
-  }
-}
-function queueSummary(env) {
-  const n = (x) => nice(Number(x || 0));
-  if (env.k === "wallet.create") return (LANG === "he" ? "רישום ארנק" : "wallet registration") + (env.nick ? ` "${env.nick}"` : "");
-  if (env.k === "token.deploy") return `${env.symbol} (cap ${n(env.maxSupply)})`;
-  if (env.k === "token.mint") return `${n(env.amount)} ${env.symbol}`;
-  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} → ${String(env.to).slice(0, 10)}…`;
-  if (env.k === "token.burn") return `${n(env.amount)} ${env.symbol}`;
-  if (env.k === "deposit.claim") return `${env.amt} ${env.cur}`;
-  if (env.k === "dex.offer") return `${n(env.units)} SAOS @ ${env.price} ${env.cur}`;
-  if (env.k === "dex.cancel") return env.offerId;
-  return env.id;
-}
-$("btn-register").addEventListener("click", async () => {
-  const nick = $("reg-nick").value.trim();
-  const fields = { k: "wallet.create" };
-  if (nick) fields.nick = nick;
-  const env = await enqueue(fields);
-  if (env) toast(t("tOk.registered"));
-});
-$("btn-send").addEventListener("click", async () => {
-  const symbol = $("send-symbol").value;
-  const to = $("send-to").value.trim();
-  const amount = $("send-amount").value.trim();
-  if (!symbol) { toast(t("tErr.noSymbol"), false); return; }
-  if (!SL.ADDR_RE.test(to)) { toast(t("tErr.badAddr"), false); return; }
-  const dec = LIVE?.state?.tokens?.[symbol]?.decimals ?? 0;
-  const units = toUnits(amount, dec);
-  if (units === null) { toast(t("tErr.badAmt"), false); return; }
-  const env = await enqueue({ k: "token.transfer", symbol, to, amount: units });
-  if (env) { toast(t("tOk.signed")); $("send-to").value = ""; $("send-amount").value = ""; }
-});
-function toUnits(amount, decimals) {
-  const m = /^(\d+)(?:\.(\d{1,9}))?$/.exec(String(amount || "").trim());
-  if (!m) return null;
-  const frac = (m[2] || "").padEnd(decimals, "0").slice(0, decimals);
-  const units = m[1] + frac;
-  if (!/^\d{1,18}$/.test(units) || /^0+$/.test(units)) return null;
-  return units.replace(/^0+(?=\d)/, "");
-}
-$("btn-deploy").addEventListener("click", async () => {
-  const symbol = $("tk-symbol").value.trim().toUpperCase();
-  const name = $("tk-name").value.trim();
-  const decimals = Number($("tk-dec").value);
-  const max = String($("tk-max").value).trim();
-  if (!/^[A-Z][A-Z0-9]{2,7}$/.test(symbol)) { toast(t("tErr.badSym"), false); return; }
-  if (name.length < 1) { toast(t("tErr.noSymbol"), false); return; }
-  if (!Number.isInteger(decimals) || decimals < 0 || decimals > 9) { toast(t("tErr.badAmt"), false); return; }
-  if (!/^\d{1,16}$/.test(max) || BigInt(max) <= 0n || BigInt(max) > 10n ** 15n) { toast(t("tErr.badAmt"), false); return; }
-  const env = await enqueue({ k: "token.deploy", symbol, name, decimals, maxSupply: max });
-  if (env) { toast(t("tOk.signed")); $("tk-symbol").value = ""; $("tk-name").value = ""; }
-});
-$("btn-mint").addEventListener("click", async () => {
-  const symbol = $("mint-symbol").value;
-  const to = $("mint-to").value.trim();
-  const amount = String($("mint-amount").value).trim();
-  if (!symbol) { toast(t("tErr.noToken"), false); return; }
-  if (!SL.ADDR_RE.test(to)) { toast(t("tErr.badAddr"), false); return; }
-  if (!/^\d{1,18}$/.test(amount) || /^0+$/.test(amount)) { toast(t("tErr.badAmt"), false); return; }
-  const env = await enqueue({ k: "token.mint", symbol, to, amount });
-  if (env) toast(t("tOk.signed"));
-});
-$("btn-copy-queue").addEventListener("click", () => {
-  if (!QUEUE.length) { toast(t("tErr.emptyQueue"), false); return; }
-  copyText(JSON.stringify(QUEUE, null, 2), "JSON");
-});
-
-/* ═══════════ exchange + earn actions ═══════════ */
-$("btn-offer").addEventListener("click", async () => {
-  const cur = $("off-cur").value.trim().toUpperCase();
-  const amt = $("off-amt").value.trim();
-  const price = $("off-price").value.trim();
-  if (!/^[A-Z]{2,10}$/.test(cur)) { toast(t("tErr.badCur"), false); return; }
-  if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(price) || /^0+(\.0+)?$/.test(price)) { toast(t("tErr.badPrice"), false); return; }
-  const units = toUnits(amt, 3);
-  if (units === null) { toast(t("tErr.badAmt"), false); return; }
-  const env = await enqueue({ k: "dex.offer", cur, units, price });
-  if (env) { toast(t("tOk.offerSigned")); $("off-amt").value = ""; }
-});
-$("btn-claim").addEventListener("click", async () => {
-  const cur = $("cl-cur").value.trim().toUpperCase();
-  const amt = $("cl-amt").value.trim();
-  const ref = $("cl-ref").value.trim();
-  if (!/^[A-Z]{2,10}$/.test(cur)) { toast(t("tErr.badCur"), false); return; }
-  if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(amt) || /^0+(\.0+)?$/.test(amt)) { toast(t("tErr.badAmt"), false); return; }
-  if (!/^[\w :.\-\/+=]{6,90}$/.test(ref)) { toast(t("tErr.badRef"), false); return; }
-  const env = await enqueue({ k: "deposit.claim", cur, amt, ref });
-  if (env) { toast(t("tOk.claimSigned")); $("cl-ref").value = ""; }
-});
-
-/* ═══════════ broadcast (any Steem account as transport) ═══════════ */
-$("btn-relay-all").addEventListener("click", async () => {
-  const account = $("relay-account").value.trim().toLowerCase();
-  const wif = $("relay-wif").value.trim();
-  const out = $("relay-result");
-  if (!QUEUE.length) { toast(t("tErr.emptyQueue"), false); return; }
-  if (!/^[a-z0-9.-]{3,24}$/.test(account)) { toast(t("tErr.badCur"), false); return; }
-  if (!wif) { toast(t("tErr.badRef"), false); return; }
-  out.textContent = "...";
-  try {
-    const priv = await C.wifToPriv(wif);
-    const pub = await C.pubToSTM(C.privToPubBytes(priv));
-    const acc = await steemRpc("condenser_api.get_accounts", [[account]]);
-    const postingPub = acc?.[0]?.posting?.key_auths?.[0]?.[0];
-    if (pub !== postingPub) throw new Error(LANG === "he" ? "המפתח אינו מפתח ה-posting של החשבון" : "key is not a posting key of this account");
-    let sent = 0;
-    for (const env of QUEUE) {
-      const op = ["custom_json", {
-        required_auths: [], required_posting_auths: [account],
-        id: SL.OP_ID, json: JSON.stringify(env),
-      }];
-      const getProps = () => steemRpc("condenser_api.get_dynamic_global_properties", []);
-      const getBlockHeader = (n) => steemRpc("condenser_api.get_block_header", [n]);
-      const signed = await C.buildSignedTx([op], priv, getProps, getBlockHeader);
-      await steemRpc("condenser_api.broadcast_transaction", [signed]);
-      sent++;
-      await new Promise((r) => setTimeout(r, 700));
-    }
-    QUEUE = [];
-    saveQueue();
-    out.textContent = "✓ " + t("tOk.broadcast")(sent);
-    toast(t("tOk.broadcast")(sent));
-    setTimeout(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 15000);
-  } catch (e) {
-    out.textContent = "✗ " + (e.message || "").slice(0, 90);
-    toast(t("tErr.relayFail") + (e.message || "").slice(0, 80), false);
-  } finally {
-    $("relay-wif").value = ""; // transport key wiped immediately
-  }
-});
-
-/* ═══════════ independent verification: fold the chain yourself ═══════════ */
-$("btn-verify-chain").addEventListener("click", async () => {
-  const out = $("verify-chain-result");
-  out.textContent = LANG === "he" ? "קורא את השרשרת הציבורית…" : "reading the public chain...";
-  out.style.color = "var(--dim)";
-  try {
-    const accounts = ["cashmachine", "headcorner"];
-    const envelopes = [];
-    for (const acc of accounts) {
-      let start = -1;
-      for (let p = 0; p < 12; p++) {
-        const hist = await steemRpc("condenser_api.get_account_history", [acc, start, 100]);
-        if (!Array.isArray(hist) || !hist.length) break;
-        let oldest = Infinity;
-        for (const [idx, entry] of hist) {
-          if (typeof idx === "number") oldest = Math.min(oldest, idx);
-          const op = entry?.op;
-          if (!op || op[0] !== "custom_json") continue;
-          const body = op[1];
-          if (body?.id !== SL.OP_ID) continue;
-          try { envelopes.push(JSON.parse(String(body.json || "{}"))); } catch { /* broken json, the fold rejects it honestly */ }
-        }
-        if (oldest === Infinity || oldest <= 1) break;
-        start = Math.max(1, oldest - 1);
-      }
-    }
-    const res = await SL.fold(envelopes);
-    const published = LIVE?.stateRoot || null;
-    if (envelopes.length === 0) {
-      out.textContent = LANG === "he"
-        ? "אין עדיין פעולות על השרשרת. הג'נזיס ייחת בפעימת הרשת הקרובה."
-        : "No operations on the chain yet. The genesis lands with the next network beat.";
-      out.style.color = "var(--amber)";
-      return;
-    }
-    const match = published === res.stateRoot;
-    out.innerHTML = (LANG === "he"
-      ? `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · שורש <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `
-      : `Read ${envelopes.length} operations · ${res.valid} valid · root <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `)
-      + (match
-        ? (LANG === "he" ? "= תואם למפורסם ✓" : "= matches the published root ✓")
-        : (LANG === "he" ? "≠ שונה מהמפורסם!" : "≠ differs from the published root!"));
-    out.style.color = match ? "#86efac" : "#fca5a5";
-    if (!match && published) toast(LANG === "he" ? "השורש שונה מהמפורסם" : "root differs from published", false);
-  } catch (e) {
-    out.textContent = (LANG === "he" ? "האימות נכשל: " : "verification failed: ") + (e.message || "").slice(0, 90);
-    out.style.color = "#fca5a5";
-  }
+$("brand").addEventListener("click", ()=>{ location.hash = "#/home"; });
+$("burger").addEventListener("click", ()=>{
+  const mn = $("mobnav");
+  mn.classList.toggle("open");
+  $("burger").setAttribute("aria-expanded", mn.classList.contains("open")?"true":"false");
 });
 
 /* ═══════════ language ═══════════ */
-$("langbtn").addEventListener("click", () => {
-  LANG = LANG === "he" ? "en" : "he";
-  try { localStorage.setItem("saos.lang", LANG); } catch {}
+function applyLang(){
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG==="he" ? "rtl" : "ltr";
+  for(const el of document.querySelectorAll("[data-i]")){
+    const v = t(el.dataset.i);
+    if(typeof v==="string") el.textContent = v;
+  }
+  for(const el of document.querySelectorAll("[data-i-html]")){
+    const v = t(el.dataset.iHtml);
+    if(typeof v==="string") el.innerHTML = v;
+  }
+  document.title = LANG==="he" ? "SAOS Network | הרשת המאמתת לסוכני AI" : "SAOS Network | The Verifying Network for AI Agents";
+  $("langbtn").textContent = LANG==="he" ? "English" : "עברית";
+  route();
+  renderDynamic();
+}
+$("langbtn").addEventListener("click", ()=>{
+  LANG = LANG==="he" ? "en" : "he";
+  try{ localStorage.setItem("saos.lang", LANG); }catch{}
   applyLang();
 });
-(() => {
+(()=>{
   let saved = null;
-  try { saved = localStorage.getItem("saos.lang"); } catch {}
-  if (saved === "he" || saved === "en") LANG = saved;
-  else if (/^he/i.test(navigator.language || "")) LANG = "he";
+  try{ saved = localStorage.getItem("saos.lang"); }catch{}
+  if(saved==="he"||saved==="en") LANG = saved;
+  else if(/^he/i.test(navigator.language||"")) LANG = "he";
 })();
+$("year").textContent = new Date().getFullYear();
 
-renderQueue();
+/* ═══════════ data layer — public mirrors only ═══════════ */
+const CACHE = { status:null, mirror:null, registry:null, saos:null, dex:null, state:null, requests:null, verify:null, gh:null, ghFail:false };
+async function jget(url){
+  const r = await fetch(url + (url.includes("?")?"&":"?") + "t=" + Date.now(), {cache:"no-store"});
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  return r.json();
+}
+async function loadAll(){
+  const jobs = [
+    jget("status.json").then(j=>CACHE.status=j).catch(()=>{}),
+    jget("mirror.json").then(j=>CACHE.mirror=j).catch(()=>{}),
+    jget("agents/registry.json").then(j=>CACHE.registry=j).catch(()=>{}),
+    jget("saos-live.json").then(j=>CACHE.saos=j).catch(()=>{}),
+    jget("dex/world.json").then(j=>CACHE.dex=j).catch(()=>{}),
+    jget("agent/state.json").then(j=>CACHE.state=j).catch(()=>{}),
+    jget("agent/requests.json").then(j=>CACHE.requests=j).catch(()=>{}),
+    jget("agent/verify/results.json").then(j=>CACHE.verify=j).catch(()=>{}),
+    (async()=>{
+      try{
+        const [repos, runs] = await Promise.all([
+          jget("https://api.github.com/orgs/roshpinacare-sys/repos?per_page=100"),
+          jget("https://api.github.com/repos/roshpinacare-sys/Console/actions/runs?per_page=8")
+        ]);
+        CACHE.gh = {repos, runs};
+      }catch{ CACHE.ghFail = true; }
+    })()
+  ];
+  await Promise.all(jobs);
+}
+function srcNote(id, txt, ok=true){
+  const el = $(id); if(!el) return;
+  el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg><span'+(ok?"":" class='failhonest'")+">"+esc(txt)+"</span>";
+}
+
+/* ═══════════ dynamic renderers ═══════════ */
+function renderHome(){
+  const st = CACHE.status, mi = CACHE.mirror, reg = CACHE.registry;
+  if(st && st.witness){
+    const fr = st.freshness || {};
+    const ok = fr.verdict === "FRESH";
+    $("k-witness").textContent = ok ? t("st.fresh") : (fr.verdict||"—");
+    $("k-witness").style.color = ok ? "#86efac" : "#fde68a";
+    $("k-witness-sub").textContent = (fr.ageHours!=null?t("st.hours")(fr.ageHours):"") + " · Steem " + (st.witness.block?("#"+fmtInt(st.witness.block)):"");
+  } else { $("k-witness").textContent = "—"; }
+  if(mi && mi.stats){
+    $("k-att").textContent = fmtInt(mi.stats.attestations);
+    $("k-att-sub").textContent = fmtInt(mi.stats.checkpoints)+" "+t("net.kCp").toLowerCase();
+    const last = (mi.attestations&&mi.attestations.length)?mi.attestations[mi.attestations.length-1].at:null;
+    if(last) $("k-att-sub").textContent += " · "+timeAgo(last);
+  }
+  if(reg && reg.agents){
+    const live = reg.agents.filter(a=>a.state==="live").length;
+    $("k-fleet").textContent = live + "/" + reg.agents.length;
+    $("k-fleet-sub").textContent = reg.reposWithAgents.length+" "+t("net.ecoActive").toLowerCase();
+  }
+  if(mi && mi.stats){
+    $("k-brain").textContent = (mi.stats.brainLive??"—") + (mi.stats.brainKeys?(" / "+mi.stats.brainKeys):"");
+    $("k-brain-sub").textContent = t("kn.brain");
+  }
+  const tb = $("home-beats");
+  if(mi && mi.attestations){
+    tb.innerHTML = mi.attestations.slice(-6).reverse().map(a=>
+      "<tr><td class='mono strong'>"+a.seq+"</td><td>"+esc(a.type)+"</td><td>"+esc(a.agentName||"—")+"</td><td style='max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap' title='"+esc(a.claim||"")+"'>"+esc((a.claim||"").slice(0,140))+"</td><td class='num'>"+timeAgo(a.at)+"</td></tr>"
+    ).join("");
+  } else {
+    tb.innerHTML = "<tr><td colspan='5' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>";
+  }
+}
+function renderNetwork(){
+  const st = CACHE.status, mi = CACHE.mirror, reg = CACHE.registry;
+  if(mi && mi.stats){
+    $("n-att").textContent = fmtInt(mi.stats.attestations);
+    $("n-cp").textContent = fmtInt(mi.stats.checkpoints);
+    $("n-ag").textContent = fmtInt(mi.stats.agents);
+    const cps = mi.checkpoints||[];
+    $("n-root").textContent = cps.length ? "#"+cps[cps.length-1].index : "—";
+    $("n-root-hex").textContent = (mi.stats.headHash||"").slice(0,26)+"…";
+  }
+  const wc = $("n-witness-card");
+  if(st && st.witness){
+    const w = st.witness, fr = st.freshness||{};
+    wc.innerHTML =
+      '<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px">'+
+        '<span class="dot '+(fr.verdict==="FRESH"?"live":"aging")+'"></span>'+
+        '<span class="strong" style="font-size:16px">'+esc(fr.verdict||"—")+'</span>'+
+        '<span class="tag">'+(fr.ageHours!=null?t("st.hours")(fr.ageHours):"")+'</span>'+
+        '<span class="tag">'+esc(fr.cadence||"")+' '+(LANG==="he"?"קצב":"cadence")+'</span>'+
+      '</div>'+
+      '<div class="stat-row">'+
+        '<div class="s"><div class="v mono" style="font-size:14px;word-break:break-all">'+esc((w.txid||"").slice(0,24))+'…</div><div class="l">'+t("t.txid")+'</div></div>'+
+        '<div class="s"><div class="v num">'+(w.block?fmtInt(w.block):"—")+'</div><div class="l">Steem block</div></div>'+
+        '<div class="s"><div class="v num">#'+(w.checkpoint??"—")+'</div><div class="l">'+t("net.kCp")+'</div></div>'+
+        '<div class="s"><div class="v num">'+fmtInt(w.attestations)+'</div><div class="l">'+t("net.kAtt")+'</div></div>'+
+      '</div>'+
+      '<div style="margin-top:14px"><a class="mono" style="font-size:12.5px" href="'+esc(w.explorer||"#")+'" target="_blank" rel="noopener">'+esc(w.explorer||"")+'</a></div>';
+  } else { wc.innerHTML = '<div class="failhonest">'+esc(t("fail.fetch"))+'</div>'; }
+  const lb = $("net-ledger");
+  if(mi && mi.attestations){
+    lb.innerHTML = mi.attestations.slice(-40).reverse().map(a=>{
+      const ok = a.status==="VERIFIED";
+      return "<tr><td class='mono strong'>"+a.seq+"</td><td>"+esc(a.type)+"</td><td><span class='tag "+(ok?"green":"amber")+"'>"+esc(a.status)+"</span></td><td>"+esc(a.agentName||"—")+"</td><td style='max-width:420px' title='"+esc(a.claim||"")+"'>"+esc((a.claim||"").slice(0,160))+"</td><td class='num'>"+timeAgo(a.at)+"</td></tr>";
+    }).join("");
+  } else { lb.innerHTML = "<tr><td colspan='6' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
+  const an = $("net-anchors");
+  if(mi && mi.anchorLines && mi.anchorLines.steem){
+    an.innerHTML = mi.anchorLines.steem.slice(-12).reverse().map(a=>
+      "<tr><td class='mono strong'>#"+a.checkpoint+"</td><td><a class='mono' href='https://steemscan.com/transaction/"+esc(a.txid||"")+"' target='_blank' rel='noopener'>"+esc((a.txid||"").slice(0,20))+"…</a></td><td class='num'>"+timeAgo(a.at)+"</td></tr>"
+    ).join("");
+  } else { an.innerHTML = "<tr><td colspan='3' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
+  const ea = $("eco-active"), ei = $("eco-idle"), er = $("eco-repos");
+  if(reg){
+    ea.innerHTML = reg.reposWithAgents.map(r=>"<li><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M20 6L9 17l-5-5'/></svg><span class='strong'>"+esc(r)+"</span></li>").join("");
+    ei.innerHTML = reg.reposIdle.map(r=>"<li><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><circle cx='12' cy='12' r='9'/><path d='M12 8v4M12 16h.01'/></svg><span>"+esc(r)+"</span></li>").join("");
+  }
+  if(CACHE.gh && CACHE.gh.repos){
+    const rows = CACHE.gh.repos.slice().sort((a,b)=>Date.parse(b.pushed_at)-Date.parse(a.pushed_at));
+    er.innerHTML = rows.map(r=>"<tr><td class='strong'>"+esc(r.name)+"</td><td class='num'>"+timeAgo(r.pushed_at)+"</td><td><span class='tag "+(r.visibility==="public"?"green":"amber")+"'>"+esc(r.visibility||"?")+"</span></td></tr>").join("");
+    srcNote("eco-src", t("src.ghapi"), true);
+  } else {
+    er.innerHTML = "<tr><td colspan='3' class='failhonest'>"+esc(CACHE.ghFail?t("src.ratelimit"):t("fail.fetch"))+"</td></tr>";
+    srcNote("eco-src", t("src.ratelimit"), false);
+  }
+  renderPlan();
+}
+function renderPlan(){
+  const el = $("plan-list");
+  const s = CACHE.state;
+  if(s && Array.isArray(s.openLoops) && s.openLoops.length){
+    const pri = {P0:"red",P1:"amber",P2:"gold",P3:"green"};
+    el.innerHTML = s.openLoops.map(o=>
+      '<div class="card" style="margin-bottom:10px;display:flex;gap:14px;align-items:flex-start">'+
+        '<span class="tag '+(pri[o.priority]||"gold")+'">'+esc(o.priority||"P?")+'</span>'+
+        '<div style="flex:1"><div class="strong" style="font-size:14.5px">'+esc(LANG==="he"?(o.titleHe||o.title):(o.title||o.titleHe))+'</div>'+
+        (o.detail?'<div style="color:var(--dim);font-size:13px;margin-top:4px;line-height:1.55">'+esc(LANG==="he"?(o.detailHe||o.detail):(o.detail||o.detailHe))+'</div>':"")+
+        '</div></div>'
+    ).join("");
+  } else if(s){
+    el.innerHTML = '<div class="note">'+esc(t("evo.none"))+'</div>';
+  } else {
+    el.innerHTML = '<div class="failhonest">'+esc(t("fail.fetch"))+'</div>';
+  }
+}
+function renderAgents(){
+  const reg = CACHE.registry, mi = CACHE.mirror;
+  const fl = $("fleet-live");
+  if(reg && reg.agents){
+    fl.innerHTML = reg.agents.map(a=>{
+      const st = a.state||"dormant";
+      const dotCls = st==="live"?"live":(st==="aging"?"aging":"dormant");
+      const lr = a.lastRun||{};
+      const runUrl = lr.url?(" href='"+esc(lr.url)+"' target='_blank' rel='noopener'"):"";
+      return '<a class="card hov" style="display:block"'+runUrl+'>'+
+        '<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:8px">'+
+          '<span class="dot '+dotCls+'"></span><span class="tag">'+esc(a.layer||"—")+'</span></div>'+
+        '<div class="strong" style="font-size:15px;margin-bottom:3px">'+esc(a.name)+'</div>'+
+        '<div style="color:var(--dim);font-size:12.5px;line-height:1.55;margin-bottom:10px;min-height:38px">'+esc((a.role&&(LANG==="he"?a.role.he:a.role.en))||"—")+'</div>'+
+        '<div class="stat-row" style="gap:14px;font-size:12px">'+
+          '<div class="s"><div class="v num" style="font-size:15px">'+(a.stats?Math.round(a.stats.successRate):"—")+'%</div><div class="l">'+esc(t("t.status")+": "+(a.stats?fmtInt(a.stats.runs_sampled):"—"))+'</div></div>'+
+          '<div class="s"><div class="v num" style="font-size:15px">'+(a.stats?Math.round(a.stats.avgDurS):"—")+'s</div><div class="l">avg</div></div>'+
+        '</div>'+
+        '<div class="meter"><i style="width:'+(a.stats?Math.max(4,Math.min(100,a.stats.successRate)):0)+'%"></i></div>'+
+        '<div style="margin-top:9px;font-size:12px;color:var(--faint)">'+esc(a.schedule||"")+' · '+esc(lr.conclusion||st)+' · '+timeAgo(lr.at)+'</div>'+
+      '</a>';
+    }).join("");
+  } else { fl.innerHTML = '<div class="card"><div class="failhonest">'+esc(t("fail.fetch"))+'</div></div>'; }
+  const ids = $("ag-ids");
+  if(mi && mi.agents){
+    ids.innerHTML = mi.agents.map(a=>
+      "<tr><td class='strong'>"+esc(a.name)+"</td><td>"+esc(a.role||"—")+"</td><td><span class='tag "+(a.status==="ACTIVE"?"green":"amber")+"'>"+esc(a.status||"—")+"</span></td><td class='mono' style='font-size:11.5px'>"+esc(a.address||"—")+"</td><td class='num'>"+fmtInt(a.attestations)+"</td><td class='num'>"+timeAgo(a.lastAttestationAt)+"</td></tr>"
+    ).join("");
+  } else { ids.innerHTML = "<tr><td colspan='6' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
+}
+function renderExchange(){
+  const dx = CACHE.dex, mi = CACHE.mirror, sv = CACHE.saos;
+  if(dx && dx.ok){
+    const m = (dx.markets||[]).find(x=>x.key==="SAOS/USDS")||(dx.markets||[])[0];
+    if(m){ $("dx-price").textContent = (m.fair/1000).toFixed(3); $("dx-spread").textContent = (m.spreadBps??0)+" bps"; }
+    $("dx-height").textContent = "h"+fmtInt(dx.state&&dx.state.height);
+    $("dx-fills").textContent = fmtInt(dx.state&&dx.state.fills);
+    srcNote("dx-src", t("src.dex")+(dx.publishedAt?" · "+timeAgo(dx.publishedAt):""), true);
+  } else { srcNote("dx-src", t("fail.fetch"), false); }
+  const mk = $("ex-market");
+  if(mi && mi.market){
+    const kindTag = {SETTLE:"green",STAKE:"gold",OPEN:"amber",REFUND:"red"};
+    mk.innerHTML = mi.market.slice(0,20).map(o=>"<tr><td class='mono strong'>"+o.seq+"</td><td><span class='tag "+(kindTag[o.kind]||"gold")+"'>"+esc(o.kind)+"</span></td><td>"+esc(o.summary||"—")+"</td><td class='num'>"+timeAgo(o.at)+"</td></tr>").join("");
+  } else { mk.innerHTML = "<tr><td colspan='4' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
+  if(sv){
+    $("hold-wallets").textContent = fmtInt(Object.keys((sv.state&&sv.state.wallets)||{}).length);
+    $("hold-ops").textContent = fmtInt((sv.ops||[]).length);
+    const sup = sv.state&&sv.state.supply&&sv.state.supply.SAOS;
+    $("hold-supply").textContent = sup?fmtInt(Number(sup)):(sv.genesis?fmtInt(Number(sv.genesis.initialMint)):"—");
+    $("hold-root").textContent = (sv.stateRoot||"").slice(0,18)+"…";
+  }
+}
+function renderKnowledge(){
+  const mi = CACHE.mirror;
+  const br = $("kn-brain");
+  if(mi && mi.brain && mi.brain.length){
+    br.innerHTML = mi.brain.map(b=>
+      '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span class="dot live"></span><span class="tag green">HTTP '+esc(b.lastCode||"—")+'</span></div>'+
+      '<div class="mono" style="font-size:12.5px;word-break:break-all">'+esc(b.fingerprint||"—")+'</div>'+
+      '<div style="margin-top:8px;font-size:12px;color:var(--faint)">'+esc(b.status||"")+' · '+timeAgo(b.verifiedAt)+'</div></div>'
+    ).join("");
+  } else if(mi){
+    br.innerHTML = '<div class="note">'+esc(t("evo.none"))+'</div>';
+  } else { br.innerHTML = '<div class="card"><div class="failhonest">'+esc(t("fail.fetch"))+'</div></div>'; }
+  const ev = $("kn-evo");
+  if(mi && Array.isArray(mi.discoveries)){
+    ev.innerHTML = mi.discoveries.length
+      ? mi.discoveries.map(d=>'<div class="card" style="margin-bottom:10px"><div class="strong">'+esc(d.title||d.id||"?")+'</div><div style="color:var(--dim);font-size:13px;margin-top:5px">'+esc(d.summary||"")+'</div></div>').join("")
+      : '<div class="note">'+esc(t("evo.none"))+'</div>';
+  } else { ev.innerHTML = '<div class="failhonest">'+esc(t("fail.fetch"))+'</div>'; }
+}
+function renderAdmin(){
+  const s = CACHE.state;
+  const el = $("ad-state");
+  if(s){
+    const lo = (s.lastHandoff||{}).at;
+    el.innerHTML =
+      '<div class="card"><div style="display:flex;gap:10px;align-items:center;margin-bottom:10px"><span class="dot live"></span><span class="tag gold">'+esc(s.phase||"—")+'</span></div>'+
+        '<div class="kplabel">'+esc(t("state.task"))+'</div><div class="strong" style="font-size:15px;margin:4px 0 12px">'+esc(LANG==="he"?(s.currentTaskHe||s.currentTask):(s.currentTask||s.currentTaskHe)||"—")+'</div>'+
+        '<div class="kplabel">'+esc(t("state.handoff"))+'</div><div style="color:var(--dim);font-size:13px;margin-top:3px">'+esc(timeAgo(lo))+' · '+esc(s.agent||"sovereign agent")+'</div>'+
+      '</div>'+
+      '<div class="card"><div class="kplabel" style="margin-bottom:8px">'+esc(t("state.openLoops"))+' · '+(Array.isArray(s.openLoops)?s.openLoops.length:0)+'</div>'+
+        '<ul class="clean">'+(Array.isArray(s.openLoops)?s.openLoops.slice(0,5).map(o=>'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/></svg><span>'+esc(LANG==="he"?(o.titleHe||o.title):(o.title||o.titleHe))+'</span></li>').join(""):"")+'</ul>'+
+        '<div style="margin-top:12px"><a class="mono" style="font-size:12px" href="agent/handoff.md" target="_blank" rel="noopener">agent/handoff.md</a></div>'+
+      '</div>';
+  } else { el.innerHTML = '<div class="card"><div class="failhonest">'+esc(t("fail.fetch"))+'</div></div>'; }
+  const runs = $("ad-runs");
+  if(CACHE.gh && CACHE.gh.runs && CACHE.gh.runs.workflow_runs){
+    const clstag = {success:"green",failure:"red",cancelled:"amber"};
+    runs.innerHTML = CACHE.gh.runs.workflow_runs.slice(0,8).map(r=>
+      "<tr><td class='strong'>"+esc(r.name)+"</td><td><span class='tag "+(clstag[r.conclusion]||"amber")+"'>"+esc(r.conclusion||r.status||"—")+"</span></td><td class='num'>"+timeAgo(r.created_at)+"</td><td><a href='"+esc(r.html_url)+"' target='_blank' rel='noopener'>"+esc(t("t.open"))+"</a></td></tr>"
+    ).join("");
+    srcNote("ad-runs-src", t("src.ghapi"), true);
+  } else { runs.innerHTML = "<tr><td colspan='4' class='failhonest'>"+esc(CACHE.ghFail?t("src.ratelimit"):t("fail.fetch"))+"</td></tr>"; }
+  renderMissions();
+  const rp = $("ad-repos");
+  if(CACHE.gh && CACHE.gh.repos){
+    const rows = CACHE.gh.repos.slice().sort((a,b)=>Date.parse(b.pushed_at)-Date.parse(a.pushed_at));
+    rp.innerHTML = rows.map(r=>"<tr><td class='strong'>"+esc(r.name)+"</td><td class='num'>"+timeAgo(r.pushed_at)+"</td><td class='num'>"+timeAgo(r.updated_at)+"</td></tr>").join("");
+    srcNote("ad-repos-src", t("src.ghapi"), true);
+  } else { rp.innerHTML = "<tr><td colspan='3' class='failhonest'>"+esc(t("src.ratelimit"))+"</td></tr>"; }
+  renderVerify();
+}
+function renderMissions(){
+  const el = $("ad-missions");
+  const s = CACHE.state;
+  if(!s){ el.innerHTML = '<div class="failhonest">'+esc(t("fail.fetch"))+'</div>'; return; }
+  const pri = {P0:"red",P1:"amber",P2:"gold",P3:"green"};
+  let html = "";
+  if(Array.isArray(s.openLoops) && s.openLoops.length){
+    html += '<h3 style="font-size:15px;margin-bottom:10px">'+esc(t("state.openLoops"))+'</h3>';
+    html += s.openLoops.map(o=>
+      '<div class="card" style="margin-bottom:10px;display:flex;gap:14px;align-items:flex-start">'+
+      '<span class="tag '+(pri[o.priority]||"gold")+'">'+esc(o.priority||"P?")+'</span>'+
+      '<div style="flex:1"><div class="strong" style="font-size:14.5px">'+esc(LANG==="he"?(o.titleHe||o.title):(o.title||o.titleHe))+'</div>'+
+      (o.detail?'<div style="color:var(--dim);font-size:13px;margin-top:4px;line-height:1.55">'+esc(LANG==="he"?(o.detailHe||o.detail):(o.detail||o.detailHe))+'</div>':"")+
+      '</div></div>').join("");
+  }
+  const money = s.moneyPlan;
+  if(money){
+    html += '<h3 style="font-size:15px;margin:20px 0 10px">'+esc(t("money.title"))+'</h3><div class="note" style="margin-bottom:10px">'+esc(t("money.note"))+'</div><div class="grid g2">';
+    for(const b of (money.buckets||[])){
+      html += '<div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span class="strong">'+esc(LANG==="he"?(b.nameHe||b.name):(b.name||b.nameHe))+'</span><span class="kpi num" style="font-size:22px">'+esc(b.share)+'</span></div>'+
+        '<div style="color:var(--dim);font-size:13px;line-height:1.55">'+esc(LANG==="he"?(b.purposeHe||b.purpose):(b.purpose||b.purposeHe))+'</div></div>';
+    }
+    html += '</div>';
+  }
+  const auth = s.authorities;
+  if(auth){
+    html += '<h3 style="font-size:15px;margin:20px 0 10px">'+esc(t("auth.title"))+'</h3><div class="note" style="margin-bottom:10px">'+esc(t("auth.note"))+'</div><div class="tblwrap"><table><thead><tr><th>'+esc(t("t.name"))+'</th><th>'+esc(t("t.role"))+'</th><th>opIds</th></tr></thead><tbody>';
+    for(const a of auth){
+      html += "<tr><td class='strong mono'>"+esc(a.account||"?")+"</td><td>"+esc(LANG==="he"?(a.roleHe||a.role):(a.role||a.roleHe))+"</td><td class='mono' style='font-size:11.5px'>"+esc((a.opIds||[]).join(", "))+"</td></tr>";
+    }
+    html += '</tbody></table></div>';
+  }
+  const safety = s.safetyLaws;
+  if(safety){
+    html += '<h3 style="font-size:15px;margin:20px 0 10px">'+esc(t("safety.title"))+'</h3><div class="note warn" style="margin-bottom:10px">'+esc(t("safety.note"))+'</div><ul class="clean">';
+    for(const l of safety){
+      html += '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7z"/><path d="M12 9v4M12 16h.01" stroke-linecap="round"/></svg><span>'+esc(LANG==="he"?(l.he||l.en):(l.en||l.he))+'</span></li>';
+    }
+    html += '</ul>';
+  }
+  el.innerHTML = html || '<div class="note">'+esc(t("evo.none"))+'</div>';
+}
+function renderVerify(){
+  const el = $("ad-verify");
+  const v = CACHE.verify;
+  if(v && v.summary){
+    const all = v.summary.verdict==="ALL_PASS";
+    el.innerHTML =
+      '<div class="card" style="margin-bottom:12px"><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">'+
+        '<span class="dot '+(all?"live":"aging")+'" style="width:12px;height:12px"></span>'+
+        '<span class="strong" style="font-size:19px">'+esc(v.summary.verdict)+'</span>'+
+        '<span class="tag '+(all?"green":"amber")+'">'+fmtInt(v.summary.passed)+' / '+fmtInt(v.summary.total)+' '+esc(t("verify.passed"))+'</span>'+
+        '<span style="color:var(--faint);font-size:13px">'+esc(t("verify.runAt"))+': '+esc(v.generatedAt)+'</span>'+
+        '<a class="mono" style="font-size:12px;margin-inline-start:auto" href="https://github.com/roshpinacare-sys/Console/actions/workflows/agent-verify.yml" target="_blank" rel="noopener">workflow</a>'+
+      '</div></div>'+
+      '<div class="tblwrap"><div class="tblscroll"><table><thead><tr><th>ID</th><th>'+esc(t("t.summary"))+'</th><th>'+esc(t("t.status"))+'</th></tr></thead><tbody>'+
+      (v.results||[]).map(r=>"<tr><td class='mono strong'>"+esc(r.id)+"</td><td>"+esc((r.details||"").slice(0,120))+"</td><td><span class='tag "+(r.ok?"green":"red")+"'>"+(r.ok?"PASS":"FAIL")+"</span></td></tr>").join("")+
+      '</tbody></table></div></div>';
+  } else {
+    el.innerHTML = '<div class="note">'+esc(t("verify.none"))+'</div>';
+  }
+}
+function renderDynamic(){ renderHome(); renderNetwork(); renderAgents(); renderExchange(); renderKnowledge(); renderAdmin(); }
+
+/* ═══════════ boot ═══════════ */
+async function boot(){
+  route();
+  await loadAll();
+  renderDynamic();
+  setInterval(()=>{ loadAll().then(renderDynamic).catch(()=>{}); }, 300000);
+}
 applyLang();
 boot();
 </script>
