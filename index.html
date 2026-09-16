@@ -117,8 +117,7 @@ nav.tabs::-webkit-scrollbar{display:none}
 .sect .sect-sub{font-size:13.5px;color:var(--dim);margin-bottom:18px}
 .feat{display:block;color:var(--text)}
 .feat:hover{text-decoration:none;border-color:var(--line2)}
-.feat .ic{margin-bottom:10px}
-.feat .ic svg{display:block}
+.feat .ic{font-size:22px;margin-bottom:10px}
 .feat b{font-size:15.5px;display:block;margin-bottom:6px}
 .feat p{font-size:13px;color:var(--dim);line-height:1.65}
 .step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
@@ -205,33 +204,6 @@ footer.site a{color:var(--dim)}
 .dex-frame{border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:#09090b;box-shadow:0 24px 70px -30px rgba(0,0,0,.8)}
 .dex-frame iframe{display:block;width:100%;height:min(84vh,900px);border:0}
 @media(max-width:520px){.dex-frame iframe{height:70vh}.dex-strip>span{padding:7px 10px;min-width:74px}}
-
-/* ═══ agents view ═══ */
-.ag-legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:14px 2px 0;font-size:12.5px;color:var(--dim)}
-.ag-lg{display:inline-flex;align-items:center;gap:7px}
-.ag-sync{margin-inline-start:auto;color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
-.ag-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
-.ag-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.ag-head b{font-size:15px}
-.ag-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
-.ag-dot.live{background:#34d399;box-shadow:0 0 8px rgba(52,211,153,.55)}
-.ag-dot.degraded{background:#f87171;box-shadow:0 0 8px rgba(248,113,113,.5)}
-.ag-dot.dormant{background:#9ca3af}
-.ag-dot.auto{background:#d4af37;box-shadow:0 0 8px rgba(212,175,55,.45)}
-.ag-repo{font-family:var(--mono);font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:7px;padding:2px 8px}
-.ag-layer{font-family:var(--mono);font-size:10px;letter-spacing:.8px;color:var(--violet);border:1px solid rgba(167,139,250,.3);border-radius:6px;padding:2px 7px}
-.ag-sched{font-size:11.5px;color:var(--gold);border:1px solid rgba(212,175,55,.35);border-radius:6px;padding:2px 8px}
-.ag-role{font-size:13px;color:var(--dim);margin:10px 0 0;line-height:1.55}
-.ag-io{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.ag-io>div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--dim);line-height:1.5;min-width:0}
-.ag-io .tag{font-family:var(--mono);font-size:10px;letter-spacing:.8px;color:var(--gold);display:block;margin-bottom:4px}
-.ag-stats{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:12px;font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
-.ag-bar{position:relative;flex:1;min-width:110px;height:5px;border-radius:3px;background:var(--line);overflow:hidden}
-.ag-bar>i{position:absolute;inset-inline-start:0;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#d4af37,#f5d67b)}
-.ag-bar>i.bad{background:linear-gradient(90deg,#b91c1c,#f87171)}
-.ag-idle{display:flex;flex-wrap:wrap;gap:8px}
-.ag-idle span{font-family:var(--mono);font-size:11.5px;color:var(--dim);border:1px dashed var(--line);border-radius:8px;padding:4px 10px}
-@media(max-width:640px){.ag-io{grid-template-columns:1fr}.ag-sync{margin-inline-start:0;flex-basis:100%}}
 </style>
 </head>
 <body>
@@ -247,10 +219,10 @@ footer.site a{color:var(--dim)}
       <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
       <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
       <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
+      <a class="tab" href="#dex" data-nav="dex" data-i="navDex">DEX</a>
       <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
       <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
       <a class="tab" href="#tokens" data-nav="tokens" data-i="navTokens">Tokens</a>
-      <a class="tab" href="#agents" data-nav="agents" data-i="navAgents">Agents</a>
       <a class="tab" href="#network" data-nav="network" data-i="navNetwork">Network</a>
     </nav>
     <div class="hright">
@@ -286,10 +258,10 @@ footer.site a{color:var(--dim)}
       <h3 data-i="featTitle">What you can do here</h3>
       <p class="sect-sub" data-i="featSub">Everything runs from public connections. This page is itself a network node.</p>
       <div class="grid g4">
-        <a class="card feat" href="#wallet"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 9h-1"/><circle cx="15.5" cy="12.5" r="1.3"/></svg></div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
-        <a class="card feat" href="#exchange"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v13m0 0-3.2-3.2M7 17l3.2-3.2"/><path d="M17 20V7m0 0 3.2 3.2M17 7l-3.2 3.2"/></svg></div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
-        <a class="card feat" href="#earn"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5V13"/><path d="M12 13C12 9.2 9.6 7 5 7c0 4.6 2.4 6.8 7 6z"/><path d="M12 11.2c0-3.4 2.1-5.4 5.7-5.4 0 3.4-2.1 5.4-5.7 5.4z"/></svg></div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
-        <a class="card feat" href="#tokens"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 4.4v9.2L12 21l-7.5-4.4V7.4z"/><circle cx="12" cy="12" r="2.6"/></svg></div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
+        <a class="card feat" href="#wallet"><div class="ic">👛</div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
+        <a class="card feat" href="#exchange"><div class="ic">🔁</div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
+        <a class="card feat" href="#earn"><div class="ic">🌱</div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
+        <a class="card feat" href="#tokens"><div class="ic">🧬</div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
       </div>
     </div>
 
@@ -401,30 +373,8 @@ footer.site a{color:var(--dim)}
 
   <!-- ═══════════ EXCHANGE ═══════════ -->
   <section class="view" id="view-exchange">
-    <div class="hero" style="padding:36px 0 8px">
-      <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
-      <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
-      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
-    </div>
-    <div class="dex-strip" id="dex-strip" aria-live="polite">
-      <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
-      <span><b id="dx-spread">…</b><small data-i="dxSpread">spread</small></span>
-      <span><b id="dx-height">…</b><small data-i="dxHeight">height</small></span>
-      <span><b id="dx-fills">…</b><small data-i="dxFills">fills</small></span>
-      <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
-      <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
-    </div>
-    <div class="dex-frame">
-      <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
-    </div>
-    <p style="text-align:center;margin:18px 0 0">
-      <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
-    </p>
-
-    <div class="sect">
-      <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">P2P escrow offers</h1>
-      <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
-    </div>
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h1>
+    <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
 
     <div class="grid g2">
       <div class="card">
@@ -464,6 +414,29 @@ footer.site a{color:var(--dim)}
       <p class="sub" data-i="xFillsP">Settled deals with their on-chain payment references.</p>
       <div class="feed" id="x-fills"></div>
     </div>
+  </section>
+
+  <!-- ═══════════ DEX TERMINAL ═══════════ -->
+  <section class="view" id="view-dex">
+    <div class="hero" style="padding:36px 0 8px">
+      <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
+      <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
+      <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
+    </div>
+    <div class="dex-strip" id="dex-strip" aria-live="polite">
+      <span><b id="dx-price">…</b><small>SAOS/USDS</small></span>
+      <span><b id="dx-spread">…</b><small data-i="dxSpread">spread</small></span>
+      <span><b id="dx-height">…</b><small data-i="dxHeight">height</small></span>
+      <span><b id="dx-fills">…</b><small data-i="dxFills">fills</small></span>
+      <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
+      <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
+    </div>
+    <div class="dex-frame">
+      <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+    <p style="text-align:center;margin:18px 0 0">
+      <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
+    </p>
   </section>
 
   <!-- ═══════════ EARN ═══════════ -->
@@ -632,35 +605,6 @@ footer.site a{color:var(--dim)}
     </div>
   </section>
 
-  <!-- ═══════════ AGENTS ═══════════ -->
-  <section class="view" id="view-agents">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="agTitle">Agents</h1>
-    <p class="sect-sub" data-i="agSub">Every autonomous agent in the system, across all 14 repositories — what it does, what goes in, what comes out, and how well it runs. Live registry, refreshed from the GitHub API.</p>
-
-    <div class="grid g4">
-      <div class="kpi"><div class="k" data-i="agKpiAgents">Autonomous agents</div><div class="v num" id="ag-n">…</div><div class="s" data-i="agKpiAgentsS">across the fleet</div></div>
-      <div class="kpi"><div class="k" data-i="agKpiRepos">Repositories</div><div class="v num" id="ag-repos">…</div><div class="s" data-i="agKpiReposS">14 in the system</div></div>
-      <div class="kpi"><div class="k" data-i="agKpiOk">Success rate</div><div class="v num" id="ag-ok">…</div><div class="s" data-i="agKpiOkS">weighted over sampled runs</div></div>
-      <div class="kpi"><div class="k" data-i="agKpiRuns">Runs sampled</div><div class="v num" id="ag-runs">…</div><div class="s" data-i="agKpiRunsS">most recent per agent</div></div>
-    </div>
-
-    <div class="ag-legend" id="ag-legend">
-      <span class="ag-lg"><i class="ag-dot live"></i><span data-i="agStLive">live</span></span>
-      <span class="ag-lg"><i class="ag-dot degraded"></i><span data-i="agStDeg">degraded</span></span>
-      <span class="ag-lg"><i class="ag-dot dormant"></i><span data-i="agStDorm">dormant</span></span>
-      <span class="ag-lg"><i class="ag-dot auto"></i><span data-i="agStAuto">automatic</span></span>
-      <span class="ag-sync" id="ag-sync"></span>
-    </div>
-
-    <div class="sect" id="ag-list" aria-live="polite"></div>
-
-    <div class="card" style="margin-top:16px">
-      <h2 data-i="agIdleT">Repositories without agents</h2>
-      <p class="sub" data-i="agIdleP">Archives, vaults and sources of truth — no autonomous workflows. Kept visible on purpose: the full picture, nothing hidden.</p>
-      <div class="feed" style="max-height:220px"><div id="ag-idle" class="ag-idle"></div></div>
-    </div>
-  </section>
-
 </div>
 </main>
 
@@ -682,7 +626,8 @@ const C = globalThis.GateCrypto;
 const I18N = {
 en: {
   brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
-  navCurrency:"Currency", navTokens:"Tokens", navAgents:"Agents", navNetwork:"Network", liveConnecting:"connecting",
+  navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
+  navDex:"DEX",
   dexChip:"the network's own exchange terminal",
   dexTitle:"Sovereign DEX", dexGrad:"Terminal",
   dexLead:"The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape — mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.",
@@ -723,7 +668,7 @@ en: {
   wQueueT:"Signed operations queue", wQueueP:"Signed and waiting. Copy them for the network, or broadcast below.", wQueueCopy:"Copy signed JSON",
   wRelayT:"Broadcast", wRelayP:"A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.",
   wRelayAcc:"Steem account", wRelayWif:"Posting key (WIF)", wRelayBtn:"Broadcast queue",
-  xTitle:"P2P escrow offers", xSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
+  xTitle:"Exchange", xSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
   xRatesT:"Network rates", xRatesP:"Reference rates published on chain by network governance.",
   xPair:"Pair", xPrice:"Price",
   xRatesNote:"Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.",
@@ -764,12 +709,6 @@ en: {
   tListT:"Contracts on chain", tListP:"Every token is a signed contract with a public state.",
   tLSym:"Symbol", tLName:"Name", tLSup:"Supply", tLMax:"Max", tLIss:"Issuer", tLHold:"Holders",
   nTitle:"Network", nSub:"A validation network that runs on public chains and publishes its own proof of life.",
-  agTitle:"Agents", agSub:"Every autonomous agent in the system, across all 14 repositories — what it does, what goes in, what comes out, and how well it runs. Live registry, refreshed from the GitHub API.",
-  agKpiAgents:"Autonomous agents", agKpiAgentsS:"across the fleet", agKpiRepos:"Repositories", agKpiReposS:"14 in the system",
-  agKpiOk:"Success rate", agKpiOkS:"weighted over sampled runs", agKpiRuns:"Runs sampled", agKpiRunsS:"most recent per agent",
-  agStLive:"live", agStDeg:"degraded", agStDorm:"dormant", agStAuto:"automatic",
-  agIn:"input", agOut:"output", agRuns:"runs", agOk:"success", agAvg:"avg", agLast:"last run", agSync:"last sync",
-  agIdleT:"Repositories without agents", agIdleP:"Archives, vaults and sources of truth — no autonomous workflows. Kept visible on purpose: the full picture, nothing hidden.",
   nAtt:"Validations", nAttS:"signed attestations", nCp:"Checkpoints", nCpS:"merkle roots",
   nAnch:"Anchors", nAnchS:"on public chains", nTest:"Engine self-test", nTestS:"runs on page load",
   nVerifyT:"Check everything yourself", nVerifyP:"Your browser reads every operation from the public chain, checks every signature, folds the ledger and compares the root with what this site shows. No trust required.",
@@ -799,7 +738,8 @@ en: {
 },
 he: {
   brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
-  navCurrency:"המטבע", navTokens:"טוקנים", navAgents:"סוכנים", navNetwork:"רשת", liveConnecting:"מתחבר",
+  navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
+  navDex:"דקס",
   dexChip:"טרמינל הבורסה של הרשת עצמה",
   dexTitle:"הבורסה הריבונית", dexGrad:"במראה ציבורית",
   dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי — משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
@@ -840,7 +780,7 @@ he: {
   wQueueT:"תור פעולות חתומות", wQueueP:"חתומות וממתינות. העתק אותן לרשת, או שדר למטה.", wQueueCopy:"העתקת JSON חתום",
   wRelayT:"שידור", wRelayP:"מפתח של חשבון Steem הוא תעבורה בלבד: הוא לא יכול לשנות את הפעולות שלך. החתימה הפנימית היא הסמכות.",
   wRelayAcc:"חשבון Steem", wRelayWif:"מפתח posting (WIF)", wRelayBtn:"שידור התור",
-  xTitle:"הצעות נאמנות P2P", xSub:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתה מבטל.",
+  xTitle:"בורסה", xSub:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתה מבטל.",
   xRatesT:"שערי הרשת", xRatesP:"שערי ייחוס שמתפרסמים על השרשרת בהחלטת ממשל הרשת.",
   xPair:"זוג", xPrice:"שער",
   xRatesNote:"השערים נקבעים בפעולות אוצר חתומות וגלויות לכולם. הם ייחוס: לכל הצעה מחיר משלה.",
@@ -881,12 +821,6 @@ he: {
   tListT:"חוזים על השרשרת", tListP:"כל טוקן הוא חוזה חתום עם מצב ציבורי.",
   tLSym:"סמל", tLName:"שם", tLSup:"אספקה", tLMax:"תקרה", tLIss:"מנפיק", tLHold:"מחזיקים",
   nTitle:"הרשת", nSub:"רשת אימות שרצה על שרשראות ציבוריות ומפרסמת את הוכחת החיים שלה.",
-  agTitle:"סוכנים", agSub:"כל הסוכנים האוטונומיים במערכת, בכל 14 הריפואים — מה כל אחד עושה, מה נכנס, מה יוצא וכמה טוב הוא רץ. רישום חי, מתעדכן מה-API של גיטהאב.",
-  agKpiAgents:"סוכנים אוטונומיים", agKpiAgentsS:"בכל הצי", agKpiRepos:"ריפואים", agKpiReposS:"14 במערכת",
-  agKpiOk:"שיעור הצלחה", agKpiOkS:"משוקלל על פני הריצות שנדגמו", agKpiRuns:"ריצות שנדגמו", agKpiRunsS:"העדכניות ביותר לכל סוכן",
-  agStLive:"חי", agStDeg:"מתדרדר", agStDorm:"רדום", agStAuto:"אוטומטי",
-  agIn:"קלט", agOut:"פלט", agRuns:"ריצות", agOk:"הצלחה", agAvg:"ממוצע", agLast:"ריצה אחרונה", agSync:"סנכרון אחרון",
-  agIdleT:"ריפואים בלי סוכנים", agIdleP:"ארכיונים, כספות ומקורות אמת — בלי זרימות אוטונומיות. גלויים בכוונה: התמונה המלאה, בלי כיסוי.",
   nAtt:"אימותים", nAttS:"עדויות חתומות", nCp:"נקודות-ביקורת", nCpS:"שורשי merkle",
   nAnch:"עוגנים", nAnchS:"על שרשראות ציבוריות", nTest:"בדיקה עצמית של המנוע", nTestS:"רצה בטעינת העמוד",
   nVerifyT:"תבדוק הכל בעצמך", nVerifyP:"הדפדפן שלך קורא כל פעולה מהשרשרת הציבורית, בודק כל חתימה, מקפל את הספר ומשווה את השורש למה שהאתר מציג. בלי צורך באמון.",
@@ -962,10 +896,9 @@ function timeAgo(iso) {
 $("year").textContent = new Date().getFullYear();
 
 /* ═══════════ routing ═══════════ */
-const VIEWS = ["home", "wallet", "exchange", "earn", "currency", "tokens", "agents", "network"];
+const VIEWS = ["home", "wallet", "exchange", "dex", "earn", "currency", "tokens", "network"];
 function route() {
   let h = (location.hash || "#home").slice(1);
-  if (h === "dex") { location.replace("#exchange"); h = "exchange"; } /* legacy: DEX merged into the exchange view */
   if (!VIEWS.includes(h)) h = "home";
   for (const v of VIEWS) $("view-" + v).classList.toggle("on", v === h);
   document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("on", el.dataset.nav === h));
@@ -1000,61 +933,6 @@ window.addEventListener("hashchange", route);
   pull();
   setInterval(pull, 60000);
 })();
-
-/* ═══════════ agents registry ═══════════ */
-let AGENTS_REG = null;
-async function pullAgents() {
-  try {
-    const r = await fetch("agents/registry.json?t=" + Date.now(), { cache: "no-store" });
-    const j = await r.json();
-    if (!j || !j.ok) return;
-    AGENTS_REG = j;
-    renderAgents();
-  } catch { /* הרישום מחזיק את המסגרת האחרונה — סבב הרענון הבא ינסה שוב */ }
-}
-function renderAgents() {
-  const reg = AGENTS_REG;
-  if (!reg) return;
-  const lang = LANG === "he" ? "he" : "en";
-  const fmt = (n) => Number(n || 0).toLocaleString("en-US");
-  const agents = reg.agents || [];
-  const runs = agents.reduce((s, a) => s + (a.stats?.runs_sampled || 0), 0);
-  const succ = agents.reduce((s, a) => s + (a.stats?.success || 0), 0);
-  $("ag-n").textContent = fmt(agents.length);
-  $("ag-repos").textContent = fmt(reg.reposTotal);
-  $("ag-ok").textContent = runs ? Math.round((100 * succ) / runs) + "%" : "—";
-  $("ag-runs").textContent = fmt(runs);
-  $("ag-sync").textContent = (t("agSync") || "last sync") + ": " + (reg.generatedAt ? timeAgo(reg.generatedAt) : "—");
-  $("ag-list").innerHTML = agents.map((a) => {
-    const st = a.stats || {};
-    const rate = st.successRate ?? 0;
-    const lr = a.lastRun || {};
-    const stateTxt = { live: t("agStLive"), degraded: t("agStDeg"), dormant: t("agStDorm"), auto: t("agStAuto") }[a.state] || a.state;
-    return `<article class="ag-card">
-      <div class="ag-head">
-        <i class="ag-dot ${a.state}" title="${esc(stateTxt)}"></i>
-        <b>${esc(a.name)}</b>
-        <span class="ag-repo">${esc(a.repo)} · ${esc(a.visibility)}</span>
-        <span class="ag-layer">${esc(a.layer)}</span>
-        <span class="ag-sched">${esc(a.schedule)}</span>
-      </div>
-      <p class="ag-role">${esc((a.role || {})[lang] || a.role?.en || "")}</p>
-      <div class="ag-io">
-        <div><span class="ag-tag">${esc(t("agIn"))}</span>${esc((a.input || {})[lang] || a.input?.en || "")}</div>
-        <div><span class="ag-tag">${esc(t("agOut"))}</span>${esc((a.output || {})[lang] || a.output?.en || "")}</div>
-      </div>
-      <div class="ag-stats">
-        <span>${esc(t("agRuns"))}: <b style="color:var(--dim)">${fmt(st.runs_sampled)}</b></span>
-        <span>${esc(t("agOk"))}: <b style="color:${rate >= 90 ? "#34d399" : rate >= 50 ? "#f5d67b" : "#f87171"}">${rate}%</b></span>
-        ${st.avgDurS ? `<span>${esc(t("agAvg"))}: <b style="color:var(--dim)">${fmt(st.avgDurS)}s</b></span>` : ""}
-        <span>${esc(t("agLast"))}: <b style="color:var(--dim)">${lr.at ? timeAgo(lr.at) : "—"}</b></span>
-        <span class="ag-bar" title="${rate}%"><i class="${rate < 50 ? "bad" : ""}" style="width:${Math.max(2, Math.min(100, rate))}%"></i></span>
-      </div>
-    </article>`;
-  }).join("");
-  $("ag-idle").innerHTML = (reg.reposIdle || []).map((r) => `<span>${esc(r)}</span>`).join("");
-}
-pullAgents();
 
 /* ═══════════ hidden operator access: 5 logo taps ═══════════ */
 (() => {
@@ -1146,10 +1024,10 @@ async function boot() {
   route();
   try {
     const st = await SL.selfTest();
-    $("selftest-badge").textContent = st.passed + "/" + st.total;
+    $("selftest-badge").textContent = st.passed + "/" + st.total + " ✓";
     $("selftest-badge").classList.toggle("bad", st.passed !== st.total);
   } catch {
-    $("selftest-badge").textContent = LANG === "he" ? "שגיאה" : "error";
+    $("selftest-badge").textContent = "✗";
     $("selftest-badge").classList.add("bad");
   }
   await Promise.all([
@@ -1176,7 +1054,7 @@ async function probeChain() {
 setInterval(probeChain, 90 * 1000);
 
 /* ═══════════ rendering ═══════════ */
-function renderAll() { renderMirror(); renderLive(); renderAgents(); }
+function renderAll() { renderMirror(); renderLive(); }
 
 function renderMirror() {
   const m = MIRROR;
@@ -1312,7 +1190,7 @@ function renderLive() {
   const fills = [];
   for (const [id, o] of Object.entries(offers)) for (const f of o.fills || []) fills.push({ ...f, offerId: id, cur: o.cur, price: o.price });
   $("x-fills").innerHTML = fills.length
-    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS -&gt; <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
+    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS → <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
 
   /* earn: deposit addresses */
@@ -1351,7 +1229,7 @@ function renderLive() {
   $("e-total-cred").textContent = nice(fmtSaos(totalCred.toString(), 3));
   $("e-total-rew").textContent = nice(fmtSaos(state.rewardsPaid || "0", 3));
   $("e-credits").innerHTML = credits.length
-    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} -&gt; <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
+    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} → <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${t("empty.cred")}</span></div>`;
 
   renderWalletBalances();
@@ -1375,7 +1253,7 @@ function renderWalletUI() {
     const w = LIVE?.state?.wallets?.[WALLET.addr];
     const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
     $("wallet-reg").innerHTML = w
-      ? `<span class="ok">${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
+      ? `<span class="ok">✓ ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
       : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
     renderWalletBalances();
     refreshSendSymbols();
@@ -1504,7 +1382,7 @@ async function enqueue(fields) {
 function renderQueue() {
   $("wallet-queue").textContent = QUEUE.length;
   $("queue-list").innerHTML = QUEUE.length
-    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}" aria-label="remove"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M1.5 1.5l7 7m0-7l-7 7"/></svg></button></div>`).join("")
+    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">✕</button></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${LANG === "he" ? "התור ריק" : "the queue is empty"}</span></div>`;
   for (const b of document.querySelectorAll("[data-qi]")) {
     b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); });
@@ -1515,7 +1393,7 @@ function queueSummary(env) {
   if (env.k === "wallet.create") return (LANG === "he" ? "רישום ארנק" : "wallet registration") + (env.nick ? ` "${env.nick}"` : "");
   if (env.k === "token.deploy") return `${env.symbol} (cap ${n(env.maxSupply)})`;
   if (env.k === "token.mint") return `${n(env.amount)} ${env.symbol}`;
-  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} -> ${String(env.to).slice(0, 10)}…`;
+  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} → ${String(env.to).slice(0, 10)}…`;
   if (env.k === "token.burn") return `${n(env.amount)} ${env.symbol}`;
   if (env.k === "deposit.claim") return `${env.amt} ${env.cur}`;
   if (env.k === "dex.offer") return `${n(env.units)} SAOS @ ${env.price} ${env.cur}`;
@@ -1629,11 +1507,11 @@ $("btn-relay-all").addEventListener("click", async () => {
     }
     QUEUE = [];
     saveQueue();
-    out.textContent = t("tOk.broadcast")(sent);
+    out.textContent = "✓ " + t("tOk.broadcast")(sent);
     toast(t("tOk.broadcast")(sent));
     setTimeout(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 15000);
   } catch (e) {
-    out.textContent = (e.message || "").slice(0, 90);
+    out.textContent = "✗ " + (e.message || "").slice(0, 90);
     toast(t("tErr.relayFail") + (e.message || "").slice(0, 80), false);
   } finally {
     $("relay-wif").value = ""; // transport key wiped immediately
@@ -1680,7 +1558,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
       ? `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · שורש <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `
       : `Read ${envelopes.length} operations · ${res.valid} valid · root <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `)
       + (match
-        ? (LANG === "he" ? "= תואם למפורסם" : "= matches the published root")
+        ? (LANG === "he" ? "= תואם למפורסם ✓" : "= matches the published root ✓")
         : (LANG === "he" ? "≠ שונה מהמפורסם!" : "≠ differs from the published root!"));
     out.style.color = match ? "#86efac" : "#fca5a5";
     if (!match && published) toast(LANG === "he" ? "השורש שונה מהמפורסם" : "root differs from published", false);
