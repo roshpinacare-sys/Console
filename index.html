@@ -82,7 +82,6 @@ nav.tabs::-webkit-scrollbar{display:none}
 .view{display:none;padding:34px 0 70px}
 .view.on{display:block}
 .grid{display:grid;gap:16px}
-.grid>*{min-width:0}
 .g2{grid-template-columns:1fr 1fr}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
@@ -118,8 +117,7 @@ nav.tabs::-webkit-scrollbar{display:none}
 .sect .sect-sub{font-size:13.5px;color:var(--dim);margin-bottom:18px}
 .feat{display:block;color:var(--text)}
 .feat:hover{text-decoration:none;border-color:var(--line2)}
-.feat .ic{margin-bottom:10px;line-height:0}
-.feat .ic svg{width:24px;height:24px;display:block;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.feat .ic{font-size:22px;margin-bottom:10px}
 .feat b{font-size:15.5px;display:block;margin-bottom:6px}
 .feat p{font-size:13px;color:var(--dim);line-height:1.65}
 .step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
@@ -180,7 +178,6 @@ details.faq p{margin-top:10px;font-size:13.5px;color:var(--dim);line-height:1.7}
 .note{font-size:12.5px;color:var(--dim);border-inline-start:3px solid var(--line2);padding-inline-start:12px;line-height:1.7;margin-top:16px}
 .note.honest{border-color:var(--amber)}
 .ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--amber)}
-.sym{width:11px;height:11px;vertical-align:-1.5px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 #toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:var(--bg2);border:1px solid var(--line2);color:var(--text);border-radius:11px;padding:11px 19px;font-size:13.5px;z-index:100;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
 #toast.show{opacity:1}
 
@@ -221,6 +218,7 @@ footer.site a{color:var(--dim)}
     <nav class="tabs" aria-label="main">
       <a class="tab" href="#home" data-nav="home" data-i="navHome">Home</a>
       <a class="tab" href="#wallet" data-nav="wallet" data-i="navWallet">Wallet</a>
+      <a class="tab" href="#exchange" data-nav="exchange" data-i="navExchange">Exchange</a>
       <a class="tab" href="#dex" data-nav="dex" data-i="navDex">DEX</a>
       <a class="tab" href="#earn" data-nav="earn" data-i="navEarn">Deposit and Earn</a>
       <a class="tab" href="#currency" data-nav="currency" data-i="navCurrency">Currency</a>
@@ -245,7 +243,7 @@ footer.site a{color:var(--dim)}
       <p class="lead" data-i="heroLead">Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.</p>
       <div class="cta">
         <a class="btn gold" href="#wallet" data-i="ctaWallet">Open a free wallet</a>
-        <a class="btn ghost" href="#dex" data-i="ctaExchange">See the exchange</a>
+        <a class="btn ghost" href="#exchange" data-i="ctaExchange">See the exchange</a>
       </div>
     </div>
 
@@ -260,10 +258,10 @@ footer.site a{color:var(--dim)}
       <h3 data-i="featTitle">What you can do here</h3>
       <p class="sect-sub" data-i="featSub">Everything runs from public connections. This page is itself a network node.</p>
       <div class="grid g4">
-        <a class="card feat" href="#wallet"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13"/><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H3"/><circle cx="16.5" cy="13" r="1"/></svg></div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
-        <a class="card feat" href="#dex"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 8h13"/><path d="m14 4.5 3.5 3.5L14 11.5"/><path d="M20 16H7"/><path d="m10 12.5-3.5 3.5L10 19.5"/></svg></div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
-        <a class="card feat" href="#earn"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 13C12 9 9 7 5 7c0 4 3 6 7 6Z"/><path d="M12 11c0-3.1 2.2-4.7 5.5-4.7 0 3.1-2.2 4.7-5.5 4.7Z"/></svg></div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
-        <a class="card feat" href="#tokens"><div class="ic"><svg viewBox="0 0 24 24"><path d="M15 3c0 4.5-6 6-6 9s6 4.5 6 9"/><path d="M9 3c0 4.5 6 6 6 9s-6 4.5-6 9"/><path d="M10.4 6h3.2M10.4 18h3.2M11.6 12h.8"/></svg></div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
+        <a class="card feat" href="#wallet"><div class="ic">👛</div><b data-i="feat1T">Free wallet</b><p data-i="feat1P">Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.</p></a>
+        <a class="card feat" href="#exchange"><div class="ic">🔁</div><b data-i="feat2T">Exchange</b><p data-i="feat2P">Sell SAOS for listed currencies at your price. Your SAOS sits in open escrow until the deal settles, and every fill is recorded on chain.</p></a>
+        <a class="card feat" href="#earn"><div class="ic">🌱</div><b data-i="feat3T">Deposit and earn</b><p data-i="feat3P">Fund the network with any listed currency, get credited in SAOS at the current rate, and follow your deposit, credit and rewards in the open ledger.</p></a>
+        <a class="card feat" href="#tokens"><div class="ic">🧬</div><b data-i="feat4T">Launch tokens</b><p data-i="feat4P">Every token here is a real smart contract: fixed supply rules, signed parameters and a public state anyone can verify in a browser.</p></a>
       </div>
     </div>
 
@@ -373,7 +371,52 @@ footer.site a{color:var(--dim)}
     </div>
   </section>
 
-  <!-- ═══════════ DEX TERMINAL (merged: exchange + dex are one) ═══════════ -->
+  <!-- ═══════════ EXCHANGE ═══════════ -->
+  <section class="view" id="view-exchange">
+    <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h1>
+    <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h2 data-i="xRatesT">Network rates</h2>
+        <p class="sub" data-i="xRatesP">Reference rates published on chain by network governance.</p>
+        <div class="tblwrap"><table><thead><tr><th data-i="xPair">Pair</th><th data-i="xPrice">Price</th></tr></thead><tbody id="x-rates"></tbody></table></div>
+        <div class="note" data-i="xRatesNote">Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.</div>
+      </div>
+      <div class="card">
+        <h2 data-i="xOfferT">Place a sell offer</h2>
+        <p class="sub" data-i="xOfferP">Your SAOS moves into escrow the moment the offer lands on chain.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="xCur">Currency you accept</label><input class="mono" id="off-cur" placeholder="USD" maxlength="10"></div>
+          <div class="field"><label class="f" data-i="xAmt">Amount (SAOS)</label><input class="mono" id="off-amt" placeholder="10.000"></div>
+          <div class="field"><label class="f" data-i="xPricePer">Price per 1 SAOS</label><input class="mono" id="off-price" placeholder="0.001"></div>
+        </div>
+        <button class="btn gold" id="btn-offer" data-i="xOfferBtn">Sign offer</button>
+        <div class="note" data-i="xOfferNote">Settlement of the currency side is recorded by the network treasury with a payment reference. Both sides stay visible on chain.</div>
+      </div>
+    </div>
+
+    <div class="sect grid g2">
+      <div class="card">
+        <h2 data-i="xBookT">Open offers</h2>
+        <p class="sub" data-i="xBookP">Escrowed SAOS for sale right now.</p>
+        <div class="tblwrap"><table><thead><tr><th data-i="xSell">Seller</th><th data-i="xGet">You pay</th><th data-i="xRemain">SAOS remaining</th><th data-i="xPrice2">Price / SAOS</th></tr></thead><tbody id="x-book"></tbody></table></div>
+      </div>
+      <div class="card">
+        <h2 data-i="xMineT">My offers</h2>
+        <p class="sub" data-i="xMineP">Open a wallet to see and manage your offers here.</p>
+        <div id="x-mine" class="feed"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2 data-i="xFillsT">Recent fills</h2>
+      <p class="sub" data-i="xFillsP">Settled deals with their on-chain payment references.</p>
+      <div class="feed" id="x-fills"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DEX TERMINAL ═══════════ -->
   <section class="view" id="view-dex">
     <div class="hero" style="padding:36px 0 8px">
       <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
@@ -394,49 +437,6 @@ footer.site a{color:var(--dim)}
     <p style="text-align:center;margin:18px 0 0">
       <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
     </p>
-
-    <div class="sect" style="margin-top:30px;padding-top:26px;border-top:1px solid var(--line)">
-      <h3 data-i="xTitle">Exchange</h3>
-      <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
-      <div class="grid g2">
-        <div class="card">
-          <h2 data-i="xRatesT">Network rates</h2>
-          <p class="sub" data-i="xRatesP">Reference rates published on chain by network governance.</p>
-          <div class="tblwrap"><table><thead><tr><th data-i="xPair">Pair</th><th data-i="xPrice">Price</th></tr></thead><tbody id="x-rates"></tbody></table></div>
-          <div class="note" data-i="xRatesNote">Rates are set by signed treasury operations and are visible to everyone. They are a reference: each offer carries its own price.</div>
-        </div>
-        <div class="card">
-          <h2 data-i="xOfferT">Place a sell offer</h2>
-          <p class="sub" data-i="xOfferP">Your SAOS moves into escrow the moment the offer lands on chain.</p>
-          <div class="frow">
-            <div class="field"><label class="f" data-i="xCur">Currency you accept</label><input class="mono" id="off-cur" placeholder="USD" maxlength="10"></div>
-            <div class="field"><label class="f" data-i="xAmt">Amount (SAOS)</label><input class="mono" id="off-amt" placeholder="10.000"></div>
-            <div class="field"><label class="f" data-i="xPricePer">Price per 1 SAOS</label><input class="mono" id="off-price" placeholder="0.001"></div>
-          </div>
-          <button class="btn gold" id="btn-offer" data-i="xOfferBtn">Sign offer</button>
-          <div class="note" data-i="xOfferNote">Settlement of the currency side is recorded by the network treasury with a payment reference. Both sides stay visible on chain.</div>
-        </div>
-      </div>
-
-      <div class="sect grid g2">
-        <div class="card">
-          <h2 data-i="xBookT">Open offers</h2>
-          <p class="sub" data-i="xBookP">Escrowed SAOS for sale right now.</p>
-          <div class="tblwrap"><table><thead><tr><th data-i="xSell">Seller</th><th data-i="xGet">You pay</th><th data-i="xRemain">SAOS remaining</th><th data-i="xPrice2">Price / SAOS</th></tr></thead><tbody id="x-book"></tbody></table></div>
-        </div>
-        <div class="card">
-          <h2 data-i="xMineT">My offers</h2>
-          <p class="sub" data-i="xMineP">Open a wallet to see and manage your offers here.</p>
-          <div id="x-mine" class="feed"></div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <h2 data-i="xFillsT">Recent fills</h2>
-        <p class="sub" data-i="xFillsP">Settled deals with their on-chain payment references.</p>
-        <div class="feed" id="x-fills"></div>
-      </div>
-    </div>
   </section>
 
   <!-- ═══════════ EARN ═══════════ -->
@@ -625,7 +625,7 @@ const C = globalThis.GateCrypto;
 /* ═══════════ i18n ═══════════ */
 const I18N = {
 en: {
-  brandSub:"Network", navHome:"Home", navWallet:"Wallet", navEarn:"Deposit and Earn",
+  brandSub:"Network", navHome:"Home", navWallet:"Wallet", navExchange:"Exchange", navEarn:"Deposit and Earn",
   navCurrency:"Currency", navTokens:"Tokens", navNetwork:"Network", liveConnecting:"connecting",
   navDex:"DEX",
   dexChip:"the network's own exchange terminal",
@@ -737,7 +737,7 @@ en: {
     deposited:"deposited", credited:"credited", rewards:"reward", myAddr:"my address", cancel:"cancel", page:"page" },
 },
 he: {
-  brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navEarn:"הפקדה ורווחים",
+  brandSub:"רשת", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
   navCurrency:"המטבע", navTokens:"טוקנים", navNetwork:"רשת", liveConnecting:"מתחבר",
   navDex:"דקס",
   dexChip:"טרמינל הבורסה של הרשת עצמה",
@@ -872,9 +872,6 @@ function applyLang() {
 /* ═══════════ tiny helpers ═══════════ */
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const OK = '<svg class="sym" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5"/></svg>';
-const NO = '<svg class="sym" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
-const AR = '<svg class="sym" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h10.5M9 4.5 12.5 8 9 11.5"/></svg>';
 function toast(msg, ok = true) {
   const el = $("toast");
   el.textContent = msg;
@@ -899,7 +896,7 @@ function timeAgo(iso) {
 $("year").textContent = new Date().getFullYear();
 
 /* ═══════════ routing ═══════════ */
-const VIEWS = ["home", "wallet", "dex", "earn", "currency", "tokens", "network"];
+const VIEWS = ["home", "wallet", "exchange", "dex", "earn", "currency", "tokens", "network"];
 function route() {
   let h = (location.hash || "#home").slice(1);
   if (!VIEWS.includes(h)) h = "home";
@@ -1027,10 +1024,10 @@ async function boot() {
   route();
   try {
     const st = await SL.selfTest();
-    $("selftest-badge").innerHTML = st.passed + "/" + st.total + " " + OK;
+    $("selftest-badge").textContent = st.passed + "/" + st.total + " ✓";
     $("selftest-badge").classList.toggle("bad", st.passed !== st.total);
   } catch {
-    $("selftest-badge").innerHTML = NO;
+    $("selftest-badge").textContent = "✗";
     $("selftest-badge").classList.add("bad");
   }
   await Promise.all([
@@ -1193,7 +1190,7 @@ function renderLive() {
   const fills = [];
   for (const [id, o] of Object.entries(offers)) for (const f of o.fills || []) fills.push({ ...f, offerId: id, cur: o.cur, price: o.price });
   $("x-fills").innerHTML = fills.length
-    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS ${AR} <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
+    ? fills.slice(-12).reverse().map((f) => `<div class="op-row"><span class="k">${esc(f.cur)}</span><span style="flex:1;color:var(--dim)">${nice(fmtSaos(f.units, 3))} SAOS → <span class="mono" style="font-size:11px">${esc(String(f.to).slice(0, 12))}…</span>${f.paid ? ` · ${esc(f.paid)} ${esc(f.cur)}` : ""}${f.ref ? ` · ref <span class="mono" style="font-size:10.5px">${esc(String(f.ref).slice(0, 22))}…</span>` : ""}</span><span class="when">${timeAgo(f.at)}</span></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${t("empty.ops")}</span></div>`;
 
   /* earn: deposit addresses */
@@ -1232,7 +1229,7 @@ function renderLive() {
   $("e-total-cred").textContent = nice(fmtSaos(totalCred.toString(), 3));
   $("e-total-rew").textContent = nice(fmtSaos(state.rewardsPaid || "0", 3));
   $("e-credits").innerHTML = credits.length
-    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} ${AR} <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
+    ? credits.slice(-10).reverse().map((o) => `<div class="op-row"><span class="k">${esc(o.d.cur)}</span><span style="flex:1;color:var(--dim)">${esc(o.d.amt)} ${esc(o.d.cur)} → <b style="color:var(--gold-bright)">${nice(fmtSaos(o.d.saos, 3))} SAOS</b> · <span class="mono" style="font-size:10.5px">${esc(String(o.d.to).slice(0, 12))}…</span></span><span class="when">${timeAgo(o.at)}</span></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${t("empty.cred")}</span></div>`;
 
   renderWalletBalances();
@@ -1256,7 +1253,7 @@ function renderWalletUI() {
     const w = LIVE?.state?.wallets?.[WALLET.addr];
     const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
     $("wallet-reg").innerHTML = w
-      ? `<span class="ok">${OK} ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
+      ? `<span class="ok">✓ ${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
       : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
     renderWalletBalances();
     refreshSendSymbols();
@@ -1385,7 +1382,7 @@ async function enqueue(fields) {
 function renderQueue() {
   $("wallet-queue").textContent = QUEUE.length;
   $("queue-list").innerHTML = QUEUE.length
-    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${queueSummary(env)}</span><button class="copy" data-qi="${i}" aria-label="${LANG === "he" ? "הסרה מהתור" : "remove from queue"}">${NO}</button></div>`).join("")
+    ? QUEUE.map((env, i) => `<div class="op-row"><span class="k">${esc(env.k)}</span><span style="flex:1;color:var(--dim);font-size:11.5px">${esc(queueSummary(env))}</span><button class="copy" data-qi="${i}">✕</button></div>`).join("")
     : `<div class="op-row"><span style="color:var(--faint)">${LANG === "he" ? "התור ריק" : "the queue is empty"}</span></div>`;
   for (const b of document.querySelectorAll("[data-qi]")) {
     b.addEventListener("click", () => { QUEUE.splice(Number(b.dataset.qi), 1); saveQueue(); });
@@ -1393,15 +1390,15 @@ function renderQueue() {
 }
 function queueSummary(env) {
   const n = (x) => nice(Number(x || 0));
-  if (env.k === "wallet.create") return (LANG === "he" ? "רישום ארנק" : "wallet registration") + (env.nick ? ` "${esc(env.nick)}"` : "");
-  if (env.k === "token.deploy") return `${esc(env.symbol)} (cap ${n(env.maxSupply)})`;
-  if (env.k === "token.mint") return `${n(env.amount)} ${esc(env.symbol)}`;
-  if (env.k === "token.transfer") return `${n(env.amount)} ${esc(env.symbol)} ${AR} ${esc(String(env.to).slice(0, 10))}…`;
-  if (env.k === "token.burn") return `${n(env.amount)} ${esc(env.symbol)}`;
-  if (env.k === "deposit.claim") return `${esc(env.amt)} ${esc(env.cur)}`;
-  if (env.k === "dex.offer") return `${n(env.units)} SAOS @ ${esc(env.price)} ${esc(env.cur)}`;
-  if (env.k === "dex.cancel") return esc(env.offerId);
-  return esc(env.id);
+  if (env.k === "wallet.create") return (LANG === "he" ? "רישום ארנק" : "wallet registration") + (env.nick ? ` "${env.nick}"` : "");
+  if (env.k === "token.deploy") return `${env.symbol} (cap ${n(env.maxSupply)})`;
+  if (env.k === "token.mint") return `${n(env.amount)} ${env.symbol}`;
+  if (env.k === "token.transfer") return `${n(env.amount)} ${env.symbol} → ${String(env.to).slice(0, 10)}…`;
+  if (env.k === "token.burn") return `${n(env.amount)} ${env.symbol}`;
+  if (env.k === "deposit.claim") return `${env.amt} ${env.cur}`;
+  if (env.k === "dex.offer") return `${n(env.units)} SAOS @ ${env.price} ${env.cur}`;
+  if (env.k === "dex.cancel") return env.offerId;
+  return env.id;
 }
 $("btn-register").addEventListener("click", async () => {
   const nick = $("reg-nick").value.trim();
@@ -1510,11 +1507,11 @@ $("btn-relay-all").addEventListener("click", async () => {
     }
     QUEUE = [];
     saveQueue();
-    out.innerHTML = OK + " " + esc(t("tOk.broadcast")(sent));
+    out.textContent = "✓ " + t("tOk.broadcast")(sent);
     toast(t("tOk.broadcast")(sent));
     setTimeout(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 15000);
   } catch (e) {
-    out.innerHTML = NO + " " + esc((e.message || "").slice(0, 90));
+    out.textContent = "✗ " + (e.message || "").slice(0, 90);
     toast(t("tErr.relayFail") + (e.message || "").slice(0, 80), false);
   } finally {
     $("relay-wif").value = ""; // transport key wiped immediately
@@ -1561,7 +1558,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
       ? `נקראו ${envelopes.length} פעולות · ${res.valid} תקפות · שורש <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `
       : `Read ${envelopes.length} operations · ${res.valid} valid · root <span class="mono">${res.stateRoot.slice(0, 16)}…</span> `)
       + (match
-        ? (LANG === "he" ? "= תואם למפורסם " + OK : "= matches the published root " + OK)
+        ? (LANG === "he" ? "= תואם למפורסם ✓" : "= matches the published root ✓")
         : (LANG === "he" ? "≠ שונה מהמפורסם!" : "≠ differs from the published root!"));
     out.style.color = match ? "#86efac" : "#fca5a5";
     if (!match && published) toast(LANG === "he" ? "השורש שונה מהמפורסם" : "root differs from published", false);
