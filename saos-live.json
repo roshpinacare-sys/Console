@@ -1,12 +1,12 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-09-16T15:09:07.218Z",
+  "generatedAt": "2026-09-16T16:09:29.951Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "d0cc8673c8ceadef6a232717f13517e5276145b6ddce3f1754662047dae6bc42",
+  "stateRoot": "930ed344c3261dd9b621c99b1d73b0d57020b787ec2c16df544f60d819af9121",
   "genesis": {
     "done": false,
-    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-    "txid": "c72a953f55d388a8e7a4a62a6a72323ea1ec8d07",
+    "treasury": null,
+    "txid": null,
     "symbol": "SAOS",
     "initialMint": "126682000",
     "maxSupply": "21000000000",
@@ -21,7 +21,16 @@
         "txid": null
       }
     },
-    "tokens": {},
+    "tokens": {
+      "SAOS": {
+        "name": "SAOS",
+        "decimals": 3,
+        "maxSupply": "21000000000",
+        "issuer": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+        "at": null,
+        "txid": null
+      }
+    },
     "balances": {},
     "supply": {},
     "claims": {},
@@ -43,12 +52,22 @@
       "block": 109623286,
       "summary": "רישום ארנק \"network-treasury\" saos1CKtmFms…",
       "d": null
+    },
+    {
+      "id": "genesis-saos-deploy",
+      "k": "token.deploy",
+      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+      "at": "2026-09-16T16:09:29.949Z",
+      "txid": "c72a953f55d388a8e7a4a62a6a72323ea1ec8d07",
+      "block": 109632837,
+      "summary": "פריסת חוזה SAOS (תקרה 21,000,000,000)",
+      "d": null
     }
   ],
   "invalid": [],
   "verify": {
-    "replayed": 1,
-    "valid": 1,
+    "replayed": 2,
+    "valid": 2,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
