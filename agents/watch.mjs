@@ -125,7 +125,10 @@ for (const repo of REPOS) {
       const s = Date.parse(r.run_started_at || r.created_at), e = Date.parse(r.updated_at);
       return Number.isFinite(s) && Number.isFinite(e) ? (e - s) / 1000 : null;
     }).filter((x) => x !== null && x >= 0);
-    const last = runs[0];
+    // self-measurement honesty: the run currently in progress has no
+    // conclusion yet - measure the last COMPLETED run instead (agents-watch
+    // itself was showing "dormant" while actively running).
+    const last = runs.find((r) => r.conclusion) || runs[0];
     const cat = CATALOG[`${repo}|${w.name}`] || GENERIC;
     agents.push({
       id: `${repo.toLowerCase()}-${w.name.toLowerCase().replace(/ /g, "-")}`,
