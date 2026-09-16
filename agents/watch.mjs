@@ -1,0 +1,133 @@
+// AGENTS-WATCH — סוכן רישום-הסוכנים (Task 37)
+//
+// רץ בריפו הציבורי כל שעה: שואל את ה-API של גיטהאב את מצבם האמיתי של
+// כל הסוכנים בכל 14 הריפואים (ריצות, הצלחות, משכים, פעם אחרונה),
+// ממזג עם קטלוג התפקידים הקנוני (קלט→פלט) וכותב את agents/registry.json
+// שתצוגת הסוכנים בקונסולה הציבורית קוראת. אפס-סנדבוקס — הענן מתעדכן
+// לבד, הריפו הוא הבית.
+
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+
+const OWNER = "roshpinacare-sys";
+const REPOS = ["Adsmarket","anchor-baseline","Console","Project-files","roshpina","saos-control-center",
+  "saos-dex","saos-jummper","saos-sovereign-foundry","saos-sovereign-platform","Saosmartwallet","Sdk","steem","Zip"];
+const TOKEN = process.env.AGENTS_WATCH_TOKEN;
+if (!TOKEN) { console.error("AGENTS_WATCH_TOKEN missing"); process.exit(1); }
+
+// ═══ קטלוג התפקידים הקנוני — מה כל סוכן עושה, מה נכנס ומה יוצא ═══
+const CATALOG = {
+  "Zip|weave-heart": { layer:"ALWAYS-UP", schedule:"hourly :00",
+    role:{en:"Cloud heart of The Weave — reads the ledger every hour, judges whether the primary runner is alive, verifies only when alive, takes over the full cycle when it is not.",he:"הלב הענן של The Weave — קורא את הספר כל שעה, פוסק אם הראנר הראשי חי, מאמת בלבד כשחי ומשתלט על המחזור המלא כשלא."},
+    input:{en:"fresh clone + ledger.json",he:"קלון טרי + ledger.json"},
+    output:{en:"attestations, checkpoints, heartbeat commits",he:"אימותים, צ'קפוינטים, קומיטים של פעימה"}},
+  "Zip|weave-anchor-lines": { layer:"WITNESS", schedule:"bi-hourly :20 + on every beat",
+    role:{en:"Sequences both witness lines as one run — anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once.",he:"מריץ את שני קווי העדות כרצף אחד — מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת."},
+    input:{en:"latest checkpoint root",he:"root של הצ'קפוינט האחרון"},
+    output:{en:"anchor txids recorded back into the ledger",he:"מזהי טרנזקציות העיגון חוזרים לספר"}},
+  "Zip|weave-anchor": { layer:"WITNESS", schedule:"dispatch (driven by lines)",
+    role:{en:"Steem/Hive witness line — publishes the checkpoint root as custom_json (posting authority, zero capital risk) on both public chains.",he:"קו עדות Steem/Hive — מפרסם את root הצ'קפוינט כ-custom_json‏ (סמכות posting, אפס סיכון הון) בשתי הרשתות הציבוריות."},
+    input:{en:"checkpoint root",he:"root של צ'קפוינט"},
+    output:{en:"Steem + Hive txids recorded in the ledger",he:"מזהי Steem + Hive נרשמים בספר"}},
+  "Zip|weave-anchor-zero": { layer:"WITNESS", schedule:"dispatch (driven by lines)",
+    role:{en:"Zero-gas EVM witness line — writes the checkpoint root as a real transaction on Z Chain (chainId 9369, gas 0x0) using the network key from the seal.",he:"קו עדות EVM בגז-אפס — כותב את root הצ'קפוינט כטרנזקציה אמיתית ב-Z Chain‏ (chainId 9369, גז 0x0) במפתח הרשת מה-seal."},
+    input:{en:"checkpoint root + sealed network key",he:"root של צ'קפוינט + מפתח רשת חתום"},
+    output:{en:"on-chain EVM anchor, cost 0.000000",he:"עיגון EVM on-chain, עלות 0.000000"}},
+  "Zip|weave-ecosystem": { layer:"ENFORCEMENT", schedule:"daily 05:30",
+    role:{en:"Ecosystem unification guard — scans all repos for duplication (target dup<0.2) and enforces the one-source-of-truth doctrine automatically.",he:"שומר איחוד האקוסיסטם — סורק את כל הריפואים לגילוי כפילויות (יעד dup<0.2) ואוכף את דוקטרינת מקור-האמת האחד אוטומטית."},
+    input:{en:"full org scan via contents API",he:"סריקת ארגון מלאה דרך contents API"},
+    output:{en:"ecosystem report commits",he:"קומיטים של דוח אקוסיסטם"}},
+  "Zip|weave-brain-restore": { layer:"RECOVERY", schedule:"one-shot (manual)",
+    role:{en:"Restored the brain (3 NVIDIA NIM keys) from the fleet vault in the cloud after the sandbox DB was lost — the sovereign home, not a passing environment.",he:"השיב את המוח (3 מפתחות NVIDIA NIM) מכספת הצי בענן לאחר אובדן ה-DB של הסנדבוקס — הבית הריבוני, לא סביבה חולפת."},
+    input:{en:"WEAVE_SEAL_PASSPHRASE + sealed vault",he:"WEAVE_SEAL_PASSPHRASE + הכספת החתומה"},
+    output:{en:"brain keys restored to the sovereign chain",he:"מפתחות המוח הושבו לשרשרת הריבונית"}},
+  "steem|cloud-heart": { layer:"ALWAYS-UP", schedule:"every 30 min",
+    role:{en:"The fleet executor outside the sandbox — reads the living-attest from Steem/Hive over public RPC; fresh attest means sandbox alive (verify only), stale means takeover: key restore, full agent cycle, on-chain leadership marker, push.",he:"המבצע של הצי מחוץ לסנדבוקס — קורא את אימות-החיים מ-Steem/Hive דרך RPC ציבורי; אימות טרי = סנדבוקס חי (אימות בלבד), אימות בלהות = השתלטות: שחזור מפתח, מחזור סוכן מלא, סמן מנהיגות on-chain, דחיפה."},
+    input:{en:"public Steem/Hive RPC + fresh clone",he:"RPC ציבורי של Steem/Hive + קלון טרי"},
+    output:{en:"saosnet beat --live, chain attest, gitkeeper push",he:"saosnet beat --live, אימות שרשרת, דחיפת gitkeeper"}},
+  "saos-dex|dex-beat": { layer:"ALWAYS-UP", schedule:"every 2h :23",
+    role:{en:"The exchange's cloud heart — loads the chain snapshot, runs deterministic ticks, verifies deposit claims against the public ledger, credits them, commits and publishes state to the public console.",he:"הלב הענן של הבורסה — טוען את תמונת-המצב, מריץ טיקים דטרמיניסטיים, מאמת תביעות הפקדה מול הספר הציבורי, מזכה, מבצע commit ומפרסם את המצב לקונסולה הציבורית."},
+    input:{en:"chain snapshot + signed deposit claims",he:"תמונת-מצב שרשרת + תביעות הפקדה חתומות"},
+    output:{en:"credits, chain commit, public state publish",he:"זיכויים, commit לשרשרת, פרסום מצב ציבורי"}},
+  "Console|dex-watch": { layer:"MIRROR", schedule:"every 20 min :07/:27/:47",
+    role:{en:"The public deposits watcher — scans the real deposit addresses (TRON/ETH/SOL/BTC) over public RPC and updates the open deposits ledger the site displays and the DEX verifies against.",he:"צופה ההפקדות הציבורי — סורק את כתובות ההפקדה האמיתיות (TRON/ETH/SOL/BTC) ב-RPC ציבורי ומעדכן את ספר ההפקדות הפתוח שהאתר מציג והדקס מאמת מולו."},
+    input:{en:"public RPC: TRON / ETH / SOL / BTC",he:"RPC ציבורי: TRON / ETH / SOL / BTC"},
+    output:{en:"dex/deposits.json — the open deposits ledger",he:"dex/deposits.json — ספר ההפקדות הפתוח"}},
+  "Console|console-publish": { layer:"PUBLISH", schedule:"on push to main",
+    role:{en:"Publishes the public console pages — validates and ships every change to the site the world sees.",he:"מפרסם את דפי הקונסולה הציבוריים — מאמת ומשטח כל שינוי לאתר שהעולם רואה."},
+    input:{en:"push to main",he:"דחיפה ל-main"},
+    output:{en:"live console pages",he:"דפי קונסולה חיים"}},
+  "saos-sovereign-foundry|CI": { layer:"QA", schedule:"push / PR",
+    role:{en:"Foundry quality gate — lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Failed 100% at API contract checks during the import wave; dormant since. Branch filter typo fixed — now scoped to main.",he:"שעת איכות של ה-foundry — lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. נכשל 100% בבדיקות חוזה ה-API בגל הייבוא; רדום מאז. שגיאת מסנן הענף תוקנה — כעת מיועד ל-main בלבד."},
+    input:{en:"push to main",he:"דחיפה ל-main"},
+    output:{en:"lint + typecheck + build + api + concurrency verdict",he:"פסק lint + typecheck + build + api + מקביליות"}},
+};
+const GENERIC = { layer:"PUBLISH", schedule:"automatic",
+  role:{en:"GitHub Pages automatic deployment of the public site.",he:"פריסה אוטומטית של GitHub Pages לאתר הציבורי."},
+  input:{en:"pages build",he:"בילד דפים"}, output:{en:"live GitHub Pages site",he:"אתר GitHub Pages חי"} };
+const REPO_VIS = { Zip:"private", steem:"private", "saos-dex":"private", Console:"public", "saos-sovereign-foundry":"public" };
+
+async function api(url) {
+  const r = await fetch(url, { headers: { Authorization: `token ${TOKEN}`, "User-Agent": "agents-watch", Accept: "application/vnd.github+json" } });
+  if (!r.ok) throw new Error(`${url} -> ${r.status}`);
+  return r.json();
+}
+
+function stateOf(name, lastConcl, lastAt) {
+  if (name === "pages build and deployment") return "auto";
+  const ageH = lastAt ? (Date.now() - Date.parse(lastAt)) / 36e5 : Infinity;
+  if (lastConcl === "success" && ageH < 48) return "live";
+  if (lastConcl === "failure") return "degraded";
+  return "dormant";
+}
+
+const agents = [];
+for (const repo of REPOS) {
+  let wfs;
+  try { wfs = (await api(`https://api.github.com/repos/${OWNER}/${repo}/actions/workflows?per_page=100`)).workflows || []; }
+  catch (e) { console.error(`workflows ${repo}: ${e.message}`); continue; }
+  for (const w of wfs) {
+    if (w.state !== "active") continue;
+    let runs = [];
+    try { runs = (await api(`https://api.github.com/repos/${OWNER}/${repo}/actions/workflows/${w.id}/runs?per_page=100`)).workflow_runs || []; }
+    catch (e) { console.error(`runs ${repo}/${w.name}: ${e.message}`); continue; }
+    if (!runs.length) continue;
+    const succ = runs.filter((r) => r.conclusion === "success").length;
+    const fail = runs.filter((r) => r.conclusion === "failure").length;
+    const durs = runs.slice(0, 40).map((r) => {
+      const s = Date.parse(r.run_started_at || r.created_at), e = Date.parse(r.updated_at);
+      return Number.isFinite(s) && Number.isFinite(e) ? (e - s) / 1000 : null;
+    }).filter((x) => x !== null && x >= 0);
+    const last = runs[0];
+    const cat = CATALOG[`${repo}|${w.name}`] || GENERIC;
+    agents.push({
+      id: `${repo.toLowerCase()}-${w.name.toLowerCase().replace(/ /g, "-")}`,
+      name: w.name, repo, visibility: REPO_VIS[repo] || "public",
+      schedule: cat.schedule, layer: cat.layer, role: cat.role, input: cat.input, output: cat.output,
+      state: stateOf(w.name, last.conclusion, last.run_started_at),
+      stats: { runs_sampled: runs.length, success: succ, failure: fail, other: runs.length - succ - fail,
+        successRate: Math.round((1000 * succ) / runs.length) / 10, avgDurS: durs.length ? Math.round((10 * durs.reduce((a, b) => a + b, 0)) / durs.length) / 10 : null },
+      lastRun: { at: last.run_started_at, conclusion: last.conclusion },
+    });
+  }
+}
+const order = { live: 0, degraded: 1, dormant: 2, auto: 3 };
+agents.sort((a, b) => (order[a.state] ?? 9) - (order[b.state] ?? 9) || a.repo.localeCompare(b.repo) || a.name.localeCompare(b.name));
+
+const withAgent = new Set(agents.map((a) => a.repo));
+const reg = {
+  ok: true,
+  generatedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+  source: "github-actions-api",
+  reposTotal: REPOS.length,
+  reposWithAgents: REPOS.filter((r) => withAgent.has(r)),
+  reposIdle: REPOS.filter((r) => !withAgent.has(r)),
+  agents,
+};
+
+const path = new URL(import.meta.url.replace("watch.mjs", "registry.json")).pathname;
+const out = process.env.REGISTRY_PATH || "agents/registry.json";
+const prev = existsSync(out) ? JSON.parse(readFileSync(out, "utf8")) : null;
+writeFileSync(out, JSON.stringify(reg, null, 1) + "\n");
+const changed = !prev || JSON.stringify(prev.agents) !== JSON.stringify(reg.agents);
+console.log(`agents: ${agents.length} | repos with agents: ${withAgent.size}/14 | changed: ${changed}`);
+process.env.REGISTRY_CHANGED = changed ? "1" : "0";

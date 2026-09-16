@@ -1,0 +1,50 @@
+# AGENTS-WATCH — סוכן רישום-הסוכנים (Task 37)
+#
+# רץ בריפו הציבורי כל שעה: שואל את ה-API של גיטהאב את המצב האמיתי של
+# כל הסוכנים בכל 14 הריפואים ומרענן את agents/registry.json שתצוגת
+# הסוכנים בקונסולה הציבורית קוראת. אפס-סנדבוקס, אפס-סודות בקוד —
+# ה-token חי רק ב-Actions Secret. הרישום לעולם לא מתיישן.
+
+name: agents-watch
+
+on:
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agents-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Refresh the agents registry
+        env:
+          AGENTS_WATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}
+        run: node agents/watch.mjs
+
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet agents/registry.json; then
+            git config user.name "agents-watch"
+            git config user.email "actions@users.noreply.github.com"
+            git add agents/registry.json
+            git commit -m "agents-watch: $(date -u +%Y-%m-%dT%H:%M:%SZ) · $(node -e 'const r=require("./agents/registry.json");console.log(r.agents.length+" agents · "+r.reposWithAgents.length+"/14 repos")')"
+            git push
+          else
+            echo "registry unchanged — no commit"
+          fi
