@@ -1,389 +1,542 @@
 {
- "format": "agent-verify-assertions-v1",
- "baseUrl": "https://roshpinacare-sys.github.io/Console/",
- "notes": {
-  "en": "The network's machine-checkable contract with the agent. Each assertion is measured against the LIVE site, never against the repo. No claim without measurement.",
-  "he": "החוזה הנבדק-מכונה של הרשת עם הסוכן. כל טענה נמדדת מול האתר החי, לעולם לא מול הריפו. שום טענה בלי מדידה."
- },
- "assertions": [
-  {
-   "id": "A01",
-   "desc": {
-    "en": "Console home page is reachable (HTTP 200)",
-    "he": "דף הבית של הקונסולה זמין (HTTP 200)"
-   },
-   "kind": "http_ok",
-   "target": ""
+  "format": "agent-verify-assertions-v1",
+  "baseUrl": "https://roshpinacare-sys.github.io/Console/",
+  "notes": {
+    "en": "The network's machine-checkable contract with the agent. Each assertion is measured against the LIVE site, never against the repo. No claim without measurement.",
+    "he": "החוזה הנבדק-מכונה של הרשת עם הסוכן. כל טענה נמדדת מול האתר החי, לעולם לא מול הריפו. שום טענה בלי מדידה."
   },
-  {
-   "id": "A02",
-   "desc": {
-    "en": "At least 6 console sections marked data-console-section on the home page",
-    "he": "לפחות 6 סקציות קונסולה המסומנות data-console-section בדף הבית"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "data-console-section",
-   "min": 6
-  },
-  {
-   "id": "A03",
-   "desc": {
-    "en": "At least one submenu marked data-submenu on the home page",
-    "he": "לפחות תת-תפריט אחד המסומן data-submenu בדף הבית"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "data-submenu",
-   "min": 1
-  },
-  {
-   "id": "A04",
-   "desc": {
-    "en": "Big-picture hero block (hero-bigpicture) present on the home page",
-    "he": "בלוק התמונה הגדולה (hero-bigpicture) קיים בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "hero-bigpicture"
-  },
-  {
-   "id": "A05",
-   "desc": {
-    "en": "Live fleet section (fleet-live) present on the home page",
-    "he": "סקציית הצי החי (fleet-live) קיימת בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "fleet-live"
-  },
-  {
-   "id": "A06",
-   "desc": {
-    "en": "Admin area (admin-area) present on the home page",
-    "he": "אזור האדמין (admin-area) קיים בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "admin-area"
-  },
-  {
-   "id": "A07",
-   "desc": {
-    "en": "The retired wallet page stays retired (HTTP 4xx/5xx, content gone)",
-    "he": "דף הארנק המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
-   },
-   "kind": "http_gone",
-   "target": "wallet.html"
-  },
-  {
-   "id": "A08",
-   "desc": {
-    "en": "Agents registry holds at least 13 agents",
-    "he": "רישום הסוכנים מכיל לפחות 13 סוכנים"
-   },
-   "kind": "json_min",
-   "target": "agents/registry.json",
-   "field": "agents.length",
-   "min": 13
-  },
-  {
-   "id": "A09",
-   "desc": {
-    "en": "Public mirror holds at least 100 attestations",
-    "he": "המראה הציבורית מכילה לפחות 100 אימותים"
-   },
-   "kind": "json_min",
-   "target": "mirror.json",
-   "field": "stats.attestations",
-   "min": 100
-  },
-  {
-   "id": "A10",
-   "desc": {
-    "en": "Network freshness verdict is FRESH in status.json",
-    "he": "פסק הדין של טריות הרשת הוא FRESH ב-status.json"
-   },
-   "kind": "json_field",
-   "target": "status.json",
-   "field": "freshness.verdict",
-   "value": "FRESH"
-  },
-  {
-   "id": "A11",
-   "desc": {
-    "en": "Agent bridgehead state is reachable (agent/state.json)",
-    "he": "מצב נקודת-הגשר של הסוכן זמין (agent/state.json)"
-   },
-   "kind": "http_ok",
-   "target": "agent/state.json"
-  },
-  {
-   "id": "A12",
-   "desc": {
-    "en": "Agent handoff protocol is reachable (agent/handoff.md)",
-    "he": "פרוטוקול המסירה של הסוכן זמין (agent/handoff.md)"
-   },
-   "kind": "http_ok",
-   "target": "agent/handoff.md"
-  },
-  {
-   "id": "A13",
-   "desc": {
-    "en": "Requests ledger holds at least 12 requests",
-    "he": "ספר הבקשות מכיל לפחות 12 בקשות"
-   },
-   "kind": "json_min",
-   "target": "agent/requests.json",
-   "field": "requests.length",
-   "min": 12
-  },
-  {
-   "id": "A14",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the home page (clean typography only)",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף הבית (טיפוגרפיה נקייה בלבד)"
-   },
-   "kind": "regex_absent",
-   "target": "",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A15",
-   "desc": {
-    "en": "Verification results (verify-results) are visible on the home page",
-    "he": "תוצאות האימות (verify-results) גלויות בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "verify-results"
-  },
-  {
-   "id": "A16",
-   "desc": {
-    "en": "The achievement loop renders on the home page (container plus five gates)",
-    "he": "לולאת ההישגיות מוצגת בדף הבית (מיכל וחמישה שערים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "loop-gate",
-   "min": 5
-  },
-  {
-   "id": "A17",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the discovery engine page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe discovery engine page"
-   },
-   "kind": "regex_absent",
-   "target": "acid.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A18",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the network mirror page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe network mirror page"
-   },
-   "kind": "regex_absent",
-   "target": "net.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A19",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the operator gate page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe operator gate page"
-   },
-   "kind": "regex_absent",
-   "target": "gate.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A20",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the knowledge hub home",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe knowledge hub home"
-   },
-   "kind": "regex_absent",
-   "target": "hub/index.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A21",
-   "desc": {
-    "en": "Money-layer links route to the in-console exchange view (at least 3 links)",
-    "he": "קישורי שכבת הכסף מובילים לתצוגת הבורסה בקונסולה (לפחות 3 קישורים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "#/exchange/terminal",
-   "min": 3
-  },
-  {
-   "id": "A22",
-   "desc": {
-    "en": "No link to the retired wallet page remains anywhere in the home page",
-    "he": "שום קישור לדף הארנק המבוטל לא נשאר בדף הבית"
-   },
-   "kind": "regex_absent",
-   "target": "",
-   "regex": "wallet\\.html"
-  },
-  {
-   "id": "A23",
-   "desc": {
-    "en": "The retired DEX snapshot stays retired (HTTP 4xx/5xx, content gone)",
-    "he": "צילום הדקס המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
-   },
-   "kind": "http_gone",
-   "target": "saos-dex/"
-  },
-  {
-   "id": "A24",
-   "desc": {
-    "en": "The deposit rails view renders on the home page (rails subview)",
-    "he": "תצוגת עוגני ההפקדה מוצגת בדף הבית (תת-תצוגת rails)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "sub-exchange-rails",
-   "min": 1
-  },
-  {
-   "id": "A25",
-   "desc": {
-    "en": "The money path page is linked from the home page (knowledge grid + footer, at least 2 links)",
-    "he": "דף נתיב הכסף מקושר מדף הבית (גריד הידע והפוטר, לפחות 2 קישורים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "money.html",
-   "min": 2
-  },
-  {
-   "id": "A26",
-   "desc": {
-    "en": "The money path page is live and carries the live anchor tracker (R23)",
-    "he": "דף נתיב הכסף חי ונושא את עוקב-העוגן החי (R23)"
-   },
-   "kind": "contains",
-   "target": "money.html",
-   "value": "Live Anchor"
-  },
-  {
-   "id": "A27",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the money path page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף נתיב הכסף"
-   },
-   "kind": "regex_absent",
-   "target": "money.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A28",
-   "desc": {
-    "en": "The public API index exists and documents the endpoints (hub/api/)",
-    "he": "מפתח ה-API הציבורי קיים ומתעד את הנקודות (hub/api/)"
-   },
-   "kind": "contains",
-   "target": "hub/api/",
-   "value": "no key, no auth"
-  },
-  {
-   "id": "A29",
-   "desc": {
-    "en": "Evolution view carries the measured milestones list (at least 4 entries)",
-    "he": "תצוגת האבולוציה נושאת את רשימת אבני-הדרך הנמדדות (לפחות 4)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "kn-miles",
-   "min": 2
-  },
-  {
-   "id": "A30",
-   "desc": {
-    "en": "The GH snapshot fallback is committed and carries the org repos (>= 10)",
-    "he": "תמונת-המצב של גיטהאב מחויבת ונושאת אית ריפואי הארגון (>= 10)"
-   },
-   "kind": "json_min",
-   "target": "agents/gh-snapshot.json",
-   "field": "repos.length",
-   "min": 10
-  },
-  {
-   "id": "A31",
-   "desc": {
-    "en": "No priority inversion on Steem: when the core anchor is stale, no non-core op from the witness account may have fired after it and consumed its RC budget (R27 detector, keyless chain read)",
-    "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה רעב, שום פעולה אחרת של חשבון העדות לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח)"
-   },
-   "kind": "steem_priority",
-   "account": "cashmachine",
-   "coreOp": "saos.weave.core.v1",
-   "staleHours": 26
-  },
-  {
-   "id": "A32",
-   "desc": {
-    "en": "The external grid publish is healthy (dex/grid.json ok=true)",
-    "he": "פרסום הגריד החוץ בריא (dex/grid.json ok=true)"
-   },
-   "kind": "json_field",
-   "target": "dex/grid.json",
-   "field": "ok",
-   "value": true
-  },
-  {
-   "id": "A33",
-   "desc": {
-    "en": "The external grid publishes its measured policy verbatim: never sell STEEM below its external USD value",
-    "he": "הגריד החוץ מפרסם את מדיניותו המדודה מילה-במילה: לעולם לא למכור STEEM מתחת לערכו החוץ בדולרים"
-   },
-   "kind": "json_field",
-   "target": "dex/grid.json",
-   "field": "policy.principle",
-   "value": "never sell STEEM below its external USD value; every buy below parity is measured surplus"
-  },
-  {
-   "id": "A34",
-   "desc": {
-    "en": "The external grid runner is alive: dex/grid.json published at most 30h ago (daily cadence)",
-    "he": "רץ-הגריד החוץ חי: dex/grid.json פורסם לפני 30 שעות לכל היותר (קצב יומי)"
-   },
-   "kind": "json_age",
-   "target": "dex/grid.json",
-   "field": "publishedAt",
-   "maxHours": 30
-  },
-  {
-   "id": "A35",
-   "desc": {
-    "en": "The DEX engine publish is healthy (dex/world.json ok=true)",
-    "he": "פרסום מנוע הדקס בריא (dex/world.json ok=true)"
-   },
-   "kind": "json_field",
-   "target": "dex/world.json",
-   "field": "ok",
-   "value": true
-  },
-  {
-   "id": "A36",
-   "desc": {
-    "en": "The DEX engine is alive: dex/world.json published at most 6h ago (two-hour cadence plus tolerance)",
-    "he": "מנוע הדקס חי: dex/world.json פורסם לפני 6 שעות לכל היותר (קצב דו-שעתי בתוספת סובלנות)"
-   },
-   "kind": "json_age",
-   "target": "dex/world.json",
-   "field": "publishedAt",
-   "maxHours": 6
-  }
- ]
+  "assertions": [
+    {
+      "id": "A01",
+      "desc": {
+        "en": "Console home page is reachable (HTTP 200)",
+        "he": "דף הבית של הקונסולה זמין (HTTP 200)"
+      },
+      "kind": "http_ok",
+      "target": ""
+    },
+    {
+      "id": "A02",
+      "desc": {
+        "en": "At least 6 console sections marked data-console-section on the home page",
+        "he": "לפחות 6 סקציות קונסולה המסומנות data-console-section בדף הבית"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "data-console-section",
+      "min": 6
+    },
+    {
+      "id": "A03",
+      "desc": {
+        "en": "At least one submenu marked data-submenu on the home page",
+        "he": "לפחות תת-תפריט אחד המסומן data-submenu בדף הבית"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "data-submenu",
+      "min": 1
+    },
+    {
+      "id": "A04",
+      "desc": {
+        "en": "Big-picture hero block (hero-bigpicture) present on the home page",
+        "he": "בלוק התמונה הגדולה (hero-bigpicture) קיים בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "hero-bigpicture"
+    },
+    {
+      "id": "A05",
+      "desc": {
+        "en": "Live fleet section (fleet-live) present on the home page",
+        "he": "סקציית הצי החי (fleet-live) קיימת בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "fleet-live"
+    },
+    {
+      "id": "A06",
+      "desc": {
+        "en": "Admin area (admin-area) present on the home page",
+        "he": "אזור האדמין (admin-area) קיים בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "admin-area"
+    },
+    {
+      "id": "A07",
+      "desc": {
+        "en": "The retired wallet page stays retired (HTTP 4xx/5xx, content gone)",
+        "he": "דף הארנק המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
+      },
+      "kind": "http_gone",
+      "target": "wallet.html"
+    },
+    {
+      "id": "A08",
+      "desc": {
+        "en": "Agents registry holds at least 13 agents",
+        "he": "רישום הסוכנים מכיל לפחות 13 סוכנים"
+      },
+      "kind": "json_min",
+      "target": "agents/registry.json",
+      "field": "agents.length",
+      "min": 13
+    },
+    {
+      "id": "A09",
+      "desc": {
+        "en": "Public mirror holds at least 100 attestations",
+        "he": "המראה הציבורית מכילה לפחות 100 אימותים"
+      },
+      "kind": "json_min",
+      "target": "mirror.json",
+      "field": "stats.attestations",
+      "min": 100
+    },
+    {
+      "id": "A10",
+      "desc": {
+        "en": "Network freshness verdict is FRESH in status.json",
+        "he": "פסק הדין של טריות הרשת הוא FRESH ב-status.json"
+      },
+      "kind": "json_field",
+      "target": "status.json",
+      "field": "freshness.verdict",
+      "value": "FRESH"
+    },
+    {
+      "id": "A11",
+      "desc": {
+        "en": "Agent bridgehead state is reachable (agent/state.json)",
+        "he": "מצב נקודת-הגשר של הסוכן זמין (agent/state.json)"
+      },
+      "kind": "http_ok",
+      "target": "agent/state.json"
+    },
+    {
+      "id": "A12",
+      "desc": {
+        "en": "Agent handoff protocol is reachable (agent/handoff.md)",
+        "he": "פרוטוקול המסירה של הסוכן זמין (agent/handoff.md)"
+      },
+      "kind": "http_ok",
+      "target": "agent/handoff.md"
+    },
+    {
+      "id": "A13",
+      "desc": {
+        "en": "Requests ledger holds at least 12 requests",
+        "he": "ספר הבקשות מכיל לפחות 12 בקשות"
+      },
+      "kind": "json_min",
+      "target": "agent/requests.json",
+      "field": "requests.length",
+      "min": 12
+    },
+    {
+      "id": "A14",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the home page (clean typography only)",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף הבית (טיפוגרפיה נקייה בלבד)"
+      },
+      "kind": "regex_absent",
+      "target": "",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A15",
+      "desc": {
+        "en": "Verification results (verify-results) are visible on the home page",
+        "he": "תוצאות האימות (verify-results) גלויות בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "verify-results"
+    },
+    {
+      "id": "A16",
+      "desc": {
+        "en": "The achievement loop renders on the home page (container plus five gates)",
+        "he": "לולאת ההישגיות מוצגת בדף הבית (מיכל וחמישה שערים)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "loop-gate",
+      "min": 5
+    },
+    {
+      "id": "A17",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the discovery engine page",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe discovery engine page"
+      },
+      "kind": "regex_absent",
+      "target": "acid.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A18",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the network mirror page",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe network mirror page"
+      },
+      "kind": "regex_absent",
+      "target": "net.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A19",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the operator gate page",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe operator gate page"
+      },
+      "kind": "regex_absent",
+      "target": "gate.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A20",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the knowledge hub home",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe knowledge hub home"
+      },
+      "kind": "regex_absent",
+      "target": "hub/index.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A21",
+      "desc": {
+        "en": "Money-layer links route to the in-console exchange view (at least 3 links)",
+        "he": "קישורי שכבת הכסף מובילים לתצוגת הבורסה בקונסולה (לפחות 3 קישורים)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "#/exchange/terminal",
+      "min": 3
+    },
+    {
+      "id": "A22",
+      "desc": {
+        "en": "No link to the retired wallet page remains anywhere in the home page",
+        "he": "שום קישור לדף הארנק המבוטל לא נשאר בדף הבית"
+      },
+      "kind": "regex_absent",
+      "target": "",
+      "regex": "wallet\\.html"
+    },
+    {
+      "id": "A23",
+      "desc": {
+        "en": "The retired DEX snapshot stays retired (HTTP 4xx/5xx, content gone)",
+        "he": "צילום הדקס המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
+      },
+      "kind": "http_gone",
+      "target": "saos-dex/"
+    },
+    {
+      "id": "A24",
+      "desc": {
+        "en": "The deposit rails view renders on the home page (rails subview)",
+        "he": "תצוגת עוגני ההפקדה מוצגת בדף הבית (תת-תצוגת rails)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "sub-exchange-rails",
+      "min": 1
+    },
+    {
+      "id": "A25",
+      "desc": {
+        "en": "The money path page is linked from the home page (knowledge grid + footer, at least 2 links)",
+        "he": "דף נתיב הכסף מקושר מדף הבית (גריד הידע והפוטר, לפחות 2 קישורים)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "money.html",
+      "min": 2
+    },
+    {
+      "id": "A26",
+      "desc": {
+        "en": "The money path page is live and carries the live anchor tracker (R23)",
+        "he": "דף נתיב הכסף חי ונושא את עוקב-העוגן החי (R23)"
+      },
+      "kind": "contains",
+      "target": "money.html",
+      "value": "Live Anchor"
+    },
+    {
+      "id": "A27",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the money path page",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף נתיב הכסף"
+      },
+      "kind": "regex_absent",
+      "target": "money.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A28",
+      "desc": {
+        "en": "The public API index exists and documents the endpoints (hub/api/)",
+        "he": "מפתח ה-API הציבורי קיים ומתעד את הנקודות (hub/api/)"
+      },
+      "kind": "contains",
+      "target": "hub/api/",
+      "value": "no key, no auth"
+    },
+    {
+      "id": "A29",
+      "desc": {
+        "en": "Evolution view carries the measured milestones list (at least 4 entries)",
+        "he": "תצוגת האבולוציה נושאת את רשימת אבני-הדרך הנמדדות (לפחות 4)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "kn-miles",
+      "min": 2
+    },
+    {
+      "id": "A30",
+      "desc": {
+        "en": "The GH snapshot fallback is committed and carries the org repos (>= 10)",
+        "he": "תמונת-המצב של גיטהאב מחויבת ונושאת אית ריפואי הארגון (>= 10)"
+      },
+      "kind": "json_min",
+      "target": "agents/gh-snapshot.json",
+      "field": "repos.length",
+      "min": 10
+    },
+    {
+      "id": "A31",
+      "desc": {
+        "en": "No priority inversion on Steem: when the core anchor is stale, no non-core op from the witness account may have fired after it and consumed its RC budget (R27 detector, keyless chain read)",
+        "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה רעב, שום פעולה אחרת של חשבון העדות לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח)"
+      },
+      "kind": "steem_priority",
+      "account": "cashmachine",
+      "coreOp": "saos.weave.core.v1",
+      "staleHours": 26
+    },
+    {
+      "id": "A32",
+      "desc": {
+        "en": "The external grid publish is healthy (dex/grid.json ok=true)",
+        "he": "פרסום הגריד החוץ בריא (dex/grid.json ok=true)"
+      },
+      "kind": "json_field",
+      "target": "dex/grid.json",
+      "field": "ok",
+      "value": true
+    },
+    {
+      "id": "A33",
+      "desc": {
+        "en": "The external grid publishes its measured policy verbatim: never sell STEEM below its external USD value",
+        "he": "הגריד החוץ מפרסם את מדיניותו המדודה מילה-במילה: לעולם לא למכור STEEM מתחת לערכו החוץ בדולרים"
+      },
+      "kind": "json_field",
+      "target": "dex/grid.json",
+      "field": "policy.principle",
+      "value": "never sell STEEM below its external USD value; every buy below parity is measured surplus"
+    },
+    {
+      "id": "A34",
+      "desc": {
+        "en": "The external grid runner is alive: dex/grid.json published at most 30h ago (daily cadence)",
+        "he": "רץ-הגריד החוץ חי: dex/grid.json פורסם לפני 30 שעות לכל היותר (קצב יומי)"
+      },
+      "kind": "json_age",
+      "target": "dex/grid.json",
+      "field": "publishedAt",
+      "maxHours": 30
+    },
+    {
+      "id": "A35",
+      "desc": {
+        "en": "The DEX engine publish is healthy (dex/world.json ok=true)",
+        "he": "פרסום מנוע הדקס בריא (dex/world.json ok=true)"
+      },
+      "kind": "json_field",
+      "target": "dex/world.json",
+      "field": "ok",
+      "value": true
+    },
+    {
+      "id": "A36",
+      "desc": {
+        "en": "The DEX engine is alive: dex/world.json published at most 6h ago (two-hour cadence plus tolerance)",
+        "he": "מנוע הדקס חי: dex/world.json פורסם לפני 6 שעות לכל היותר (קצב דו-שעתי בתוספת סובלנות)"
+      },
+      "kind": "json_age",
+      "target": "dex/world.json",
+      "field": "publishedAt",
+      "maxHours": 6
+    },
+    {
+      "id": "A37",
+      "desc": {
+        "en": "R28 truth anchor: every active oracle price in world.json stays within 5% of the live CoinGecko market (the oracle proves it tracks reality)",
+        "he": "עוגן האמת R28: כל מחיר אורקל פעיל ב-world.json בטווח 5% מהשוק החי ב-CoinGecko (האורקל מוכיח שהוא עוקב אחרי המציאות)"
+      },
+      "kind": "oracle_drift",
+      "target": "dex/world.json",
+      "maxDriftPct": 5,
+      "assets": {
+        "WSTEEM": "steem",
+        "PHIVE": "hive",
+        "WSBD": "steem-dollars",
+        "WSOL": "solana",
+        "WTRX": "tron",
+        "ETH": "ethereum",
+        "BTC": "bitcoin"
+      }
+    },
+    {
+      "id": "A38",
+      "desc": {
+        "en": "R28 treasury ratchet: accumulated treasury profit never drops below the floor measured on 2026-09-17 (209785 mu). Catches state regressions like the h9433 to h8953 overwrite. The floor only ever moves upward, session by session",
+        "he": "ראצ'ט האוצר R28: הרווח המצטבר לעולם לא יורד מתחת לרצפה שנמדדה ב-2026-09-17 (209785 מיקרו). תופס רגרסיות מצב כמו הדריסה מ-h9433 ל-h8953. הרצפה זזה רק כלפי מעלה, מסשן לסשן"
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "state.income.treasuryProfitMu",
+      "min": 209785
+    },
+    {
+      "id": "A39",
+      "desc": {
+        "en": "R28 rail ratchet: microrail equity never drops below the floor measured on 2026-09-17 (17975080 mu). Same regression guard for the value rail",
+        "he": "ראצ'ט הרכבת R28: הון המיקרו-רכבת לעולם לא יורד מתחת לרצפה שנמדדה ב-2026-09-17 (17975080 מיקרו). אותו מגן רגרסיה לרכבת הערך"
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "state.rail.equityMu",
+      "min": 17975080
+    },
+    {
+      "id": "A40",
+      "desc": {
+        "en": "R28 inventory sweep: the full public page set answers 200 with real content (not empty shells). Covers the console SPA, all standalone tools, and the knowledge hub core",
+        "he": "סריקת מלאי R28: מלוא מערך העמודים הציבורי עונה 200 עם תוכן אמיתי (לא קליפות ריקות). מכסה את ה-SPA, כל הכלים העצמאיים וליבת הידע"
+      },
+      "kind": "pages_ok",
+      "pages": [
+        {
+          "path": "",
+          "minBytes": 60000
+        },
+        {
+          "path": "roast.html",
+          "minBytes": 14000
+        },
+        {
+          "path": "money.html",
+          "minBytes": 20000
+        },
+        {
+          "path": "net.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "acid.html",
+          "minBytes": 20000
+        },
+        {
+          "path": "gate.html",
+          "minBytes": 18000
+        },
+        {
+          "path": "404.html",
+          "minBytes": 2000
+        },
+        {
+          "path": "hub/index.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/faq.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/fact-sheet.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/glossary.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/compare.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/ecosystem.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/explainer/en.html",
+          "minBytes": 15000
+        },
+        {
+          "path": "hub/articles/en/01-what-is-saos.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/docs/reports/index.html",
+          "minBytes": 4000
+        },
+        {
+          "path": "receipts/index.html",
+          "minBytes": 4000
+        },
+        {
+          "path": "deck/index.html",
+          "minBytes": 4000
+        },
+        {
+          "path": "onepager/index.html",
+          "minBytes": 4000
+        },
+        {
+          "path": "pitch/index.html",
+          "minBytes": 4000
+        }
+      ]
+    },
+    {
+      "id": "A41",
+      "desc": {
+        "en": "The engineering roast page is live and carries the claims-versus-truth section plus the live verdict pulse",
+        "he": "עמוד הרוסט ההנדסי חי ונושא את סקציית הטענות מול האמת וגם את פולס הפסק החי"
+      },
+      "kind": "contains_min",
+      "target": "roast.html",
+      "value": "claim",
+      "min": 12
+    },
+    {
+      "id": "A42",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the engineering roast page (clean typography only)",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או קו-מפריד בעמוד הרוסט ההנדסי (טיפוגרפיה נקייה בלבד)"
+      },
+      "kind": "regex_absent",
+      "target": "roast.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    }
+  ]
 }

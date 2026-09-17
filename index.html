@@ -504,6 +504,7 @@ footer.site a:hover{color:var(--text)}
       <div class="grid g3" style="margin-top:16px">
         <a class="pathlink" href="net.html"><h4 data-i="kn.netPage">The network page</h4><p data-i="kn.netPageSub">The verification walk-through of the chain of truth.</p><span class="go" data-i="t.open">Open</span></a>
         <a class="pathlink" href="money.html"><h4 data-i="kn.moneyPage">The money path</h4><p data-i="kn.moneyPageSub">The outside map: which instruments run the smart networks, where liquidity flows, and what we adopt.</p><span class="go" data-i="t.open">Open</span></a>
+        <a class="pathlink" href="roast.html"><h4 data-i="kn.roastPage">The engineering roast</h4><p data-i="kn.roastPageSub">The network cross-examines its own claims against live measurement: real, partial, or empty.</p><span class="go" data-i="t.open">Open</span></a>
         <a class="pathlink" href="gate.html"><h4 data-i="kn.gatePage">The gate</h4><p data-i="kn.gatePageSub">The threshold between LOCAL and REAL: the anchored truth.</p><span class="go" data-i="t.open">Open</span></a>
         <a class="pathlink" href="acid.html"><h4 data-i="kn.acidPage">The ACID test</h4><p data-i="kn.acidPageSub">Hard properties of the ledger, measured, not promised.</p><span class="go" data-i="t.open">Open</span></a>
         <a class="pathlink" href="receipts/"><h4 data-i="kn.receiptsPage">The receipt wall</h4><p data-i="kn.receiptsPageSub">Every live receipt in one place: anchors, conversions, seals, each row opens in a public explorer.</p><span class="go" data-i="t.open">Open</span></a>
@@ -595,6 +596,7 @@ footer.site a:hover{color:var(--text)}
         <a href="#/exchange/terminal" data-i="f.wallet">The exchange</a>
         <a href="net.html" data-i="kn.netPage">The network page</a>
         <a href="money.html" data-i="kn.moneyPage">The money path</a>
+        <a href="roast.html" data-i="kn.roastPage">The engineering roast</a>
         <a href="gate.html" data-i="kn.gatePage">The gate</a>
         <a href="acid.html" data-i="kn.acidPage">The ACID test</a>
         <a href="receipts/" data-i="kn.receiptsPage">The receipt wall</a>
@@ -679,6 +681,7 @@ en: {
   "kn.netPage":"The network page", "kn.netPageSub":"The verification walk-through of the chain of truth.",
   "kn.receiptsPage":"The receipt wall", "kn.receiptsPageSub":"Every live receipt in one place: anchors, conversions, seals, each row opens in a public explorer.",
   "kn.moneyPage":"The money path", "kn.moneyPageSub":"The outside map: which instruments run the smart networks, where liquidity flows, and what we adopt.",
+  "kn.roastPage":"The engineering roast", "kn.roastPageSub":"The network cross-examines its own claims against live measurement: real, partial, or empty.",
   "kn.gatePage":"The gate", "kn.gatePageSub":"The threshold between LOCAL and REAL: the anchored truth.",
   "kn.acidPage":"The ACID test", "kn.acidPageSub":"Hard properties of the ledger, measured, not promised.",
   "kn.evo":"Evolution", "kn.evoSub":"Measured discoveries and capacity milestones on the road to a self-improving network.",
@@ -784,6 +787,7 @@ he: {
   "kn.netPage":"דף הרשת", "kn.netPageSub":"סיור האימות של שרשרת האמת.",
   "kn.receiptsPage":"קיר הקבלות", "kn.receiptsPageSub":"כל הקבלות החיות במקום אחד: עוגנים, המרות וחותמות - כל שורה נפתחת בסייר ציבורי.",
   "kn.moneyPage":"נתיב הכסף", "kn.moneyPageSub":"מפת החוץ: אילו מכשירים מניעים את הרשתות החכמות, איפה הנזילות זורמת, ומה אנחנו מאמצים.",
+  "kn.roastPage":"הרוסט ההנדסי", "kn.roastPageSub":"הרשת חוקרת את הטענות של עצמה מול מדידה חיה: אמיתי, חלקי, או ריק.",
   "kn.gatePage":"השער", "kn.gatePageSub":"הסף בין LOCAL ל-REAL: האמת הנעוגנת.",
   "kn.acidPage":"מבחן ה-ACID", "kn.acidPageSub":"תכונות קשות של הספר: נמדדות, לא מובטחות.",
   "kn.evo":"אבולוציה", "kn.evoSub":"תגליות נמדדות ואבני דרך בדרך לרשת שמשתפרת לבד.",
@@ -1049,6 +1053,24 @@ const MILES = [
     en:"The wedge cure: the surviving home went back to work",
     subEn:"After a repeated sandbox crash, the home page was rebuilt to survive any death of an environment.",
     href:"about/" },
+  { when:"09-17", kind:"cure",
+    he:"רעב העוגן נתפס, נרפא ונולד גלאי",
+    subHe:"33.7 שעות של רעב ליבה אובחנו על ידי המאמת ב-07:57, תוקנו בחוק-העדיפויות R27, העוגן נחת ב-08:34 ו-36/36 חזרו עד 08:51.",
+    en:"Anchor starvation caught, cured, and turned into a detector",
+    subEn:"33.7 hours of core starvation diagnosed by the verifier at 07:57, fixed by the R27 priority law, the anchor landed at 08:34 and 36/36 returned by 08:51.",
+    href:"roast.html" },
+  { when:"09-17", kind:"proof",
+    he:"הרוסט ההנדסי יוצא לאור",
+    subHe:"עשר טענות מרכזיות נשפטות מול מדידה חיה בעמוד ציבורי: אורקל מול שוק, אוצר מול רצפה, מלאי מודולים ורשימת חובות כנה.",
+    en:"The engineering roast goes public",
+    subEn:"Ten core claims stand trial against live measurement on a public page: oracle versus market, treasury versus floor, module inventory, and an honest debt list.",
+    href:"roast.html" },
+  { when:"09-17", kind:"proof",
+    he:"המאמת התאמן: 36 ל-42 גלאים",
+    subHe:"A37 בודק את האורקל מול השוק החי, A38 ו-A39 ראצ׳טים של אוצר ורכבת שתופסים רגרסיות, A40 סורק 20 עמודים מול רצפת תוכן.",
+    en:"The verifier trained: 36 to 42 detectors",
+    subEn:"A37 checks the oracle against the live market, A38 and A39 are treasury and rail ratchets that catch regressions, A40 sweeps 20 pages against a content floor.",
+    href:"roast.html" },
   { when:"09-17", kind:"cure",
     he:"השקר של 5.8x מת: העוגן החי נכנס לפעולה",
     subHe:"מחיר WSTEEM הפנימי 320 מול אמת חוץ 55 - ההחלקה המדודה גררה אותו ל-60 בתוך שעות, וכל צעד נרשם בספר הפתוח.",

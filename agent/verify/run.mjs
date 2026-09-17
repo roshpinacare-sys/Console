@@ -142,6 +142,112 @@ async function evaluate(a, baseUrl) {
     return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h stale but no non-core op fired after it (honest starvation: RC regen, no inversion)` };
   }
 
+  // ── oracle_drift: R28 truth anchor ──────────────────────────────────
+  // The DEX oracle claims to track real markets. This detector makes it
+  // prove it: reads the live world.json oracle, fetches a public keyless
+  // price source (CoinGecko first, CoinPaprika and CryptoCompare as
+  // honest fallbacks, mirroring the engine's own multi-source doctrine)
+  // and fails when any ACTIVE asset drifts beyond maxDriftPct.
+  // Legacy frozen keys (not in the assets map) are ignored by design.
+  if (a.kind === "oracle_drift") {
+    const maxDriftPct = Number(a.maxDriftPct ?? 5);
+    const assets = a.assets && typeof a.assets === "object" ? a.assets : {};
+    if (Object.keys(assets).length === 0) return { id, ok: false, details: "invalid assertion: assets map is empty" };
+    let world;
+    try {
+      const r = await fetchTarget(baseUrl, a.target ?? "dex/world.json");
+      world = JSON.parse(r.body);
+    } catch (err) {
+      return { id, ok: false, details: `cannot read world.json: ${err?.message ?? err}` };
+    }
+    const oracle = world?.state?.oracle;
+    if (!oracle || typeof oracle !== "object") return { id, ok: false, details: "field state.oracle is missing" };
+
+    const cgIds = [...new Set(Object.values(assets))];
+    const PAPRIKA = { "steem": "steem-steem", "hive": "hive-hive", "steem-dollars": "sbd-steem-dollars", "solana": "sol-solana", "tron": "trx-tron", "ethereum": "eth-ethereum", "bitcoin": "btc-bitcoin" };
+    const CCSYMS = { "steem": "STEEM", "hive": "HIVE", "steem-dollars": "SBD", "solana": "SOL", "tron": "TRX", "ethereum": "ETH", "bitcoin": "BTC" };
+
+    async function tryFetchJson(url) {
+      try {
+        const r = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
+        if (!r.ok) return { error: `HTTP ${r.status}` };
+        return { json: await r.json() };
+      } catch (err) {
+        return { error: err?.message ?? String(err) };
+      }
+    }
+
+    let cg = null, provider = "", providerErrs = [];
+    const invPaprika = {};
+    for (const [gid, pid] of Object.entries(PAPRIKA)) invPaprika[pid] = gid;
+    const cgRes = await tryFetchJson(`https://api.coingecko.com/api/v3/simple/price?ids=${cgIds.join(",")}&vs_currencies=usd&t=${cacheBust}`);
+    if (cgRes.json && cgIds.some((id) => Number(cgRes.json?.[id]?.usd) > 0)) { cg = cgRes.json; provider = "coingecko"; }
+    else {
+      providerErrs.push(`coingecko:${cgRes.error ?? "no-prices"}`);
+      const ppRes = await tryFetchJson(`https://api.coinpaprika.com/v1/tickers?quotes=USD&t=${cacheBust}`);
+      if (Array.isArray(ppRes.json)) {
+        const m = {};
+        for (const t of ppRes.json) {
+          const gid = invPaprika[t.id];
+          if (gid) m[gid] = { usd: Number(t?.quotes?.USD?.price) };
+        }
+        if (cgIds.some((id) => Number(m?.[id]?.usd) > 0)) { cg = m; provider = "coinpaprika"; }
+        else providerErrs.push("coinpaprika:no-prices");
+      } else providerErrs.push(`coinpaprika:${ppRes.error ?? "no-array"}`);
+      if (!cg) {
+        const ccRes = await tryFetchJson(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${cgIds.map((id) => CCSYMS[id] ?? id).join(",")}&tsyms=USD&t=${cacheBust}`);
+        if (ccRes.json && !ccRes.json.Response) {
+          const invCc = {};
+          for (const [gid, sym] of Object.entries(CCSYMS)) invCc[sym] = gid;
+          const m = {};
+          for (const [sym, v] of Object.entries(ccRes.json)) {
+            const gid = invCc[sym];
+            if (gid) m[gid] = { usd: Number(v?.USD) };
+          }
+          if (cgIds.some((id) => Number(m?.[id]?.usd) > 0)) { cg = m; provider = "cryptocompare"; }
+          else providerErrs.push("cryptocompare:no-prices");
+        } else providerErrs.push(`cryptocompare:${ccRes.error ?? "error-shape"}`);
+      }
+    }
+    if (!cg) return { id, ok: false, details: `all price sources failed: ${providerErrs.join(", ")}` };
+
+    const parts = [];
+    let worstAbs = 0, worstName = "", compared = 0;
+    for (const [asset, cgId] of Object.entries(assets)) {
+      const mu = Number(oracle?.[asset]?.mu);
+      const market = Number(cg?.[cgId]?.usd);
+      if (!Number.isFinite(mu) || mu <= 0) { parts.push(`${asset}:no-oracle`); continue; }
+      if (!Number.isFinite(market) || market <= 0) { parts.push(`${asset}:no-market`); continue; }
+      const driftPct = ((mu / 1e6 - market) / market) * 100;
+      compared++;
+      parts.push(`${asset} ${driftPct >= 0 ? "+" : ""}${driftPct.toFixed(2)}%`);
+      if (Math.abs(driftPct) > worstAbs) { worstAbs = Math.abs(driftPct); worstName = asset; }
+    }
+    if (compared === 0) return { id, ok: false, details: `no asset could be compared via ${provider} (oracle or market missing)` };
+    const ok = worstAbs <= maxDriftPct;
+    return { id, ok, details: `${compared} assets vs ${provider}: ${parts.join(", ")} · worst ${worstName} ${worstAbs.toFixed(2)}%, limit ${maxDriftPct}%` };
+  }
+
+  // ── pages_ok: R28 inventory sweep ───────────────────────────────────
+  // Every page the Console publicly promises must exist and carry real
+  // content. A page that answers 200 with an empty shell is a lie this
+  // detector refuses to bless: minBytes is the floor for "real content".
+  if (a.kind === "pages_ok") {
+    const pages = Array.isArray(a.pages) ? a.pages : [];
+    if (pages.length === 0) return { id, ok: false, details: "invalid assertion: pages list is empty" };
+    const bad = [];
+    for (const p of pages) {
+      const path = String(p?.path ?? "");
+      const minBytes = Number(p?.minBytes ?? 1024);
+      const r = await fetchTarget(baseUrl, path);
+      if (r.error) { bad.push(`${path}:fetch-error`); continue; }
+      if (r.status !== 200) { bad.push(`${path}:HTTP${r.status}`); continue; }
+      if (r.body.length < minBytes) { bad.push(`${path}:${r.body.length}B<${minBytes}B`); }
+    }
+    const ok = bad.length === 0;
+    return { id, ok, details: ok ? `${pages.length}/${pages.length} pages healthy (200 + content floor)` : `${pages.length - bad.length}/${pages.length} healthy · failing: ${bad.join(", ")}` };
+  }
+
   const target = a.target ?? "";
   const res = await fetchTarget(baseUrl, target);
 
