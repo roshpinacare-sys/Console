@@ -512,6 +512,11 @@ footer.site a:hover{color:var(--text)}
     <div class="subview" id="sub-knowledge-evolution">
       <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg><span data-i="kn.evo">Evolution</span></h2>
       <p class="pgsub" data-i="kn.evoSub">Measured discoveries and capacity milestones on the road to a self-improving network.</p>
+      <h3 class="sb" style="font-size:16px"><span data-i="evo.miles">Measured milestones</span></h3>
+      <p class="pgsub" style="margin-bottom:14px" data-i="evo.milesSub">Every line below was a real failure or a real cure, measured in the terminal and published with a receipt. The links open the public evidence.</p>
+      <div id="kn-miles"><div class="skel">…</div></div>
+      <h3 class="sb" style="font-size:16px"><span data-i="evo.disc">Sovereign discoveries</span></h3>
+      <p class="pgsub" style="margin-bottom:14px" data-i="evo.discSub">Public recipes the network reproduced by itself (ACID engine). Not yet recorded - this stays empty until one truly exists.</p>
       <div id="kn-evo"><div class="skel">…</div></div>
     </div>
 
@@ -701,6 +706,7 @@ en: {
   "st.fresh":"FRESH","st.stale":"AGING","st.dead":"DORMANT","st.hours":(h)=>h.toFixed(1)+" h",
   "src.mirror":"Live from the public mirror, updated by the network itself, independent of any sandbox.",
   "src.ghapi":"Live from the public GitHub API.",
+  "src.snap":(at)=>"API rate-limited for this browser; showing the cloud snapshot from "+at+" - committed, verifiable, honest.",
   "src.dex":"Live from the cloud-mirrored DEX world.",
   "src.ratelimit":"GitHub API rate-limited for this browser; the rest of the page still reads the committed mirrors.",
   "verify.passed":"passed","verify.failed":"failed","verify.verdict":"Verdict","verify.runAt":"Measured at","verify.none":"No verification run recorded yet; the workflow commits the first result on its next cycle.",
@@ -712,6 +718,8 @@ en: {
   "safety.title":"Safety laws of autonomous push",
   "safety.note":"Autonomy is allowed to advance the network, never to endanger it.",
   "evo.none":"No measured discoveries recorded yet; the honest state is an empty list, not an invented story.",
+  "evo.miles":"Measured milestones","evo.milesSub":"Every line below was a real failure or a real cure, measured in the terminal and published with a receipt. The links open the public evidence.",
+  "evo.disc":"Sovereign discoveries","evo.discSub":"Public recipes the network reproduced by itself (ACID engine). Not yet recorded - this stays empty until one truly exists.",
   "fail.fetch":"Unreachable; showing the last committed mirror state honestly."
 },
 he: {
@@ -802,6 +810,7 @@ he: {
   "st.fresh":"טרי","st.stale":"מזדקן","st.dead":"דורם","st.hours":(h)=>h.toFixed(1)+" שע'",
   "src.mirror":"חי מהמראה הציבורית, מתעדכן על ידי הרשת עצמה, בלי תלות בסנדבוקס.",
   "src.ghapi":"חי מה-API הציבורי של גיטהאב.",
+  "src.snap":(at)=>"ה-API הוגבל לדפדפן הזה; מוצגת תמונת-מצב מהענן מ"+at+" - מחויבת, ניתנת לאימות, כנה.",
   "src.dex":"חי מעולם הדקס המוחזר מהענן.",
   "src.ratelimit":"ה-API של גיטהאב הוגבל לדפדפן הזה; שאר העמוד עדיין קורא את המראות השמורות.",
   "verify.passed":"עברו","verify.failed":"נכשלו","verify.verdict":"פסק הדין","verify.runAt":"נמדד ב","verify.none":"אין עדיין ריצת אימות רשומה; ה-workflow יכתוב את התוצאה הראשונה במחזור הבא שלו.",
@@ -813,6 +822,8 @@ he: {
   "safety.title":"חוקי הבטיחות של הדחיפה האוטונומית",
   "safety.note":"מותר לאוטונומיה לקדם את הרשת, לעולם לא לסכן אותה.",
   "evo.none":"אין עדיין תגליות נמדדות רשומות; המצב הכן הוא רשימה ריקה, לא סיפור שהומצא.",
+  "evo.miles":"אבני דרך נמדדות","evo.milesSub":"כל שורה למטה היא כישלון או ריפוי אמיתי, שנמדד בטרמינל ופורסם עם קבלה. הקישורים פותחים את הראיות הציבוריות.",
+  "evo.disc":"תגליות ריבוניות","evo.discSub":"מתכונים ציבוריים שהרשת שחזרה בעצמה (מנוע ה-ACID). טרם נרשמו - נשאר ריק עד שאחד יתקיים באמת.",
   "fail.fetch":"לא נגיש; מוצג מצב המראה האחרון שנשמר, בכנות."
 }};
 function t(k){ const v = (I18N[LANG] && I18N[LANG][k]) ?? I18N.en[k] ?? k; return v; }
@@ -968,7 +979,22 @@ async function loadAll(){
           jget("https://api.github.com/repos/roshpinacare-sys/Console/actions/runs?per_page=8")
         ]);
         CACHE.gh = {repos, runs};
-      }catch{ CACHE.ghFail = true; }
+      }catch{
+        /* רשת-ביטחון למכסת-הדפדפן (Task 49): ה-API הציבורי מוגבל ל-IP
+         * אלמוניים, אז כמעט כל מבקר ראה טבלה ריקה. תמונת-המצב שהרץ
+         * הענן כותב בכל שעה (agents/gh-snapshot.json) ממלאת את אותן
+         * תצוגות בכנות מתויגת: מקור + גיל, לא התחזות לחי. */
+        try{
+          const snap = await jget("agents/gh-snapshot.json");
+          if(snap && (snap.repos || snap.runs)){
+            CACHE.gh = {
+              repos: snap.repos||[],
+              runs: { workflow_runs: snap.runs||[] },
+              snapshotAt: snap.generatedAt
+            };
+          } else { CACHE.ghFail = true; }
+        }catch{ CACHE.ghFail = true; }
+      }
     })()
   ];
   await Promise.all(jobs);
@@ -979,6 +1005,59 @@ function srcNote(id, txt, ok=true){
 }
 
 /* ═══════════ dynamic renderers ═══════════ */
+/* אבני-דרך נמדדות של הרשת - עובדות היסטוריות עם קבלות ציבוריות.
+ * כל שורה: כישלון אמיתי שנתפס, ריפוי שנמדד, או הוכחה שנפתחת לבדיקה.
+ * הקישורים מובילים לדוחות הציבוריים שמתעדים כל אירוע. */
+const MILES = [
+  { when:"09-12", kind:"proof",
+    he:"פריצת-האפס: עוגן EVM בגז-אפס על Z Chain",
+    subHe:"שורש צ'קפוינט עוגן לראשונה כטרנזאקציית EVM אמיתית בגז 0x0 - קו עדות שלם בלי עלות.",
+    en:"The zero breakthrough: gas-free EVM anchor on Z Chain",
+    subEn:"A checkpoint root anchored for the first time as a real EVM transaction at gas 0x0 - a full witness line at zero cost.",
+    href:"hub/docs/reports/SAOS-PULSE-2026-09-12-R9-ZERO-BREAKTHROUGH.html" },
+  { when:"09-12", kind:"cure",
+    he:"ריפוי-עצמי מאובדן מסד-הנתונים של הסנדבוקס",
+    subHe:"ה-DB אבד; המוח (3 מפתחות) שוחזר מהכספת החתומה בענן - הבית הריבוני הוכיח את עצמו.",
+    en:"Self-heal from the loss of the sandbox database",
+    subEn:"The DB was lost; the brain (3 keys) was restored from the sealed cloud vault - the sovereign home proved itself.",
+    href:"hub/docs/reports/SAOS-PULSE-2026-09-12-R10-VAULT-SELF-HEAL.html" },
+  { when:"09-13", kind:"fail",
+    he:"השרת נפל; האמת המשיכה להיות מוגשת",
+    subHe:"סריקת-אמת מלאה תיעדה שהקונסולה הציבורית ממשיכה להגיש מהמראות והשרשרות גם כשהמכונה מתה.",
+    en:"The server fell; the truth kept being served",
+    subEn:"A full truth sweep documented that the public console keeps serving from mirrors and chains even when the machine dies.",
+    href:"hub/docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.html" },
+  { when:"09-13", kind:"fail",
+    he:"נעילת-טוקן שרדה בכנות",
+    subHe:"כשהטוקן נחסם הרשת לא המציאה הצלחות - היא דיווחה על החסימה בגלוי והמשיכה למדוד.",
+    en:"A token lockout survived honestly",
+    subEn:"When the token was blocked the network did not invent successes - it reported the blockage openly and kept measuring.",
+    href:"hub/docs/reports/SAOS-PULSE-2026-09-13-R18-PAT-LOCKOUT.html" },
+  { when:"09-13", kind:"cure",
+    he:"רציפות נסגרה: בית ששורד כל סנדבוקס",
+    subHe:"פרוטוקול ההעברה והסנכרון הושלמו כך שכל סשן חדש ממשיך בדיוק מאיפה שהקודם עצר.",
+    en:"Continuity closed: a home that outlives any sandbox",
+    subEn:"The handoff and sync protocols were completed so every new session continues exactly where the last one stopped.",
+    href:"hub/docs/reports/SAOS-PULSE-2026-09-13-R20-CONTINUITY-CLOSED.html" },
+  { when:"09-13", kind:"cure",
+    he:"ריפוי הטריז: הבית ששורד חזר לעבוד",
+    subHe:"אחרי קריסת-סנדבוקס חוזרת, הדף הבית נבנה מחדש כך שישרוד כל מוות של סביבה.",
+    en:"The wedge cure: the surviving home went back to work",
+    subEn:"After a repeated sandbox crash, the home page was rebuilt to survive any death of an environment.",
+    href:"hub/docs/reports/SAOS-PULSE-2026-09-13-R22-SURVIVABLE-HOME.html" },
+  { when:"09-17", kind:"cure",
+    he:"השקר של 5.8x מת: העוגן החי נכנס לפעולה",
+    subHe:"מחיר WSTEEM הפנימי 320 מול אמת חוץ 55 - ההחלקה המדודה גררה אותו ל-60 בתוך שעות, וכל צעד נרשם בספר הפתוח.",
+    en:"The 5.8x lie died: the live anchor went to work",
+    subEn:"Internal WSTEEM at 320 against an outside truth of 55 - the measured glide dragged it to 60 within hours, every step recorded in the open ledger.",
+    href:"money.html" },
+  { when:"09-17", kind:"proof",
+    he:"הזרימה החוץ: מילוי אמיתי נספר לראשונה",
+    subHe:"רץ-הגריד על ספר-STEEM הציבורי חי בענן; המילוי המוכח (0.049 SBD ל-0.5 STEEM) נספר בעודף +26% מול קו-הזהות החי.",
+    en:"The outside flow: a real fill counted for the first time",
+    subEn:"The grid runner on the public Steem book is live in the cloud; the proven fill (0.049 SBD for 0.5 STEEM) counted at a +26% surplus over the live parity line.",
+    href:"money.html" },
+];
 function renderHome(){
   const st = CACHE.status, mi = CACHE.mirror, reg = CACHE.registry;
   if(st && st.witness){
@@ -1061,7 +1140,7 @@ function renderNetwork(){
   if(CACHE.gh && CACHE.gh.repos){
     const rows = CACHE.gh.repos.slice().sort((a,b)=>Date.parse(b.pushed_at)-Date.parse(a.pushed_at));
     er.innerHTML = rows.map(r=>"<tr><td class='strong'>"+esc(r.name)+"</td><td class='num'>"+timeAgo(r.pushed_at)+"</td><td><span class='tag "+(r.visibility==="public"?"green":"amber")+"'>"+esc(r.visibility||"?")+"</span></td></tr>").join("");
-    srcNote("eco-src", t("src.ghapi"), true);
+    srcNote("eco-src", CACHE.gh.snapshotAt ? t("src.snap")(timeAgo(CACHE.gh.snapshotAt)) : t("src.ghapi"), !CACHE.gh.snapshotAt);
   } else {
     er.innerHTML = "<tr><td colspan='3' class='failhonest'>"+esc(CACHE.ghFail?t("src.ratelimit"):t("fail.fetch"))+"</td></tr>";
     srcNote("eco-src", t("src.ratelimit"), false);
@@ -1196,6 +1275,20 @@ function renderKnowledge(){
   } else if(mi){
     br.innerHTML = '<div class="note">'+esc(t("evo.none"))+'</div>';
   } else { br.innerHTML = '<div class="card"><div class="failhonest">'+esc(t("fail.fetch"))+'</div></div>'; }
+  /* אבני-דרך נמדדות (Task 49): כל שורה היא כישלון או ריפוי אמיתי שנמדד
+   * בטרמינל ופורסם עם קבלה ציבורית. הרשימה סטטית-מקור (עובדות היסטוריות
+   * קבועות עם קישורי ראיות), לא המצאה - הקבלות נפתחות לבדיקה. */
+  const ml = $("kn-miles");
+  if(ml){
+    ml.innerHTML = MILES.map(m=>
+      '<a class="card hov" style="display:block;margin-bottom:10px" href="'+esc(m.href)+'" target="_blank" rel="noopener">'+
+      '<div style="display:flex;gap:12px;align-items:flex-start">'+
+      '<span class="tag '+(m.kind==="cure"?"green":(m.kind==="proof"?"emerald":"amber"))+'">'+esc(m.when)+'</span>'+
+      '<div style="flex:1"><div class="strong" style="font-size:14.5px">'+esc(LANG==="he"?m.he:m.en)+'</div>'+
+      '<div style="color:var(--dim);font-size:13px;margin-top:5px;line-height:1.55">'+esc(LANG==="he"?m.subHe:m.subEn)+'</div>'+
+      '<div class="mono" style="color:var(--faint);font-size:11.5px;margin-top:6px">'+esc(m.href)+'</div></div></div></a>'
+    ).join("");
+  }
   const ev = $("kn-evo");
   if(mi && Array.isArray(mi.discoveries)){
     ev.innerHTML = mi.discoveries.length
@@ -1224,14 +1317,14 @@ function renderAdmin(){
     runs.innerHTML = CACHE.gh.runs.workflow_runs.slice(0,8).map(r=>
       "<tr><td class='strong'>"+esc(r.name)+"</td><td><span class='tag "+(clstag[r.conclusion]||"amber")+"'>"+esc(r.conclusion||r.status||"…")+"</span></td><td class='num'>"+timeAgo(r.created_at)+"</td><td><a href='"+esc(r.html_url)+"' target='_blank' rel='noopener'>"+esc(t("t.open"))+"</a></td></tr>"
     ).join("");
-    srcNote("ad-runs-src", t("src.ghapi"), true);
+    srcNote("ad-runs-src", CACHE.gh.snapshotAt ? t("src.snap")(timeAgo(CACHE.gh.snapshotAt)) : t("src.ghapi"), !CACHE.gh.snapshotAt);
   } else { runs.innerHTML = "<tr><td colspan='4' class='failhonest'>"+esc(CACHE.ghFail?t("src.ratelimit"):t("fail.fetch"))+"</td></tr>"; }
   renderMissions();
   const rp = $("ad-repos");
   if(CACHE.gh && CACHE.gh.repos){
     const rows = CACHE.gh.repos.slice().sort((a,b)=>Date.parse(b.pushed_at)-Date.parse(a.pushed_at));
     rp.innerHTML = rows.map(r=>"<tr><td class='strong'>"+esc(r.name)+"</td><td class='num'>"+timeAgo(r.pushed_at)+"</td><td class='num'>"+timeAgo(r.updated_at)+"</td></tr>").join("");
-    srcNote("ad-repos-src", t("src.ghapi"), true);
+    srcNote("ad-repos-src", CACHE.gh.snapshotAt ? t("src.snap")(timeAgo(CACHE.gh.snapshotAt)) : t("src.ghapi"), !CACHE.gh.snapshotAt);
   } else { rp.innerHTML = "<tr><td colspan='3' class='failhonest'>"+esc(t("src.ratelimit"))+"</td></tr>"; }
   renderVerify();
 }

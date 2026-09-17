@@ -162,3 +162,31 @@ writeFileSync(out, JSON.stringify(reg, null, 1) + "\n");
 const changed = !prev || JSON.stringify(prev.agents) !== JSON.stringify(reg.agents);
 console.log(`agents: ${agents.length} | repos with agents: ${withAgent.size}/14 | changed: ${changed}`);
 process.env.REGISTRY_CHANGED = changed ? "1" : "0";
+
+// ═══ GH-SNAPSHOT (Task 49) - רשת-ביטחון למכסת-הדפדפן ═══
+// הבעיה הנמדדת: ה-API הציבורי של גיטהאב מוגבל ל-60 בקשות/שעה לכל IP
+// אלמוני - כלומר כמעט כל מבקר בקונסולה רואה "ה-API הוגבל" בתצוגות
+// האקוסיסטם והשרת במקום נתונים. הפתרון: אותו רץ ענן עם הטוקן כותב
+// גם תמונת-מצב (ריפואים + ריצות אחרונות) שהדפדפן קורא כשה-API נכשל -
+// בכנות מתויגת כתמונת-מצב עם גילה, לא כנתונים חיים.
+try {
+  const orgRepos = await api(`https://api.github.com/orgs/${OWNER}/repos?per_page=100`);
+  const consoleRuns = await api(`https://api.github.com/repos/${OWNER}/Console/actions/runs?per_page=8`);
+  const snap = {
+    ok: true,
+    format: "gh-snapshot-v1",
+    generatedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+    source: "github-actions-api (token, hourly agents-watch run)",
+    purpose: "browser fallback when api.github.com is rate-limited for anonymous visitors",
+    repos: orgRepos.map((r) => ({
+      name: r.name, pushed_at: r.pushed_at, updated_at: r.updated_at,
+      html_url: r.html_url, visibility: r.visibility, archived: r.archived,
+    })),
+    runs: (consoleRuns.workflow_runs || []).map((r) => ({
+      name: r.name, status: r.status, conclusion: r.conclusion,
+      created_at: r.created_at, updated_at: r.updated_at, html_url: r.html_url,
+    })),
+  };
+  writeFileSync("agents/gh-snapshot.json", JSON.stringify(snap, null, 1) + "\n");
+  console.log(`gh-snapshot: ${snap.repos.length} repos, ${snap.runs.length} runs`);
+} catch (e) { console.error(`gh-snapshot (honest skip): ${e.message}`); }

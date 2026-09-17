@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>api - SAOS · SAOS</title>
-<meta name="description" content="api - SAOS - SAOS Network">
+<title>Public APIs - every endpoint, no key, no auth · SAOS</title>
+<meta name="description" content="The complete API index of the SAOS public console: live JSON data endpoints (network mirror, chain freshness, DEX world, deposits, fleet, verification verdicts) and the Identity Verification API. No key, no registration, open CORS.">
 <meta name="theme-color" content="#050507">
-<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/api/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
 --gold:#d4af37;--gold-bright:#f0d060;--violet:#a78bfa;--green:#22c55e;--red:#ef4444;--text:#f4f4f5;--dim:#a1a1aa;--faint:#71717a;
 --mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
---sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif}
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -23,8 +23,8 @@ header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
 main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
 h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
 h1 em,h1 .gold{color:var(--gold);font-style:normal}
-h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
-h3{font-size:17px;margin:22px 0 8px}
+h2{font-size:21px;margin:34px 0 10px;color:var(--gold-bright)}
+h3{font-size:16px;margin:24px 0 8px;color:var(--text)}
 p{margin:10px 0;color:#d4d4d8}
 a{color:var(--gold)}
 ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
@@ -37,11 +37,17 @@ hr{border:none;border-top:1px dashed var(--line2);margin:26px 0}
 .tbl{overflow-x:auto;margin:14px 0}
 table{border-collapse:collapse;width:100%;font-size:13.5px}
 th{color:var(--gold-bright);text-align:start;border-bottom:1px solid var(--line2);padding:8px 10px}
-td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8}
-img{max-width:100%;border-radius:12px}
+td{border-bottom:1px solid rgba(255,255,255,.06);padding:8px 10px;color:#d4d4d8;vertical-align:top}
+.ep{border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:16px 0;background:var(--panel)}
+.ep .path{font-family:var(--mono);font-size:15px;color:var(--gold-bright);word-break:break-all;direction:ltr;unicode-bidi:embed}
+.ep .meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.ep .badge{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line2);border-radius:6px;padding:2px 8px;color:var(--dim)}
+.ep .badge.live{color:#86efac;border-color:rgba(34,197,94,.35)}
+.ep .badge.cad{color:var(--violet);border-color:rgba(167,139,250,.35)}
 footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
 footer.site a{color:var(--dim)}
 .mono{font-family:var(--mono)}
+.note{font-size:13px;color:var(--faint)}
 @media print{body{background:#fff;color:#111}header.top{position:static}}
 </style>
 </head>
@@ -52,12 +58,122 @@ footer.site a{color:var(--dim)}
     SAOS
   </a>
   <span class="sp"></span>
-  <a class="lnk" href="../">מרכז התוכן</a>
-  <a class="lnk" href="../../">חזרה לקונסולה</a>
+  <a class="lnk" href="../">Content hub</a>
+  <a class="lnk" href="../../">Console</a>
 </header>
 <main>
-<h1>api</h1><ul style="list-style:none;padding:0"><li style="margin:8px 0"><a class="mono" style="font-size:14px" href="identity-api.html">identity-api</a><div style="color:var(--faint);font-size:12.5px">Identity Verification API: Reference and Integration Guide · SAOS</div></li></ul>
+<h1>Public APIs: <span class="gold">no key, no auth, no trust required.</span></h1>
+<p>Everything the console itself displays, it reads from these endpoints. They are plain JSON files served from the public repository and its GitHub Pages mirror. There is no backend to register against, no token to request, and no rate limit beyond a CDN. The network writes them from the cloud on fixed cadences; the browser reads them directly. What you fetch is exactly what the site shows.</p>
+<blockquote>Ground rules: all endpoints are GET-only, return JSON, and send <code>Access-Control-Allow-Origin: *</code> (GitHub Pages default). Freshness is documented per endpoint. The cadence is enforced by workflows in the public repos, and the verification bot checks the live site against these files every cycle - so a stale endpoint shows up as a red mark on the console, not as silence.</blockquote>
+
+<h2>1. Network truth</h2>
+
+<div class="ep">
+  <div class="path">GET /status.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">refreshed hourly by the chain watcher</span></div>
+  <p>The freshness verdict of the public witness line: whether the last Steem anchor is within threshold, the anchoring transaction, its block, and the recent anchor history. This is the file to poll if you want one answer to the question "is the network's public witness alive right now".</p>
+  <pre><code>curl -s https://roshpinacare-sys.github.io/Console/status.json | head -20</code></pre>
+  <p class="note">Key fields: <code>freshness.verdict</code> (FRESH / STALE / DORMANT), <code>freshness.ageHours</code>, <code>witness.txid</code>, <code>witness.block</code>, <code>witness.explorer</code> (open the anchoring transaction yourself).</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /mirror.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">regenerated on every heartbeat</span></div>
+  <p>The derived public mirror of the sovereign ledger: agent roster (public keys only), the latest 120 attestations, the latest 30 checkpoints with their Merkle roots, the anchor lines (Steem and Hive txids per checkpoint), market events, brain key status, and the ACID discoveries list. Secrets are filtered before publication by the gate in the sovereign repo - this file is what remains.</p>
+  <pre><code>curl -s https://roshpinacare-sys.github.io/Console/mirror.json \
+  | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['stats'])"</code></pre>
+  <p class="note">Key fields: <code>stats.attestations</code>, <code>stats.checkpoints</code>, <code>stats.headHash</code>, <code>checkpoints[].root</code>, <code>anchorLines.steem[].txid</code>.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /saos-live.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">published by the saos-live workflow</span></div>
+  <p>The state of the SAOS token layer: genesis record, state root, supply, wallets, and the operation log. The initial mint is verified one-to-one and documented; there is no promise of profit anywhere in this file, by design.</p>
+  <p class="note">Key fields: <code>stateRoot</code>, <code>genesis.initialMint</code>, <code>genesis.maxSupply</code>, <code>state.supply</code>.</p>
+</div>
+
+<h2>2. The money layer</h2>
+
+<div class="ep">
+  <div class="path">GET /dex/world.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">every ~2h by dex-beat (480 deterministic ticks per beat)</span></div>
+  <p>The complete exchange state: markets with fair prices and spreads, the order books, liquidity pools with reserves and accrued fees, wallets, the trade tape, and proofs. Prices are anchored to the median of three external feeds; the glide toward the anchor is recorded in the ledger.</p>
+  <pre><code>curl -s https://roshpinacare-sys.github.io/Console/dex/world.json \
+  | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['state']['height'], 'height')" </code></pre>
+  <p class="note">Key fields: <code>state.height</code>, <code>markets[]</code>, <code>pools[]</code>, <code>tape[]</code>.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /dex/watch.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">every 20 min by dex-watch</span></div>
+  <p>The keyless deposit watcher: which chains are being watched (TRON, Ethereum, Solana, Bitcoin), over which public RPCs, with what cadence and minimum deposit. This is the machine that turns a real on-chain deposit into a credit - and it holds no keys while doing it.</p>
+  <p class="note">Key fields: <code>chains[].chain</code>, <code>chains[].address</code>, <code>chains[].status</code>, <code>depositsTotal</code>.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /dex/deposits.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">on every detected deposit</span></div>
+  <p>The open deposits ledger: every real deposit detected on the watched addresses, with chain, amount, transaction id, and detection time. Claims are settled by the DEX heart only against entries that exist here.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /dex/grid.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">daily at 03:17 UTC by dex-grid</span></div>
+  <p>The external grid runner status: the verdict on the public Steem order book, the parity line, the counted fills with their measured surplus, the fuel (powerdown schedule), and the honest blocker. The policy is published in the file itself: never sell below external value.</p>
+</div>
+
+<h2>3. The fleet and its verdict</h2>
+
+<div class="ep">
+  <div class="path">GET /agents/registry.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">hourly by agents-watch</span></div>
+  <p>The cloud fleet registry: every agent in every repo, its layer, schedule, role (what it takes in and what it puts out), measured run statistics, and its current state. This is the roster behind the "22 cloud agents alive" number on the console - and it is measured, not declared.</p>
+  <p class="note">Key fields: <code>reposWithAgents[]</code>, <code>agents[].state</code>, <code>agents[].stats.successRate</code>, <code>agents[].lastRun</code>.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /agents/gh-snapshot.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">hourly by agents-watch</span></div>
+  <p>A snapshot of the org's repositories and recent workflow runs, written with a token by the hourly cloud run. Purpose: the GitHub API is rate-limited to 60 requests per hour per anonymous IP, so nearly every first-time visitor would otherwise see empty tables. The console falls back to this file - labeled as a snapshot with its age, never presented as live data.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /agent/state.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">on every agent handoff</span></div>
+  <p>The operator state: current phase, current task, last handoff time, open loops with priorities, the money routing plan, and the publishing authorities. This is how any agent, in any fresh session, continues exactly where the last one stopped.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /agent/requests.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">on every operator request</span></div>
+  <p>The public request queue: what the operator asked for, when, and whether it was closed with evidence. Requests that were not delivered simply stay open here, in public.</p>
+</div>
+
+<div class="ep">
+  <div class="path">GET /agent/verify/results.json</div>
+  <div class="meta"><span class="badge live">live</span><span class="badge cad">every cycle by the independent verify bot</span></div>
+  <p>The machine verdict on the console itself: 27 assertions measured against the live site (not the repo), each with pass/fail and detail. The contract is in <code>agent/verify/assertions.json</code> and the runner is <code>agent/verify/run.mjs</code> - you can run it yourself.</p>
+  <p class="note">Key fields: <code>summary.total</code>, <code>summary.passed</code>, <code>summary.failed</code>, <code>summary.verdict</code>.</p>
+</div>
+
+<h2>4. Identity Verification API</h2>
+<p>For verifying that a Steem account controls its keys (the gate the operator console uses), see the full reference:</p>
+<ul>
+  <li><a class="mono" style="font-size:14px" href="identity-api.html">identity-api.html</a> - Identity Verification API: reference and integration guide</li>
+</ul>
+
+<h2>How to consume honestly</h2>
+<ul>
+  <li>Always send <code>cache: "no-store"</code> from the browser (the console does this everywhere) so you read the last committed state, not a stale cache.</li>
+  <li>Cadences are upper bounds, not promises: a workflow that fails leaves the previous file in place, and its failure is visible in the repo's run history and in the verify bot results.</li>
+  <li>The JSON files are committed in the public <a href="https://github.com/roshpinacare-sys/Console">Console repository</a> - you can diff any value against its git history, and every write is attributable to a workflow run.</li>
+  <li>If a number on the site disagrees with a number in these files, that is a bug: report it and the verify contract will grow an assertion to pin it.</li>
+</ul>
+
+<p class="note" style="margin-top:28px">This index is itself part of the public site. If an endpoint is listed here but does not answer, that is a failed assertion - exactly the kind of thing the network is built to admit in the open.</p>
 </main>
-<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+<footer class="site">
+  SAOS - the verifying network for AI agents - <a href="../../">console</a> - <a href="../">content hub</a> - <a href="https://github.com/roshpinacare-sys/Console">source</a>
+</footer>
 </body>
 </html>
