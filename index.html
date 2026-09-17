@@ -678,7 +678,7 @@ en: {
   "src.ratelimit":"GitHub API rate-limited for this browser; the rest of the page still reads the committed mirrors.",
   "verify.passed":"passed","verify.failed":"failed","verify.verdict":"Verdict","verify.runAt":"Measured at","verify.none":"No verification run recorded yet; the workflow commits the first result on its next cycle.",
   "state.phase":"Phase","state.task":"Current task","state.handoff":"Last handoff","state.openLoops":"Open loops","state.doc":"Handoff protocol",
-  "mission.p0":"P0 - urgent","mission.p1":"P1 - important","mission.p2":"P2 - background","mission.p3":"P3 - optional","mission.closed":"Closed",
+  "mission.p0":"P0 - urgent","mission.p1":"P1 - important","mission.p2":"P2 - background","mission.p3":"P3 - optional",
   "money.title":"Money routing plan (funds entering within days)",
   "money.note":"Routing is data, not advice: buckets are decided by the operator and recorded here so every agent works from the same plan.",
   "auth.title":"Publishing authorities","auth.note":"Posting power for the network's public voice, used within published rate limits and platform rules.",
@@ -775,7 +775,7 @@ he: {
   "src.ratelimit":"ה-API של גיטהאב הוגבל לדפדפן הזה; שאר העמוד עדיין קורא את המראות השמורות.",
   "verify.passed":"עברו","verify.failed":"נכשלו","verify.verdict":"פסק הדין","verify.runAt":"נמדד ב","verify.none":"אין עדיין ריצת אימות רשומה; ה-workflow יכתוב את התוצאה הראשונה במחזור הבא שלו.",
   "state.phase":"שלב","state.task":"משימה נוכחית","state.handoff":"העברה אחרונה","state.openLoops":"לולאות פתוחות","state.doc":"פרוטוקול ההעברה",
-  "mission.p0":"P0 - דחוף","mission.p1":"P1 - חשוב","mission.p2":"P2 - רקע","mission.p3":"P3 - רשות","mission.closed":"נסגר",
+  "mission.p0":"P0 - דחוף","mission.p1":"P1 - חשוב","mission.p2":"P2 - רקע","mission.p3":"P3 - רשות",
   "money.title":"תוכנית ניתוב כסף (כספים נכנסים בימים הקרובים)",
   "money.note":"הניתוב הוא נתון, לא ייעוץ: הדליים מוחלטים על ידי המפעיל ונרשמים כאן כדי שכל סוכן יעבוד מאותה תוכנית.",
   "auth.title":"רשויות הפרסום","auth.note":"כוח פרסום לקול הציבורי של הרשת, בשימוש בתוך מגבלות קצב וכללי פלטפורמה מפורסמים.",
@@ -1040,15 +1040,13 @@ function renderPlan(){
   const s = CACHE.state;
   if(s && Array.isArray(s.openLoops) && s.openLoops.length){
     const pri = {P0:"red",P1:"amber",P2:"emerald",P3:"green"};
-    el.innerHTML = s.openLoops.map(o=>{
-      const closed = o.status==="closed";
-      return '<div class="card" style="margin-bottom:10px;display:flex;gap:14px;align-items:flex-start'+(closed?';opacity:.6':'')+'">'+
-        '<span class="tag '+(closed?"green":(pri[o.priority]||"emerald"))+'">'+(closed?esc(t("mission.closed")):esc(o.priority||"P?"))+'</span>'+
-        '<div style="flex:1"><div class="strong" style="font-size:14.5px'+(closed?';text-decoration:line-through':'')+'">'+esc(LANG==="he"?(o.titleHe||o.title):(o.title||o.titleHe))+'</div>'+
+    el.innerHTML = s.openLoops.map(o=>
+      '<div class="card" style="margin-bottom:10px;display:flex;gap:14px;align-items:flex-start">'+
+        '<span class="tag '+(pri[o.priority]||"emerald")+'">'+esc(o.priority||"P?")+'</span>'+
+        '<div style="flex:1"><div class="strong" style="font-size:14.5px">'+esc(LANG==="he"?(o.titleHe||o.title):(o.title||o.titleHe))+'</div>'+
         (o.detail?'<div style="color:var(--dim);font-size:13px;margin-top:4px;line-height:1.55">'+esc(LANG==="he"?(o.detailHe||o.detail):(o.detail||o.detailHe))+'</div>':"")+
-        (closed&&o.evidence?'<div style="color:var(--dim);font-size:12px;margin-top:4px">'+esc(o.evidence)+'</div>':"")+
-        '</div></div>';
-    }).join("");
+        '</div></div>'
+    ).join("");
   } else if(s){
     el.innerHTML = '<div class="note">'+esc(t("evo.none"))+'</div>';
   } else {
