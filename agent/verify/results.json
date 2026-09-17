@@ -1,26 +1,26 @@
 {
   "format": "agent-verify-results-v1",
-  "generatedAt": "2026-09-17T00:54:03.313Z",
+  "generatedAt": "2026-09-17T01:06:29.951Z",
   "runBy": "github-actions",
-  "durationMs": 2907,
+  "durationMs": 765,
   "summary": {
     "total": 20,
-    "passed": 20,
-    "failed": 0,
-    "verdict": "ALL_PASS"
+    "passed": 16,
+    "failed": 4,
+    "verdict": "HAS_FAILURES"
   },
   "results": [
     {
       "id": "A01",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 351
+      "ms": 165
     },
     {
       "id": "A02",
       "ok": true,
       "details": "6 occurrence(s) of \"data-console-section\", minimum is 6",
-      "ms": 1
+      "ms": 0
     },
     {
       "id": "A03",
@@ -50,43 +50,43 @@
       "id": "A07",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 234
+      "ms": 66
     },
     {
       "id": "A08",
       "ok": true,
       "details": "agents.length = 21, minimum is 13",
-      "ms": 235
+      "ms": 51
     },
     {
       "id": "A09",
       "ok": true,
-      "details": "stats.attestations = 146, minimum is 100",
-      "ms": 232
+      "details": "stats.attestations = 148, minimum is 100",
+      "ms": 63
     },
     {
       "id": "A10",
-      "ok": true,
-      "details": "field \"freshness.verdict\" = \"FRESH\", expected \"FRESH\"",
-      "ms": 231
+      "ok": false,
+      "details": "field \"freshness.verdict\" = \"STALE\", expected \"FRESH\"",
+      "ms": 64
     },
     {
       "id": "A11",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 231
+      "ms": 59
     },
     {
       "id": "A12",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 235
+      "ms": 53
     },
     {
       "id": "A13",
       "ok": true,
       "details": "requests.length = 20, minimum is 12",
-      "ms": 232
+      "ms": 47
     },
     {
       "id": "A14",
@@ -108,27 +108,27 @@
     },
     {
       "id": "A17",
-      "ok": true,
-      "details": "pattern not found in body (0 matches)",
-      "ms": 232
+      "ok": false,
+      "details": "pattern matched 94 time(s), first match \"—\"",
+      "ms": 48
     },
     {
       "id": "A18",
-      "ok": true,
-      "details": "pattern not found in body (0 matches)",
-      "ms": 231
+      "ok": false,
+      "details": "pattern matched 21 time(s), first match \"—\"",
+      "ms": 55
     },
     {
       "id": "A19",
-      "ok": true,
-      "details": "pattern not found in body (0 matches)",
-      "ms": 233
+      "ok": false,
+      "details": "pattern matched 19 time(s), first match \"✓\"",
+      "ms": 47
     },
     {
       "id": "A20",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 228
+      "ms": 47
     }
   ]
 }
