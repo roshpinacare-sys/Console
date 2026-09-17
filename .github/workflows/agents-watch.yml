@@ -40,6 +40,23 @@ jobs:
       - name: Commit if changed
         run: |
           if ! git diff --quiet agents/registry.json agents/gh-snapshot.json; then
+            # R28 Pages-quota gate: lastRun timestamps churn every hourly run,
+            # forcing a commit (and a Pages build) even when the fleet is
+            # semantically identical. Commit only when the agent roster, its
+            # states, or the repo set truly change, or when the last committed
+            # heartbeat is older than 3h. Measured root cause of the
+            # 2026-09-17 Pages build-quota exhaustion.
+            SEM_NOW="$(node -e 'const r=require("./agents/registry.json");console.log(JSON.stringify({n:r.agents.length,s:r.agents.map(a=>a.name+":"+(a.state||"")).sort(),repos:(r.reposWithAgents||[]).length}))' 2>/dev/null || echo x$$)"
+            git show HEAD:agents/registry.json > /tmp/prev-reg.json 2>/dev/null \
+              && SEM_PREV="$(node -e 'const r=require("/tmp/prev-reg.json");console.log(JSON.stringify({n:r.agents.length,s:r.agents.map(a=>a.name+":"+(a.state||"")).sort(),repos:(r.reposWithAgents||[]).length}))' 2>/dev/null || echo y$$)" \
+              || SEM_PREV=""
+            LAST_TS="$(git log -1 --format=%cI -- agents/registry.json agents/gh-snapshot.json)"
+            LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
+            AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
+            if [ "$SEM_NOW" = "$SEM_PREV" ] && [ "$AGE_H" -lt 3 ]; then
+              echo "fleet semantically unchanged and heartbeat fresh (${AGE_H}h < 3h) - no commit, Pages quota spared"
+              exit 0
+            fi
             git config user.name "agents-watch"
             git config user.email "actions@users.noreply.github.com"
             git add agents/registry.json agents/gh-snapshot.json

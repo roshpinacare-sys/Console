@@ -42,7 +42,26 @@ jobs:
           git add dex/deposits.json dex/watch.json
           if git diff --cached --quiet; then
             echo "no new deposits - the book is unchanged"
-          else
-            git commit -m "dex-watch: $(date -u +%FT%TZ) · $(jq -r '.depositsTotal' dex/watch.json) deposits · $(jq -r '.chains | to_entries | map("\(.key) \(.value)") | join(" · ")' dex/watch.json)"
-            for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done
+            exit 0
           fi
+          # R28 Pages-quota gate: publishedAt and lastEvmBlock churn every run,
+          # so a raw diff forces a commit (and a Pages build) every 20 minutes
+          # even when nothing meaningful moved. That cadence exhausted the
+          # legacy Pages build quota on 2026-09-17 (~09:48Z) and froze the
+          # public site mid-deploy. The honest fix is semantic: commit only
+          # when the watched state truly changes (addresses, chain health,
+          # deposit count, the deposit book itself) or when the last committed
+          # heartbeat is older than 3h (liveness proof, sparse).
+          SEM_NOW="$(jq -Sc '{watching, chains, depositsTotal}' dex/watch.json)"
+          git show HEAD:dex/watch.json > /tmp/prev-watch.json 2>/dev/null \
+            && SEM_PREV="$(jq -Sc '{watching, chains, depositsTotal}' /tmp/prev-watch.json)" \
+            || SEM_PREV=""
+          LAST_TS="$(git log -1 --format=%cI -- dex/watch.json dex/deposits.json)"
+          LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
+          AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
+          if [ "$SEM_NOW" = "$SEM_PREV" ] && [ "$AGE_H" -lt 3 ] && git diff --cached --quiet -- dex/deposits.json; then
+            echo "semantic state unchanged and heartbeat fresh (${AGE_H}h < 3h) - no commit, Pages quota spared"
+            exit 0
+          fi
+          git commit -m "dex-watch: $(date -u +%FT%TZ) · $(jq -r '.depositsTotal' dex/watch.json) deposits · $(jq -r '.chains | to_entries | map("\(.key) \(.value)") | join(" · ")' dex/watch.json)"
+          for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done
