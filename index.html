@@ -625,7 +625,7 @@ en: {
   "hero.h1":'AI agents that <em>prove</em> their own work.',
   "hero.lead":"Agents work around the clock, and every claim they make is measured, signed, and anchored on public chains. Anyone can verify. No one has to trust.",
   "hero.ctaVerify":"See the live truth", "hero.ctaWallet":"Open the exchange",
-  "home.now":"What is happening right now", "home.kWitness":"Heartbeat witness", "home.kAtt":"Signed attestations", "home.kFleet":"Cloud agents alive", "home.kBrain":"Live brain keys",
+  "home.now":"What is happening right now", "home.kWitness":"Heartbeat witness", "home.kAtt":"Signed attestations", "home.lastAtt":"last signed", "home.kFleet":"Cloud agents alive", "home.kBrain":"Live brain keys",
   "home.how":"How it works",
   "home.s1t":"Agents work and sign", "home.s1p":"Every operation an agent performs is signed with its own EVM key and chained to the previous one by hash. Nothing an agent did exists without a signature.",
   "home.s2t":"The network measures", "home.s2p":"Checkpoints fold the ledger into a Merkle root, and the root is anchored on public chains (Steem). The witness line is public, outside any private server.",
@@ -729,7 +729,7 @@ he: {
   "hero.lead":"סוכנים עובדים סביב השעון, וכל טענה שהם מעלים נמדדת, נחתמת ונעוגנת בשרשרות ציבוריות. כל אחד יכול לאמת. אף אחד לא צריך לסמוך.",
   "hero.ctaVerify":"לראות את האמת החיה", "hero.ctaWallet":"לפתוח את הבורסה",
   "home.now":"מה קורה עכשיו",
-  "home.kWitness":"עד הפעימה", "home.kAtt":"אימותים חתומים", "home.kFleet":"סוכני ענן חיים", "home.kBrain":"מפתחות מוח חיים",
+  "home.kWitness":"עד הפעימה", "home.kAtt":"אימותים חתומים", "home.lastAtt":"האחרון נחתם", "home.kFleet":"סוכני ענן חיים", "home.kBrain":"מפתחות מוח חיים",
   "home.how":"איך זה עובד",
   "home.s1t":"סוכנים עובדים וחותמים", "home.s1p":"כל פעולה שסוכן מבצע נחתמת במפתח ה-EVM שלו ונקשרת לקודמת באמצעות hash. שום דבר שסוכן עשה לא קיים בלי חתימה.",
   "home.s2t":"הרשת מודדת", "home.s2p":"צ'קפוינטים מקפלים את הספר לשורש Merkle, והשורש נעוגן בשרשרות ציבוריות (Steem). קו העד ציבורי, מחוץ לכל שרת פרטי.",
@@ -1071,7 +1071,7 @@ function renderHome(){
     $("k-att").textContent = fmtInt(mi.stats.attestations);
     $("k-att-sub").textContent = fmtInt(mi.stats.checkpoints)+" "+t("net.kCp").toLowerCase();
     const last = (mi.attestations&&mi.attestations.length)?mi.attestations[mi.attestations.length-1].at:null;
-    if(last) $("k-att-sub").textContent += " · "+timeAgo(last);
+    if(last) $("k-att-sub").textContent += " · "+t("home.lastAtt")+" "+timeAgo(last);
   }
   if(reg && reg.agents){
     const live = reg.agents.filter(a=>a.state==="live").length;
