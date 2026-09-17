@@ -99,6 +99,17 @@ async function evaluate(a, baseUrl) {
       return { id, ok: true, details: "HTTP 200" };
     }
 
+    // A retired page must stay retired: any 2xx (or a redirect that lands on
+    // content) is a failure. 3xx that fell through to 200 via redirect: "follow"
+    // is also a failure, because the operator cancelled the page outright.
+    case "http_gone": {
+      if (res.error) return { id, ok: false, details: `fetch failed: ${res.error}` };
+      if (res.status >= 200 && res.status < 300) {
+        return { id, ok: false, details: `HTTP ${res.status}, the retired page still serves content (expected 4xx/5xx)` };
+      }
+      return { id, ok: true, details: `HTTP ${res.status} (retired, as required)` };
+    }
+
     case "contains": {
       const found = res.body.includes(String(a.value ?? ""));
       return {

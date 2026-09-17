@@ -163,6 +163,12 @@ td .strong{color:var(--text)}
 /* meters */
 .meter{height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:9px}
 .meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#059669,#34d399)}
+.bookrow{display:grid;grid-template-columns:74px 1fr 86px;gap:10px;align-items:center;padding:5px 0;font-size:13px}
+.bookrow .meter{height:7px;margin-top:0}
+.bookrow .num{text-align:end;color:var(--dim)}
+.bookrow em{font-style:normal;color:var(--faint);font-size:11px;margin-inline-start:6px}
+.addr{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;word-break:break-all;color:var(--dim);line-height:1.6;user-select:all;cursor:pointer}
+.addr:hover{color:var(--tx)}
 
 /* misc */
 .stat-row{display:flex;gap:26px;flex-wrap:wrap}
@@ -267,9 +273,9 @@ footer.site a:hover{color:var(--text)}
         <a class="btn" href="#/network/overview">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           <span data-i="hero.ctaVerify">See the live truth</span></a>
-        <a class="btn ghost" href="wallet.html">
+        <a class="btn ghost" href="#/exchange/terminal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="13" rx="2.5"/><path d="M2 10h20"/></svg>
-          <span data-i="hero.ctaWallet">Open wallet &amp; exchange</span></a>
+          <span data-i="hero.ctaWallet">Open the exchange</span></a>
       </div>
     </div>
 
@@ -342,7 +348,7 @@ footer.site a:hover{color:var(--text)}
     <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span data-i="home.paths">Start where you are</span></h2>
     <div class="grid g3">
       <a class="pathlink" href="#/network/overview"><h4 data-i="home.p1t">I am new here</h4><p data-i="home.p1p">Give me the big picture of the network, the book, and the anchor, in numbers I can check.</p><span class="go" data-i="home.p1go">Open the network view</span></a>
-      <a class="pathlink" href="wallet.html"><h4 data-i="home.p2t">I want to use the money layer</h4><p data-i="home.p2p">Open a free wallet in seconds, exchange at network rates, and see every coin in the open ledger. Keys never leave the device.</p><span class="go" data-i="home.p2go">Open the wallet &amp; exchange</span></a>
+      <a class="pathlink" href="#/exchange/terminal"><h4 data-i="home.p2t">I want to use the money layer</h4><p data-i="home.p2p">Live markets, pools and a trade tape mirrored from the cloud, deposit rails on four public chains, and every coin visible in the open ledger. Deposits are credited by the dex heart against the public book.</p><span class="go" data-i="home.p2go">Open the exchange</span></a>
       <a class="pathlink" href="#/admin/command"><h4 data-i="home.p3t">I operate the network</h4><p data-i="home.p3p">Command center, mission queue, money routing, and the agent bridgehead: the sovereign control room.</p><span class="go" data-i="home.p3go">Enter the admin area</span></a>
     </div>
   </div>
@@ -429,16 +435,31 @@ footer.site a:hover{color:var(--text)}
         <div class="card"><div class="kpi num" id="dx-height">…</div><div class="kplabel" data-i="ex.height">DEX height</div></div>
         <div class="card"><div class="kpi num" id="dx-fills">…</div><div class="kplabel" data-i="ex.fills">Fills</div></div>
       </div>
-      <div class="card" style="margin-top:14px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap">
-        <div>
-          <h3 style="font-size:16px;margin-bottom:5px" data-i="ex.openWallet">The full terminal lives in the wallet app</h3>
-          <p style="color:var(--dim);font-size:13.5px;line-height:1.6" data-i="ex.openWalletSub">Free wallet, exchange at network rates, deposits and earn; keys are generated on your device and never sent anywhere.</p>
-        </div>
-        <a class="btn" href="wallet.html" style="flex:none">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          <span data-i="ex.openBtn">Open the wallet &amp; exchange</span></a>
+      <h2 class="sb" style="margin-top:26px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><span data-i="ex.markets">Live markets</span></h2>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Live market"><thead><tr><th data-i="t.pair">Pair</th><th data-i="t.fair">Fair</th><th data-i="t.bid">Best bid</th><th data-i="t.ask">Best ask</th><th data-i="ex.spread">Spread</th><th data-i="t.twap">TWAP</th></tr></thead><tbody id="dx-markets"><tr><td colspan="6" class="skel">…</td></tr></tbody></table></div></div>
+
+      <h2 class="sb" style="margin-top:26px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V5"/><path d="M20 19V5"/><path d="M4 9h16M4 15h16"/></svg><span data-i="ex.book">Order book - SAOS/USDS</span></h2>
+      <div class="grid g2">
+        <div class="card"><div class="kplabel" style="margin-bottom:10px;color:#86efac" data-i="ex.bookBids">Bids</div><div id="dx-bids"><div class="skel">…</div></div></div>
+        <div class="card"><div class="kplabel" style="margin-bottom:10px;color:#fda4af" data-i="ex.bookAsks">Asks</div><div id="dx-asks"><div class="skel">…</div></div></div>
       </div>
+
+      <h2 class="sb" style="margin-top:26px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg><span data-i="ex.pools">Liquidity pools</span></h2>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Liquidity pools"><thead><tr><th data-i="t.pair">Pair</th><th data-i="t.reserves">Reserves</th><th data-i="t.lp">LP supply</th><th data-i="t.fees">Fees accrued</th><th data-i="t.yield">LP yield</th><th data-i="t.swaps">Swaps</th></tr></thead><tbody id="dx-pools"><tr><td colspan="6" class="skel">…</td></tr></tbody></table></div></div>
+
+      <h2 class="sb" style="margin-top:26px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg><span data-i="ex.tape">Recent tape</span></h2>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Recent fills"><thead><tr><th data-i="t.kind">Kind</th><th data-i="t.pair">Pair</th><th data-i="t.price">Price</th><th data-i="t.amount">Amount</th><th data-i="t.taker">Taker</th><th data-i="t.maker">Maker</th><th data-i="t.when">When</th></tr></thead><tbody id="dx-tape"><tr><td colspan="7" class="skel">…</td></tr></tbody></table></div></div>
       <div class="srcnote" id="dx-src"></div>
+    </div>
+
+    <div class="subview" id="sub-exchange-rails">
+      <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7z"/></svg><span data-i="ex.rails">Deposit rails</span></h2>
+      <p class="pgsub" data-i="ex.railsSub">Four public chains are watched around the clock by a keyless bot: it reads public RPCs, records every deposit in the open book, and the dex heart credits USDS against it. No custody, no promises.</p>
+      <div class="grid g4" id="rails-addrs"><div class="card"><div class="skel">…</div></div></div>
+      <h2 class="sb" style="margin-top:26px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span data-i="ex.deposits">The deposit book</span></h2>
+      <div class="tblwrap"><div class="tblscroll"><table aria-label="Deposits"><thead><tr><th data-i="t.chain">Chain</th><th data-i="t.amount">Amount</th><th data-i="t.txid">Transaction</th><th data-i="t.when">When</th></tr></thead><tbody id="rails-deposits"><tr><td colspan="4" class="skel">…</td></tr></tbody></table></div></div>
+      <div class="note" style="margin-top:14px" data-i="ex.railsNote">Minimum deposit 5 USD. The watcher scans every 20 minutes and writes the open book; nothing here is advice, and no profit is promised.</div>
+      <div class="srcnote" id="rails-src"></div>
     </div>
 
     <div class="subview" id="sub-exchange-market">
@@ -564,7 +585,7 @@ footer.site a:hover{color:var(--text)}
       </div>
       <div>
         <h5 data-i="f.tools">Tools</h5>
-        <a href="wallet.html" data-i="f.wallet">Wallet &amp; exchange</a>
+        <a href="#/exchange/terminal" data-i="f.wallet">The exchange</a>
         <a href="net.html" data-i="kn.netPage">The network page</a>
         <a href="gate.html" data-i="kn.gatePage">The gate</a>
         <a href="acid.html" data-i="kn.acidPage">The ACID test</a>
@@ -596,7 +617,7 @@ en: {
   "hero.eyebrow":"THE VERIFYING NETWORK",
   "hero.h1":'AI agents that <em>prove</em> their own work.',
   "hero.lead":"Agents work around the clock, and every claim they make is measured, signed, and anchored on public chains. Anyone can verify. No one has to trust.",
-  "hero.ctaVerify":"See the live truth", "hero.ctaWallet":"Open wallet & exchange",
+  "hero.ctaVerify":"See the live truth", "hero.ctaWallet":"Open the exchange",
   "home.now":"What is happening right now", "home.kWitness":"Heartbeat witness", "home.kAtt":"Signed attestations", "home.kFleet":"Cloud agents alive", "home.kBrain":"Live brain keys",
   "home.how":"How it works",
   "home.s1t":"Agents work and sign", "home.s1p":"Every operation an agent performs is signed with its own EVM key and chained to the previous one by hash. Nothing an agent did exists without a signature.",
@@ -617,7 +638,7 @@ en: {
   "home.beats":"Latest heartbeats",
   "home.paths":"Start where you are",
   "home.p1t":"I am new here", "home.p1p":"Give me the big picture of the network, the book, and the anchor, in numbers I can check.", "home.p1go":"Open the network view",
-  "home.p2t":"I want to use the money layer", "home.p2p":"Open a free wallet in seconds, exchange at network rates, and see every coin in the open ledger. Keys never leave the device.", "home.p2go":"Open the wallet & exchange",
+  "home.p2t":"I want to use the money layer", "home.p2p":"Live markets, pools and a trade tape mirrored from the cloud, deposit rails on four public chains, and every coin visible in the open ledger. Deposits are credited by the dex heart against the public book.", "home.p2go":"Open the exchange",
   "home.p3t":"I operate the network", "home.p3p":"Command center, mission queue, money routing, and the agent bridgehead: the sovereign control room.", "home.p3go":"Enter the admin area",
   "net.h":"The network", "net.sub":"The verifying layer itself: the ledger of signed claims, the checkpoints that fold it, the anchors that nail it to public chains, and the ecosystem of repositories that run it.",
   "net.kAtt":"Attestations", "net.kCp":"Checkpoints", "net.kAg":"Signed identities", "net.kRoot":"Merkle root (last)",
@@ -630,10 +651,12 @@ en: {
   "ag.h":"The agents", "ag.sub":"A fleet of cloud agents runs the network around the clock, each with a defined role, input, and output, and a measured success rate. They live in GitHub Actions, so they never depend on any single sandbox.",
   "ag.fleetSrc":"Registry refreshed hourly by the agents-watch workflow, straight from the GitHub API.",
   "ag.ids":"Signed identities in the book",
-  "ex.h":"The exchange", "ex.sub":"The money layer: a live DEX mirrored from the cloud, a truth market settled by measurement, and the full wallet terminal, with every coin visible in the open ledger.",
+  "ex.h":"The exchange", "ex.sub":"The money layer: live markets, pools and a trade tape mirrored from the cloud, deposit rails on four public chains, a truth market settled by measurement, and every coin visible in the open ledger.",
   "ex.spread":"Spread", "ex.height":"DEX height", "ex.fills":"Fills",
-  "ex.openWallet":"The full terminal lives in the wallet app", "ex.openWalletSub":"Free wallet, exchange at network rates, deposits and earn; keys are generated on your device and never sent anywhere.",
-  "ex.openBtn":"Open the wallet & exchange",
+  "ex.markets":"Live markets", "ex.book":"Order book - SAOS/USDS", "ex.bookBids":"Bids", "ex.bookAsks":"Asks", "ex.pools":"Liquidity pools", "ex.tape":"Recent tape",
+  "ex.rails":"Deposit rails", "ex.railsSub":"Four public chains are watched around the clock by a keyless bot: it reads public RPCs, records every deposit in the open book, and the dex heart credits USDS against it. No custody, no promises.",
+  "ex.deposits":"The deposit book", "ex.depositsEmpty":"No deposits recorded yet; the book fills as real deposits land on the public chains. That is the honest state, not a story.",
+  "ex.railsNote":"Minimum deposit 5 USD. The watcher scans every 20 minutes and writes the open book; nothing here is advice, and no profit is promised.",
   "ex.market":"The truth market", "ex.marketSub":"Claims are staked on, and settled only by measurement; the market's whole history is part of the ledger.",
   "ex.holdings":"The live ledger", "ex.kWallets":"Wallets on chain", "ex.kOps":"Operations", "ex.kSupply":"SAOS supply", "ex.kRoot":"State root",
   "ex.holdNote":"The sovereign live ledger is mirrored to the cloud by the saos-live workflow. Genesis mints mirror the verified SAOS-NET v0 supply one-to-one; no promise of profit is made or implied.",
@@ -666,8 +689,9 @@ en: {
   "ad.verify":"The network's verdict on the agent",
   "ad.verifySub":"An independent workflow measures the delivery itself, at this public URL, on a schedule, with results committed to the repo. Training loop: request, build, the network measures, the result is public.",
   "f.about":"Agents that prove their work: measured, signed, anchored on public chains. A claim without measurement is noise.",
-  "f.explore":"Explore", "f.tools":"Tools", "f.truth":"Source of truth", "f.wallet":"Wallet & exchange", "f.motto":"No claim without measurement.",
+  "f.explore":"Explore", "f.tools":"Tools", "f.truth":"Source of truth", "f.wallet":"The exchange", "f.motto":"No claim without measurement.",
   "t.type":"Type","t.agent":"Agent","t.claim":"Claim","t.when":"When","t.status":"Status","t.txid":"Transaction","t.repo":"Repository","t.pushed":"Last push",
+  "t.pair":"Pair","t.fair":"Fair","t.bid":"Best bid","t.ask":"Best ask","t.twap":"TWAP","t.reserves":"Reserves","t.lp":"LP supply","t.fees":"Fees accrued","t.yield":"LP yield","t.swaps":"Swaps","t.price":"Price","t.amount":"Amount","t.taker":"Taker","t.maker":"Maker","t.chain":"Chain","t.watching":"Watching",
   "t.visibility":"Visibility","t.kind":"Kind","t.summary":"Summary","t.name":"Name","t.role":"Role","t.address":"EVM address","t.atts":"Attestations",
   "t.last":"Last attestation","t.open":"Open","t.workflow":"Workflow","t.updated":"Console mirror age",
   "misc.never":"never","misc.agoNow":"just now","misc.agoMin":(m)=>m+" min ago","misc.agoH":(h)=>h+" h ago","misc.agoD":(d)=>d+" d ago",
@@ -692,7 +716,7 @@ he: {
   "hero.eyebrow":"הרשת המאמתת",
   "hero.h1":'סוכני AI שמוכיחים <em>את עבודתם שלהם</em>.',
   "hero.lead":"סוכנים עובדים סביב השעון, וכל טענה שהם מעלים נמדדת, נחתמת ונעוגנת בשרשרות ציבוריות. כל אחד יכול לאמת. אף אחד לא צריך לסמוך.",
-  "hero.ctaVerify":"לראות את האמת החיה", "hero.ctaWallet":"לפתוח ארנק ובורסה",
+  "hero.ctaVerify":"לראות את האמת החיה", "hero.ctaWallet":"לפתוח את הבורסה",
   "home.now":"מה קורה עכשיו",
   "home.kWitness":"עד הפעימה", "home.kAtt":"אימותים חתומים", "home.kFleet":"סוכני ענן חיים", "home.kBrain":"מפתחות מוח חיים",
   "home.how":"איך זה עובד",
@@ -714,7 +738,7 @@ he: {
   "home.beats":"פעימות אחרונות",
   "home.paths":"התחילו מאיפה שאתם",
   "home.p1t":"אני חדש כאן", "home.p1p":"תנו לי את התמונה הגדולה של הרשת, הספר והעוגן, במספרים שאני יכול לבדוק.", "home.p1go":"לפתוח את תצוגת הרשת",
-  "home.p2t":"אני רוצה להשתמש בשכבת הכסף", "home.p2p":"פתחו ארנק חינם בשניות, החליפו בשערי הרשת וראו כל מטבע בספר הפתוח. המפתחות לא עוזבים את המכשיר.", "home.p2go":"לפתוח את הארנק והבורסה",
+  "home.p2t":"אני רוצה להשתמש בשכבת הכסף", "home.p2p":"שווקים, בריכות וטייפ מסחר חיים ממוחזרים מהענן, עוגני הפקדה בארבע שרשרות ציבוריות, וכל מטבע נראה בספר הפתוח. הפקדות נזקפות על ידי לב הדקס מול הספר הציבורי.", "home.p2go":"לפתוח את הבורסה",
   "home.p3t":"אני מפעיל את הרשת", "home.p3p":"מרכז הפיקוד, תור המשימות, ניתוב הכסף והמאחז של הסוכן: חדר הבקרה הריבוני.", "home.p3go":"להיכנס לאזור האדמין",
   "net.h":"הרשת", "net.sub":"שכבת האימות עצמה: ספר הטענות החתומות, הצ'קפוינטים שמקפלים אותו, העוגנים שמסמרים אותו לשרשרות ציבוריות, והאקוסיסטם של הריפואים שמריץ אותו.",
   "net.kAtt":"אימותים", "net.kCp":"צ'קפוינטים", "net.kAg":"זהויות חתומות", "net.kRoot":"שורש Merkle (אחרון)",
@@ -727,10 +751,12 @@ he: {
   "ag.h":"הסוכנים", "ag.sub":"צי של סוכני ענן מריץ את הרשת סביב השעון, לכל אחד תפקיד, קלט ופלט מוגדרים, ושיעור הצלחה נמדד. הם חיים ב-GitHub Actions, ולכן לעולם לא תלויים בסנדבוקס אחד.",
   "ag.fleetSrc":"הרישום מתרענן שעתית על ידי workflow agents-watch, ישר מה-API של גיטהאב.",
   "ag.ids":"זהויות חתומות בספר",
-  "ex.h":"הבורסה", "ex.sub":"שכבת הכסף: דקס חי ממוחזר מהענן, שוק אמת שנסגר לפי מדידה, וטרמינל הארנק המלא; כל מטבע נראה בספר הפתוח.",
+  "ex.h":"הבורסה", "ex.sub":"שכבת הכסף: שווקים, בריכות וטייפ מסחר חיים ממוחזרים מהענן, עוגני הפקדה בארבע שרשרות ציבוריות, שוק אמת שנסגר לפי מדידה, וכל מטבע נראה בספר הפתוח.",
   "ex.spread":"פער", "ex.height":"גובה הדקס", "ex.fills":"עסקאות שנסגרו",
-  "ex.openWallet":"הטרמינל המלא חי באפליקציית הארנק", "ex.openWalletSub":"ארנק חינם, המרה בשערי הרשת, הפקדות ורווחים; מפתחות נוצרים במכשיר שלכם ולעולם לא נשלחים לשום מקום.",
-  "ex.openBtn":"לפתוח את הארנק והבורסה",
+  "ex.markets":"שווקים חיים", "ex.book":"ספר הפקודות - SAOS/USDS", "ex.bookBids":"קניות", "ex.bookAsks":"מכירות", "ex.pools":"בריכות נזילות", "ex.tape":"טייפ אחרון",
+  "ex.rails":"עוגני הפקדה", "ex.railsSub":"ארבע שרשרות ציבוריות תחת מעקב סביב השעון על ידי בוט חסר-מפתח: הוא קורא RPCs ציבוריים, רושם כל הפקדה בספר הפתוח, ולב הדקס זוקף מולו USDS. בלי משמרת, בלי הבטחות.",
+  "ex.deposits":"ספר ההפקדות", "ex.depositsEmpty":"אין עדיין הפקדות רשומות; הספר יתמלא כשהפקדות אמיתיות ינחתו בשרשרות הציבוריות. זה המצב הכנות ולא סיפור.",
+  "ex.railsNote":"הפקדה מינימלית 5 דולר. הצופה סורק כל 20 דקות וכותב את הספר הפתוח; שום דבר כאן אינו ייעוץ, ואין הבטחת רווח.",
   "ex.market":"שוק האמת", "ex.marketSub":"טענות מומרות בהימור ונסגרות רק לפי מדידה; כל ההיסטוריה של השוק חלק מהספר.",
   "ex.holdings":"הספר החי", "ex.kWallets":"ארנקים בשרשרת", "ex.kOps":"פעולות", "ex.kSupply":"היצע SAOS", "ex.kRoot":"שורש המצב",
   "ex.holdNote":"הספר החי הריבוני מוחזר לענן על ידי workflow saos-live. הטבעת ההתחלה משקפת את היצע SAOS-NET v0 המאומת אחד לאחד; לא ניתנת או נרמזת שום הבטחת רווח.",
@@ -763,8 +789,9 @@ he: {
   "ad.verify":"פסק הדין של הרשת על הסוכן",
   "ad.verifySub":"workflow עצמאי מודד את המסירה עצמה, ב-URL הציבורי הזה, בלוח זמנים, עם תוצאות שנשמרות בריפו. לולאת האימון: בקשה, בנייה, הרשת מודדת, התוצאה פומבית.",
   "f.about":"סוכנים שמוכיחים את עבודתם: נמדד, נחתם, נעוגן בשרשרות ציבוריות. טענה בלי מדידה היא רעש.",
-  "f.explore":"סיור", "f.tools":"כלים", "f.truth":"מקור האמת", "f.wallet":"ארנק ובורסה", "f.motto":"שום טענה בלי מדידה.",
+  "f.explore":"סיור", "f.tools":"כלים", "f.truth":"מקור האמת", "f.wallet":"הבורסה", "f.motto":"שום טענה בלי מדידה.",
   "t.type":"סוג","t.agent":"סוכן","t.claim":"טענה","t.when":"מתי","t.status":"מצב","t.txid":"העברה","t.repo":"ריפו","t.pushed":"דחיפה אחרונה",
+  "t.pair":"זוג","t.fair":"הוגן","t.bid":"קנייה מובילה","t.ask":"מכירה מובילה","t.twap":"מחן ממוצע","t.reserves":"רזרבות","t.lp":"היצע LP","t.fees":"עמלות שנצברו","t.yield":"תשואת LP","t.swaps":"החלפות","t.price":"מחיר","t.amount":"כמות","t.taker":"לוקח","t.maker":"מניח","t.chain":"שרשרת","t.watching":"במעקב",
   "t.visibility":"נראות","t.kind":"סוג","t.summary":"תקציר","t.name":"שם","t.role":"תפקיד","t.address":"כתובת EVM","t.atts":"אימותים",
   "t.last":"אימות אחרון","t.open":"פתח","t.workflow":"Workflow","t.updated":"גיל המראה",
   "misc.never":"מעולם לא","misc.agoNow":"עכשיו","misc.agoMin":(m)=>"לפני "+m+" דק'","misc.agoH":(h)=>"לפני "+h+" שע'","misc.agoD":(d)=>"לפני "+d+" ימים",
@@ -812,22 +839,22 @@ const SECTIONS = {
   home:    { subs: [] },
   network: { subs: ["overview","ledger","anchor","ecosystem","plan"] },
   agents:  { subs: ["fleet","ids"] },
-  exchange:{ subs: ["terminal","market","holdings"] },
+  exchange:{ subs: ["terminal","rails","market","holdings"] },
   knowledge:{ subs: ["brain","sovereignty","evolution","doctrine"] },
   admin:   { subs: ["command","missions","server","verify"] }
 };
 const SUB_I18N = {
   overview:"sub.overview", ledger:"sub.ledger", anchor:"sub.anchor", ecosystem:"sub.ecosystem", plan:"sub.plan",
-  fleet:"sub.fleet", ids:"sub.ids", terminal:"sub.terminal", market:"sub.market", holdings:"sub.holdings",
+  fleet:"sub.fleet", ids:"sub.ids", terminal:"sub.terminal", market:"sub.market", rails:"sub.rails", holdings:"sub.holdings",
   brain:"sub.brain", sovereignty:"sub.sovereignty", evolution:"sub.evolution", doctrine:"sub.doctrine",
   command:"sub.command", missions:"sub.missions", server:"sub.server", verify:"sub.verify"
 };
 I18N.en["sub.overview"]="Overview"; I18N.en["sub.ledger"]="The book"; I18N.en["sub.anchor"]="Anchors"; I18N.en["sub.ecosystem"]="Ecosystem"; I18N.en["sub.plan"]="Plan";
-I18N.en["sub.fleet"]="The fleet"; I18N.en["sub.ids"]="Identities"; I18N.en["sub.terminal"]="Terminal"; I18N.en["sub.market"]="Truth market"; I18N.en["sub.holdings"]="Live ledger";
+I18N.en["sub.fleet"]="The fleet"; I18N.en["sub.ids"]="Identities"; I18N.en["sub.terminal"]="Terminal"; I18N.en["sub.market"]="Truth market"; I18N.en["sub.rails"]="Deposit rails"; I18N.en["sub.holdings"]="Live ledger";
 I18N.en["sub.brain"]="Brain"; I18N.en["sub.sovereignty"]="Sovereignty"; I18N.en["sub.evolution"]="Evolution"; I18N.en["sub.doctrine"]="Doctrine";
 I18N.en["sub.command"]="Command"; I18N.en["sub.missions"]="Missions & money"; I18N.en["sub.server"]="Server & sync"; I18N.en["sub.verify"]="Verify";
 I18N.he["sub.overview"]="סקירה"; I18N.he["sub.ledger"]="הספר"; I18N.he["sub.anchor"]="עוגנים"; I18N.he["sub.ecosystem"]="אקוסיסטם"; I18N.he["sub.plan"]="תוכנית";
-I18N.he["sub.fleet"]="הצי"; I18N.he["sub.ids"]="זהויות"; I18N.he["sub.terminal"]="טרמינל"; I18N.he["sub.market"]="שוק האמת"; I18N.he["sub.holdings"]="הספר החי";
+I18N.he["sub.fleet"]="הצי"; I18N.he["sub.ids"]="זהויות"; I18N.he["sub.terminal"]="טרמינל"; I18N.he["sub.market"]="שוק האמת"; I18N.he["sub.rails"]="עוגני הפקדה"; I18N.he["sub.holdings"]="הספר החי";
 I18N.he["sub.brain"]="מוח"; I18N.he["sub.sovereignty"]="ריבונות"; I18N.he["sub.evolution"]="אבולוציה"; I18N.he["sub.doctrine"]="דוקטרינה";
 I18N.he["sub.command"]="פיקוד"; I18N.he["sub.missions"]="משימות וכסף"; I18N.he["sub.server"]="שרת וסנכרון"; I18N.he["sub.verify"]="אימות";
 
@@ -912,7 +939,7 @@ $("langbtn").addEventListener("click", ()=>{
 $("year").textContent = new Date().getFullYear();
 
 /* ═══════════ data layer - public mirrors only ═══════════ */
-const CACHE = { status:null, mirror:null, registry:null, saos:null, dex:null, state:null, requests:null, verify:null, gh:null, ghFail:false };
+const CACHE = { status:null, mirror:null, registry:null, saos:null, dex:null, watch:null, deposits:null, state:null, requests:null, verify:null, gh:null, ghFail:false };
 async function jget(url){
   const r = await fetch(url + (url.includes("?")?"&":"?") + "t=" + Date.now(), {cache:"no-store"});
   if(!r.ok) throw new Error("HTTP "+r.status);
@@ -925,6 +952,8 @@ async function loadAll(){
     jget("agents/registry.json").then(j=>CACHE.registry=j).catch(()=>{}),
     jget("saos-live.json").then(j=>CACHE.saos=j).catch(()=>{}),
     jget("dex/world.json").then(j=>CACHE.dex=j).catch(()=>{}),
+    jget("dex/watch.json").then(j=>CACHE.watch=j).catch(()=>{}),
+    jget("dex/deposits.json").then(j=>CACHE.deposits=j).catch(()=>{}),
     jget("agent/state.json").then(j=>CACHE.state=j).catch(()=>{}),
     jget("agent/requests.json").then(j=>CACHE.requests=j).catch(()=>{}),
     jget("agent/verify/results.json").then(j=>CACHE.verify=j).catch(()=>{}),
@@ -1085,15 +1114,59 @@ function renderAgents(){
     ).join("");
   } else { ids.innerHTML = "<tr><td colspan='6' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
 }
+/* money units: prices are milli (1e-3), amounts are micro (1e-3 tokens, decimals=3) */
+const fmtM = (v)=>Number(v||0).toLocaleString("en-US",{maximumFractionDigits:3});
+const fmtU = (v)=>Number((v||0)/1000).toLocaleString("en-US",{maximumFractionDigits:1});
 function renderExchange(){
-  const dx = CACHE.dex, mi = CACHE.mirror, sv = CACHE.saos;
+  const dx = CACHE.dex, mi = CACHE.mirror, sv = CACHE.saos, wt = CACHE.watch, dp = CACHE.deposits;
   if(dx && dx.ok){
-    const m = (dx.markets||[]).find(x=>x.key==="SAOS/USDS")||(dx.markets||[])[0];
-    if(m){ $("dx-price").textContent = (m.fair/1000).toFixed(3); $("dx-spread").textContent = (m.spreadBps??0)+" bps"; }
+    const mkt = (dx.markets||[]).find(x=>x.key==="SAOS/USDS")||(dx.markets||[])[0];
+    if(mkt){ $("dx-price").textContent = fmtM(mkt.fair/1000); $("dx-spread").textContent = (mkt.spreadBps??0)+" bps"; }
     $("dx-height").textContent = "h"+fmtInt(dx.state&&dx.state.height);
     $("dx-fills").textContent = fmtInt(dx.state&&dx.state.fills);
     srcNote("dx-src", t("src.dex")+(dx.publishedAt?" · "+timeAgo(dx.publishedAt):""), true);
+    const mt = $("dx-markets");
+    if((dx.markets||[]).length){
+      mt.innerHTML = dx.markets.map(m=>"<tr><td class='strong'>"+esc(m.key||"?")+"</td><td class='num'>"+fmtM(m.fair/1000)+"</td><td class='num'>"+fmtM(m.bestBid/1000)+"</td><td class='num'>"+fmtM(m.bestAsk/1000)+"</td><td class='num'>"+(m.spreadBps??0)+" bps</td><td class='num' style='color:var(--dim)'>"+fmtM(m.twap/1000)+"<em style='font-style:normal;font-size:11px'> · "+(m.twapSamples??0)+"s</em></td></tr>").join("");
+    } else { mt.innerHTML = "<tr><td colspan='6' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
+    if(mkt){
+      const book = (side,elid,color)=>{
+        const el = $(elid);
+        const lv = (mkt[side]||[]).slice(0,7);
+        if(!lv.length){ el.innerHTML = "<div class='failhonest' style='font-size:13px'>"+esc(t("fail.fetch"))+"</div>"; return; }
+        const mx = Math.max(...lv.map(l=>l.total||0));
+        el.innerHTML = lv.map(l=>"<div class='bookrow'><span class='mono strong' style='color:"+color+"'>"+fmtM(l.price/1000)+"</span><span class='meter'><i style='width:"+Math.max(4,Math.round(100*(l.total||0)/mx))+"%;background:linear-gradient(90deg,"+color+","+color+")'></i></span><span class='num'>"+fmtU(l.total)+(l.orders?"<em>x"+l.orders+"</em>":"")+"</span></div>").join("");
+      };
+      book("bids","dx-bids","#34d399");
+      book("asks","dx-asks","#fb7185");
+    }
+    const pt = $("dx-pools");
+    if((dx.pools||[]).length){
+      pt.innerHTML = dx.pools.map(p=>"<tr><td class='strong'>"+esc(p.key||p.a+"/"+p.b)+"</td><td class='num' style='color:var(--dim)'>"+fmtU(p.ra)+" / "+fmtU(p.rb)+"</td><td class='num'>"+fmtU(p.lp)+"</td><td class='num'>"+fmtU(p.feeAccruedTreasury)+"</td><td class='num'>"+((p.lpYieldBps??0)/100).toFixed(2)+"%</td><td class='num'>"+fmtInt(p.swaps)+"</td></tr>").join("");
+    } else { pt.innerHTML = "<tr><td colspan='6' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
+    const tp = $("dx-tape");
+    if((dx.tape||[]).length){
+      tp.innerHTML = dx.tape.slice(-14).reverse().map(o=>"<tr><td><span class='tag "+(o.kind==="fill"?"green":"amber")+"'>"+esc(o.kind||"?")+"</span></td><td class='strong'>"+esc((o.base||"?")+"/"+(o.quote||"?"))+"</td><td class='num'>"+fmtM(o.price/1000)+"</td><td class='num'>"+fmtU(o.amountMu)+"</td><td>"+esc(o.taker||"…")+"</td><td>"+esc(o.maker||"…")+"</td><td class='num'>"+timeAgo(o.at?new Date(o.at).toISOString():null)+"</td></tr>").join("");
+    } else { tp.innerHTML = "<tr><td colspan='7' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
   } else { srcNote("dx-src", t("fail.fetch"), false); }
+  const ra = $("rails-addrs");
+  if(wt && wt.watching){
+    const names = {tron:"TRON", evm:"Ethereum", sol:"Solana", btc:"Bitcoin"};
+    const chainKey = {tron:"tron", evm:"ethereum", sol:"solana", btc:"bitcoin"};
+    ra.innerHTML = Object.entries(wt.watching).map(([k,addr])=>{
+      const stt = ((wt.chains||{})[chainKey[k]||k]||"");
+      const okc = stt.indexOf("ok")===0;
+      return '<div class="card hov"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span class="strong">'+esc(names[k]||k)+'</span><span class="tag '+(okc?"green":"amber")+'">'+esc(stt||"…")+'</span></div>'+
+        '<div class="addr" title="'+esc(t("t.watching"))+'">'+esc(addr)+'</div></div>';
+    }).join("");
+    srcNote("rails-src", (wt.note?esc(wt.note):t("src.dex"))+(wt.publishedAt?" · "+timeAgo(wt.publishedAt):""), true);
+  } else { ra.innerHTML = "<div class='card'><div class='failhonest'>"+esc(t("fail.fetch"))+"</div></div>"; }
+  const dpl = $("rails-deposits");
+  if(dp && Array.isArray(dp.deposits) && dp.deposits.length){
+    dpl.innerHTML = dp.deposits.slice(-20).reverse().map(d=>"<tr><td class='strong'>"+esc(d.chain||"?")+"</td><td class='num'>"+esc(String(d.amount??"?"))+" "+esc(d.asset||"USD")+"</td><td class='mono' style='font-size:11.5px' title='"+esc(d.from||"")+"'>"+esc((d.txid||"").slice(0,24))+"…</td><td class='num'>"+timeAgo(d.detectedAt||((d.ts?new Date(d.ts).toISOString():null)))+ "</td></tr>").join("");
+  } else if(dp){
+    dpl.innerHTML = "<tr><td colspan='4' class='failhonest' style='opacity:.85'>"+esc(t("ex.depositsEmpty"))+"</td></tr>";
+  } else { dpl.innerHTML = "<tr><td colspan='4' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>"; }
   const mk = $("ex-market");
   if(mi && mi.market){
     const kindTag = {SETTLE:"green",STAKE:"emerald",OPEN:"amber",REFUND:"red"};

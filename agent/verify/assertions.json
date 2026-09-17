@@ -70,10 +70,10 @@
   {
    "id": "A07",
    "desc": {
-    "en": "Legacy wallet app preserved and reachable (wallet.html)",
-    "he": "אפליקציית הארנק הוותיקה נשמרת וזמינה (wallet.html)"
+    "en": "The retired wallet page stays retired (HTTP 4xx/5xx, content gone)",
+    "he": "דף הארנק המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
    },
-   "kind": "http_ok",
+   "kind": "http_gone",
    "target": "wallet.html"
   },
   {
@@ -213,6 +213,47 @@
    "target": "hub/index.html",
    "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
    "flag": "u"
+  },
+  {
+   "id": "A21",
+   "desc": {
+    "en": "Money-layer links route to the in-console exchange view (at least 3 links)",
+    "he": "קישורי שכבת הכסף מובילים לתצוגת הבורסה בקונסולה (לפחות 3 קישורים)"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "#/exchange/terminal",
+   "min": 3
+  },
+  {
+   "id": "A22",
+   "desc": {
+    "en": "No link to the retired wallet page remains anywhere in the home page",
+    "he": "שום קישור לדף הארנק המבוטל לא נשאר בדף הבית"
+   },
+   "kind": "regex_absent",
+   "target": "",
+   "regex": "wallet\\.html"
+  },
+  {
+   "id": "A23",
+   "desc": {
+    "en": "The retired DEX snapshot stays retired (HTTP 4xx/5xx, content gone)",
+    "he": "צילום הדקס המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
+   },
+   "kind": "http_gone",
+   "target": "saos-dex/"
+  },
+  {
+   "id": "A24",
+   "desc": {
+    "en": "The deposit rails view renders on the home page (rails subview)",
+    "he": "תצוגת עוגני ההפקדה מוצגת בדף הבית (תת-תצוגת rails)"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "sub-exchange-rails",
+   "min": 1
   }
  ]
 }
