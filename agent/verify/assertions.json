@@ -559,13 +559,13 @@
     {
       "id": "A44",
       "desc": {
-        "en": "SETTLE-18 permanence: the sovereign micro-rail executes - cumulative doses never fall below the measured floor (rail starvation is a public failure)",
-        "he": "קביעות SETTLE-18: מסילת-המיקרו הריבונית מבצעת - מנות מצטברות לא יורדות מתחת לרצפה הנמדדת (הרעבה של המסילה היא כשל פומבי)"
+        "en": "SETTLE-18 permanence (lifetime ratchet): WSTEEM ever-paid by the sovereign micro-rail never falls below the measured floor (300,000 mu). The doses field is a per-run window and cannot be asserted; the lifetime counters ride the chain in db/rail-lifetime.json and are published in state.rail.lifetime",
+        "he": "קביעות SETTLE-18 (ראצ'ט-חיים): WSTEEM ששולם אי-פעם על-ידי מסילת-המיקרו לעולם לא יורד מתחת-לרצפה הנמדדת (300,000µ). שדה-doses הוא חלון-פר-ריצה ואין-לתבוע-עליו; מוני-החיים רוכבים-על-השרשרת ב-db/rail-lifetime.json ומפורסמים ב-state.rail.lifetime"
       },
       "kind": "json_min",
       "target": "dex/world.json",
-      "field": "state.rail.doses",
-      "min": 2
+      "field": "state.rail.lifetime.wsteem",
+      "min": 300000
     },
     {
       "id": "A45",
