@@ -106,15 +106,15 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
       זהו מפת-החוץ של נתיב הכסף: <b>לא</b> מה שקורה אצלנו, אלא מה שקורה ברשתות החכמות המובילות.
       אילו מכשירים קיימים שם, מה כל מכשיר עושה, ואיפה הכסף באמת זורם.
       מטרת המפה אחת: ללמוד מהשטח האמיתי וליישם אצלנו את מה שעובד, על היתרונות הריבוניים שלנו.
-      כל מספר בעמוד נמדד חי ממקורות ציבוריים, ותאריך המדידה מוצג למטה.
+      מספרים חיים נמדדים ממקור ציבורי בזמן הפתיחה; מספרי-תמונה מתויגים בתאריך המדידה שלהם, לא מעמידים פנים שהם חיים.
     </p>
 
     <div class="pulse" id="kpis">
-      <div class="pcard"><div class="v">$294B</div><div class="l">קופות בורסות מרכזיות</div></div>
-      <div class="pcard"><div class="v">$183B</div><div class="l">טת׳ר בסיחור, מטבע יציב</div></div>
-      <div class="pcard"><div class="v">$51B</div><div class="l">בגשרים בין-רשתיים</div></div>
-      <div class="pcard"><div class="v">$50B</div><div class="l">בהלוואות מבוזרות</div></div>
-      <div class="pcard"><div class="v">$318B</div><div class="l">נפח מסחר 30 יום בדקסים</div></div>
+      <div class="pcard"><div class="v">$294B</div><div class="l">קופות בורסות מרכזיות · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$183B</div><div class="l">טת׳ר בסיחור, מטבע יציב · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$51B</div><div class="l">בגשרים בין-רשתיים · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$50B</div><div class="l">בהלוואות מבוזרות · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$318B</div><div class="l">נפח מסחר 30 יום בדקסים · תמונת 17/09</div></div>
     </div>
 
     <section class="card">
@@ -130,7 +130,7 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
         <div class="irow">
           <div class="hd"><span class="nm">בורסת-עשיית-שוק אוטומטית</span><span class="cat">AMM · Uniswap</span><span class="tvln">$318B נפח 30d</span></div>
           <div class="what"><b>מה זה עושה:</b> נזילות תמידית. בריכה שמחזיקה שני נכסים ומתמחרת לפי מאזן, בלי סוחר מולך. יוניסוואפ V4 לבדה עשתה 42 מיליארד דולר נפח ב-30 יום ו-125 מיליון עמלות. המכשיר שמלמד: הנזילות היא המוצר, העמלה היא המד.</div>
-          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">קיים ופועל</span> · בריכות AMM + ספר-פקודות היברידי עם עשיית-שוק בגריד. מדוד: 8,805 מילויים, 6,449 החלפות, עמלות-אוצר במד הצטברות. <span class="gap">הפער: כל הנפח פנימי. הצעד: לחבר את הגריד לספר-STEEM הציבורי (נתיב שכבר הוכח בעסקה אחת אמיתית).</span></div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">קיים ופועל</span> · בריכות AMM + ספר-פקודות היברידי עם עשיית-שוק בגריד. מדוד חי מהספר: <span class="mono" id="ammLive">טוען מ-dex/world.json…</span>. <span class="gap">הפער: כל הנפח פנימי. הצעד: לחבר את הגריד לספר-STEEM הציבורי (נתיב שכבר הוכח בעסקה אחת אמיתית).</span></div>
         </div>
 
         <div class="irow">
@@ -312,7 +312,17 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
   function drawAnchors(w){
     var host=document.getElementById("anchors");if(!host)return;
     host.innerHTML="";
-    var st=w.state||{},A=st.assets||{},O=st.oracle||{};
+    var st=w.state||{};
+    /* אמת חיה למספרי השוק הפנימי: בעבר הציג העמוד מספר קפוא מיום בנייתו
+     * כאילו הוא נוכחי. עכשיו הספר עצמו מדבר, בכל פתיחה. */
+    try{
+      var live=document.getElementById("ammLive");
+      if(live){
+        var f=Number(st.fills||0),s=Number(st.swaps||0),tp=Number(st.treasuryProfit||0)/1000;
+        live.textContent=f.toLocaleString("en-US")+" מילויים · "+s.toLocaleString("en-US")+" החלפות · עמלות אוצר $"+tp.toFixed(2)+" · גובה h"+(st.height||"?");
+      }
+    }catch(e){}
+    var A=st.assets||{},O=st.oracle||{};
     var defs=[["WSTEEM","גיבוי STEEM 1:1"],["PHIVE","גיבוי HIVE 1:1"],["WSBD","גיבוי SBD 1:1"]];
     var box=el("div","anlist");
     defs.forEach(function(d){

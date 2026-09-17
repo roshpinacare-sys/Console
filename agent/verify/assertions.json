@@ -566,6 +566,38 @@
       "target": "dex/world.json",
       "field": "state.rail.doses",
       "min": 2
+    },
+    {
+      "id": "A45",
+      "desc": {
+        "en": "SETTLE-19 permanence: the money path page injects live AMM stats from the ledger (id ammLive) instead of a frozen build-day number (the forgery pattern stays cured)",
+        "he": "קביעות SETTLE-19: עמוד נתיב הכסף מזריק מספרי שוק חיים מהספר (id ammLive) במקום מספר קפוא מיום בנייתו (דפוס הזיוף נשאר מרופא)"
+      },
+      "kind": "contains",
+      "target": "money.html",
+      "value": "id=\"ammLive\""
+    },
+    {
+      "id": "A46",
+      "desc": {
+        "en": "The frozen build-day stats string is gone from the money path page (old forgery marker must never return)",
+        "he": "מחרוזת המספרים הקפואים מיום הבנייה נעלמה מעמוד נתיב הכסף (סמן הזיוף הישן לא חוזר)"
+      },
+      "kind": "regex_absent",
+      "target": "money.html",
+      "regex": "מדוד: 8,805|6,449 החלפות",
+      "flag": "u"
+    },
+    {
+      "id": "A47",
+      "desc": {
+        "en": "Static KPI cards on the money path page carry an honest snapshot date tag (numbers that are not live are labeled, not disguised)",
+        "he": "כרטיסי ה-KPI הסטטיים בעמוד נתיב הכסף נושאים תיוג-תמונה כן בתאריך (מספרים שאינם חיים מתויגים, לא מוסווים)"
+      },
+      "kind": "contains_min",
+      "target": "money.html",
+      "value": "תמונת 17/09",
+      "min": 5
     }
   ]
 }
