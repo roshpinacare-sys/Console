@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-17T01:04:53.734Z",
+  "generatedAt": "2026-09-17T01:08:51.187Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth - no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 148,
-    "checkpoints": 141,
+    "attestations": 150,
+    "checkpoints": 143,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 147
+      "VERIFIED": 149
     },
-    "headHash": "0x9ab84a65a8d1b38da06e5a65cc747533aa7af2858ef1b31cf507c550e0ab83d6"
+    "headHash": "0x285b5eced01d755acd7dea369116a1d9601b271bd9a139c0319adbe10bc02a64"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 125,
-      "lastAttestationSeq": 148,
-      "lastAttestationAt": "2026-09-17T01:04:53.672Z"
+      "attestations": 127,
+      "lastAttestationSeq": 150,
+      "lastAttestationAt": "2026-09-17T01:05:03.889Z"
     },
     {
       "name": "weave-market-regulator",
@@ -99,6 +99,22 @@
     }
   ],
   "attestations": [
+    {
+      "seq": 150,
+      "type": "MEASUREMENT",
+      "status": "VERIFIED",
+      "at": "2026-09-17T01:05:03.889Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "פעימת לב ריבונית: הספר אומת מחדש - 149 רשומות, חתימות 149/149, head תואם. הרץ: GitHub Actions (הענן שלנו)."
+    },
+    {
+      "seq": 149,
+      "type": "SAOSLIVE",
+      "status": "VERIFIED",
+      "at": "2026-09-17T01:04:57.484Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "SAOS-LIVE v1 התקדם: stateRoot חדש 9ac42df4e84ad0f5… - 3 פעולות תקפות, 1 ארנקים, 1 חוזים, אספקת SAOS 126682"
+    },
     {
       "seq": 148,
       "type": "AUDIT",
@@ -1042,25 +1058,25 @@
       "at": "2026-09-14T22:41:42.328Z",
       "agentName": "weave-cloud-heart",
       "claim": "פעימת לב ריבונית: הספר אומת מחדש - 30 רשומות, חתימות 30/30, head תואם. הרץ: ה-runner הראשי (סנדבוקס/מקומי)."
-    },
-    {
-      "seq": 30,
-      "type": "CROSSCHAIN",
-      "status": "VERIFIED",
-      "at": "2026-09-14T22:37:17.797Z",
-      "agentName": "weave-saosnet-witness",
-      "claim": "עוגן-עוגנים: שרשרת הכלכלה של הצי (saos-net/0) נמדדה ב-replay דטרמיניסטי - stateRoot=…e6601494 בגובה 223,838 - ו שתי שרשראות האמת מעידות זו על זו."
-    },
-    {
-      "seq": 29,
-      "type": "AUDIT",
-      "status": "VERIFIED",
-      "at": "2026-09-14T22:37:05.359Z",
-      "agentName": "weave-market-regulator",
-      "claim": "מיגרציית רגולטור השוק לזהות נגזרת-seal: הזהות הישנה (מפתח אקראי, מקומי בלבד) פורשה עם 3 אימותים חתומים שנשארים עליה לצמיתות; מעתה הרגולטור נגזר דטרמיניסטית ממפתח הרשת שב-seal - אותה כתובת בכל סביבה, השלמה-עצמית אחרי כל ייבוא."
     }
   ],
   "checkpoints": [
+    {
+      "index": 143,
+      "root": "0x285b5eced01d755acd7dea369116a1d9601b271bd9a139c0319adbe10bc02a64",
+      "attFrom": 150,
+      "attTo": 150,
+      "at": "2026-09-17T01:05:03.906Z",
+      "anchoredOn": []
+    },
+    {
+      "index": 142,
+      "root": "0x29be0d20fd73846bb48adbd7562446c77e300f7ba3cc7a179cbc9714afe0bbea",
+      "attFrom": 149,
+      "attTo": 149,
+      "at": "2026-09-17T01:04:57.505Z",
+      "anchoredOn": []
+    },
     {
       "index": 141,
       "root": "0x9ab84a65a8d1b38da06e5a65cc747533aa7af2858ef1b31cf507c550e0ab83d6",
@@ -1332,26 +1348,6 @@
       "anchoredOn": [
         "zero"
       ]
-    },
-    {
-      "index": 113,
-      "root": "0xc03c87c399e23bc18228acb02b588517f474336389fe6f012257c7e55c703841",
-      "attFrom": 120,
-      "attTo": 120,
-      "at": "2026-09-16T08:36:09.958Z",
-      "anchoredOn": [
-        "zero"
-      ]
-    },
-    {
-      "index": 112,
-      "root": "0xa70123a7839d6bebc21b1edfff3c04b51eea366ca0578a90ed1293df54c3afa6",
-      "attFrom": 119,
-      "attTo": 119,
-      "at": "2026-09-16T08:11:01.597Z",
-      "anchoredOn": [
-        "zero"
-      ]
     }
   ],
   "anchorLines": {
@@ -1517,7 +1513,7 @@
       "fingerprint": "nv-fp:1e332f98b5ef7b9b",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-17T00:40:23.940Z"
+      "verifiedAt": "2026-09-17T01:05:55.861Z"
     },
     {
       "fingerprint": "nv-fp:531b3f28a4c50a9a",
