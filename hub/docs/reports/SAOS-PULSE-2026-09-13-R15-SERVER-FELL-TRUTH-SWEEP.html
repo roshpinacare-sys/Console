@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>אוחד לבית הקנוני - G6 · SAOS</title>
-<meta name="description" content="אוחד לבית הקנוני - G6 - SAOS Network">
+<title>SAOS PULSE - 2026-09-13 - R15 - השרת נפל: שיעור-המוות, ומבצע-אמת (THE SERVER FELL: ROOT CAUSE + TRUTH SWEEP) · SAOS</title>
+<meta name="description" content="SAOS PULSE - 2026-09-13 - R15 - השרת נפל: שיעור-המוות, ומבצע-אמת (THE SERVER FELL: ROOT CAUSE + TRUTH SWEEP) - דוח היסטורי שוחזר מהארכיון, SAOS Network">
 <meta name="theme-color" content="#050507">
-<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/hub/docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
 <style>
 :root{--bg:#050507;--bg2:#0a0a10;--panel:rgba(255,255,255,.028);--line:rgba(212,175,55,.16);--line2:rgba(212,175,55,.32);
@@ -18,13 +18,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
 header.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;padding:12px 22px;background:rgba(5,5,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header.top .logo{font-family:var(--mono);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:9px}
 header.top .sp{flex:1}
-header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px}
+header.top a.lnk{color:var(--dim);font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:6px 13px;white-space:nowrap}
 header.top a.lnk:hover{color:var(--gold-bright);border-color:var(--line2)}
 main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:36px 22px 64px}
 h1{font-size:clamp(25px,4.5vw,36px);line-height:1.25;margin-bottom:10px;color:var(--text)}
 h1 em,h1 .gold{color:var(--gold);font-style:normal}
 h2{font-size:21px;margin:30px 0 10px;color:var(--gold-bright)}
 h3{font-size:17px;margin:22px 0 8px}
+h4,h5{font-size:15px;margin:18px 0 6px;color:var(--gold-bright)}
 p{margin:10px 0;color:#d4d4d8}
 a{color:var(--gold)}
 ul,ol{margin:10px 0 10px 24px;color:#d4d4d8}
@@ -42,22 +43,42 @@ img{max-width:100%;border-radius:12px}
 footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center;color:var(--faint);font-size:12.5px}
 footer.site a{color:var(--dim)}
 .mono{font-family:var(--mono)}
+.restored{display:inline-block;font-size:12px;color:var(--violet);border:1px solid rgba(167,139,250,.35);border-radius:999px;padding:2px 12px;margin-inline-start:10px;vertical-align:middle}
+.prov-note{color:var(--dim);font-size:13.5px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
 @media print{body{background:#fff;color:#111}header.top{position:static}}
 </style>
 </head>
 <body>
 <header class="top">
-  <a class="logo" href="../../../">
+  <a class="logo" href="../../../../">
     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#d4af37"/></svg>
     SAOS
   </a>
   <span class="sp"></span>
   <a class="lnk" href="../../">מרכז התוכן</a>
-  <a class="lnk" href="../../../">חזרה לקונסולה</a>
+  <a class="lnk" href="index.html">כל הדוחות</a>
+  <a class="lnk" href="../../../../">חזרה לקונסולה</a>
 </header>
 <main>
-<h1>אוחד לבית הקנוני - G6</h1><p>קובץ זה היה עותק-שידור משוכפל (קבוצת שכפול 28/90 במדידת האקוסיסטם של 2026-09-14: 1527 קבצי-סטטוס נמדדו, 910 עותקים יתרים, dup=0.5959 - יעד <0.2). התוכן אוחד לבית הקנוני. אין לשחזר את התוכן לכאן - עדכנו את הקנוני וקשרו אליו.</p><div class="tbl"><table><thead><tr><th>שדה</th><th>ערך</th></tr></thead><tbody><tr><td>העותק הקנוני</td><td>roshpinacare-sys/anchor-baseline · docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.md</td></tr><tr><td>sha256 העותק שהיה כאן</td><td>undefined</td></tr><tr><td>גודל העותק שהיה כאן</td><td>undefined bytes</td></tr><tr><td>מיקום העותק שהיה כאן</td><td>roshpinacare-sys/Adsmarket · docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.md</td></tr><tr><td>אוחד</td><td>2026-09-14 · THE WEAVE · weave-ecosystem G6</td></tr></tbody></table></div><p>התוכן המלא נשמר בשני מקומות: (א) העותק הקנוני שלעיל; (ב) היסטוריית הגיט של הריפו הזה - <code>git log --oneline -- docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.md</code> ואז <code>git show <commit>:docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.md</code>.</p><p>Consolidated by THE WEAVE ecosystem dedup (G6). This pointer is intentional - do not copy content back.</p>
+<h1>SAOS PULSE - 2026-09-13 - R15 - השרת נפל: שיעור-המוות, ומבצע-אמת (THE SERVER FELL: ROOT CAUSE + TRUTH SWEEP)<span class="restored">שוחזר מהארכיון</span></h1>
+<div class="tbl"><table><thead><tr><th>שדה</th><th>ערך</th></tr></thead><tbody><tr><td>העותק הקנוני</td><td>roshpinacare-sys/anchor-baseline · docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.md</td></tr><tr><td>sha256 עותק-המקור (נמדד)</td><td><span class="mono" style="direction:ltr;unicode-bidi:embed">a31e7781fd6e3bd2e4b7a763af55499270abe33ece7c94a7b3df4b02402113e6</span></td></tr><tr><td>גודל עותק-המקור</td><td><span class="mono">7,730 bytes</span></td></tr><tr><td>מקור השחזור</td><td>saos-sovereign-foundry · git c2942ca^ · docs/reports/SAOS-PULSE-2026-09-13-R15-SERVER-FELL-TRUTH-SWEEP.md</td></tr><tr><td>אוחד (G6)</td><td>2026-09-14 · THE WEAVE · weave-ecosystem</td></tr><tr><td>שוחזר לציבור</td><td>2026-09-17 · R26 · ביקורת תוכן הקונסולה</td></tr></tbody></table></div>
+<p class="prov-note">הדוח שוחזר לגישה ציבורית בהוראת המפעיל (2026-09-17): הריפוים הקנוניים פרטיים, ולכן עמוד זה הוא נקודת-הגישה הציבורית של התיעוד. התוכן מוטמע לקריאה-בלבד; הקנוני לעדכונים ממשיך לחיות בריפו הקנוני.</p>
+<hr>
+<p style="color:var(--dim);font-size:15px">SAOS PULSE - 2026-09-13 - R15 - השרת נפל: שיעור-המוות, ומבצע-אמת (THE SERVER FELL: ROOT CAUSE + TRUTH SWEEP)</p>
+<p><strong>מקור:</strong> הוראת הבעלים (trace 1a09928027f40c55): "השרת נפל צריך לבחון הכל כל מה שעשית בדף עדיין ולסדר לתקן יש הרבה חוסר אמיתות ותקלות"</p>
+<p><strong>מסקנת-השורה התחתונה:</strong> השרת אכן נפל - והשורש נמצא ונקטל: <strong>provider של ethers על שרשרת-מעבדה מתה (:8545) רדף גילוי-רשת לנצח</strong> ("failed to detect network; retry in 1s" אינסופי, מטומן-על-globalThis) עד שהפיל את הקונסולה. מעבר לכך - סיור-אמת מלא בפרשות-עיניים חדשות מצא <strong>13 פגמי-אמת/תקלות נוספים ותיקן את כולם</strong>: קריאות-Math.random שכונו "נמדד", GET-ים שזיהמו את פנקס-הראיות בכל דפדוף, כישלון-שהוצג כהצלחה, ומספרים-קפואים שנותרו. <strong>v88.</strong></p>
+<hr>
+<h3>מצב (Status)</h3>
+<ul><li><strong>השרת הוקם מחדש פעמיים</strong> (דרך ראש-הסגל -&gt; פועל-אפמרי - אותו מנגנון-אל-מוות מוכח) - ועכשיו רץ על הקוד המתוקן: אפס רעש, <code>status</code> 200 ב-20ms.</li><li><strong>שורש-המוות נקטל (P0-תשתית):</strong> 9 מודולי-רשת בנו providers על <code>http://127.0.0.1:8545</code> (SAOS-NET, אינה קיימת בסביבה). ה-provider המהיר מטומן על globalThis - הקריאה הראשונה שכל מסך-רשת ביצע הצמיחה לולאת-גילוי-נצחית. <strong>התיקון:</strong> <code>staticNetwork</code> על שני אתרי-הבנייה (mesh-provider + conversion-chamber) - בלי גילוי, כל קריאה לשער-מת נכשלת מיד ובכנות ("שגיאות הן נתונים"), אפס ריצה-רקע.</li><li><strong>סיור-אמת (Task 93-a, סוכן research-only):</strong> 38 וויו + ~75 מסילות-API + libs - 2 P0, 5 P1, 6 P2. <strong>כל 13 הממצאים תוקנו במחזור זה.</strong></li><li><strong>אימות-מלא:</strong> <code>tsc</code> 0 שגיאות · <code>eslint</code> 0 · סוואף-דפדפן 38/38 - אפס שגיאות, אפס גלישה, אפס טקסט-חשוד · מובייל 375 נקי · פוטר טבעי בתחתית.</li></ul>
+<h3>ראיות (Evidence)</h3>
+<ul><li><strong>P0-1 (חוסר-האמיתות שהבעלים ראה באגרו):</strong> כרטיסי-החלקות הציגו קריאות-סימולטור (Math.random) עם התווית <strong>"נמדד"</strong> ותג "אוטונומי/ידני" - כאילו חיישן אמיתי בשדה. מ-v88: <strong>כל כרטיס-חלקה נושא תג זהוב "סימולטור · לא מדידה"</strong>, צמוד-למספר "· סימולציה", והתווית שונתה ל"קריאה אחרונה" - אומת בצילום-מסך חי (כל שלוש החלקות).</li><li><strong>P0-2 (זיהום-פנקס-הראיות):</strong> GET של <code>energy</code> ו-<code>economy</code> <strong>כתבו קבלה-שרשרתית בכל דפדוף</strong> - ~4 שורות/דק' משני מסכים פתוחים (~4,300/יום) של רעש-תכנון בספר שנועד להוכחות. מ-v88: GET קריאה-בלבד; קבלה נרשמת רק על פעולת-POST מפורשת של המפעיל.</li><li><strong>P1 - כישלון-שהוצג-כהצלחה (irrigation):</strong> החלפת-אוטונומיה ללא catch - גוף <code>{ok:false}</code> הוצג "ההגדרה הוחלפה" ושגיאת-רשת הייתה דחייה-בלתי-מטופלת. מ-v88: כישלון מוצג " ההחלפה נכשלה: …" + catch מלא.</li><li><strong>P1 - network360:</strong> "18.7 TRX באוצר" (מספר-יעד-ישן שהוצג כיתרה) -&gt; נוסח-יעד מפורש "תקרת-תכנון, לא יתרה נמדדת - היתרה החיה נמדדת בפסק FLOW"; "(3 עסקאות)" קפוא -&gt; <code>flowTxCount</code> נגזר-חי מהספר; "שמונה חוזים" בסתירה ל-DEX של אותו מסך -&gt; <strong>תשעה</strong> (Hub -&gt; … -&gt; GRID-98).</li><li><strong>P1 - networks:</strong> מפת-אקוסיסטם קפואה מ-2026-09-07 הוצגה עם פילי-"live" ירוקים -&gt; הפאנל כולו מתויג "סריקת ארכיון (2026-09-07) · אינו מדידה-חיה" והפילים בגוון-ארכיון עם תאריך.</li><li><strong>P1 - energy:</strong> כשמדידת-ה-RC החיה נכשלת, התוכנית חושבת על מודל 0.6% בלי לומר זאת -&gt; כרוז-זהוב "סימולציה - לא מדידה" בפנים-הפאנל.</li><li><strong>P2 - כנות-מיקרו:</strong> conversion: " - - חיים בחוץ" -&gt; סעיפי-משפט שלמים ("הסכום לא נמדד במחזור זה") · roast: "(? פאניקות נרפאו)" -&gt; "השומר לא נענה - פאניקות לא נמדדו כרגע" · fleet: "11 חיילים" בטרם-תשובה -&gt; " - " · ops: עמלת-SOL תויגה "קבועת-פרוטוקול" · ops-TRON: יתרת-v32 תויגה "היסטורי, לא יתרה חיה" · networkmap: מסך-שגיאה חשוף -&gt; מצב-ראיות עם מספרי-המדידות שכן צלחו.</li><li><strong>אימות-רעש:</strong> לאחר ההתקנה - דריכה על 11 מסילות-רשת כולל roast/conversion/cornerstone/microgrid - <strong>אפס שורות "failed to detect network" ב-dev.log</strong> (הלוג נקי, 17KB לעומת גדילה-אינסופית קודם).</li></ul>
+<h3>תוכניות (Plans)</h3>
+<ul><li><strong>R16:</strong> מעבר אופציונלי על <code>meshGate()</code> (סקר-חיות מטמון 30ש') במסילות-ה-SAOS-NET - קיצור-תשובה בסביבה ללא שרשרת-מעבדה (כרגע הכישלון מיידי ממילא); פיצול ops.tsx (חוב-מבני מ-R14, עדיין פתוח במכוון).</li><li><strong>עצירת-הדלפת-RSS:</strong> ריכוז-מדידת-זיכרון של תהליך-ה-dev (turbopack) - ה-RSS נמדד ~2GB בפיתוח; עדכון-ספי-השומר אם נמדד שונה בפרודקשן.</li><li>רוטציית-PAT עם סיום-הסוכנים האחרים (החלטת-R13 בתוקף); חלון headcorner נספר-חי עד 2026-10-08.</li><li>דוח-יומי עברי בכל מחזור, create-only, לכל 11 הריפואים.</li></ul>
+<h3>כנות (Honesty)</h3>
+<ul><li><strong>הסימולטור האגרי נשאר סימולטור:</strong> אין חיישנים אמיתיים בחלקות - המדידות נותרות נגזרת-מודל; מה ששונה הוא <strong>שהמסך אינו מעמיד פנים</strong> (תגים ברמת-המספר, לא הערות-שוליים). תחזית-מזג-האוויר נשארת המדידה-החיה-היחידה שם (Open-Meteo).</li><li><strong>אשרשרת-המעבדה (anvil :8545) עדיין לא קיימת בתמונה</strong> - אך מעכשיו נגישה-אליה היא fail-fast כנה ולא לולאת-מוות. הבורסה ממשיכה בניתוב-השירות-העצמי הכן.</li><li>מנועי-הכתיבה-על-השרשרות עדיין <strong>fail-closed</strong> (מפתחות חתומים-במעטפת לפי פקודת-העצירה); כל האימותים במחזור זה הם קריאה-בלבד.</li><li>ה-RSS של תהליך-ה-dev נמדד גבוה (~2GB) - מאפיין-פיתוח של turbopack; המעקב-הקיים (שומר + החייאת-ראש-הסגל) מכסה אותו, והוא נרשם כנה ולא מוסתר.</li><li>מה-<strong>לא</strong> נבדק: זרימות-כתיבה אמיתיות (חתימות/שידורים) - חסומות-מבנית; הסוואף אימת רינדור, נתונים-חיים וניהול-כישלונות.</li><li>אפס סודות בקוד/הודעות · אפס דריסות · אפס force-push · create-only למחזורי-הדוחות.</li></ul>
+<hr>
+<p><em>פסק R15 - מחזור "השרת נפל": השורש נמצא, הלולאה נקטלה, ו-13 שקרי-מסך תוקנו. הקונסולה חיה, והיא מספרת את האמת ברמת-המספר.</em></p>
 </main>
-<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a></footer>
+<footer class="site">SAOS Network · <a href="https://roshpinacare-sys.github.io/Console/">Console</a> · <a href="https://roshpinacare-sys.github.io/Console/#network">Verify independently</a> · <a href="index.html">Reports</a></footer>
 </body>
 </html>
