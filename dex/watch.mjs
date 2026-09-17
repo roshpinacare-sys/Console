@@ -1,18 +1,18 @@
 /**
- * dex/watch.mjs — צופה-ההפקדות הציבורי של SAOS (Task 33)
+ * dex/watch.mjs - צופה-ההפקדות הציבורי של SAOS (Task 33)
  * =============================================================================
  * רץ ב-GitHub Actions בריפו הציבורי Console (דקות-בלתי-מוגבלות, אפס-סודות,
  * אפס-מפתחות): סורק את כתובות-ההפקדה האמיתיות של הרשת (ארנקי-הצבא) בארבע
  * רשתות עם RPC ציבוריים בלבד, ומפרסם את ספר-ההפקדות הפתוח:
  *
- *   TRON  — USDT/USDC (TRC20) + TRX   · Tronscan apilist (ציבורי, ללא-מפתח)
- *   ETH   — USDT/USDC (ERC20)         · eth_getLogs על publicnode
- *   SOL   — USDT/USDC (SPL) + SOL     · getSignaturesForAddress + getParsedTransaction
- *   BTC   — מקורי                     · blockchain.info rawaddr
+ *   TRON  - USDT/USDC (TRC20) + TRX   · Tronscan apilist (ציבורי, ללא-מפתח)
+ *   ETH   - USDT/USDC (ERC20)         · eth_getLogs על publicnode
+ *   SOL   - USDT/USDC (SPL) + SOL     · getSignaturesForAddress + getParsedTransaction
+ *   BTC   - מקורי                     · blockchain.info rawaddr
  *
  * הספר הוא append-only מסונן: רק העברות שהגיעו אלינו, מבלי לחשוף שום-דבר
  * אחר. הלב של הדקס (dex-beat בריפו הפרטי) מתאים תביעות-חתומות מול-ספר-זה
- * ומזכה USDS — שתי-המערכות נפגשות רק דרך הקבצים הציבוריים. אפס-אמון-עיוור.
+ * ומזכה USDS - שתי-המערכות נפגשות רק דרך הקבצים הציבוריים. אפס-אמון-עיוור.
  */
 
 import fs from "fs";
@@ -90,7 +90,7 @@ const fresh = [];
 function add(chain, asset, txid, amount, from, to, ts, conf, extra = {}) {
   const key = `${chain}:${txid}`;
   if (seen.has(key)) return;
-  if (!(amount >= MIN_DEPOSIT_USD)) return; // אבק-מתחת-לרף — לא-נספר
+  if (!(amount >= MIN_DEPOSIT_USD)) return; // אבק-מתחת-לרף - לא-נספר
   seen.add(key);
   const rec = {
     txid: String(txid), chain, asset, amount: Math.round(amount * 1e6) / 1e6,
@@ -130,7 +130,7 @@ async function scanEvm() {
   const toTopic = "0x" + ADDR.evm.slice(2).toLowerCase().padStart(64, "0");
   let n = 0;
   for (const [, t] of Object.entries(ERC20)) {
-    // חלוקה-למנות-של-2,000 בלוקים — מגבלת-getLogs של-הצומת הציבורי
+    // חלוקה-למנות-של-2,000 בלוקים - מגבלת-getLogs של-הצומת הציבורי
     for (let from = lastBlock; from <= head; from += 2_000) {
       const to = Math.min(head, from + 1_999);
       const logs = await rpc(EVM_RPC, "eth_getLogs", [{
@@ -169,7 +169,7 @@ async function scanSol() {
       const delta = (p.uiTokenAmount?.uiAmount ?? 0) - before;
       if (!(delta > 0)) continue;
       const sym = Object.entries(SPL).find(([, m]) => m.mint === p.mint)?.[0];
-      if (!sym) continue; // טוקן-אחר — לא-במפה-הציבורית (ניתן-לתבוע-דרך-השער)
+      if (!sym) continue; // טוקן-אחר - לא-במפה-הציבורית (ניתן-לתבוע-דרך-השער)
       add("solana", sym, s.signature, delta, "", ADDR.sol, (s.blockTime ?? 0) * 1000 || undefined, "finalized");
       n++;
     }
@@ -190,7 +190,7 @@ async function scanBtc() {
   const head = Number(await jfetch(`${BTC_API}/q/getblockcount`).catch(() => 0));
   const j = await jfetch(`${BTC_API}/rawaddr/${ADDR.btc}?limit=30`).catch(() => null);
   for (const tx of j?.txs ?? []) {
-    if (!tx.block_height) continue; // ממתין-בממפיל — עדיין-לא-מאושר
+    if (!tx.block_height) continue; // ממתין-בממפיל - עדיין-לא-מאושר
     let sat = 0;
     for (const o of tx.out ?? []) if (o.addr === ADDR.btc) sat += o.value ?? 0;
     if (!(sat > 0)) continue;
@@ -222,7 +222,7 @@ const watch = {
   depositsTotal: ledger.deposits.length,
   cadenceMin: 20,
   minDepositUsd: MIN_DEPOSIT_USD,
-  note: "keyless public watcher — reads public RPCs, writes the open deposit book; the dex heart matches signed claims against this book and credits USDS",
+  note: "keyless public watcher - reads public RPCs, writes the open deposit book; the dex heart matches signed claims against this book and credits USDS",
   ...(evmHead ? { lastEvmBlock: evmHead } : {}),
 };
 fs.writeFileSync(WATCH_FILE, JSON.stringify(watch, null, 1));

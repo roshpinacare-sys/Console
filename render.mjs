@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 // ─────────────────────────────────────────────────────────────────────
-// THE WEAVE · render.mjs — the keyless console renderer (public chain only)
+// THE WEAVE · render.mjs - the keyless console renderer (public chain only)
 //
 // Runs inside the PUBLIC Console repository (GitHub Actions, its own
 // GITHUB_TOKEN, zero secrets). It re-reads THE WEAVE's anchor line from a
@@ -18,7 +18,7 @@ const NODES = ["https://api.steemit.com", "https://api.justyy.com", "https://ste
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
 const PAGE = 100; // condenser_api.get_account_history hard upper limit per call
 const MAX_PAGES = 30; // ~3000 ops back: days of fleet noise, always enough for the anchor line
-const TARGET_ANCHORS = 24; // scan wide, dedupe by checkpoint — retries/re-broadcasts of the same cp are one row
+const TARGET_ANCHORS = 24; // scan wide, dedupe by checkpoint - retries/re-broadcasts of the same cp are one row
 const RECENT_ROWS = 8; // unique checkpoints shown on the anchor line
 
 async function rpc(node, method, params) {
@@ -84,7 +84,7 @@ async function readAnchorLine() {
       }
       anchors.sort((a, b) => (a.at < b.at ? 1 : a.at > b.at ? -1 : 0));
       // התאמת-שכפול (Task 26): אותו checkpoint שעוגן מחדש (ניסיון חוזר,
-      // שידור-כפול, קו שהשלים את קודמו) הוא שורה אחת — העדות החדשה
+      // שידור-כפול, קו שהשלים את קודמו) הוא שורה אחת - העדות החדשה
       // ביותר שלו. השרשרת שופטת; הקונסולה מציגה אמת ייחודית.
       const seenCp = new Set();
       const unique = anchors.filter((a) => {
@@ -147,7 +147,7 @@ const status = {
   })),
 };
 
-// שער הסודות של הקונסולה — שום מפתח/טוקן לא עולה לריפו הציבורי.
+// שער הסודות של הקונסולה - שום מפתח/טוקן לא עולה לריפו הציבורי.
 // hash-ים ציבוריים (root/headHash: 0x+64hex בשדות קנוניים) אינם סוד.
 const text = JSON.stringify(status, null, 2);
 const PATTERNS = [

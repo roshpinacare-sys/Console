@@ -1,9 +1,9 @@
-// AGENTS-WATCH — סוכן רישום-הסוכנים (Task 37)
+// AGENTS-WATCH - סוכן רישום-הסוכנים (Task 37)
 //
 // רץ בריפו הציבורי כל שעה: שואל את ה-API של גיטהאב את מצבם האמיתי של
 // כל הסוכנים בכל 14 הריפואים (ריצות, הצלחות, משכים, פעם אחרונה),
-// ממזג עם קטלוג התפקידים הקנוני (קלט→פלט) וכותב את agents/registry.json
-// שתצוגת הסוכנים בקונסולה הציבורית קוראת. אפס-סנדבוקס — הענן מתעדכן
+// ממזג עם קטלוג התפקידים הקנוני (קלט->פלט) וכותב את agents/registry.json
+// שתצוגת הסוכנים בקונסולה הציבורית קוראת. אפס-סנדבוקס - הענן מתעדכן
 // לבד, הריפו הוא הבית.
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -14,38 +14,38 @@ const REPOS = ["Adsmarket","anchor-baseline","Console","Project-files","roshpina
 const TOKEN = process.env.AGENTS_WATCH_TOKEN;
 if (!TOKEN) { console.error("AGENTS_WATCH_TOKEN missing"); process.exit(1); }
 
-// ═══ קטלוג התפקידים הקנוני — מה כל סוכן עושה, מה נכנס ומה יוצא ═══
+// ═══ קטלוג התפקידים הקנוני - מה כל סוכן עושה, מה נכנס ומה יוצא ═══
 const CATALOG = {
   "Zip|weave-heart": { layer:"ALWAYS-UP", schedule:"hourly :00",
-    role:{en:"Cloud heart of The Weave — reads the ledger every hour, judges whether the primary runner is alive, verifies only when alive, takes over the full cycle when it is not.",he:"הלב הענן של The Weave — קורא את הספר כל שעה, פוסק אם הראנר הראשי חי, מאמת בלבד כשחי ומשתלט על המחזור המלא כשלא."},
+    role:{en:"Cloud heart of The Weave - reads the ledger every hour, judges whether the primary runner is alive, verifies only when alive, takes over the full cycle when it is not.",he:"הלב הענן של The Weave - קורא את הספר כל שעה, פוסק אם הראנר הראשי חי, מאמת בלבד כשחי ומשתלט על המחזור המלא כשלא."},
     input:{en:"fresh clone + ledger.json",he:"קלון טרי + ledger.json"},
     output:{en:"attestations, checkpoints, heartbeat commits",he:"אימותים, צ'קפוינטים, קומיטים של פעימה"}},
   "Zip|weave-anchor-lines": { layer:"WITNESS", schedule:"bi-hourly :20 + on every beat",
-    role:{en:"Sequences both witness lines as one run — anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",he:"מריץ את שני קווי העדות כרצף אחד — מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."},
+    role:{en:"Sequences both witness lines as one run - anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",he:"מריץ את שני קווי העדות כרצף אחד - מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."},
     input:{en:"latest checkpoint root",he:"root של הצ'קפוינט האחרון"},
     output:{en:"anchor txids recorded back into the ledger",he:"מזהי טרנזקציות העיגון חוזרים לספר"}},
   "Zip|weave-ecosystem": { layer:"ENFORCEMENT", schedule:"daily 05:30",
-    role:{en:"Ecosystem unification guard — scans all repos for duplication (target dup<0.2) and enforces the one-source-of-truth doctrine automatically.",he:"שומר איחוד האקוסיסטם — סורק את כל הריפואים לגילוי כפילויות (יעד dup<0.2) ואוכף את דוקטרינת מקור-האמת האחד אוטומטית."},
+    role:{en:"Ecosystem unification guard - scans all repos for duplication (target dup<0.2) and enforces the one-source-of-truth doctrine automatically.",he:"שומר איחוד האקוסיסטם - סורק את כל הריפואים לגילוי כפילויות (יעד dup<0.2) ואוכף את דוקטרינת מקור-האמת האחד אוטומטית."},
     input:{en:"full org scan via contents API",he:"סריקת ארגון מלאה דרך contents API"},
     output:{en:"ecosystem report commits",he:"קומיטים של דוח אקוסיסטם"}},
   "Zip|weave-brain-restore": { layer:"RECOVERY", schedule:"one-shot (manual)",
-    role:{en:"Restored the brain (3 NVIDIA NIM keys) from the fleet vault in the cloud after the sandbox DB was lost — the sovereign home, not a passing environment.",he:"השיב את המוח (3 מפתחות NVIDIA NIM) מכספת הצי בענן לאחר אובדן ה-DB של הסנדבוקס — הבית הריבוני, לא סביבה חולפת."},
+    role:{en:"Restored the brain (3 NVIDIA NIM keys) from the fleet vault in the cloud after the sandbox DB was lost - the sovereign home, not a passing environment.",he:"השיב את המוח (3 מפתחות NVIDIA NIM) מכספת הצי בענן לאחר אובדן ה-DB של הסנדבוקס - הבית הריבוני, לא סביבה חולפת."},
     input:{en:"WEAVE_SEAL_PASSPHRASE + sealed vault",he:"WEAVE_SEAL_PASSPHRASE + הכספת החתומה"},
     output:{en:"brain keys restored to the sovereign chain",he:"מפתחות המוח הושבו לשרשרת הריבונית"}},
   "steem|cloud-heart": { layer:"ALWAYS-UP", schedule:"every 30 min",
-    role:{en:"The fleet executor outside the sandbox — reads the living-attest from Steem/Hive over public RPC; fresh attest means sandbox alive (verify only), stale means takeover: key restore, full agent cycle, on-chain leadership marker, push.",he:"המבצע של הצי מחוץ לסנדבוקס — קורא את אימות-החיים מ-Steem/Hive דרך RPC ציבורי; אימות טרי = סנדבוקס חי (אימות בלבד), אימות בלהות = השתלטות: שחזור מפתח, מחזור סוכן מלא, סמן מנהיגות on-chain, דחיפה."},
+    role:{en:"The fleet executor outside the sandbox - reads the living-attest from Steem/Hive over public RPC; fresh attest means sandbox alive (verify only), stale means takeover: key restore, full agent cycle, on-chain leadership marker, push.",he:"המבצע של הצי מחוץ לסנדבוקס - קורא את אימות-החיים מ-Steem/Hive דרך RPC ציבורי; אימות טרי = סנדבוקס חי (אימות בלבד), אימות בלהות = השתלטות: שחזור מפתח, מחזור סוכן מלא, סמן מנהיגות on-chain, דחיפה."},
     input:{en:"public Steem/Hive RPC + fresh clone",he:"RPC ציבורי של Steem/Hive + קלון טרי"},
     output:{en:"saosnet beat --live, chain attest, gitkeeper push",he:"saosnet beat --live, אימות שרשרת, דחיפת gitkeeper"}},
   "saos-dex|dex-beat": { layer:"ALWAYS-UP", schedule:"every 2h :23",
-    role:{en:"The exchange's cloud heart — loads the chain snapshot, runs deterministic ticks, verifies deposit claims against the public ledger, credits them, commits and publishes state to the public console.",he:"הלב הענן של הבורסה — טוען את תמונת-המצב, מריץ טיקים דטרמיניסטיים, מאמת תביעות הפקדה מול הספר הציבורי, מזכה, מבצע commit ומפרסם את המצב לקונסולה הציבורית."},
+    role:{en:"The exchange's cloud heart - loads the chain snapshot, runs deterministic ticks, verifies deposit claims against the public ledger, credits them, commits and publishes state to the public console.",he:"הלב הענן של הבורסה - טוען את תמונת-המצב, מריץ טיקים דטרמיניסטיים, מאמת תביעות הפקדה מול הספר הציבורי, מזכה, מבצע commit ומפרסם את המצב לקונסולה הציבורית."},
     input:{en:"chain snapshot + signed deposit claims",he:"תמונת-מצב שרשרת + תביעות הפקדה חתומות"},
     output:{en:"credits, chain commit, public state publish",he:"זיכויים, commit לשרשרת, פרסום מצב ציבורי"}},
   "Console|dex-watch": { layer:"MIRROR", schedule:"every 20 min :07/:27/:47",
-    role:{en:"The public deposits watcher — scans the real deposit addresses (TRON/ETH/SOL/BTC) over public RPC and updates the open deposits ledger the site displays and the DEX verifies against.",he:"צופה ההפקדות הציבורי — סורק את כתובות ההפקדה האמיתיות (TRON/ETH/SOL/BTC) ב-RPC ציבורי ומעדכן את ספר ההפקדות הפתוח שהאתר מציג והדקס מאמת מולו."},
+    role:{en:"The public deposits watcher - scans the real deposit addresses (TRON/ETH/SOL/BTC) over public RPC and updates the open deposits ledger the site displays and the DEX verifies against.",he:"צופה ההפקדות הציבורי - סורק את כתובות ההפקדה האמיתיות (TRON/ETH/SOL/BTC) ב-RPC ציבורי ומעדכן את ספר ההפקדות הפתוח שהאתר מציג והדקס מאמת מולו."},
     input:{en:"public RPC: TRON / ETH / SOL / BTC",he:"RPC ציבורי: TRON / ETH / SOL / BTC"},
-    output:{en:"dex/deposits.json — the open deposits ledger",he:"dex/deposits.json — ספר ההפקדות הפתוח"}},
+    output:{en:"dex/deposits.json - the open deposits ledger",he:"dex/deposits.json - ספר ההפקדות הפתוח"}},
   "Console|console-publish": { layer:"PUBLISH", schedule:"on push to main",
-    role:{en:"Publishes the public console pages — validates and ships every change to the site the world sees.",he:"מפרסם את דפי הקונסולה הציבוריים — מאמת ומשטח כל שינוי לאתר שהעולם רואה."},
+    role:{en:"Publishes the public console pages - validates and ships every change to the site the world sees.",he:"מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."},
     input:{en:"push to main",he:"דחיפה ל-main"},
     output:{en:"live console pages",he:"דפי קונסולה חיים"}},
   "saos-sovereign-foundry|CI": { layer:"QA", schedule:"push / PR",

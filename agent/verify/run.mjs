@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// AGENT-VERIFY — הרשת מאמתת את הסוכן (Task 6)
+// AGENT-VERIFY - הרשת מאמתת את הסוכן (Task 6)
 //
 // המאמת העצמאי של הרשת: קורא את assertions.json שלצידו, מודד את האתר
 // החי הציבורי (לא את הריפו), וכותב את results.json לצידו. זרימת האמת:
 // בקשה, בנייה, הרשת מודדת, תוצאה ציבורית.
 //
 // Zero dependencies, Node 20+ (global fetch). Doctrine: "no claim without
-// measurement" — and results are data, never a crash: the exit code is
+// measurement" - and results are data, never a crash: the exit code is
 // always 0 and every failure is recorded honestly in the results file.
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -48,7 +48,7 @@ async function fetchTarget(baseUrl, target) {
   let entry;
   try {
     const url = new URL(target, baseUrl);
-    url.searchParams.set("t", cacheBust); // ?t=<ms> — break the CDN cache
+    url.searchParams.set("t", cacheBust); // ?t=<ms> - break the CDN cache
     const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
     const body = await res.text();
     entry = { status: res.status, body, error: null };
@@ -132,7 +132,7 @@ async function evaluate(a, baseUrl) {
         return { id, ok, details: `field "${a.field}" = ${JSON.stringify(value)}, expected ${JSON.stringify(a.value)}` };
       }
 
-      // json_min: value must be a real number — null/boolean/empty do not count.
+      // json_min: value must be a real number - null/boolean/empty do not count.
       if (value === null || typeof value === "boolean" || (typeof value === "string" && value.trim() === "")) {
         return { id, ok: false, details: `field "${a.field}" = ${JSON.stringify(value)} is not numeric` };
       }

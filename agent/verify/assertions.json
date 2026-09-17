@@ -141,12 +141,12 @@
   {
    "id": "A14",
    "desc": {
-    "en": "No emoji, dingbat or arrow characters in the home page (SVG icons only)",
-    "he": "אין תווי אימוג'י, דינגבט או חץ בדף הבית (אייקוני SVG בלבד)"
+    "en": "No emoji, dingbat, arrow or em-dash characters in the home page (clean typography only)",
+    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף הבית (טיפוגרפיה נקייה בלבד)"
    },
    "kind": "regex_absent",
    "target": "",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}]",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
    "flag": "u"
   },
   {
@@ -169,6 +169,50 @@
    "target": "",
    "value": "loop-gate",
    "min": 5
+  },
+  {
+   "id": "A17",
+   "desc": {
+    "en": "No emoji, dingbat, arrow or em-dash characters in the discovery engine page",
+    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe discovery engine page"
+   },
+   "kind": "regex_absent",
+   "target": "acid.html",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+   "flag": "u"
+  },
+  {
+   "id": "A18",
+   "desc": {
+    "en": "No emoji, dingbat, arrow or em-dash characters in the network mirror page",
+    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe network mirror page"
+   },
+   "kind": "regex_absent",
+   "target": "net.html",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+   "flag": "u"
+  },
+  {
+   "id": "A19",
+   "desc": {
+    "en": "No emoji, dingbat, arrow or em-dash characters in the operator gate page",
+    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe operator gate page"
+   },
+   "kind": "regex_absent",
+   "target": "gate.html",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+   "flag": "u"
+  },
+  {
+   "id": "A20",
+   "desc": {
+    "en": "No emoji, dingbat, arrow or em-dash characters in the knowledge hub home",
+    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe knowledge hub home"
+   },
+   "kind": "regex_absent",
+   "target": "hub/index.html",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+   "flag": "u"
   }
  ]
 }
