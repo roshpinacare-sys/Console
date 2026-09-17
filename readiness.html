@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · מבחן המוכנות - ההשוואה הכנה מול הרשתות המובילות</title>
+<meta name="description" content="הבדיקה המלאה שדרש המפעיל: בלי סמכות על טענות. מה נמצא, מה תוקן באוויר, מה חסר לנו מול הרשתות המובילות במדידה חיה, נתיבי הכסף של הקריפטו והמקבילות שלנו, הפוטנציאל, ואיפה עוד לא מוכנים.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--gold-dim:#8a7423;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px;width:100%}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+header.nhead{border-bottom:1px solid var(--border);padding:18px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
+.nhead .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nhead h1{font-size:18px;font-weight:700}
+.nhead .sub{font-size:12px;color:var(--mut)}
+.badge{font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.links{margin-inline-start:auto;display:flex;gap:14px;font-size:13px}
+main{flex:1;padding:30px 0 56px}
+.lede{font-size:14.5px;color:var(--mut);line-height:1.75;margin-bottom:26px;max-width:880px}
+.lede b{color:var(--tx)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.card h2{font-size:15px;margin-bottom:14px;color:var(--gold);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
+.card p{font-size:13.5px;color:var(--mut);line-height:1.75;margin-bottom:10px}
+.card p b{color:var(--tx)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--dim);font-weight:400;font-size:11.5px;text-align:right;padding:6px 8px;border-bottom:1px solid var(--border2)}
+td{padding:8px;border-bottom:1px dashed var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{font-family:var(--mono);direction:ltr;unicode-bidi:embed;white-space:nowrap}
+.tag{font-size:10.5px;font-family:var(--mono);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;color:var(--mut);white-space:nowrap}
+.tag.g{border-color:#2d5a3d;color:var(--green)}
+.tag.y{border-color:#5a512d;color:var(--yellow)}
+.tag.r{border-color:#5a2d2d;color:var(--red)}
+.tag.p{border-color:#4a3f6e;color:var(--purple)}
+footer{border-top:1px solid var(--border);padding:18px 0;margin-top:auto}
+footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--dim);border-right:3px solid var(--gold-dim);padding-right:12px;margin-top:14px;line-height:1.7}
+.src{font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.8}
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.vcard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+.vcard h3{font-size:15px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.vcard ul{list-style:none}
+.vcard li{font-size:13px;color:var(--mut);line-height:1.7;padding:7px 0;border-bottom:1px dashed var(--border)}
+.vcard li:last-child{border-bottom:none}
+.vcard li b{color:var(--tx)}
+.vcard.red{border-color:#5a2d2d}
+.vcard.green{border-color:#2d5a3d}
+.vcard.purple{border-color:#4a3f6e}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
+.dot.g{background:var(--green)} .dot.r{background:var(--red)} .dot.y{background:var(--yellow)} .dot.p{background:var(--purple)}
+.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.pcard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
+.pcard .v{font-size:20px;font-weight:800;color:var(--gold);font-family:var(--mono);direction:ltr}
+.pcard .v.red{color:var(--red)}
+.pcard .v.green{color:var(--green)}
+.pcard .l{font-size:11.5px;color:var(--mut);margin-top:2px}
+.gap-col{color:var(--red)}
+@media(max-width:640px){.card{padding:16px}.nhead h1{font-size:16px}}
+</style>
+</head>
+<body>
+<header class="nhead">
+  <div class="wrap">
+    <h1>מבחן המוכנות <span class="sub">· readiness exam</span></h1>
+    <span class="badge">R26 · נבדק ואומת 2026-09-17</span>
+    <nav class="links">
+      <a href="index.html">קונסולה</a>
+      <a href="sovereign.html">ריבונות</a>
+      <a href="money.html">נתיב הכסף</a>
+      <a href="roast.html">צלייה</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+
+    <p class="lede">
+      הוראת המפעיל הייתה חדה: <b>אל תסמוך על הטענות שלך בכלל. תבדוק הכל. ותתקן.</b>
+      הבדיקה צדקה בצורה מביכה: נמצאה באגית כלכלה מסדר P0 חיה במסדרון העיגון, פער של 8.8x
+      מהאמת, שכל מפקיד אמיתי היה מנצל להדפסת כסף על חשבון האוצר. היא תוקנה היום, והתיקון
+      אומת באוויר. העמוד הזה הוא הבדיקה המלאה שביקשת: מה יש, מה חסר, מה הפוטנציאל,
+      ואיפה עוד לא מוכנים. <b>כל מספר כאן נמדד היום</b>, בפקודות חיות, מול המראות הציבוריים.
+    </p>
+
+    <div class="pulse">
+      <div class="pcard"><div class="v red">8.8x</div><div class="l">פער המסדרון שנמצא בבדיקה (h18553)</div></div>
+      <div class="pcard"><div class="v green">53/54µ</div><div class="l">המסדרור אחרי הריפוי (h19034)</div></div>
+      <div class="pcard"><div class="v">$49.9B</div><div class="l">TVL אתריום · הפער שלנו: 0</div></div>
+      <div class="pcard"><div class="v red">0</div><div class="l">משתמשים חיצוניים והפקדות מאז ומעולם</div></div>
+      <div class="pcard"><div class="v">~$210</div><div class="l">רווח אוצר סימולטיבי מול 485M$ לחודש אצל המובילה</div></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot r"></span>א. הבדיקה שצדקה: מה נמצא היום ותוקן באוויר <span class="en">the finding</span></h2>
+      <p>
+        בגובה <span class="mono">h18553</span> בריכת המסדרון <span class="mono">USDS/WSTEEM</span> נסחרה ב
+        <span class="mono">mid=473µ</span> בזמן שהעוגן האורקלי החי, מחיר STEEM בפועל, עמד על
+        <span class="mono">54µ</span>. הספר ציטט <span class="mono">304/306µ</span> מול
+        <span class="mono">refPrice=54µ</span> של הנכס שלו עצמו. המשמעות הכלכלית: מי שהיה מפקיד
+        STEEM אמיתי דרך הדלת (עטיפה 1:1) ומוכר WSTEEM בספר, היה מקבל <b>5.6x על הכסף שלו</b>
+        ברווח מיידי על חשבון האוצר. רק העובדה שאין עדיין מפקידים היא שמנעה את הניצול.
+      </p>
+      <table>
+        <tr><th>מדד</th><th>לפני (h18553)</th><th>אחרי (h19034, באוויר)</th><th>עוגן אמת</th></tr>
+        <tr><td>מחיר הבריכה (µ ליחידת WSTEEM)</td><td class="num gap-col">473</td><td class="num" style="color:var(--green)">53</td><td class="num">54</td></tr>
+        <tr><td>פייר הספר</td><td class="num gap-col">305</td><td class="num" style="color:var(--green)">54</td><td class="num">54</td></tr>
+        <tr><td>פרמיית הניצול הפוטנציאלית</td><td class="num gap-col">+463%</td><td class="num" style="color:var(--green)">-1.9%</td><td class="num">0%</td></tr>
+        <tr><td>USDS שהוחזר לאוצר מהבריכה</td><td class="num">-</td><td class="num" style="color:var(--green)">4,474,793µ</td><td class="num">-</td></tr>
+      </table>
+      <p style="margin-top:12px">
+        <b>ארבע שורשים נמצאו בשרשרת, וכולם תוקנו:</b>
+        (1) מחיר ההוגן של הזוג היה 80% מתייחס לעצמו, נקודת שבת שהצדיקה את עצמה אחרי שהנכס החיצוני קרס.
+        (2) שומר הבריכות פטר את בריכות המסדרון משמירה.
+        (3) סוכן הנזילות (ALE) קנה WSTEEM בכסף אוצר כל 100 בלוקים ודחף את המסדרון מעל האמת באופן מתמיד, זה גם מה ששבר את הריפוי ההיסטורי.
+        (4) מנות ייצוב הוגדלו ליניארית בעוד המחיר הוא יחס, מה שגרם לראצ׳ט שדילדל את הבריכה.
+      </p>
+      <p>
+        <b>הריפוי:</b> אופרציית סימון מחדש ריבונית <span class="mono">pool_repeg</span> (אוצר בלבד, אפס הטבעה,
+        סכומים נשמרים בדיוק, הכל ביומן), עוגן יחיד לזוגות המסדרון, מנות מדויקות שורש, הוצאת המסדרון מתחום
+        סוכן הנזילות ובוטי הרעש, ומדיניות עוגן ברירה בכל פעימה: אם הבריכה סוטה מהאורקל מעבר לעשירית,
+        היא מסומנת מחדש לבד. <b>הרשת מרפאת את עצמה מעכשיו, בלי מפעיל.</b>
+      </p>
+      <div class="note">
+        לקח הכנות של היום: טענת ה״עוגן מדויק״ שפורסמה כאן בעבר הייתה נכונה לאורקל בלבד. המסדרון המסחרי שיקר.
+        הבדל שכזה בין טענה למציאות הוא בדיוק מה שהמפעיל חשש ממנו.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot y"></span>ב. רשתות מובילות מולנו · ההשוואה במספרים שנמדדו היום <span class="en">the comparison</span></h2>
+      <p>כל הנתונים בטבלה נמשכו היום בשעות אחה״צ מממשקי DefiLlama הציבוריים ומהמראות החיות שלנו. אין כאן אף מספר מהזיכרון.</p>
+      <table>
+        <tr><th>ממד</th><th>הרשתות המובילות (חי)</th><th>אנחנו (חי, h19034)</th><th>מצב</th></tr>
+        <tr>
+          <td><b>TVL צבור</b></td>
+          <td>אתריום <span class="num">$49.9B</span> · סולנה <span class="num">$5.85B</span> · בייס <span class="num">$5.58B</span> · טרון <span class="num">$5.44B</span></td>
+          <td>0 חיצוני. נזילות פרוטוקול בבעלות מלאה: <span class="num">~$23K</span> בסימון פנימי</td>
+          <td><span class="tag r">פער 0</span>
+        </tr>
+        <tr>
+          <td><b>עמלות 30 יום</b></td>
+          <td>Tether <span class="num">$485.4M</span> · Circle <span class="num">$196.9M</span> · Uniswap V4 <span class="num">$125.4M</span> · Lido <span class="num">$47.7M</span></td>
+          <td>רווח אוצר מצטבר <span class="num">209,785µ ≈ $210</span>, כולו מסחר פנימי של סוכנינו</td>
+          <td><span class="tag r">יחס 1 : 2.3M</span></td>
+        </tr>
+        <tr>
+          <td><b>נפח DEX ל-30 יום</b></td>
+          <td>Uniswap V4 <span class="num">$41.7B</span> · V3 <span class="num">$36.3B</span> · PancakeSwap <span class="num">$21.3B</span> · PumpSwap <span class="num">$19.3B</span></td>
+          <td><span class="num">7,121</span> החלפות מאז ההתחלה, כולן של 22 הסוכנים הפנימיים</td>
+          <td><span class="tag r">אין נפח אמיתי</span></td>
+        </tr>
+        <tr>
+          <td><b>משתמשים חיצוניים</b></td>
+          <td>מיליוני ארנקים פעילים</td>
+          <td><span class="num">0</span> משתמשים, <span class="num">0</span> הפקדות, מאז ומעולם</td>
+          <td><span class="tag r">הפער האמיתי</span></td>
+        </tr>
+        <tr>
+          <td><b>פדיון נזיל</b></td>
+          <td>USDT ו-USDC נפדות 1:1 בסכומי ענק, רצועות הנפקה מבוקרות</td>
+          <td>דלת העיגון קיימת אבל הגיבוי הנזיל: <span class="num">34 STEEM ≈ $1.9</span> באוצר בלבד</td>
+          <td><span class="tag r">החסר הקריטי</span></td>
+        </tr>
+        <tr>
+          <td><b>פלטפורמת חוזים</b></td>
+          <td>כל מפתח בעולם כותב ומפרסם חוזה חכם על השרשרת עצמה</td>
+          <td>סט אופרציות קבוע ועשיר (ספר, בריכות, כספת, נעילות, בונדים, DCA, טריגרים, לונצ׳פד) אבל לא פתוח לקוד של צד שלישי</td>
+          <td><span class="tag y">החלטה אסטרטגית</span></td>
+        </tr>
+        <tr>
+          <td><b>אודיט חיצוני</b></td>
+          <td>סטנדרט: כמה חברות אודיט לפני כסף אמיתי</td>
+          <td>0 אודיטים חיצוניים. הביקורת היחידה היא ביקורת הברזל הפנימית (שהוכיחה את עצמה היום, אבל היא שלנו)</td>
+          <td><span class="tag r">אמון</span></td>
+        </tr>
+        <tr>
+          <td><b>תשתית סביב</b></td>
+          <td>אקספלוררים, אינדקסרים, גשרים, רמפות פיאט, ארנקי צד שלישי, תיעוד ציבורי</td>
+          <td>GitHub Actions כלב פעימות, דפי קונסולה, אין אקספלורר חיצוני ואין רמפות</td>
+          <td><span class="tag y">לבנות</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot p"></span>ג. נתיבי הכסף של הקריפטו · המקבילה שלנו, בכנות <span class="en">money paths</span></h2>
+      <p>
+        איפה הכסף זורם בפועל בקריפטו (עמלות 30 יום שנמדדו היום), מה המקבילה שכבר קיימת אצלנו
+        במנוע, ומה בדיוק חסר כדי שזה יהיה כסף אמיתי ולא סימולציה.
+      </p>
+      <table>
+        <tr><th>נתיב הכסף</th><th>המוביל (30 יום, חי)</th><th>המקבילה שלנו</th><th>מה חסר לכסף אמיתי</th></tr>
+        <tr>
+          <td><b>עמלות סטייבלקוין</b></td><td class="num">Tether $485.4M · Circle $196.9M</td>
+          <td>מערכת USDS: זיכוי הפקדות מאומת, שער חי, תקרות</td>
+          <td>מחזיקים חיצוניים ופדיון שטעון גיבוי נזיל אמיתי</td>
+        </tr>
+        <tr>
+          <td><b>עמלות ספוט DEX</b></td><td class="num">Uniswap V4 $125.4M · V3 $55.1M</td>
+          <td>הבורסה: ספר הזמנות + בריכות AMM + נזילות בבעלות מלאה</td>
+          <td>סוחרים אמיתיים, עומק אמיתי, מחיר שיש לו שוק</td>
+        </tr>
+        <tr>
+          <td><b>פרפטואלים</b></td><td class="num">Hyperliquid $78.6M</td>
+          <td><span class="tag r">אין</span></td>
+          <td>מכשיר שלם: מימון, סימון, פירוק. הרווחיות בענף מוכחת</td>
+        </tr>
+        <tr>
+          <td><b>סטייקינג</b></td><td class="num">Lido $47.7M</td>
+          <td>veSAOS, נעילות לתקופות, הצבעות</td>
+          <td>מחיר SAOS חיצוני. בלי ביקוש אמיתי אין מה לנעול</td>
+        </tr>
+        <tr>
+          <td><b>לונצ׳פד</b></td><td class="num">pump.fun $46.5M</td>
+          <td>השקות: יצירה, קנייה, מסלול הגירה לבריכה</td>
+          <td>מנפיקים אמיתיים. המנגנון קיים, הביקוש לא</td>
+        </tr>
+        <tr>
+          <td><b>שוק חיזוי</b></td><td class="num">Polymarket $73.5M</td>
+          <td><span class="tag r">אין</span></td>
+          <td>מכשיר חדש לגמרי. שוק חיזוי מינימלי הוא פרויקט של כמה שבועות במנוע שלנו</td>
+        </tr>
+        <tr>
+          <td><b>הלוואות מבוטחות</b></td><td class="num">Aave V3 $34.4M</td>
+          <td>הכספת: CDP שמרני, יחס 250%, תקרה גלובלית $500 עד הוכחה</td>
+          <td>בטחונות אמיתיים בכספת. התקרה מושפלת בכוונה עד שיהיה כסף אמיתי במערכת</td>
+        </tr>
+        <tr>
+          <td><b>כלי מסחר ובוטים</b></td><td class="num">GMGN $51.6M</td>
+          <td>22 סוכני מסחר פנימיים, DCA, טריגרים, COW</td>
+          <td>גישה חיצונית: API ציבורי, מפתחות למשתמשים, תיעוד</td>
+        </tr>
+      </table>
+      <div class="src">
+        מקורות חיים: DefiLlama chains / fees / dexs, נמשך היום 17:50Z · המראות שלנו:
+        world.json ו-state.json בגובה h19034.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot g"></span>ד. מה כן יש לנו · היתרונות שנמדדו, לא נטענו <span class="en">real advantages</span></h2>
+      <ul style="list-style:none">
+        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>מיקרו ללא עמלת רשת:</b> מנת מסילה של <span class="mono">150kµ</span> שורפת <span class="mono">100µ</span> גז, שיעור <span class="mono">0.067%</span>. על רשת ציבורית מובילה אותה מנה בלתי כדאית מלכתחילה בגז של <span class="mono">$1-5</span> לעסקה. זה היתרון המבני היחיד שלנו שקיים גם היום, והוא אמיתי רק אם הנזילות אמיתית.</li>
+        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>אפס MEV:</b> אין ממפול ציבורי, סדר דטרמיניסטי. אין כריכות סנדוויץ׳. המחיר שווידאנו היום שהוא אמיתי.</li>
+        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>מסדרון אמת שמרפא את עצמו:</b> היום הוכח מקצה לקצה: באגית נמצאה, תוקנה, ואומתה באוויר באותו היום, ומעכשיו מדיניות העוגן רצה בכל פעימה לבד.</li>
+        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>GitHub כלב פעימות:</b> עלות תשתית אפס, כל הראיות ציבוריות בריפו, כל פעימה חתומה וניתנת לריפליי. אף רשת מובילה לא נותנת שקיפות כזאת של הליבון עצמו.</li>
+        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>נזילות בבעלות מלאה 100%:</b> אין LP חיצוני שימשוך שטיח. הסימון מחדש של היום היה אפשרי רק בגלל זה, בלי לגעת בכסף של אף אחד.</li>
+        <li style="padding:7px 0"><b>המנוע כבר מכיל את רוב המכשירים של הענף:</b> ספר, AMM, כספת CDP, נעילות והצבעות, בונדים, DCA, טריגרים, לונצ׳פד, הזמנות COW, אורקל חי. הפער הוא לא בקוד של המכשירים, הוא בכסף שנכנס אליהם.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot r"></span>ה. איפה עוד לא מוכנים · רשימת הליטוש, לפי חומרה <span class="en">not ready yet</span></h2>
+      <table>
+        <tr><th>#</th><th>החסר</th><th>המציאות הנמדדת</th><th>חומרה</th></tr>
+        <tr><td class="num">1</td><td><b>פדיון נזיל אמיתי</b></td><td>היציאה מ-USDS עוברת דרך WSTEEM, והגיבוי הנזיל בפועל הוא <span class="num">34 STEEM ≈ $1.9</span> באוצר. נעילת SP קיימת אבל לא נזילה. בלי זה, כל דולר חיצוני שייכנס ייכנס למערכת שאינה יכולה להחזיר אותו בגדול.</td><td><span class="tag r">חוסם עליון</span></td></tr>
+        <tr><td class="num">2</td><td><b>עומק המסדרון אחרי הריפוי</b></td><td>הבריכה כנה אבל רדודה: צד USDS של <span class="num">$584</span> בלבד. הכנות עלתה במחיר העומק. העומק יחזור רק מהפקדות STEEM אמיתיות.</td><td><span class="tag y">גדל עם הפקדות</span></td></tr>
+        <tr><td class="num">3</td><td><b>תלות אורקל בממשקים חינמיים</b></td><td>האורקל ניזון מממשקי מחיר חינמיים. היום בפועל נתקלנו בהגבלת קצב של אחד מהם ועברנו בהצלחה לשני. נקודת כשל יחידה שצריכה מקורות נוספים.</td><td><span class="tag y">בינוני</span></td></tr>
+        <tr><td class="num">4</td><td><b>אפס אודיט חיצוני</b></td><td>כל מה שכתוב כאן נבדק על ידי הרשת על עצמה. ביקורת הברזל תפסה היום את כל הפרות השימור, אבל לצד שלישי זה עדיין עניין של אמון.</td><td><span class="tag r">אמון</span></td></tr>
+        <tr><td class="num">5</td><td><b>ל-SAOS אין שוק חיצוני</b></td><td>מחיר ה-SAOS נקבע בבורסה הפנימית שלנו בלבד. עד שאין לו מחיר חיצוני, כל המכשירים סביבו נעילות, בונדים, השקות הם תיאוריה.</td><td><span class="tag y">גורם מעכב</span></td></tr>
+        <tr><td class="num">6</td><td><b>אין דלת קדימה למפתחים</b></td><td>אין אקספלורר ציבורי, אין אינדקסר, אין תיעוד לשילוב חיצוני, אין סביבת בדיקות ציבורית. הרשתות המובילות חיות מהאקוסיסטם הזה.</td><td><span class="tag y">לבנות</span></td></tr>
+        <tr><td class="num">7</td><td><b>רציפות תפעולית</b></td><td>הלב רץ על Actions של ריפו אחד. הפעימות אוטומטיות ומאומתות, אבל תלות בספק יחיד לתשתית היא סיכון שכל רשת מובילה פיזרה.</td><td><span class="tag y">פיזור</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot y"></span>ו. הפוטנציאל · דרכי המימוש, בסדר עדיפויות <span class="en">implementation paths</span></h2>
+      <p>
+        הפוטנציאל האמיתי שלנו אינו לנצח את Tether. הוא להיות הרשת הכנה ביותר בסדר גודל שלה:
+        מיקרו-מסחר ללא עמלה וללא MEV, מסדרון עיגון שמרפא את עצמו, וראיות ציבוריות לכל פעימה.
+        הדרך מכאן לדולר הראשון ואילך, כפי שהיא נראית אחרי הבדיקה של היום:
+      </p>
+      <table>
+        <tr><th>שלב</th><th>המהלך</th><th>מה זה מוכיח</th><th>מצב</th></tr>
+        <tr><td class="num">P0</td><td>אמת המסדרון: סימון מחדש, עוגן יחיד, מדיניות ברירה בכל פעימה</td><td>שהמחיר שלנו הוא המחיר של העולם. התיקון עצמו מדיד באוויר היום</td><td><span class="tag g">בוצע היום</span></td></tr>
+        <tr><td class="num">P1</td><td>הדולר הראשון: הפקדת STEEM אמיתית קטנה דרך הדלת, מחזור מלא, קבלה חתומה על השרשרת הציבורית</td><td>שכסף אמיתי נכנס, נזכר ביושר, ויוצא. ההוכחה היחידה שסופרת בסופו של דבר</td><td><span class="tag y">מוכן לביצוע</span></td></tr>
+        <tr><td class="num">P2</td><td>עומק מהפקדות אמיתיות: כל הפקדה מעמיקה את המסדרון בכנות. הרמת תקרות הכספת רק כנגד בטחונות אמיתיים</td><td>שהמערכת גדלה רק עם כסף אמיתי, לא עם סימולציה</td><td><span class="tag">תלוי P1</span></td></tr>
+        <tr><td class="num">P3</td><td>שוק חיצוני ראשון ל-SAOS, ולו זעיר: רישום בבורסה קטנה או השוואה מחיר אורקלית</td><td>גילוי מחיר אמיתי. מכאן נעילות ובונדים מקבלים משמעות</td><td><span class="tag">לתכנן</span></td></tr>
+        <tr><td class="num">P4</td><td>אודיט חיצוני של הגרעין והדלת: חברת אודיט אחת שקוראת את הקוד</td><td>מכפיל האמון שמזיז את המחסום הפסיכולוגי של כל מפקיד רציני</td><td><span class="tag">תלוי תקציב</span></td></tr>
+        <tr><td class="num">P5</td><td>החלטת הפתיחות: להישאר עם סט אופרציות קבוע ומבוקר, או לפתוח שכבת חוזים לצד שלישי</td><td>זו קפיצת הרשת האמיתית. היא גם המקום שבו נולדות שליטות של ממש. לא לפני ש-P1 עד P3 מוכחים</td><td><span class="tag p">החלטה אסטרטגית</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot g"></span>ז. פסק הדין <span class="en">the verdict</span></h2>
+      <div class="verdict">
+        <div class="vcard green">
+          <h3><span class="dot g"></span>מוכנים עכשיו, מוכח במדידה</h3>
+          <ul>
+            <li><b>ריצה אוטונומית:</b> פעימות, שמירות, ליבונים, סוכנים, הכל בלי מפעיל</li>
+            <li><b>ריפוי עצמי:</b> באגית P0 נמצאה, תוקנה ואומתה באוויר ביום אחד</li>
+            <li><b>מחיר אמת:</b> המסדרון מחזיק את מחיר העולם, בתוך עשירית</li>
+            <li><b>מנוע מיקרו:</b> אפס עמלת רשת, אפס MEV, אטומיות מלאה</li>
+            <li><b>ראיות ציבוריות:</b> כל בלוק, כל פעימה, כל קבלה, בריפו הפתוח</li>
+          </ul>
+        </div>
+        <div class="vcard red">
+          <h3><span class="dot r"></span>לא מוכנים, נמדד בלי רחמים</h3>
+          <ul>
+            <li><b>בלי כסף אמיתי:</b> 0 משתמשים, 0 הפקדות, 0 הכנסה חיצונית</li>
+            <li><b>בלי פדיון בקנה מידה:</b> גיבוי נזיל של דולרים בודדים מול נזילות פנימית של אלפים</li>
+            <li><b>בלי אודיט חיצוני:</b> כל ההוכחות שלנו על עצמנו</li>
+            <li><b>בלי שוק ל-SAOS:</b> המכשירים סביבו תיאוריה עד שיהיה לו מחיר</li>
+            <li><b>בלי אקוסיסטם:</b> אין דלת קדימה למפתח, לאקספלורר, לאינדקסר</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:15px;color:var(--tx);line-height:1.8">
+        <b>המשפט האחד:</b> הרשת מוכנה לרוץ לבד, והיא מוכיחה את זה כל יום. היא עוד לא מוכנה
+        להחזיק כסף אמיתי של אחרים, והיום גם תיקנו את הסיבה מספר אחת שזה היה מסוכן.
+        הדרך בין השניים כבר לא ענקית: היא עוברת בהפקדה אמיתית ראשונה, בגיבוי נזיל אמיתי,
+        ובאודיט אחד חיצוני. עד שזה יקרה, כל טענת מוכנות שתראה כאן תיבדק, ומה שלא יעמוד
+        בבדיקה יתוקן או יימחק. זו המשמעות של היום.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot p"></span>ח. איך כל זה נבדק <span class="en">verification</span></h2>
+      <ul style="list-style:none">
+        <li style="padding:6px 0;border-bottom:1px dashed var(--border)">מחירי העולם: DefiLlama coins API, נמשך חי היום, STEEM <span class="mono">$0.0541</span>, סולנה <span class="mono">$101.3</span>, ביטקוין <span class="mono">$76,787</span>, אתריום <span class="mono">$2,470</span>.</li>
+        <li style="padding:6px 0;border-bottom:1px dashed var(--border)">TVL ועמלות ונפחים: ממשקי DefiLlama הציבוריים chains / fees / dexs, נמשק היום בשעה 17:50Z, ללא הרשאות.</li>
+        <li style="padding:6px 0;border-bottom:1px dashed var(--border)">הנתונים שלנו: המראות החיות world.json ו-state.json בגובה <span class="mono">h19034</span>, כולל טבלת הלפני/אחרי של הריפוי.</li>
+        <li style="padding:6px 0">הריפוי עצמו: הוכחה מקומית על עותק של השרשרת החיה, 480 טיקים, ביקורת הברזל ירוקה, ואז פריסה באוויר ואימות חוזר בגובה <span class="mono">h19034</span>.</li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>SAOS · מבחן המוכנות · כל מספר בעמוד נמדד היום מול מקור חי</span>
+    <span><a href="index.html">קונסולה</a> · <a href="sovereign.html">ריבונות</a> · <a href="money.html">נתיב הכסף</a> · <a href="roast.html">צלייה</a></span>
+  </div>
+</footer>
+</body>
+</html>
