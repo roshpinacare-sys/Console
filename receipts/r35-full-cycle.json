@@ -1,0 +1,201 @@
+{
+  "cycle": "R35-first-full-cycle",
+  "at": "2026-09-17T23:35:10.146Z",
+  "chain": {
+    "heightBefore": 21495,
+    "heightAfter": 21500,
+    "root": null
+  },
+  "custody": {
+    "address": "TYVwwuvdDmfy3shxT3cb3RKLrRCshaZxTy",
+    "sun": 2000002,
+    "trxEquivalent": 2.000002,
+    "depositTxid": "8d84e637f3ebc87b8248361a58342eb05014315beb9a9e9b6f3c1c403de9e917"
+  },
+  "oracle": {
+    "wtrxMu": 334591,
+    "atH": 21495,
+    "src": "median(WTRX×2,WSOL×2,WSTEEM×2,PHIVE×2)",
+    "usdPerWtrx": 0.334591,
+    "refPriceListed": 335
+  },
+  "market": {
+    "pair": "USDS/WTRX",
+    "openedAtH": 21500,
+    "raUsds": 535,
+    "rbWtrx": 1603,
+    "lp": 925,
+    "midOpenMilli": 334,
+    "midFinalMilli": 333,
+    "spreadBpsVsOracle": -60,
+    "verdict": "CONVERGED",
+    "poolSwaps": 2,
+    "feeAccruedTreasury": 0,
+    "honestNote": "צד-ה-WTRX הוא הנכס-החיץ-האמיתי (2.0 TRX שהופקדו בפועל); צד-ה-USDS הוא אשראי-פנימי"
+  },
+  "trades": [
+    {
+      "dir": "sell",
+      "inMu": 30,
+      "assetIn": "WTRX",
+      "outMu": 9,
+      "assetOut": "USDS"
+    },
+    {
+      "dir": "buy",
+      "inMu": 9,
+      "assetIn": "USDS",
+      "outMu": 27,
+      "assetOut": "WTRX"
+    }
+  ],
+  "redemption": {
+    "outbox": "peg-outbox",
+    "wtrxMu": 100,
+    "destTron": "TG6SrsMJjRqnqAyYM8kGZu1rgkpsgizKEn",
+    "note": "הכסף הפיזי יעזוב את המשמורת רק בשידור-אמת של המפעיל (המפתח בידיו בלבד)"
+  },
+  "operator": {
+    "before": {
+      "SAOS": 2000000,
+      "USDS": 5000000,
+      "STEEM": 1000000,
+      "WTRX": 2000
+    },
+    "after": {
+      "SAOS": 2000000,
+      "USDS": 5000000,
+      "STEEM": 1000000,
+      "WTRX": 297
+    }
+  },
+  "treasury": {
+    "before": {
+      "SAOS": 4340964,
+      "USDS": 1014403,
+      "STEEM": 34362,
+      "WSTEEM": 682,
+      "ENERGY": 40059,
+      "WSBD": 50000,
+      "PHIVE": 100000,
+      "LP|SAOS/USDS": 17093100,
+      "LP|USDS/WSTEEM": 7137442,
+      "LP|ENERGY/SAOS": 14142,
+      "WTRX": 0
+    },
+    "after": {
+      "SAOS": 4340964,
+      "USDS": 1013868,
+      "STEEM": 34362,
+      "WSTEEM": 682,
+      "ENERGY": 40059,
+      "WSBD": 50000,
+      "PHIVE": 100000,
+      "LP|SAOS/USDS": 17093100,
+      "LP|USDS/WSTEEM": 7137442,
+      "LP|ENERGY/SAOS": 14142,
+      "WTRX": 0,
+      "LP|USDS/WTRX": 925
+    }
+  },
+  "backing": {
+    "WSTEEM": 965638,
+    "WTRX": 2000
+  },
+  "totalsWtrx": 397,
+  "journal": [
+    {
+      "h": 20474,
+      "t": 1789677166907,
+      "soldier": "treasury",
+      "action": "oracle_set",
+      "note": "BTC,ETH,HIVE,PHIVE,WSBD,WSOL,WSTEEM,WTRX <- median(WTRX×2,WSOL×2,WSTEEM×2,PHIVE×2)"
+    },
+    {
+      "h": 20474,
+      "t": 1789677166907,
+      "soldier": "treasury",
+      "action": "oracle_set",
+      "note": "BTC,ETH,HIVE,PHIVE,WSBD,WSOL,WSTEEM,WTRX <- median(WTRX×2,WSOL×2,WSTEEM×2,PHIVE×2)"
+    },
+    {
+      "h": 20954,
+      "t": 1789684211803,
+      "soldier": "treasury",
+      "action": "oracle_set",
+      "note": "BTC,ETH,HIVE,PHIVE,WSBD,WSOL,WSTEEM,WTRX <- median(WTRX×2,WSOL×2,WSTEEM×2,PHIVE×2) · anchor WSBD 445>444 of 444"
+    },
+    {
+      "h": 20954,
+      "t": 1789684211803,
+      "soldier": "treasury",
+      "action": "oracle_set",
+      "note": "BTC,ETH,HIVE,PHIVE,WSBD,WSOL,WSTEEM,WTRX <- median(WTRX×2,WSOL×2,WSTEEM×2,PHIVE×2)"
+    },
+    {
+      "h": 21434,
+      "t": 1789684482694,
+      "soldier": "treasury",
+      "action": "oracle_set",
+      "note": "BTC,ETH,HIVE,PHIVE,WSBD,WSOL,WSTEEM,WTRX <- median(WTRX×3,WSOL×3,WSTEEM×3,PHIVE×3)"
+    },
+    {
+      "h": 21434,
+      "t": 1789684482694,
+      "soldier": "treasury",
+      "action": "wrap_mint_ext",
+      "note": "external-backed mint 2000µ WTRX (trx:8d84e637f3ebc87b8248361a58342eb05014315beb9a9e9b6f3c1c403de9e917)"
+    },
+    {
+      "h": 21434,
+      "t": 1789684482694,
+      "soldier": "treasury",
+      "action": "xfer_free",
+      "note": "→operator 2000µ WTRX"
+    },
+    {
+      "h": 21495,
+      "t": 1789688110108,
+      "soldier": "treasury",
+      "action": "oracle_set",
+      "note": "BTC,ETH,HIVE,PHIVE,WSOL,WSTEEM,WTRX <- median(WTRX×2,WSOL×2,WSTEEM×2,PHIVE×2)"
+    },
+    {
+      "h": 21496,
+      "t": 1789688110122,
+      "soldier": "operator",
+      "action": "xfer_free",
+      "note": "→treasury 1600µ WTRX"
+    },
+    {
+      "h": 21496,
+      "t": 1789688110122,
+      "soldier": "treasury",
+      "action": "pool_open",
+      "note": "USDS/WTRX 535+1600µ · LP 925µ"
+    },
+    {
+      "h": 21499,
+      "t": 1789688110140,
+      "soldier": "operator",
+      "action": "xfer_free",
+      "note": "→peg-outbox 100µ WTRX"
+    }
+  ],
+  "stats": {
+    "fills": 12597,
+    "swaps": 7159,
+    "opsTotal": 331705,
+    "ladders": 31
+  },
+  "liveProof": {
+    "worldJson": "https://roshpinacare-sys.github.io/Console/dex/world.json",
+    "depositTronscan": "https://tronscan.org/#/transaction/8d84e637f3ebc87b8248361a58342eb05014315beb9a9e9b6f3c1c403de9e917",
+    "custodyTronscan": "https://tronscan.org/#/address/TYVwwuvdDmfy3shxT3cb3RKLrRCshaZxTy",
+    "engineCommit": "https://github.com/roshpinacare-sys/saos-dex/commit/afccfff",
+    "receiptsWall": "https://roshpinacare-sys.github.io/Console/receipts/"
+  },
+  "invariant": {
+    "sumBalancesWtrxPlusPool": "operator 297µ + peg-outbox 100µ + pool rb 1603µ = 2000µ = backing 2000µ = custody 2.0 TRX (verified 1:1)"
+  }
+}
