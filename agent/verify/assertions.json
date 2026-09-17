@@ -544,6 +544,28 @@
       "target": "roast.html",
       "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
       "flag": "u"
+    },
+    {
+      "id": "A43",
+      "desc": {
+        "en": "SETTLE-17 permanence: the WSTEEM/USDS market is two-sided - at least one live ask exists (the one-sided disease never returns silently)",
+        "he": "קביעות SETTLE-17: שוק USDS/WSTEEM דו-צדדי - קיימת לפחות הצעת מכירה חיה אחת (מחלת החד-צדדיות לא חוזרת בשקט)"
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "markets.1.bestAsk",
+      "min": 1
+    },
+    {
+      "id": "A44",
+      "desc": {
+        "en": "SETTLE-18 permanence: the sovereign micro-rail executes - cumulative doses never fall below the measured floor (rail starvation is a public failure)",
+        "he": "קביעות SETTLE-18: מסילת-המיקרו הריבונית מבצעת - מנות מצטברות לא יורדות מתחת לרצפה הנמדדת (הרעבה של המסילה היא כשל פומבי)"
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "state.rail.doses",
+      "min": 2
     }
   ]
 }
