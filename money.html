@@ -136,7 +136,7 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
         <div class="irow">
           <div class="hd"><span class="nm">שוק הלוואות</span><span class="cat">Lending · Aave</span><span class="tvln">$50B</span></div>
           <div class="what"><b>מה זה עושה:</b> הון חונה מרוויח. מפקידים מכניסים נכס, לווים משלמים ריבית, הבריכה מתמחרת את השימוש בהון לפי ביקוש. אאבה V3 עם 16.7 מיליארד, מורפו כחול עם 10.1 מיליארד. זהו מחלקת-המכשירים הגדולה ביותר שחסרה לנו.</div>
-          <div class="ours"><span class="lbl">אצלנו</span> · <span class="gap">לא קיים</span> · אין אף מכשיר שמייצר תשואה על הון חונה ברשת שלנו. <span class="plan">המהלך: כספת-הלוואות מינימלית, USDS נגד בטחונות WSTEEM/SAOS, ריבית מתמחרת במצב השרשרת, נוזליות לפי העוגנים שלנו. אפס חוץ, אפס אורקל מורכב.</span></div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">קיים ופועל</span> · כספת-ההלוואות נבנתה וחיה: USDS נגד בטחונות WSTEEM בלבד, יחס 250%, נזילות מתחת-150% פתוחה-לכל-אזרח עם בונוס 5%, ריבית מתומחרת-במצב-השרשרת (בסיס 5%/שנה + ניצולת), תקרות שמרניות עד-שהמכשיר-יוכח. <span class="plan">המצב החי בכרטיס הכספת למטה.</span></div>
         </div>
 
         <div class="irow">
@@ -216,6 +216,13 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
     </section>
 
     <section class="card">
+      <h2>כספת-ההלוואות <span class="en">The Vault · שלב 2 בשעון · חי</span></h2>
+      <p>המכשיר שהיה חסר: הון חונה מתחיל לעבוד. שאיבת USDS נגד בטחונות WSTEEM בלבד, יחס-בטחונות 250% מינימום, נזילות-אזרח מתחת-150% עם בונוס 5% למפרק, וגיבוי-אוצר לכספות שקועות עם הפסד-נרשם-לנצח. הריבית מתומחרת במצב-השרשרת (בסיס 5%/שנה + תוספת-ניצולת) ומומשת-בפירעון. הטבעה מוצהרת-בביקורת, שריפה נספרת: ההיצע מדויק בכל רגע.</p>
+      <div id="vaultLive"><p class="loading">טוען את מצב הכספת מהספר</p></div>
+      <p class="src">מקור חי: dex/world.json (state.vaults + state.vaultTot) מתעדכן בכל פעימת-ענן. אם אין עמדות פתוחות מוצגים המונים המצטברים-האמיתיים בלבד. הריבית המומשת היא בסדר-הגודל של הרשת: מיקרו-µ בהתחלה, גדלה עם השימוש. שום מספר לא מוצג שאיננו בספר.</p>
+    </section>
+
+    <section class="card">
       <h2>הזרימה החוץ <span class="en">External Flow · R24</span></h2>
       <p>צעד 1 בתוכנית, בנוי ומודד: רץ-ענן יומי שפורש גריד-אמת על ספר-STEEM הפנימי הציבורי: סוחרים אמיתיים, יישוב-על-השרשרת, אפס-עמלה. עקרון-המדיניות שנמדד מול הספר החי: אף-פעם לא מוכרים STEEM מתחת לערכו החיצוני (קו-הזהות מוצג למטה), וכל קנייה מתחת לקו היא עודף מדוד. כל מילוי של סוחר-חוץ נספר במעקה הציבורי עם העודף ב-bps מול הציון. המצב החי:</p>
       <div id="extgrid"><p class="loading">טוען את מצב הגריד החוץ</p></div>
@@ -234,7 +241,7 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
       <div class="clock">
         <div class="step done"><div class="ph">0</div><div class="bd"><h4>תיקון-שורש: עוגן חי <span class="en">delivered</span></h4><p>בוצע ומדוד: מכל פעימת-ענן העוגן מחליק אל מחיר-החוץ (חציון חוצה-מקורות, צעד מדוד וכנון-ריפליי), ההחלקה נרשמת בספר השרשרת, והמספרים חשופים בעמוד הזה. השלבים הבאים נשענים על עוגן שאינו משקר.</p></div></div>
         <div class="step"><div class="ph">1</div><div class="bd"><h4>זרימה חוץ ראשונה: הגריד על ספר-STEEM הציבורי <span class="en">built</span></h4><p>הרץ-הענני נבנה ומודד (הכרטיס למעלה): גריד יומי מעל קו-הזהות החיצוני, דלק מתשלומי-השחרור, מעקה-ציבורי לכל מילוי. המילוי המוכח נספר בעודף +26%. הצעד שנותר: הצבת-הסוד הפעיל על-ידי המפעיל, פעולת-אצבע אחת, והגריד חמוש.</p></div></div>
-        <div class="step"><div class="ph">2</div><div class="bd"><h4>כספת-הלוואות מינימלית</h4><p>המחלקה הגדולה שחסרה לנו. USDS נגד בטחונות WSTEEM/SAOS, ריבית מתמחרת במצב השרשרת, נוזליות לפי עוגן חי מהצעד 0. ההון החונה שלנו מתחיל לעבוד.</p></div></div>
+        <div class="step done"><div class="ph">2</div><div class="bd"><h4>כספת-הלוואות מינימלית <span class="en">delivered</span></h4><p>בוצע ומדוד: CDP מלא נגד WSTEEM בלבד, יחס 250%, נזילות אזרחית מתחת-150% עם בונוס 5%, גיבוי-אוצר לשוקעות עם הפסד-נרשם-לנצח, ריבית מתומחרת-במצב, חשבונאות-ברזל (הטבעה מוצהרת, שריפה נספרת). הוכח מקומית על עותק-שרשרת-חיה לפני-העלאה, וסוכן-הדגמה מפעיל אותו בכל פעימה. המצב החי בכרטיס למעלה.</p></div></div>
         <div class="step"><div class="ph">3</div><div class="bd"><h4>sSAOS: הימור-נזיל על סולם הערך</h4><p>עטיפה סביב מנגנון קיים ומדוד. שטר שזוכה בנתח הסולם ונסחר חינם בספר שלנו. ההון הנאמן לרשת מקבל גוף נזיל בחזרה.</p></div></div>
         <div class="step"><div class="ph">4</div><div class="bd"><h4>מסדרון דו-כיווני</h4><p>ציטוטי יציאה על הספר במרווח גלוי, כך שהגשר שלנו מוכר נזילות בשני הכיוונים והמרווח נמדד לאוצר. הגשר הופך מצינור למכשיר.</p></div></div>
         <div class="step"><div class="ph">5</div><div class="bd"><h4>ניתוב תשואה ותשואה קבועה</h4><p>פיצול פנדל-לייט על גבי כספת-ההלוואות. רק אצלנו זה כדאי בגדלים קטנים, בגלל אפס העמלות. יתרון מבני מדוד שאף רשת ציבורית לא יכולה לחקות.</p></div></div>
@@ -356,7 +363,42 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
     foot.textContent="גובה שרשרת: "+(st.height||"?")+" · פורסם: "+String(w.publishedAt||"?").replace("T"," ").slice(0,16)+"Z";
     host.appendChild(foot);
   }
-  jget("dex/world.json").then(drawAnchors).catch(function(){
+  function drawVault(w){
+    var host=document.getElementById("vaultLive");if(!host)return;
+    host.innerHTML="";
+    var st=w.state||{},V=st.vaults||{},T=st.vaultTot||{};
+    var ref=(st.assets&&st.assets.WSTEEM&&st.assets.WSTEEM.refPrice)||0;
+    var totCol=0,totDebt=0;
+    Object.keys(V).forEach(function(k){totCol+=V[k].colMu||0;totDebt+=(V[k].debtMu||0)+(V[k].intMu||0);});
+    var rate=500+Math.floor(Math.min(1,totDebt/500000)*1000);
+    var box=el("div","anlist");
+    var row=el("div","anrow");
+    var head=el("div","anhead");
+    var openN=Object.keys(V).length;
+    head.appendChild(el("span","nm",openN?("כספת-ההלוואות · "+openN+" עמדה"+(openN>1?"ות":"")+" פתוחות"):"כספת-ההלוואות · אין עמדות פתוחות כרגע"));
+    var nums=el("span","annums mono");
+    nums.textContent="ריבית חיה "+(rate/100).toFixed(2)+"%/שנה · נפתחו "+(T.opened||0)+" · נפרעו "+(T.repaid||0)+" · ריבית מומשה "+(T.interestMu||0)+"µ · מפורקות "+(T.liquidations||0)+" · הפסדי-גיבוי "+(T.backstopLossMu||0)+"µ";
+    head.appendChild(nums);row.appendChild(head);
+    if(ref>0&&totCol>0){
+      var p1=el("p");
+      p1.style.cssText="font-size:12.5px;color:var(--mut);margin:6px 0 0";
+      p1.textContent="בטחונות נעולים: "+(totCol/1000).toFixed(1)+" WSTEEM ($"+((totCol*ref/1000)/1000).toFixed(2)+") · חוב בתוקף: "+totDebt.toLocaleString("en-US")+"µ USDS ($"+(totDebt/1000).toFixed(2)+")";
+      row.appendChild(p1);
+    }
+    Object.keys(V).forEach(function(k){
+      var v=V[k],colVal=Math.floor((v.colMu*ref)/1000),base=(v.debtMu||0)+(v.intMu||0);
+      var cr=base>0?Math.floor((colVal*100)/base):0;
+      var p=el("p","mono");
+      p.style.cssText="font-size:12px;color:var(--tx);margin:4px 0 0;direction:ltr;text-align:right";
+      p.textContent=k+" · col "+(v.colMu/1000).toFixed(1)+" WSTEEM · debt "+base+"µ · CR "+cr+"%";
+      row.appendChild(p);
+    });
+    box.appendChild(row);host.appendChild(box);
+    var foot=el("p","src");
+    foot.textContent="ספר-שרשרת: h"+(st.height||"?")+" · היצע-כספת חי: "+(((T.issuedMu||0)-(T.burnedMu||0)))+"µ USDS (מוצהר-בביקורת, issued−burned)";
+    host.appendChild(foot);
+  }
+  jget("dex/world.json").then(function(w){drawAnchors(w);drawVault(w);}).catch(function(){
     var host=document.getElementById("anchors");
     if(host)host.innerHTML='<p class="src">קריאת ספר-השרשרת הציבורי נכשלה כרגע. העוגנים ממשיכים להחליק בכל פעימה; נסה שוב בעוד רגע.</p>';
   });
