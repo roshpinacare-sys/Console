@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · הפעלה ריבונית - האם הרשת בונה על עצמה</title>
+<meta name="description" content="התשובה הכנה לשאלה אם הרשת בונה על עצמנו להפעלה מלאה בלי תלות במשתמשים: פסק דין כפול מוכח במדידה חיה, נתיבי הכסף של הרשתות המובילות מול המקבילות שלנו, הערוץ החיצוני שאומת, דרכי מימוש, והאמת על החוזים החכמים שלנו.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--gold-dim:#8a7423;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px;width:100%}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+header.nhead{border-bottom:1px solid var(--border);padding:18px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
+.nhead .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nhead h1{font-size:18px;font-weight:700}
+.nhead .sub{font-size:12px;color:var(--mut)}
+.badge{font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.links{margin-inline-start:auto;display:flex;gap:14px;font-size:13px}
+main{flex:1;padding:30px 0 56px}
+.lede{font-size:14.5px;color:var(--mut);line-height:1.75;margin-bottom:26px;max-width:860px}
+.lede b{color:var(--tx)}
+.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.pcard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
+.pcard .v{font-size:22px;font-weight:800;color:var(--gold);font-family:var(--mono);direction:ltr}
+.pcard .l{font-size:11.5px;color:var(--mut);margin-top:2px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.card h2{font-size:15px;margin-bottom:14px;color:var(--gold);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
+.card p{font-size:13.5px;color:var(--mut);line-height:1.75;margin-bottom:10px}
+.card p b{color:var(--tx)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--dim);font-weight:400;font-size:11.5px;text-align:right;padding:6px 8px;border-bottom:1px solid var(--border2)}
+td{padding:8px;border-bottom:1px dashed var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{font-family:var(--mono);direction:ltr;unicode-bidi:embed;white-space:nowrap}
+.tag{font-size:10.5px;font-family:var(--mono);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;color:var(--mut);white-space:nowrap}
+.tag.g{border-color:#2d5a3d;color:var(--green)}
+.tag.y{border-color:#5a512d;color:var(--yellow)}
+.tag.r{border-color:#5a2d2d;color:var(--red)}
+.tag.p{border-color:#4a3f6e;color:var(--purple)}
+footer{border-top:1px solid var(--border);padding:18px 0;margin-top:auto}
+footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--dim);border-right:3px solid var(--gold-dim);padding-right:12px;margin-top:14px;line-height:1.7}
+.src{font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.8}
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.vcard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+.vcard h3{font-size:15px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.vcard ul{list-style:none}
+.vcard li{font-size:13px;color:var(--mut);line-height:1.7;padding:7px 0;border-bottom:1px dashed var(--border)}
+.vcard li:last-child{border-bottom:none}
+.vcard li b{color:var(--tx)}
+.vcard li .num{font-size:12.5px;color:var(--gold)}
+.vcard.yes{border-color:#2d5a3d}
+.vcard.yes h3{color:var(--green)}
+.vcard.no{border-color:#5a2d2d}
+.vcard.no h3{color:var(--red)}
+.inflist{display:flex;flex-direction:column;gap:12px}
+.inf{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:44px 1fr;gap:14px}
+.inf .n{font-family:var(--mono);font-weight:800;color:var(--purple);font-size:16px;border:1px solid #4a3f6e;border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:44px}
+.inf h4{font-size:14px;margin-bottom:4px}
+.inf p{font-size:13px;color:var(--mut);margin:0;line-height:1.65}
+.inf p b{color:var(--tx)}
+.inf p .num{color:var(--gold);font-size:12.5px}
+.rlist{display:flex;flex-direction:column;gap:14px}
+.rstep{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.rstep .ph{font-family:var(--mono);font-size:14px;font-weight:800;color:var(--purple);border:1px solid #4a3f6e;border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:44px;direction:ltr}
+.rstep h4{font-size:14px;margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rstep p{font-size:13px;color:var(--mut);margin:0 0 4px;line-height:1.65}
+.rstep p b{color:var(--tx)}
+.rstep p .num{color:var(--gold);font-size:12.5px}
+.rstep .first{font-size:12.5px;color:var(--gold);border-right:3px solid var(--gold-dim);padding-right:10px;margin-top:6px;line-height:1.6}
+.bigfind{background:linear-gradient(135deg,#18181b 0%,#1a1710 100%);border:1px solid var(--gold-dim);border-radius:14px;padding:22px;margin-bottom:20px}
+.bigfind h2{font-size:16px;color:var(--gold);margin-bottom:12px}
+.bigfind p{font-size:13.5px;color:var(--mut);line-height:1.75;margin-bottom:10px}
+.bigfind p b{color:var(--tx)}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:14px 0}
+.kv .box{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.kv .box .k{font-size:11px;color:var(--dim)}
+.kv .box .v{font-family:var(--mono);font-size:15px;color:var(--gold);direction:ltr;text-align:right}
+.kv .box .v.g{color:var(--green)}
+.kv .box .v.r{color:var(--red)}
+.duolist{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.duo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px}
+.duo h4{font-size:13.5px;margin-bottom:8px;color:var(--green)}
+.duo.bad h4{color:var(--red)}
+.duo ul{list-style:none}
+.duo li{font-size:12.5px;color:var(--mut);line-height:1.65;padding:5px 0;border-bottom:1px dashed var(--border)}
+.duo li:last-child{border-bottom:none}
+.duo li b{color:var(--tx)}
+@media(max-width:640px){.card{padding:16px 14px}.inf{grid-template-columns:38px 1fr}.rstep{grid-template-columns:44px 1fr}}
+</style>
+</head>
+<body>
+<header class="nhead">
+  <div class="wrap">
+    <h1>הפעלה ריבונית</h1>
+    <span class="badge">Sovereign Operation · פסק-דין נמדד</span>
+    <span class="sub">האם הרשת בונה על עצמה להפעלה מלאה בלי תלות במשתמשים</span>
+    <nav class="links">
+      <a href="index.html">הקונסולה</a>
+      <a href="money.html">נתיב הכסף</a>
+      <a href="roast.html">הרוסט</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+
+    <p class="lede">
+      השאלה נשאלה בדיוק: <b>האם אנחנו בונים על עצמנו להפעלה מלאה, בלי תלות במשתמשים?</b>
+      התשובה הכנה מפוצלת והעמוד הזה לא מייפה אותה: <b>הביצוע אוטונומי לחלוטין</b> ומוכח בגובה שרשרת חי;
+      <b>הכלכלה עדיין לא מזינה את עצמה</b>, וההוכחה היא המסילה שטחנה את מלאיה ונעצרה בכנות.
+      מה שכן אומת ביום הזה: קיים ערוץ הכנסה חיצוני אחד שלא תלוי במשתמשים שלנו, הוא נמדד חי מול ספר-STEEM האמיתי,
+      והוא ממתין למפתח אחד של מפעיל. כל מספר כאן או נקרא חי מהמראות הציבוריים בזמן הפתיחה, או מתויג בשעת מדידתו.
+    </p>
+
+    <div class="pulse" id="pulse">
+      <div class="pcard"><div class="v" id="pv-h">h18073</div><div class="l">גובה שרשרת חי</div></div>
+      <div class="pcard"><div class="v" id="pv-fills">11,607</div><div class="l">מילויים · אפס משתמשי חוץ</div></div>
+      <div class="pcard"><div class="v" id="pv-tp">$209.78</div><div class="l">רווח אוצר מצטבר</div></div>
+      <div class="pcard"><div class="v" id="pv-rail">300,000µ</div><div class="l">נטחן במסילה לכל החיים</div></div>
+      <div class="pcard"><div class="v" id="pv-ops">269,623</div><div class="l">פעולות מנוע מאז ההתחלה</div></div>
+      <div class="pcard"><div class="v" id="pv-dep">0</div><div class="l">הפקדות חיצוניות · 4 רשתות נצפות</div></div>
+    </div>
+
+    <section class="card" aria-labelledby="vd">
+      <h2 id="vd">פסק-הדין הכפול <span class="en">The dual verdict</span></h2>
+      <div class="verdict">
+        <div class="vcard yes">
+          <h3>אנרגיה: הביצוע ריבוני לחלוטין <span class="tag g">מוכח</span></h3>
+          <ul>
+            <li>דופק עצמאי: המנוע רץ ב-Actions של GitHub כל כ-2 שעות, 480 טיקים לריצה, <b>אפס שרתים בבעלותנו</b>, אפס תלות באף משתמש.</li>
+            <li><span class="num" data-live="ops">269,623</span> פעולות, <span class="num" data-live="fills">11,607</span> מילויים ו-<span class="num" data-live="swaps">7,120</span> החלפות מאז ההתחלה - <b>בלי אף משתמש חיצוני אחד</b>.</li>
+            <li>ביקורת-ברזל בכל חותם: היצע ה-USDS חייב להתיישב אל מול מקורותיו המוצהרים, או שהשרשרת עוצרת.</li>
+            <li>שורש-מצב לכל פעימה ואישורי מרקל של 12 עלים לכל חותם: כל מעבר מצב ציבורי וניתן לריפליי.</li>
+            <li>מאמת עצמאי בן 49 בדיקות מודד את האתר הציבורי הזה בלוח-זמנים קבוע, והתוצאה מתפרסמת במקום גלוי.</li>
+          </ul>
+        </div>
+        <div class="vcard no">
+          <h3>כלכלה: עדיין לא מזינה את עצמה <span class="tag r">פער גלוי</span></h3>
+          <ul>
+            <li>המסילה טחנה <span class="num" data-live="rail">300,000µ</span> WSTEEM לכל אורך ההיסטוריה ואז נעצרה בכנות: המלאי נגמר, שארית של 420µ מתחת לרף הרעש. <b>הוכחה אמפירית, לא תיאוריה.</b></li>
+            <li>רווח האוצר המצטבר: <span class="num" data-live="tp">$209.78</span>. עמלות בריכות מצטברות <span class="num" data-live="poolfees">$254.06</span>. זה כל העוללה, והוא אמיתי.</li>
+            <li><span class="num" data-live="dep">0</span> הפקדות חיצוניות: השער חי ונסרק בארבע רשתות כל 20 דקות (BTC, ETH, SOL, TRON) - ואף אחד לא נכנס עדיין.</li>
+            <li>המסקנה המרה: לולאה פנימית סגורה צורכת את מלאיה של עצמה. בלי אנרגיה חיצונית הרווח שואף לאפס. <b>המנוע לא מת, הוא סיים את הדלק הפנימי.</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="inf">
+      <h2 id="inf">מה ניתן להסיק <span class="en">The inference chain</span></h2>
+      <div class="inflist">
+        <div class="inf"><div class="n">1</div><div>
+          <h4>אוטונומיית הביצוע מוכחת במלואה</h4>
+          <p>גובה חי <span class="num" data-live="h">h18073</span> עם אפס משתמשים, דופק עצמאי, ביקורת ומאמת פועלים. אין "מישהו שמריץ" את המערכת - הדופק עצמו הוא תשתית ציבורית.</p>
+        </div></div>
+        <div class="inf"><div class="n">2</div><div>
+          <h4>רווח פנימי אמיתי אבל אסימפטוטי</h4>
+          <p>המסילה הוכיחה בשרירים: טחינה עד גמר המלאי, עצירה כנה בשארית זעירה. זה לא כשל הנדסי, זו <b>הגדרת הבעיה</b>: בלי כניסת חוץ, הלולאה הפנימית היא מכל סגור.</p>
+        </div></div>
+        <div class="inf"><div class="n">3</div><div>
+          <h4>האילוץ הקושר אינו קוד</h4>
+          <p>כל המכשירים חיים או מקודדים וממתינים. מה שחסר הוא <b>אנרגיה חיצונית בכניסה</b>: הפקדות אמיתיות, או רכישת נכס אמיתי מתחת לערכו בשוק חוץ.</p>
+        </div></div>
+        <div class="inf"><div class="n">4</div><div>
+          <h4>קיים בדיוק ערוץ חיצוני אחד שלא תלוי במשתמשים שלנו, והוא אומת היום</h4>
+          <p>שוק-STEEM הפנימי מתמחר את ה-STEEM כ-<span class="num">20.7%</span> מתחת לקו-הזהות החיצוני (אמצע <span class="num">0.0980</span> מול זהות <span class="num">0.1236</span> SBD/STEEM, נמדד בשתי מדידות במרחק 11 שעות). המילוי האמיתי היחיד של הגריד תפס יתרון של <span class="num">+26.28%</span>. <b>הצד השני בעסקה הוא כל שוק STEEM, לא המשתמשים שלנו.</b></p>
+        </div></div>
+        <div class="inf"><div class="n">5</div><div>
+          <h4>ההכנסות הרדומות ממתינות לזרימה</h4>
+          <p>מתגי עמלות מקודדים (מסילה, גלישת wrap, בונוס פירוק), גז ליבה של 80/60/40/20µ לפעולה כבר נמדד במונה, מסילת-ההשקות סגורה-מעגלית עם נזילות בבעלות מלאה של האוצר.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="mp">
+      <h2 id="mp">נתיבי הכסף של הרשתות מול שלנו <span class="en">Networks money paths · מדידת 17/09</span></h2>
+      <p>איך הרשתות והפרוטוקולים המובילים באמת מרוויחים, ומה המקבילה שלנו לכל דגם. עמלות 30 יום נמדדות מ-DefiLlama בזמן הפתיחה; אם הקריאה נכשלת נשארת תמונת 17/09 המתויגת.</p>
+      <div class="tblwrap" style="overflow-x:auto">
+      <table aria-label="Networks money paths vs ours">
+        <thead><tr><th>יצרן הכסף</th><th>עמלות 30 יום</th><th>הדגם הכלכלי</th><th>המקבילה שלנו</th><th>מצב</th></tr></thead>
+        <tbody id="mp-body">
+          <tr><td>Tether</td><td class="num">$485.4M</td><td>ריבית על רזרבות של מטבע-יציב מונפק</td><td>USDS מגובה 1:1 אבל אפס תשואת רזרבה</td><td><span class="tag r">חסר בגלוי</span></td></tr>
+          <tr><td>Circle USDC</td><td class="num">$196.9M</td><td>ריבית רזרבות, אותו דגם</td><td>אין</td><td><span class="tag r">חסר בגלוי</span></td></tr>
+          <tr><td>Uniswap V4</td><td class="num">$125.4M</td><td>עמלות נזילות על נפח ($41.7B, כ-0.30% אפקטיבי)</td><td>עושה-השוק שלנו: $254.06 עמלות בריכה מצטברות</td><td><span class="tag y">חי בזעיר</span></td></tr>
+          <tr><td>PumpSwap</td><td class="num">$99.2M</td><td>עמלות נזילות על נפח</td><td>אותו עושה-שוק, אותה תקרה</td><td><span class="tag y">חי בזעיר</span></td></tr>
+          <tr><td>Polymarket (שתי ישויות)</td><td class="num">$73.5M</td><td>עמלות שוק נבואות</td><td>אין עדיין</td><td><span class="tag">עתידי</span></td></tr>
+          <tr><td>Lido</td><td class="num">$47.7M</td><td>פרש על סטייקינג</td><td>אין מקבילה, אין PoS בשרשרת הבסיס</td><td><span class="tag r">חסר בכנות</span></td></tr>
+          <tr><td>pump.fun</td><td class="num">$46.5M</td><td>עמלות השקות והגירה</td><td>מסילת-ההשקות מקודדת: נזילות 100% לאוצר, 60% מעמלות למעגל ההכנסה (40% שריפה, 40% קרן ve, 20% אוצר)</td><td><span class="tag p">מקודד, ממתין לאזרחים</span></td></tr>
+          <tr><td>Aave V3</td><td class="num">$34.4M</td><td>ריבית הלוואות מובטחות</td><td>כספת-ההלוואות: חיה, ריבית חיה 5.04% ותוספת ניצולת, 2,160µ USDS בתוקף</td><td><span class="tag y">חי בזעיר</span></td></tr>
+          <tr><td>Tron (הרשת)</td><td class="num">$24.5M</td><td>עמלת העברה על כל תנועת USDT</td><td>המסילה שלנו: אפס-עמלה במדיניות, המתג מקודד</td><td><span class="tag p">רדום במדיניות</span></td></tr>
+          <tr><td>Ethereum (הרשת)</td><td class="num">$12.6M</td><td>גז וטיפים</td><td>גז ליבה 80/60/40/20µ לפעולה, נמדד במונה חי</td><td><span class="tag y">חי בזעיר</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="src" id="mp-src">מקור: api.llama.fi/overview/fees · נמדד 17/09 · המרה שלנו מספר-השרשרת החי</p>
+    </section>
+
+    <section class="bigfind" aria-labelledby="bf">
+      <h2 id="bf">האמת החיצונית שאומתה: ה-STEEM הפנימי זול מהערך החיצוני</h2>
+      <p>
+        זהו ממצא הערך של היום, והוא נמדד משני צדדים בלתי-תלויים: ספר-STEEM החי מול ציוני-USD חיצוניים.
+        שוק ה-STEEM הפנימי סוגר עסקאות בסביבות <b>0.098 SBD ל-STEEM</b> בזמן שקו-הזהות החיצוני עומד על <b>0.1236</b>.
+        תרגום כנה: כל SBD שמוצא בשוק הפנימי קונה <b>כ-26% יותר STEEM</b> ממה שהוא היה קונה בערך חיצוני הוגן.
+        המילוי האמיתי היחיד של רץ-הגריד שלנו תפס בדיוק את זה: 0.049 SBD תמורת 0.500 STEEM, יתרון מדוד של <b>+26.28%</b>.
+      </p>
+      <div class="kv">
+        <div class="box"><div class="k">ספר חי · ביד / אסק (SBD ל-STEEM)</div><div class="v" id="bf-book">0.09740 / 0.09865</div></div>
+        <div class="box"><div class="k">קו-זהות חיצוני (STEEM $0.0550 · SBD $0.4446)</div><div class="v">0.12364</div></div>
+        <div class="box"><div class="k">היוון פנימי מתחת לערך החיצוני</div><div class="v r">-20.7%</div></div>
+        <div class="box"><div class="k">המילוי האמיתי היחיד · 13/09</div><div class="v g">+26.28%</div></div>
+        <div class="box"><div class="k">נפח 24 שעות בשוק-STEEM הפנימי</div><div class="v">55.5 SBD / 548.9 STEEM</div></div>
+        <div class="box"><div class="k">עומק 5 האסקים העליונים</div><div class="v">89,020 STEEM</div></div>
+      </div>
+      <p>
+        הדלק לערוץ הזה כבר זורם בכנות: powerdown אמיתי של <b>1,901 SP</b> משתחרר בתשלומים שבועיים של <b>$26.13</b>,
+        התשלום הבא 2026-09-19. החסם היחיד: <b>מפתח STEEM_ACTIVE_WIF חסר בסודות</b>, פעולת מפעיל אחת לחימוש.
+        התקרה בכנות: נפח השוק דק (כ-$25 ביום) והעומק מוגבל, אז בסדרי הגודל הנוכחיים מדובר באגורות ליום, לא במשכורת.
+        אבל זה <b>כסף אמיתי מזרימה של אחרים</b>, הוא גדל עם השוק ולא איתנו, וכל STEEM שנרכש מתחת לזהות הופך מיד לגיבוי-WSTEEM אמיתי 1:1
+        שמזין את הלולאה הפנימית. זה הגלגל שמחבר חוץ לפנים.
+      </p>
+      <p class="src" id="bf-src">ספר: api.steemit.com get_ticker + get_order_book · 17/09 15:27Z · ציונים ומצב-הגריד: dex/grid.json 04:11Z · המילוי והדלק: dex/grid.json חי</p>
+    </section>
+
+    <section class="card" aria-labelledby="rp">
+      <h2 id="rp">דרכי מימוש <span class="en">Realization paths, ranked</span></h2>
+      <div class="rlist">
+        <div class="rstep"><div class="ph">R1</div><div>
+          <h4>חימוש רץ-הגריד החיצוני <span class="tag r">חסום על מפתח אחד</span></h4>
+          <p>הערוץ החיצוני היחיד שלא תלוי במשתמשים שלנו. המדיניות כבר הוכחה (אף מכירה מתחת לערך חיצוני), המילוי כבר תפס <span class="num">+26.28%</span>, הדלק כבר זורם <span class="num">$26.13</span> לשבוע, הפאוורדאון אמיתי ומתועד בשרשרת.</p>
+          <p>תקרה כנה: מוגבלת בעומק הספר ובקצב הדלק. בקנה המידה הנוכחי זה עשרות דולרים לחודש, אבל כל רכישה מתחת לזהות היא גם רווח מדוד וגם גיבוי אמיתי שמעמיק את ההון הריבוני.</p>
+          <p class="first">הצעד הראשון: המפעיל מזרים את STEEM_ACTIVE_WIF לסודות. משם הרץ עושה הכל לבד: רכישה מתחת לזהות, גיבוי 1:1, מדידה פומבית של כל מילוי.</p>
+        </div></div>
+        <div class="rstep"><div class="ph">R2</div><div>
+          <h4>פתיחת השער להפקדות חוץ <span class="tag g">התשתית חיה</span></h4>
+          <p>ערוץ הצמיחה הראשי: הפקדת BTC, ETH, SOL או TRON וקבלת קרדיט USDS מגובה. השער חי ונסרק כל 20 דקות בארבע רשתות, הכתובות פומביות, התביעה בחתימת STEEM, האימות חסר-מפתח מצידנו.</p>
+          <p>כל הפקדה היא שלוש אנרגיות באחת: בטחונות לכספת, עומק לעושה-השוק, ומלאי למסילה. עד כה <span class="num">0</span> הפקדות - זו האמת, וזה גם הפוטנציאל הבלתי-ממומש הגדול.</p>
+          <p class="first">הצעד הראשון: פרסום השער בפני קהילות שמחפשות בדיוק את מה שיש לנו: העברות זעירות ללא עמלה, ללא MEV, גיבוי 1:1, ניטור חסר-מפתח.</p>
+        </div></div>
+        <div class="rstep"><div class="ph">R3</div><div>
+          <h4>מסילת-ההשקות <span class="tag p">מקודד, ממתין לאזרחים</span></h4>
+          <p>הדגם שמדפיס בסבב הזה: pump.fun לבדו גבה <span class="num">$46.5M</span> ב-30 יום, Pons <span class="num">$122.8M</span>. אצלנו המסילה מקודדת וסגורה-מעגלית: כל השקה מסיימת בבריכת-AMM שהנזילות שלה 100% בבעלות האוצר, לתמיד.</p>
+          <p>זה נתיב הכסף היחיד שבו "משתמשים" הם דווקא נכס: כל אזרח שמשיק מזין את קופת הרשת ב-60% מהעמלות (40% שריפה, 40% קרן ve, 20% אוצר), והנזילות נשארת שלנו.</p>
+          <p class="first">הצעד הראשון: הדגמה פומבית של השקה אחת מקצה לקצה, מהעלייה ועד ההגירה לבריכה, עם קבלה פומבית.</p>
+        </div></div>
+        <div class="rstep"><div class="ph">R4</div><div>
+          <h4>ProtoRev: הבונה צד לבד <span class="tag g">מקודד</span></h4>
+          <p>כל סטיית מחיר פנימית בין הספר לבריכות נצודת בקנון על ידי הבונה עצמו, מול שולחן הארב שהוא האוצר. הרווח לא נגע לעמלות בריכה: 40% נשרף, 40% לקרן ve, 20% לאוצר.</p>
+          <p>זו הגרסה שלנו למנגנון של Osmosis, והיא מרוויחה מכל שיבוש פנימי בלי שום תלות בגורם חוץ. היא נדלקת מעצמה כשנולדות סטיות, ובכל פעם שהשקה מוגרת לבריכה חדשה נולדות הזדמנויות ציד חדשות.</p>
+        </div></div>
+        <div class="rstep"><div class="ph">R5</div><div>
+          <h4>מתגי העמלות הרדומים <span class="tag y">מקודדים, ממתינים</span></h4>
+          <p>המסילה יכולה לגבות בסיסי-נקודות על מנות-פרימיום, גלישת ה-wrap יכולה לגבות עמלת כניסה קטנה, ובונוס הפירוק כבר מתומחר. אלה מדיניות, לא הנדסה: הידיים על המתג מחכות שהזרימה תצדיק אותן.</p>
+          <p>העיקרון שנשמר: אצלנו העמלות נשארות אפס לזעיר-מסחר כל עוד אין זרימה, כי עמלה על ספר ריק היא מס על אוויר. המתגים ייהפכו כשיהיה מה למסות.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="sc">
+      <h2 id="sc">חוזים חכמים, האמת שלנו <span class="en">Smart contracts, honestly</span></h2>
+      <p>
+        בשרשרת הבסיס אין מכונת-EVM, ואנחנו לא מתחפשים שיש. מה שיש לנו הוא קנון של <b>35 מנועים דטרמיניסטיים</b>
+        (כספת, שער-גלישה, מסילה, עושה-שוק, השקות, ציד-ארב, גדרות, אמת) שרצים כולם על אותם חוקים:
+        אפס נקודה-צפה, אפס אקראיות, אפס שעון בליבה. כל בלוק ניתן לריפליי זהה. זה "חוזה" במובן החלש יותר של המילה,
+        והעמוד הזה מעדיף להגיד את זה במפורש מאשר להתחפש ל-Solidity.
+      </p>
+      <div class="duolist">
+        <div class="duo">
+          <h4>מה זה כן קונה לנו</h4>
+          <ul>
+            <li><b>שקיפות מלאה:</b> כל מעבר מצב מתפרסם, כל שורש-מצב נבדק, כל חותם נושא אישור מרקל.</li>
+            <li><b>חשבונאות ברזל:</b> בכל חותם ההיצע חייב להתיישב מול המקורות המוצהרים, כולל הטבעות כספת נגד שריפות. סטייה עוצרת את השרשרת.</li>
+            <li><b>ליביות בלי שרתים:</b> הדופק הוא Actions ציבוריים; אין מכונה בודדת שמתה הורסת את הרשת.</li>
+            <li><b>ביקורת חיה:</b> מאמת 49 בדיקות רץ מול האתר הציבורי בתור צד שלישי, בלוח-זמנים, ותוצאותיו נשמרות במקום ציבורי.</li>
+          </ul>
+        </div>
+        <div class="duo bad">
+          <h4>מה חסר לנו מול EVM</h4>
+          <ul>
+            <li><b>ביצוע חסר-אמון:</b> המפעיל יכול לשנות קוד. זה פער ממשל אמיתי, והמענה החלקי שלנו הוא מאמת-הצד-השלישי שמפרסם כל סטייה בגלוי.</li>
+            <li><b>התנגדות צנזורה:</b> אין. הרשת חיה בתוך תשתית שמישהו מפעיל, וזו עובדה שלא מוסתרת.</li>
+            <li><b>הרכבה חיצונית:</b> אין קריאות בין-חוזים משכנים זרים; ההרכבה שלנו פנימית לקנון ולרשת-STEEM.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="src">מצב חי: שורש-מצב נוכחי <span class="mono" id="sc-root">0e2f66cb</span> · חותם אחרון 18061 עד 18072 · 12 עלים · קרא מ-dex/world.json בזמן פתיחה</p>
+    </section>
+
+    <section class="card" aria-labelledby="ft">
+      <h2 id="ft">לוח הפיצ'רים המתקדמים <span class="en">Advanced features board</span></h2>
+      <div style="overflow-x:auto">
+      <table aria-label="Advanced features status">
+        <thead><tr><th>פיצ'ר</th><th>מה הוא</th><th>מצב</th></tr></thead>
+        <tbody>
+          <tr><td>החלקת עוגן חיה</td><td>המסילה מחליקה את הפרימיום הפנימית מול הציון בכל פעימה</td><td><span class="tag y">חי · 77,592bps נותרו</span></td></tr>
+          <tr><td>רץ-הגריד החיצוני</td><td>רכישת STEEM מתחת לקו-זהות בשוק האמיתי, גיבוי 1:1</td><td><span class="tag r">מוכח, מושבת בלי מפתח</span></td></tr>
+          <tr><td>כספת-ההלוואות</td><td>CDP מלא על בטחונות WSTEEM, ריבית חיה, פירוק וגיבוי</td><td><span class="tag g">חי · עמדה אחת פתוחה</span></td></tr>
+          <tr><td>מסילת-ההשקות</td><td>עקומת השקה עם הגירה אוטומטית לבריכה, נזילות 100% לאוצר</td><td><span class="tag p">מקודד</span></td></tr>
+          <tr><td>ProtoRev</td><td>ציד סטיות פנימי בקנון, הרווח למעגל ההכנסה</td><td><span class="tag p">מקודד</span></td></tr>
+          <tr><td>מתגי עמלות</td><td>מסילה, גלישה, בונוס פירוק</td><td><span class="tag y">מקודדים, רדומים במדיניות</span></td></tr>
+          <tr><td>עיגון אבני-דרך</td><td>עגינת סיכומי P&amp;L על שרשרת חוץ</td><td><span class="tag">כבוי במדיניות</span></td></tr>
+          <tr><td>עמוד ריפליי</td><td>אימות ציבורי של שורשי-מצה היסטוריים מול הקלטת</td><td><span class="tag">מתוכנן</span></td></tr>
+          <tr><td>תשואת רזרבה</td><td>הדגם של Tether: רזרבת הגיבוי מרוויחה בעצמה (למשל SP עם פרש אינפלציה, במחיר נזילות 13 שבועות)</td><td><span class="tag">אפשרות עתידית, לא מחויב</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">עמוד הריפליי הוא הצעד הבא הטבעי של האמון: מי שיכול להריץ את הקלטת בבית לא צריך להאמין לאף אחד.</p>
+    </section>
+
+    <section class="card" aria-labelledby="bl">
+      <h2 id="bl">השורה התחתונה <span class="en">Bottom line</span></h2>
+      <p>
+        <b>בונים על עצמנו?</b> כן בביצוע, עדיין לא בהזנה. המנוע מוכיח מדי יום שהוא יודע לרוץ לבד, להרוויח לבד,
+        להפסיק בכנות כשנגמר הדלק, ולדווח על הכל בגלוי. מה שהוא לא יכול לבד זה להמציא אנרגיה מאין.
+      </p>
+      <p>
+        <b>הפוטנציאל:</b> לא בהבטחות אלא במדידות - מילוי חוץ אחד של <span class="num">+26.28%</span> מוכיח שהיד יודעת לקנות מתחת לערך;
+        רווח אוצר של <span class="num">$209.78</span> מוכיח שהלולאה הפנימית סוגרת בפלוס; הפסקת המסילה מוכיחה שאנחנו לא מדפיסים דמי-עצמאות מדומים.
+        הבסיס אמיתי, הסדר גודל עוד זעיר, והצמיחה תבוא משני שערים: מפתח אחד שמחמש את הגריד, וזרימת חוץ אחת שנכנסת בשער.
+      </p>
+      <p>
+        <b>והאמת הבלתי-נוחה נשארת למעלה:</b> אפס משתמשים, אפס הפקדות, וכל הממלכה עומדת על $209.78.
+        שום דבר בעמוד הזה לא מובטח, וזו בדיוק הסיבה שכל מספר בו נמדד.
+      </p>
+    </section>
+
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>SAOS Network · עמוד הפעלה ריבונית · אין טענה בלי מדידה</span>
+    <span>מקורות: dex/world.json · dex/watch.json · dex/grid.json · api.steemit.com · api.llama.fi · נקראו בזמן הפתיחה</span>
+  </div>
+</footer>
+<script>
+(function(){
+  "use strict";
+  function jget(u){return fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();});}
+  function set(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  function nfmt(x){return x.toLocaleString("en-US");}
+  function mu2usd(mu){return "$"+(mu/1000).toFixed(2);}
+
+  /* live injection from the public chain mirror */
+  jget("dex/world.json").then(function(w){
+    var st=w.state||{};
+    var rl=(st.rail&&st.rail.lifetime)||{};
+    var inc=st.income||{};
+    set("pv-h","h"+(st.height||"?"));
+    set("pv-fills",nfmt(Number(st.fills||0)));
+    set("pv-tp",mu2usd(Number(st.treasuryProfit||0)));
+    set("pv-rail",nfmt(Number(rl.wsteem||0))+"\u00B5");
+    set("pv-ops",nfmt(Number(st.opsTotal||0)));
+    set("pv-dep","0");
+    var live={"h":"h"+(st.height||"?"),fills:nfmt(Number(st.fills||0)),swaps:nfmt(Number(st.swaps||0)),
+      tp:mu2usd(Number(st.treasuryProfit||0)),rail:nfmt(Number(rl.wsteem||0))+"\u00B5 WSTEEM",
+      poolfees:mu2usd(Number(inc.poolFeesMu||0))};
+    ["h","fills","swaps","tp","rail","poolfees"].forEach(function(k){
+      var els=document.querySelectorAll('[data-live="'+k+'"]');
+      for(var i=0;i<els.length;i++)els[i].textContent=live[k];
+    });
+    set("sc-root",String(st.stateRoot||"").slice(0,8));
+  }).catch(function(){});
+
+  /* watch: external deposits truth */
+  jget("dex/watch.json").then(function(w){
+    set("pv-dep",String(w.depositsTotal!=null?w.depositsTotal:0));
+    var els=document.querySelectorAll('[data-live="dep"]');
+    for(var i=0;i<els.length;i++)els[i].textContent=String(w.depositsTotal!=null?w.depositsTotal:0);
+  }).catch(function(){});
+
+  /* grid: live marks, book, fuel */
+  jget("dex/grid.json").then(function(g){
+    var b=g.book||{},m=g.marks||{},f=g.fuel||{};
+    if(b.bestBid&&b.bestAsk){
+      set("bf-book",Number(b.bestBid).toFixed(5)+" / "+Number(b.bestAsk).toFixed(5));
+    }
+    var fl=(g.fills||[]).slice(-3).reverse();
+    var run=g.run||{};
+    var src=document.getElementById("bf-src");
+    if(src&&g.publishedAt){
+      src.textContent="ספר: api.steemit.com · 17/09 15:27Z · ציונים, ספר-גריד, דלק ומצב-חימוש: dex/grid.json חי ("+String(g.publishedAt).slice(0,16).replace("T"," ")+"Z · "+(g.armed?"חמוש":"לא חמוש: "+(g.verdict||"?"))+")";
+    }
+  }).catch(function(){});
+
+  /* steem live book attempt: replace the tagged snapshot if the RPC answers */
+  fetch("https://api.steemit.com",{
+    method:"POST",
+    headers:{"Content-Type":"text/plain"},
+    body:JSON.stringify({jsonrpc:"2.0",method:"condenser_api.get_ticker",params:[],id:1})
+  }).then(function(r){return r.json();}).then(function(d){
+    var t=d&&d.result;if(!t)return;
+    var bid=Number(t.highest_bid),ask=Number(t.lowest_ask);
+    if(bid>0&&ask>0)set("bf-book",bid.toFixed(5)+" / "+ask.toFixed(5));
+    var src=document.getElementById("bf-src");
+    if(src)src.textContent="ספר: api.steemit.com get_ticker · נקרא חי מהדפדפן בעת הפתיחה · ציונים ודלק: dex/grid.json חי · עומק ונפח: תמונת 17/09 15:27Z";
+  }).catch(function(){});
+
+  /* networks fees: live refresh of the 30d column when DefiLlama answers */
+  jget("https://api.llama.fi/overview/fees?excludeChain=None").then(function(d){
+    var by={};
+    (d.protocols||[]).forEach(function(p){by[p.name]=p.total30d||0;});
+    var pm={"Tether":"$485.4M","Circle USDC":"$196.9M","Uniswap V4":"$125.4M","PumpSwap":"$99.2M",
+      "Lido":"$47.7M","pump.fun":"$46.5M","Aave V3":"$34.4M"};
+    var rows=document.querySelectorAll("#mp-body tr");
+    for(var i=0;i<rows.length;i++){
+      var tds=rows[i].querySelectorAll("td");
+      if(!tds.length)continue;
+      var nm=tds[0].textContent.replace(" (שתי ישויות)","").trim();
+      var found=null;
+      if(nm==="Polymarket (שתי ישויות)"){
+        var a=(by["Polymarket US"]||0)+(by["Polymarket International"]||0);
+        if(a>0)found=a;
+      }else if(by[nm]>0){found=by[nm];}
+      if(found&&tds[1])tds[1].textContent="$"+(found/1e6).toFixed(1)+"M";
+    }
+    var src=document.getElementById("mp-src");
+    if(src)src.textContent="מקור: api.llama.fi/overview/fees · נקרא חי מהדפדפן בעת הפתיחה · המרת שלנו מספר-השרשרת החי";
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
