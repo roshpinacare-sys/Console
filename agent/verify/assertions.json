@@ -70,11 +70,13 @@
     {
       "id": "A07",
       "desc": {
-        "en": "The retired wallet page stays retired (HTTP 4xx/5xx, content gone)",
-        "he": "דף הארנק המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
+        "en": "R29 doctrine update: the sovereign wallet page is live and carries its crypto core (saos1 addresses) - the old retirement guard is superseded by A40 page sweep plus this content check",
+        "he": "עדכון דוקטרינה R29: דף הארנק הריבוני חי ונושא את ליבת הקריפטו שלו (כתובות saos1) - משמרת ההוצאה לגמלאות הישנה הוחלפה על ידי סריקת העמודים A40 ובדיקת תוכן זו"
       },
-      "kind": "http_gone",
-      "target": "wallet.html"
+      "kind": "contains_min",
+      "target": "wallet.html",
+      "value": "saos1",
+      "min": 5
     },
     {
       "id": "A08",
@@ -228,12 +230,13 @@
     {
       "id": "A22",
       "desc": {
-        "en": "No link to the retired wallet page remains anywhere in the home page",
-        "he": "שום קישור לדף הארנק המבוטל לא נשאר בדף הבית"
+        "en": "R29 doctrine update: the home page wires the sovereign wallet in both navigation points (pathlink card and footer tools)",
+        "he": "עדכון דוקטרינה R29: דף הבית מחבר את הארנק הריבוני בשתי נקודות הניווט (כרטיס וקישור בכותרת התחתונה)"
       },
-      "kind": "regex_absent",
+      "kind": "contains_min",
       "target": "",
-      "regex": "wallet\\.html"
+      "value": "wallet.html",
+      "min": 2
     },
     {
       "id": "A23",
@@ -513,6 +516,10 @@
         {
           "path": "pitch/index.html",
           "minBytes": 4000
+        },
+        {
+          "path": "wallet.html",
+          "minBytes": 100000
         }
       ]
     },
