@@ -169,7 +169,7 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
           <tr><td><b>PancakeSwap</b></td><td class="num">$21.4B</td><td>AMM + lottery</td><td>מיקור נזילות חיצוני, פיזור תמריצים</td></tr>
           <tr><td><b>PumpSwap</b></td><td class="num">$19.3B</td><td>curves + fees</td><td>ספקולציה טהורה, אפס ערבות</td></tr>
           <tr><td><b>Aerodrome</b></td><td class="num">$13.9B</td><td>ve(3,3)</td><td>מלחמות-קולות, הון נעול, סבוכת</td></tr>
-          <tr><td><b>SAOS, אנחנו</b></td><td class="num">$0.25 (עמלות)</td><td>ספר+AMM+רכבת</td><td>אפס משתמשים חיצוניים, נזילות זעירה, מחיר חד-צדדי בזוג המשני</td></tr>
+          <tr><td><b>SAOS, אנחנו</b></td><td class="num">$0.25 (עמלות)</td><td>ספר+AMM+רכבת</td><td>אפס משתמשים חיצוניים, נזילות זעירה, פרמיה בזוג המשני שהמסילה מיטחנת במלאי סופי</td></tr>
         </tbody>
       </table>
       <p style="margin-top:14px">ועכשיו האמת הכפולה: הפער בנפח הוא <b>פער של חמישה סדרי גודל</b>, ואף אחד לא יסגור אותו בלילה. אבל היתרונות המבניים שלנו אמיתיים ונמדדים: נזילות בבעלות פרוטוקולית מלאה <span class="mono">100%</span> מול אפס אצל מתחרים, עמלה שנכנסת ישר לאוצר <span class="mono">34bps</span>, אפס MEV בסדר דטרמיניסטי, ניטור הפקדות חסר-מפתח לחלוטין, ושקיפות מקורית: כל מצב הרשת נשפט מקובץ ציבורי אחד. הבעיה האמיתית אינה הטכנולוגיה אלא הפריון: עד שלא יהיה משתמש חוץ-רשתי ראשון, כל זה מכונה שטוחנת אוויר.</p>
@@ -181,11 +181,11 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
       <table aria-label="מה נשאר פתוח">
         <thead><tr><th>#</th><th>הפער</th><th>המדידה שתוכיח סגירה</th></tr></thead>
         <tbody>
-          <tr><td class="num">1</td><td>מחיר חד-צדדי בזוג USDS/WSTEEM: מוצע קנייה 320 מול עוגן 55, אפס מוכרים</td><td>מוצע מכירה חיה בטווח 10% מהעוגן, במדידה רציפה</td></tr>
+          <tr><td class="num">1</td><td>פרמיה בזוג USDS/WSTEEM: החד-צדדיות נרפאה (SETTLE-17, 2026-09-17) אך הספר עדיין מעל העוגן החיצוני, ומלאי הטחינה סופי</td><td>מרכז הספר בטווח 10% מהעוגן, במדידה רציפה</td></tr>
           <tr><td class="num">2</td><td>מפתחות אורקל ישנים: HIVE קפוא ב-h9913 ו-WBLURT ב-h1, לא נכסי מסחר</td><td>סימון legacy מפורש או הסרה מקובץ העולם</td></tr>
           <tr><td class="num">3</td><td>אפס הפקדות חיצוניות על 4 שרשראות נצפות</td><td>הפקדה ראשונה בספר הפתוח, עם זיהוי עסקה</td></tr>
           <tr><td class="num">4</td><td>אוצר: $0.21 רווח מצטבר, סכום זעיר</td><td>צמיחה מונוטונית מעל $1, נמדדת בגלאי ייעודי</td></tr>
-          <tr><td class="num">5</td><td>רכבת: הון $17.98, אפס מינונים ששולמו</td><td>מינון ראשון שנפרע, ביומן הציבורי</td></tr>
+          <tr><td class="num">5</td><td>רכבת: הון $17.98, המינונים הראשונים נפרעו (SETTLE-18) אך מלאי הטחינה סופי ויתמצה</td><td>מינונים מצטברים גדלים ביומן הציבורי, או מקור מלאי חוץ ראשון</td></tr>
           <tr><td class="num">6</td><td>grid חוץ-רשתי מפורק-נשק בלי סוד מפעיל</td><td>החלטת מפעיל מתועדת, או חימוש עם גבולות</td></tr>
           <tr><td class="num">7</td><td>milestone כבוי, P&L לא מעוגן אוטומטית</td><td>עיגון ראשון על שרשרת חוץ, בחתימה</td></tr>
         </tbody>
@@ -204,10 +204,10 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
 (function(){
 "use strict";
 var SNAP = {
-  measuredAt: "2026-09-17T09:15:00Z",
-  height: 14233, ops: 262555, fills: 10255, swaps: 7118, liveOrders: 14,
-  treasuryMu: 209785, poolFeesMu: 253636, railEquityMu: 17975080, railDoses: 0,
-  verdict: "ALL_PASS", passed: 36, total: 36,
+  measuredAt: "2026-09-17T13:53:00Z",
+  height: 16153, ops: 262555, fills: 10255, swaps: 7118, liveOrders: 14,
+  treasuryMu: 209785, poolFeesMu: 253636, railEquityMu: 17975080, railDoses: 2,
+  verdict: "ALL_PASS", passed: 44, total: 44,
   deposits: 0,
   oracle: {
     WTRX: {mu:335085, atH:13753}, WSOL: {mu:100072525, atH:13753},
@@ -217,7 +217,7 @@ var SNAP = {
   },
   market: { steem: 0.054788, hive: 0.050637, "steem-dollars": 0.444805, ethereum: 2444.01, solana: 100.47, tron: 0.334888, bitcoin: 76597 },
   saosFair: 1350, saosSpread: 29, saosTwapSamples: 96, saosPoolSwaps: 3338,
-  wsteemBid: 320, wsteemAnchor: 55, wsteemAskCount: 0, wsteemBackingMu: 683941
+  wsteemBid: 304, wsteemAsk: 306, wsteemAnchor: 54, wsteemAskCount: 3, wsteemBackingMu: 683941
 };
 var CG = "https://api.coingecko.com/api/v3/simple/price?ids=steem,hive,steem-dollars,ethereum,solana,tron,bitcoin&vs_currencies=usd";
 function jget(u){return fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();});}
@@ -243,6 +243,15 @@ function render(W,R,WD,CGD){
   var poolFees = s?(s.income?s.income.poolFeesMu:SNAP.poolFeesMu):SNAP.poolFeesMu;
   var rail = s?s.rail:null;
   var oracle = s?s.oracle:SNAP.oracle;
+  /* R29 · אמת-חיה: שוק ה-WSTEEM מהעולם-החי, לא מתמונת-מצב קפואה. בלי-זה
+     * העמוד הציג מחירי-עבר כאילו-היו-היום  -  בדיוק-הזיוף-שהעמוד-עצמו-נלחם-בו. */
+  var wm = (W&&W.markets)?W.markets.find(function(m){return m.base==="WSTEEM";}):null;
+  var wBid = wm&&wm.bestBid?wm.bestBid:SNAP.wsteemBid;
+  var wAsk = wm&&wm.bestAsk?wm.bestAsk:0;
+  var wAskN = wm&&wm.asks?wm.asks.reduce(function(a,x){return a+x.orders;},0):SNAP.wsteemAskCount;
+  var wAnchor = oracle&&oracle.WSTEEM?oracle.WSTEEM.mu:SNAP.wsteemAnchor;
+  var railDosesLive = rail?rail.doses:SNAP.railDoses;
+  var railPrem = rail&&rail.premiums?(rail.premiums.find(function(p){return p.id==="wsteem";})||{}).premBps:null;
   var verdict = R?R.summary.verdict:SNAP.verdict;
   var passed = R?R.summary.passed:SNAP.passed, total = R?R.summary.total:SNAP.total;
   var deposits = (WD&&WD.chains)?Object.values(WD.chains).reduce(function(a,c){return a+((c.deposits&&c.deposits.length)||0);},0):SNAP.deposits;
@@ -279,7 +288,10 @@ function render(W,R,WD,CGD){
   var saosSpread = SNAP.saosSpread, saosTwap = SNAP.saosTwapSamples, saosPool = SNAP.saosPoolSwaps, fair = SNAP.saosFair;
   rows += claimRow("y","גילוי מחירים פנימי אמיתי",
     "בזוג המרכזי SAOS/USDS: הוגן <span class='mono'>"+(fair/1e6).toFixed(6)+"</span> · ספרד <span class='mono'>"+saosSpread+"bps</span> · <span class='mono'>"+saosTwap+"</span> דגימות TWAP · <span class='mono'>"+int(saosPool)+"</span> החלפות בבריכה. אמת. "+
-    "אבל בזוג USDS/WSTEEM: מוצע קנייה <span class='mono'>"+SNAP.wsteemBid+"</span> מול עוגן <span class='mono'>"+SNAP.wsteemAnchor+"</span> ו<b>אפס מוכרים</b>, על צף של <span class='mono'>"+mu(SNAP.wsteemBackingMu)+"</span> בלבד. מחיר חד-צדדי על צף זעיר אינו גילוי מחיר, והעמוד הזה לא יתן לו להתחפש לכזה.");
+    "בזוג USDS/WSTEEM, אחרי-ריפוי SETTLE-17 (2026-09-17): הספר דו-צדדי  -  ביד <span class='mono'>"+wBid+"</span> מול אסק <span class='mono'>"+wAsk+"</span> (<span class='mono'>"+wAskN+"</span> הצעות מכירה חיות) סביב עוגן <span class='mono'>"+wAnchor+"</span>. "+
+    (wAskN>0
+      ? "הפרמיה מעל-העוגן עדיין גבוהה"+(railPrem!==null?" (<span class='mono'>"+int(Math.round(railPrem/100))+"%</span> קירוב, מיטחנת-במנות)":"")+", והמסילה הריבונית פרעה עד-כה <span class='mono'>"+railDosesLive+"</span> מינונים. גילוי-מחיר דו-צדדי אמיתי, בדרך אל העוגן  -  לא מושלם."
+      : "אפס מוכרים  -  מחיר חד-צדדי אינו גילוי מחיר, והעמוד הזה לא יתן לו להתחפש לכזה."));
 
   rows += claimRow("g","רשת שמאמתת את עצמה, כולל כישלונות",
     "פסק חי: <span class='mono'>"+verdict+" "+passed+"/"+total+"</span> גלאים. היום ב-07:57 שני גלאים נכשלו בכנות, שורש הבעיה תוקן עד 08:51, וגלאי A31 נולד. אמינות שנמדדת כולל את הדרך להתאוששות, לא רק את הפסגה.");
@@ -288,7 +300,10 @@ function render(W,R,WD,CGD){
     "ספר ההפקדות הפתוח: <span class='mono'>"+int(deposits)+"</span> הפקדות על 4 שרשראות נצפות. אין משתמש חוץ-רשתי אחד. כל נזילות המערכת פנימית-ריבונית. זו האמת, והיא הפרויקט האמיתי הבא.");
 
   rows += claimRow("y","הרכבת מממנת את המערכת",
-    "הון עצמי <span class='mono'>"+(rail?mu(rail.equityMu):mu(SNAP.railEquityMu))+"</span> · <span class='mono'>"+(rail?rail.doses:SNAP.railDoses)+"</span> מינונים שנפרעו. המנגנון בנוי וממומן, אך טרם שילם מינון ראשון. תשתית ללא תנועה עדיין.");
+    "הון עצמי <span class='mono'>"+(rail?mu(rail.equityMu):mu(SNAP.railEquityMu))+"</span> · <span class='mono'>"+railDosesLive+"</span> מינונים שנפרעו. "+
+    (railDosesLive>0
+      ? "המינונים הראשונים בתולדות-המסילה נפרעו ב-2026-09-17 (SETTLE-18: גשר-עטיפה מה-STEEM-הטבעי  -  המסילה הייתה רעבה-מבנית, מחסני-הבוטים התרוקנו וההזרמה נדחתה-לנצח). הטחינה מוגבלת-מלאי ותיעצר בכנות כשיתמצה."
+      : "המנגנון בנוי וממומן, אך טרם שילם מינון ראשון. תשתית ללא תנועה עדיין."));
 
   rows += claimRow("y","מסחר חוץ-רשתי על מחירי אמת",
     "מנוע ה-grid מפורק-נשק בכנות: בלי סוד מפעיל אין הצבת פקודות חיצוניות, והיומן מראה 0 הצבות. ההחלטה מתועדת ולא מוסתרת.");
