@@ -170,7 +170,19 @@ process.env.REGISTRY_CHANGED = changed ? "1" : "0";
 // גם תמונת-מצב (ריפואים + ריצות אחרונות) שהדפדפן קורא כשה-API נכשל -
 // בכנות מתויגת כתמונת-מצב עם גילה, לא כנתונים חיים.
 try {
-  const orgRepos = await api(`https://api.github.com/orgs/${OWNER}/repos?per_page=100`);
+  // אוסף ריפואים: ניסיון אחד ל-org, ואם הטוקן צר-היקף - נפילה כנה
+  // למפה פר-ריפו (אותה רשימת 14 שכבר מזינה את הרישום).
+  let orgRepos = null;
+  try {
+    orgRepos = await api(`https://api.github.com/orgs/${OWNER}/repos?per_page=100`);
+  } catch { orgRepos = null; }
+  if (!orgRepos) {
+    orgRepos = [];
+    for (const r of REPOS) {
+      try { orgRepos.push(await api(`https://api.github.com/repos/${OWNER}/${r}`)); }
+      catch (e) { console.error(`repo ${r}: ${e.message}`); }
+    }
+  }
   const consoleRuns = await api(`https://api.github.com/repos/${OWNER}/Console/actions/runs?per_page=8`);
   const snap = {
     ok: true,
