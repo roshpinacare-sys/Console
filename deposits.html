@@ -226,7 +226,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     if(W && W.ok){
       var st = W.state || {};
       document.getElementById("k-height").textContent = "h" + (st.height ?? "?");
-      document.getElementById("k-treas").textContent = ((st.balances && st.balances.treasury && st.balances.treasury.USDS) ? (st.balances.treasury.USDS/1000).toLocaleString("en-US",{maximumFractionDigits:0}) : "?") + " USDS";
+      var tw = (W.wallets || []).find(function(w){ return w.name === "treasury"; });
+      document.getElementById("k-treas").textContent = (tw && tw.balances && tw.balances.USDS ? (tw.balances.USDS/1000).toLocaleString("en-US",{maximumFractionDigits:0}) : "?") + " USDS";
       document.getElementById("k-age").textContent = W.publishedAt ? age(W.publishedAt) : "";
       var fresh = W.publishedAt && (Date.now() - new Date(W.publishedAt).getTime() < 30*60*1000);
       if(dot) dot.className = fresh ? "livedot" : "deaddot";
