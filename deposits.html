@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · דלת הנזילות · מה קורה ברגע שנכנס כסף</title>
+<meta name="description" content="הבדיקה הכבדה של מחזור ההפקדה המלא: הרגע שכסף נכנס, מה הוא עושה, מה נמצא שבור, מה שוקם היום, מה זויף, מה נשאר פתוח, אפשרויות הפקת הערך להפקדות ונוהל הפדיון. הכל בהוכחת הרצה על עותק של השרשרת החיה.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Cpath d='M8 12h8M12 8v8' stroke='%23a78bfa' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--gold-dim:#8a7423;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px;width:100%}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+header.nhead{border-bottom:1px solid var(--border);padding:18px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
+.nhead .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nhead h1{font-size:18px;font-weight:700}
+.nhead .sub{font-size:12px;color:var(--mut)}
+.badge{font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.links{margin-inline-start:auto;display:flex;gap:14px;font-size:13px}
+main{flex:1;padding:30px 0 56px}
+.lede{font-size:14.5px;color:var(--mut);line-height:1.75;margin-bottom:26px;max-width:880px}
+.lede b{color:var(--tx)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.card h2{font-size:15px;margin-bottom:14px;color:var(--gold);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
+.card p{font-size:13.5px;color:var(--mut);line-height:1.75;margin-bottom:10px}
+.card p b{color:var(--tx)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+.card table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.card table::-webkit-scrollbar{height:6px}
+.card table::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+th{color:var(--dim);font-weight:400;font-size:11.5px;text-align:right;padding:6px 8px;border-bottom:1px solid var(--border2)}
+td{padding:8px;border-bottom:1px dashed var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{font-family:var(--mono);direction:ltr;unicode-bidi:embed;white-space:nowrap}
+.tag{display:inline-block;font-size:10.5px;border:1px solid var(--border2);border-radius:999px;padding:1px 8px;color:var(--mut);white-space:nowrap}
+.tag.green{color:var(--green);border-color:rgba(34,197,94,.35)}
+.tag.red{color:var(--red);border-color:rgba(239,68,68,.35)}
+.tag.amber{color:var(--yellow);border-color:rgba(234,179,8,.35)}
+.tag.violet{color:var(--purple);border-color:rgba(167,139,250,.35)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.dot.g{background:var(--green)}.dot.p{background:var(--purple)}.dot.r{background:var(--red)}.dot.y{background:var(--yellow)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.kpi{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.kpi .k{font-size:11px;color:var(--dim);letter-spacing:.04em}
+.kpi .v{font-size:21px;font-weight:800;color:var(--tx);font-family:var(--mono);direction:ltr;unicode-bidi:embed;margin-top:3px}
+.kpi .s{font-size:11px;color:var(--dim);margin-top:3px}
+.kpi .v.green{color:var(--green)}.kpi .v.purple{color:var(--purple)}.kpi .v.red{color:var(--red)}.kpi .v.gold{color:var(--gold)}
+.stage{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--border)}
+.stage:last-child{border-bottom:none}
+.stage .n{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--gold-dim);color:var(--gold);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;background:var(--panel2)}
+.stage .b{min-width:0}
+.stage .t{font-size:13.5px;color:var(--tx);font-weight:600}
+.stage .t .when{font-size:11px;color:var(--dim);font-weight:400;margin-inline-start:8px}
+.stage .d{font-size:12.5px;color:var(--mut);line-height:1.65;margin-top:3px}
+.stage .d b{color:var(--gold-bright,#f0d060)}
+ul.plain{list-style:none}
+ul.plain li{padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px;color:var(--mut);line-height:1.7}
+ul.plain li:last-child{border-bottom:none}
+ul.plain li b{color:var(--tx)}
+footer{border-top:1px solid var(--border);padding:18px 0;margin-top:auto}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--dim)}
+.src{font-size:11px;color:var(--dim);margin-top:10px}
+.livedot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-inline-end:6px;vertical-align:1px}
+.deaddot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-inline-end:6px;vertical-align:1px}
+</style>
+</head>
+<body>
+<header class="nhead">
+  <div class="wrap">
+    <h1>דלת הנזילות <span style="color:var(--dim);font-weight:400;font-size:13px">· deposit lifecycle exam</span></h1>
+    <span class="badge">R33 · היום</span>
+    <span class="sub">מה קורה ברגע שנכנס כסף</span>
+    <nav class="links"><a href="index.html">קונסולה</a><a href="readiness.html">מוכנות</a><a href="money.html">נתיב הכסף</a><a href="defi.html">חדשנות</a></nav>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <p class="lede">
+      המפעיל שאל: <b>בקרוב יהיו הפקדות, האם המערכת מוכנה? מה קורה ברגע שנכנס כסף, הוא יישאר במקום? מה שבור, מה מזויף, מה מדמם?</b>
+      התשובה נבדקה בלי אמון בהצהרות: מחזור-ההפקדה המלא הורץ על עותק מבודד של השרשרת החיה
+      (h19514), מארנץ נולד ועד פדיון. התוצאה: <b>ארבעה כשלים קריטיים נמצאו, שוקמו, והוכחו ירוקים בהרצה חוזרת</b>.
+      הדלת הייתה סגורה בפני המפקידים; עכשיו היא פתוחה, ומה שעדיין לא פתוח כתוב למטה במפורש.
+    </p>
+
+    <div class="grid2" style="margin-bottom:20px">
+      <div class="kpi"><div class="k">גובה השרשרת החיה <span style="float:left" id="k-age">…</span></div><div class="v" id="k-height">…</div><div class="s">הלב הענני ממשיך לפעום</div></div>
+      <div class="kpi"><div class="k">הפקדות חוץ שנצפו</div><div class="v" id="k-dep">…</div><div class="s" id="k-chains">…</div></div>
+      <div class="kpi"><div class="k">מכל USDS של האוצר</div><div class="v gold" id="k-treas">…</div><div class="s">גיבוי נזיל פנימי לזיכויי הפקדות</div></div>
+      <div class="kpi"><div class="k">תקרת זיכוי אוטומטי להפקדה</div><div class="v purple">250 USDS</div><div class="s">מעבר לזה, זיכוי מפעיל דרך השער</div></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot g"></span>א. המחזור המלא: מה קורה ברגע שנכנס כסף <span class="en">the full deposit lifecycle</span></h2>
+      <div class="stage"><div class="n">1</div><div class="b">
+        <div class="t">המטבעות נוחתים בכתובת הצבא <span class="when">רגע 0</span></div>
+        <div class="d">TRON, אתריום, סולנה או ביטקוין. הכסף האמיתי נשאר בכתובת ההפקדה הציבורית, בבעלות האוצר. שום דבר אחר לא זז ברגע זה; המערכת לא נוגעת בו עד שהבעלים תובע.</div>
+      </div></div>
+      <div class="stage"><div class="n">2</div><div class="b">
+        <div class="t">הצופה רואה ומפרסם <span class="when">עד 20 דקות</span></div>
+        <div class="d">dex-watch סורק ארבע רשתות בלי מפתח ובלי סוד, ומפרסם את ספר-ההפקדות הפתוח <span class="mono">dex/deposits.json</span>. דלת-האבק מודדת לפי יחידות הנכס (היום תוקן): יציבים מ-5, סולנה מ-0.03, ביטקוין מ-0.00008. מתחת לרף, התביעה עדיין אפשרית דרך השער.</div>
+      </div></div>
+      <div class="stage"><div class="n">3</div><div class="b">
+        <div class="t">הבעלים חותם תביעה <span class="when">בזמנו</span></div>
+        <div class="d">בארנק שבדפדפן: מפתח saos1 לא עוזב את המכשיר. המעטפה החתומה משודרת כפעולה ציבורית על סטים דרך כל חשבון שיש למשתמש. החתימה הפנימית היא הסמכות; ההובלה רק מסיעה.</div>
+      </div></div>
+      <div class="stage"><div class="n">4</div><div class="b">
+        <div class="t">הלב מאמת ומזכה <span class="when">עד שעתיים</span></div>
+        <div class="d">cloud-beat מאמת את חתימת saos1, מתאים את מזהה העסקה מול ספר-ההפקדות הציבורי, ומזכה USDS בשם הקנוני. מהיום הזיכוי גם מוכח-נחיתה: היתרה נמדדת לפני ואחרי, ורק נחיתה אמיתית נרשמת כמעובדת. יציבים 1:1, האחרים לפי פיד חי. תקרה 250 USDS להפקדה בודדת.</div>
+      </div></div>
+      <div class="stage"><div class="n">5</div><div class="b">
+        <div class="t">מכל הדלק מתודלק יחד עם הזיכוי <span class="when">אותו בלוק</span></div>
+        <div class="d">היום נמצא שחשבון מפקיד טרי נולד בלי אף קרדיט גז, וכל פקודת מסחר שלו נדחתה בבלוק. עכשיו כל זיכוי מזריע גם 100,000 מיקרו-קרדיטים מהאוצר, העברה טהורה ששומרת על סכום הקרדיטים בדיוק. במחיר הגז שלנו, פקודה עולה 60: זה מכל ל-1,600 פקודות.</div>
+      </div></div>
+      <div class="stage"><div class="n">6</div><div class="b">
+        <div class="t">הכסף עובד בפנים <span class="when">מיד</span></div>
+        <div class="d">USDS ניתן למסחר באפס עמלה מיקרו (0.067% מחיר ביצוע), פקודות אצווה, DCA, טריגרים, כספת הלוואות נגד WSTEEM והשקות. כל עמלה זורמת לאוצר. היתרה נראית בארנק לצד יתרת ה-SAOS.</div>
+      </div></div>
+      <div class="stage"><div class="n">7</div><div class="b">
+        <div class="t">היציאה: נעילה, שחרור אמיתי, אימות <span class="when">בבקשה</span></div>
+        <div class="d">המפקיד נועל USDS בנאמנות הגשר (הדלת שהייתה סגורה ונפתחה היום), האוצר שולח את המטבעות האמיתיים מכתובת הצבא, והשחרור נרשם רק אחרי אימות קישור על הרשת החוץ: נמען, סכום ועומק. בסוג הנכס שהופקד, אחד לאחד.</div>
+      </div></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot r"></span>ב. מה נמצא שבור: ארבעה כשלים, שוקמו היום <span class="en">found by simulation, fixed, proven green</span></h2>
+      <table>
+        <thead><tr><th>הכשל</th><th>מה קרה בפועל</th><th>ההוכחה שנמצאה בהרצה</th><th>התיקון</th></tr></thead>
+        <tbody>
+          <tr><td><b>דלת היציאה סגורה</b></td><td>בדיקת השם בגשר דחתה את חשבונות המפקידים (נקודותיים לא באלפבית, אורך 41 מעל 32)</td><td class="mono">lockOutbound(u:) = bad-issuer</td><td><span class="tag green">שוקם</span> הטופס הקנוני התקבל, ו-10 USDS ננעלו בנאמנות הגשר בהוכחה</td></tr>
+          <tr><td><b>שחיתות רישיות</b></td><td>הגרעין מנרמל שמות לקטנות אבל כתובת saos1 רגישה לרישיות; הזיכוי נחת תחת שם אחר מזה שכל הבדיקות מחפשות</td><td class="mono">balance saved under u:saos1bxqg… while owner is saos1Bxqg…</td><td><span class="tag green">שוקם</span> הלב מזכה וסוחר בשם הקנוני הקטן, והארנק מציג אותו</td></tr>
+          <tr><td><b>מסומן-כמעובד בלי זיכוי</b></td><td>הסימון "טופל" נקבע מיד אחרי התור, גם אם הבלוק דחה את ההעברה; הפקדה הייתה נתקעת לנצח כ"מטופלת" בלי כסף</td><td class="mono">credit did NOT land (bal 0 to 0, want +25000)</td><td><span class="tag green">שוקם</span> נחיתה מוכחת לפני הסימון; דחייה נשארת פתוחה לפעימה הבאה</td></tr>
+          <tr><td><b>מפקיד בלי דלק</b></td><td>חשבון טרי נולד בלי קרדיטים; כל פקודת מסחר נדחתה בבלוק בזמן שנרשמה כבוצעה</td><td class="mono">order(u:...) = insufficient-credits</td><td><span class="tag green">שוקם</span> עירוי 100,000 מיקרו-קרדיטים עם הזיכוי, ופקודה מוכחת-נחיתה לפני רישום</td></tr>
+          <tr><td><b>מסנן האבק מדד יחידות כמו דולרים</b></td><td>הפקדת 4 סולנה (מאות דולרים) נזרקה מהספר בשקט; הפקדת 5 TRX (פחות מדולר וחצי) נרשמה</td><td class="mono">amount(4 SOL) &lt; MIN_DEPOSIT_USD(5)</td><td><span class="tag green">שוקם</span> מינימום לפי יחידות הנכס לכל נכס</td></tr>
+        </tbody>
+      </table>
+      <p class="src">מנוע commit <span class="mono">366a9dc</span> · ההוכחה: הרצת מחזור מלא על עותק מבודד של h19514, שבעה שלבים ירוקים: מעטפה, זיכוי, מכל דלק, פקודה בספר, נעילת פדיון, נאמנות, והשרשרת לא נעצרה.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot y"></span>ג. מה זויף או לא רץ: האמת המלאה <span class="en">honesty about what is not live</span></h2>
+      <ul class="plain">
+        <li><b>שומר-הגשר האוטומטי מעולם לא רץ.</b> המראה הציבורית אומרת זאת בעצמה: <span class="mono">auto: never-run</span>. הקוד קיים אבל אף תהליך לא מפעיל אותו בענן. המסילה האמיתית להפקדות היא הזיכוי הענני, והיא זו שנבדקה ושוקמה. מסילת הגשר נשארת כלי מתועד עם דלת פתוחה עכשיו, לא כשירות פועל.</li>
+        <li><b>נאמנות הגשר ריקה.</b> <span class="mono">escrow: {}</span>. עד שלא תמומן, תביעות דרך הגשר ייענו בסירוב כנה של אי-מימון. הפדיון בפועל עובר דרך האוצר וכתובות הצבא, לא דרך נאמנות זו.</li>
+        <li><b>אתריום מקורי בלתי נראה לצופה.</b> כתובת ה-EVM נסרקת רק ללוגים של USDT/USDC. מי שישלח ETH מקורי לא ייראה בספר ולא יוכל לתבוע לבד; ההחזר רק דרך המפעיל. עד שיתווסף סריקת טרנזקציות מקוריות, ההמלצה כתובה בכל מקום: יציבים בלבד לכתובת זו.</li>
+        <li><b>משמרת המפתחות של כתובות הצבא לא מתועדת בקוד.</b> הפדיון דורש שליחת מטבעות אמיתיים מכתובות אלה, כלומר מפתחות בצד המפעיל. הצי על סטים מודה בעצמו: מפתחות active לא הופעלו בדרך הצי. זו תלות מפעיל אמיתית, והיא כתובה כאן במקום להיעלם.</li>
+        <li><b>הכסף שנכנס לא עובד בחוץ.</b> המטבעות האמיתיים יושבים בכתובות הצבא ולא מייצרים כלום עד החלטת מפעיל. אין הבטחת תשואה ואין הבטחת רווח למפקיד; מה שיש הוא זכות פדיון מתועדת בסוג הנכס, ומסחר פנימי באפס עמלה.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot p"></span>ד. אפשרויות הפקת ערך מהפקדות <span class="en">how deposits can generate value</span></h2>
+      <table>
+        <thead><tr><th>האפשרות</th><th>מה היא מייצרת</th><th>מה נדרש</th><th>מצב</th></tr></thead>
+        <tbody>
+          <tr><td><b>מסחר פנימי על ההפקדות</b></td><td>עומק לספרים ולבריכות, עמלות לאוצר, נפח אמיתי במקום בוטים</td><td>שום דבר נוסף; רץ היום, הדלק מתודלק עם הזיכוי</td><td><span class="tag green">עובד היום</span></td></tr>
+          <tr><td><b>כספת ההלוואות</b></td><td>ריבית ממומשת על חוב USDS נגד בטחונות WSTEEM, לאוצר</td><td>WSTEEM אמיתי מהפקדות STEEM (מסילת 1:1 קיימת)</td><td><span class="tag green">עובד היום, בקנה מידה זעיר</span></td></tr>
+          <tr><td><b>פדיון בסוג הנכס</b></td><td>הבטחה שקולה: מה שהופקד הוא מה שחוזר, אחד לאחד, בלי חשיפה למחיר</td><td>מפתחות כתובות הצבא בצד המפעיל</td><td><span class="tag amber">תלוי מפעיל</span></td></tr>
+          <tr><td><b>ערבול הפקדות STEEM לערך רשת</b></td><td>הפעלת המסילה שהוכחה: פער 20.7% בין השוק הפנימי של סטים לזה החוץ, עסקה אחת אמיתית כבר לכדה 26.28%</td><td>סוד STEEM_ACTIVE_WIF (חסימה קיימת מתועדת)</td><td><span class="tag amber">חסום על סוד</span></td></tr>
+          <tr><td><b>תשואה חוץ על מטבעות ההפקדה</b></td><td>השקעת היציבים שבכתובות הצבא (הלוואות, עידון) ותשלום חלק למפקידים</td><td>החלטת משמרת מפורסמת + העברת מטבעות אמיתיים + נטילת סיכון</td><td><span class="tag red">לא אושר, בכוונה</span></td></tr>
+        </tbody>
+      </table>
+      <p>העיקרון שנשמר: <b>אין הבטחת רווח למפקיד</b>. כל תגמול עתידי יעבור החלטת משמרת מתועדת בספר הפתוח, או שלא יהיה.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot g"></span>ה. נוהל הפדיון <span class="en">redemption, step by step</span></h2>
+      <ul class="plain">
+        <li><b>1. המפקיד נועל:</b> פעולת lockOutbound חתומה, USDS עובר לנאמנות הגשר. הדלת שנפתחה היום.</li>
+        <li><b>2. האוצר שולח את האמיתי:</b> מטבעות בסוג שהופקד, מכתובת הצבא של אותה רשת, לכתובת שנרשמה בכוונה.</li>
+        <li><b>3. השחרור נאמת:</b> markReleased בודק על הרשת החוץ נמען, סכום ועומק (3 אישורים לפחות, או finalized בסולנה). בלי הוכחה, הסטטוס נשאר נעול.</li>
+        <li><b>4. הגבולות הכנים:</b> תקרת כוונה 2,000 USDS. פדיון הוא פעולת מפעיל, לא אוטומטית; זמן התגובה תלוי בזמינות המפעיל. אין דלילות-סוד ואין הבטחה של מיידיות, וזה כתוב.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot y"></span>ו. מה נשאר פתוח, בכנות מלאה <span class="en">the honest open list</span></h2>
+      <ul class="plain">
+        <li><b>אפס הפקדות חוץ.</b> כל מה שנבדק היום הוכח בסימולציה על עותק חי, לא בכסף אמיתי של משתמש אמיתי. ההוכחה האחרונה תהיה ההפקדה הראשונה.</li>
+        <li><b>משמרת המפתחות.</b> עד שמפתחות כתובות הצבא לא יתועדו בכתוב ולא ייבדק נוהל שחרור חי, הפדיון נשאר הבטחה שתלויה במפעיל.</li>
+        <li><b>אתריום מקורי.</b> סריקתו אינה בצופה; עד אז רק יציבים לכתובת ה-EVM.</li>
+        <li><b>אודיט חוץ.</b> אפס. הביקורת הפנימית עמוקה אבל היא שלנו על עצמנו.</li>
+        <li><b>ביטוח מפקידים.</b> אין. במקום זה: תקרת 250, פדיון בסוג הנכס, ואמת מתועדת.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot p"></span>ז. איך זה נבדק <span class="en">verification</span></h2>
+      <ul class="plain">
+        <li>ההרצה: עותק מבודד של השרשרת החיה (h19514), ארנץ saos1 נולד בתהליך, מעטפת הפקדה נחתמה ואומתה לפי החוקים המדויקים של הלב.</li>
+        <li>שבעת השלבים: אימות מעטפה, זיכוי נחת, מכל דלק, פקודה נחה בספר, נעילת פדיון, נאמנות גשר, והשרשרת לא נעצרה. שבע ירוקות אחרי התיקון, ארבע אדומות לפניו.</li>
+        <li>הפריסה: מנוע commit <span class="mono">366a9dc</span>, הלב הופעל מחדש, והמראה שלפניך נמשכת מהקבצים החיים בעצמה.</li>
+        <li>הצופה והמחזור: dex/watch.mjs בדלת-אבק מתוקנת, מחויב בספר שכל אחד יכול לקרוא.</li>
+      </ul>
+      <p class="src"><span class="livedot" id="live-dot"></span>מקור חי: <span class="mono">dex/world.json</span> ו-<span class="mono">dex/watch.json</span>, מתעדכן כל 60 שניות. בשגיאת רשת הנתונים מסומנים כקפואים, לא מוצגים כחיים.</p>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>SAOS · דלת הנזילות · כל כשל בעמוד זה נמצא בהרצה, שוקם והוכח</span>
+    <span><a href="index.html">קונסולה</a> · <a href="readiness.html">מוכנות</a> · <a href="money.html">נתיב הכסף</a> · <a href="defi.html">חדשנות</a></span>
+  </div>
+</footer>
+<script>
+(function(){
+  var W = null, WT = null;
+  function age(iso){
+    if(!iso) return "";
+    var m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime())/60000));
+    return m < 60 ? "לפני " + m + " דק" : "לפני " + Math.round(m/60) + " שע";
+  }
+  function draw(){
+    var dot = document.getElementById("live-dot");
+    if(W && W.ok){
+      var st = W.state || {};
+      document.getElementById("k-height").textContent = "h" + (st.height ?? "?");
+      document.getElementById("k-treas").textContent = ((st.balances && st.balances.treasury && st.balances.treasury.USDS) ? (st.balances.treasury.USDS/1000).toLocaleString("en-US",{maximumFractionDigits:0}) : "?") + " USDS";
+      document.getElementById("k-age").textContent = W.publishedAt ? age(W.publishedAt) : "";
+      var fresh = W.publishedAt && (Date.now() - new Date(W.publishedAt).getTime() < 30*60*1000);
+      if(dot) dot.className = fresh ? "livedot" : "deaddot";
+    } else if(dot){ dot.className = "deaddot"; }
+    if(WT){
+      document.getElementById("k-dep").textContent = String(WT.depositsTotal ?? "?");
+      var chains = WT.chains || {};
+      document.getElementById("k-chains").textContent = Object.keys(chains).map(function(k){ return k + ": " + chains[k]; }).join(" · ");
+    }
+  }
+  function pull(){
+    fetch("dex/world.json?t=" + Date.now(), {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){ W = j; draw(); }).catch(function(){ if(document.getElementById("live-dot")) document.getElementById("live-dot").className = "deaddot"; });
+    fetch("dex/watch.json?t=" + Date.now(), {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){ WT = j; draw(); }).catch(function(){});
+  }
+  pull();
+  setInterval(pull, 60*1000);
+})();
+</script>
+</body>
+</html>

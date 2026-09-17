@@ -46,6 +46,15 @@ const TRONSCAN = "https://apilist.tronscanapi.com";
 const BTC_API = "https://blockchain.info";
 
 const MIN_DEPOSIT_USD = 5; // הגנת-אבק: מתחת-לזה לא-נרשם (עדיין-ניתן-לתבוע דרך-השער)
+/* R33 · unit-aware dust filter — היה: כל-הנכסים נמדדו-מול-5-דולר **ביחידות-המטבע**
+ * (amount >= MIN_DEPOSIT_USD) ולא-בשווי-דולרי: הפקדת-4 SOL (~$400) נזרקה
+ * מהספר בשקט (4 < 5) והפקדת-5 TRX (~$1.2) נרשמה. כסף-אמיתי נעלם-מהספר-הציבורי
+ * והתביעה נחסמה. עתה: מינימום-פר-נכס ביחידות-הנכס, מכסה את-אותה-מטרת-האבק
+ * (~$5) בלי-להרוג הפקדות-גדולות-בשווי. */
+const MIN_UNITS = {
+  USDT: 5, USDC: 5, USD: 5, TUSD: 5, DAI: 5, FDUSD: 5, // stables: units = dollars
+  TRX: 20, ETH: 0.002, SOL: 0.03, BTC: 0.00008,
+};
 const CAP = 400;
 
 const DEX_DIR = fileURLToPath(new URL("./", import.meta.url));
@@ -90,7 +99,8 @@ const fresh = [];
 function add(chain, asset, txid, amount, from, to, ts, conf, extra = {}) {
   const key = `${chain}:${txid}`;
   if (seen.has(key)) return;
-  if (!(amount >= MIN_DEPOSIT_USD)) return; // אבק-מתחת-לרף - לא-נספר
+  const min = MIN_UNITS[asset] ?? MIN_DEPOSIT_USD; // R33: unit-aware, fail-open for unmapped stables
+  if (!(amount >= min)) return; // אבק-מתחת-לרף-הנכס - לא-נספר (דרך-השער עדיין-פתוחה)
   seen.add(key);
   const rec = {
     txid: String(txid), chain, asset, amount: Math.round(amount * 1e6) / 1e6,
