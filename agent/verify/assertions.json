@@ -254,6 +254,38 @@
    "target": "",
    "value": "sub-exchange-rails",
    "min": 1
+  },
+  {
+   "id": "A25",
+   "desc": {
+    "en": "The money path page is linked from the home page (knowledge grid + footer, at least 2 links)",
+    "he": "דף נתיב הכסף מקושר מדף הבית (גריד הידע והפוטר, לפחות 2 קישורים)"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "money.html",
+   "min": 2
+  },
+  {
+   "id": "A26",
+   "desc": {
+    "en": "The money path page is live and carries the live anchor tracker (R23)",
+    "he": "דף נתיב הכסף חי ונושא את עוקב-העוגן החי (R23)"
+   },
+   "kind": "contains",
+   "target": "money.html",
+   "value": "Live Anchor"
+  },
+  {
+   "id": "A27",
+   "desc": {
+    "en": "No emoji, dingbat, arrow or em-dash characters in the money path page",
+    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף נתיב הכסף"
+   },
+   "kind": "regex_absent",
+   "target": "money.html",
+   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+   "flag": "u"
   }
  ]
 }
