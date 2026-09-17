@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-17T03:09:22.386Z",
+  "generatedAt": "2026-09-17T04:09:12.894Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth - no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 154,
-    "checkpoints": 147,
+    "attestations": 155,
+    "checkpoints": 148,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 153
+      "VERIFIED": 154
     },
-    "headHash": "0x5d04300d86043fd2ce57c7bfff6db5d02e249233f740f58edd7e52e24c1b8e2d"
+    "headHash": "0x6a5e58c843d40465a0a467010c3e9e3ae2091f25593ec4e5fa7db74865e6a718"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 131,
-      "lastAttestationSeq": 154,
-      "lastAttestationAt": "2026-09-17T02:35:19.288Z"
+      "attestations": 132,
+      "lastAttestationSeq": 155,
+      "lastAttestationAt": "2026-09-17T03:11:42.019Z"
     },
     {
       "name": "weave-market-regulator",
@@ -99,6 +99,14 @@
     }
   ],
   "attestations": [
+    {
+      "seq": 155,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-17T03:11:42.019Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #147 root 0x5d04300d86043fd2… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
+    },
     {
       "seq": 154,
       "type": "ANCHOR",
@@ -1050,24 +1058,26 @@
       "at": "2026-09-15T00:39:58.160Z",
       "agentName": "weave-cloud-heart",
       "claim": "קו Steem/Hive: checkpoint #28 root 0xcb73fb88bf77d40a… עוגן on-chain כ-custom_json saos.weave.core.v1 מאת @cashmachine (סמכות posting) - עד חיצוני ציבורי ובלתי-תלוי בגיטהאב לאמת הספר."
-    },
-    {
-      "seq": 35,
-      "type": "CROSSCHAIN",
-      "status": "VERIFIED",
-      "at": "2026-09-14T23:43:09.827Z",
-      "agentName": "weave-saosnet-witness",
-      "claim": "עוגן-עוגנים: שרשרת הכלכלה של הצי (saos-net/0) נמדדה ב-replay דטרמיניסטי - stateRoot=…e6601494 בגובה 223,838 - ו שתי שרשראות האמת מעידות זו על זו."
     }
   ],
   "checkpoints": [
+    {
+      "index": 148,
+      "root": "0x6a5e58c843d40465a0a467010c3e9e3ae2091f25593ec4e5fa7db74865e6a718",
+      "attFrom": 155,
+      "attTo": 155,
+      "at": "2026-09-17T03:11:42.046Z",
+      "anchoredOn": []
+    },
     {
       "index": 147,
       "root": "0x5d04300d86043fd2ce57c7bfff6db5d02e249233f740f58edd7e52e24c1b8e2d",
       "attFrom": 154,
       "attTo": 154,
       "at": "2026-09-17T02:35:19.312Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "zero"
+      ]
     },
     {
       "index": 146,
@@ -1338,16 +1348,6 @@
       "anchoredOn": [
         "zero"
       ]
-    },
-    {
-      "index": 118,
-      "root": "0xdb726ab4e78027ad964d0240b031cec9e3c039dfe297ed76318e24f1de452a40",
-      "attFrom": 125,
-      "attTo": 125,
-      "at": "2026-09-16T12:13:28.662Z",
-      "anchoredOn": [
-        "zero"
-      ]
     }
   ],
   "anchorLines": {
@@ -1385,12 +1385,6 @@
     ],
     "zero": [
       {
-        "checkpoint": 139,
-        "at": "2026-09-17T00:40:51.312Z",
-        "txid": "0xa89661f57ab5b93c4f4e248dfa216f023c8e710483307b1dff53d332482e5e99",
-        "explorer": "https://zscan.live/tx/0xa89661f57ab5b93c4f4e248dfa216f023c8e710483307b1dff53d332482e5e99"
-      },
-      {
         "checkpoint": 143,
         "at": "2026-09-17T01:08:29.721Z",
         "txid": "0x2f16daa53e453e0cc8be28d686213f7746acb6af2a2104d127ed0aa7c06ed8d4",
@@ -1413,6 +1407,12 @@
         "at": "2026-09-17T02:35:11.498Z",
         "txid": "0xf525979cb46386d49d7c16359baae303cde80b7f0bee61e9ac7229065ce1a2ca",
         "explorer": "https://zscan.live/tx/0xf525979cb46386d49d7c16359baae303cde80b7f0bee61e9ac7229065ce1a2ca"
+      },
+      {
+        "checkpoint": 147,
+        "at": "2026-09-17T03:11:25.536Z",
+        "txid": "0x00499802ad460e4bef893a2ef19a60e21c63d782efa180f29a70c4d4ec8cc14c",
+        "explorer": "https://zscan.live/tx/0x00499802ad460e4bef893a2ef19a60e21c63d782efa180f29a70c4d4ec8cc14c"
       }
     ]
   },
