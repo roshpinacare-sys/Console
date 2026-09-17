@@ -1,12 +1,12 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-09-17T00:11:37.796Z",
+  "generatedAt": "2026-09-17T01:04:56.768Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "930ed344c3261dd9b621c99b1d73b0d57020b787ec2c16df544f60d819af9121",
+  "stateRoot": "9ac42df4e84ad0f55aba2408bdad61353d0598b7ece95ebd4e3ad1f195fdb0f5",
   "genesis": {
-    "done": false,
+    "done": true,
     "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-    "txid": "0529cef05f075947b6f73acb2554a7b8bf03e411",
+    "txid": null,
     "symbol": "SAOS",
     "initialMint": "126682000",
     "maxSupply": "21000000000",
@@ -31,8 +31,14 @@
         "txid": null
       }
     },
-    "balances": {},
-    "supply": {},
+    "balances": {
+      "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
+        "SAOS": "126682000"
+      }
+    },
+    "supply": {
+      "SAOS": "126682000"
+    },
     "claims": {},
     "offers": {},
     "cfg": {
@@ -62,12 +68,26 @@
       "block": 109632837,
       "summary": "פריסת חוזה SAOS (תקרה 21,000,000,000)",
       "d": null
+    },
+    {
+      "id": "genesis-saos-mint",
+      "k": "token.mint",
+      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+      "at": "2026-09-17T01:04:56.766Z",
+      "txid": "0529cef05f075947b6f73acb2554a7b8bf03e411",
+      "block": 109643652,
+      "summary": "הטבעת 126,682,000 SAOS · saos1CKtmFms…",
+      "d": {
+        "symbol": "SAOS",
+        "to": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+        "amount": "126682000"
+      }
     }
   ],
   "invalid": [],
   "verify": {
-    "replayed": 2,
-    "valid": 2,
+    "replayed": 3,
+    "valid": 3,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
