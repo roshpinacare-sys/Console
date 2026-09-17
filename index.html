@@ -1070,7 +1070,10 @@ function renderHome(){
   if(mi && mi.stats){
     $("k-att").textContent = fmtInt(mi.stats.attestations);
     $("k-att-sub").textContent = fmtInt(mi.stats.checkpoints)+" "+t("net.kCp").toLowerCase();
-    const last = (mi.attestations&&mi.attestations.length)?mi.attestations[mi.attestations.length-1].at:null;
+    /* המראה מסודרת seq-desc (החדש ראשון) - האימות האחרון הוא האיבר
+     * הראשון, לא האחרון. התצוגה הישנה הראתה את הישן מבין 120 במקום
+     * את החדש ("לפני 2 ימים" בזמן שהאימות החי היה בן דקות). */
+    const last = (mi.attestations&&mi.attestations.length)?mi.attestations[0].at:null;
     if(last) $("k-att-sub").textContent += " · "+t("home.lastAtt")+" "+timeAgo(last);
   }
   if(reg && reg.agents){
@@ -1084,7 +1087,7 @@ function renderHome(){
   }
   const tb = $("home-beats");
   if(mi && mi.attestations){
-    tb.innerHTML = mi.attestations.slice(-6).reverse().map(a=>
+    tb.innerHTML = mi.attestations.slice(0,6).map(a=>
       "<tr><td class='mono strong'>"+a.seq+"</td><td>"+esc(a.type)+"</td><td>"+esc(a.agentName||"…")+"</td><td style='max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap' title='"+esc(a.claim||"")+"'>"+esc((a.claim||"").slice(0,140))+"</td><td class='num'>"+timeAgo(a.at)+"</td></tr>"
     ).join("");
   } else {
@@ -1121,7 +1124,7 @@ function renderNetwork(){
   } else { wc.innerHTML = '<div class="failhonest">'+esc(t("fail.fetch"))+'</div>'; }
   const lb = $("net-ledger");
   if(mi && mi.attestations){
-    lb.innerHTML = mi.attestations.slice(-40).reverse().map(a=>{
+    lb.innerHTML = mi.attestations.slice(0,40).map(a=>{
       const ok = a.status==="VERIFIED";
       return "<tr><td class='mono strong'>"+a.seq+"</td><td>"+esc(a.type)+"</td><td><span class='tag "+(ok?"green":"amber")+"'>"+esc(a.status)+"</span></td><td>"+esc(a.agentName||"…")+"</td><td style='max-width:420px' title='"+esc(a.claim||"")+"'>"+esc((a.claim||"").slice(0,160))+"</td><td class='num'>"+timeAgo(a.at)+"</td></tr>";
     }).join("");
