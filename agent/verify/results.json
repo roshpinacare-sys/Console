@@ -1,20 +1,20 @@
 {
   "format": "agent-verify-results-v1",
-  "generatedAt": "2026-09-17T07:57:46.379Z",
+  "generatedAt": "2026-09-17T08:51:19.586Z",
   "runBy": "github-actions",
-  "durationMs": 976,
+  "durationMs": 770,
   "summary": {
     "total": 36,
-    "passed": 34,
-    "failed": 2,
-    "verdict": "HAS_FAILURES"
+    "passed": 36,
+    "failed": 0,
+    "verdict": "ALL_PASS"
   },
   "results": [
     {
       "id": "A01",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 162
+      "ms": 136
     },
     {
       "id": "A02",
@@ -50,49 +50,49 @@
       "id": "A07",
       "ok": true,
       "details": "HTTP 404 (retired, as required)",
-      "ms": 40
+      "ms": 47
     },
     {
       "id": "A08",
       "ok": true,
       "details": "agents.length = 22, minimum is 13",
-      "ms": 51
+      "ms": 18
     },
     {
       "id": "A09",
       "ok": true,
-      "details": "stats.attestations = 163, minimum is 100",
-      "ms": 41
+      "details": "stats.attestations = 164, minimum is 100",
+      "ms": 27
     },
     {
       "id": "A10",
-      "ok": false,
-      "details": "field \"freshness.verdict\" = \"STALE\", expected \"FRESH\"",
-      "ms": 39
+      "ok": true,
+      "details": "field \"freshness.verdict\" = \"FRESH\", expected \"FRESH\"",
+      "ms": 33
     },
     {
       "id": "A11",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 34
+      "ms": 22
     },
     {
       "id": "A12",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 46
+      "ms": 14
     },
     {
       "id": "A13",
       "ok": true,
       "details": "requests.length = 21, minimum is 12",
-      "ms": 33
+      "ms": 20
     },
     {
       "id": "A14",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 1
+      "ms": 0
     },
     {
       "id": "A15",
@@ -110,25 +110,25 @@
       "id": "A17",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 33
+      "ms": 16
     },
     {
       "id": "A18",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 36
+      "ms": 25
     },
     {
       "id": "A19",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 36
+      "ms": 32
     },
     {
       "id": "A20",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 38
+      "ms": 24
     },
     {
       "id": "A21",
@@ -146,13 +146,13 @@
       "id": "A23",
       "ok": true,
       "details": "HTTP 404 (retired, as required)",
-      "ms": 34
+      "ms": 17
     },
     {
       "id": "A24",
       "ok": true,
       "details": "1 occurrence(s) of \"sub-exchange-rails\", minimum is 1",
-      "ms": 1
+      "ms": 0
     },
     {
       "id": "A25",
@@ -164,19 +164,19 @@
       "id": "A26",
       "ok": true,
       "details": "\"Live Anchor\" found in body",
-      "ms": 35
+      "ms": 28
     },
     {
       "id": "A27",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A28",
       "ok": true,
       "details": "\"no key, no auth\" found in body",
-      "ms": 35
+      "ms": 18
     },
     {
       "id": "A29",
@@ -188,19 +188,19 @@
       "id": "A30",
       "ok": true,
       "details": "repos.length = 14, minimum is 10",
-      "ms": 32
+      "ms": 17
     },
     {
       "id": "A31",
-      "ok": false,
-      "details": "priority inversion: core 33.7h stale while saos.weave.live.v1 fired later (2026-09-17T00:11:24Z) and consumed the anchor budget",
-      "ms": 181
+      "ok": true,
+      "details": "core anchor 0.3h old (fresh, <= 26h)",
+      "ms": 244
     },
     {
       "id": "A32",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 32
+      "ms": 14
     },
     {
       "id": "A33",
@@ -211,20 +211,20 @@
     {
       "id": "A34",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-09-17T04:11:50.437Z\", age 3.77h, maximum 30h",
+      "details": "field \"publishedAt\" = \"2026-09-17T04:11:50.437Z\", age 4.66h, maximum 30h",
       "ms": 0
     },
     {
       "id": "A35",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 35
+      "ms": 17
     },
     {
       "id": "A36",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-09-17T06:39:51.397Z\", age 1.30h, maximum 6h",
-      "ms": 1
+      "details": "field \"publishedAt\" = \"2026-09-17T08:34:25.963Z\", age 0.28h, maximum 6h",
+      "ms": 0
     }
   ]
 }
