@@ -1,34 +1,34 @@
 /* ─────────────────────────────────────────────────────────────────────
- * THE WEAVE · ACID-Engine — מנוע הגילוי הריבוני (weave-acid-1.0.0)
+ * THE WEAVE · ACID-Engine - מנוע הגילוי הריבוני (weave-acid-1.0.0)
  *
  * מקור: מודול ACID (Autonomous Computational Intelligence Discovery)
- * שהועלה מצי הרשת — נבדק לעומק, נמצא שבור (שגיאות תחביר ב-substrate.py
- * וב-verifier.py, ייבוא שם לא קיים) ותלוי-Cloudflare. הליבה הטובה —
- * מכונת מחסנית דטרמיניסטית + חיפוש אבולוציוני + אימות עצמאי — הובאה
+ * שהועלה מצי הרשת - נבדק לעומק, נמצא שבור (שגיאות תחביר ב-substrate.py
+ * וב-verifier.py, ייבוא שם לא קיים) ותלוי-Cloudflare. הליבה הטובה -
+ * מכונת מחסנית דטרמיניסטית + חיפוש אבולוציוני + אימות עצמאי - הובאה
  * לכאן כמימוש טהור, בלי שרת, בלי תלות חיצונית, בלי CDN.
  *
  * דוקטרינת הריבונות של המנוע:
- *   · דטרמיניזם מלא: אותו מזהה-משימה + זרע + פרמטרים ⇒ אותה תוכנית
- *     ואותו hash — בכל דפדפן, בכל סביבה, לנצח. ההוכחה שעל השרשרת
- *     היא מתכון: (משימה, זרע, דורות, אוכלוסייה) → hash. כל אחד
+ *   · דטרמיניזם מלא: אותו מזהה-משימה + זרע + פרמטרים => אותה תוכנית
+ *     ואותו hash - בכל דפדפן, בכל סביבה, לנצח. ההוכחה שעל השרשרת
+ *     היא מתכון: (משימה, זרע, דורות, אוכלוסייה) -> hash. כל אחד
  *     יכול לגזור את הפרי מחדש בעצמו, חינם.
  *   · הרשת משחזרת לפני שהיא מעידה: הלב הענני מריץ את אותו גילוי
  *     מהמתכון שהוחתם ב-custom_json; רק התאמת-hash מייצרת אימות
- *     DISCOVERY בספר. אין אמון — יש חישוב.
+ *     DISCOVERY בספר. אין אמון - יש חישוב.
  *   · תווית אמת: המנוע מדווח רק על מה שנמדד (דורות, הערכות, צעדים).
- *     הוא אינו "אוטונומי" ואינו "משפר את עצמו" — הוא חיפוש תוכניות
+ *     הוא אינו "אוטונומי" ואינו "משפר את עצמו" - הוא חיפוש תוכניות
  *     מודולרי, כפי שביקורת ה-ACID המקורית קבעה בכנות.
  *
  * תיקוני האמת מול המקור (מתועדים בכל נקודה):
- *   · substrate.py:140 — שורה מתה אחרי return (שגיאת תחביר) ⇒ כאן:
+ *   · substrate.py:140 - שורה מתה אחרי return (שגיאת תחביר) => כאן:
  *     execute מחזיר {outputs, steps, halted, timedOut} בבהירות.
- *   · verifier.py:86 — פסיק כפול ב-tuple (שגיאת תחביר) ⇒ כאן: סט פרימיטיבים קנוני אחד.
- *   · tasks.py — ייבא "Program" שאינו קיים ⇒ כאן: ספריית משימות עצמאית,
+ *   · verifier.py:86 - פסיק כפול ב-tuple (שגיאת תחביר) => כאן: סט פרימיטיבים קנוני אחד.
+ *   · tasks.py - ייבא "Program" שאינו קיים => כאן: ספריית משימות עצמאית,
  *     כל משימה עם פתרון-יד שמוכיח פתירות (דוקטרינת ACID).
- *   · search.py classify_novelty — לוגיקת חיתוך שבורה ⇒ כאן: סט נקי.
- *   · smart_discover — RNG לא-זרוע (בלתי-ניתן לשחזור) ⇒ כאן: mulberry32
+ *   · search.py classify_novelty - לוגיקת חיתוך שבורה => כאן: סט נקי.
+ *   · smart_discover - RNG לא-זרוע (בלתי-ניתן לשחזור) => כאן: mulberry32
  *     זרוע; הכל נגזר מהזרע בלבד.
- *   · crossover — set() על קבועים (סדר בלתי-דטרמיניסטי) ⇒ כאן: דה-דופ
+ *   · crossover - set() על קבועים (סדר בלתי-דטרמיניסטי) => כאן: דה-דופ
  *     שמראי-סדר.
  * ───────────────────────────────────────────────────────────────────── */
 (function (root, factory) {
@@ -108,7 +108,7 @@
     return out;
   }
 
-  /* ═══════════════════ RNG זרוע — mulberry32 (דטרמיניסטי חוצה-סביבות) ═══════════════════ */
+  /* ═══════════════════ RNG זרוע - mulberry32 (דטרמיניסטי חוצה-סביבות) ═══════════════════ */
   function mulberry32(seed) {
     var a = seed >>> 0;
     return function () {
@@ -121,7 +121,7 @@
   function randInt(rng, lo, hi) { return lo + Math.floor(rng() * (hi - lo + 1)); }
   function pick(rng, arr) { return arr[Math.floor(rng() * arr.length)]; }
 
-  /* ═══════════════════ תוכנית — מבנה, קנון, hash ═══════════════════ */
+  /* ═══════════════════ תוכנית - מבנה, קנון, hash ═══════════════════ */
   function clampProgram(instructions, constants) {
     var ins = instructions.slice(0, MAX_PROGRAM_LENGTH);
     var cons = [];
@@ -133,7 +133,7 @@
     if (cons.length === 0) cons = [0];
     return { instructions: ins, constants: cons };
   }
-  /* הקנון: מפתחות בסדר קבוע (c לפני i), בלי רווחים — ההגדרה שלנו, מתועדת */
+  /* הקנון: מפתחות בסדר קבוע (c לפני i), בלי רווחים - ההגדרה שלנו, מתועדת */
   function canonical(program) {
     var cons = program.constants.map(function (c) { return String(c); }).join(",");
     var ins = program.instructions.map(function (p) { return '["' + p[0] + '",' + p[1] + "]"; }).join(",");
@@ -141,10 +141,10 @@
   }
   function hashProgram(program) { return sha256Hex(canonical(program)).slice(0, 16); }
 
-  /* ═══════════════════ המצע — מכונת מחסנית (20 פרימיטיבים) ═══════════════════
+  /* ═══════════════════ המצע - מכונת מחסנית (20 פרימיטיבים) ═══════════════════
    * סמנטיקה זהה ל-substrate.py המקורי (אחרי תיקון שגיאת התחביר):
-   *   · חשבון מודולרי (mod 1e6) — כל ערך על המחסנית ב-[0, 1e6)
-   *   · JZ קופץ ל-arg % n (עטיפה תמיד בתחום — ולכן בדיקת המבנה אינה
+   *   · חשבון מודולרי (mod 1e6) - כל ערך על המחסנית ב-[0, 1e6)
+   *   · JZ קופץ ל-arg % n (עטיפה תמיד בתחום - ולכן בדיקת המבנה אינה
    *     מסמנת JZ כחוץ-טווח, בניגוד ל-verifier.py השבור)
    *   · READ כותב לזיכרון גם כשהמחסנית מלאה; WRITE כותב פלט בלי לשלוף
    */
@@ -281,7 +281,7 @@
       en: "sum of squares",
       inputLen: 2,
       hard: true,
-      searchNote: "משימת הרכבה קשה — 1/5 זרעים ב-600 דורות (נמדד)",
+      searchNote: "משימת הרכבה קשה - 1/5 זרעים ב-600 דורות (נמדד)",
       expected: function (inp) { return [((inp[0] * inp[0]) % MOD + (inp[1] * inp[1]) % MOD) % MOD]; },
       hand: { instructions: [["READ", 0], ["DUP", 0], ["MUL", 0], ["READ", 1], ["DUP", 0], ["MUL", 0], ["ADD", 0], ["WRITE", 2], ["HALT", 0]], constants: [0] },
     },
@@ -307,12 +307,12 @@
       hand: { instructions: [["READ", 0], ["READ", 1], ["GT", 0], ["WRITE", 2], ["HALT", 0]], constants: [0] },
     },
     max2: {
-      spec: "מקסימום של שני קלטים — דורש ענף (GT+JZ)",
+      spec: "מקסימום של שני קלטים - דורש ענף (GT+JZ)",
       en: "max of 2 inputs (branching)",
       inputLen: 2,
       expected: function (inp) { return [Math.max(inp[0], inp[1])]; },
       hard: true,
-      searchNote: "פתרון-יד מוכיח פתירות; החיפוש טרם השיג (0/5 זרעים ב-600 דורות) — אמת מדודה, לא מוסתרת",
+      searchNote: "פתרון-יד מוכיח פתירות; החיפוש טרם השיג (0/5 זרעים ב-600 דורות) - אמת מדודה, לא מוסתרת",
       hand: {
         instructions: [
           ["READ", 0], ["READ", 1], ["GT", 0], ["JZ", 7],
@@ -333,7 +333,7 @@
     read_write: [["READ", 0], ["WRITE", 1]],
     dup_add: [["READ", 0], ["DUP", 0], ["ADD", 0], ["WRITE", 1]],
     /* בלוקי הרכבה שנוספו בשיפור (בעיית הגרדיאנט שנמדדה בפועל):
-     * ללא מקור חלקי היה החיפוש עיוור — 0/5 זרעים ב-400 דורות */
+     * ללא מקור חלקי היה החיפוש עיוור - 0/5 זרעים ב-400 דורות */
     read_pair_mul: [["READ", 0], ["READ", 1], ["MUL", 0]],
     dup_mul: [["READ", 0], ["DUP", 0], ["MUL", 0], ["WRITE", 1]],
   };
@@ -405,7 +405,7 @@
     return clampProgram(instructions, constants);
   }
 
-  /* ═══════════════════ crossover — דה-דופ שמראי-סדר (תיקון set() הבלתי-דטרמיניסטי) ═══════════════════ */
+  /* ═══════════════════ crossover - דה-דופ שמראי-סדר (תיקון set() הבלתי-דטרמיניסטי) ═══════════════════ */
   function crossover(p1, p2, rng) {
     if (p1.instructions.length < 2 || p2.instructions.length < 2) return p1;
     var cut1 = randInt(rng, 1, p1.instructions.length - 1);
@@ -420,11 +420,11 @@
     return clampProgram(instructions, constants);
   }
 
-  /* ═══════════════════ ניקוד מדורג — תיקון בעיית הגרדיאנט ═══════════════════
-   * המקור (smart_discover): פלט מדויק=1.0, ±1=0.3, אחרת 0 — חיפוש עיוור
+  /* ═══════════════════ ניקוד מדורג - תיקון בעיית הגרדיאנט ═══════════════════
+   * המקור (smart_discover): פלט מדויק=1.0, ±1=0.3, אחרת 0 - חיפוש עיוור
    * (נמדד: sq2 0/5 זרעים ב-400 דורות). כאן: ניקוד מוצבי לפי מרחק
-   * מעגלי על חוג mod 1e6 — exp(−dist/25) לכל מילה + בונוס התאמת-אורך.
-   * הציון החלקי חתום מעלה ב-0.95 — "נמצא" נשאר 1.0 בלבד.
+   * מעגלי על חוג mod 1e6 - exp(−dist/25) לכל מילה + בונוס התאמת-אורך.
+   * הציון החלקי חתום מעלה ב-0.95 - "נמצא" נשאר 1.0 בלבד.
    */
   function scoreRun(outputs, expected) {
     if (!outputs || !outputs.length) return 0;
@@ -445,10 +445,10 @@
     return Math.min(s, 0.95);
   }
 
-  /* ═══════════════════ הגילוי — סטֶפֶּר דטרמיניסטי ═══════════════════
-   * createDiscovery(opts) מחזיר אובייקט עם step(maxEvals) — מאפשר ל-UI
+  /* ═══════════════════ הגילוי - סטֶפֶּר דטרמיניסטי ═══════════════════
+   * createDiscovery(opts) מחזיר אובייקט עם step(maxEvals) - מאפשר ל-UI
    * לרוץ בנתחים בלי להקפיא את הדפדפן, ולענן לרוץ הכל בבת אחת.
-   * הכל נגזר מהזרע — אין Date.now ואין Math.random בדרך.
+   * הכל נגזר מהזרע - אין Date.now ואין Math.random בדרך.
    */
   function createDiscovery(opts) {
     var taskId = opts.taskId;
@@ -475,13 +475,13 @@
         stats.executed++;
         var s = scoreRun(run.outputs, task.expected(trainInputs));
         var demoted = false;
-        /* אימות-על: ציון מושלם על קלט האימון בלבד היא התאמת-יתר —
+        /* אימות-על: ציון מושלם על קלט האימון בלבד היא התאמת-יתר -
          * בודקים 8 סטים לפני שמכריזים "נמצא": 3 זרועים + משפחת
          * הגבולות הקנונית (כולם-0, כולם-1, כולם-מקס, סיבוב מינ/מקס)
-         * — הסטים הקנוניים הורגים דטרמיניסטית תוכניות שמצליחות רק
+         * - הסטים הקנוניים הורגים דטרמיניסטית תוכניות שמצליחות רק
          * בכיוון אחד (נמדד: READ 0/WRITE 1 עבר 5 סטים אקראיים במקרה
-         * שכולם a>b). תוכנית שלא מכלילה מודחת ל-0.95 — קרובה אך
-         * אינה פתרון. הגרלה זרועה מ-(seed, gen) — דטרמיניסטי. */
+         * שכולם a>b). תוכנית שלא מכלילה מודחת ל-0.95 - קרובה אך
+         * אינה פתרון. הגרלה זרועה מ-(seed, gen) - דטרמיניסטי. */
         if (s >= 1) {
           var ofRng = mulberry32(((seed ^ 0xfeed0000) + (gen + 1) * 2654435761) >>> 0);
           var ofSets = [];
@@ -525,9 +525,9 @@
         };
         return;
       }
-      /* ניצולים: רק תוכניות שהוכיחו הכללה — התאמות-יתר מודחות מהאליטה
+      /* ניצולים: רק תוכניות שהוכיחו הכללה - התאמות-יתר מודחות מהאליטה
        * (ציון 0.95 שנשאר אליטה לנצח נמדד כמחנה את החיפוש). אם כולן
-       * מודחות — נופלים בחזרה לסדר הציון הגולמי. */
+       * מודחות - נופלים בחזרה לסדר הציון הגולמי. */
       var nonDemoted = scored.filter(function (e) { return !e[2]; });
       var pool = nonDemoted.length ? nonDemoted : scored;
       var survivors = [];
@@ -583,8 +583,8 @@
     return out.result;
   }
 
-  /* ═══════════════════ המאמת העצמאי — 5 מבחנים ═══════════════════
-   * נפרד מהגילוי (אסטרטגיה אחרת, זרע אחר, קפידה יתרה) — דוקטרינת ACID:
+  /* ═══════════════════ המאמת העצמאי - 5 מבחנים ═══════════════════
+   * נפרד מהגילוי (אסטרטגיה אחרת, זרע אחר, קפידה יתרה) - דוקטרינת ACID:
    * "Verification > Trust". מתקן את verifier.py (שבור התחביר) ומיישר
    * את בדיקת המבנה לסמנטיקת המצע (JZ נעטף תמיד).
    */
@@ -595,13 +595,13 @@
     var trainRng = mulberry32((seed >>> 0) ^ 0x5eed0000);
     var trainInputs = mkInputs(trainRng, task.inputLen);
 
-    /* 1 — פונקציונלי */
+    /* 1 - פונקציונלי */
     var run1 = execute(program, trainInputs);
     var exp1 = task.expected(trainInputs);
     var ok1 = run1.outputs.length === exp1.length && run1.outputs.every(function (v, i) { return v === exp1[i]; });
-    tests.push({ id: "functional", name: "פונקציונלי — קלט האימון", pass: ok1, detail: "פלט " + JSON.stringify(run1.outputs.slice(0, 4)) + " · צפוי " + JSON.stringify(exp1.slice(0, 4)) });
+    tests.push({ id: "functional", name: "פונקציונלי - קלט האימון", pass: ok1, detail: "פלט " + JSON.stringify(run1.outputs.slice(0, 4)) + " · צפוי " + JSON.stringify(exp1.slice(0, 4)) });
 
-    /* 2 — רב-קלט (10 סטים זרועים) */
+    /* 2 - רב-קלט (10 סטים זרועים) */
     var multiRng = mulberry32((seed >>> 0) ^ 0xfeed0000);
     var ok2 = true;
     var n2 = 0;
@@ -613,22 +613,22 @@
       if (ok) n2++;
       else ok2 = false;
     }
-    tests.push({ id: "multi", name: "רב-קלט — 10 סטים אקראיים זרועים", pass: ok2, detail: n2 + "/10 התאימו" });
+    tests.push({ id: "multi", name: "רב-קלט - 10 סטים אקראיים זרועים", pass: ok2, detail: n2 + "/10 התאימו" });
 
-    /* 3 — דטרמיניזם (5 ריצות) */
+    /* 3 - דטרמיניזם (5 ריצות) */
     var uniq = {};
     for (var i = 0; i < 5; i++) {
       var run = execute(program, trainInputs);
       uniq[JSON.stringify(run.outputs)] = true;
     }
     var nUniq = Object.keys(uniq).length;
-    tests.push({ id: "determinism", name: "דטרמיניזם — 5 ריצות זהות", pass: nUniq === 1, detail: nUniq + " פלטים ייחודיים (צפוי 1)" });
+    tests.push({ id: "determinism", name: "דטרמיניזם - 5 ריצות זהות", pass: nUniq === 1, detail: nUniq + " פלטים ייחודיים (צפוי 1)" });
 
-    /* 4 — משאבים */
+    /* 4 - משאבים */
     var ok4 = !run1.timedOut && run1.steps < MAX_STEPS && program.instructions.length <= MAX_PROGRAM_LENGTH;
-    tests.push({ id: "resource", name: "משאבים — גבולות צעדים ואורך", pass: ok4, detail: run1.steps + " צעדים (גבול " + MAX_STEPS + ") · אורך " + program.instructions.length });
+    tests.push({ id: "resource", name: "משאבים - גבולות צעדים ואורך", pass: ok4, detail: run1.steps + " צעדים (גבול " + MAX_STEPS + ") · אורך " + program.instructions.length });
 
-    /* 5 — אדוורסריאלי (ערכי קצה, באורך החוזה של המשימה — קלט ריק הוא
+    /* 5 - אדוורסריאלי (ערכי קצה, באורך החוזה של המשימה - קלט ריק הוא
      * מחוץ לחוזה; נבדק רק שהריצה לא קורסת, לא שהפלט נכון) */
     var edgeSets = [];
     var L = task.inputLen;
@@ -649,13 +649,13 @@
     }
     var emptyRun = execute(program, []);
     var emptySafe = Array.isArray(emptyRun.outputs) && isFinite(emptyRun.steps);
-    tests.push({ id: "adversarial", name: "אדוורסריאלי — ערכי קצה", pass: ok5 && emptySafe, detail: n5 + "/" + edgeSets.length + " (0, 1, 999999, 500000…) · קלט-ריק: רץ בלי קריסה" });
+    tests.push({ id: "adversarial", name: "אדוורסריאלי - ערכי קצה", pass: ok5 && emptySafe, detail: n5 + "/" + edgeSets.length + " (0, 1, 999999, 500000…) · קלט-ריק: רץ בלי קריסה" });
 
     var allPass = tests.every(function (t) { return t.pass; });
     return { taskId: taskId, seed: seed, hash: hashProgram(program), verified: allPass, tests: tests, passedCount: tests.filter(function (t) { return t.pass; }).length };
   }
 
-  /* ═══════════════════ מבחן עצמי — הוכחה בעליית הדף ═══════════════════ */
+  /* ═══════════════════ מבחן עצמי - הוכחה בעליית הדף ═══════════════════ */
   function selfTest() {
     var checks = [];
     function check(name, fn) {
@@ -701,14 +701,14 @@
         return v.verified && v.tests.every(function (t) { return t.pass; });
       });
     });
-    /* דטרמיניזם גילוי: אותו זרע ⇒ אותו hash (פעמיים) */
+    /* דטרמיניזם גילוי: אותו זרע => אותו hash (פעמיים) */
     check("דטרמיניזם גילוי (זרע 7, פעמיים)", function () {
       var a = discoverSync({ taskId: "sum3", seed: 7, generations: 120, population: 50 });
       var b = discoverSync({ taskId: "sum3", seed: 7, generations: 120, population: 50 });
       return a.found && b.found && a.hash === b.hash && JSON.stringify(a.program.instructions) === JSON.stringify(b.program.instructions);
     });
-    /* גילוי אמיתי: מוטציה מגלה את הפרש (ADD→SUB מבלוק הזריעה) —
-     * לא בלוק מוכן ולא התאמת-יתר. מדוד: 5/5 זרעים, 8–234 דורות. */
+    /* גילוי אמיתי: מוטציה מגלה את הפרש (ADD->SUB מבלוק הזריעה) -
+     * לא בלוק מוכן ולא התאמת-יתר. מדוד: 5/5 זרעים, 8-234 דורות. */
     check("גילוי חי: sub2 (מוטציה אמיתית) נמצא ומאומת 5/5", function () {
       var d = discoverSync({ taskId: "sub2", seed: 1337, generations: 300, population: 80 });
       if (!d.found) return false;

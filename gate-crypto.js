@@ -1,16 +1,16 @@
 /* ─────────────────────────────────────────────────────────────────────
- * THE WEAVE · gate-crypto — קריפטו שער הכניסה (ריבוני, אפס תלות)
+ * THE WEAVE · gate-crypto - קריפטו שער הכניסה (ריבוני, אפס תלות)
  *
- * מטרה: לאפשר למפעיל להיכנס לרשת מכל דפדפן — נגזור מפתחות, חותמים
+ * מטרה: לאפשר למפעיל להיכנס לרשת מכל דפדפן - נגזור מפתחות, חותמים
  * ומשדרים ישירות לשרשרת הציבורית. המפתח לעולם לא עוזב את הדפדפן:
  * רק חתימות ומפתחות-ציבוריים נשלחים החוצה.
  *
  * יישום טהור: sha256 (WebCrypto), base58, base58check, secp256k1 (BigInt),
- * סריאליזציית עסקת-Steem, חתימת ECDSA compact עם recovery — הכל בקובץ
+ * סריאליזציית עסקת-Steem, חתימת ECDSA compact עם recovery - הכל בקובץ
  * אחד, בלי CDN, בלי ספריות. נבדק מול חבילת steem (steem-js) בייצוג
  * מדויק: אותם מפתחות ציבוריים, אותה סריאליזציה, אותן חתימות-כשרות.
  *
- * דוקטרינת הרשת: רשות POSTING בלבד (custom_json) — השרשרת עצמה אוסרת
+ * דוקטרינת הרשת: רשות POSTING בלבד (custom_json) - השרשרת עצמה אוסרת
  * על המפתח הזה להזיז כסף. אפס סיכון הון.
  * ───────────────────────────────────────────────────────────────────── */
 (function (root, factory) {
@@ -19,7 +19,7 @@
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
 
-  /* ── sha256 — WebCrypto גלובלי (כל דפדפן מודרני, node ≥ 18) ── */
+  /* ── sha256 - WebCrypto גלובלי (כל דפדפן מודרני, node ≥ 18) ── */
   const subtle = globalThis.crypto.subtle;
   function sha256(data) {
     return subtle.digest("SHA-256", data).then((b) => new Uint8Array(b));
@@ -58,7 +58,7 @@
     for (const a of arrs) { out.set(a, o); o += a.length; }
     return out;
   };
-  const be = (n, len) => { // BigInt → bytes big-endian
+  const be = (n, len) => { // BigInt -> bytes big-endian
     const out = new Uint8Array(len);
     for (let i = len - 1; i >= 0; i--) { out[i] = Number(n & 0xffn); n >>= 8n; }
     return out;
@@ -82,7 +82,7 @@
   }
 
   // הקבועים בצורה מפוצלת (לא ליטרל 64hex): שער-הסודות של הרשת חוסם 0x+64hex בדחיפה,
-  // והשער נשאר ברזל בלי יוצאים מן הכלל — אלה קבוצי secp256k1 הציבוריים, לא סודות.
+  // והשער נשאר ברזל בלי יוצאים מן הכלל - אלה קבוצי secp256k1 הציבוריים, לא סודות.
   /* ── secp256k1 (BigInt, יעקוביאנים) ── */
   const P = 2n ** 256n - 2n ** 32n - 977n;
   const N = (0xfffffffffffffffffffffffffffffffen << 128n) | 0xbaaedce6af48a03bbfd25e8cd0364141n;
@@ -148,17 +148,17 @@
   }
   const G = { x: GX, y: GY, z: 1n };
 
-  /** מפתח-פרטי (32 בתים) → מפתח ציבורי מכווץ (33 בתים) */
+  /** מפתח-פרטי (32 בתים) -> מפתח ציבורי מכווץ (33 בתים) */
   function privToPubBytes(priv) {
     const A = toAffine(ptMul(fromBE(priv), G));
     return cat(new Uint8Array([A.y & 1n ? 0x03 : 0x02]), be(A.x, 32));
   }
-  /** מפתח ציבורי מכווץ → פורמט Steem STM… (ללא בית-גרסה, checksum=ripemd160 — כמו key_public.js של steem-js) */
+  /** מפתח ציבורי מכווץ -> פורמט Steem STM… (ללא בית-גרסה, checksum=ripemd160 - כמו key_public.js של steem-js) */
   async function pubToSTM(pub33) {
     const chk = rmd160(pub33);
     return "STM" + b58encode(cat(pub33, chk.slice(0, 4)));
   }
-  /** STM… → בתים מכווצים (ההופכי — לצורך תצוגה/השוואה) */
+  /** STM… -> בתים מכווצים (ההופכי - לצורך תצוגה/השוואה) */
   function stmToPub(stm) {
     if (!/^STM/.test(stm)) throw new Error("לא מפתח STM");
     const raw = b58decode(stm.slice(3));
@@ -166,7 +166,7 @@
     return raw.slice(0, 33);
   }
 
-  /* ── RIPEMD-160 טהור (WebCrypto אינו תומך — נדרש לקידוד מפתחות STM של גרפן) ── */
+  /* ── RIPEMD-160 טהור (WebCrypto אינו תומך - נדרש לקידוד מפתחות STM של גרפן) ── */
   function rotl(x, n) { return ((x << n) | (x >>> (32 - n))) >>> 0; }
   function rmd160(bytes) {
     const ZL = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15, 7,4,13,1,10,6,15,3,12,0,9,5,2,14,11,8, 3,10,14,4,9,15,8,1,2,7,0,6,13,11,5,12, 1,9,11,10,0,8,12,4,13,3,7,15,14,5,6,2, 4,0,5,9,7,12,2,10,14,1,3,8,11,6,15,13];
@@ -217,26 +217,26 @@
 
   /* ── גזירת מפתחות ── */
   const te = new TextEncoder();
-  /** WIF → מפתח פרטי בתים (מאמת version 0x80) */
+  /** WIF -> מפתח פרטי בתים (מאמת version 0x80) */
   async function wifToPriv(wif) {
     const { version, payload } = await b58cDecode(wif);
     if (version !== 0x80) throw new Error("WIF: version 0x" + version.toString(16) + " (צפוי 0x80)");
     if (payload.length !== 32) throw new Error("WIF: " + payload.length + " bytes (צפוי 32)");
     return payload;
   }
-  /** סיסמת-אב של Steemit → WIF לפי תפקיד (sha256(account+role+password)) */
+  /** סיסמת-אב של Steemit -> WIF לפי תפקיד (sha256(account+role+password)) */
   async function masterToWif(account, role, password) {
     const seed = te.encode(String(account).toLowerCase() + role + password);
     return b58cEncode(0x80, await sha256(seed));
   }
-  /** קלט חופשי: WIF או סיסמת-אב → { wif, pub } לפי תפקיד */
+  /** קלט חופשי: WIF או סיסמת-אב -> { wif, pub } לפי תפקיד */
   async function deriveAny(input, account, role) {
     const s = String(input).trim();
     // WIF: base58check תקני עם version 0x80
     try {
       const priv = await wifToPriv(s);
       return { wif: s, priv, pub: await pubToSTM(privToPubBytes(priv)) };
-    } catch (e) { /* לא WIF — מנסים סיסמת-אב */ }
+    } catch (e) { /* לא WIF - מנסים סיסמת-אב */ }
     const wif = await masterToWif(account, role, s);
     const priv = await wifToPriv(wif);
     return { wif, priv, pub: await pubToSTM(privToPubBytes(priv)) };
@@ -265,7 +265,7 @@
     return out;
   }
   const OP_IDS = { custom_json: 18 }; // ChainTypes של Steem
-  /** עסקה (בלי חתימות) → בתים בדיוק כמו transaction.toBuffer של steem-js */
+  /** עסקה (בלי חתימות) -> בתים בדיוק כמו transaction.toBuffer של steem-js */
   function serializeTx(tx) {
     let out = [];
     const rb = (n, len) => { for (let i = 0; i < len; i++) out.push((Number(n) >>> (8 * i)) & 0xff); }; // LE
@@ -275,10 +275,10 @@
     out.push(...varint(tx.operations.length));
     for (const op of tx.operations) {
       const tid = typeof op[0] === "number" ? op[0] : OP_IDS[op[0]];
-      if (tid === undefined) throw new Error("שער: פעולה לא נתמכת בשער — " + op[0]);
+      if (tid === undefined) throw new Error("שער: פעולה לא נתמכת בשער - " + op[0]);
       out.push(...varint(tid));
       if (tid === 18) out.push(...serializeCustomJson(op));
-      else throw new Error("שער: השער חותם custom_json בלבד (רשות posting) — סירוב כנה");
+      else throw new Error("שער: השער חותם custom_json בלבד (רשות posting) - סירוב כנה");
     }
     out.push(...varint((tx.extensions || []).length));
     return new Uint8Array(out);
@@ -307,8 +307,8 @@
       if (r === 0n) continue;
       let s = (modInv(k, N) * ((e + r * d) % N)) % N;
       if (s === 0n) continue;
-      if (s > N / 2n) s = N - s; // low-s (bip62 — כמו steem-js)
-      // קנוניות DER של steem-js: אורך INTEGER בדיוק 32 — r,s ∈ [2^247, 2^255)
+      if (s > N / 2n) s = N - s; // low-s (bip62 - כמו steem-js)
+      // קנוניות DER של steem-js: אורך INTEGER בדיוק 32 - r,s ∈ [2^247, 2^255)
       if (r < 2n ** 247n || r >= 2n ** 255n || s < 2n ** 247n || s >= 2n ** 255n) continue;
       // recovery: מוצאים את ה-i שמשחזר בדיוק את המפתח הציבורי של החותם
       let rec = -1;
@@ -338,7 +338,7 @@
    * operations: [["custom_json", { required_auths: [], required_posting_auths: [account], id, json }]]
    * מחזיר עסקה חתומה מוכנת ל-broadcast_transaction.
    * ref_block לפי הדפוס הקנוני של steem-js: last_irreversible_block_num-1 & 0xFFFF
-   * + previous של block_header(libr) — readUInt32LE(4).
+   * + previous של block_header(libr) - readUInt32LE(4).
    */
   async function buildSignedTx(ops, priv, getProps, getBlockHeader) {
     const props = await getProps();
