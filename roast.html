@@ -249,7 +249,7 @@ function render(W,R,WD,CGD){
   var wBid = wm&&wm.bestBid?wm.bestBid:SNAP.wsteemBid;
   var wAsk = wm&&wm.bestAsk?wm.bestAsk:0;
   var wAskN = wm&&wm.asks?wm.asks.reduce(function(a,x){return a+x.orders;},0):SNAP.wsteemAskCount;
-  var wAnchor = oracle&&oracle.WSTEEM?oracle.WSTEEM.mu:SNAP.wsteemAnchor;
+  var wAnchor = rail&&rail.premiums?((rail.premiums.find(function(p){return p.id==="wsteem";})||{}).anchor??SNAP.wsteemAnchor):SNAP.wsteemAnchor; /* עוגן-המסילה: אותה-סקאלה כמו-הספר (עוגן-האורקל בµ הוא-סקאלה-אחרת - ערבוב-סקאלות כאן הוא-בלבול-תצוגה, לא-אמת) */
   var railDosesLive = rail?rail.doses:SNAP.railDoses;
   var railPrem = rail&&rail.premiums?(rail.premiums.find(function(p){return p.id==="wsteem";})||{}).premBps:null;
   var verdict = R?R.summary.verdict:SNAP.verdict;
@@ -288,10 +288,10 @@ function render(W,R,WD,CGD){
   var saosSpread = SNAP.saosSpread, saosTwap = SNAP.saosTwapSamples, saosPool = SNAP.saosPoolSwaps, fair = SNAP.saosFair;
   rows += claimRow("y","גילוי מחירים פנימי אמיתי",
     "בזוג המרכזי SAOS/USDS: הוגן <span class='mono'>"+(fair/1e6).toFixed(6)+"</span> · ספרד <span class='mono'>"+saosSpread+"bps</span> · <span class='mono'>"+saosTwap+"</span> דגימות TWAP · <span class='mono'>"+int(saosPool)+"</span> החלפות בבריכה. אמת. "+
-    "בזוג USDS/WSTEEM, אחרי-ריפוי SETTLE-17 (2026-09-17): הספר דו-צדדי  -  ביד <span class='mono'>"+wBid+"</span> מול אסק <span class='mono'>"+wAsk+"</span> (<span class='mono'>"+wAskN+"</span> הצעות מכירה חיות) סביב עוגן <span class='mono'>"+wAnchor+"</span>. "+
+    "בזוג USDS/WSTEEM, אחרי-ריפוי SETTLE-17 (2026-09-17): הספר דו-צדדי - ביד <span class='mono'>"+wBid+"</span> מול אסק <span class='mono'>"+wAsk+"</span> (<span class='mono'>"+wAskN+"</span> הצעות מכירה חיות) סביב עוגן <span class='mono'>"+wAnchor+"</span>. "+
     (wAskN>0
-      ? "הפרמיה מעל-העוגן עדיין גבוהה"+(railPrem!==null?" (<span class='mono'>"+int(Math.round(railPrem/100))+"%</span> קירוב, מיטחנת-במנות)":"")+", והמסילה הריבונית פרעה עד-כה <span class='mono'>"+railDosesLive+"</span> מינונים. גילוי-מחיר דו-צדדי אמיתי, בדרך אל העוגן  -  לא מושלם."
-      : "אפס מוכרים  -  מחיר חד-צדדי אינו גילוי מחיר, והעמוד הזה לא יתן לו להתחפש לכזה."));
+      ? "הפרמיה מעל-העוגן עדיין גבוהה"+(railPrem!==null?" (<span class='mono'>"+int(Math.round(railPrem/100))+"%</span> קירוב, מיטחנת-במנות)":"")+", והמסילה הריבונית פרעה עד-כה <span class='mono'>"+railDosesLive+"</span> מינונים. גילוי-מחיר דו-צדדי אמיתי, בדרך אל העוגן - לא מושלם."
+      : "אפס מוכרים - מחיר חד-צדדי אינו גילוי מחיר, והעמוד הזה לא יתן לו להתחפש לכזה."));
 
   rows += claimRow("g","רשת שמאמתת את עצמה, כולל כישלונות",
     "פסק חי: <span class='mono'>"+verdict+" "+passed+"/"+total+"</span> גלאים. היום ב-07:57 שני גלאים נכשלו בכנות, שורש הבעיה תוקן עד 08:51, וגלאי A31 נולד. אמינות שנמדדת כולל את הדרך להתאוששות, לא רק את הפסגה.");
