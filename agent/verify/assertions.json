@@ -286,6 +286,38 @@
    "target": "money.html",
    "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
    "flag": "u"
+  },
+  {
+   "id": "A28",
+   "desc": {
+    "en": "The public API index exists and documents the endpoints (hub/api/)",
+    "he": "מפתח ה-API הציבורי קיים ומתעד את הנקודות (hub/api/)"
+   },
+   "kind": "contains",
+   "target": "hub/api/",
+   "value": "no key, no auth"
+  },
+  {
+   "id": "A29",
+   "desc": {
+    "en": "Evolution view carries the measured milestones list (at least 4 entries)",
+    "he": "תצוגת האבולוציה נושאת את רשימת אבני-הדרך הנמדדות (לפחות 4)"
+   },
+   "kind": "contains_min",
+   "target": "",
+   "value": "kn-miles",
+   "min": 2
+  },
+  {
+   "id": "A30",
+   "desc": {
+    "en": "The GH snapshot fallback is committed and carries the org repos (>= 10)",
+    "he": "תמונת-המצב של גיטהאב מחויבת ונושאת את ריפואי הארגון (>= 10)"
+   },
+   "kind": "json_min",
+   "target": "agents/gh-snapshot.json",
+   "field": "repos.length",
+   "min": 10
   }
  ]
 }
