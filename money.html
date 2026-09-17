@@ -58,6 +58,16 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
 .step .ph{font-family:var(--mono);font-size:14px;font-weight:800;color:var(--purple);border:1px solid #4a3f6e;border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:44px;direction:ltr}
 .step .bd h4{font-size:14px;margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .step .bd p{font-size:13px;color:var(--mut);margin:0;line-height:1.65}
+.step.done .ph{color:var(--green);border-color:#166534}
+.anlist{display:flex;flex-direction:column;gap:14px;margin:14px 0}
+.anrow{border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:var(--panel2)}
+.anhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.anhead .nm{font-weight:700;font-size:14px}
+.annums{font-size:12.5px;color:var(--mut)}
+.anbar{position:relative;display:flex;height:10px;border-radius:6px;overflow:hidden;margin-top:10px;direction:ltr;background:#27272a}
+.anfill{background:var(--gold)}
+.andiff{background:var(--purple);opacity:.55}
+.anmark{position:absolute;top:0;bottom:0;width:2px;background:var(--tx);z-index:2}
 .chev{display:inline-block;width:7px;height:7px;border-inline-start:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);margin-inline-start:6px;vertical-align:1px}
 .inst{display:grid;gap:12px}
 .irow{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
@@ -199,16 +209,23 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
     </section>
 
     <section class="card">
+      <h2>עוגן חי, מהחוץ פנימה <span class="en">Live Anchor · R23</span></h2>
+      <p>הכשל שנמדד בעמוד הזה תוקן בשורש: העוגן הפנימי של נכסי-הגיבוי לא עקב אחרי מחירי-השוק האמיתיים, ו-WSTEEM נסחר בפנים על 0.32 דולר בזמן ש-STEEM האמיתי שווה 0.055. מעכשיו כל פעימת-ענן מקרבת את העוגן אל מחיר-החוץ (חציון חוצה-מקורות) בהחלקה מדודה שנרשמת בספר השרשרת, והמסילה והשוק הפנימי נגררים אחריו. זו המדידה החיה, לא טענה:</p>
+      <div id="anchors"><p class="loading">טוען עוגנים חיים</p></div>
+      <p class="src">מקור חי: ספר-השרשרת הציבורי שלנו (dex/world.json) שמתעדכן בכל פעימת-ענן. המקטע הסגול הוא הפער שנותר לסגור, הקו הלבן הוא יעד השוק החיצוני. USDS, יחידת-החשבון, לעולם אינה נעוגנת מחדש.</p>
+    </section>
+
+    <section class="card">
       <h2>מה זה אומר עלינו <span class="en">The Honest Read</span></h2>
       <p><b>מה כבר יש לנו ועובד (מדוד):</b> ספר-פקודות היברידי חי, בריכות AMM, פוליטיקת-נזילות של האוצר (POL) עם עמלות פרו-רטה, מסילת-מיקרו שסוחרת נגד עוגנים, ארבע מסילות הפקדה נטולות-מפתח עם ספר גלוי, זיכוי חתום מול תביעות ציבוריות, ועיגון ראיות בשרשרות ציבוריות. התשתית הזאת היא לא פחות מזו של הדור הראשון של המכשירים שלמדנו מהם למעלה.</p>
-      <p><b>מה חסר (בכנות):</b> אפס נזילות חוץ אמיתית. אפס הפקדות בפועל. המסחר פנימי, בוטים מול בוטים. אין מכשיר תשואה על הון חונה. העוגן הפנימי של WSTEEM נעול על מחיר מדור קודם ואינו עוקב אחרי מחיר ה-STEEM החי (פער מדוד של פי 5.8). עד שזה לא מתוקן, פתיחת נזילות חוץ היא סיכון ולא הישג.</p>
+      <p><b>מה חסר (בכנות):</b> אפס נזילות חוץ אמיתית. אפס הפקדות בפועל. המסחר פנימי, בוטים מול בוטים. אין מכשיר תשואה על הון חונה. העוגן הפנימי של WSTEEM היה נעול על מחיר מדור קודם (פער מדוד של פי 5.8); הוא תוקן בשורש וכעת מחליק אל מחיר-החוץ החי בכל פעימה, במדידה גלויה למעלה בעמוד הזה, והשווקים הפנימיים נגררים אחריו במדוד.</p>
       <p><b>מה היתרון שלנו (מדוד):</b> אפס עמלת רשת, אפס גז (מנת-מסילה שורפת 0.067% לעומת $1-5 ברשת ציבורית), אין ממפול ציבורי ואין כריכות-סנדוויץ׳, סדר דטרמיניסטי, העברות חינם, גיבוי 1:1 נאכף בקוד, וכל טענה מעוגנת בשרשרת ציבורית. מיקרו-מכשירים שלא כדאי לבנות בשום רשת ציבורית, רווחיים אצלנו מהיום הראשון.</p>
     </section>
 
     <section class="card">
       <h2>תוכנית הביצוע <span class="en">Step by Step, Like a Clock</span></h2>
       <div class="clock">
-        <div class="step"><div class="ph">0</div><div class="bd"><h4>תיקון-שורש: עוגן חי ל-WSTEEM ו-PHIVE</h4><p>האורקל קיים, הפידים קיימים, העוגן נעול על מחיר מדור קודם. עד שהעוגן לא עוקב אחרי השוק החי, כל נזילות חוץ היא חור כלכלי מדוד. תנאי-סף לכל השאר.</p></div></div>
+        <div class="step done"><div class="ph">0</div><div class="bd"><h4>תיקון-שורש: עוגן חי <span class="en">delivered</span></h4><p>בוצע ומדוד: מכל פעימת-ענן העוגן מחליק אל מחיר-החוץ (חציון חוצה-מקורות, צעד מדוד וכנון-ריפליי), ההחלקה נרשמת בספר השרשרת, והמספרים חשופים בעמוד הזה. השלבים הבאים נשענים על עוגן שאינו משקר.</p></div></div>
         <div class="step"><div class="ph">1</div><div class="bd"><h4>זרימה חוץ ראשונה: הגריד על ספר-STEEM הציבורי</h4><p>הנתיב הוכח בעסקה אמיתית אחת. קו הדלק קיים (כ-437 SP לשבוע מתוכנית השחרור). להריץ גריד שבועי מדוד שסופר נזילות אמיתית מהעולם החיצון לתוך הגיבוי שלנו.</p></div></div>
         <div class="step"><div class="ph">2</div><div class="bd"><h4>כספת-הלוואות מינימלית</h4><p>המחלקה הגדולה שחסרה לנו. USDS נגד בטחונות WSTEEM/SAOS, ריבית מתמחרת במצב השרשרת, נוזליות לפי עוגן חי מהצעד 0. ההון החונה שלנו מתחיל לעבוד.</p></div></div>
         <div class="step"><div class="ph">3</div><div class="bd"><h4>sSAOS: הימור-נזיל על סולם הערך</h4><p>עטיפה סביב מנגנון קיים ומדוד. שטר שזוכה בנתח הסולם ונסחר חינם בספר שלנו. ההון הנאמן לרשת מקבל גוף נזיל בחזרה.</p></div></div>
@@ -285,6 +302,47 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
       .map(function(p){return [p.name,p.total30d/1e6,p.category||""].slice(0,3);});
     if(rows.length)drawFees(rows);
   }).catch(function(){drawFees(FEES_FALLBACK);});
+  function drawAnchors(w){
+    var host=document.getElementById("anchors");if(!host)return;
+    host.innerHTML="";
+    var st=w.state||{},A=st.assets||{},O=st.oracle||{};
+    var defs=[["WSTEEM","גיבוי STEEM 1:1"],["PHIVE","גיבוי HIVE 1:1"],["WSBD","גיבוי SBD 1:1"]];
+    var box=el("div","anlist");
+    defs.forEach(function(d){
+      var k=d[0],a=A[k]||{},o=O[k]||{};
+      var ref=(a.refPrice||0)/1000;
+      var tgt=o.mu?o.mu/1e6:null;
+      var row=el("div","anrow");
+      var head=el("div","anhead");
+      head.appendChild(el("span","nm",k+" · "+d[1]));
+      var nums=el("span","annums mono");
+      if(tgt!=null&&ref>0){
+        var gap=Math.round(((ref-tgt)/tgt)*100);
+        nums.textContent="פנימי $"+ref.toFixed(4)+" · יעד $"+tgt.toFixed(4)+" · פער "+(gap>0?"+":"")+gap+"%";
+      }else{
+        nums.textContent="פנימי $"+ref.toFixed(4)+" · אין פיד חוץ כרגע";
+      }
+      head.appendChild(nums);row.appendChild(head);
+      if(tgt!=null&&ref>0){
+        var scale=Math.max(ref,tgt)*1.12;
+        var bar=el("div","anbar");
+        var fill=el("div","anfill");fill.style.width=Math.min(100,(Math.min(ref,tgt)/scale)*100)+"%";
+        var diff=el("div","andiff");diff.style.width=Math.min(100,(Math.abs(ref-tgt)/scale)*100)+"%";
+        var mark=el("div","anmark");mark.style.left=Math.min(97.5,(tgt/scale)*100)+"%";
+        bar.appendChild(fill);bar.appendChild(diff);bar.appendChild(mark);
+        row.appendChild(bar);
+      }
+      box.appendChild(row);
+    });
+    host.appendChild(box);
+    var foot=el("p","src");
+    foot.textContent="גובה שרשרת: "+(st.height||"?")+" · פורסם: "+String(w.publishedAt||"?").replace("T"," ").slice(0,16)+"Z";
+    host.appendChild(foot);
+  }
+  jget("dex/world.json").then(drawAnchors).catch(function(){
+    var host=document.getElementById("anchors");
+    if(host)host.innerHTML='<p class="src">קריאת ספר-השרשרת הציבורי נכשלה כרגע. העוגנים ממשיכים להחליק בכל פעימה; נסה שוב בעוד רגע.</p>';
+  });
   ts();
 })();
 </script>
