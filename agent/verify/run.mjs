@@ -88,6 +88,60 @@ async function evaluate(a, baseUrl) {
   if (!a || typeof a !== "object") return { id, ok: false, details: "invalid assertion: not an object" };
   if (typeof a.kind !== "string") return { id, ok: false, details: "invalid assertion: kind is missing" };
 
+  // ── steem_priority: the R27 priority-inversion detector ──────────────
+  // Keyless public-history read from a Steem RPC. If the core anchor op
+  // is older than staleHours AND a newer non-core custom_json op from the
+  // same account exists, the anchor's RC budget was consumed by a
+  // lower-priority op: exactly the 2026-09-17 incident (genesis deploy +
+  // mint fired while the anchor line waited and the network stayed STALE
+  // for 32.7h). Independent of the Console target: the chain is a second
+  // witness, not a page fetch.
+  if (a.kind === "steem_priority") {
+    const account = String(a.account ?? "cashmachine");
+    const coreOp = String(a.coreOp ?? "saos.weave.core.v1");
+    const staleHours = Number(a.staleHours ?? 26);
+    if (!Number.isFinite(staleHours)) return { id, ok: false, details: "invalid assertion: staleHours is not a number" };
+    const rpc = String(a.rpc ?? "https://api.steemit.com");
+    let hist;
+    try {
+      const r = await fetch(rpc, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [account, -1, 100] }),
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      });
+      const j = await r.json();
+      hist = j?.result;
+      if (!Array.isArray(hist)) return { id, ok: false, details: `rpc returned no history array (HTTP ${r.status})` };
+    } catch (err) {
+      return { id, ok: false, details: `rpc fetch failed: ${err?.message ?? err}` };
+    }
+    let coreTs = "";
+    let nonCore = null;
+    for (const [, entry] of hist) {
+      const op = entry?.op;
+      if (!op || op[0] !== "custom_json") continue;
+      const body = op[1] ?? {};
+      if (!Array.isArray(body.required_posting_auths) || !body.required_posting_auths.includes(account)) continue;
+      const ts = String(entry.timestamp ?? "");
+      if (!ts) continue;
+      if (body.id === coreOp) {
+        if (ts > coreTs) coreTs = ts;
+      } else if (!nonCore || ts > nonCore.ts) {
+        nonCore = { id: String(body.id ?? "?"), ts };
+      }
+    }
+    if (!coreTs) return { id, ok: false, details: `core op ${coreOp} not found in last 100 ops of @${account}` };
+    const coreAgeH = (Date.now() - Date.parse(coreTs + "Z")) / 3_600_000;
+    if (coreAgeH <= staleHours) {
+      return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h old (fresh, <= ${staleHours}h)` };
+    }
+    if (nonCore && nonCore.ts > coreTs) {
+      return { id, ok: false, details: `priority inversion: core ${coreAgeH.toFixed(1)}h stale while ${nonCore.id} fired later (${nonCore.ts}Z) and consumed the anchor budget` };
+    }
+    return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h stale but no non-core op fired after it (honest starvation: RC regen, no inversion)` };
+  }
+
   const target = a.target ?? "";
   const res = await fetchTarget(baseUrl, target);
 
@@ -154,6 +208,25 @@ async function evaluate(a, baseUrl) {
       const min = Number(a.min);
       if (!Number.isFinite(min)) return { id, ok: false, details: `invalid assertion: min is not a number` };
       return { id, ok: num >= min, details: `${a.field} = ${num}, minimum is ${min}` };
+    }
+
+    // json_age: a date field must be at most maxHours old - liveness of a
+    // publisher, measured against the live file (not a claim in a page).
+    case "json_age": {
+      let json;
+      try {
+        json = JSON.parse(res.body);
+      } catch (err) {
+        return { id, ok: false, details: `target is not valid JSON: ${err?.message ?? err}` };
+      }
+      const { found, value } = resolvePath(json, a.field);
+      if (!found) return { id, ok: false, details: `field "${a.field}" is missing` };
+      const t = Date.parse(String(value));
+      if (!Number.isFinite(t)) return { id, ok: false, details: `field "${a.field}" = ${JSON.stringify(value)} is not a parsable date` };
+      const ageH = (Date.now() - t) / 3_600_000;
+      const maxH = Number(a.maxHours);
+      if (!Number.isFinite(maxH)) return { id, ok: false, details: `invalid assertion: maxHours is not a number` };
+      return { id, ok: ageH <= maxH, details: `field "${a.field}" = ${JSON.stringify(value)}, age ${ageH.toFixed(2)}h, maximum ${maxH}h` };
     }
 
     case "regex_absent": {

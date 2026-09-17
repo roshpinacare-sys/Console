@@ -6,10 +6,12 @@ the result in public.
 
 The flow: **request · build · the network measures · public result.**
 
-- `assertions.json` - the machine-checkable contract: 15 assertions over
+- `assertions.json` - the machine-checkable contract: 36 assertions over
   the live site (HTTP reachability, required page structures, live-data
-  minima, the FRESH verdict, the zero-emoji policy). Bilingual, versioned
-  with the repo, changed only by explicit edit.
+  minima, the FRESH verdict, the zero-emoji policy, publisher liveness
+  via json_age, and the R27 priority-inversion detector reading the Steem
+  chain itself keyless). Bilingual, versioned with the repo, changed only
+  by explicit edit.
 - `run.mjs` - the verifier. Zero dependencies, Node 20+ (global fetch).
   Fetches the live site with a cache-buster, evaluates every assertion,
   and writes `results.json` next to itself. The exit code is always 0:
@@ -22,7 +24,7 @@ The flow: **request · build · the network measures · public result.**
 ## How to run
 
 - Manual: GitHub, this repo, tab **Actions**, workflow **agent-verify**,
-  button **Run workflow**. It also runs automatically every 6 hours at :55
+  button **Run workflow**. It also runs automatically every 2 hours at :55
   (schedule) and commits the fresh results.
 - Local, from the repo root: `node agent/verify/run.mjs`. It writes
   `agent/verify/results.json`. Local runs are for debugging - do not

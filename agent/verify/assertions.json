@@ -312,12 +312,78 @@
    "id": "A30",
    "desc": {
     "en": "The GH snapshot fallback is committed and carries the org repos (>= 10)",
-    "he": "תמונת-המצב של גיטהאב מחויבת ונושאת את ריפואי הארגון (>= 10)"
+    "he": "תמונת-המצב של גיטהאב מחויבת ונושאת אית ריפואי הארגון (>= 10)"
    },
    "kind": "json_min",
    "target": "agents/gh-snapshot.json",
    "field": "repos.length",
    "min": 10
+  },
+  {
+   "id": "A31",
+   "desc": {
+    "en": "No priority inversion on Steem: when the core anchor is stale, no non-core op from the witness account may have fired after it and consumed its RC budget (R27 detector, keyless chain read)",
+    "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה רעב, שום פעולה אחרת של חשבון העדות לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח)"
+   },
+   "kind": "steem_priority",
+   "account": "cashmachine",
+   "coreOp": "saos.weave.core.v1",
+   "staleHours": 26
+  },
+  {
+   "id": "A32",
+   "desc": {
+    "en": "The external grid publish is healthy (dex/grid.json ok=true)",
+    "he": "פרסום הגריד החוץ בריא (dex/grid.json ok=true)"
+   },
+   "kind": "json_field",
+   "target": "dex/grid.json",
+   "field": "ok",
+   "value": true
+  },
+  {
+   "id": "A33",
+   "desc": {
+    "en": "The external grid publishes its measured policy verbatim: never sell STEEM below its external USD value",
+    "he": "הגריד החוץ מפרסם את מדיניותו המדודה מילה-במילה: לעולם לא למכור STEEM מתחת לערכו החוץ בדולרים"
+   },
+   "kind": "json_field",
+   "target": "dex/grid.json",
+   "field": "policy.principle",
+   "value": "never sell STEEM below its external USD value; every buy below parity is measured surplus"
+  },
+  {
+   "id": "A34",
+   "desc": {
+    "en": "The external grid runner is alive: dex/grid.json published at most 30h ago (daily cadence)",
+    "he": "רץ-הגריד החוץ חי: dex/grid.json פורסם לפני 30 שעות לכל היותר (קצב יומי)"
+   },
+   "kind": "json_age",
+   "target": "dex/grid.json",
+   "field": "publishedAt",
+   "maxHours": 30
+  },
+  {
+   "id": "A35",
+   "desc": {
+    "en": "The DEX engine publish is healthy (dex/world.json ok=true)",
+    "he": "פרסום מנוע הדקס בריא (dex/world.json ok=true)"
+   },
+   "kind": "json_field",
+   "target": "dex/world.json",
+   "field": "ok",
+   "value": true
+  },
+  {
+   "id": "A36",
+   "desc": {
+    "en": "The DEX engine is alive: dex/world.json published at most 6h ago (two-hour cadence plus tolerance)",
+    "he": "מנוע הדקס חי: dex/world.json פורסם לפני 6 שעות לכל היותר (קצב דו-שעתי בתוספת סובלנות)"
+   },
+   "kind": "json_age",
+   "target": "dex/world.json",
+   "field": "publishedAt",
+   "maxHours": 6
   }
  ]
 }
