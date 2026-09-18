@@ -193,6 +193,32 @@ ul.clean li svg{width:16px;height:16px;color:var(--acc);flex:none;margin-top:3px
 .skel{color:var(--faint);font-size:13px;padding:8px 0}
 .failhonest{color:#fca5a5;font-size:13px}
 
+/* ── operator login — המקום להתחבר עם המפתח ── */
+.opcard{border:1px solid rgba(212,175,55,.38);border-radius:var(--r);background:linear-gradient(180deg, rgba(212,175,55,.08), rgba(212,175,55,.015) 60%, transparent),var(--panel);padding:24px;margin-bottom:24px}
+.opcard h2{font-size:16px;color:#e8cd6e;display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.opcard .opsub{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+.oprow{display:flex;gap:10px;flex-wrap:wrap}
+.oprow input{flex:1;min-width:220px;background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r-sm);color:var(--text);padding:12px 14px;font-size:14px;font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+.oprow input:focus{outline:none;border-color:rgba(212,175,55,.55);box-shadow:0 0 0 3px rgba(212,175,55,.14)}
+.opbtn{background:#d4af37;color:#18181b;border:none;border-radius:var(--r-sm);padding:12px 22px;font-size:14.5px;font-weight:700;cursor:pointer;min-height:46px}
+.opbtn:hover:not(:disabled){filter:brightness(1.12)}
+.opbtn:disabled{opacity:.45;cursor:not-allowed}
+.opbtn.ghosty{background:transparent;color:var(--dim);border:1px solid var(--line2);font-weight:600}
+.opbtn.ghosty:hover{color:var(--text);border-color:rgba(255,255,255,.3);filter:none}
+.opstatus{margin-top:12px;font-size:13px;color:var(--dim);min-height:20px;line-height:1.6}
+.opstatus.err{color:#fca5a5}
+.opstatus.ok{color:#86efac}
+.opsafe{margin-top:12px;font-size:12px;color:var(--faint);line-height:1.7}
+.ophead{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;margin-bottom:18px}
+.opbadge{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.09);color:#86efac;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600}
+.opbadge .odot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.7);flex:none}
+.opgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-bottom:16px}
+.opkv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.opkv:last-child{border-bottom:none}
+.opkv .k{color:var(--faint);flex:none}
+.opkv .v{color:var(--text);font-weight:600;min-width:0;flex:1;overflow-wrap:anywhere;word-break:break-all;text-align:left}
+.oplink{display:block;color:var(--dim);font-size:13px;padding:5px 0}
+.oplink:hover{color:var(--text)}
 /* footer */
 footer.site{border-top:1px solid var(--line);margin-top:auto;padding:34px 0 26px;background:rgba(255,255,255,.015)}
 .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:26px}
@@ -564,6 +590,28 @@ footer.site a:hover{color:var(--text)}
     <h1 class="pg" data-i="ad.h">Admin - the sovereign control room</h1>
     <p class="pgsub" data-i="ad.sub">The operator's personal area: the agent bridgehead, the mission queue, the money routing plan, and the independent verification of delivery. View-only from the public side; actions run from the sovereign console or the repository's Actions tab.</p>
 
+    <!-- כניסת מפעיל: המקום להתחבר עם המפתח -->
+    <div id="op-login-card" class="opcard">
+      <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px;flex:none"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/></svg><span data-i="op.title">Operator login</span> <span class="en" style="color:var(--faint);font-size:12px;font-weight:400">the key never leaves the browser</span></h2>
+      <p class="opsub" data-i="op.sub">Connect with the commander's active key (WIF or Steemit master password). The public key is derived in your browser and matched bit-by-bit against the live on-chain authority of @headcorner. On match — the admin area unlocks. Nothing else is sent anywhere.</p>
+      <div class="oprow">
+        <input id="op-key" type="password" autocomplete="off" spellcheck="false" aria-label="active key" placeholder="5K… / L… / master password">
+        <button class="opbtn" id="op-connect-btn" type="button" data-i="op.connect">Connect</button>
+      </div>
+      <div class="opstatus" id="op-status" role="status" aria-live="polite"></div>
+      <p class="opsafe" data-i="op.safe">Security: the key is parsed by gate-crypto.js (sovereign, zero-dependency, tested against steem-js) inside this page only. It is never stored, logged, or transmitted — only the derived public key is compared against api.steemit.com. The session flag (public key + timestamp) lives in this tab's sessionStorage and dies with it.</p>
+    </div>
+
+    <!-- מחובר: לוח-המפעיל החי -->
+    <div id="op-connected" class="opcard" hidden>
+      <div class="ophead">
+        <span class="opbadge"><span class="odot"></span><span data-i="op.connected">Connected as operator</span> <span class="mono" id="op-pub" style="font-size:11.5px;opacity:.75"></span></span>
+        <button class="opbtn ghosty" id="op-disconnect-btn" type="button" data-i="op.disconnect">Disconnect</button>
+      </div>
+      <div class="opgrid" id="op-panels"><!-- filled live by opRender() --></div>
+      <p class="opsafe" id="op-verified-note"></p>
+    </div>
+
     <div class="subview" id="sub-admin-command">
       <h2 class="sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 17l-3 3v-11h6l4-6v14l-4-6h-3z"/><path d="M17 8a5 5 0 010 8"/></svg><span data-i="ad.cmd">The bridgehead</span></h2>
       <p class="pgsub" data-i="ad.cmdSub">The agent's own position, live from the public repo; the same state any future agent reads to resume the work. This is how the work survives every sandbox and every session.</p>
@@ -645,6 +693,7 @@ footer.site a:hover{color:var(--text)}
 
 <div id="toast" role="status" aria-live="polite"></div>
 
+<script src="gate-crypto.js"></script>
 <script>
 "use strict";
 /* ═══════════ i18n ═══════════ */
@@ -733,6 +782,30 @@ en: {
   "kn.doc5":"<b>No custody, no lies about money.</b> Keys stay with their owners; deposits are recorded in the open ledger; no promise of profit.",
   "kn.doc6":"<b>Autonomy with safety.</b> Agents push forward by themselves, within published laws that keep the platform and the public safe.",
   "ad.h":"Admin - the sovereign control room",
+  "op.title":"Operator login",
+  "op.sub":"Connect with the commander's active key (WIF or Steemit master password). The public key is derived in your browser and matched bit-by-bit against the live on-chain authority of @headcorner. On match — the admin area unlocks. Nothing else is sent anywhere.",
+  "op.connect":"Connect",
+  "op.safe":"Security: the key is parsed by gate-crypto.js (sovereign, zero-dependency, tested against steem-js) inside this page only. It is never stored, logged, or transmitted — only the derived public key is compared against api.steemit.com. The session flag (public key + timestamp) lives in this tab's sessionStorage and dies with it.",
+  "op.connected":"Connected as operator",
+  "op.disconnect":"Disconnect",
+  "op.busy":"Verifying against the live chain…",
+  "op.err.empty":"Enter the active key (WIF or master password). Nothing is stored.",
+  "op.err.mismatch":"This key is not the current on-chain active of @headcorner. Nothing was stored and nothing changed.",
+  "op.err.bad":"Could not derive a key from this input (WIF checksum failed). Nothing stored.",
+  "op.err.chain":"Could not read the live chain authority: ",
+  "op.verifiedNote":(ts)=>"Identity verified against the live Steem chain at "+ts+". The admin panels below read only public mirrors — no secrets exist on this site.",
+  "op.walletTitle":"Operator wallet — live",
+  "op.netTitle":"Network state — live",
+  "op.depositTitle":"Deposit doors — live watch",
+  "op.controlTitle":"Control links",
+  "op.kOperator":"Operator WTRX", "op.kOutbox":"Peg-outbox WTRX", "op.kPool":"USDS/WTRX pool",
+  "op.kTotal":"Sum (µ)", "op.kBacking":"Invariant: sum = on-chain backing",
+  "op.kHeight":"Height", "op.kProfit":"Treasury profit", "op.kPools":"Pools",
+  "op.kHalted":"Halted", "op.kDeposits":"External deposits ever",
+  "op.controlDex":"Engine Actions (saos-dex)", "op.controlConsole":"Console Actions",
+  "op.controlSecrets":"Engine secrets (GitHub settings)", "op.controlCustodian":"Custodian on Tronscan",
+  "op.chains":"Chains", "op.watchAge":"Last scan", "op.live":"live from world.json h",
+  "op.backingOk":"HOLDS — every issued WTRX is backed 1:1 on-chain", "op.backingBad":"CHECK — sum ≠ 2000µ backing",
   "ad.sub":"The operator's personal area: the agent bridgehead, the mission queue, the money routing plan, and the independent verification of delivery. View-only from the public side; actions run from the sovereign console or the repository's Actions tab.",
   "ad.cmd":"The bridgehead",
   "ad.cmdSub":"The agent's own position, live from the public repo; the same state any future agent reads to resume the work. This is how the work survives every sandbox and every session.",
@@ -852,6 +925,30 @@ he: {
   "kn.doc5":"<b>אין משמורת, אין שקרים על כסף.</b> מפתחות נשארים אצל בעליהם; הפקדות נרשמות בספר הפתוח; לא הבטחת רווח.",
   "kn.doc6":"<b>אוטונומיה עם בטיחות.</b> סוכנים דוחפים קדימה לבד, בתוך חוקים מפורסמים ששומרים על הפלטפורמה ועל הציבור.",
   "ad.h":"אדמין - חדר הבקרה הריבוני",
+  "op.title":"כניסת מפעיל",
+  "op.sub":"התחברות עם מפתח ה-active של המפקד (WIF או סיסמת-אב של Steemit). המפתח-הציבורי נגזר בדפדפן שלך ונבדק ביט-מול-ביט מול הרשות החיה של @headcorner בשרשרת. בהתאמה — אזור האדמין נפתח. שום דבר אחר לא נשלח לשום מקום.",
+  "op.connect":"התחברות",
+  "op.safe":"אבטחה: המפתח מפורש על-ידי gate-crypto.js (ריבוני, אפס תלות, מאומת מול steem-js) בתוך הדף הזה בלבד. הוא לעולם לא נשמר, לא נרשם בלוג ולא משודר — רק המפתח-הציבורי הנגזר מושווה מול api.steemit.com. דגל-הסשן (מפתח-ציבורי + חותמת-זמן) חי ב-sessionStorage של הלשונית ומתה איתה.",
+  "op.connected":"מחובר כמפעיל",
+  "op.disconnect":"התנתקות",
+  "op.busy":"מאמת מול השרשרת החיה…",
+  "op.err.empty":"הזן את המפתח (WIF או סיסמת-אב). שום דבר לא נשמר.",
+  "op.err.mismatch":"המפתח שהוזן אינו ה-active הנוכחי של @headcorner כפי שרשום בשרשרת. שום דבר לא נשמר ושום דבר לא השתנה.",
+  "op.err.bad":"לא הצלחתי לגזור מפתח מהקלט (בדיקת checksum של WIF נכשלה). שום דבר לא נשמר.",
+  "op.err.chain":"קריאת הרשות החיה מהשרשרת נכשלה: ",
+  "op.verifiedNote":(ts)=>"הזהות אומתה מול שרשרת Steem החיה ב-"+ts+". לוחות האדמין למטה קוראים מראות ציבוריות בלבד — אין סודות באתר הזה.",
+  "op.walletTitle":"ארנק המפעיל — חי",
+  "op.netTitle":"מצב הרשת — חי",
+  "op.depositTitle":"שערי ההפקדה — משמר-חי",
+  "op.controlTitle":"קישורי שליטה",
+  "op.kOperator":"WTRX של המפעיל", "op.kOutbox":"WTRX בתיבת-הפדיון", "op.kPool":"בריכת USDS/WTRX",
+  "op.kTotal":"סכום (µ)", "op.kBacking":"אינווריאנטה: הסכום = הגיבוי בשרשרת",
+  "op.kHeight":"גובה", "op.kProfit":"רווח האוצר", "op.kPools":"בריכות",
+  "op.kHalted":"עצור", "op.kDeposits":"הפקדות-חוץ אי-פעם",
+  "op.controlDex":"Actions של המנוע (saos-dex)", "op.controlConsole":"Actions של הקונסולה",
+  "op.controlSecrets":"סודות המנוע (הגדרות GitHub)", "op.controlCustodian":"המשמרת ב-Tronscan",
+  "op.chains":"שרשרות", "op.watchAge":"סריקה אחרונה", "op.live":"חי מ-world.json גובה",
+  "op.backingOk":"מתקיימת — כל WTRX שהונפק מגובה 1:1 בשרשרת", "op.backingBad":"לבדוק — הסכום שונה מהגיבוי 2000µ",
   "ad.sub":"האזור האישי של המפעיל: מאחז הסוכן, תור המשימות, תוכנית ניתוב הכסף והאימות העצמאי של המסירה. צפייה בלבד מהצד הציבורי; פעולות רצות מהקונסולה הריבונית או מלשונית ה-Actions של הריפו.",
   "ad.cmd":"המאחז",
   "ad.cmdSub":"המיקום של הסוכן עצמו, חי מהריפו הציבורי; אותו מצב שכל סוכן עתידי קורא כדי להמשיך את העבודה. כך העבודה שורדת כל סנדבוקס וכל סשן.",
@@ -1519,11 +1616,163 @@ function renderLoop(){
     srcNote("loop-ach-sub", t("loop.achSub"), true);
   }
 }
-function renderDynamic(){ renderHome(); renderLoop(); renderNetwork(); renderAgents(); renderExchange(); renderKnowledge(); renderAdmin(); }
+function renderDynamic(){ renderHome(); renderLoop(); renderNetwork(); renderAgents(); renderExchange(); renderKnowledge(); renderAdmin(); if(OP && OP.pub) opRenderPanels(); }
+
+/* ═══════════ operator login — המקום להתחבר עם המפתח ═══════════ */
+let OP = null;
+try{ OP = JSON.parse(sessionStorage.getItem("saos.op") || "null"); }catch{ OP = null; }
+
+async function opLiveAuthority(){
+  const r = await fetch("https://api.steemit.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_accounts", params: [["headcorner"]] })
+  });
+  if(!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  const ka = j && j.result && j.result[0] && j.result[0].active && j.result[0].active.key_auths;
+  if(!ka || !ka.length) throw new Error("authority-unreadable");
+  return String(ka[0][0]);
+}
+
+async function opConnect(){
+  const input = $("op-key").value.trim();
+  const st = $("op-status");
+  const btn = $("op-connect-btn");
+  if(!input){ st.className = "opstatus err"; st.textContent = t("op.err.empty"); return; }
+  btn.disabled = true;
+  st.className = "opstatus";
+  st.textContent = t("op.busy");
+  try{
+    const d = await GateCrypto.deriveAny(input, "headcorner", "active");
+    $("op-key").value = ""; // המפתח לא נשאר אפילו בשדה
+    let live = "";
+    try{ live = await opLiveAuthority(); }
+    catch(e){ st.className = "opstatus err"; st.textContent = t("op.err.chain") + String(e && e.message || e).slice(0,60); return; }
+    if(d.pub !== live){
+      st.className = "opstatus err";
+      st.textContent = t("op.err.mismatch");
+      return;
+    }
+    OP = { pub: d.pub, verifiedAt: new Date().toISOString() };
+    try{ sessionStorage.setItem("saos.op", JSON.stringify(OP)); }catch{}
+    opRender();
+  }catch(e){
+    st.className = "opstatus err";
+    st.textContent = t("op.err.bad");
+  }finally{
+    btn.disabled = false;
+  }
+}
+
+function opDisconnect(){
+  try{ sessionStorage.removeItem("saos.op"); }catch{}
+  OP = null;
+  opRender();
+}
+
+function opNum(v){ return typeof v === "number" ? v.toLocaleString("en-US") : "—"; }
+
+function opPanel(title, rows, foot){
+  return '<div class="card" style="margin:0"><div class="kplabel" style="margin:0 0 8px">'+esc(title)+'</div>'+
+    rows.map(r=>'<div class="opkv"><span class="k">'+esc(r[0])+'</span><span class="v mono" dir="ltr">'+esc(r[1])+'</span></div>').join("")+
+    (foot ? '<div style="margin-top:10px;font-size:12px;color:var(--faint)">'+esc(foot)+'</div>' : "")+
+  '</div>';
+}
+
+function opRenderPanels(){
+  const el = $("op-panels");
+  if(!el) return;
+  const w = CACHE.dex || {};
+  const byName = {};
+  (w.wallets || []).forEach(x => byName[x.name] = x);
+  const opW   = ((byName["operator"]   || {}).balances || {}).WTRX ?? null;
+  const outW  = ((byName["peg-outbox"]  || {}).balances || {}).WTRX ?? null;
+  const pool  = (w.pools || []).find(p => p.key === "USDS/WTRX") || null;
+  const poolW = pool && pool.a === "USDS" ? pool.rb : (pool ? pool.ra : null);
+  const st    = w.state || {};
+  const sum   = (typeof opW === "number" ? opW : 0) + (typeof outW === "number" ? outW : 0) + (typeof poolW === "number" ? poolW : 0);
+  const backingOk = opW !== null && outW !== null && poolW !== null && sum === 2000;
+
+  let html = "";
+  // ארנק המפעיל — מהספר הציבורי
+  html += opPanel(t("op.walletTitle"), [
+    [t("op.kOperator"),  opW  !== null ? opNum(opW) + " µ" : "—"],
+    [t("op.kOutbox"),    outW !== null ? opNum(outW) + " µ" : "—"],
+    [t("op.kPool"),      poolW !== null ? opNum(poolW) + " µ" : "—"],
+    [t("op.kTotal"),     opW !== null ? opNum(sum) + " µ" : "—"]
+  ], t(backingOk ? "op.backingOk" : "op.backingBad") + " · " + t("op.live") + " " + (st.height ?? "—"));
+
+  // מצב הרשת
+  html += opPanel(t("op.netTitle"), [
+    [t("op.kHeight"),  opNum(st.height)],
+    [t("op.kProfit"), st.treasuryProfit != null ? opNum(st.treasuryProfit / 1000) + " USDS" : "—"],
+    [t("op.kPools"),  opNum((w.pools || []).length)],
+    [t("op.kHalted"), st.halted ? "true" : "false"]
+  ]);
+
+  // שערי ההפקדה — מהמשמר הציבורי
+  const wt = CACHE.watch || {};
+  const watching = wt.watching || {};
+  const chains = wt.chains || {};
+  html += opPanel(t("op.depositTitle"), [
+    ["TRON",      watching.tron || "—"],
+    ["Ethereum",  watching.evm  || "—"],
+    ["Solana",    watching.sol  || "—"],
+    ["Bitcoin",   watching.btc  || "—"],
+    [t("op.kDeposits"), opNum(wt.depositsTotal)]
+  ], t("op.chains") + ": " + Object.keys(chains).map(c => c + " " + chains[c]).join(" · ") + (wt.publishedAt ? " · " + t("op.watchAge") + " " + timeAgo(wt.publishedAt) : ""));
+
+  // קישורי שליטה
+  html += '<div class="card" style="margin:0"><div class="kplabel" style="margin:0 0 8px">'+esc(t("op.controlTitle"))+'</div>'+
+    '<a class="oplink" href="https://github.com/roshpinacare-sys/saos-dex/actions" target="_blank" rel="noopener">▸ '+esc(t("op.controlDex"))+'</a>'+
+    '<a class="oplink" href="https://github.com/roshpinacare-sys/Console/actions" target="_blank" rel="noopener">▸ '+esc(t("op.controlConsole"))+'</a>'+
+    '<a class="oplink" href="https://github.com/roshpinacare-sys/saos-dex/settings/secrets/actions" target="_blank" rel="noopener">▸ '+esc(t("op.controlSecrets"))+'</a>'+
+    '<a class="oplink mono" dir="ltr" style="font-size:12px" href="https://tronscan.org/#/address/TYVwwuvdDmfy3shxT3cb3RKLrRCshaZxTy" target="_blank" rel="noopener">▸ '+esc(t("op.controlCustodian"))+'</a>'+
+  '</div>';
+
+  el.innerHTML = html;
+}
+
+function opRender(){
+  const loginCard = $("op-login-card");
+  const connected = $("op-connected");
+  if(!loginCard || !connected) return;
+  if(OP && OP.pub){
+    loginCard.hidden = true;
+    connected.hidden = false;
+    const pubEl = $("op-pub");
+    if(pubEl) pubEl.textContent = OP.pub.slice(0, 20) + "…";
+    const note = $("op-verified-note");
+    if(note){
+      try{
+        note.textContent = t("op.verifiedNote")(new Date(OP.verifiedAt).toLocaleTimeString(LANG === "he" ? "he-IL" : "en-GB", { hour: "2-digit", minute: "2-digit" }));
+      }catch{ note.textContent = t("op.verifiedNote")(String(OP.verifiedAt || "")); }
+    }
+    opRenderPanels();
+  } else {
+    loginCard.hidden = false;
+    connected.hidden = true;
+    const st = $("op-status");
+    if(st){ st.className = "opstatus"; st.textContent = ""; }
+  }
+}
+
+function opInit(){
+  const btn = $("op-connect-btn");
+  const key = $("op-key");
+  const dis = $("op-disconnect-btn");
+  if(!btn || !key || !dis) return;
+  btn.addEventListener("click", opConnect);
+  key.addEventListener("keydown", (e) => { if(e.key === "Enter") opConnect(); });
+  dis.addEventListener("click", opDisconnect);
+  opRender();
+}
 
 /* ═══════════ boot ═══════════ */
 async function boot(){
   route();
+  opInit();
   await loadAll();
   renderDynamic();
   setInterval(()=>{ loadAll().then(renderDynamic).catch(()=>{}); }, 300000);
