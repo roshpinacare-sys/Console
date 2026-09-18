@@ -99,6 +99,17 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
   <tr><td>BSC</td><td>חומת העוגנים · אימות read-only (v50)</td><td class="mono">receipt 0x1 · block 121,011,726</td><td><span class="tag live">מאומת</span></td></tr>
 </table>
 
+<h2>// R40 · מכשיר-החיסכון — למה להפקיד (2026-09-18)</h2>
+<div class="h2note">ההכנסה המדודה של המנוע מחולקת לחוסכים · קבלה מכונה: <span class="mono"><a class="rc" href="r40-the-save.json">receipts/r40-the-save.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.savings</a></span></div>
+<table>
+  <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
+  <tr><td>הוכחה-מקומית מלאה</td><td class="mono">הפקדה←הכנסה←חלוקה←משיכה · 24 בדיקות · אפס-הטבעה</td><td class="mono">save-first-cycle.ts · ALL GREEN</td><td><span class="tag live">הוכח</span></td></tr>
+  <tr><td>פריסה לענן</td><td class="mono">הריצה ביצעה 480 טיקים עם המכשיר</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/saos-dex/actions/runs/35309970983" target="_blank" rel="noopener">run 35309970983 · 6c54938</a></td><td><span class="tag live">success</span></td></tr>
+  <tr><td>העמדה החיה הראשונה</td><td class="mono">500 USDS של המפעיל → save-pot · operator 5,000,000→4,500,000µ</td><td class="mono">h24440 · world.json</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>שיעור-יום מפורסם</td><td class="mono">0.00% — כנות: ריבית-כספת טרם נפרעה; אין הכנסה, אין חלוקה</td><td class="mono">state.savings.apyBps = 0</td><td><span class="tag live">נמדד</span></td></tr>
+  <tr><td>אי-רטרואקטיביות</td><td class="mono">הכנסה שהגיעה בלי חוסכים לא מחולקת למי שהגיע אחריה</td><td class="mono">הוכחה מקומית · PASS</td><td><span class="tag live">מוכח</span></td></tr>
+</table>
+
 <h2>// R35 · המחזור-המלא-הראשון (2026-09-17)</h2>
 <div class="h2note">כסף-אמת מההפקדה ועד תביעת-הפדיון · קבלה מכונה: <span class="mono"><a class="rc" href="r35-full-cycle.json">receipts/r35-full-cycle.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json</a></span></div>
 <table>
