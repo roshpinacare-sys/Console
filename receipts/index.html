@@ -113,6 +113,19 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
   <tr><td>פסק-דין-עוגן</td><td class="mono">mid 333mµ מול אורקל 335mµ · spread ‎-60bps</td><td class="mono">doorReport · h21500</td><td><span class="tag live">CONVERGED</span></td></tr>
 </table>
 
+<h2>// R38 · מפתח-המפעיל אומת מול השרשרת · הגריד התחמש (2026-09-18)</h2>
+<div class="h2note">המפתח שהמפעיל הוסיף בגיטהאב נבדק, אומת ביט-מול-ביט והועבר לכספת-המנוע · קבלה מכונה: <span class="mono"><a class="rc" href="key-check.json">receipts/key-check.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/grid.json">dex/grid.json</a></span></div>
+<table>
+  <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
+  <tr><td>המפעיל הוסיף סוד HEADCORNER בגיטהאב</td><td class="mono">Console · Actions Secrets · 2026-09-18T01:53:33Z</td><td class="mono">שם-הסוד בלבד — הערך לעולם לא נחשף</td><td><span class="tag live">נמדד</span></td></tr>
+  <tr><td>סוכן key-verify בענן</td><td class="mono">גזירה ריבונית ב-gate-crypto (אפס תלות) · WIF ← מפתח-ציבורי</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/Console/actions/runs/35298963781" target="_blank" rel="noopener">run 35298963781</a> · success</td><td><span class="tag live">הצליח</span></td></tr>
+  <tr><td>השוואה מול השרשרת החיה</td><td class="mono">STM5HhJD5WUXu8vPh… ≡ ה-active של @headcorner</td><td class="mono">api.steemit.com · condenser_api.get_accounts</td><td><span class="tag live">התאמה מלאה</span></td></tr>
+  <tr><td>העברה לכספת-המנוע</td><td class="mono">sealed-box (libsodium) → saos-dex/STEEM_ACTIVE_WIF</td><td class="mono">verified-in-list · 2026-09-18T02:20:48Z</td><td><span class="tag live">אטום ומאומת</span></td></tr>
+  <tr><td>הזנקת הגריד החוץ</td><td class="mono">dex-grid · ריצה ראשונה הושלמה: 0 הונחו, 0 בוטלו — המלאי מתחת למינימום</td><td class="mono">commit bd3d54a בקונסולה</td><td><span class="tag live">ARMED-WAITING</span></td></tr>
+  <tr><td>מצב-חי מפורסם</td><td class="mono">armed: true · דלק: 475 SP/שבוע נוחת 2026-09-19T02:01:27Z · הגריד רץ יומית 03:17</td><td class="mono">grid.json · publishedAt 02:16Z</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>ניקוי העותק-הכפול</td><td class="mono">HEADCORNER נמחק מכספת-הקונסולה אחרי ההעברה — המפתח חי רק בכספת-המנוע</td><td class="mono">secrets list · post-relay</td><td><span class="tag honest">הוסר (שכפול אפס)</span></td></tr>
+</table>
+
 <h2>// כשלונות כנים (גם להם יש קבלות)</h2>
 <div class="h2note">המותג נמדד במה שהוא מפרסם כשלא הולך</div>
 <table>
