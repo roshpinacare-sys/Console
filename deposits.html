@@ -98,6 +98,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       <div class="kpi"><div class="k">גובה השרשרת החיה <span style="float:left" id="k-age">…</span></div><div class="v" id="k-height">…</div><div class="s">הלב הענני ממשיך לפעום</div></div>
       <div class="kpi"><div class="k">הפקדות חוץ שנצפו</div><div class="v" id="k-dep">…</div><div class="s" id="k-chains">…</div></div>
       <div class="kpi"><div class="k">מכל USDS של האוצר</div><div class="v gold" id="k-treas">…</div><div class="s">גיבוי נזיל פנימי לזיכויי הפקדות</div></div>
+      <div class="kpi"><div class="k">קרן-החוסכים · מכשיר R40</div><div class="v gold" id="k-save">…</div><div class="s">חיסכון-USDS שמתחלק בהכנסה המדודה — <span id="k-save-apy">…</span></div></div>
       <div class="kpi"><div class="k">תקרת זיכוי אוטומטי להפקדה</div><div class="v purple">250 USDS</div><div class="s">מעבר לזה, זיכוי מפעיל דרך השער</div></div>
     </div>
 
@@ -155,7 +156,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <li><b>נאמנות הגשר ריקה.</b> <span class="mono">escrow: {}</span>. עד שלא תמומן, תביעות דרך הגשר ייענו בסירוב כנה של אי-מימון. הפדיון בפועל עובר דרך האוצר וכתובות הצבא, לא דרך נאמנות זו.</li>
         <li><b>אתריום מקורי בלתי נראה לצופה.</b> כתובת ה-EVM נסרקת רק ללוגים של USDT/USDC. מי שישלח ETH מקורי לא ייראה בספר ולא יוכל לתבוע לבד; ההחזר רק דרך המפעיל. עד שיתווסף סריקת טרנזקציות מקוריות, ההמלצה כתובה בכל מקום: יציבים בלבד לכתובת זו.</li>
         <li><b>משמרת המפתחות של כתובות הצבא לא מתועדת בקוד.</b> הפדיון דורש שליחת מטבעות אמיתיים מכתובות אלה, כלומר מפתחות בצד המפעיל. הצי על סטים מודה בעצמו: מפתחות active לא הופעלו בדרך הצי. זו תלות מפעיל אמיתית, והיא כתובה כאן במקום להיעלם.</li>
-        <li><b>הכסף שנכנס לא עובד בחוץ.</b> המטבעות האמיתיים יושבים בכתובות הצבא ולא מייצרים כלום עד החלטת מפעיל. אין הבטחת תשואה ואין הבטחת רווח למפקיד; מה שיש הוא זכות פדיון מתועדת בסוג הנכס, ומסחר פנימי באפס עמלה.</li>
+        <li><b>הכסף שנכנס לא עובד בחוץ.</b> המטבעות האמיתיים יושבים בכתובות הצבא ולא מייצרים כלום עד החלטת מפעיל. מה שכן עובד מהרגע-שהוזכר: <b>ה-USDS הפנימי יכול להיכנס לחיסכון</b> (R40) ולהתחלק בכל-ההכנסה-המדודה של המנוע — בלי-הבטחה: אין הכנסה, אין חלוקה.</li>
       </ul>
     </div>
 
@@ -164,14 +165,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       <table>
         <thead><tr><th>האפשרות</th><th>מה היא מייצרת</th><th>מה נדרש</th><th>מצב</th></tr></thead>
         <tbody>
+          <tr><td><b>חיסכון-USDS — המפקיד מרוויח ישר</b></td><td>ה-USDS של המפקיד מקבל את כל-ההכנסה-המדודה של המנוע (ריבית-כספות, פרו-ראטה), מועברת מיתרת-האוצר החיה — אפס הטבעה</td><td>שום-דבר נוסף — המכשיר בגרעין מהרצה זו</td><td><span class="tag green">חי מריצה זו (R40)</span></td></tr>
           <tr><td><b>מסחר פנימי על ההפקדות</b></td><td>עומק לספרים ולבריכות, עמלות לאוצר, נפח אמיתי במקום בוטים</td><td>שום דבר נוסף; רץ היום, הדלק מתודלק עם הזיכוי</td><td><span class="tag green">עובד היום</span></td></tr>
           <tr><td><b>כספת ההלוואות</b></td><td>ריבית ממומשת על חוב USDS נגד בטחונות WSTEEM, לאוצר</td><td>WSTEEM אמיתי מהפקדות STEEM (מסילת 1:1 קיימת)</td><td><span class="tag green">עובד היום, בקנה מידה זעיר</span></td></tr>
           <tr><td><b>פדיון בסוג הנכס</b></td><td>הבטחה שקולה: מה שהופקד הוא מה שחוזר, אחד לאחד, בלי חשיפה למחיר</td><td>מפתחות כתובות הצבא בצד המפעיל</td><td><span class="tag amber">תלוי מפעיל</span></td></tr>
-          <tr><td><b>ערבול הפקדות STEEM לערך רשת</b></td><td>הפעלת המסילה שהוכחה: פער 20.7% בין השוק הפנימי של סטים לזה החוץ, עסקה אחת אמיתית כבר לכדה 26.28%</td><td>סוד STEEM_ACTIVE_WIF (חסימה קיימת מתועדת)</td><td><span class="tag amber">חסום על סוד</span></td></tr>
+          <tr><td><b>ערבול הפקדות STEEM לערך רשת</b></td><td>הפעלת המסילה שהוכחה: פער 20.7% בין השוק הפנימי של סטים לזה החוץ, עסקה אחת אמיתית כבר לכדה 26.28%</td><td>סוד STEEM_ACTIVE_WIF — נאטם בכספת-המנוע ואומת ביט-מול-ביט (R38)</td><td><span class="tag green">גריד חוץ חמוש ורץ</span></td></tr>
           <tr><td><b>תשואה חוץ על מטבעות ההפקדה</b></td><td>השקעת היציבים שבכתובות הצבא (הלוואות, עידון) ותשלום חלק למפקידים</td><td>החלטת משמרת מפורסמת + העברת מטבעות אמיתיים + נטילת סיכון</td><td><span class="tag red">לא אושר, בכוונה</span></td></tr>
         </tbody>
       </table>
-      <p>העיקרון שנשמר: <b>אין הבטחת רווח למפקיד</b>. כל תגמול עתידי יעבור החלטת משמרת מתועדת בספר הפתוח, או שלא יהיה.</p>
+      <p>העיקרון שנשמר: <b>אין הבטחת רווח למפקיד — יש חלוקת-הכנסה מדודה</b>. מהרגע-שהוזכר, ה-USDS של המפקיד יכול להיכנס לחיסכון ולקבל את ההכנסה-שהגיעה-בפועל לאוצר, פרו-ראטה, בלי-הטבעה (R40). שיעור-החלוקה המפורסם הוא תמיד הנמדד — גם-כשהוא כמעט-אפס. כל תשואה-חוץ נוספת תעבור החלטת משמרת מתועדת בספר הפתוח, או שלא תהיה.</p>
     </div>
 
     <div class="card">
@@ -229,6 +231,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       var tw = (W.wallets || []).find(function(w){ return w.name === "treasury"; });
       document.getElementById("k-treas").textContent = (tw && tw.balances && tw.balances.USDS ? (tw.balances.USDS/1000).toLocaleString("en-US",{maximumFractionDigits:0}) : "?") + " USDS";
       document.getElementById("k-age").textContent = W.publishedAt ? age(W.publishedAt) : "";
+      var sv = st.savings;
+      if(sv){
+        document.getElementById("k-save").textContent = (sv.potMu/1000).toLocaleString("en-US",{maximumFractionDigits:0}) + " USDS · " + (sv.savers||0) + " חוסכים";
+        document.getElementById("k-save-apy").textContent = sv.potMu > 0 ? ("שיעור-יום מדוד: " + (sv.apyBps/100).toFixed(2) + "% שנתי · חולק מצטבר $" + (sv.paidMu/1000).toFixed(2)) : "המכשיר חי, ממתין לחוסך הראשון";
+      } else {
+        document.getElementById("k-save").textContent = "—";
+        document.getElementById("k-save-apy").textContent = "המכשיר מתפרסם מהפעימה הקרובה";
+      }
       var fresh = W.publishedAt && (Date.now() - new Date(W.publishedAt).getTime() < 30*60*1000);
       if(dot) dot.className = fresh ? "livedot" : "deaddot";
     } else if(dot){ dot.className = "deaddot"; }
