@@ -112,6 +112,18 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
   <tr><td>ביקורת-ספרים חיה</td><td class="mono">pot = Σקרן+Σרווחים−Σחוב · 4 נכסים · ledgerAudit מלא עובר</td><td class="mono">world.json → state.lend.invariant</td><td><span class="tag live">נמדד</span></td></tr>
 </table>
 
+<h2>// R46 · אמת-הראצ'ט — treasuryProfitEver (2026-09-18)</h2>
+<div class="h2note">החוזה אמר "רווח-אוצר מונוטוני" אבל ה-economy מנקז את היתרה לדלק — A38 תפסה את זה בדיוק-כמתוכנן (49/52) · קבלות מכונה: <span class="mono"><a class="rc" href="r46-ratchet-proof.json">receipts/r46-ratchet-proof.json</a></span> · <span class="mono"><a class="rc" href="r46-public-gates.json">receipts/r46-public-gates.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.income.treasuryProfitEverMu</a></span></div>
+<table>
+  <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
+  <tr><td>הדימום התגלה</td><td class="mono">יתרת-האוצר צנחה מ-213,752µ ל-200,000µ — היסטוריית-גיט מלאה נסרקה, השיא אותר (4ac9369)</td><td class="mono">agent-verify: 49/52 HAS_FAILURES</td><td><span class="tag live">נתפס</span></td></tr>
+  <tr><td>הריפוי בגרעין</td><td class="mono">מונה-מונוטוני treasuryProfitEver: עולה-בכל-קציר, לעולם-לא-נשחק · זרוע-מהשיא-הגיט-מוכח</td><td class="mono">commit <a class="rc" href="https://github.com/roshpinacare-sys/saos-dex/commit/77e078c" target="_blank" rel="noopener">77e078c</a></td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>הוכחה-מקומית מבודדת</td><td class="mono">13/13: זרע 213,752µ · קציר +100µ בדיוק בשניהם · 240 טיקים חיים המונה-לעולם-לא-יורד · ledgerAudit מלא</td><td class="mono">scripts/r46-proof.ts</td><td><span class="tag live">הוכח</span></td></tr>
+  <tr><td>חי על-השרשרת</td><td class="mono">h30748 מפרסם income.treasuryProfitEverMu = 213,752µ (היתרה-העובדת 200,000µ מזרימה-דלק-כמתוכנן)</td><td class="mono">dex-beat run 35386301034</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>טיפוגרפיה ציבורית</td><td class="mono">36+3 מקפי-אמה אסורים הוסרו-כירורגית מדף-הבית והרוסט — A14/A42</td><td class="mono">re-scan: 0 forbidden</td><td><span class="tag live">נקי</span></td></tr>
+  <tr><td>כל-השערים ירוקים</td><td class="mono">52/52 ALL_PASS — A38 על השדה-המונוטוני האמיתי (213,752 ≥ 213,752)</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/Console/actions/runs/35386619595" target="_blank" rel="noopener">run 35386619595</a></td><td><span class="tag live">ALL_PASS</span></td></tr>
+</table>
+
 <h2>// R40 · מכשיר-החיסכון — למה להפקיד (2026-09-18)</h2>
 <div class="h2note">ההכנסה המדודה של המנוע מחולקת לחוסכים · קבלה מכונה: <span class="mono"><a class="rc" href="r40-the-save.json">receipts/r40-the-save.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.savings</a></span></div>
 <table>
