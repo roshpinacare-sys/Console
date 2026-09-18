@@ -47,11 +47,11 @@ jobs:
       - name: Publish the receipt (verdict, never the value)
         if: always()
         run: |
-          if ! git diff --quiet receipts/key-check.json receipts/key-check-log.jsonl 2>/dev/null; then
+          git add receipts/key-check.json receipts/key-check-log.jsonl
+          if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{process.stdout.write(require("./receipts/key-check.json").verdict)}catch{process.stdout.write("none")}')"
             git config user.name "key-verify"
             git config user.email "key-verify@users.noreply.github.com"
-            git add receipts/key-check.json receipts/key-check-log.jsonl
             git commit -m "key-verify: ${VERDICT} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           else
