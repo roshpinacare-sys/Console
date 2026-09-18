@@ -360,14 +360,21 @@ function renderTheirs(){
 }
 
 function renderOurs(){
+  jget(B + "dex/portfolio.json").then(function(P){
+    var t = P && P.portfolio && P.portfolio.totalUsdsMu;
+    if(typeof t === "number" && t > 0){
+      var usd = t / 1e3; /* µ במנוע = מילי-דולר */
+      el("k-our-book").textContent = bil(usd);
+      el("our-tvl-cell").textContent = bil(usd);
+      el("f-engine").textContent = bil(usd);
+      el("k-our-book").title = el("our-tvl-cell").title = "dex/portfolio.json · core book, live";
+    }
+  });
   jget(B + "dex/world.json").then(function(W){
     if(!W || !W.state){ return; }
     var s = W.state;
-    if(el("k-our-book")) el("k-our-book").textContent = "$" + Math.round((s.income ? (s.income.poolFeesMu + s.income.treasuryProfitMu) : 0) / 1e3 + 69) + "K";
-    el("our-tvl-cell").textContent = "$69K";
     var inc = s.income || {};
     el("f-income").textContent = mus((inc.poolFeesMu||0) + (inc.treasuryProfitMu||0));
-    el("f-engine").textContent = "$69K";
     /* המכשיר החדש */
     var sv = s.savings;
     if(sv){
