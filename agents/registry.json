@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-18T21:45:39Z",
+ "generatedAt": "2026-09-18T23:45:49Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -108,15 +108,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 40,
-    "success": 38,
+    "runs_sampled": 41,
+    "success": 39,
     "failure": 2,
     "other": 0,
-    "successRate": 95,
-    "avgDurS": 18.1
+    "successRate": 95.1,
+    "avgDurS": 18.2
    },
    "lastRun": {
-    "at": "2026-09-18T20:58:16Z",
+    "at": "2026-09-18T22:58:12Z",
     "conclusion": "success"
    }
   },
@@ -141,15 +141,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 62,
-    "success": 60,
+    "runs_sampled": 64,
+    "success": 62,
     "failure": 1,
     "other": 1,
-    "successRate": 96.8,
-    "avgDurS": 43.5
+    "successRate": 96.9,
+    "avgDurS": 43.6
    },
    "lastRun": {
-    "at": "2026-09-18T20:46:05Z",
+    "at": "2026-09-18T22:44:56Z",
     "conclusion": "success"
    }
   },
@@ -174,15 +174,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 88,
-    "success": 87,
+    "runs_sampled": 90,
+    "success": 89,
     "failure": 1,
     "other": 0,
     "successRate": 98.9,
-    "avgDurS": 14.7
+    "avgDurS": 14.8
    },
    "lastRun": {
-    "at": "2026-09-18T20:53:07Z",
+    "at": "2026-09-18T22:53:26Z",
     "conclusion": "success"
    }
   },
@@ -212,10 +212,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.5
+    "avgDurS": 15.8
    },
    "lastRun": {
-    "at": "2026-09-18T21:32:55Z",
+    "at": "2026-09-18T23:32:03Z",
     "conclusion": "success"
    }
   },
@@ -273,15 +273,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 59,
-    "success": 59,
+    "runs_sampled": 67,
+    "success": 67,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17.1
+    "avgDurS": 17.2
    },
    "lastRun": {
-    "at": "2026-09-18T21:43:51Z",
+    "at": "2026-09-18T23:42:41Z",
     "conclusion": "success"
    }
   },
@@ -307,14 +307,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 86,
+    "success": 87,
     "failure": 0,
-    "other": 14,
-    "successRate": 86,
-    "avgDurS": 29.8
+    "other": 13,
+    "successRate": 87,
+    "avgDurS": 26.3
    },
    "lastRun": {
-    "at": "2026-09-18T21:44:05Z",
+    "at": "2026-09-18T23:42:56Z",
     "conclusion": "success"
    }
   },
@@ -405,15 +405,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 64,
-    "success": 63,
+    "runs_sampled": 66,
+    "success": 65,
     "failure": 1,
     "other": 0,
-    "successRate": 98.4,
-    "avgDurS": 43.1
+    "successRate": 98.5,
+    "avgDurS": 44.4
    },
    "lastRun": {
-    "at": "2026-09-18T20:31:50Z",
+    "at": "2026-09-18T22:59:01Z",
     "conclusion": "success"
    }
   },
@@ -480,39 +480,6 @@
    },
    "lastRun": {
     "at": "2026-09-18T10:37:04Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-sovereign-foundry-ci",
-   "name": "CI",
-   "repo": "saos-sovereign-foundry",
-   "visibility": "public",
-   "schedule": "push / PR",
-   "layer": "QA",
-   "role": {
-    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Repaired at the root (Task 43): the recovery drill is self-sufficient (fresh verified backup then restore dry-run with chain-proof) and owner-held-token assertions skip honestly - api-check 182 passed / 0 failed / 7 environment-held skips, green run 35161896260.",
-    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. תוקן מהשורש (Task 43): תרגיל ההתאוששות עצמאי (גיבוי מאומת טרי ואז שחזור dry-run עם הוכחת-שרשרת) וקביעות הטוקנים שבידי הבעלים מדלגות בכנות - api-check 182 עבר / 0 נכשלו / 7 דילוגים סביבתיים, ריצה ירוקה 35161896260."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "lint + typecheck + build + api + concurrency verdict",
-    "he": "פסק lint + typecheck + build + api + מקביליות"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 1,
-    "failure": 99,
-    "other": 0,
-    "successRate": 1,
-    "avgDurS": 137.7
-   },
-   "lastRun": {
-    "at": "2026-09-16T23:20:59Z",
     "conclusion": "success"
    }
   },
@@ -641,10 +608,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 61.9
+    "avgDurS": 62.5
    },
    "lastRun": {
-    "at": "2026-09-18T21:34:09Z",
+    "at": "2026-09-18T23:33:15Z",
     "conclusion": "success"
    }
   },
@@ -674,10 +641,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 56.1
+    "avgDurS": 58.1
    },
    "lastRun": {
-    "at": "2026-09-18T21:08:06Z",
+    "at": "2026-09-18T23:08:00Z",
     "conclusion": "success"
    }
   },
@@ -740,10 +707,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 37.6
+    "avgDurS": 37.3
    },
    "lastRun": {
-    "at": "2026-09-18T21:07:33Z",
+    "at": "2026-09-18T23:07:27Z",
     "conclusion": "success"
    }
   },
@@ -777,6 +744,39 @@
    },
    "lastRun": {
     "at": "2026-09-16T21:11:56Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "saos-sovereign-foundry-ci",
+   "name": "CI",
+   "repo": "saos-sovereign-foundry",
+   "visibility": "public",
+   "schedule": "push / PR",
+   "layer": "QA",
+   "role": {
+    "en": "Foundry quality gate - lint, typecheck, production build, API contract and concurrency checks against a throwaway SQLite. Repaired at the root (Task 43): the recovery drill is self-sufficient (fresh verified backup then restore dry-run with chain-proof) and owner-held-token assertions skip honestly - api-check 182 passed / 0 failed / 7 environment-held skips, green run 35161896260.",
+    "he": "שעת איכות של ה-foundry - lint, typecheck, בילד ייצור, בדיקות חוזה API ומקביליות מול SQLite חד-פעמי. תוקן מהשורש (Task 43): תרגיל ההתאוששות עצמאי (גיבוי מאומת טרי ואז שחזור dry-run עם הוכחת-שרשרת) וקביעות הטוקנים שבידי הבעלים מדלגות בכנות - api-check 182 עבר / 0 נכשלו / 7 דילוגים סביבתיים, ריצה ירוקה 35161896260."
+   },
+   "input": {
+    "en": "push to main",
+    "he": "דחיפה ל-main"
+   },
+   "output": {
+    "en": "lint + typecheck + build + api + concurrency verdict",
+    "he": "פסק lint + typecheck + build + api + מקביליות"
+   },
+   "state": "dormant",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 1,
+    "failure": 99,
+    "other": 0,
+    "successRate": 1,
+    "avgDurS": 137.7
+   },
+   "lastRun": {
+    "at": "2026-09-16T23:20:59Z",
     "conclusion": "success"
    }
   },
