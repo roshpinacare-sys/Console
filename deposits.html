@@ -99,6 +99,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       <div class="kpi"><div class="k">הפקדות חוץ שנצפו</div><div class="v" id="k-dep">…</div><div class="s" id="k-chains">…</div></div>
       <div class="kpi"><div class="k">מכל USDS של האוצר</div><div class="v gold" id="k-treas">…</div><div class="s">גיבוי נזיל פנימי לזיכויי הפקדות</div></div>
       <div class="kpi"><div class="k">קרן-החוסכים · מכשיר R40</div><div class="v gold" id="k-save">…</div><div class="s">חיסכון-USDS שמתחלק בהכנסה המדודה — <span id="k-save-apy">…</span></div></div>
+      <div class="kpi"><div class="k">ריבונות-נעולה · מכשיר R41</div><div class="v purple" id="k-ve">…</div><div class="s">ve: נעילה ← הצבעה ← אפוק מחלק את הקרן — <span id="k-ve-detail">…</span></div></div>
       <div class="kpi"><div class="k">תקרת זיכוי אוטומטי להפקדה</div><div class="v purple">250 USDS</div><div class="s">מעבר לזה, זיכוי מפעיל דרך השער</div></div>
     </div>
 
@@ -166,6 +167,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <thead><tr><th>האפשרות</th><th>מה היא מייצרת</th><th>מה נדרש</th><th>מצב</th></tr></thead>
         <tbody>
           <tr><td><b>חיסכון-USDS — המפקיד מרוויח ישר</b></td><td>ה-USDS של המפקיד מקבל את כל-ההכנסה-המדודה של המנוע (ריבית-כספות, פרו-ראטה), מועברת מיתרת-האוצר החיה — אפס הטבעה</td><td>שום-דבר נוסף — המכשיר בגרעין מהרצה זו</td><td><span class="tag green">חי מריצה זו (R40)</span></td></tr>
+          <tr><td><b>נעילת-ve — ריבונות-הכסף של המאמינים</b></td><td>נועלים SAOS לשבועות (1-208) ← כוח-ve דועך-לינארית ← מצביעים לבריכה ← אפוק-פליפ שעתי מחלק לנועלים פרו-ראטה את קרן-העמלות שהראוטר הזרים (40% מהרווח המדוד). אג"ח-ריבונית: USDS ← SAOS-אוצר בהנחה-3%, נעול-ve-12שב' — נזילות-אוצר שאי-אפשר-למשוך</td><td>שום-דבר נוסף — הפרימיטיבים בגרעין מ-Task 54, המעגל-נסגר ב-R41: סוכן-סוחר נועל מכיסו וקונה אג"ח אחת-חד-פעמית</td><td><span class="tag green">חי מריצה זו (R41)</span></td></tr>
           <tr><td><b>מסחר פנימי על ההפקדות</b></td><td>עומק לספרים ולבריכות, עמלות לאוצר, נפח אמיתי במקום בוטים</td><td>שום דבר נוסף; רץ היום, הדלק מתודלק עם הזיכוי</td><td><span class="tag green">עובד היום</span></td></tr>
           <tr><td><b>כספת ההלוואות</b></td><td>ריבית ממומשת על חוב USDS נגד בטחונות WSTEEM, לאוצר</td><td>WSTEEM אמיתי מהפקדות STEEM (מסילת 1:1 קיימת)</td><td><span class="tag green">עובד היום, בקנה מידה זעיר</span></td></tr>
           <tr><td><b>פדיון בסוג הנכס</b></td><td>הבטחה שקולה: מה שהופקד הוא מה שחוזר, אחד לאחד, בלי חשיפה למחיר</td><td>מפתחות כתובות הצבא בצד המפעיל</td><td><span class="tag amber">תלוי מפעיל</span></td></tr>
@@ -173,7 +175,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           <tr><td><b>תשואה חוץ על מטבעות ההפקדה</b></td><td>השקעת היציבים שבכתובות הצבא (הלוואות, עידון) ותשלום חלק למפקידים</td><td>החלטת משמרת מפורסמת + העברת מטבעות אמיתיים + נטילת סיכון</td><td><span class="tag red">לא אושר, בכוונה</span></td></tr>
         </tbody>
       </table>
-      <p>העיקרון שנשמר: <b>אין הבטחת רווח למפקיד — יש חלוקת-הכנסה מדודה</b>. מהרגע-שהוזכר, ה-USDS של המפקיד יכול להיכנס לחיסכון ולקבל את ההכנסה-שהגיעה-בפועל לאוצר, פרו-ראטה, בלי-הטבעה (R40). שיעור-החלוקה המפורסם הוא תמיד הנמדד — גם-כשהוא כמעט-אפס. כל תשואה-חוץ נוספת תעבור החלטת משמרת מתועדת בספר הפתוח, או שלא תהיה.</p>
+      <p>העיקרון שנשמר: <b>אין הבטחת רווח למפקיד — יש חלוקת-הכנסה מדודה</b>. מהרגע-שהוזכר, ה-USDS של המפקיד יכול להיכנס לחיסכון ולקבל את ההכנסה-שהגיעה-בפועל לאוצר, פרו-ראטה, בלי-הטבעה (R40); מי-שמאמין לטווח-ארוך נועל-SAOS ב-ve ומקבל את חלק-העמלות שהוזרם-לקרן (R41). שיעור-החלוקה המפורסם הוא תמיד הנמדד — גם-כשהוא כמעט-אפס. כל תשואה-חוץ נוספת תעבור החלטת משמרת מתועדת בספר הפתוח, או שלא תהיה.</p>
     </div>
 
     <div class="card">
@@ -238,6 +240,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       } else {
         document.getElementById("k-save").textContent = "—";
         document.getElementById("k-save-apy").textContent = "המכשיר מתפרסם מהפעימה הקרובה";
+      }
+      var ve = st.ve;
+      if(ve){
+        document.getElementById("k-ve").textContent = (ve.positions||0) + " נועלים · " + (ve.votes||0) + " הצבעות";
+        var bond = st.bond || { count: 0, usdsInMu: 0 };
+        document.getElementById("k-ve-detail").textContent = "קרן $" + (ve.potMu/1000).toFixed(2) + " · חולק-מצטבר $" + ((ve.paidOutMu||0)/1000).toFixed(2) + " · אפוק " + (ve.epoch||0) + (bond.count ? " · אג\"ח " + bond.count + " ($" + (bond.usdsInMu/1000).toFixed(0) + ")" : "");
+      } else {
+        document.getElementById("k-ve").textContent = "—";
+        document.getElementById("k-ve-detail").textContent = "המכשיר מתפרסם מהפעימה הקרובה";
       }
       var fresh = W.publishedAt && (Date.now() - new Date(W.publishedAt).getTime() < 30*60*1000);
       if(dot) dot.className = fresh ? "livedot" : "deaddot";
