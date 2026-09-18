@@ -99,7 +99,7 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
   <tr><td>BSC</td><td>חומת העוגנים · אימות read-only (v50)</td><td class="mono">receipt 0x1 · block 121,011,726</td><td><span class="tag live">מאומת</span></td></tr>
 </table>
 
-<h2>// R44 · שוק-הכספים הריבוני — THE-MARKET (2026-09-18)</h2>
+<h2>// R44 · שוק-הכספים הריבוני · THE-MARKET (2026-09-18)</h2>
 <div class="h2note">peer-to-pool בסטנדרט Aave-v3 על השרשרת-הקנונית · השאילה-הראשונה בהיסטוריה: h28764 · קבלה מכונה: <span class="mono"><a class="rc" href="r44-money-market.json">receipts/r44-money-market.json</a></span> · ההוכחה: <span class="mono"><a class="rc" href="r44-lend-proof.json">receipts/r44-lend-proof.json</a> · 45/45</span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.lend</a></span></div>
 <table>
   <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
@@ -107,31 +107,43 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
   <tr><td>האוצר פותח את השוק</td><td class="mono">20,000µ USDS → lend-pot · היעד-האדפטיבי (3× ביקוש)</td><td class="mono">h28762 · commit <a class="rc" href="https://github.com/roshpinacare-sys/saos-dex/commit/99c2221" target="_blank" rel="noopener">99c2221</a></td><td><span class="tag live">חי</span></td></tr>
   <tr><td>בטחונות-חייל אמיתיים</td><td class="mono">soldier-1: 60,000µ WSTEEM מהיתרה-הפנויה-בלבד</td><td class="mono">h28763</td><td><span class="tag live">חי</span></td></tr>
   <tr><td>השאילה-הראשונה בהיסטוריה</td><td class="mono">1,368µ USDS · HF 1.62 · ניצולת 6.84% · APR 1.34%</td><td class="mono">h28764</td><td><span class="tag live">FIRST</span></td></tr>
-  <tr><td>סגירת-מחזור-1</td><td class="mono">פירעון-מלא + שחרור · הריבית חולקה-כחוק (µ-בודדים — כנות-סקאלה)</td><td class="mono">h28766</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>סגירת-מחזור-1</td><td class="mono">פירעון-מלא + שחרור · הריבית חולקה-כחוק (µ-בודדים · כנות-סקאלה)</td><td class="mono">h28766</td><td><span class="tag live">חי</span></td></tr>
   <tr><td>העמדות-העומדות</td><td class="mono">soldier-1 במחזור-2 + הסוכנים פתחו לבד: soldier-3 · ניצולת 12.42%</td><td class="mono">h28768 → state.lend</td><td><span class="tag live">אוטונומי</span></td></tr>
   <tr><td>ביקורת-ספרים חיה</td><td class="mono">pot = Σקרן+Σרווחים−Σחוב · 4 נכסים · ledgerAudit מלא עובר</td><td class="mono">world.json → state.lend.invariant</td><td><span class="tag live">נמדד</span></td></tr>
 </table>
 
-<h2>// R46 · אמת-הראצ'ט — treasuryProfitEver (2026-09-18)</h2>
-<div class="h2note">החוזה אמר "רווח-אוצר מונוטוני" אבל ה-economy מנקז את היתרה לדלק — A38 תפסה את זה בדיוק-כמתוכנן (49/52) · קבלות מכונה: <span class="mono"><a class="rc" href="r46-ratchet-proof.json">receipts/r46-ratchet-proof.json</a></span> · <span class="mono"><a class="rc" href="r46-public-gates.json">receipts/r46-public-gates.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.income.treasuryProfitEverMu</a></span></div>
+<h2>// R47 · אמת-הגלגל · החיסכון משלם (2026-09-18)</h2>
+<div class="h2note">מדידת-גיט על-12-פעימות-פרסום: saveAPY=0 לכל-אורך-ההיסטוריה · שלושה-שורשים נמצאו ורופאו · קבלת מכונה: <span class="mono"><a class="rc" href="r47-flywheel-proof.json">receipts/r47-flywheel-proof.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.savings</a></span></div>
 <table>
   <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
-  <tr><td>הדימום התגלה</td><td class="mono">יתרת-האוצר צנחה מ-213,752µ ל-200,000µ — היסטוריית-גיט מלאה נסרקה, השיא אותר (4ac9369)</td><td class="mono">agent-verify: 49/52 HAS_FAILURES</td><td><span class="tag live">נתפס</span></td></tr>
+  <tr><td>הדימום התגלה</td><td class="mono">חיסכון מת-מלידה: בסיס-ההכנסה = ריבית-כספת-בלבד · כספת-אחת ($2.16) שלא-נפרעה · 0.3µ/יום על קרן-500,000µ = אפס-מובנה</td><td class="mono">git history: saveAPY=0 × 12 beats</td><td><span class="tag live">נתפס</span></td></tr>
+  <tr><td>שורש-1 · שעון-ריבית</td><td class="mono">BLOCKS_PER_YEAR הניח 3s/בלוק · הקצב-הנמדד 15s/גובה · הריבית זרמה-ב-1/5 מהמציאות ועיגול-השלמים איפס-אותה (floor(1368µ×131bps×מחזור)=0)</td><td class="mono">10,483,200 → 2,102,400</td><td><span class="tag live">תוקן</span></td></tr>
+  <tr><td>שורש-2 · בסיס-הכנסה</td><td class="mono">הורחב להבטחת-העיצוב המקורית: 30% מחית-עמלות-הבריכות + ריבית-כספת + עתודת-אוצר-שוק-הכספים · כיסוי-אמת-של-יתרת-האוצר · אפס-הטבעה</td><td class="mono">savingsIncomeMu (kernel)</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>שורש-3 · סדרי-גודל</td><td class="mono">כספת: בטחונות 100kµ→250kµ (שאיבה 2,160µ→5,239µ · ריבית-מחזור floor≥1µ) · לווים: רגל-SAOS שנייה · soldier-1 נפתח ב-28,732µ נגד 20,790µ WSTEEM + 71,676µ SAOS</td><td class="mono">h34627 isolated · h30827 live</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>הוכחה-מקומית מבודדת</td><td class="mono">26/26: החוסך הרוויח 77,316µ מזרם-העמלות · מחזורי-כספת חיים · הקרנת-ריבית floor≥1µ · ledgerAudit מלא</td><td class="mono">scripts/r47-proof.ts</td><td><span class="tag live">הוכח</span></td></tr>
+  <tr><td>חי על-השרשרת</td><td class="mono">h31228: 77,201µ שולמו-לחוסכים (incomeStreams.feeShareMu) · הכספת נפרעה-ונפתחה-מחדש · חלון-היום 5,760 גבהים = יום-אמת</td><td class="mono">dex-beat run 35391315992</td><td><span class="tag live">חי</span></td></tr>
+</table>
+
+<h2>// R46 · אמת-הראצ'ט · treasuryProfitEver (2026-09-18)</h2>
+<div class="h2note">החוזה אמר "רווח-אוצר מונוטוני" אבל ה-economy מנקז את היתרה לדלק · A38 תפסה את זה בדיוק-כמתוכנן (49/52) · קבלות מכונה: <span class="mono"><a class="rc" href="r46-ratchet-proof.json">receipts/r46-ratchet-proof.json</a></span> · <span class="mono"><a class="rc" href="r46-public-gates.json">receipts/r46-public-gates.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.income.treasuryProfitEverMu</a></span></div>
+<table>
+  <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
+  <tr><td>הדימום התגלה</td><td class="mono">יתרת-האוצר צנחה מ-213,752µ ל-200,000µ · היסטוריית-גיט מלאה נסרקה, השיא אותר (4ac9369)</td><td class="mono">agent-verify: 49/52 HAS_FAILURES</td><td><span class="tag live">נתפס</span></td></tr>
   <tr><td>הריפוי בגרעין</td><td class="mono">מונה-מונוטוני treasuryProfitEver: עולה-בכל-קציר, לעולם-לא-נשחק · זרוע-מהשיא-הגיט-מוכח</td><td class="mono">commit <a class="rc" href="https://github.com/roshpinacare-sys/saos-dex/commit/77e078c" target="_blank" rel="noopener">77e078c</a></td><td><span class="tag live">חי</span></td></tr>
   <tr><td>הוכחה-מקומית מבודדת</td><td class="mono">13/13: זרע 213,752µ · קציר +100µ בדיוק בשניהם · 240 טיקים חיים המונה-לעולם-לא-יורד · ledgerAudit מלא</td><td class="mono">scripts/r46-proof.ts</td><td><span class="tag live">הוכח</span></td></tr>
   <tr><td>חי על-השרשרת</td><td class="mono">h30748 מפרסם income.treasuryProfitEverMu = 213,752µ (היתרה-העובדת 200,000µ מזרימה-דלק-כמתוכנן)</td><td class="mono">dex-beat run 35386301034</td><td><span class="tag live">חי</span></td></tr>
-  <tr><td>טיפוגרפיה ציבורית</td><td class="mono">36+3 מקפי-אמה אסורים הוסרו-כירורגית מדף-הבית והרוסט — A14/A42</td><td class="mono">re-scan: 0 forbidden</td><td><span class="tag live">נקי</span></td></tr>
-  <tr><td>כל-השערים ירוקים</td><td class="mono">52/52 ALL_PASS — A38 על השדה-המונוטוני האמיתי (213,752 ≥ 213,752)</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/Console/actions/runs/35386619595" target="_blank" rel="noopener">run 35386619595</a></td><td><span class="tag live">ALL_PASS</span></td></tr>
+  <tr><td>טיפוגרפיה ציבורית</td><td class="mono">36+3 מקפי-אמה אסורים הוסרו-כירורגית מדף-הבית והרוסט · A14/A42</td><td class="mono">re-scan: 0 forbidden</td><td><span class="tag live">נקי</span></td></tr>
+  <tr><td>כל-השערים ירוקים</td><td class="mono">52/52 ALL_PASS · A38 על השדה-המונוטוני האמיתי (213,752 ≥ 213,752)</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/Console/actions/runs/35386619595" target="_blank" rel="noopener">run 35386619595</a></td><td><span class="tag live">ALL_PASS</span></td></tr>
 </table>
 
-<h2>// R40 · מכשיר-החיסכון — למה להפקיד (2026-09-18)</h2>
+<h2>// R40 · מכשיר-החיסכון · למה להפקיד (2026-09-18)</h2>
 <div class="h2note">ההכנסה המדודה של המנוע מחולקת לחוסכים · קבלה מכונה: <span class="mono"><a class="rc" href="r40-the-save.json">receipts/r40-the-save.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.savings</a></span></div>
 <table>
   <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
   <tr><td>הוכחה-מקומית מלאה</td><td class="mono">הפקדה←הכנסה←חלוקה←משיכה · 24 בדיקות · אפס-הטבעה</td><td class="mono">save-first-cycle.ts · ALL GREEN</td><td><span class="tag live">הוכח</span></td></tr>
   <tr><td>פריסה לענן</td><td class="mono">הריצה ביצעה 480 טיקים עם המכשיר</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/saos-dex/actions/runs/35309970983" target="_blank" rel="noopener">run 35309970983 · 6c54938</a></td><td><span class="tag live">success</span></td></tr>
   <tr><td>העמדה החיה הראשונה</td><td class="mono">500 USDS של המפעיל → save-pot · operator 5,000,000→4,500,000µ</td><td class="mono">h24440 · world.json</td><td><span class="tag live">חי</span></td></tr>
-  <tr><td>שיעור-יום מפורסם</td><td class="mono">0.00% — כנות: ריבית-כספת טרם נפרעה; אין הכנסה, אין חלוקה</td><td class="mono">state.savings.apyBps = 0</td><td><span class="tag live">נמדד</span></td></tr>
+  <tr><td>שיעור-יום מפורסם</td><td class="mono">0.00% · כנות: ריבית-כספת טרם נפרעה; אין הכנסה, אין חלוקה</td><td class="mono">state.savings.apyBps = 0</td><td><span class="tag live">נמדד</span></td></tr>
   <tr><td>אי-רטרואקטיביות</td><td class="mono">הכנסה שהגיעה בלי חוסכים לא מחולקת למי שהגיע אחריה</td><td class="mono">הוכחה מקומית · PASS</td><td><span class="tag live">מוכח</span></td></tr>
 </table>
 
@@ -153,13 +165,13 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
 <div class="h2note">המפתח שהמפעיל הוסיף בגיטהאב נבדק, אומת ביט-מול-ביט והועבר לכספת-המנוע · קבלה מכונה: <span class="mono"><a class="rc" href="key-check.json">receipts/key-check.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/grid.json">dex/grid.json</a></span></div>
 <table>
   <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
-  <tr><td>המפעיל הוסיף סוד HEADCORNER בגיטהאב</td><td class="mono">Console · Actions Secrets · 2026-09-18T01:53:33Z</td><td class="mono">שם-הסוד בלבד — הערך לעולם לא נחשף</td><td><span class="tag live">נמדד</span></td></tr>
+  <tr><td>המפעיל הוסיף סוד HEADCORNER בגיטהאב</td><td class="mono">Console · Actions Secrets · 2026-09-18T01:53:33Z</td><td class="mono">שם-הסוד בלבד · הערך לעולם לא נחשף</td><td><span class="tag live">נמדד</span></td></tr>
   <tr><td>סוכן key-verify בענן</td><td class="mono">גזירה ריבונית ב-gate-crypto (אפס תלות) · WIF ← מפתח-ציבורי</td><td class="mono"><a class="rc" href="https://github.com/roshpinacare-sys/Console/actions/runs/35298963781" target="_blank" rel="noopener">run 35298963781</a> · success</td><td><span class="tag live">הצליח</span></td></tr>
   <tr><td>השוואה מול השרשרת החיה</td><td class="mono">STM5HhJD5WUXu8vPh… ≡ ה-active של @headcorner</td><td class="mono">api.steemit.com · condenser_api.get_accounts</td><td><span class="tag live">התאמה מלאה</span></td></tr>
   <tr><td>העברה לכספת-המנוע</td><td class="mono">sealed-box (libsodium) → saos-dex/STEEM_ACTIVE_WIF</td><td class="mono">verified-in-list · 2026-09-18T02:20:48Z</td><td><span class="tag live">אטום ומאומת</span></td></tr>
-  <tr><td>הזנקת הגריד החוץ</td><td class="mono">dex-grid · ריצה ראשונה הושלמה: 0 הונחו, 0 בוטלו — המלאי מתחת למינימום</td><td class="mono">commit bd3d54a בקונסולה</td><td><span class="tag live">ARMED-WAITING</span></td></tr>
+  <tr><td>הזנקת הגריד החוץ</td><td class="mono">dex-grid · ריצה ראשונה הושלמה: 0 הונחו, 0 בוטלו · המלאי מתחת למינימום</td><td class="mono">commit bd3d54a בקונסולה</td><td><span class="tag live">ARMED-WAITING</span></td></tr>
   <tr><td>מצב-חי מפורסם</td><td class="mono">armed: true · דלק: 475 SP/שבוע נוחת 2026-09-19T02:01:27Z · הגריד רץ יומית 03:17</td><td class="mono">grid.json · publishedAt 02:16Z</td><td><span class="tag live">חי</span></td></tr>
-  <tr><td>ניקוי העותק-הכפול</td><td class="mono">HEADCORNER נמחק מכספת-הקונסולה אחרי ההעברה — המפתח חי רק בכספת-המנוע</td><td class="mono">secrets list · post-relay</td><td><span class="tag honest">הוסר (שכפול אפס)</span></td></tr>
+  <tr><td>ניקוי העותק-הכפול</td><td class="mono">HEADCORNER נמחק מכספת-הקונסולה אחרי ההעברה · המפתח חי רק בכספת-המנוע</td><td class="mono">secrets list · post-relay</td><td><span class="tag honest">הוסר (שכפול אפס)</span></td></tr>
 </table>
 
 <h2>// כשלונות כנים (גם להם יש קבלות)</h2>

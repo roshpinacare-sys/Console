@@ -1,0 +1,27 @@
+{
+ "proof": "R47-flywheel-truth-isolated",
+ "sandbox": "/tmp/saos-r47-proof-*",
+ "heightStart": 30748,
+ "heightEnd": 34700,
+ "pass": 26,
+ "fail": 0,
+ "cures": {
+  "time-truth": "BLOCKS_PER_YEAR 10483200→2102400 (measured: 480 heights/beat × 12 beats/day × 365 = 15s/height; old assumed 3s continuous — interest at 1/5 real speed, integer-floor zeroed it forever: floor(1368µ×131bps×28800/(10⁴×10.5M))=0 measured)",
+  "income-base": "THE-SAVE income = vault interest + money-market treasury reserve + 30% of pool fee-cut (SAVE_FEE_SHARE_PCT=30 mirrors TREASURY_CUT_PCT) — the design's original promise, coverage-capped by treasury real USDS, pro-rata by live principal, zero mint",
+  "scale-truth": "vault 100k→250k collateral µ · 0.4→0.65 free-fraction (draw 2160µ→5239µ — cycle interest floor≥1µ) · borrower two-leg collateral WSTEEM(40%)+SAOS(25%) — soldier-1 reopened h34627: 20790µ WSTEEM + 71676µ SAOS → 28732µ USDS draw · util 71.8% · APR 4.59% · HF 5.05",
+  "day-window": "28800→5760 (a true day at measured cadence)"
+ },
+ "live": {
+  "saverOwedMu": 77316,
+  "savingsPaidMu": 77316,
+  "vaultOpened": 2,
+  "vaultRepaid": 1,
+  "newVaultCollateralMu": 233906,
+  "newVaultDebtMu": 5239,
+  "soldier1DrawMu": 28732,
+  "publishedIncomeStreams": {"vaultInterestMu": 0, "lendReserveMu": 0, "feeShareMu": 77316}
+ },
+ "ledgerAudit": true,
+ "regressions": {"r46-proof": "13/13 clean", "r45-proof": "4 rail assertions fail identically WITHOUT changes (git-stash proven) — premiums converged below 200bps edge by R45's own success; rail rests honestly"},
+ "durationMs": 19200
+}
