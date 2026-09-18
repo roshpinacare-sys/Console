@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-18T21:07:58.489Z",
+  "generatedAt": "2026-09-18T22:08:31.638Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth - no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 231,
-    "checkpoints": 224,
+    "attestations": 232,
+    "checkpoints": 225,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 230
+      "VERIFIED": 231
     },
-    "headHash": "0x9fa593b4157907fced802f7ff986933ed89c2f1b05b61f7b8939cd8078869d88"
+    "headHash": "0x62d64b8dc50734d1e2a8a8d36dbb24de536a604db2e7d500de2f697903693acb"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 208,
-      "lastAttestationSeq": 231,
-      "lastAttestationAt": "2026-09-18T20:32:54.768Z"
+      "attestations": 209,
+      "lastAttestationSeq": 232,
+      "lastAttestationAt": "2026-09-18T21:10:18.386Z"
     },
     {
       "name": "weave-market-regulator",
@@ -99,6 +99,14 @@
     }
   ],
   "attestations": [
+    {
+      "seq": 232,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-18T21:10:18.386Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #224 root 0x9fa593b4157907fc… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
+    },
     {
       "seq": 231,
       "type": "ANCHOR",
@@ -1050,24 +1058,26 @@
       "at": "2026-09-16T06:11:26.505Z",
       "agentName": "weave-cloud-heart",
       "claim": "פעימת לב ריבונית: הספר אומת מחדש - 112 רשומות, חתימות 112/112, head תואם. הרץ: GitHub Actions (הענן שלנו)."
-    },
-    {
-      "seq": 112,
-      "type": "AUDIT",
-      "status": "VERIFIED",
-      "at": "2026-09-16T06:11:21.111Z",
-      "agentName": "weave-cloud-heart",
-      "claim": "ביקורת יכולת-חתימה יומית: 9 זהויות תפקיד בספר, 1 חותמים בפועל (sealed) · השאר memory-only - מפתחותיהם חיו ב-DB סביבתי ומתים עם הסביבה · הפונקציות שלהם נבלעו בלב (gitkeeper·דחיפות, scout·סריקת האקוסיסטם) או ממתינות (relayer·עדות הפוכה)"
     }
   ],
   "checkpoints": [
+    {
+      "index": 225,
+      "root": "0x62d64b8dc50734d1e2a8a8d36dbb24de536a604db2e7d500de2f697903693acb",
+      "attFrom": 232,
+      "attTo": 232,
+      "at": "2026-09-18T21:10:18.406Z",
+      "anchoredOn": []
+    },
     {
       "index": 224,
       "root": "0x9fa593b4157907fced802f7ff986933ed89c2f1b05b61f7b8939cd8078869d88",
       "attFrom": 231,
       "attTo": 231,
       "at": "2026-09-18T20:32:54.791Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "zero"
+      ]
     },
     {
       "index": 223,
@@ -1344,14 +1354,6 @@
       "attTo": 203,
       "at": "2026-09-18T06:11:11.659Z",
       "anchoredOn": []
-    },
-    {
-      "index": 195,
-      "root": "0x265bbb7f000bd3f8c6205e6c0ec98738b1f31981d2134ed23e1fce4ca6608030",
-      "attFrom": 202,
-      "attTo": 202,
-      "at": "2026-09-18T05:09:02.432Z",
-      "anchoredOn": []
     }
   ],
   "anchorLines": {
@@ -1389,12 +1391,6 @@
     ],
     "zero": [
       {
-        "checkpoint": 218,
-        "at": "2026-09-18T18:10:22.373Z",
-        "txid": "0x113033984ffe5936bb1e837884368a23978eddb8f9bbea7acf5d7172f50de56c",
-        "explorer": "https://zscan.live/tx/0x113033984ffe5936bb1e837884368a23978eddb8f9bbea7acf5d7172f50de56c"
-      },
-      {
         "checkpoint": 219,
         "at": "2026-09-18T18:34:54.316Z",
         "txid": "0x9cf52dedf05c0cd94f85f2fd2e11a5adc30dc23f6fba419a7ea2bd081006de40",
@@ -1417,6 +1413,12 @@
         "at": "2026-09-18T20:32:46.436Z",
         "txid": "0x9797026cd95ace1aa14a784013d76241e2af7af3fe375837da7a82595d4b4b62",
         "explorer": "https://zscan.live/tx/0x9797026cd95ace1aa14a784013d76241e2af7af3fe375837da7a82595d4b4b62"
+      },
+      {
+        "checkpoint": 224,
+        "at": "2026-09-18T21:10:10.494Z",
+        "txid": "0x02d8eafd5495e6cf07b0762865d6e1bbcfc3983f8670e01419add00babe991c9",
+        "explorer": "https://zscan.live/tx/0x02d8eafd5495e6cf07b0762865d6e1bbcfc3983f8670e01419add00babe991c9"
       }
     ]
   },
