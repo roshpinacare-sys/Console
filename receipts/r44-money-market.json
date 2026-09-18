@@ -1,0 +1,103 @@
+{
+  "ok": true,
+  "door": "R44-money-market-first-cycle",
+  "at": "2026-09-18T15:54:38.514Z",
+  "heightStart": 28761,
+  "heightEnd": 28768,
+  "invariant": {
+    "USDS": {
+      "pot": 18632,
+      "expect": 18632,
+      "ok": true
+    },
+    "WSTEEM": {
+      "pot": 60000,
+      "expect": 60000,
+      "ok": true
+    },
+    "WTRX": {
+      "pot": 0,
+      "expect": 0,
+      "ok": true
+    },
+    "SAOS": {
+      "pot": 0,
+      "expect": 0,
+      "ok": true
+    }
+  },
+  "journal": [
+    {
+      "h": 28761,
+      "who": "treasury",
+      "action": "lend_supply",
+      "note": "+20000µ USDS → lend-pot (pool 20000µ · util 0% · borrowAPR 1%)"
+    },
+    {
+      "h": 28762,
+      "who": "soldier-1",
+      "action": "lend_supply",
+      "note": "+60000µ WSTEEM → lend-pot (pool 60000µ · util 0% · borrowAPR 1%)"
+    },
+    {
+      "h": 28763,
+      "who": "soldier-1",
+      "action": "lend_borrow",
+      "note": "borrow 1368µ USDS (util 6.84% · APR 1.34% · HF after 1.25)"
+    },
+    {
+      "h": 28764,
+      "who": "soldier-1",
+      "action": "lend_repay",
+      "note": "repay 1368µ USDS (interest 0µ: 0µ→1 suppliers · 0µ→treasury · principal 1368µ) · debt now 0µ"
+    },
+    {
+      "h": 28765,
+      "who": "soldier-1",
+      "action": "lend_withdraw",
+      "note": "withdraw 60000µ WSTEEM + earned 0µ (measured) · pool 0µ"
+    },
+    {
+      "h": 28766,
+      "who": "soldier-1",
+      "action": "lend_supply",
+      "note": "+60000µ WSTEEM → lend-pot (pool 60000µ · util 0% · borrowAPR 1%)"
+    },
+    {
+      "h": 28767,
+      "who": "soldier-1",
+      "action": "lend_borrow",
+      "note": "borrow 1368µ USDS (util 6.84% · APR 1.34% · HF after 1.25)"
+    }
+  ],
+  "evidence": {
+    "commit": "saos-dex@99c2221 — לידת-השוק (h28761→h28768)",
+    "world": "world.json → state.lend (markets/positions/totals/treasury/invariant) — חי ב-Pages",
+    "cockpit": "#/money-market — תצוגת-שוק-הכספים החיה",
+    "proof45": "45/45 בהוכחה-המבודדת (סנדבוקס-חד-פעמי על שיבוט-השרשרת)"
+  },
+  "what": "שוק-הכספים הריבוני (THE-MARKET) — peer-to-pool בסטנדרט Aave-v3 על השרשרת-הקנונית. השאילה-הראשונה בהיסטוריה: h28764. עקומת-kink (1%/4%/60%@80%), חלוקת-ריבית מדודה 90/10, ניזולת עם בונוס-5%, אינווריאנטת-ספרים חיה. הכל העברות-טהורות — אפס-הטבעה.",
+  "localProof": {
+    "script": "saos-dex/scripts/lend-proof.ts",
+    "verdict": "ALL GREEN — 45/45",
+    "proved": [
+      "עקומת-kink מלאה: 1% בסיס → 5% בקינק → 50% בניצולת-קיצה (חישוב-יד מדויק)",
+      "חלוקת-ריבית 90/10: 61µ ריבית → 54µ לשני מלווים פרו-ראטה (3:1 מדויק) + 7µ לאוצר",
+      "ניזולת-חיובית: פושט-מחירים 56→10 ← HF 0.54 ← פשיטה עם בונוס-5% ← חוב-נסגר",
+      "אינווריאנטה: pot = Σקרן+Σרווחים−Σחוב לכל-נכס, אחרי-כל-פעולה",
+      "ledgerAudit מלא: יתרות+בריכות+גיבוי=ג'נזיס (שימור-מוחלט)",
+      "סוכנים-אוטונומיים: האוצר מזרים-לבד, soldier-1/3 במחזורי-אשראי לבד (ניצולת-חיה)"
+    ]
+  },
+  "onChain": {
+    "treasurySupplyMu": 20000,
+    "soldier1CollateralMu": 60000,
+    "firstBorrowMu": 1368,
+    "hfAtOpen": 1.62,
+    "interestPaidMu": 0,
+    "utilizationBps": 684,
+    "borrowAprBps": 134,
+    "supplyAprBps": 8,
+    "standingDebtMu": 1368
+  }
+}

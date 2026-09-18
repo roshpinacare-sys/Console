@@ -99,6 +99,19 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:30px 0 44px;fo
   <tr><td>BSC</td><td>חומת העוגנים · אימות read-only (v50)</td><td class="mono">receipt 0x1 · block 121,011,726</td><td><span class="tag live">מאומת</span></td></tr>
 </table>
 
+<h2>// R44 · שוק-הכספים הריבוני — THE-MARKET (2026-09-18)</h2>
+<div class="h2note">peer-to-pool בסטנדרט Aave-v3 על השרשרת-הקנונית · השאילה-הראשונה בהיסטוריה: h28764 · קבלה מכונה: <span class="mono"><a class="rc" href="r44-money-market.json">receipts/r44-money-market.json</a></span> · ההוכחה: <span class="mono"><a class="rc" href="r44-lend-proof.json">receipts/r44-lend-proof.json</a> · 45/45</span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.lend</a></span></div>
+<table>
+  <tr><th>צעד</th><th>המדידה</th><th>מזהה</th><th>סטטוס</th></tr>
+  <tr><td>הוכחה-מקומית מבודדת</td><td class="mono">45/45: עקומת-kink · חלוקה 90/10 פרו-ראטה · ניזולת בונוס-5% · אינווריאנטות · שימור</td><td class="mono">scripts/lend-proof.ts</td><td><span class="tag live">הוכח</span></td></tr>
+  <tr><td>האוצר פותח את השוק</td><td class="mono">20,000µ USDS → lend-pot · היעד-האדפטיבי (3× ביקוש)</td><td class="mono">h28762 · commit <a class="rc" href="https://github.com/roshpinacare-sys/saos-dex/commit/99c2221" target="_blank" rel="noopener">99c2221</a></td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>בטחונות-חייל אמיתיים</td><td class="mono">soldier-1: 60,000µ WSTEEM מהיתרה-הפנויה-בלבד</td><td class="mono">h28763</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>השאילה-הראשונה בהיסטוריה</td><td class="mono">1,368µ USDS · HF 1.62 · ניצולת 6.84% · APR 1.34%</td><td class="mono">h28764</td><td><span class="tag live">FIRST</span></td></tr>
+  <tr><td>סגירת-מחזור-1</td><td class="mono">פירעון-מלא + שחרור · הריבית חולקה-כחוק (µ-בודדים — כנות-סקאלה)</td><td class="mono">h28766</td><td><span class="tag live">חי</span></td></tr>
+  <tr><td>העמדות-העומדות</td><td class="mono">soldier-1 במחזור-2 + הסוכנים פתחו לבד: soldier-3 · ניצולת 12.42%</td><td class="mono">h28768 → state.lend</td><td><span class="tag live">אוטונומי</span></td></tr>
+  <tr><td>ביקורת-ספרים חיה</td><td class="mono">pot = Σקרן+Σרווחים−Σחוב · 4 נכסים · ledgerAudit מלא עובר</td><td class="mono">world.json → state.lend.invariant</td><td><span class="tag live">נמדד</span></td></tr>
+</table>
+
 <h2>// R40 · מכשיר-החיסכון — למה להפקיד (2026-09-18)</h2>
 <div class="h2note">ההכנסה המדודה של המנוע מחולקת לחוסכים · קבלה מכונה: <span class="mono"><a class="rc" href="r40-the-save.json">receipts/r40-the-save.json</a></span> · מצב-חי: <span class="mono"><a class="rc" href="../dex/world.json">dex/world.json → state.savings</a></span></div>
 <table>
