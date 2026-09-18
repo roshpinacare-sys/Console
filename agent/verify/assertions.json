@@ -410,13 +410,13 @@
   {
    "id": "A38",
    "desc": {
-    "en": "R28 treasury ratchet: accumulated treasury profit never drops below the floor measured on 2026-09-17 (209785 mu). Catches state regressions like the h9433 to h8953 overwrite. The floor only ever moves upward, session by session",
-    "he": "ראצ'ט האוצר R28: הרווח המצטבר לעולם לא יורד מתחת לרצפה שנמדדה ב-2026-09-17 (209785 מיקרו). תופס רגרסיות מצב כמו הדריסה מ-h9433 ל-h8953. הרצפה זזה רק כלפי מעלה, מסשן לסשן"
+    "en": "R46 treasury ratchet (monotonic lifetime accrual): treasuryProfitEverMu never drops. The working balance (treasuryProfit) is fuel-consumed by design (economy drains it for ladder/gas), so the ratchet moved to the true monotonic counter (seeded with the git-proven historical high-water 213752mu, commit 4ac9369, 2026-09-17). Floor only ever moves upward.",
+    "he": "ראצ׳ט האוצר R46 (צבירה-מצטברת מונוטונית): treasuryProfitEverMu לעולם לא יורד. היתרה העובדת (treasuryProfit) היא דלק-מתכלה-לפי-תכנון (ה-economy מנקז אותה לסולם/גז), ולכן הראצ׳ט עבר אל המונה-המונוטוני-האמיתי (זרע = השיא-ההיסטורי הגיט-מוכח 213752µ, קומיט 4ac9369, 2026-09-17). הרצפה זזה רק כלפי מעלה."
    },
    "kind": "json_min",
    "target": "dex/world.json",
-   "field": "state.income.treasuryProfitMu",
-   "min": 209785
+   "field": "state.income.treasuryProfitEverMu",
+   "min": 213752
   },
   {
    "id": "A39",
