@@ -1,0 +1,58 @@
+# MONEY-WATCH — צופה נתיב הכסף (R39)
+#
+# שני צווארי-הבקבוק של נתיב הכסף עלו על מעקב חי:
+#   1. נחיתת-הדלק: תשלום ה-powerdown של @headcorner (עורק-החיים היחיד,
+#      ≈470 SP ≈ $25 לשבוע) נוחת ב-02:01 UTC — הגריד היה תופס אותו רק
+#      ב-03:17. הסוכן קולט את הנחיתה בתוך רבע-שעה ומזניק את הגריד מיד.
+#   2. יציאת-הפדיון: תיבת-היציאה מול עלות השידור ב-TRON — פסק
+#      SEND-NOW/WAIT חי עם המספרים.
+#
+# תדירות: כל רבע-שעה. הריפו ציבורי — ה-Actions בחינם. אפס-מפתחות:
+# RPC ציבורי בלבד. הזנקת-הגריד פעם-אחת-לכל-תשלום (סנטינל ב-money.json).
+
+name: money-watch
+
+on:
+  schedule:
+    - cron: '2,17,32,47 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: money-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Money path watch (fuel landing + redemption verdict)
+        env:
+          AGENTS_WATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}
+        run: node agents/money-watch.mjs
+
+      - name: Publish the money path state
+        if: always()
+        run: |
+          git add dex/money.json
+          if ! git diff --cached --quiet; then
+            VERDICT="$(node -e 'try{const d=require("./dex/money.json");process.stdout.write((d.redemption&&d.redemption.verdict)||"none")}catch{process.stdout.write("none")}')"
+            LANDING="$(node -e 'try{const d=require("./dex/money.json");process.stdout.write(d.landing?"LANDING":"steady")}catch{process.stdout.write("?")}')"
+            git config user.name "money-watch"
+            git config user.email "money-watch@users.noreply.github.com"
+            git commit -m "money-watch: ${LANDING} · redemption ${VERDICT} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "no money state change to publish"
+          fi
