@@ -141,26 +141,47 @@ try {
   const world = JSON.parse(readFileSync("dex/world.json", "utf8"));
   const wallets = world?.wallets || [];
   const state = world?.state || {};
+  const pools = world?.pools || [];
   const outbox = wallets.find((w) => w.name === "peg-outbox");
   const operator = wallets.find((w) => w.name === "operator");
-  const poolWtrx = (world?.pools || []).find((p) => p.key === "USDS/WTRX");
+  const poolWtrx = pools.find((p) => p.key === "USDS/WTRX");
   const outboxMu = outbox?.balances?.WTRX ?? null;
   const operatorMu = operator?.balances?.WTRX ?? null;
   const poolWtrx2 = poolWtrx ? (poolWtrx.b === "WTRX" ? poolWtrx.rb : poolWtrx.ra) : null;
+  // אינווריאנטת שימור מלאה: כל ה-WTRX בעולם (כל ארנק + כל בריכה) = הגיבוי —
+  // לא משנה לאן זרם הכסף (אוצר-POL, חיילים, בוטים) — סכום-העולם חייב להתאים במדויק
+  const wtrxHolders = wallets
+    .filter((w) => ((w?.balances?.WTRX ?? 0) + (w?.locked?.WTRX ?? 0)) > 0)
+    .map((w) => ({ who: w.name, mu: (w.balances?.WTRX ?? 0) + (w.locked?.WTRX ?? 0) }));
+  const walletSumMu = wtrxHolders.reduce((s, h) => s + h.mu, 0);
+  const poolHolders = pools
+    .map((p) => ({ key: p.key, mu: (p.a === "WTRX" ? p.ra : 0) + (p.b === "WTRX" ? p.rb : 0) }))
+    .filter((h) => h.mu > 0);
+  const poolSumMu = poolHolders.reduce((s, h) => s + h.mu, 0);
   const oracleWtrxMu = state?.oracle?.WTRX?.mu ?? null; // אורקל: µ = מיקרו-דולר ליחידה (chain.ts:781 ×1e6)
   const oracleWsteemMu = state?.oracle?.WSTEEM?.mu ?? null;
   oracleWtrxMuGlobal = oracleWtrxMu;
   oracleWsteemMuGlobal = oracleWsteemMu;
   const backingMu = state?.backing?.WTRX ?? null;
-  const poolMu = poolWtrx2;
 
   if (outboxMu !== null) {
     const outboxTrx = outboxMu / 1000;
     const custody = await tronCustody().catch(() => null);
-    // אינווריאנטה: מפעיל + תיבת-יציאה + בריכה = גיבוי (ב-µ)
-    if (operatorMu !== null && poolMu !== null && backingMu !== null) {
-      const sum = operatorMu + outboxMu + poolMu;
-      invariant = { operatorMu, outboxMu, poolMu, sumMu: sum, backingMu, holds: sum === backingMu };
+    // אינווריאנטה: סכום-העולם (כל ארנק + כל בריכה) = הגיבוי (ב-µ) — שימור מלא, עמיד לכל זרימה עתידית
+    if (backingMu !== null) {
+      const sum = walletSumMu + poolSumMu;
+      invariant = {
+        operatorMu,
+        outboxMu,
+        poolMu: poolWtrx2,
+        walletSumMu,
+        poolSumMu,
+        holders: [...wtrxHolders, ...poolHolders],
+        sumMu: sum,
+        backingMu,
+        holds: sum === backingMu,
+        scope: "all wallets + all pools (full conservation)",
+      };
     }
     const threshold = r2(BANDWIDTH_COST_TRX * SEND_NOW_MULTIPLE);
     const verdict = outboxTrx >= threshold ? "SEND-NOW" : "WAIT";
