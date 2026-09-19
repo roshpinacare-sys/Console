@@ -41,15 +41,27 @@ jobs:
             echo "results.json missing - the verifier wrote nothing; nothing to commit"
             exit 0
           fi
-          git add agent/verify/results.json
-          if git diff --cached --quiet -- agent/verify/results.json; then
-            echo "results unchanged - no commit"
-          else
-            git config user.name "weave-verify[bot]"
-            git config user.email "weave-verify[bot]@users.noreply.github.com"
+          git config user.name "weave-verify[bot]"
+          git config user.email "weave-verify[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git add agent/verify/results.json
+            if git diff --cached --quiet -- agent/verify/results.json; then
+              echo "results unchanged - no commit (attempt ${attempt})"
+              exit 0
+            fi
             VERDICT="$(node -p "require('./agent/verify/results.json').summary.verdict")"
             PASSED="$(node -p "require('./agent/verify/results.json').summary.passed")"
             TOTAL="$(node -p "require('./agent/verify/results.json').summary.total")"
             git commit -m "agent-verify: ${VERDICT} · ${PASSED}/${TOTAL} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
-          fi
+            git pull --rebase origin main
+            if git push; then
+              echo "results committed on attempt ${attempt}: ${VERDICT} ${PASSED}/${TOTAL}"
+              exit 0
+            fi
+            echo "push failed (attempt ${attempt}); resetting to origin and re-running the verifier"
+            git checkout -- .
+            git reset --hard origin/main
+            node agent/verify/run.mjs
+          done
+          echo "ERROR: could not commit the results after 3 attempts"
+          exit 1
