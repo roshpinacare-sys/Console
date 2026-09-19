@@ -437,12 +437,13 @@ footer.site a{color:var(--dim)}
       <span><b id="dx-pools">…</b><small data-i="dxPools">pools</small></span>
       <span><b id="dx-age">…</b><small data-i="dxAge">data age</small></span>
     </div>
-    <div class="dex-frame">
-      <iframe id="dex-frame" src="saos-dex/" title="SAOS-DEX Sovereign Terminal" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    <div class="dex-frame" style="display:flex;align-items:center;justify-content:center;min-height:280px;padding:36px 22px;text-align:center">
+      <div>
+        <div style="font-size:34px;line-height:1">🛡️</div>
+        <div style="font-weight:700;font-size:16px;margin:14px 0 6px" data-i="dexMirrorTitle">The interactive terminal runs on the sovereign side</div>
+        <div style="color:var(--dim);font-size:13.5px;max-width:520px;margin:0 auto" data-i="dexMirrorBody">This public mirror carries the live measured state only (the strip above - price, height, fills, pools - refreshed with every cloud beat). The trading terminal itself is operator-internal and is not published here. Nothing is hidden: every number on this page is verifiable from the public chain feeds.</div>
+      </div>
     </div>
-    <p style="text-align:center;margin:18px 0 0">
-      <a class="btn gold" href="saos-dex/" target="_blank" rel="noopener" data-i="dexOpen">Open full terminal</a>
-    </p>
   </section>
 
   <!-- ═══════════ EARN ═══════════ -->
@@ -751,7 +752,8 @@ he: {
   dexTitle:"הבורסה הריבונית", dexGrad:"במראה ציבורית",
   dexLead:"הטרמינל שהשרשרת מריצה בעצמה: ספר-זמנות דטרמיניסטי, בריכות AMM, ארנה אוטונומית של חיילים, חותמים מעוגנים וטייפ חי, משוקף פומבית ומתעדכן עם כל פעימת ענן. מראה לקריאה בלבד; המסחר רץ בצד הריבוני.",
   dxSpread:"ספרד", dxHeight:"גובה", dxFills:"מילויים", dxPools:"בריכות", dxAge:"גיל נתונים",
-  dexOpen:"פתיחת הטרמינל המלא",
+  dexMirrorTitle:"הטרמינל האינטראקטיבי רץ בצד הריבוני",
+  dexMirrorBody:"המראה הציבורית הזאת נושאת את המצב החי הנמדד בלבד (הרצועה למעלה - מחיר, גובה, עסקאות, בריכות - מתעדכנת בכל פעימת ענן). טרמינל המסחר עצמו פנימי-למפעיל ואינו מתפרסם כאן. שום דבר לא מוסתר: כל מספר בעמוד הזה ניתן לאימות מההזנות הציבוריות של השרשרת.",
   chipLive:"חי על שרשרת ציבורית",
   heroTop:"הכסף שלך.", heroGrad:"הרשת שלך.", heroBottom:"SAOS.",
   heroLead:"פתח ארנק חינם בשניות, החזק את המטבע SAOS, סחור בשערי הרשת וממן את הרשת כשכל מטבע נראה בספר פתוח. בלי כתובת-שרת, בלי מתווך: המפתחות שלך לא עוזבים את המכשיר.",
