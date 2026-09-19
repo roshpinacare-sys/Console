@@ -549,6 +549,48 @@
    "target": "truth/latest.json",
    "field": "format",
    "value": "truth-gate-v1"
+  },
+  {
+   "id": "A60",
+   "desc": {
+    "en": "R59 stage 4: the SLO ledger is published (truth/slo.json reachable, format slo-v1)",
+    "he": "שלב 4 של R59: פנקס ה-SLO מפורסם (truth/slo.json זמין, פורמט slo-v1)"
+   },
+   "kind": "json_field",
+   "target": "truth/slo.json",
+   "field": "format",
+   "value": "slo-v1"
+  },
+  {
+   "id": "A61",
+   "desc": {
+    "en": "R59: the truth gate page carries the SLO table container (slo-table)",
+    "he": "R59: עמוד שער האמת נושא את מיכל טבלת ה-SLO (slo-table)"
+   },
+   "kind": "contains",
+   "target": "truth.html",
+   "value": "slo-table"
+  },
+  {
+   "id": "A62",
+   "desc": {
+    "en": "R59: the truth gate page carries the budget burn log container (slo-events)",
+    "he": "R59: עמוד שער האמת נושא את מיכל יומן שריפת התקציב (slo-events)"
+   },
+   "kind": "contains",
+   "target": "truth.html",
+   "value": "slo-events"
+  },
+  {
+   "id": "A63",
+   "desc": {
+    "en": "R59: the truth gate page links the SLO ledger (truth/slo.json, at least 1 link)",
+    "he": "R59: עמוד שער האמת מקשר את פנקס ה-SLO (truth/slo.json, לפחות קישור אחד)"
+   },
+   "kind": "contains_min",
+   "target": "truth.html",
+   "value": "truth/slo.json",
+   "min": 1
   }
  ]
 }
