@@ -17,7 +17,7 @@
  *
  * Gates measured from the public internet (CI-scope):
  *   G1 site-up · G2 zero-broken-links · G3 witness-freshness ·
- *   G5 live-format · G6 bridgehead-sane · G8 single-generation ·
+ *   G5 live-format · G6 bridgehead-sane · G8 complete-map ·
  *   G9 slo-published
  * Sandbox-only gates (G4 local twins, G7 dev server) are recorded as SKIP
  * with an explicit reason - they belong to the sovereign machine
@@ -48,19 +48,26 @@ const HISTORY_PATH = path.join(HERE, "history.json");
 const SLO_PATH = path.join(HERE, "slo.json");
 const HISTORY_CAP = 200;
 
-// The one-generation doctrine (R58): these fronts belong to previous
-// interface generations. They must serve permanent redirect stubs - nothing
-// bigger, nothing linked from any current page.
-const RETIRED = [
-  "money.html", "net.html", "acid.html", "gate.html", "roast.html",
-  "defi.html", "deposits.html", "readiness.html", "sovereign.html", "versus.html",
+// The complete-map doctrine (R61): the nine system fronts are real pages
+// again - restored, linked from the home map, present in the sitemap, and
+// measured here (ok, >10KB, no stub marker). The single retired front
+// (roast.html - a stale claims-audit snapshot superseded by the living
+// truth gate) keeps its permanent redirect stub, and the internal session
+// artifacts under hub/docs/reports/ must stay gone from the public site.
+const SYSTEM_PAGES = [
+  "net.html", "money.html", "deposits.html", "defi.html", "versus.html",
+  "readiness.html", "sovereign.html", "acid.html", "gate.html",
 ];
+const SYSTEM_MIN_BYTES = 10000;
 const STUB_MAX_BYTES = 2500;
 const STUB_REDIRECT_TO = "/Console/";
 
 // The current-generation pages the link sweep walks (the console SPA, the
-// wallet, the truth gate, the receipt wall, and the content hub entry).
-const PAGES = ["", "wallet.html", "truth.html", "receipts/", "hub/index.html"];
+// wallet, the truth gate, the receipt wall, the content hub entry, and the
+// nine restored system fronts - every page the home map links).
+const PAGES = ["", "wallet.html", "truth.html", "receipts/", "hub/index.html",
+  "net.html", "money.html", "deposits.html", "defi.html", "versus.html",
+  "readiness.html", "sovereign.html", "acid.html", "gate.html"];
 
 const FRESH_THRESHOLD_H = 26; // the same life doctrine render.mjs lives by
 const FETCH_TIMEOUT_MS = 15000;
@@ -214,26 +221,37 @@ function bucketFor(days, date) {
       ok ? "" : "expected agent-bridgehead-state-v1");
   } else record("G6-bridgehead-sane", "FAIL", `agent/state.json unreadable (HTTP ${bridge.status})`);
 
-  // ── G8: one interface generation ──────────────────────────────────
-  const stubFailures = [];
-  for (const p of RETIRED) {
+  // ── G8: the complete map (R61) ─────────────────────────────────────
+  const mapFailures = [];
+  const pageBytes = {};
+  for (const p of SYSTEM_PAGES) {
     const r = await fetchUrl(`${BASE}/${p}`);
-    if (!r.ok || !r.text) { stubFailures.push(`${p}: HTTP ${r.status}`); continue; }
+    if (!r.ok || !r.text) { mapFailures.push(`${p}: HTTP ${r.status}`); continue; }
     const bytes = Buffer.byteLength(r.text);
-    if (bytes > STUB_MAX_BYTES) { stubFailures.push(`${p}: ${bytes}B > ${STUB_MAX_BYTES}B`); continue; }
-    if (!r.text.includes(`content="0; url=${STUB_REDIRECT_TO}"`)) { stubFailures.push(`${p}: no permanent refresh to ${STUB_REDIRECT_TO}`); continue; }
-    if (!r.text.includes('rel="canonical"')) { stubFailures.push(`${p}: no canonical`); continue; }
+    pageBytes[p] = bytes;
+    if (bytes <= SYSTEM_MIN_BYTES) { mapFailures.push(`${p}: ${bytes}B <= ${SYSTEM_MIN_BYTES}B`); continue; }
+    if (r.text.includes(`content="0; url=${STUB_REDIRECT_TO}"`)) { mapFailures.push(`${p}: still serves the redirect stub`); continue; }
+    if (!/<title>[^<]*SAOS/.test(r.text)) { mapFailures.push(`${p}: no SAOS title`); continue; }
   }
   const indexText = home.text || "";
-  const retiredHrefs = RETIRED.filter(p => indexText.includes(`href="${p}"`));
+  const unlinked = SYSTEM_PAGES.filter(p => !indexText.includes(`href="${p}"`));
   const truthLinked = indexText.includes('href="truth.html"');
   const sitemap = await fetchUrl(BASE + "/sitemap.xml");
-  const retiredInSitemap = sitemap.ok && sitemap.text
-    ? RETIRED.filter(p => sitemap.text.includes(`/${p}`)) : ["(sitemap unreadable)"];
-  const g8ok = stubFailures.length === 0 && retiredHrefs.length === 0 && truthLinked && retiredInSitemap.length === 0;
-  record("G8-single-generation", g8ok ? "PASS" : "FAIL",
-    `${RETIRED.length} retired stubs · index retired-hrefs ${retiredHrefs.length} · truth linked ${truthLinked ? "yes" : "NO"} · sitemap retired ${retiredInSitemap.length === 1 && retiredInSitemap[0] === "(sitemap unreadable)" ? "?" : retiredInSitemap.length}`,
-    [stubFailures.join(" | "), retiredHrefs.join(" | "), retiredInSitemap.join(" | ")].filter(Boolean).join(" || "));
+  const sitemapOk = sitemap.ok && !!sitemap.text;
+  const unmapped = sitemapOk ? SYSTEM_PAGES.filter(p => !sitemap.text.includes(`/${p}`)) : SYSTEM_PAGES;
+  const roast = await fetchUrl(`${BASE}/roast.html`);
+  const roastBytes = roast.text ? Buffer.byteLength(roast.text) : 0;
+  const roastOk = roast.ok && roast.text &&
+    roastBytes <= STUB_MAX_BYTES &&
+    roast.text.includes(`content="0; url=${STUB_REDIRECT_TO}"`) &&
+    roast.text.includes('rel="canonical"');
+  const artifacts = await fetchUrl(`${BASE}/hub/docs/reports/`);
+  const artifactsGone = !artifacts.ok && artifacts.status === 404;
+  const g8ok = mapFailures.length === 0 && unlinked.length === 0 && unmapped.length === 0 &&
+    truthLinked && roastOk && artifactsGone;
+  record("G8-complete-map", g8ok ? "PASS" : "FAIL",
+    `${SYSTEM_PAGES.length} system pages (min ${SYSTEM_MIN_BYTES}B) · index links ${SYSTEM_PAGES.length - unlinked.length}/${SYSTEM_PAGES.length} · sitemap ${sitemapOk ? SYSTEM_PAGES.length - unmapped.length + "/" + SYSTEM_PAGES.length : "?"} · roast stub ${roastOk ? "ok" : "BROKEN"} · hub/docs/reports ${artifactsGone ? "404 (banned, as required)" : "HTTP " + artifacts.status + " (still served)"}`,
+    [mapFailures.join(" | "), unlinked.length ? "not linked from home: " + unlinked.join(" | ") : "", unmapped.length ? "not in sitemap: " + unmapped.join(" | ") : "", roastOk ? "" : "roast stub broken", artifactsGone ? "" : "hub/docs/reports/ not 404"].filter(Boolean).join(" || "));
 
   // ── sandbox-only gates: recorded honestly as SKIP ─────────────────
   record("G4-no-forged-twins", "SKIP", "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)");

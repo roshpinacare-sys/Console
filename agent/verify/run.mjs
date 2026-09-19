@@ -253,6 +253,41 @@ async function evaluate(a, baseUrl) {
     return { id, ok, details: ok ? `${pages.length}/${pages.length} retired fronts serve permanent redirect stubs (<= ${maxBytes}B)` : `${pages.length - bad.length}/${pages.length} stubs healthy · failing: ${bad.join(", ")}` };
   }
 
+  // ── home_links: the complete map (R61) ─────────────────────────────
+  // The home page must link every current system surface: the nine
+  // restored system fronts plus the wallet, the truth gate, the content
+  // hub and the receipt wall. A surface the home page does not link is
+  // a door without a sign - this detector refuses to bless it.
+  if (a.kind === "home_links") {
+    const links = Array.isArray(a.links) ? a.links : [];
+    if (links.length === 0) return { id, ok: false, details: "invalid assertion: links list is empty" };
+    const home = await fetchTarget(baseUrl, "");
+    if (home.error) return { id, ok: false, details: `home page fetch failed: ${home.error}` };
+    if (home.status !== 200) return { id, ok: false, details: `home page HTTP ${home.status}, expected 200` };
+    const missing = links.filter((l) => !home.body.includes(`href="${l}"`));
+    const ok = missing.length === 0;
+    return { id, ok, details: ok ? `${links.length}/${links.length} required system hrefs present on the home page` : `missing from the home page: ${missing.join(", ")}` };
+  }
+
+  // ── pages_gone: the artifact ban (R61) ──────────────────────────────
+  // Internal session artifacts (hourly pulse rounds, claims-audit
+  // snapshots, token dossiers) are not public content. A path on this
+  // list must not serve content on the live site: any 2xx (including a
+  // redirect that lands on content) is a violation.
+  if (a.kind === "pages_gone") {
+    const pages = Array.isArray(a.pages) ? a.pages : [];
+    if (pages.length === 0) return { id, ok: false, details: "invalid assertion: pages list is empty" };
+    const served = [];
+    for (const p of pages) {
+      const r = await fetchTarget(baseUrl, p);
+      if (r.error) { served.push(`${p}:fetch-error(${r.error})`); continue; }
+      if (r.status >= 200 && r.status < 300) { served.push(`${p}:HTTP${r.status}`); continue; }
+      if (r.status === 0) { served.push(`${p}:network-error`); continue; }
+    }
+    const ok = served.length === 0;
+    return { id, ok, details: ok ? `${pages.length}/${pages.length} artifact paths serve no content (banned, as required)` : `artifact ban violated: ${served.join(", ")}` };
+  }
+
   // ── pages_ok: R28 inventory sweep ───────────────────────────────────
   // Every page the Console publicly promises must exist and carry real
   // content. A page that answers 200 with an empty shell is a lie this

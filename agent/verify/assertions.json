@@ -367,8 +367,8 @@
   {
    "id": "A40",
    "desc": {
-    "en": "R58 inventory sweep: the full current-generation page set answers 200 with real content (retired fronts are covered by A53 stub checks)",
-    "he": "סריקת מלאי R58: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (החזיתות שיצאו מכוסות על ידי בדיקות ה-stub ב-A53)"
+    "en": "R61 inventory sweep: the full current-generation page set answers 200 with real content (nine restored system fronts included; the retired roast front is covered by A53)",
+    "he": "סריקת מלאי R61: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (כולל תשע חזיתות המערכת המשוחזרות; חזית הרוסט שיצאה מהמחזור מכוסה על ידי A53)"
    },
    "kind": "pages_ok",
    "pages": [
@@ -413,10 +413,6 @@
      "minBytes": 8000
     },
     {
-     "path": "hub/docs/reports/index.html",
-     "minBytes": 4000
-    },
-    {
      "path": "receipts/index.html",
      "minBytes": 4000
     },
@@ -439,6 +435,42 @@
     {
      "path": "truth.html",
      "minBytes": 4000
+    },
+    {
+     "path": "net.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "money.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "deposits.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "defi.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "versus.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "readiness.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "sovereign.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "acid.html",
+     "minBytes": 10000
+    },
+    {
+     "path": "gate.html",
+     "minBytes": 10000
     }
    ]
   },
@@ -467,21 +499,12 @@
   {
    "id": "A53",
    "desc": {
-    "en": "R58 single generation: all ten retired fronts serve permanent redirect stubs only (200, tiny, http-equiv refresh to the console, canonical present)",
-    "he": "דור אחד R58: כל עשר החזיתות שיצאו מהמחזור מגישות הפניה קבועה בלבד (200, קטן, refresh לקונסולה, canonical קיים)"
+    "en": "R61: the single retired front (a stale claims-audit snapshot superseded by the living truth gate) serves its permanent redirect stub (200, tiny, http-equiv refresh to the console, canonical present)",
+    "he": "R61: החזית היחידה שיצאה מהמחזור (תמונת-מצב מיושנת של ביקורת טענות, שהוחלפה בשער האמת החי) מגישה הפניה קבועה (200, קטן, refresh לקונסולה, canonical קיים)"
    },
    "kind": "retired_pages",
    "pages": [
-    "money.html",
-    "net.html",
-    "acid.html",
-    "gate.html",
-    "roast.html",
-    "defi.html",
-    "deposits.html",
-    "readiness.html",
-    "sovereign.html",
-    "versus.html"
+    "roast.html"
    ],
    "maxBytes": 2500,
    "redirectTo": "/Console/"
@@ -489,13 +512,25 @@
   {
    "id": "A54",
    "desc": {
-    "en": "R58: the home page no longer links to any retired front (one generation, one truth)",
-    "he": "R58: דף הבית כבר לא מקשר לאף חזית שיצאה מהמחזור (דור אחד, אמת אחת)"
+    "en": "R61 complete map: the home page links every current system surface - the nine system fronts plus the wallet, the truth gate, the content hub and the receipt wall",
+    "he": "המפה המלאה R61: דף הבית מקשר כל פני מערכת נוכחית - תשע חזיתות המערכת וגם הארנק, שער האמת, מרכז התוכן וקיר הקבלות"
    },
-   "kind": "regex_absent",
-   "target": "",
-   "regex": "href=\"[^\"]*(money|net|acid|gate|roast|defi|deposits|readiness|sovereign|versus)\\.html\"",
-   "flag": "u"
+   "kind": "home_links",
+   "links": [
+    "net.html",
+    "readiness.html",
+    "sovereign.html",
+    "money.html",
+    "deposits.html",
+    "defi.html",
+    "versus.html",
+    "acid.html",
+    "gate.html",
+    "wallet.html",
+    "truth.html",
+    "hub/",
+    "receipts/"
+   ]
   },
   {
    "id": "A55",
@@ -591,6 +626,18 @@
    "target": "truth.html",
    "value": "truth/slo.json",
    "min": 1
+  },
+  {
+   "id": "A64",
+   "desc": {
+    "en": "R61 artifact ban: internal session artifacts (hourly pulse rounds, claims-audit snapshots, token dossiers) are not public content - hub/docs/reports/ serves no content on the live site",
+    "he": "איסור חומרי-שיחות R61: חומרי סשן פנימיים (פעימות שעתיות, תמונות ביקורת טענות, תיקי טוקן) אינם תוכן ציבורי - hub/docs/reports/ לא מגיש תוכן באתר החי"
+   },
+   "kind": "pages_gone",
+   "pages": [
+    "hub/docs/reports/",
+    "hub/docs/reports/index.html"
+   ]
   }
  ]
 }

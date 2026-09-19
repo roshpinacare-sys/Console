@@ -1,32 +1,229 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="0; url=/Console/">
-<title>SAOS · הדף יצא מהמחזור</title>
-<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/">
-<meta name="robots" content="noindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · הרשת החיה - The Network Mirror</title>
+<meta name="description" content="המראה הציבורית של THE WEAVE: הסוכנים, הספר, העוגנים, השוק והמוח - נקראת מהמראה שהלב מפרסם בעצמו, בלי סנדבוקס ובלי שרת.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
 <style>
-:root{--bg:#09090b;--panel:rgba(255,255,255,.03);--line:rgba(255,255,255,.09);--acc:#10b981;--text:#fafafa;--dim:#a1a1aa;--faint:#71717a}
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--gold-dim:#8a7423;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans Hebrew",sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-main{max-width:560px;width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:32px 28px;text-align:center}
-h1{font-size:19px;font-weight:700;letter-spacing:.01em}
-h2{font-size:12px;font-weight:600;color:var(--faint);margin-top:6px;font-family:ui-monospace,Menlo,Consolas,monospace}
-p{font-size:14px;color:var(--dim);line-height:1.7;margin-top:14px}
-p.en{font-size:12.5px;color:var(--faint)}
-a.btn{display:inline-block;margin-top:20px;padding:11px 22px;border-radius:10px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);color:#34d399;font-weight:600;font-size:14px;text-decoration:none}
-a.btn:hover{background:rgba(16,185,129,.2)}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px;width:100%}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+header.nhead{border-bottom:1px solid var(--border);padding:18px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
+.nhead .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nhead h1{font-size:18px;font-weight:700}
+.nhead .sub{font-size:12px;color:var(--mut)}
+.badge{font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.links{margin-inline-start:auto;display:flex;gap:14px;font-size:13px}
+main{flex:1;padding:30px 0 56px}
+.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px}
+.pcard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
+.pcard .v{font-size:26px;font-weight:800;color:var(--gold);font-family:var(--mono)}
+.pcard .l{font-size:11.5px;color:var(--mut);margin-top:2px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.card h2{font-size:15px;margin-bottom:14px;color:var(--gold);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--dim);font-weight:400;font-size:11.5px;text-align:right;padding:6px 8px;border-bottom:1px solid var(--border2)}
+td{padding:8px;border-bottom:1px dashed var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tag{font-size:10.5px;font-family:var(--mono);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;color:var(--mut);white-space:nowrap}
+.tag.g{border-color:#2d5a3d;color:var(--green)}
+.tag.y{border-color:#5a512d;color:var(--yellow)}
+.tag.p{border-color:#4a3f6e;color:var(--purple)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:5px}
+.dot.g{background:var(--green);box-shadow:0 0 8px var(--green)}
+.dot.y{background:var(--yellow);box-shadow:0 0 8px var(--yellow)}
+.feed{max-height:430px;overflow-y:auto}
+.feed::-webkit-scrollbar{width:8px}
+.feed::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.arow{padding:10px 0;border-bottom:1px dashed var(--border);font-size:13px}
+.arow:last-child{border-bottom:none}
+.arow .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.arow .seq{font-family:var(--mono);color:var(--purple);font-size:12px}
+.arow .type{font-size:10.5px;font-family:var(--mono);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;color:var(--dim)}
+.arow .when{color:var(--dim);font-size:11px;direction:ltr}
+.arow .who{color:var(--mut);font-size:11.5px}
+.arow .claim{color:var(--tx);font-size:13px;margin-top:3px;line-height:1.55}
+.crow{display:grid;grid-template-columns:70px 1fr auto;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:12.5px;align-items:center}
+.crow:last-child{border-bottom:none}
+.crow .cp{font-family:var(--mono);color:var(--gold)}
+.crow .root{font-family:var(--mono);font-size:11px;color:var(--mut);direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.mrow{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px;flex-wrap:wrap}
+.mrow:last-child{border-bottom:none}
+.mrow .seq{font-family:var(--mono);color:var(--purple);font-size:11.5px}
+.mrow .kind{font-size:10.5px;font-family:var(--mono);border-radius:5px;padding:1px 7px}
+.kind.OPEN{border:1px solid #4a3f6e;color:var(--purple)}
+.kind.SETTLE{border:1px solid #2d5a3d;color:var(--green)}
+.kind.REFUND{border:1px solid #5a512d;color:var(--yellow)}
+.mrow .when{color:var(--dim);font-size:11px;direction:ltr}
+footer{border-top:1px solid var(--border);padding:18px 0;margin-top:auto}
+footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--dim);border-right:3px solid var(--gold-dim);padding-right:12px;margin-top:14px;line-height:1.7}
+.loading{color:var(--dim);padding:20px 0;font-size:14px}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--dim);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-inline-end:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(max-width:640px){
+  .card{padding:16px 14px}
+  .crow{grid-template-columns:56px 1fr;row-gap:2px}
+  .crow .chains{grid-column:1/-1}
+  table.hide-sm th:nth-child(3),table.hide-sm td:nth-child(3){display:none}
+  .links{display:none}
+}
 </style>
 </head>
 <body>
+
+<header class="nhead">
+  <div class="wrap">
+    <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="2.4" fill="#d4af37"/><circle cx="7.5" cy="15.5" r="1.5" fill="#a78bfa"/><circle cx="16.5" cy="15.5" r="1.5" fill="#a78bfa"/><circle cx="9" cy="8.5" r="1.2" fill="#71717a"/><circle cx="15" cy="8.5" r="1.2" fill="#71717a"/></svg>
+    <div>
+      <h1>הרשת החיה <span style="color:var(--dim);font-weight:400;font-size:12.5px">Network Mirror</span></h1>
+      <div class="sub">THE WEAVE · מצב מלא נקרא מהמראה שהלב מפרסם בעצמו - אמת נגזרת, בלי סנדבוקס ובלי שרת</div>
+    </div>
+    <span class="badge" id="fresh" style="margin-inline-start:auto">טוען…</span>
+  </div>
+</header>
+
 <main>
-<h1>דף הרשת יצא מהמחזור</h1>
-<h2>net.html · retired R58</h2>
-<p>דף זה השתייך לדור ממשק קודם של הקונסולה. החזיתות מדורות שונים אינן מתקיימות במקביל: דור אחד, אמת אחת.</p>
-<p class="en">This page belonged to a previous interface generation of the console. One generation, one truth.</p>
-<a class="btn" href="/Console/">הקונסולה הנוכחית · The current console</a>
+  <div class="wrap">
+
+    <div class="pulse" id="pulse"></div>
+
+    <div class="card">
+      <h2>הסוכנים <span class="en">- identities in the book · signing capability honestly measured</span></h2>
+      <div style="overflow-x:auto"><table class="hide-sm" id="agentsT"><thead><tr><th>שם</th><th>תפקיד</th><th>יכולת חתימה</th><th>עדויות</th><th>אחרונה</th></tr></thead><tbody></tbody></table></div>
+      <div class="note" id="capNote">יכולת החתימה נמדדת ומפורסמת בכנות בכל יום (ביקורת יכולת חתומה בספר): sealed = חותם מה-seal הענני; memory-only = זהות תפקיד שמפתחה חי בסביבה שמתה - הפונקציה נבלעה בלב או ממתינה. רשת אימות לא מעמידה פנים.</div>
+    </div>
+
+    <div class="card">
+      <h2>ספר העדויות <span class="en">- the latest attestations, newest first</span></h2>
+      <div class="feed" id="attFeed"><div class="loading"><span class="spin"></span>קורא את המראה…</div></div>
+    </div>
+
+    <div class="card">
+      <h2>שרשרת ה-checkpoints <span class="en">- Merkle roots · where each is witnessed</span></h2>
+      <div id="cpList" style="max-height:360px;overflow-y:auto"><div class="loading"><span class="spin"></span>…</div></div>
+      <div class="note">כל checkpoint הוא שורש מרקל חתום (EIP-712) על טווח עדויות. "מעיד" = השורש נקרא-חזרה מהשרשרת הציבורית - Steem (custom_json חינמי) או Z Chain (עסקת EVM בגז-אפס, ניתן לאימות בסייר).</div>
+    </div>
+
+    <div class="card">
+      <h2>שוק האמת <span class="en">- the market that publishes its refusals</span></h2>
+      <div id="marketList"><div class="loading"><span class="spin"></span>…</div></div>
+    </div>
+
+    <div class="card">
+      <h2>המוח הריבוני <span class="en">- sealed NVIDIA keys, status honestly probed</span></h2>
+      <div id="brainList"><div class="loading"><span class="spin"></span>…</div></div>
+      <div class="note">המפתחות חיים אטומים בספר (צופן GCM תחת מפתח הרשת) - המראה מציגה סטטוס בלבד, לעולם לא את הגושים. אימות-אמת שעתי: 1-token מול NVIDIA בכל פעימת לב.</div>
+    </div>
+
+  </div>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span id="srcNote">המראה מתפרסמת על ידי הלב הענני של הרשת בכל פעימה</span>
+    <span><a href="./">הקונסולה</a> · <a href="gate.html">שער המפעיל</a></span>
+  </div>
+</footer>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ago = (iso) => {
+  const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000);
+  if (m < 60) return Math.round(m) + " דק' לפני";
+  if (m < 2880) return Math.round(m / 60) + " שע' לפני";
+  return Math.round(m / 1440) + " ימים לפני";
+};
+
+fetch("mirror.json", { cache: "no-store" })
+  .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+  .then((m) => render(m))
+  .catch((e) => {
+    $("fresh").textContent = "המראה לא נקראה";
+    $("attFeed").innerHTML = '<div class="loading" style="color:var(--red)">המראה (mirror.json) לא זמינה: ' + esc(e.message) + "</div>";
+  });
+
+function render(m) {
+  const s = m.stats || {};
+  $("fresh").textContent = "עודכן " + ago(m.generatedAt);
+  $("fresh").style.color = "var(--green)";
+
+  $("pulse").innerHTML = [
+    ["אימותים בספר", s.attestations ?? "?"],
+    ["checkpoints", s.checkpoints ?? "?"],
+    ["זהויות תפקיד", s.agents ?? "?"],
+    ["חותמים sealed", (s.agents ? "1/" + s.agents : "?")],
+    ["המוח", (s.brainLive ?? "?") + "/" + (s.brainKeys ?? "?") + " חי"],
+    ["עדויות מאומתות", (s.attByStatus && s.attByStatus.VERIFIED) || 0],
+  ].map(([l, v]) => '<div class="pcard"><div class="v">' + esc(v) + '</div><div class="l">' + esc(l) + "</div></div>").join("");
+
+  // סוכנים - יכולת אמיתית: רק הלב sealed; השאר memory-only (ביקורת יומית בספר)
+  const rows = (m.agents || []).map((a) => {
+    const sealed = a.name === "weave-cloud-heart";
+    return "<tr><td><b>" + esc(a.name) + "</b></td><td>" + esc(a.role) + "</td><td>" +
+      (sealed ? '<span class="tag g">sealed</span>' : '<span class="tag">memory-only</span>') +
+      '</td><td class="mono">' + esc(a.attestations ?? 0) + "</td><td>" +
+      (a.lastAttestationAt ? esc(ago(a.lastAttestationAt)) : "-") + "</td></tr>";
+  }).join("");
+  $("agentsT").querySelector("tbody").innerHTML = rows || '<tr><td colspan="5">-</td></tr>';
+
+  // עדויות
+  $("attFeed").innerHTML = (m.attestations || []).slice(0, 60).map((a) =>
+    '<div class="arow"><div class="top">' +
+      '<span class="seq">att' + esc(a.seq) + "</span>" +
+      '<span class="type">' + esc(a.type) + "</span>" +
+      (a.status === "VERIFIED" ? '<span class="tag g">VERIFIED</span>' : '<span class="tag y">' + esc(a.status) + "</span>") +
+      '<span class="who">' + esc(a.agentName) + "</span>" +
+      '<span class="when">' + esc(ago(a.at)) + "</span>" +
+      '</div><div class="claim">' + esc(a.claim) + "</div></div>"
+  ).join("") || '<div class="loading">-</div>';
+
+  // checkpoints + עוגנים
+  $("cpList").innerHTML = (m.checkpoints || []).map((c) => {
+    const chains = c.anchoredOn || [];
+    const chips = chains.map((ch) => {
+      const label = ch === "zero" ? "Z-Chain" : ch;
+      const cls = ch === "zero" ? "tag p" : "tag g";
+      return '<span class="' + cls + '">' + label + " מעיד</span>";
+    }).join("");
+    return '<div class="crow"><span class="cp">#' + esc(c.index) + '</span><span class="root" title="' + esc(c.root) + '">' + esc(c.root) + "</span>" +
+      '<span class="chains">' + (chips || '<span class="tag">ממתין לעיגון</span>') + "</span></div>";
+  }).join("") || '<div class="loading">-</div>';
+
+  // שוק
+  $("marketList").innerHTML = (m.market || []).map((ev) =>
+    '<div class="mrow"><span class="seq">#' + esc(ev.seq) + '</span><span class="kind ' + esc(ev.kind) + '">' + esc(ev.kind) + "</span>" +
+    "<span>" + esc(ev.summary) + '</span><span class="when">' + esc(ago(ev.at)) + "</span></div>"
+  ).join("") || '<div class="loading">אין אירועים - השוק שקט</div>';
+
+  // מוח
+  $("brainList").innerHTML = (m.brain || []).map((b) => {
+    const live = b.status === "verified";
+    return '<div class="mrow"><span class="dot ' + (live ? "g" : "y") + '"></span><span class="seq mono">' + esc(b.fingerprint) + "</span>" +
+      (live ? '<span class="tag g">חי</span>' : '<span class="tag y">' + esc(b.status) + "</span>") +
+      (b.lastCode ? '<span class="tag">HTTP ' + esc(b.lastCode) + "</span>" : "") +
+      (b.verifiedAt ? '<span class="when">נבדק ' + esc(ago(b.verifiedAt)) + "</span>" : "") + "</div>";
+  }).join("") || '<div class="loading">-</div>';
+
+  $("srcNote").textContent = "המראה פורסמה על ידי הלב הענני · " + new Date(m.generatedAt).toLocaleString("he-IL") + " · מקור האמת: הספר בגיט + השרשרות הציבוריות";
+}
+</script>
 </body>
 </html>
