@@ -1,0 +1,96 @@
+{
+  "format": "slo-v1",
+  "days": [
+    {
+      "date": "2026-09-19",
+      "runs": 7,
+      "allGreen": 6,
+      "g1Pass": 6,
+      "g1Runs": 6,
+      "g2Pass": 6,
+      "g2Runs": 6,
+      "g3Pass": 6,
+      "g3Runs": 6
+    }
+  ],
+  "events": [],
+  "dataSince": "2026-09-19T11:01:02.561Z",
+  "generatedAt": "2026-09-19T14:04:12.594Z",
+  "generator": "truth-gate-ci",
+  "windowDays": 30,
+  "targets": [
+    {
+      "id": "availability",
+      "gate": "G1-site-up",
+      "target": 0.99
+    },
+    {
+      "id": "link-integrity",
+      "gate": "G2-zero-broken-links",
+      "target": 0.99
+    },
+    {
+      "id": "freshness",
+      "gate": "G3-witness-freshness",
+      "target": 0.99
+    },
+    {
+      "id": "heartbeat",
+      "gate": "hourly cadence",
+      "target": 0.9
+    }
+  ],
+  "window": {
+    "daysCounted": 1,
+    "runs": 7,
+    "allGreen": 6,
+    "expectedRuns": 4,
+    "fillPct": 0.4
+  },
+  "slos": [
+    {
+      "id": "availability",
+      "gate": "G1-site-up",
+      "target": "99%",
+      "measured": 100,
+      "good": 6,
+      "total": 6,
+      "budgetAllowed": 0.06,
+      "budgetConsumedPct": 0,
+      "state": "WARMING"
+    },
+    {
+      "id": "link-integrity",
+      "gate": "G2-zero-broken-links",
+      "target": "99%",
+      "measured": 100,
+      "good": 6,
+      "total": 6,
+      "budgetAllowed": 0.06,
+      "budgetConsumedPct": 0,
+      "state": "WARMING"
+    },
+    {
+      "id": "freshness",
+      "gate": "G3-witness-freshness",
+      "target": "99%",
+      "measured": 100,
+      "good": 6,
+      "total": 6,
+      "budgetAllowed": 0.06,
+      "budgetConsumedPct": 0,
+      "state": "WARMING"
+    },
+    {
+      "id": "heartbeat",
+      "gate": "cadence",
+      "target": "90%",
+      "measured": 100,
+      "good": 4,
+      "total": 4,
+      "budgetAllowed": 0.4,
+      "budgetConsumedPct": 0,
+      "state": "WARMING"
+    }
+  ]
+}
