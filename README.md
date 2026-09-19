@@ -57,26 +57,19 @@ materials (receipt-backed claims only). The live panel derives from the
 public chain. The site's canonical source lives in the ecosystem's
 sovereign repository. Operator: roshpinacare-sys.
 
-## The operator gate (gate.html)
+## Single interface generation (R58)
 
-`gate.html` is the sovereign entrance for the operator of THE WEAVE:
+The console keeps **one generation of pages**: the console SPA (`index.html`),
+the wallet, the truth gate, the content hub and the receipt wall. The
+previous-generation fronts (money · net · acid · gate · roast · defi ·
+deposits · readiness · sovereign · versus) were retired in R58 and are now
+permanent redirects to the console — one generation, one truth.
 
-- the owner connects with his own key (Steem master password or a role WIF);
-  everything is derived and verified **in the browser** against the account's
-  on-chain keys (public RPC, keyless read) — the key never leaves the browser
-- signed commands (`ping` · `beat` · `anchor` · `console`) are broadcast as
-  free `custom_json` (op id `saos.weave.ops.v1`, posting authority only —
-  the chain itself forbids this key from moving funds)
-- the network's cloud heart reads the commands back from the public chain,
-  executes them, and records the execution in its signed ledger; the anchors
-  witness it at $0
-- the command history shown in the gate is read back from the public chain —
-  the chain is the receipt
-
-All gate cryptography is implemented locally in `gate-crypto.js` (pure JS:
-sha256 + RIPEMD-160 + secp256k1 over BigInt + Steem transaction
-serialization + compact ECDSA with recovery). No CDN, no external
-dependencies, nothing to trust but math anyone can audit.
+The operator console itself lives on the sovereign side, not here. The local
+crypto engine `gate-crypto.js` (pure JS: sha256 + RIPEMD-160 + secp256k1 over
+BigInt + Steem transaction serialization + compact ECDSA with recovery)
+remains and serves the live pages. No CDN, no external dependencies,
+nothing to trust but math anyone can audit.
 
 ## What never enters this repository
 

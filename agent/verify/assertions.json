@@ -173,39 +173,6 @@
    "min": 5
   },
   {
-   "id": "A17",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the discovery engine page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe discovery engine page"
-   },
-   "kind": "regex_absent",
-   "target": "acid.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A18",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the network mirror page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe network mirror page"
-   },
-   "kind": "regex_absent",
-   "target": "net.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A19",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the operator gate page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe operator gate page"
-   },
-   "kind": "regex_absent",
-   "target": "gate.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
    "id": "A20",
    "desc": {
     "en": "No emoji, dingbat, arrow or em-dash characters in the knowledge hub home",
@@ -257,38 +224,6 @@
    "target": "",
    "value": "sub-exchange-rails",
    "min": 1
-  },
-  {
-   "id": "A25",
-   "desc": {
-    "en": "The money path page is linked from the home page (knowledge grid + footer, at least 2 links)",
-    "he": "דף נתיב הכסף מקושר מדף הבית (גריד הידע והפוטר, לפחות 2 קישורים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "money.html",
-   "min": 2
-  },
-  {
-   "id": "A26",
-   "desc": {
-    "en": "The money path page is live and carries the live anchor tracker (R23)",
-    "he": "דף נתיב הכסף חי ונושא את עוקב-העוגן החי (R23)"
-   },
-   "kind": "contains",
-   "target": "money.html",
-   "value": "Live Anchor"
-  },
-  {
-   "id": "A27",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the money path page",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף נתיב הכסף"
-   },
-   "kind": "regex_absent",
-   "target": "money.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
   },
   {
    "id": "A28",
@@ -432,38 +367,14 @@
   {
    "id": "A40",
    "desc": {
-    "en": "R28 inventory sweep: the full public page set answers 200 with real content (not empty shells). Covers the console SPA, all standalone tools, and the knowledge hub core",
-    "he": "סריקת מלאי R28: מלוא מערך העמודים הציבורי עונה 200 עם תוכן אמיתי (לא קליפות ריקות). מכסה את ה-SPA, כל הכלים העצמאיים וליבת הידע"
+    "en": "R58 inventory sweep: the full current-generation page set answers 200 with real content (retired fronts are covered by A53 stub checks)",
+    "he": "סריקת מלאי R58: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (החזיתות שיצאו מכוסות על ידי בדיקות ה-stub ב-A53)"
    },
    "kind": "pages_ok",
    "pages": [
     {
      "path": "",
      "minBytes": 60000
-    },
-    {
-     "path": "roast.html",
-     "minBytes": 14000
-    },
-    {
-     "path": "money.html",
-     "minBytes": 20000
-    },
-    {
-     "path": "sovereign.html",
-     "minBytes": 20000
-    },
-    {
-     "path": "net.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "acid.html",
-     "minBytes": 20000
-    },
-    {
-     "path": "gate.html",
-     "minBytes": 18000
     },
     {
      "path": "404.html",
@@ -524,30 +435,12 @@
     {
      "path": "wallet.html",
      "minBytes": 100000
+    },
+    {
+     "path": "truth.html",
+     "minBytes": 4000
     }
    ]
-  },
-  {
-   "id": "A41",
-   "desc": {
-    "en": "The engineering roast page is live and carries the claims-versus-truth section plus the live verdict pulse",
-    "he": "עמוד הרוסט ההנדסי חי ונושא את סקציית הטענות מול האמת וגם את פולס הפסק החי"
-   },
-   "kind": "contains_min",
-   "target": "roast.html",
-   "value": "claim",
-   "min": 12
-  },
-  {
-   "id": "A42",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the engineering roast page (clean typography only)",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או קו-מפריד בעמוד הרוסט ההנדסי (טיפוגרפיה נקייה בלבד)"
-   },
-   "kind": "regex_absent",
-   "target": "roast.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
   },
   {
    "id": "A43",
@@ -572,88 +465,90 @@
    "min": 300000
   },
   {
-   "id": "A45",
+   "id": "A53",
    "desc": {
-    "en": "SETTLE-19 permanence: the money path page injects live AMM stats from the ledger (id ammLive) instead of a frozen build-day number (the forgery pattern stays cured)",
-    "he": "קביעות SETTLE-19: עמוד נתיב הכסף מזריק מספרי שוק חיים מהספר (id ammLive) במקום מספר קפוא מיום בנייתו (דפוס הזיוף נשאר מרופא)"
+    "en": "R58 single generation: all ten retired fronts serve permanent redirect stubs only (200, tiny, http-equiv refresh to the console, canonical present)",
+    "he": "דור אחד R58: כל עשר החזיתות שיצאו מהמחזור מגישות הפניה קבועה בלבד (200, קטן, refresh לקונסולה, canonical קיים)"
    },
-   "kind": "contains",
-   "target": "money.html",
-   "value": "id=\"ammLive\""
+   "kind": "retired_pages",
+   "pages": [
+    "money.html",
+    "net.html",
+    "acid.html",
+    "gate.html",
+    "roast.html",
+    "defi.html",
+    "deposits.html",
+    "readiness.html",
+    "sovereign.html",
+    "versus.html"
+   ],
+   "maxBytes": 2500,
+   "redirectTo": "/Console/"
   },
   {
-   "id": "A46",
+   "id": "A54",
    "desc": {
-    "en": "The frozen build-day stats string is gone from the money path page (old forgery marker must never return)",
-    "he": "מחרוזת המספרים הקפואים מיום הבנייה נעלמה מעמוד נתיב הכסף (סמן הזיוף הישן לא חוזר)"
+    "en": "R58: the home page no longer links to any retired front (one generation, one truth)",
+    "he": "R58: דף הבית כבר לא מקשר לאף חזית שיצאה מהמחזור (דור אחד, אמת אחת)"
    },
    "kind": "regex_absent",
-   "target": "money.html",
-   "regex": "מדוד: 8,805|6,449 החלפות",
+   "target": "",
+   "regex": "href=\"[^\"]*(money|net|acid|gate|roast|defi|deposits|readiness|sovereign|versus)\\.html\"",
    "flag": "u"
   },
   {
-   "id": "A47",
+   "id": "A55",
    "desc": {
-    "en": "Static KPI cards on the money path page carry an honest snapshot date tag (numbers that are not live are labeled, not disguised)",
-    "he": "כרטיסי ה-KPI הסטטיים בעמוד נתיב הכסף נושאים תיוג-תמונה כן בתאריך (מספרים שאינם חיים מתויגים, לא מוסווים)"
+    "en": "The truth gate page is live and carries the verdict container (truth-verdict)",
+    "he": "עמוד שער האמת חי ונושא את מיכל פסק-הדין (truth-verdict)"
+   },
+   "kind": "contains",
+   "target": "truth.html",
+   "value": "truth-verdict"
+  },
+  {
+   "id": "A56",
+   "desc": {
+    "en": "The truth gate page carries the run history container (truth-history)",
+    "he": "עמוד שער האמת נושא את מיכל היסטוריית הריצות (truth-history)"
+   },
+   "kind": "contains",
+   "target": "truth.html",
+   "value": "truth-history"
+  },
+  {
+   "id": "A57",
+   "desc": {
+    "en": "R58: the home page wires the truth gate (knowledge card plus footer, at least 2 links)",
+    "he": "R58: דף הבית מחבר את שער האמת (כרטיס ידע ופוטר, לפחות 2 קישורים)"
    },
    "kind": "contains_min",
-   "target": "money.html",
-   "value": "תמונת 17/09",
-   "min": 5
+   "target": "",
+   "value": "truth.html",
+   "min": 2
   },
   {
-   "id": "A48",
+   "id": "A58",
    "desc": {
-    "en": "THE-VAULT live card on the money path page: the lending vault status is read live from the ledger (vaultLive injection), not a static claim",
-    "he": "כרטיס כספת-ההלוואות החי בעמוד נתיב הכסף: מצב הכספת נקרא חי מהספר (הזרקת vaultLive), לא טענה סטטית"
-   },
-   "kind": "contains",
-   "target": "money.html",
-   "value": "id=\"vaultLive\""
-  },
-  {
-   "id": "A49",
-   "desc": {
-    "en": "Vault clock honesty: execution-clock step 2 (minimal lending vault) is marked delivered on the money path page (built claims must graduate or stay honestly pending)",
-    "he": "כנות שעון-הביצוע: שלב 2 (כספת-ההלוואות המינימלית) מסומן כ-delivered בעמוד נתיב הכסף (טענות שנבנו חייבות לעלות-דרגה או להישאר ממתינות-בכנות)"
-   },
-   "kind": "contains",
-   "target": "money.html",
-   "value": "כספת-הלוואות מינימלית <span class=\"en\">delivered</span>"
-  },
-  {
-   "id": "A50",
-   "desc": {
-    "en": "Sovereign operation page exists with the external Steem book block: the one user-independent external channel is measured live on the page (bf-book injection), not claimed",
-    "he": "עמוד ההפעלה הריבונית קיים עם בלוק ספר-STEEM החיצוני: הערוץ החיצוני היחיד שלא תלוי במשתמשינו נמדד חי בעמוד (הזרקת bf-book), לא נטען"
-   },
-   "kind": "contains",
-   "target": "sovereign.html",
-   "value": "id=\"bf-book\""
-  },
-  {
-   "id": "A51",
-   "desc": {
-    "en": "The sovereign verdict is wired to the live chain: at least 8 data-live injection points on the page read world.json numbers in the open (a frozen verdict would be exactly the forgery this network fights)",
-    "he": "פסק-הדין הריבוני מחובר לשרשרת החיה: לפחות 8 נקודות data-live בעמוד קוראות מספרי world.json בגלוי (פסק-דין קפוא הוא בדיוק הזיוף שהרשת הזו נלחמת בו)"
+    "en": "R58: the content hub is reachable from the home page (at least 1 link)",
+    "he": "R58: מרכז התוכן נגיש מדף הבית (לפחות קישור אחד)"
    },
    "kind": "contains_min",
-   "target": "sovereign.html",
-   "value": "data-live=",
-   "min": 8
+   "target": "",
+   "value": "hub/",
+   "min": 1
   },
   {
-   "id": "A52",
+   "id": "A59",
    "desc": {
-    "en": "Sovereign page typography law: no emoji, dingbat, arrow or em-dash characters (clean geometry only)",
-    "he": "חוק הטיפוגרפיה בעמוד הריבוני: אין תווי אימוג'י, דינגבט, חץ או מקף-אמה (גיאומטריה נקייה בלבד)"
+    "en": "The CI truth machine publishes its verdict (truth/latest.json reachable, format truth-gate-v1)",
+    "he": "מכונת האמת של ה-CI מפרסמת את פסק-דינה (truth/latest.json זמין, פורמט truth-gate-v1)"
    },
-   "kind": "regex_absent",
-   "target": "sovereign.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
+   "kind": "json_field",
+   "target": "truth/latest.json",
+   "field": "format",
+   "value": "truth-gate-v1"
   }
  ]
 }

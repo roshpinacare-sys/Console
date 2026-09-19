@@ -1,0 +1,78 @@
+# TRUTH-GATE - the system proves itself (BENCHMARK.md stage 3)
+#
+# Runs inside the PUBLIC Console repository, its own GITHUB_TOKEN, zero
+# secrets. Every hour the machine (truth/truth-gate-ci.cjs) measures the
+# LIVE deployed site - not the repo - and commits the verdict:
+#   truth/latest.json  - the full report of the run
+#   truth/history.json - one line per run (public, capped history)
+# A red verdict commits FIRST (the truth is always recorded), then fails
+# the workflow run itself - a red X in the public Actions history.
+#
+# Cadence: console-publish commits the beacon at :45; Pages deploys it a
+# few minutes later; this gate runs at :07 of the next hour and grades
+# what the world actually sees.
+
+name: truth-gate
+
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: truth-gate
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout the public console
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run the truth gate against the live site
+        id: gate
+        continue-on-error: true
+        run: node truth/truth-gate-ci.cjs
+
+      - name: Commit the verdict (always - red or green)
+        if: always()
+        run: |
+          set +e
+          git config user.name "truth-gate[bot]"
+          git config user.email "truth-gate[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git add truth/latest.json truth/history.json
+            if git diff --cached --quiet; then
+              echo "no verdict change to commit (attempt ${attempt})"
+              exit 0
+            fi
+            VERDICT=$(node -e "console.log(require('./truth/latest.json').verdict)" 2>/dev/null || echo UNKNOWN)
+            git commit -m "truth-gate: $(date -u +%FT%TZ) · ${VERDICT}"
+            git pull --rebase origin main
+            if git push; then
+              echo "verdict committed on attempt ${attempt}: ${VERDICT}"
+              exit 0
+            fi
+            echo "push failed (attempt ${attempt}); resetting to origin and re-running the gate"
+            git checkout -- .
+            git reset --hard origin/main
+            node truth/truth-gate-ci.cjs
+          done
+          echo "ERROR: could not commit the verdict after 3 attempts"
+          exit 1
+
+      - name: A red gate fails the run in public
+        if: steps.gate.outcome == 'failure'
+        run: |
+          echo "truth-gate is RED - the verdict is committed above; this run fails with it"
+          exit 1

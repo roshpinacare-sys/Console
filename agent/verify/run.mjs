@@ -228,6 +228,31 @@ async function evaluate(a, baseUrl) {
     return { id, ok, details: `${compared} assets vs ${provider}: ${parts.join(", ")} · worst ${worstName} ${worstAbs.toFixed(2)}%, limit ${maxDriftPct}%` };
   }
 
+  // ── retired_pages: R58 single-generation doctrine ──────────────────
+  // A page retired from a previous interface generation must serve a
+  // permanent redirect stub: HTTP 200, tiny, http-equiv refresh to the
+  // console root, canonical present. Anything bigger or livelier is a
+  // second-generation front coexisting with the current one (the exact
+  // disease this detector refuses to bless).
+  if (a.kind === "retired_pages") {
+    const pages = Array.isArray(a.pages) ? a.pages : [];
+    if (pages.length === 0) return { id, ok: false, details: "invalid assertion: pages list is empty" };
+    const maxBytes = Number(a.maxBytes ?? 2500);
+    const redirectTo = String(a.redirectTo ?? "/Console/");
+    const bad = [];
+    for (const p of pages) {
+      const path = String(p ?? "");
+      const r = await fetchTarget(baseUrl, path);
+      if (r.error) { bad.push(`${path}:fetch-error`); continue; }
+      if (r.status !== 200) { bad.push(`${path}:HTTP${r.status}`); continue; }
+      if (r.body.length > maxBytes) { bad.push(`${path}:${r.body.length}B>${maxBytes}B`); continue; }
+      if (!r.body.includes(`content="0; url=${redirectTo}"`)) { bad.push(`${path}:no-refresh`); continue; }
+      if (!r.body.includes(`rel="canonical"`)) { bad.push(`${path}:no-canonical`); continue; }
+    }
+    const ok = bad.length === 0;
+    return { id, ok, details: ok ? `${pages.length}/${pages.length} retired fronts serve permanent redirect stubs (<= ${maxBytes}B)` : `${pages.length - bad.length}/${pages.length} stubs healthy · failing: ${bad.join(", ")}` };
+  }
+
   // ── pages_ok: R28 inventory sweep ───────────────────────────────────
   // Every page the Console publicly promises must exist and carry real
   // content. A page that answers 200 with an empty shell is a lie this

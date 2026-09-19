@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAOS · שער האמת · The Truth Gate</title>
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/truth.html">
+<meta name="description" content="מכונה מודדת את האתר הציבורי הזה כל שעה: פסק-דין, שערים והיסטוריית ריצות מלאה. שום ציון לא נכתב ביד.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z' fill='none' stroke='%2310b981' stroke-width='1.8'/%3E%3Cpath d='M9 12l2 2 4-4' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b; --bg2:#101013;
+  --panel:rgba(255,255,255,.03); --panel2:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --acc:#10b981; --acc-bright:#34d399; --acc-bg:rgba(16,185,129,.10); --acc-line:rgba(16,185,129,.35);
+  --green:#22c55e; --red:#ef4444; --amber:#eab308;
+  --text:#fafafa; --dim:#a1a1aa; --faint:#71717a;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
+  --r:16px; --r-sm:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+a{color:var(--acc-bright);text-decoration:none}
+a:hover{text-decoration:underline}
+header.site{position:sticky;top:0;z-index:50;background:rgba(9,9,11,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:14px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.brand .logo{width:30px;height:30px;color:var(--acc);display:grid;place-items:center}
+.brand small{display:block;font-weight:500;color:var(--faint);font-size:11px;letter-spacing:.02em}
+.hd-actions{display:flex;align-items:center;gap:10px}
+.langbtn{font-family:var(--mono);font-size:12px;color:var(--dim);border:1px solid var(--line);background:var(--panel);padding:6px 12px;border-radius:8px;cursor:pointer}
+.langbtn:hover{color:var(--text);border-color:var(--line2)}
+.backlink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--acc-bright);border:1px solid var(--acc-line);background:var(--acc-bg);padding:7px 14px;border-radius:9px}
+.backlink:hover{text-decoration:none;background:rgba(16,185,129,.18)}
+main{padding:40px 0 24px}
+.pgsub{color:var(--dim);max-width:780px;margin-top:10px;font-size:15px}
+h1{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.01em}
+.lang-tag{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-inline-start:8px;vertical-align:middle}
+#verdict-banner{margin-top:26px;border-radius:var(--r);padding:22px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:18px;border:1px solid var(--line);background:var(--panel)}
+#verdict-banner.green{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.06)}
+#verdict-banner.red{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.06)}
+#verdict-banner.wait{border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.05)}
+.v-mark{width:46px;height:46px;flex:none;display:grid;place-items:center;border-radius:12px}
+.green .v-mark{background:rgba(34,197,94,.12);color:var(--green)}
+.red .v-mark{background:rgba(239,68,68,.12);color:var(--red)}
+.wait .v-mark{background:rgba(234,179,8,.12);color:var(--amber)}
+.v-main{flex:1;min-width:220px}
+.v-word{font-size:21px;font-weight:800;font-family:var(--mono);letter-spacing:.02em}
+.green .v-word{color:var(--green)} .red .v-word{color:var(--red)} .wait .v-word{color:var(--amber)}
+.v-sub{color:var(--dim);font-size:12.5px;margin-top:3px;font-family:var(--mono)}
+.v-counts{display:flex;gap:22px}
+.v-counts .c{text-align:center}
+.v-counts .n{font-size:22px;font-weight:800;font-family:var(--mono)}
+.v-counts .l{font-size:11px;color:var(--faint)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px}
+.kpi{border:1px solid var(--line);border-radius:var(--r-sm);background:var(--panel);padding:14px 16px}
+.kpi .n{font-size:24px;font-weight:800;font-family:var(--mono)}
+.kpi .l{font-size:11.5px;color:var(--faint);margin-top:2px}
+.kpi .s{font-size:11px;color:var(--faint);margin-top:4px;font-family:var(--mono)}
+h2.sb{display:flex;align-items:center;gap:10px;font-size:16px;margin:38px 0 14px}
+h2.sb svg{color:var(--acc);flex:none}
+.tblwrap{border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:var(--panel)}
+.tblscroll{overflow-x:auto;max-height:480px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:start;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:11px 14px;border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;font-family:var(--mono);font-weight:600}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.mono, .mono{font-family:var(--mono);font-size:12px}
+.st{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.03em}
+.st.pass{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}
+.st.fail{color:var(--red);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}
+.st.skip{color:var(--faint);background:var(--panel2);border:1px solid var(--line)}
+.st.warn{color:var(--amber);background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.3)}
+td .note{color:var(--faint);font-size:11.5px;margin-top:3px}
+.note{border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;font-size:13.5px;color:var(--dim);line-height:1.7;background:var(--panel);margin-top:14px}
+.note b{color:var(--text)}
+footer.site{border-top:1px solid var(--line);margin-top:48px}
+.pb{padding:28px 20px 34px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;color:var(--faint);font-size:12.5px}
+footer .cols{display:flex;gap:26px;flex-wrap:wrap}
+footer h5{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:6px;font-family:var(--mono)}
+footer a{color:var(--dim);display:block;font-size:12.5px;margin-top:3px}
+footer a:hover{color:var(--acc-bright)}
+.skel{color:var(--faint);font-family:var(--mono);font-size:12px}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap hd">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div>SAOS · THE WEAVE<small data-i="brandSub">The Verifying Network</small></div>
+    </div>
+    <div class="hd-actions">
+      <button class="langbtn" id="langbtn" onclick="toggleLang()" aria-label="Switch language">EN</button>
+      <a class="backlink" href="/Console/"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span data-i="backConsole">הקונסולה</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1><span data-i="h1">שער האמת</span> <span class="lang-tag">truth-gate-v1</span></h1>
+  <p class="pgsub" data-i="lead">מכונה מודדת את האתר הציבורי הזה כל שעה ב-GitHub Actions: זמינות, קישורים, טריות העדות, אחידות הפורמטים, ודור-ממשק אחד. פסק-הדין נשמר בקובץ ציבורי, כל ריצה נרשמת בהיסטוריה, והרצה אדומה מכשילה את ה-Actions בפומבי. שום ציון לא נכתב ביד.</p>
+
+  <div id="verdict-banner" class="wait" role="status" aria-live="polite">
+    <div class="v-mark" id="v-mark"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+    <div class="v-main">
+      <div class="v-word" id="v-word" data-i="loading">טוען מדידה</div>
+      <div class="v-sub" id="v-sub">truth/latest.json</div>
+    </div>
+    <div class="v-counts">
+      <div class="c"><div class="n" id="c-pass">·</div><div class="l" data-i="cPass">עובר</div></div>
+      <div class="c"><div class="n" id="c-fail">·</div><div class="l" data-i="cFail">נכשל</div></div>
+      <div class="c"><div class="n" id="c-skip">·</div><div class="l" data-i="cSkip">לא-רלוונטי</div></div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="n" id="k-streak">·</div><div class="l" data-i="kStreak">ריצות ירוקות רצופות</div><div class="s" data-i="kStreakSub">יעד השלב: 30</div></div>
+    <div class="kpi"><div class="n" id="k-total">·</div><div class="l" data-i="kTotal">סך ריצות מדודות</div><div class="s" id="k-first">·</div></div>
+    <div class="kpi"><div class="n" id="k-lastage">·</div><div class="l" data-i="kLastAge">גיל המדידה האחרונה</div><div class="s" id="k-lastat">·</div></div>
+  </div>
+
+  <h2 class="sb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span data-i="gatesH">השערים שנמדדו</span></h2>
+  <div class="tblwrap"><div class="tblscroll">
+    <table aria-label="Gates">
+      <thead><tr><th data-i="tGate">שער</th><th data-i="tStatus">מצב</th><th data-i="tMeasured">הנמדד</th></tr></thead>
+      <tbody id="truth-gates"><tr><td colspan="3" class="skel">...</td></tr></tbody>
+    </table>
+  </div></div>
+
+  <h2 class="sb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h4l3-8 4 16 3-8h6"/></svg><span data-i="histH">היסטוריית ריצות</span></h2>
+  <div class="tblwrap"><div class="tblscroll">
+    <table aria-label="Run history">
+      <thead><tr><th data-i="tWhen">מועד</th><th data-i="tVerdict">פסק-דין</th><th data-i="tCounts">מספרים</th><th data-i="tRun">ריצה</th></tr></thead>
+      <tbody id="truth-history"><tr><td colspan="4" class="skel">...</td></tr></tbody>
+    </table>
+  </div></div>
+
+  <div class="note"><b data-i="noteHowT">איך זה עובד.</b> <span data-i="noteHow">המכונה (truth/truth-gate-ci.cjs) רצה ב-Actions בקדנס שעתי ומודדת את האתר החי, לא את הריפו. הפלט נשמר ל-truth/latest.json וכל ריצה נרשמת ב-truth/history.json; ריצה עם כשל יוצאת אדומה בפומבי בדף ה-Actions של הריפו. שערי הסנדבוקס בלבד (תאומים מקומיים, שרת עבודה) לא נמדדים כאן ומסומנים לא-רלוונטי בכל ריצה.</span></div>
+  <div class="note"><b data-i="noteDocT">דוקטרינת R58.</b> <span data-i="noteDoc">דור ממשק אחד לאתר: החזיתות מהדורות הקודמים (money · net · acid · gate · roast · defi · deposits · readiness · sovereign · versus) יצאו מהמחזור ומגישות הפניה קבועה לקונסולה. שער 8 מודד שהן נשארות stub-ים קטנים ושאף דף נוכחי לא מקשר אליהן.</span></div>
+</main>
+
+<footer class="site">
+  <div class="wrap pb">
+    <div>SAOS Network · <span data-i="fMotto">שום טענה בלי מדידה.</span></div>
+    <div class="cols">
+      <div><h5>Truth files</h5><a href="truth/latest.json">truth/latest.json</a><a href="truth/history.json">truth/history.json</a></div>
+      <div><h5 data-i="fTruth">מקורות אמת</h5><a href="status.json">status.json</a><a href="mirror.json">mirror.json</a><a href="agent/state.json">agent/state.json</a></div>
+      <div><h5 data-i="fSite">האתר</h5><a href="/Console/" data-i="fConsole">הקונסולה</a><a href="wallet.html" data-i="fWallet">הארנק</a><a href="hub/" data-i="fHub">מרכז התוכן</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var I18N={
+ en:{
+  brandSub:"The Verifying Network", backConsole:"Console", h1:"The Truth Gate",
+  lead:"A machine measures this public site every hour in GitHub Actions: availability, links, witness freshness, format consistency, and a single interface generation. The verdict is saved to a public file, every run is recorded in history, and a red run fails the Actions in public. No grade is written by hand.",
+  loading:"Loading measurement", cPass:"pass", cFail:"fail", cSkip:"n/a",
+  kStreak:"consecutive green runs", kStreakSub:"stage target: 30",
+  kTotal:"total measured runs", kLastAge:"age of last measurement",
+  gatesH:"The gates that were measured", histH:"Run history",
+  tGate:"Gate", tStatus:"Status", tMeasured:"Measured", tWhen:"When", tVerdict:"Verdict", tCounts:"Counts", tRun:"Run",
+  noteHowT:"How it works.", noteHow:"The machine (truth/truth-gate-ci.cjs) runs in Actions on an hourly cadence and measures the LIVE site, not the repo. Output is saved to truth/latest.json, every run is appended to truth/history.json, and a failing run exits red in the repository's public Actions page. Sandbox-only gates (local twins, work server) are not measured here and are marked n/a on every run.",
+  noteDocT:"The R58 doctrine.", noteDoc:"One interface generation for the site: the previous-generation fronts (money, net, acid, gate, roast, defi, deposits, readiness, sovereign, versus) were retired and serve a permanent redirect to the console. Gate 8 measures that they stay small stubs and that no current page links to them.",
+  fMotto:"No claim without measurement.", fTruth:"Sources of truth", fSite:"The site", fConsole:"The console", fWallet:"The wallet", fHub:"The content center",
+  none:"no measured runs yet",
+  fetchFail:"truth/latest.json is not reachable or no run has been recorded yet"
+ },
+ he:{
+  brandSub:"רשת האימות", backConsole:"הקונסולה", h1:"שער האמת",
+  lead:"מכונה מודדת את האתר הציבורי הזה כל שעה ב-GitHub Actions: זמינות, קישורים, טריות העדות, אחידות הפורמטים, ודור-ממשק אחד. פסק-הדין נשמר בקובץ ציבורי, כל ריצה נרשמת בהיסטוריה, והרצה אדומה מכשילה את ה-Actions בפומבי. שום ציון לא נכתב ביד.",
+  loading:"טוען מדידה", cPass:"עובר", cFail:"נכשל", cSkip:"לא-רלוונטי",
+  kStreak:"ריצות ירוקות רצופות", kStreakSub:"יעד השלב: 30",
+  kTotal:"סך ריצות מדודות", kLastAge:"גיל המדידה האחרונה",
+  gatesH:"השערים שנמדדו", histH:"היסטוריית ריצות",
+  tGate:"שער", tStatus:"מצב", tMeasured:"הנמדד", tWhen:"מועד", tVerdict:"פסק-דין", tCounts:"מספרים", tRun:"ריצה",
+  noteHowT:"איך זה עובד.", noteHow:"המכונה (truth/truth-gate-ci.cjs) רצה ב-Actions בקדנס שעתי ומודדת את האתר החי, לא את הריפו. הפלט נשמר ל-truth/latest.json וכל ריצה נרשמת ב-truth/history.json; ריצה עם כשל יוצאת אדומה בפומבי בדף ה-Actions של הריפו. שערי הסנדבוקס בלבד (תאומים מקומיים, שרת עבודה) לא נמדדים כאן ומסומנים לא-רלוונטי בכל ריצה.",
+  noteDocT:"דוקטרינת R58.", noteDoc:"דור ממשק אחד לאתר: החזיתות מהדורות הקודמים (money · net · acid · gate · roast · defi · deposits · readiness · sovereign · versus) יצאו מהמחזור ומגישות הפניה קבועה לקונסולה. שער 8 מודד שהן נשארות stub-ים קטנים ושאף דף נוכחי לא מקשר אליהן.",
+  fMotto:"שום טענה בלי מדידה.", fTruth:"מקורות אמת", fSite:"האתר", fConsole:"הקונסולה", fWallet:"הארנק", fHub:"מרכז התוכן",
+  none:"אין עדיין ריצות מדודות",
+  fetchFail:"truth/latest.json לא נגיש או שטרם נרשמה ריצה"
+ }
+};
+var LANG=localStorage.getItem("saos.lang")||"he";
+function t(k){var d=I18N[LANG];return d&&d[k]?d[k]:(I18N.he[k]||k);}
+function applyI18n(){
+  document.documentElement.lang=LANG; document.documentElement.dir=LANG==="he"?"rtl":"ltr";
+  document.querySelectorAll("[data-i]").forEach(function(el){el.textContent=t(el.getAttribute("data-i"));});
+  document.getElementById("langbtn").textContent=LANG==="he"?"EN":"עב";
+}
+window.toggleLang=function(){LANG=LANG==="he"?"en":"he";localStorage.setItem("saos.lang",LANG);applyI18n();render(lastData);};
+
+function el(id){return document.getElementById(id);}
+function fmtTime(iso){
+  try{return new Date(iso).toLocaleString(LANG==="he"?"he-IL":"en-GB",{dateStyle:"short",timeStyle:"short"});}catch(e){return iso;}
+}
+function ageH(iso){return Math.max(0,(Date.now()-new Date(iso).getTime())/36e5);}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+var lastData=null;
+function render(data){
+  lastData=data;
+  var b=el("verdict-banner"),w=el("v-word"),s=el("v-sub");
+  if(!data||!data.latest){
+    b.className="wait";w.textContent=t("fetchFail");
+    s.textContent="truth/latest.json";
+    el("c-pass").textContent="·";el("c-fail").textContent="·";el("c-skip").textContent="·";
+    el("k-streak").textContent="0";el("k-total").textContent="0";
+    el("k-first").textContent=t("none");el("k-lastage").textContent="·";el("k-lastat").textContent="·";
+    el("truth-gates").innerHTML="<tr><td colspan='3' class='skel'>"+esc(t("none"))+"</td></tr>";
+    el("truth-history").innerHTML="<tr><td colspan='4' class='skel'>"+esc(t("none"))+"</td></tr>";
+    return;
+  }
+  var L=data.latest, green=L.verdict==="ALL-GREEN";
+  b.className=green?"green":"red";
+  w.textContent=green?"ALL-GREEN":(L.counts.fail+" RED");
+  s.textContent=fmtTime(L.at)+" · "+esc(L.runner||"github-actions")+" · "+esc(L.target||"");
+  el("v-mark").innerHTML=green
+    ?'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
+    :'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v8M12 16.5v.5"/></svg>';
+  el("c-pass").textContent=L.counts.pass; el("c-fail").textContent=L.counts.fail; el("c-skip").textContent=L.counts.skip||0;
+
+  var runs=(data.history&&data.history.runs)||[];
+  var streak=0; for(var i=runs.length-1;i>=0;i--){if(runs[i].verdict==="ALL-GREEN")streak++;else break;}
+  var newest=runs.length?runs[runs.length-1]:null, oldest=runs.length?runs[0]:null;
+  el("k-streak").textContent=streak;
+  el("k-total").textContent=runs.length;
+  el("k-first").textContent=oldest?fmtTime(oldest.at):t("none");
+  el("k-lastage").textContent=newest?ageH(newest.at).toFixed(1)+"h":"·";
+  el("k-lastat").textContent=newest?fmtTime(newest.at):"·";
+
+  var gs=(L.results||[]).map(function(g){
+    var cls=g.status==="PASS"?"pass":(g.status==="SKIP"?"skip":(g.status==="WARN"?"warn":"fail"));
+    return "<tr><td class='mono'>"+esc(g.gate)+"</td><td><span class='st "+cls+"'>"+esc(g.status)+"</span></td><td>"+esc(g.measured)+(g.note?"<div class='note'>"+esc(g.note)+"</div>":"")+"</td></tr>";
+  }).join("");
+  el("truth-gates").innerHTML=gs||"<tr><td colspan='3' class='skel'>...</td></tr>";
+
+  var rows=runs.slice(-30).reverse().map(function(r){
+    var cls=r.verdict==="ALL-GREEN"?"pass":"fail";
+    return "<tr><td class='mono'>"+fmtTime(r.at)+"</td><td><span class='st "+cls+"'>"+esc(r.verdict)+"</span></td><td class='mono'>"+r.pass+" / "+r.fail+" / "+(r.skip||0)+"</td><td>"+(r.runUrl?"<a href='"+esc(r.runUrl)+"' target='_blank' rel='noopener'>Actions</a>":"<span class='skel'>-</span>")+"</td></tr>";
+  }).join("");
+  el("truth-history").innerHTML=rows||"<tr><td colspan='4' class='skel'>"+esc(t("none"))+"</td></tr>";
+}
+
+function boot(){
+  applyI18n();
+  var bust=String(Date.now());
+  Promise.all([
+    fetch("truth/latest.json?t="+bust).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}),
+    fetch("truth/history.json?t="+bust).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
+  ]).then(function(p){
+    render({latest:p[0],history:p[1]&&p[1].runs?p[1]:{runs:[]}});
+  }).catch(function(){render(null);});
+}
+boot();
+})();
+</script>
+</body>
+</html>
