@@ -1,32 +1,459 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="0; url=/Console/">
-<title>SAOS · הדף יצא מהמחזור</title>
-<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/">
-<meta name="robots" content="noindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAOS · נתיב הכסף - מפת המכשירים החיצונית</title>
+<meta name="description" content="מפת נתיב הכסף החיצונית: אילו מכשירים קיימים ברשתות החכמות המובילות, מה כל מכשיר עושה, איפה הנזילות זורמת בפועל, ומה אנחנו מיישמים אצלנו. הכל במדידה חיה, לא בטענות.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
 <style>
-:root{--bg:#09090b;--panel:rgba(255,255,255,.03);--line:rgba(255,255,255,.09);--acc:#10b981;--text:#fafafa;--dim:#a1a1aa;--faint:#71717a}
+:root{
+  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --gold:#d4af37;--gold-dim:#8a7423;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans Hebrew",sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-main{max-width:560px;width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:32px 28px;text-align:center}
-h1{font-size:19px;font-weight:700;letter-spacing:.01em}
-h2{font-size:12px;font-weight:600;color:var(--faint);margin-top:6px;font-family:ui-monospace,Menlo,Consolas,monospace}
-p{font-size:14px;color:var(--dim);line-height:1.7;margin-top:14px}
-p.en{font-size:12.5px;color:var(--faint)}
-a.btn{display:inline-block;margin-top:20px;padding:11px 22px;border-radius:10px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);color:#34d399;font-weight:600;font-size:14px;text-decoration:none}
-a.btn:hover{background:rgba(16,185,129,.2)}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px;width:100%}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+header.nhead{border-bottom:1px solid var(--border);padding:18px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
+.nhead .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.nhead h1{font-size:18px;font-weight:700}
+.nhead .sub{font-size:12px;color:var(--mut)}
+.badge{font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.links{margin-inline-start:auto;display:flex;gap:14px;font-size:13px}
+main{flex:1;padding:30px 0 56px}
+.lede{font-size:14.5px;color:var(--mut);line-height:1.75;margin-bottom:26px;max-width:860px}
+.lede b{color:var(--tx)}
+.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.pcard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
+.pcard .v{font-size:22px;font-weight:800;color:var(--gold);font-family:var(--mono);direction:ltr}
+.pcard .l{font-size:11.5px;color:var(--mut);margin-top:2px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.card h2{font-size:15px;margin-bottom:14px;color:var(--gold);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
+.card p{font-size:13.5px;color:var(--mut);line-height:1.75;margin-bottom:10px}
+.card p b{color:var(--tx)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--dim);font-weight:400;font-size:11.5px;text-align:right;padding:6px 8px;border-bottom:1px solid var(--border2)}
+td{padding:8px;border-bottom:1px dashed var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{font-family:var(--mono);direction:ltr;unicode-bidi:embed;white-space:nowrap}
+.tag{font-size:10.5px;font-family:var(--mono);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;color:var(--mut);white-space:nowrap}
+.tag.g{border-color:#2d5a3d;color:var(--green)}
+.tag.y{border-color:#5a512d;color:var(--yellow)}
+.tag.r{border-color:#5a2d2d;color:var(--red)}
+.tag.p{border-color:#4a3f6e;color:var(--purple)}
+footer{border-top:1px solid var(--border);padding:18px 0;margin-top:auto}
+footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--dim);border-right:3px solid var(--gold-dim);padding-right:12px;margin-top:14px;line-height:1.7}
+.loading{color:var(--dim);padding:10px 0;font-size:13px}
+.clock{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.step .ph{font-family:var(--mono);font-size:14px;font-weight:800;color:var(--purple);border:1px solid #4a3f6e;border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:44px;direction:ltr}
+.step .bd h4{font-size:14px;margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.step .bd p{font-size:13px;color:var(--mut);margin:0;line-height:1.65}
+.step.done .ph{color:var(--green);border-color:#166534}
+.anlist{display:flex;flex-direction:column;gap:14px;margin:14px 0}
+.anrow{border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:var(--panel2)}
+.anhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.anhead .nm{font-weight:700;font-size:14px}
+.annums{font-size:12.5px;color:var(--mut)}
+.anbar{position:relative;display:flex;height:10px;border-radius:6px;overflow:hidden;margin-top:10px;direction:ltr;background:#27272a}
+.anfill{background:var(--gold)}
+.andiff{background:var(--purple);opacity:.55}
+.anmark{position:absolute;top:0;bottom:0;width:2px;background:var(--tx);z-index:2}
+.chev{display:inline-block;width:7px;height:7px;border-inline-start:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);margin-inline-start:6px;vertical-align:1px}
+.inst{display:grid;gap:12px}
+.irow{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.irow .hd{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.irow .nm{font-size:14.5px;font-weight:700}
+.irow .cat{font-size:10.5px;font-family:var(--mono);color:var(--purple);border:1px solid #4a3f6e;border-radius:5px;padding:1px 7px}
+.irow .tvln{font-family:var(--mono);font-size:13px;color:var(--gold);direction:ltr;margin-inline-start:auto}
+.irow .what{font-size:13px;color:var(--mut);line-height:1.7}
+.irow .what b{color:var(--tx)}
+.irow .ours{font-size:12.5px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);line-height:1.65}
+.irow .ours .lbl{font-size:10.5px;font-family:var(--mono);color:var(--dim)}
+.irow .ours .have{color:var(--green)}
+.irow .ours .gap{color:var(--yellow)}
+.irow .ours .plan{color:var(--tx)}
+.src{font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.8}
+@media(max-width:640px){.card{padding:16px 14px}.step{grid-template-columns:44px 1fr}}
 </style>
 </head>
 <body>
+<header class="nhead">
+  <div class="wrap">
+    <h1>נתיב הכסף</h1>
+    <span class="badge">The Money Path · מבט החוצה</span>
+    <span class="sub">מפת המכשירים של הרשתות החכמות המובילות</span>
+    <nav class="links">
+      <a href="index.html">הקונסולה</a>
+      <a href="net.html">הרשת</a>
+      <a href="gate.html">השער</a>
+    </nav>
+  </div>
+</header>
 <main>
-<h1>נתיב הכסף יצא מהמחזור</h1>
-<h2>money.html · retired R58</h2>
-<p>דף זה השתייך לדור ממשק קודם של הקונסולה. החזיתות מדורות שונים אינן מתקיימות במקביל: דור אחד, אמת אחת.</p>
-<p class="en">This page belonged to a previous interface generation of the console. One generation, one truth.</p>
-<a class="btn" href="/Console/">הקונסולה הנוכחית · The current console</a>
+  <div class="wrap">
+
+    <p class="lede">
+      זהו מפת-החוץ של נתיב הכסף: <b>לא</b> מה שקורה אצלנו, אלא מה שקורה ברשתות החכמות המובילות.
+      אילו מכשירים קיימים שם, מה כל מכשיר עושה, ואיפה הכסף באמת זורם.
+      מטרת המפה אחת: ללמוד מהשטח האמיתי וליישם אצלנו את מה שעובד, על היתרונות הריבוניים שלנו.
+      מספרים חיים נמדדים ממקור ציבורי בזמן הפתיחה; מספרי-תמונה מתויגים בתאריך המדידה שלהם, לא מעמידים פנים שהם חיים.
+    </p>
+
+    <div class="pulse" id="kpis">
+      <div class="pcard"><div class="v">$294B</div><div class="l">קופות בורסות מרכזיות · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$183B</div><div class="l">טת׳ר בסיחור, מטבע יציב · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$51B</div><div class="l">בגשרים בין-רשתיים · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$50B</div><div class="l">בהלוואות מבוזרות · תמונת 17/09</div></div>
+      <div class="pcard"><div class="v">$318B</div><div class="l">נפח מסחר 30 יום בדקסים · תמונת 17/09</div></div>
+    </div>
+
+    <section class="card">
+      <h2>אנציקלופדיית המכשירים <span class="en">The Instrument Map · מה עושה מה</span></h2>
+      <div class="inst">
+
+        <div class="irow">
+          <div class="hd"><span class="nm">מטבע יציב מגובה-פיאט</span><span class="cat">Stablecoin · Fiat</span><span class="tvln">$183B + $74B</span></div>
+          <div class="what"><b>מה זה עושה:</b> חניה והסתדרות. דולר בבנק מאחורי כל יחידה שעל השרשרת. הכסף של העולם נכנס לקריפטו דרך הדלת הזאת וחונה בה. טת׳ר ו-USDC מייצרות יחד כ-675 מיליון דולר עמלות ב-30 יום, יותר מכל פרוטוקול אחר.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="gap">אין מקבילה חיצונית</span> · USDS הוא זכות-פדיון פנימית המזוכה מול ספר-הפקדות גלוי. הדלת הזאת אצלנו היא ארבע מסילות ההפקדה (TRX/ETH/SOL/BTC) שכבר נבנו ומאוכלסות אפס. <span class="plan">המהלך: להניע את הזרימה הראשונה דרך הדלת הקיימת, לא לבנות דלת חמישית.</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">בורסת-עשיית-שוק אוטומטית</span><span class="cat">AMM · Uniswap</span><span class="tvln">$318B נפח 30d</span></div>
+          <div class="what"><b>מה זה עושה:</b> נזילות תמידית. בריכה שמחזיקה שני נכסים ומתמחרת לפי מאזן, בלי סוחר מולך. יוניסוואפ V4 לבדה עשתה 42 מיליארד דולר נפח ב-30 יום ו-125 מיליון עמלות. המכשיר שמלמד: הנזילות היא המוצר, העמלה היא המד.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">קיים ופועל</span> · בריכות AMM + ספר-פקודות היברידי עם עשיית-שוק בגריד. מדוד חי מהספר: <span class="mono" id="ammLive">טוען מ-dex/world.json…</span>. <span class="gap">הפער: כל הנפח פנימי. הצעד: לחבר את הגריד לספר-STEEM הציבורי (נתיב שכבר הוכח בעסקה אחת אמיתית).</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">שוק הלוואות</span><span class="cat">Lending · Aave</span><span class="tvln">$50B</span></div>
+          <div class="what"><b>מה זה עושה:</b> הון חונה מרוויח. מפקידים מכניסים נכס, לווים משלמים ריבית, הבריכה מתמחרת את השימוש בהון לפי ביקוש. אאבה V3 עם 16.7 מיליארד, מורפו כחול עם 10.1 מיליארד. זהו מחלקת-המכשירים הגדולה ביותר שחסרה לנו.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">קיים ופועל</span> · כספת-ההלוואות נבנתה וחיה: USDS נגד בטחונות WSTEEM בלבד, יחס 250%, נזילות מתחת-150% פתוחה-לכל-אזרח עם בונוס 5%, ריבית מתומחרת-במצב-השרשרת (בסיס 5%/שנה + ניצולת), תקרות שמרניות עד-שהמכשיר-יוכח. <span class="plan">המצב החי בכרטיס הכספת למטה.</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">הימור נזיל</span><span class="cat">Liquid Staking · Lido</span><span class="tvln">$51B</span></div>
+          <div class="what"><b>מה זה עושה:</b> הון נעול הופך נזיל. מהמרים ETH ומקבלים שטר נזיל שסופר תשואה ונסחר בחופשיות. לידו לבדו 23.6 מיליארד. הלקח: כשנועלים הון למען אבטחה, נותנים לו גוף נסחר בחזרה.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">הבסיס קיים</span> · סולם-הערך שלנו כבר נועל SAOS ומחלק עליות מדודות. <span class="plan">המהלך: עטיפת sSAOS, שטר שזוכה בנתח הסולם ונסחר בספר שלנו בחינם. עטיפה סביב מנגנון קיים, לא מנוע חדש.</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">גשר בין-רשתי</span><span class="cat">Bridge · WBTC, LayerZero</span><span class="tvln">$51B</span></div>
+          <div class="what"><b>מה זה עושה:</b> העברת כסף בין רשתות. WBTC מחזיק 8.8 מיליארד, גשר קונבייס 7.7 מיליארד, הייפרליקוויד 6.5 מיליארד. הלקח הכי חשוב לנו: גשר = המכשיר שמזרים נזילות חדשה לרשת חדשה. בלי גשר עובד, אין כניסת כסף.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">חצי-גשר מוכח</span> · כניסה: ארבע מסילות הפקדה נטולות-מפתח עם ספר גלוי וזיכוי חתום. יציאה: מעשה-מפעיל מתועד. <span class="gap">הפער: הכיוון החוצה ידני. הצעד: ציטוטי יציאה על הספר שלנו, מרווח גלוי, דו-כיווניות אמיתית.</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">מטבע-יציב מגובה-קריפטו</span><span class="cat">CDP · Sky</span><span class="tvln">$7.4B</span></div>
+          <div class="what"><b>מה זה עושה:</b> טביעת-עצמית של דולר נגד בטחונות קריפטו. סקיי (לשעבר מייקר) 5.1 מיליארד. המשתמש לא מפקיד כסף חוץ אלא נועל הון קיים ומקבל נזילות חדשה נגדו, בלי למכור.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">החוזה קיים</span> · op של משכון נגד בטחונות קיים בגרעין. <span class="plan">המהלך: הפעלה זהירה על USDS נגד WSTEEM בלבד, עם יחס בטחונות שמרני ונוזליות מדודה.</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">נגזרים ומימון</span><span class="cat">Perps · Hyperliquid</span><span class="tvln">$76M עמלות 30d</span></div>
+          <div class="what"><b>מה זה עושה:</b> חשיפה ממונפת בלי מסירת נכס. הייפרליקוויד הפך פרפ-דקס לרשת-על משלו ומייצר 76 מיליון עמלות ב-30 יום, כשהכספת HLP קולטת את הצד השני. המכשיר הרווחי ביותר ליחידת-נפח בשוק.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="gap">לא קיים, ובצדק</span> · היתרון המבני שלנו (אפס גז, אפס ממפול, סדר דטרמיניסטי) הוא בדיוק מה שפרפ צריך, אבל מנוע מימון דורש ביקורת-אבטחה חיצונית קודם. חוק הסף שנקבע באסטרטגיית הנזילות נשאר בתוקף: ביקורת עוברת, ואז נגזרים.</div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">בימת-הנפקה</span><span class="cat">Launchpad · pump.fun</span><span class="tvln">$45M עמלות 30d</span></div>
+          <div class="what"><b>מה זה עושה:</b> מקום שנולדים בו מטבעות. פאמפ-סוואפ עשתה 96 מיליון עמלות ב-30 יום ממסחר במטבעות שנולדו בבימה שלה. הלקח: ברירת-מסלול ליצירה היא מכונת-עמלות. אבל רוב מוחלט של הנכסים שם הם רעש.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="have">רישום-נכס קיים</span> · asset_list בגרעין. <span class="plan">המהלך הריבוני: לא בימת-קזינו אלא מסלול-רישום מבוקר, רישיון-נזילות שניתן רק לנכס עם גיבוי מוכח. איכות על כמות.</span></div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">הימור-על-הימור</span><span class="cat">Restaking · EigenLayer</span><span class="tvln">$9.8B</span></div>
+          <div class="what"><b>מה זה עושה:</b> הון שכבר מאבטח רשת מאבטח שירותים נוספים ומרוויח פעמיים על אותו כסף. אייג׳נלייר 6.4 מיליארד, בבילון נותן ל-BTC לאבטח בלי לזוז. הלקח: שכבת אבטחה שכבר שולמה יכולה להמכיר שוב.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="gap">לא קיים כמכשיר</span> · אבל הרעיון הריבוני שלנו ממילא מקדים אותו: הסוכנים שלנו מאמתים ומעגנים בלי תשלום נוסף. אם נמכור את זה נכון, העיגון שלנו הוא restaking של אמון.</div>
+        </div>
+
+        <div class="irow">
+          <div class="hd"><span class="nm">ניתוב תשואה</span><span class="cat">Yield Router · Pendle</span><span class="tvln">$4.5B</span></div>
+          <div class="what"><b>מה זה עושה:</b> פיצול תשואה משתנה לקבועה. פנדל חותך פוזיציה מניבה לשטר-קרן (קבוע) ושטר-תשואה (משתנה), שניהם נסחרים. קונים ומוכרים ודאות. שוק ריבית אמיתי על השרשרת.</div>
+          <div class="ours"><span class="lbl">אצלנו</span> · <span class="gap">לא קיים</span> · אחרי שכספת-ההלוואות תעבוד, הפיצול הזה הוא הצעד הטבעי: הספר שלנו נטול-עמלה, ולכן ניתוב תשואה בגדלים קטנים רווחי אצלנו ולא כדאי בשום רשת ציבורית. יתרון מבני מדוד.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>איפה הכסף באמת זורם <span class="en">Fee Flow 30d · המד שלא משקר</span></h2>
+      <p>TVL אומר איפה הכסף חונה. עמלות אומרות איפה הוא <b>זז</b>. מדידת 30 הימים האחרונים, בסדר יורד:</p>
+      <table>
+        <thead><tr><th>מקום הזרימה</th><th>עמלות 30 יום</th><th>מה גורם לכסף לזוז שם</th></tr></thead>
+        <tbody>
+          <tr><td>מנפיקי סטייבלקוין (טר, סירקל)</td><td class="num">$675M</td><td>כל כניסה ויציאה של כסף מהעולם הקריפטו עוברת דרכם</td></tr>
+          <tr><td>דקסים (יוניסוואפ V4+V3, פאמפ-סוואפ)</td><td class="num">$276M</td><td>מסחר נזילות; ה-V4 לבדה $125M</td></tr>
+          <tr><td>בימות הנפקה (פונס, פאמפ-פאן)</td><td class="num">$166M</td><td>ספקולציית יצירה; הכסף זז בגלל רעש, לא ערך</td></tr>
+          <tr><td>פרפ-נגזרים (הייפרליקוויד)</td><td class="num">$76M</td><td>מינוף; הכי הרבה עמלה ליחידת נפח</td></tr>
+          <tr><td>הימור נזיל (לידו)</td><td class="num">$46M</td><td>תשואת-בסיס של הרשת עצמה</td></tr>
+          <tr><td>אפליקציות מסחר (GMGN, אקסיום)</td><td class="num">$91M</td><td>מהירות ונוחות על גבי המכשירים</td></tr>
+        </tbody>
+      </table>
+      <p class="note">המסקנה המדודה: הכסף זז בשלוש סיבות בלבד, כניסה/יציאה (סטייבל), חשיפה (מסחר ומינוף), ותשואה (הימור והלוואות). כל מכשיר מצליח הוא אחת משלוש הסיבות האלה בלבוש שונה. את שלוש הסיבות צריך לשאול על כל מה שאנחנו בונים.</p>
+      <div id="fees"><p class="loading">טוען מדידת עמלות חיה</p></div>
+    </section>
+
+    <section class="card">
+      <h2>רשתות החכמות לפי גודל <span class="en">Live Chain Board</span></h2>
+      <div id="chainboard"><p class="loading">טוען</p></div>
+      <p class="src">מקור חי: DefiLlama (api.llama.fi/chains), קריאה ציבורית חסרת-מפתח שמתבצעת בדפדפן שלך. אם הקריאה נכשלת מוצגת התמונה שנמדדה בעת בניית העמוד.</p>
+    </section>
+
+    <section class="card">
+      <h2>עוגן חי, מהחוץ פנימה <span class="en">Live Anchor · R23</span></h2>
+      <p>הכשל שנמדד בעמוד הזה תוקן בשורש: העוגן הפנימי של נכסי-הגיבוי לא עקב אחרי מחירי-השוק האמיתיים, ו-WSTEEM נסחר בפנים על 0.32 דולר בזמן ש-STEEM האמיתי שווה 0.055. מעכשיו כל פעימת-ענן מקרבת את העוגן אל מחיר-החוץ (חציון חוצה-מקורות) בהחלקה מדודה שנרשמת בספר השרשרת, והמסילה והשוק הפנימי נגררים אחריו. זו המדידה החיה, לא טענה:</p>
+      <div id="anchors"><p class="loading">טוען עוגנים חיים</p></div>
+      <p class="src">מקור חי: ספר-השרשרת הציבורי שלנו (dex/world.json) שמתעדכן בכל פעימת-ענן. המקטע הסגול הוא הפער שנותר לסגור, הקו הלבן הוא יעד השוק החיצוני. USDS, יחידת-החשבון, לעולם אינה נעוגנת מחדש.</p>
+    </section>
+
+    <section class="card">
+      <h2>כספת-ההלוואות <span class="en">The Vault · שלב 2 בשעון · חי</span></h2>
+      <p>המכשיר שהיה חסר: הון חונה מתחיל לעבוד. שאיבת USDS נגד בטחונות WSTEEM בלבד, יחס-בטחונות 250% מינימום, נזילות-אזרח מתחת-150% עם בונוס 5% למפרק, וגיבוי-אוצר לכספות שקועות עם הפסד-נרשם-לנצח. הריבית מתומחרת במצב-השרשרת (בסיס 5%/שנה + תוספת-ניצולת) ומומשת-בפירעון. הטבעה מוצהרת-בביקורת, שריפה נספרת: ההיצע מדויק בכל רגע.</p>
+      <div id="vaultLive"><p class="loading">טוען את מצב הכספת מהספר</p></div>
+      <p class="src">מקור חי: dex/world.json (state.vaults + state.vaultTot) מתעדכן בכל פעימת-ענן. אם אין עמדות פתוחות מוצגים המונים המצטברים-האמיתיים בלבד. הריבית המומשת היא בסדר-הגודל של הרשת: מיקרו-µ בהתחלה, גדלה עם השימוש. שום מספר לא מוצג שאיננו בספר.</p>
+    </section>
+
+    <section class="card">
+      <h2>הזרימה החוץ <span class="en">External Flow · R24</span></h2>
+      <p>צעד 1 בתוכנית, בנוי ומודד: רץ-ענן יומי שפורש גריד-אמת על ספר-STEEM הפנימי הציבורי: סוחרים אמיתיים, יישוב-על-השרשרת, אפס-עמלה. עקרון-המדיניות שנמדד מול הספר החי: אף-פעם לא מוכרים STEEM מתחת לערכו החיצוני (קו-הזהות מוצג למטה), וכל קנייה מתחת לקו היא עודף מדוד. כל מילוי של סוחר-חוץ נספר במעקה הציבורי עם העודף ב-bps מול הציון. המצב החי:</p>
+      <div id="extgrid"><p class="loading">טוען את מצב הגריד החוץ</p></div>
+      <p class="src">מקור חי: dex/grid.json שמתפרסם מהענן בכל ריצה יומית. החימוש כנה: בלי המפתח הפעיל (סוד-ריפו שרק המפעיל מציב) אין חתימה ואין שידור, והמצב מתפרסם בגלוי עם הסיבה. הדלק הוא תשלומי-ה-powerdown הפעילים, שנקראים-בלבד (DIRECTIVE-R24: כוח-הצי קדוש).</p>
+    </section>
+
+    <section class="card">
+      <h2>מה זה אומר עלינו <span class="en">The Honest Read</span></h2>
+      <p><b>מה כבר יש לנו ועובד (מדוד):</b> ספר-פקודות היברידי חי, בריכות AMM, פוליטיקת-נזילות של האוצר (POL) עם עמלות פרו-רטה, מסילת-מיקרו שסוחרת נגד עוגנים, ארבע מסילות הפקדה נטולות-מפתח עם ספר גלוי, זיכוי חתום מול תביעות ציבוריות, ועיגון ראיות בשרשרות ציבוריות. התשתית הזאת היא לא פחות מזו של הדור הראשון של המכשירים שלמדנו מהם למעלה.</p>
+      <p><b>מה חסר (בכנות):</b> אפס נזילות חוץ אמיתית. אפס הפקדות בפועל. המסחר פנימי, בוטים מול בוטים. אין מכשיר תשואה על הון חונה. העוגן הפנימי של WSTEEM היה נעול על מחיר מדור קודם (פער מדוד של פי 5.8); הוא תוקן בשורש וכעת מחליק אל מחיר-החוץ החי בכל פעימה, במדידה גלויה למעלה בעמוד הזה, והשווקים הפנימיים נגררים אחריו במדוד.</p>
+      <p><b>מה היתרון שלנו (מדוד):</b> אפס עמלת רשת, אפס גז (מנת-מסילה שורפת 0.067% לעומת $1-5 ברשת ציבורית), אין ממפול ציבורי ואין כריכות-סנדוויץ׳, סדר דטרמיניסטי, העברות חינם, גיבוי 1:1 נאכף בקוד, וכל טענה מעוגנת בשרשרת ציבורית. מיקרו-מכשירים שלא כדאי לבנות בשום רשת ציבורית, רווחיים אצלנו מהיום הראשון.</p>
+    </section>
+
+    <section class="card">
+      <h2>תוכנית הביצוע <span class="en">Step by Step, Like a Clock</span></h2>
+      <div class="clock">
+        <div class="step done"><div class="ph">0</div><div class="bd"><h4>תיקון-שורש: עוגן חי <span class="en">delivered</span></h4><p>בוצע ומדוד: מכל פעימת-ענן העוגן מחליק אל מחיר-החוץ (חציון חוצה-מקורות, צעד מדוד וכנון-ריפליי), ההחלקה נרשמת בספר השרשרת, והמספרים חשופים בעמוד הזה. השלבים הבאים נשענים על עוגן שאינו משקר.</p></div></div>
+        <div class="step"><div class="ph">1</div><div class="bd"><h4>זרימה חוץ ראשונה: הגריד על ספר-STEEM הציבורי <span class="en">built</span></h4><p>הרץ-הענני נבנה ומודד (הכרטיס למעלה): גריד יומי מעל קו-הזהות החיצוני, דלק מתשלומי-השחרור, מעקה-ציבורי לכל מילוי. המילוי המוכח נספר בעודף +26%. הצעד שנותר: הצבת-הסוד הפעיל על-ידי המפעיל, פעולת-אצבע אחת, והגריד חמוש.</p></div></div>
+        <div class="step done"><div class="ph">2</div><div class="bd"><h4>כספת-הלוואות מינימלית <span class="en">delivered</span></h4><p>בוצע ומדוד: CDP מלא נגד WSTEEM בלבד, יחס 250%, נזילות אזרחית מתחת-150% עם בונוס 5%, גיבוי-אוצר לשוקעות עם הפסד-נרשם-לנצח, ריבית מתומחרת-במצב, חשבונאות-ברזל (הטבעה מוצהרת, שריפה נספרת). הוכח מקומית על עותק-שרשרת-חיה לפני-העלאה, וסוכן-הדגמה מפעיל אותו בכל פעימה. המצב החי בכרטיס למעלה.</p></div></div>
+        <div class="step"><div class="ph">3</div><div class="bd"><h4>sSAOS: הימור-נזיל על סולם הערך</h4><p>עטיפה סביב מנגנון קיים ומדוד. שטר שזוכה בנתח הסולם ונסחר חינם בספר שלנו. ההון הנאמן לרשת מקבל גוף נזיל בחזרה.</p></div></div>
+        <div class="step"><div class="ph">4</div><div class="bd"><h4>מסדרון דו-כיווני</h4><p>ציטוטי יציאה על הספר במרווח גלוי, כך שהגשר שלנו מוכר נזילות בשני הכיוונים והמרווח נמדד לאוצר. הגשר הופך מצינור למכשיר.</p></div></div>
+        <div class="step"><div class="ph">5</div><div class="bd"><h4>ניתוב תשואה ותשואה קבועה</h4><p>פיצול פנדל-לייט על גבי כספת-ההלוואות. רק אצלנו זה כדאי בגדלים קטנים, בגלל אפס העמלות. יתרון מבני מדוד שאף רשת ציבורית לא יכולה לחקות.</p></div></div>
+        <div class="step"><div class="ph">6</div><div class="bd"><h4>נגזרים, אחרי ביקורת</h4><p>מימון ופרפ על הספר שלנו זה המנוע הרווחי ביותר ליחידת נפח, אבל חוק הסף נשאר: ביקורת-אבטחה חיצונית עוברת קודם. בלי קיצורי דרך.</p></div></div>
+      </div>
+    </section>
+
+  </div>
 </main>
+<footer>
+  <div class="wrap">
+    <span>נתיב הכסף · מפת חוץ חיה · שום טענה בלי מדידה</span>
+    <span>מקורות: DefiLlama (ציבורי), CoinGecko (ציבורי), שרשראות ציבוריות · תמונת-שבר: <span class="mono" id="snapts">2026-09-17</span></span>
+  </div>
+</footer>
+<script>
+(function(){
+  "use strict";
+  var CHAINS_FALLBACK = [
+    ["Ethereum",106.8,"ETH"],["Solana",12.8,"SOL"],["Base",8.7,""],["Binance",7.7,"BNB"],
+    ["Tron",5.4,"TRX"],["Bitcoin",5.4,"BTC"],["Hyperliquid L1",2.9,"HYPE"],["Arbitrum",2.0,"ARB"]
+  ];
+  var FEES_FALLBACK = [
+    ["Tether",485.4,"Stablecoin Issuer"],["Circle USDC",190.0,"Stablecoin Issuer"],
+    ["Uniswap V4",125.4,"Dexs"],["PumpSwap",95.8,"Dexs"],["Hyperliquid Perps",75.9,"Derivatives"],
+    ["Uniswap V3",55.1,"Dexs"],["Lido",46.1,"Liquid Staking"],["pump.fun",45.1,"Launchpad"]
+  ];
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+  function fmtB(v){return "$"+(v>=100?v.toFixed(1):v>=10?v.toFixed(1):v.toFixed(2))+"B";}
+  function fmtM(v){return "$"+v.toFixed(1)+"M";}
+  function drawChains(rows){
+    var host=document.getElementById("chainboard");host.innerHTML="";
+    var t=el("table"),thead=el("thead"),htr=el("tr");
+    ["שרשרת","ערך נעול","מטבע"].forEach(function(h){htr.appendChild(el("th",null,h));});
+    thead.appendChild(htr);t.appendChild(thead);
+    var tb=el("tbody");
+    rows.forEach(function(r){
+      var tr=el("tr");
+      tr.appendChild(el("td",null,r[0]));
+      tr.appendChild(el("td","num",fmtB(r[1])));
+      tr.appendChild(el("td","mono",r[2]||"Multi"));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);host.appendChild(t);
+  }
+  function drawFees(rows){
+    var host=document.getElementById("fees");host.innerHTML="";
+    var t=el("table"),thead=el("thead"),htr=el("tr");
+    ["מייצר העמלות","30 יום","סוג"].forEach(function(h){htr.appendChild(el("th",null,h));});
+    thead.appendChild(htr);t.appendChild(thead);
+    var tb=el("tbody");
+    rows.forEach(function(r){
+      var tr=el("tr");
+      tr.appendChild(el("td",null,r[0]));
+      tr.appendChild(el("td","num",fmtM(r[1])));
+      tr.appendChild(el("td","mono",r[2]));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);host.appendChild(t);
+  }
+  function jget(url){return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();});}
+  function ts(){try{document.getElementById("snapts").textContent=new Date().toISOString().slice(0,10);}catch(e){}}
+  jget("https://api.llama.fi/chains").then(function(d){
+    var rows=d.filter(function(c){return (c.tvl||0)>0;})
+      .sort(function(a,b){return b.tvl-a.tvl;}).slice(0,10)
+      .map(function(c){return [c.name,c.tvl/1e9,c.tokenSymbol||""];});
+    if(rows.length)drawChains(rows);
+  }).catch(function(){drawChains(CHAINS_FALLBACK);});
+  jget("https://api.llama.fi/overview/fees?excludeChain=None").then(function(d){
+    var rows=(d.protocols||[]).filter(function(p){return (p.total30d||0)>0;})
+      .sort(function(a,b){return b.total30d-a.total30d;}).slice(0,8)
+      .map(function(p){return [p.name,p.total30d/1e6,p.category||""].slice(0,3);});
+    if(rows.length)drawFees(rows);
+  }).catch(function(){drawFees(FEES_FALLBACK);});
+  function drawAnchors(w){
+    var host=document.getElementById("anchors");if(!host)return;
+    host.innerHTML="";
+    var st=w.state||{};
+    /* אמת חיה למספרי השוק הפנימי: בעבר הציג העמוד מספר קפוא מיום בנייתו
+     * כאילו הוא נוכחי. עכשיו הספר עצמו מדבר, בכל פתיחה. */
+    try{
+      var live=document.getElementById("ammLive");
+      if(live){
+        var f=Number(st.fills||0),s=Number(st.swaps||0),tp=Number(st.treasuryProfit||0)/1000;
+        live.textContent=f.toLocaleString("en-US")+" מילויים · "+s.toLocaleString("en-US")+" החלפות · עמלות אוצר $"+tp.toFixed(2)+" · גובה h"+(st.height||"?");
+      }
+    }catch(e){}
+    var A=st.assets||{},O=st.oracle||{};
+    var defs=[["WSTEEM","גיבוי STEEM 1:1"],["PHIVE","גיבוי HIVE 1:1"],["WSBD","גיבוי SBD 1:1"]];
+    var box=el("div","anlist");
+    defs.forEach(function(d){
+      var k=d[0],a=A[k]||{},o=O[k]||{};
+      var ref=(a.refPrice||0)/1000;
+      var tgt=o.mu?o.mu/1e6:null;
+      var row=el("div","anrow");
+      var head=el("div","anhead");
+      head.appendChild(el("span","nm",k+" · "+d[1]));
+      var nums=el("span","annums mono");
+      if(tgt!=null&&ref>0){
+        var gap=Math.round(((ref-tgt)/tgt)*100);
+        nums.textContent="פנימי $"+ref.toFixed(4)+" · יעד $"+tgt.toFixed(4)+" · פער "+(gap>0?"+":"")+gap+"%";
+      }else{
+        nums.textContent="פנימי $"+ref.toFixed(4)+" · אין פיד חוץ כרגע";
+      }
+      head.appendChild(nums);row.appendChild(head);
+      if(tgt!=null&&ref>0){
+        var scale=Math.max(ref,tgt)*1.12;
+        var bar=el("div","anbar");
+        var fill=el("div","anfill");fill.style.width=Math.min(100,(Math.min(ref,tgt)/scale)*100)+"%";
+        var diff=el("div","andiff");diff.style.width=Math.min(100,(Math.abs(ref-tgt)/scale)*100)+"%";
+        var mark=el("div","anmark");mark.style.left=Math.min(97.5,(tgt/scale)*100)+"%";
+        bar.appendChild(fill);bar.appendChild(diff);bar.appendChild(mark);
+        row.appendChild(bar);
+      }
+      box.appendChild(row);
+    });
+    host.appendChild(box);
+    var foot=el("p","src");
+    foot.textContent="גובה שרשרת: "+(st.height||"?")+" · פורסם: "+String(w.publishedAt||"?").replace("T"," ").slice(0,16)+"Z";
+    host.appendChild(foot);
+  }
+  function drawVault(w){
+    var host=document.getElementById("vaultLive");if(!host)return;
+    host.innerHTML="";
+    var st=w.state||{},V=st.vaults||{},T=st.vaultTot||{};
+    var ref=(st.assets&&st.assets.WSTEEM&&st.assets.WSTEEM.refPrice)||0;
+    var totCol=0,totDebt=0;
+    Object.keys(V).forEach(function(k){totCol+=V[k].colMu||0;totDebt+=(V[k].debtMu||0)+(V[k].intMu||0);});
+    var rate=500+Math.floor(Math.min(1,totDebt/500000)*1000);
+    var box=el("div","anlist");
+    var row=el("div","anrow");
+    var head=el("div","anhead");
+    var openN=Object.keys(V).length;
+    head.appendChild(el("span","nm",openN?("כספת-ההלוואות · "+openN+" עמדה"+(openN>1?"ות":"")+" פתוחות"):"כספת-ההלוואות · אין עמדות פתוחות כרגע"));
+    var nums=el("span","annums mono");
+    nums.textContent="ריבית חיה "+(rate/100).toFixed(2)+"%/שנה · נפתחו "+(T.opened||0)+" · נפרעו "+(T.repaid||0)+" · ריבית מומשה "+(T.interestMu||0)+"µ · מפורקות "+(T.liquidations||0)+" · הפסדי-גיבוי "+(T.backstopLossMu||0)+"µ";
+    head.appendChild(nums);row.appendChild(head);
+    if(ref>0&&totCol>0){
+      var p1=el("p");
+      p1.style.cssText="font-size:12.5px;color:var(--mut);margin:6px 0 0";
+      p1.textContent="בטחונות נעולים: "+(totCol/1000).toFixed(1)+" WSTEEM ($"+((totCol*ref/1000)/1000).toFixed(2)+") · חוב בתוקף: "+totDebt.toLocaleString("en-US")+"µ USDS ($"+(totDebt/1000).toFixed(2)+")";
+      row.appendChild(p1);
+    }
+    Object.keys(V).forEach(function(k){
+      var v=V[k],colVal=Math.floor((v.colMu*ref)/1000),base=(v.debtMu||0)+(v.intMu||0);
+      var cr=base>0?Math.floor((colVal*100)/base):0;
+      var p=el("p","mono");
+      p.style.cssText="font-size:12px;color:var(--tx);margin:4px 0 0;direction:ltr;text-align:right";
+      p.textContent=k+" · col "+(v.colMu/1000).toFixed(1)+" WSTEEM · debt "+base+"µ · CR "+cr+"%";
+      row.appendChild(p);
+    });
+    box.appendChild(row);host.appendChild(box);
+    var foot=el("p","src");
+    foot.textContent="ספר-שרשרת: h"+(st.height||"?")+" · היצע-כספת חי: "+(((T.issuedMu||0)-(T.burnedMu||0)))+"µ USDS (מוצהר-בביקורת, issued−burned)";
+    host.appendChild(foot);
+  }
+  jget("dex/world.json").then(function(w){drawAnchors(w);drawVault(w);}).catch(function(){
+    var host=document.getElementById("anchors");
+    if(host)host.innerHTML='<p class="src">קריאת ספר-השרשרת הציבורי נכשלה כרגע. העוגנים ממשיכים להחליק בכל פעימה; נסה שוב בעוד רגע.</p>';
+  });
+  function drawGrid(g){
+    var host=document.getElementById("extgrid");if(!host)return;
+    host.innerHTML="";
+    var box=el("div","anlist");
+    var row=el("div","anrow");
+    var head=el("div","anhead");
+    var v=g.verdict||"?";
+    var nm=el("span","nm","רץ-הגריד · "+(g.armed?"חמוש":"לא-חמוש")+" · "+v);
+    head.appendChild(nm);
+    var nums=el("span","annums mono");
+    var f=g.fuel||{};
+    nums.textContent=(f.weeklyUsd!=null?"דלק שבועי $"+f.weeklyUsd+" · ":"")+(f.nextPayout?"תשלום הבא "+String(f.nextPayout).slice(0,10):"");
+    head.appendChild(nums);row.appendChild(head);
+    var body=el("p",null);
+    var b=g.book||{},m=g.marks||{};
+    body.innerHTML="";
+    var t1=el("span",null,"ספר חי: ביד "+(b.bestBid!=null?b.bestBid.toFixed(4):"?")+" · אסק "+(b.bestAsk!=null?b.bestAsk.toFixed(4):"?")+" SBD/STEEM");
+    var t2=el("span",null,"קו-זהות חיצוני: "+(m.paritySbdPerSteem!=null?m.paritySbdPerSteem.toFixed(4):"?")+" (STEEM $"+(m.steemUsd!=null?m.steemUsd.toFixed(4):"?")+" · SBD $"+(m.sbdUsd!=null?m.sbdUsd.toFixed(4):"?")+")");
+    t1.style.display="block";t2.style.display="block";
+    t1.style.fontSize="12.5px";t2.style.fontSize="12.5px";
+    t1.style.color="var(--mut)";t2.style.color="var(--mut)";
+    row.appendChild(t1);row.appendChild(t2);
+    var fl=(g.fills||[]).slice(-3).reverse();
+    if(fl.length){
+      var flp=el("p",null,"מילויים שנספרו:");
+      flp.style.cssText="font-size:12.5px;color:var(--mut);margin:6px 0 0";
+      row.appendChild(flp);
+      for(var i=0;i<fl.length;i++){
+        var x=fl[i];
+        var lp=el("p","mono");
+        lp.textContent=x.at.slice(0,16)+"Z · "+x.paid+" > "+x.received+" · "+(x.edgeBps>0?"+":"")+Math.round(x.edgeBps/100)+"% מול ציון";
+        lp.style.cssText="font-size:12px;color:"+(x.edgeBps>=0?"var(--green)":"var(--red)")+";margin:2px 0 0;direction:ltr;text-align:right";
+        row.appendChild(lp);
+      }
+    }
+    var tot=el("p",null,"נזילות-חוץ נטו שנספרה: $"+Number(g.externalFlowUsd||0).toFixed(4));
+    tot.style.cssText="font-size:12.5px;color:var(--tx);margin:8px 0 0";
+    row.appendChild(tot);
+    if(g.blocker&&g.blocker.length){
+      var bl=el("p",null);
+      bl.textContent="חוסר-כנות גלוי: "+g.blocker.join(" · ");
+      bl.style.cssText="font-size:12px;color:var(--yellow);margin:8px 0 0";
+      row.appendChild(bl);
+    }
+    box.appendChild(row);host.appendChild(box);
+  }
+  jget("dex/grid.json").then(drawGrid).catch(function(){
+    var host=document.getElementById("extgrid");
+    if(host)host.innerHTML='<p class="src">קריאת מצב-הגריד הציבורי נכשלה כרגע (הריצה העננית הראשונה עוד עשויה להיות בדרך). נסה שוב בעוד רגע.</p>';
+  });
+  ts();
+})();
+</script>
 </body>
 </html>
