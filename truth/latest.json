@@ -1,72 +1,72 @@
 {
   "format": "truth-gate-v1",
   "runner": "github-actions",
-  "at": "2026-09-19T11:01:02.561Z",
+  "at": "2026-09-19T11:03:01.434Z",
   "target": "https://roshpinacare-sys.github.io/Console",
-  "verdict": "1 RED",
+  "verdict": "ALL-GREEN",
   "counts": {
-    "pass": 5,
-    "fail": 1,
+    "pass": 6,
+    "fail": 0,
     "skip": 2
   },
-  "durationMs": 9222,
-  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/35438929375",
+  "durationMs": 9261,
+  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/35439025453",
   "results": [
     {
       "gate": "G1-site-up",
       "status": "PASS",
       "measured": "HTTP 200 · 157900 bytes",
       "note": "",
-      "at": "2026-09-19T11:00:53.568Z"
+      "at": "2026-09-19T11:02:52.415Z"
     },
     {
       "gate": "G2-zero-broken-links",
-      "status": "FAIL",
-      "measured": "5 pages · 75 links · 2 broken · 5 undetermined",
-      "note": "truth.html: truth/latest.json → HTTP 404 | truth.html: truth/history.json → HTTP 404",
-      "at": "2026-09-19T11:01:01.623Z"
+      "status": "PASS",
+      "measured": "5 pages · 75 links · 0 broken · 5 undetermined",
+      "note": "",
+      "at": "2026-09-19T11:03:00.483Z"
     },
     {
       "gate": "G3-witness-freshness",
       "status": "PASS",
-      "measured": "cp#234 · att 241 · age 0.1h (threshold 26h)",
+      "measured": "cp#234 · att 241 · age 0.2h (threshold 26h)",
       "note": "",
-      "at": "2026-09-19T11:01:01.634Z"
+      "at": "2026-09-19T11:03:00.491Z"
     },
     {
       "gate": "G5-live-format-consistency",
       "status": "PASS",
       "measured": "public book format=\"saos-live-v1\"",
       "note": "",
-      "at": "2026-09-19T11:01:01.710Z"
+      "at": "2026-09-19T11:03:00.573Z"
     },
     {
       "gate": "G6-bridgehead-sane",
       "status": "PASS",
       "measured": "format=\"agent-bridgehead-state-v1\" · phase task present",
       "note": "",
-      "at": "2026-09-19T11:01:01.721Z"
+      "at": "2026-09-19T11:03:00.581Z"
     },
     {
       "gate": "G8-single-generation",
       "status": "PASS",
       "measured": "10 retired stubs · index retired-hrefs 0 · truth linked yes · sitemap retired 0",
       "note": "",
-      "at": "2026-09-19T11:01:02.561Z"
+      "at": "2026-09-19T11:03:01.434Z"
     },
     {
       "gate": "G4-no-forged-twins",
       "status": "SKIP",
       "measured": "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)",
       "note": "",
-      "at": "2026-09-19T11:01:02.561Z"
+      "at": "2026-09-19T11:03:01.434Z"
     },
     {
       "gate": "G7-dev-server",
       "status": "SKIP",
       "measured": "sandbox-only (the work server is not public infrastructure)",
       "note": "",
-      "at": "2026-09-19T11:01:02.561Z"
+      "at": "2026-09-19T11:03:01.434Z"
     }
   ]
 }
