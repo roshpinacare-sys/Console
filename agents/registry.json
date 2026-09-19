@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-19T02:47:14Z",
+ "generatedAt": "2026-09-19T03:46:59Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -108,15 +108,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 42,
-    "success": 40,
+    "runs_sampled": 43,
+    "success": 41,
     "failure": 2,
     "other": 0,
-    "successRate": 95.2,
+    "successRate": 95.3,
     "avgDurS": 18
    },
    "lastRun": {
-    "at": "2026-09-19T00:59:03Z",
+    "at": "2026-09-19T02:58:00Z",
     "conclusion": "success"
    }
   },
@@ -141,15 +141,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 67,
-    "success": 65,
+    "runs_sampled": 68,
+    "success": 66,
     "failure": 1,
     "other": 1,
-    "successRate": 97,
-    "avgDurS": 44
+    "successRate": 97.1,
+    "avgDurS": 44.1
    },
    "lastRun": {
-    "at": "2026-09-19T01:46:50Z",
+    "at": "2026-09-19T02:46:38Z",
     "conclusion": "success"
    }
   },
@@ -174,15 +174,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 93,
-    "success": 92,
+    "runs_sampled": 94,
+    "success": 93,
     "failure": 1,
     "other": 0,
     "successRate": 98.9,
-    "avgDurS": 14.2
+    "avgDurS": 14.3
    },
    "lastRun": {
-    "at": "2026-09-19T01:53:47Z",
+    "at": "2026-09-19T02:53:16Z",
     "conclusion": "success"
    }
   },
@@ -212,10 +212,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.7
+    "avgDurS": 14.7
    },
    "lastRun": {
-    "at": "2026-09-19T02:33:23Z",
+    "at": "2026-09-19T03:33:48Z",
     "conclusion": "success"
    }
   },
@@ -253,6 +253,39 @@
    }
   },
   {
+   "id": "console-money-watch",
+   "name": "money-watch",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "every 15 min :02/:17/:32/:47",
+   "layer": "MONEY-PATH",
+   "role": {
+    "en": "Money path sentinel - watches the two chokepoints of the real money path: detects the weekly powerdown landing within minutes and dispatches the external grid immediately (instead of waiting for the daily run), and rules SEND-NOW/WAIT on the redemption outbox versus the measured TRON broadcast cost.",
+    "he": "צופה נתיב הכסף - קולט את נחיתת ה-powerdown השבועית בתוך דקות ומזניק את הגריד החוץ מיד (במקום להמתין לריצה היומית), ופוסק SEND-NOW/WAIT על תיבת הפדיון מול עלות השידור הנמדדת ב-TRON."
+   },
+   "input": {
+    "en": "Steem public RPC (account+powerdown) + world.json + trongrid + CoinGecko",
+    "he": "RPC ציבורי של Steem (חשבון+powerdown) + world.json + trongrid + CoinGecko"
+   },
+   "output": {
+    "en": "dex/money.json + immediate dex-grid dispatch on landing",
+    "he": "dex/money.json + הזנקת dex-grid מיידית בנחיתה"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 79,
+    "success": 78,
+    "failure": 1,
+    "other": 0,
+    "successRate": 98.7,
+    "avgDurS": 16.4
+   },
+   "lastRun": {
+    "at": "2026-09-19T03:32:30Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "console-pages-build-deployment",
    "name": "pages-build-deployment",
    "repo": "Console",
@@ -278,10 +311,10 @@
     "failure": 0,
     "other": 12,
     "successRate": 88,
-    "avgDurS": 24.1
+    "avgDurS": 24.7
    },
    "lastRun": {
-    "at": "2026-09-19T02:33:35Z",
+    "at": "2026-09-19T03:33:59Z",
     "conclusion": "success"
    }
   },
@@ -405,15 +438,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 7,
-    "success": 7,
+    "runs_sampled": 8,
+    "success": 8,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 51.7
+    "avgDurS": 50.8
    },
    "lastRun": {
-    "at": "2026-09-19T02:16:57Z",
+    "at": "2026-09-19T03:29:18Z",
     "conclusion": "success"
    }
   },
@@ -575,10 +608,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 61.6
+    "avgDurS": 61.3
    },
    "lastRun": {
-    "at": "2026-09-19T02:34:33Z",
+    "at": "2026-09-19T03:35:05Z",
     "conclusion": "success"
    }
   },
@@ -608,10 +641,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 55.5
+    "avgDurS": 54.6
    },
    "lastRun": {
-    "at": "2026-09-19T02:32:15Z",
+    "at": "2026-09-19T03:09:03Z",
     "conclusion": "success"
    }
   },
@@ -674,10 +707,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 36.1
+    "avgDurS": 37
    },
    "lastRun": {
-    "at": "2026-09-19T02:08:00Z",
+    "at": "2026-09-19T03:08:02Z",
     "conclusion": "success"
    }
   },
@@ -768,49 +801,16 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 18,
-    "success": 11,
+    "runs_sampled": 21,
+    "success": 14,
     "failure": 7,
     "other": 0,
-    "successRate": 61.1,
-    "avgDurS": 29.7
+    "successRate": 66.7,
+    "avgDurS": 29.6
    },
    "lastRun": {
-    "at": "2026-09-19T02:30:43Z",
+    "at": "2026-09-19T03:31:04Z",
     "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-money-watch",
-   "name": "money-watch",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "every 15 min :02/:17/:32/:47",
-   "layer": "MONEY-PATH",
-   "role": {
-    "en": "Money path sentinel - watches the two chokepoints of the real money path: detects the weekly powerdown landing within minutes and dispatches the external grid immediately (instead of waiting for the daily run), and rules SEND-NOW/WAIT on the redemption outbox versus the measured TRON broadcast cost.",
-    "he": "צופה נתיב הכסף - קולט את נחיתת ה-powerdown השבועית בתוך דקות ומזניק את הגריד החוץ מיד (במקום להמתין לריצה היומית), ופוסק SEND-NOW/WAIT על תיבת הפדיון מול עלות השידור הנמדדת ב-TRON."
-   },
-   "input": {
-    "en": "Steem public RPC (account+powerdown) + world.json + trongrid + CoinGecko",
-    "he": "RPC ציבורי של Steem (חשבון+powerdown) + world.json + trongrid + CoinGecko"
-   },
-   "output": {
-    "en": "dex/money.json + immediate dex-grid dispatch on landing",
-    "he": "dex/money.json + הזנקת dex-grid מיידית בנחיתה"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 76,
-    "success": 75,
-    "failure": 1,
-    "other": 0,
-    "successRate": 98.7,
-    "avgDurS": 16.5
-   },
-   "lastRun": {
-    "at": "2026-09-19T02:32:21Z",
-    "conclusion": "failure"
    }
   },
   {
