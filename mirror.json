@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-19T05:07:59.460Z",
+  "generatedAt": "2026-09-19T06:10:42.171Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth - no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 236,
-    "checkpoints": 229,
+    "attestations": 238,
+    "checkpoints": 231,
     "agents": 9,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 235
+      "VERIFIED": 237
     },
-    "headHash": "0x849d194ddc310b37fd6823a68409907c959573191951a408aeb1ccbd076ab5e8"
+    "headHash": "0x7cf3037d219f62581b050ef0f001c2930e3a18051b3a6b046439e0a77de4d6e7"
   },
   "agents": [
     {
@@ -57,9 +57,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 213,
-      "lastAttestationSeq": 236,
-      "lastAttestationAt": "2026-09-19T05:07:59.397Z"
+      "attestations": 215,
+      "lastAttestationSeq": 238,
+      "lastAttestationAt": "2026-09-19T06:10:42.021Z"
     },
     {
       "name": "weave-market-regulator",
@@ -100,12 +100,28 @@
   ],
   "attestations": [
     {
-      "seq": 236,
+      "seq": 238,
       "type": "AUDIT",
       "status": "VERIFIED",
-      "at": "2026-09-19T05:07:59.397Z",
+      "at": "2026-09-19T06:10:42.021Z",
       "agentName": "weave-cloud-heart",
       "claim": "ביקורת יכולת-חתימה יומית: 9 זהויות תפקיד בספר, 1 חותמים בפועל (sealed) · השאר memory-only - מפתחותיהם חיו ב-DB סביבתי ומתים עם הסביבה · הפונקציות שלהם נבלעו בלב (gitkeeper·דחיפות, scout·סריקת האקוסיסטם) או ממתינות (relayer·עדות הפוכה)"
+    },
+    {
+      "seq": 237,
+      "type": "AUDIT",
+      "status": "VERIFIED",
+      "at": "2026-09-19T06:10:40.433Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "מדידת אקוסיסטם (G6) הונחה בספר: dup=0.0059 - 9 עותקים יתרים מתוך 1537 קבצי-סטטוס שנמדדו (3 קבוצות שכפול) · יעד <0.2 מוחזק"
+    },
+    {
+      "seq": 236,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-19T05:10:19.155Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #228 root 0xeca6ee59521de333… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
     },
     {
       "seq": 235,
@@ -1042,31 +1058,31 @@
       "at": "2026-09-16T08:11:01.576Z",
       "agentName": "weave-cloud-heart",
       "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #111 root 0x32ead08203219b44… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
-    },
-    {
-      "seq": 118,
-      "type": "MEASUREMENT",
-      "status": "VERIFIED",
-      "at": "2026-09-16T08:09:16.650Z",
-      "agentName": "weave-cloud-heart",
-      "claim": "פעימת לב ריבונית: הספר אומת מחדש - 117 רשומות, חתימות 117/117, head תואם. הרץ: GitHub Actions (הענן שלנו)."
-    },
-    {
-      "seq": 117,
-      "type": "SAOSLIVE",
-      "status": "VERIFIED",
-      "at": "2026-09-16T08:09:15.601Z",
-      "agentName": "weave-cloud-heart",
-      "claim": "SAOS-LIVE v1 התקדם: stateRoot חדש d0cc8673c8ceadef… - 1 פעולות תקפות, 1 ארנקים, 0 חוזים, אספקת SAOS 0"
     }
   ],
   "checkpoints": [
     {
+      "index": 231,
+      "root": "0x7cf3037d219f62581b050ef0f001c2930e3a18051b3a6b046439e0a77de4d6e7",
+      "attFrom": 238,
+      "attTo": 238,
+      "at": "2026-09-19T06:10:42.083Z",
+      "anchoredOn": []
+    },
+    {
+      "index": 230,
+      "root": "0xd65404bc2c19e3c85c38ceda9c49a7e82ea49c8cfb7dc091491bab532611d6cc",
+      "attFrom": 237,
+      "attTo": 237,
+      "at": "2026-09-19T06:10:41.767Z",
+      "anchoredOn": []
+    },
+    {
       "index": 229,
-      "root": "0x849d194ddc310b37fd6823a68409907c959573191951a408aeb1ccbd076ab5e8",
+      "root": "0xd193e9659e8b100d36aa2b5c485d01528324b82d43be0e3c0329a1596ab1b028",
       "attFrom": 236,
       "attTo": 236,
-      "at": "2026-09-19T05:07:59.429Z",
+      "at": "2026-09-19T05:10:19.176Z",
       "anchoredOn": []
     },
     {
@@ -1075,7 +1091,9 @@
       "attFrom": 235,
       "attTo": 235,
       "at": "2026-09-18T23:08:58.893Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "zero"
+      ]
     },
     {
       "index": 227,
@@ -1336,26 +1354,6 @@
       "anchoredOn": [
         "zero"
       ]
-    },
-    {
-      "index": 201,
-      "root": "0x5778b1ef7b4529dd91db0a02c65e7f3b08dab9795b7202d25881d4a7abe82895",
-      "attFrom": 208,
-      "attTo": 208,
-      "at": "2026-09-18T07:09:27.774Z",
-      "anchoredOn": [
-        "zero"
-      ]
-    },
-    {
-      "index": 200,
-      "root": "0x7c0db3a0a414a23da6819b7a9fe65d65a03fa30acd83e92b2cf99f5caf80437d",
-      "attFrom": 207,
-      "attTo": 207,
-      "at": "2026-09-18T06:38:24.500Z",
-      "anchoredOn": [
-        "zero"
-      ]
     }
   ],
   "anchorLines": {
@@ -1393,12 +1391,6 @@
     ],
     "zero": [
       {
-        "checkpoint": 223,
-        "at": "2026-09-18T20:32:46.436Z",
-        "txid": "0x9797026cd95ace1aa14a784013d76241e2af7af3fe375837da7a82595d4b4b62",
-        "explorer": "https://zscan.live/tx/0x9797026cd95ace1aa14a784013d76241e2af7af3fe375837da7a82595d4b4b62"
-      },
-      {
         "checkpoint": 224,
         "at": "2026-09-18T21:10:10.494Z",
         "txid": "0x02d8eafd5495e6cf07b0762865d6e1bbcfc3983f8670e01419add00babe991c9",
@@ -1421,6 +1413,12 @@
         "at": "2026-09-18T23:08:36.889Z",
         "txid": "0x46b62df652429c550f108a6e10fc7c89a80e787be67bca903dab4d9aaf7c4a56",
         "explorer": "https://zscan.live/tx/0x46b62df652429c550f108a6e10fc7c89a80e787be67bca903dab4d9aaf7c4a56"
+      },
+      {
+        "checkpoint": 228,
+        "at": "2026-09-19T05:10:08.730Z",
+        "txid": "0xc0d3e0c4e003b8acc974bb17da3765ba25deeca43dfd6978f8fd6b8b6795390c",
+        "explorer": "https://zscan.live/tx/0xc0d3e0c4e003b8acc974bb17da3765ba25deeca43dfd6978f8fd6b8b6795390c"
       }
     ]
   },
