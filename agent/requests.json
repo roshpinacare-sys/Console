@@ -1,7 +1,7 @@
 {
  "format": "agent-requests-ledger-v1",
- "generatedAt": "2026-09-17T00:30:00Z",
- "note": "Every operator request, ledgered with its true status. This is the audit trail the verifier and any future agent work from. Honesty over decoration: a request marked delivered must be visible at the public URL.",
+ "generatedAt": "2026-09-20T09:30:00Z",
+ "note": "Every operator request, ledgered with its true status. This is the audit trail the verifier and any future agent work from. Honesty over decoration: a request marked delivered must be visible at the public URL. ERA NOTE (R64 ledger repair, 2026-09-20): this book covers the CONSOLE era, R01-R61. Entries R22-R61 were ledgered retroactively on 2026-09-20 from the sovereign worklog + git history - they were delivered on 2026-09-17..19 but the book had silently stopped at R21 (recorded in TRUTH-AUDIT section 9; R40 partial-record, R41/R42/R49 no-surviving-record - not guessed). The operator's public home moved to the Domain repository on 2026-09-19/20: the LIVE request book continues there (https://roshpinacare-sys.github.io/Domain/agent/requests.json) with Domain-era numbering restarting at R22. This book is closed and must not lag reality again: assertion A65 (ledger_integrity) machine-checks it.",
  "requests": [
   {
    "id": "R01",
@@ -10,7 +10,9 @@
    "request": "Verify environment recovery + confirm local HEAD matches remote (Zip repo)",
    "requestHe": "אימות השחזור של הסביבה + אישור שה-HEAD המקומי תואם לריחוק",
    "status": "delivered",
-   "deliveredAt": "https://github.com/roshpinacare-sys/Zip (Task 37: reset to cloud HEAD, 0/0 divergence since)"
+   "deliveredAt": "https://github.com/roshpinacare-sys/Zip (Task 37: reset to cloud HEAD, 0/0 divergence since)",
+   "evidence": "https://github.com/roshpinacare-sys/Zip (Task 37: reset to cloud HEAD, 0/0 divergence since)",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R02",
@@ -19,7 +21,9 @@
    "request": "Full agent audit across all 14 repos",
    "requestHe": "ביקורת סוכנים מלאה בכל 14 הריפואים",
    "status": "delivered",
-   "deliveredAt": "https://roshpinacare-sys.github.io/Console/agents/registry.json + #/agents/fleet (13 agents, 5 repos with agents, 9 quiet - measured, not reported)"
+   "deliveredAt": "https://roshpinacare-sys.github.io/Console/agents/registry.json + #/agents/fleet (13 agents, 5 repos with agents, 9 quiet - measured, not reported)",
+   "evidence": "https://roshpinacare-sys.github.io/Console/agents/registry.json + #/agents/fleet (13 agents, 5 repos with agents, 9 quiet - measured, not reported)",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R03",
@@ -29,7 +33,9 @@
    "requestHe": "ארגון האתר לפי כמות תוכן: תפריטים, תתי-תפריטים, הצגה נכונה; תמונה גדולה למשתמש החדש - מה, איך ולמה",
    "status": "delivered-public",
    "deliveredAt": "index.html: 6 sections (home/network/agents/exchange/knowledge/admin) + submenus + hero/big-picture home with how-it-works and why; verified by assertions A02-A04",
-   "history": "Built in sandbox (Task 38) but NOT visible at the public URL - the gap the operator caught on 2026-09-16. Fixed same day."
+   "history": "Built in sandbox (Task 38) but NOT visible at the public URL - the gap the operator caught on 2026-09-16. Fixed same day.",
+   "evidence": "index.html: 6 sections (home/network/agents/exchange/knowledge/admin) + submenus + hero/big-picture home with how-it-works and why; verified by assertions A02-A04",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R04",
@@ -38,7 +44,9 @@
    "request": "Personal admin area: everything allowed, sovereign 24/7 autonomous operation on the server, continuous improvement",
    "requestHe": "אזור אדמין אישי: הכל מותר, עבודה ריבונית אוטונומית 24/7 על השרת ושיפור מתמיד",
    "status": "delivered-public",
-   "deliveredAt": "#/admin (command/missions/server/verify): bridgehead state, mission queue, money plan, authorities, safety laws, live runs - all from public data; dispatch actions run from the sovereign console + Actions tab (view-only by design: zero secrets in public)"
+   "deliveredAt": "#/admin (command/missions/server/verify): bridgehead state, mission queue, money plan, authorities, safety laws, live runs - all from public data; dispatch actions run from the sovereign console + Actions tab (view-only by design: zero secrets in public)",
+   "evidence": "#/admin (command/missions/server/verify): bridgehead state, mission queue, money plan, authorities, safety laws, live runs - all from public data; dispatch actions run from the sovereign console + Actions tab (view-only by design: zero secrets in public)",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R05",
@@ -47,7 +55,9 @@
    "request": "Agents must constantly find what to do: understand what exists, optimize, extract value, strengthen, fix, secure, improve - generate the flow themselves",
    "requestHe": "הסוכנים ימצאו לעצמם כל הזמן מה לעשות: להבין מה קיים, לייעל, להפיק ערך, לחזק, לתקן, לאבטח, לשפר - לייצר את הזרימה בעצמם",
    "status": "partial",
-   "deliveredAt": "Mission queue (state.json openLoops) is the live flow source; 13 cloud agents self-schedule; agent-verify closes the loop. Remaining: agents that open new loops autonomously (planned: loop-discovery workflow)"
+   "deliveredAt": "Mission queue (state.json openLoops) is the live flow source; 13 cloud agents self-schedule; agent-verify closes the loop. Remaining: agents that open new loops autonomously (planned: loop-discovery workflow)",
+   "evidence": "Mission queue (state.json openLoops) is the live flow source; 13 cloud agents self-schedule; agent-verify closes the loop. Remaining: agents that open new loops autonomously (planned: loop-discovery workflow)",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R06",
@@ -56,7 +66,9 @@
    "request": "Money enters the system in ~3 days - understand how to best route it",
    "requestHe": "בעוד ~3 ימים נכנס כסף למערכת - להבין איך לנתב אותו בצורה הטובה ביותר",
    "status": "delivered-public",
-   "deliveredAt": "#/admin/missions money plan (4 buckets with purposes) + hourly deposit watching on 4 chains; plan is data the operator controls"
+   "deliveredAt": "#/admin/missions money plan (4 buckets with purposes) + hourly deposit watching on 4 chains; plan is data the operator controls",
+   "evidence": "#/admin/missions money plan (4 buckets with purposes) + hourly deposit watching on 4 chains; plan is data the operator controls",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R07",
@@ -65,7 +77,9 @@
    "request": "Agents are connected to the authority (הרשות) - use it for posts, organize power, exploit everything for maximum benefit",
    "requestHe": "הסוכנים מחוברים לרשות - להשתמש בה לפרסומים, לארגן כוח ולנצל הכל לתועלת מקסימלית",
    "status": "partial",
-   "deliveredAt": "Authorities registered (cashmachine hourly anchor witness, lsa publishing) with rate laws; publishing fuel bucket in the money plan. Remaining: regular value posts through lsa"
+   "deliveredAt": "Authorities registered (cashmachine hourly anchor witness, lsa publishing) with rate laws; publishing fuel bucket in the money plan. Remaining: regular value posts through lsa",
+   "evidence": "Authorities registered (cashmachine hourly anchor witness, lsa publishing) with rate laws; publishing fuel bucket in the money plan. Remaining: regular value posts through lsa",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R08",
@@ -74,7 +88,9 @@
    "request": "The daily-update agent is dead for 3 days - it exists in the repo but does not update; probably depended on a dead sandbox",
    "requestHe": "הסוכן שהיה אמור לעדכן יומית מת כבר 3 ימים - קיים בריפו אבל לא מעדכן; כנראה תלוי בסנדבוקס אחר שמת",
    "status": "delivered",
-   "deliveredAt": "Root cause measured: the local DB reset with the sandbox while the cloud kept beating (135 attestations at diagnosis). The cloud agents never died. The public site now reads cloud mirrors - a sandbox death changes nothing visible. Evidence: #/network (witness FRESH, heartbeats from mirror.json)"
+   "deliveredAt": "Root cause measured: the local DB reset with the sandbox while the cloud kept beating (135 attestations at diagnosis). The cloud agents never died. The public site now reads cloud mirrors - a sandbox death changes nothing visible. Evidence: #/network (witness FRESH, heartbeats from mirror.json)",
+   "evidence": "Root cause measured: the local DB reset with the sandbox while the cloud kept beating (135 attestations at diagnosis). The cloud agents never died. The public site now reads cloud mirrors - a sandbox death changes nothing visible. Evidence: #/network (witness FRESH, heartbeats from mirror.json)",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R09",
@@ -83,7 +99,9 @@
    "request": "Verify everything is alive WITHOUT dependency on the assistant's sandbox - continuity no matter which agent",
    "requestHe": "לוודא שהכל חי בלי תלות בסנדבוקס של העוזר - רצף לא משנה מי הסוכן",
    "status": "delivered-public",
-   "deliveredAt": "The entire public console reads only cloud mirrors + public chains + this bridgehead. Sandbox death = zero visible change. The bridgehead (agent/state.json + handoff.md + this ledger) carries the work across sessions"
+   "deliveredAt": "The entire public console reads only cloud mirrors + public chains + this bridgehead. Sandbox death = zero visible change. The bridgehead (agent/state.json + handoff.md + this ledger) carries the work across sessions",
+   "evidence": "The entire public console reads only cloud mirrors + public chains + this bridgehead. Sandbox death = zero visible change. The bridgehead (agent/state.json + handoff.md + this ledger) carries the work across sessions",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R10",
@@ -92,7 +110,9 @@
    "request": "Autonomous push must be safe - so they do not kick us out",
    "requestHe": "הדחיפה האוטונומית חייבת להיות בטוחה - שלא יעיפו אותנו",
    "status": "delivered-public",
-   "deliveredAt": "Six safety laws published at #/admin/missions: rate limits, zero secrets, honest metrics, platform terms first, no custody lies, honest bot identity"
+   "deliveredAt": "Six safety laws published at #/admin/missions: rate limits, zero secrets, honest metrics, platform terms first, no custody lies, honest bot identity",
+   "evidence": "Six safety laws published at #/admin/missions: rate limits, zero secrets, honest metrics, platform terms first, no custody lies, honest bot identity",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R11",
@@ -101,7 +121,9 @@
    "request": "Do yourself a harsh roast - examine what I asked vs what I actually received",
    "requestHe": "תעשה לעצמך roast חריף - בחן מה ביקשתי מול מה שקיבלתי בפועל",
    "status": "delivered",
-   "deliveredAt": "This ledger IS the audit (R01-R10 above show the sandbox-delivery gap pattern); the roast itself was delivered in the operator conversation"
+   "deliveredAt": "This ledger IS the audit (R01-R10 above show the sandbox-delivery gap pattern); the roast itself was delivered in the operator conversation",
+   "evidence": "This ledger IS the audit (R01-R10 above show the sandbox-delivery gap pattern); the roast itself was delivered in the operator conversation",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R12",
@@ -110,7 +132,9 @@
    "request": "Establish a sovereign foothold (מאחז) on the Console - your own console there, so you stop getting tangled",
    "requestHe": "הקם לך מאחז ריבוני בקונסולה - קונסולה משלך שם, כדי שתפסיק להסתבך",
    "status": "delivered-public",
-   "deliveredAt": "agent/ directory: state.json (machine state) + handoff.md (resume protocol) + requests.json (this ledger) + limitations.md + verify/ (the measuring harness). The admin area renders it live at #/admin/command"
+   "deliveredAt": "agent/ directory: state.json (machine state) + handoff.md (resume protocol) + requests.json (this ledger) + limitations.md + verify/ (the measuring harness). The admin area renders it live at #/admin/command",
+   "evidence": "agent/ directory: state.json (machine state) + handoff.md (resume protocol) + requests.json (this ledger) + limitations.md + verify/ (the measuring harness). The admin area renders it live at #/admin/command",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R13",
@@ -119,7 +143,9 @@
    "request": "Work on the verifying system and train yourself: be more precise, understand more, do not run away from the request; see the limitations and how the network prevents them",
    "requestHe": "עבוד על המערכת המאמתת ותאמן את עצמך: לדייק, להבין יותר, לא לברוח מהבקשה; ראה את המגבלות ואיך הרשת מונעת אותן",
    "status": "delivered-public",
-   "deliveredAt": "agent-verify workflow (every 6h): 15 assertions measure the delivery at the public URL and commit the verdict publicly at #/admin/verify. limitations.md maps each agent weakness to its network prevention. Training loop closed: request -> build -> network measures -> public result"
+   "deliveredAt": "agent-verify workflow (every 6h): 15 assertions measure the delivery at the public URL and commit the verdict publicly at #/admin/verify. limitations.md maps each agent weakness to its network prevention. Training loop closed: request -> build -> network measures -> public result",
+   "evidence": "agent-verify workflow (every 6h): 15 assertions measure the delivery at the public URL and commit the verdict publicly at #/admin/verify. limitations.md maps each agent weakness to its network prevention. Training loop closed: request -> build -> network measures -> public result",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R14",
@@ -128,7 +154,9 @@
    "request": "Even if I open a new conversation - we return to what we did, the sandbox does not delete the work, continuity no matter which agent",
    "requestHe": "גם אם אפתח שיחה חדשה - נחזור למה שעשינו, הסנדבוקס לא ימחוק, יהיה רצף לא משנה מי הסוכן",
    "status": "delivered-public",
-   "deliveredAt": "The boot sequence in handoff.md §2 restores any new session in 4 commands; the bridgehead + ledger + worklog survive in cloud repos; the requests ledger preserves full context across sessions"
+   "deliveredAt": "The boot sequence in handoff.md §2 restores any new session in 4 commands; the bridgehead + ledger + worklog survive in cloud repos; the requests ledger preserves full context across sessions",
+   "evidence": "The boot sequence in handoff.md §2 restores any new session in 4 commands; the bridgehead + ledger + worklog survive in cloud repos; the requests ledger preserves full context across sessions",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R15",
@@ -138,7 +166,9 @@
    "requestHe": "הקונסולה חזרה לגרסה קודמת במקום להתקדם - תיקון מקיף",
    "status": "delivered-public",
    "deliveredAt": "Diagnosed: Task 38's architecture lived only in the sandbox app while the public URL served the wallet-era page. Fixed: new public console (this page) + wallet preserved at wallet.html + assertions A02-A06 pin the architecture so a regression fails publicly",
-   "history": "This is the exact failure mode SO-1 now prevents."
+   "history": "This is the exact failure mode SO-1 now prevents.",
+   "evidence": "Diagnosed: Task 38's architecture lived only in the sandbox app while the public URL served the wallet-era page. Fixed: new public console (this page) + wallet preserved at wallet.html + assertions A02-A06 pin the architecture so a regression fails publicly",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R16",
@@ -147,7 +177,9 @@
    "request": "Preserve the money product: wallet, exchange, earn - nothing lost in the reorganization",
    "requestHe": "לשמר את מוצר הכסף: ארנק, בורסה, רווחים - שדבר לא ילך לאיבוד בארגון מחדש",
    "status": "delivered-public",
-   "deliveredAt": "wallet.html - the full 111KB wallet/exchange/earn app, byte-identical except canonical + console back-link; reachable from home hero, exchange section, and footer"
+   "deliveredAt": "wallet.html - the full 111KB wallet/exchange/earn app, byte-identical except canonical + console back-link; reachable from home hero, exchange section, and footer",
+   "evidence": "wallet.html - the full 111KB wallet/exchange/earn app, byte-identical except canonical + console back-link; reachable from home hero, exchange section, and footer",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R17",
@@ -156,7 +188,9 @@
    "request": "Why only 5 repos with agents? There are more meaningful folders that need an agent - cover them all, optimize, find efficiency, value, inference, verification and achievement",
    "requestHe": "למה רק 5 ריפו עם סוכנים? יש עוד תיקיות עם משמעות שצריכות סוכן - לכסות הכל, לייעל, למצוא יעילות, ערך, היסק, אימות וקדמה להישגיות",
    "status": "delivered-public",
-   "deliveredAt": "9 new agents on the 9 idle repos (Adsmarket/anchor-baseline/roshpina/Sdk/saos-jummper/Project-files/saos-control-center/saos-sovereign-platform/Saosmartwallet) + fleet display on the public console"
+   "deliveredAt": "9 new agents on the 9 idle repos (Adsmarket/anchor-baseline/roshpina/Sdk/saos-jummper/Project-files/saos-control-center/saos-sovereign-platform/Saosmartwallet) + fleet display on the public console",
+   "evidence": "9 new agents on the 9 idle repos (Adsmarket/anchor-baseline/roshpina/Sdk/saos-jummper/Project-files/saos-control-center/saos-sovereign-platform/Saosmartwallet) + fleet display on the public console",
+   "evidenceNormalized": "2026-09-20 R64 ledger repair: the original proof lived in deliveredAt (schema drift of the early entries) - copied verbatim into evidence so one field always carries the proof"
   },
   {
    "id": "R18",
@@ -193,6 +227,406 @@
    "status": "delivered-public",
    "deliveredAt": "2026-09-17T01:52:00Z",
    "evidence": "wallet.html + the whole saos-dex snapshot deleted from the repo (404 measured live); every money-layer link routes to #/exchange/terminal (4 occurrences, clicked in the browser: hero, path card, footer); new exchange terminal renders live markets, order book with depth bars, pools, tape; new deposit-rails subview shows the 4 watched chains with live ok status and the honest empty deposit book; enforced by A07/A21-A24 (all PASS live, 23/24 total with only the documented A10 RC-budget staleness); commits Console ac69076 + Zip 4c5fd49 (twin byte-identical)"
+  },
+  {
+   "id": "R22",
+   "date": "2026-09-17",
+   "session": "Task 46",
+   "text": "The external money path: map the leading smart networks, verify in the terminal without claims, implement the learning in our network (agent paraphrase; direct continuation of R21)",
+   "textHe": "נתיב הכסף החיצוני - למפות את הרשתות החכמות המובילות (אילו מכשירים עושים מה ואיפה הנזילות זורמת), לאמת בטרמינל בלי טענות, וליישם את הלמידה ברשת שלנו (פרפרזת הסוכן; המשך ישיר ל-R21)",
+   "status": "delivered-public",
+   "evidence": "money.html the money-path page delivered (Console 5a88d29): live external map, 10-instrument encyclopedia, DefiLlama chains table client-side, 30d fees, honest gap reading, 7-step clock plan; the R22 regression (hourly sync clobbered the index links) caught and root-cured - money.html + index added to CONSOLE_ASSETS in mirror.ts so the sync became a no-op",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R23",
+   "date": "2026-09-17",
+   "session": "Task 47",
+   "text": "Money path step 0: a live anchor - wire the canonical oracle into refPrice (measured 5.8x gap), fix at the root, prove in terminal and browser, enforce mechanically",
+   "textHe": "המשך נתיב הכסף: ביצוע צעד 0 מהתוכנית - עוגן חי. האורקל הקנוני קיים אבל שום דבר לא חיבר אותו ל-refPrice שהשוק הפנימי סוחר עליו (WSTEEM 320mµ מול STEEM אמת 55mµ, פער 5.8x מדוד). לתקן בשורש, להוכיח בטרמינל ובדפדפן, ולאכוף מנגנונית",
+   "status": "delivered-public",
+   "evidence": "Canonical oracle wired to the internal market refPrice: the measured 5.8x WSTEEM gap cured at the root and proven live; evolution milestone 'מות-שקר-5.8x' later embedded in the R25 milestones with the live receipt (worklog R23; engine-side commits of the era)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R24",
+   "date": "2026-09-17",
+   "session": "Task 48",
+   "text": "Clock plan step 1: the external flow - a daily cloud runner of the real grid on the internal public Steem book, measured policy, public trail per fill, honest arming (no key = no broadcast)",
+   "textHe": "צעד 1 בתוכנית השעון: הזרימה החוץ - רץ-ענן יומי של גריד-אמת על ספר-STEEM הפנימי הציבורי, עם מדיניות מדודה, מעקה-ציבורי לכל מילוי-חוץ, וחימוש-כנה (בלי מפתח אין שידור, המצב מתפרסם בגלוי)",
+   "status": "delivered-public",
+   "evidence": "The external-flow machine delivered: daily cloud runner with measured policy and a public trail for every external fill; arming kept honest - without a key there is no broadcast and the state is published openly (worklog R24; later measured live in R62: real orders placed on the book)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R25",
+   "date": "2026-09-17",
+   "session": "Task 49 + 49-a",
+   "text": "'Many pages lack content and many more gaps... urgent' - a full console gap review: examine, measure, fix, verify",
+   "textHe": "'הרבה דפים חסרים תוכן ועוד הרבה חוסרים... דחוף' - סקירת חסרים מלאה של הקונסולה הציבורית: לבחון, למדוד, לתקן, לאמת",
+   "status": "delivered-public",
+   "evidence": "Full gap review delivered with live proof (Console fd49ab4 era): evolution view filled with 8 measured milestones each linked to the receipt that still proves it (A29 born); the R25-a display bug was caught in live verification and cured; dead-link sweep across all pages",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R26",
+   "date": "2026-09-17",
+   "session": "Task 50",
+   "text": "'There is much more, examine well, execute and push' - second depth round: find the remaining big gaps and close them with live proof",
+   "textHe": "'יש עוד המון, תבחן היטב, בצע ודחוף' - סבב עומק שני: מציאת החסרים הגדולים שנותרו וסגירתם בהוכחה חיה",
+   "status": "delivered-public",
+   "evidence": "The biggest gap closed: 39 of 94 pages (43%) were ~900-char G6-union tombstones with 'undefined' fields - all 39 restored from git history with real provenance (sha256 + size + exact source per page, 194,115 content chars; Console 6db8280); 13 orphans linked into the map; sitemap 94 URLs; branded 404 + robots born; mobile 375 overflow root-cured across 40 pages",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R27",
+   "date": "2026-09-17",
+   "session": "Task 51",
+   "text": "'Continue and push, trust only the live Console... train the system and the agents more, execute what remains and update'",
+   "textHe": "'תמשיך ודחוף אל תסמוך על הטענות שלך רק על ה-Console החי... תאמן את המערכת עוד ואת הסוכנים ומה שנותר תבצע ותעדכן'",
+   "status": "delivered-public",
+   "evidence": "STALE root eradicated by law: readCoreAnchorAge() + the core-priority law (automatic broadcasts yield when the core anchor starves >12h; operator commands exempt - Zip 2dd0fb0); agents trained 30 -> 36: A31 the priority-inversion detector reads the Steem chain itself keyless; the network self-healed within the hour: anchor landed, FRESH, agent-verify ALL_PASS 36/36 (Console 2f2d18d)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R28",
+   "date": "2026-09-17",
+   "session": "R28 sessions",
+   "text": "'Keep checking, examining, fitting and implementing to gain certain advantages for the system and how to route them for us and for the network. Continue deeper, stronger, and push.'",
+   "textHe": "'תמשיך לבדוק לבחון להתאים וליישם כדי להשיג יתרונות ודאים למערכת ואיך לנתב אותם נכון עבורנו ועבור הרשת. תמשיך עמוק יותר חזק יותר ודחוף.'",
+   "status": "delivered-public",
+   "evidence": "roast.html born (28KB): the standing answer to 'roast between description and truth' - every verdict backed by live measurement, failures included; oracle verified within 2% of CoinGecko live; honest treasury units established (treasuryProfit 209785 mu = $0.21, not $202); verifier 36 -> 42 (oracle_drift + pages_ok kinds, cadence 6h -> 2h); HIVE rejoined ORACLE_MAP (Console bf94927)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R29",
+   "date": "2026-09-17",
+   "session": "R29-session-a/b",
+   "text": "(Direct continuation of R28 in the money-path era; no separate original quote in the worklog - recorded by its delivery sessions)",
+   "textHe": "(המשך ישיר ל-R28 בתקופת נתיב-הכסף; אין ציטוט מקורי נפרד ביומן - הרישום לפי סשני המסירה)",
+   "status": "delivered",
+   "evidence": "Deep engine cures: the one-sided market root-caused and fixed, the starved rail fed, the verifier trained to 44 detectors; crashed-session commit recovered, sovereign wallet page live, verifier doctrine updated (worklog R29-session-a/b)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R30",
+   "date": "2026-09-17",
+   "session": "R30-session-a",
+   "text": "'Continue and push' (money-path continuation: frozen-number cure + the next financial instrument)",
+   "textHe": "'תמשיך ודחוף' (בהמשך נתיב הכסף: ריפוי מספר-קפוא + הכלי הפיננסי הבא)",
+   "status": "delivered-public",
+   "evidence": "THE-VAULT lending instrument built, proven and shipped - live on the public chain; verifier 49/49; the A44 honesty cure (worklog R30-session-a + addendum)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R31",
+   "date": "2026-09-17",
+   "session": "R31-session-a",
+   "text": "'Continue - are we building on ourselves for full operation without dependence on users?'",
+   "textHe": "'תמשיך אנחנו בונים על עצמנו להפעלה מלאה ללא תלות במשתמשים?'",
+   "status": "delivered",
+   "evidence": "The measured full-autonomy answer built: verdict, network money paths, realization paths, smart-contract honesty, verified external possibilities (worklog R31-session-a)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R32",
+   "date": "2026-09-17",
+   "session": "R32-session",
+   "text": "'We are NOT ready, do not trust your claims at all, check everything and fix, compare leading networks vs ours, what is missing, money paths, features, potential, where not ready, execute urgently' (English in the original log)",
+   "textHe": "'אנחנו לא מוכנים, אל תסמוך על הטענות שלך בכלל, תבדוק הכל ותתקן, תשווה רשתות מובילות מול שלנו, מה חסר, נתיבי כסף, פיצ'רים, פוטנציאל, איפה לא מוכן, בצע בדחיפות' (אנגלית במקור)",
+   "status": "delivered",
+   "evidence": "Operator-override urgent deep audit executed: engine and readiness cures delivered against live measurement only (worklog R32-session)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R33",
+   "date": "2026-09-17",
+   "session": "R33-session",
+   "text": "'Deposits are coming soon. The system is not ready. Do not trust your claims at all and check why. Fix everything for liquidity entry and know how to handle it. What happens the moment money enters? What is broken? fake? bleeding? Heavy roast, truth exposure and comprehensive fix. How is value generated for deposits?'",
+   "textHe": "'בקרוב יהיו הפקדות. המערכת לא מוכנה לזה. אל תסמוך על הטענות שלך בכלל ותבדוק למה. ותתקן שהכל יהיה מוכן לכניסת נזילות ולדעת לטפל בה. מה קורה ברגע שיכנס כסף? מה שבור? מה מזויף? מה מדמם? roast כבד, חשיפת אמת ותיקון מקיף. איך מייצרים ערך להפקדות?'",
+   "status": "delivered",
+   "evidence": "Heavy roast + truth exposure + comprehensive fixes for deposit readiness delivered (worklog R33-session; commits 404559e era)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R34",
+   "date": "2026-09-17",
+   "session": "R34-gate + R34-first-drop",
+   "text": "(1) 'The claims are wrong, there is nowhere to enter the key (blocked), there is more money in the system with no one knowing where (TRX/SOL/ETH on the soldier accounts), first understand what exists, comprehensive roast and fixes' (2) 'Prove on the network that you solved the issue - not in words. I do not care how.'",
+   "textHe": "(1) 'הטענות לא נכונות, אין איפה להכניס את המפתח (חסום), יש עוד כסף במערכת בלי לדעת איפה (TRX/SOL/ETH על חשבונות החיילים), קודם להבין מה יש, roast מקיף ותיקונים' (2) 'תוכיח על הרשת שאתה הצלחת לפתור את הסוגיה - לא במילים. לא אכפת לי איך.'",
+   "status": "delivered-public",
+   "evidence": "The loop from real money to a tradeable asset closed with network-only proof: the first drop proven on-chain (worklog R34-gate + R34-first-drop)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R35",
+   "date": "2026-09-17",
+   "session": "R35",
+   "text": "'OK so you have everything. Now prove it is all possible. And push.'",
+   "textHe": "'אוקי אז יש לך הכל. עכשיו תוכיח שזה אפשרי הכל. ודחוף'",
+   "status": "delivered",
+   "evidence": "The full economic cycle of the real money proven on the network with live receipts only (worklog R35)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R36",
+   "date": "2026-09-18",
+   "session": "R36",
+   "text": "'Make me a place to log in - I will log in with the key both on the site as admin and in the sandbox'",
+   "textHe": "'תעשה לי מקום להתחבר אני אתחבר עם המפתח גם באתר באדמין וגם בסנבוקד'",
+   "status": "delivered",
+   "evidence": "The key-login place built on both fronts: the public site (admin) and the sandbox (Console 2c2a693)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R37",
+   "date": "2026-09-18",
+   "session": "R37",
+   "text": "'I logged in, continue'",
+   "textHe": "'התחברתי תמשיך'",
+   "status": "delivered",
+   "evidence": "Autonomous continuation after the operator logged in with the key in the sandbox (worklog R37)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R38",
+   "date": "2026-09-18",
+   "session": "R38",
+   "text": "'Hydration error on login + I added a key on GitHub, check it'",
+   "textHe": "'שגיאת hydration בכניסה + הוספתי מפתח בגיטהאב תבדוק'",
+   "status": "delivered",
+   "evidence": "The hydration tear fixed to the end + the operator-entered key checked (Console bd3d54a)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R39",
+   "date": "2026-09-18",
+   "session": "R39",
+   "text": "'Continue, examine everything we have and how to optimize the system... examine the array and prepare the agents and get ready'",
+   "textHe": "'תמשיך תבחן עוד מה יש לנו הכל ואיך לייעל את המערכת... לבחון המערך ולהכין את הסוכנים ולהתכונן'",
+   "status": "delivered",
+   "evidence": "Full array examination + current-state ordering + money-path gaps completed + agents prepared for the fuel landing (worklog R39)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R40",
+   "date": "2026-09-18",
+   "session": "(סשן שלא שרד ביומן)",
+   "text": "(Partial record) 'savings' - referenced by the worklog R43 section: 'the network had a CDP vault (Maker-style) and savings (R40)'",
+   "textHe": "(רישום חלקי) 'חיסכון' - נזכר ביומן R43: 'הרשת היתה עם כספת-CDP (Maker-style) וחיסכון (R40)'",
+   "status": "partial-record",
+   "evidence": "The savings request is referenced by the surviving worklog (R43 section) but its delivery section did not survive to the pushed log. Recorded honestly as partial during the R64 ledger repair - not guessed, not inflated",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R41",
+   "date": "2026-09-18",
+   "session": "(מספור חסר)",
+   "text": "(Missing numbering - no surviving worklog record carries this number)",
+   "textHe": "(מספור חסר - אין רישום שורד ביומן למספר זה)",
+   "status": "no-surviving-record",
+   "evidence": "Numbering gap discovered during the R64 ledger repair: no worklog section carries R41; the operator-directive stream is continuous in the log (R39 -> R43 era, 2026-09-18). Not guessed - documented in TRUTH-AUDIT section 9",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R42",
+   "date": "2026-09-18",
+   "session": "(מספור חסר)",
+   "text": "(Missing numbering - no surviving worklog record carries this number)",
+   "textHe": "(מספור חסר - אין רישום שורד ביומן למספר זה)",
+   "status": "no-surviving-record",
+   "evidence": "Numbering gap discovered during the R64 ledger repair: no worklog section carries R42; the operator-directive stream is continuous in the log (R39 -> R43 era, 2026-09-18). Not guessed - documented in TRUTH-AUDIT section 9",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R43",
+   "date": "2026-09-18",
+   "session": "R43",
+   "text": "'One thing leads to another' - four questions in live evidence, a sharp roast vs the DeFi giants, and real DeFi instruments (money market + vault + flywheel) embedded in the platform. Hebrew only (correction: the operator does not read Chinese)",
+   "textHe": "'דבר גורר דבר' - ארבע השאלות בראיות חיות, Roast חד מול ענקיות ה-DeFi, והטמעת כלי DeFi אמיתיים (שוק-כספים + כספות + גלגל) בפלטפורמה. הכל בעברית בלבד (תיקון: המפעיל לא קורא סינית)",
+   "status": "delivered-public",
+   "evidence": "The money-market + vault + flywheel embedded in the platform; four questions answered in live evidence; the sharp roast vs the DeFi giants; all in Hebrew only (worklog R43)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R44",
+   "date": "2026-09-18",
+   "session": "R44",
+   "text": "'Even deeper and wider - examine, improve, standardize, optimize everything: what is missing, broken, bleeding. Complete everything, prove, validate, break through. How? What do we have? What can be done with it? Value? Validation? How do we implement more sovereign autonomous activity and improve the array a lot'",
+   "textHe": "'עוד יותר עמוק ונרחב - בחן שפר תקן ייעל הכל: מה חסר, מה שבור, מה מדמם. להשלים הכל, להוכיח, לאמת, לפרוץ דרך. איך? מה יש לנו? מה ניתן לעשות עם זה? ערך? ולידציה? איך ניישם יותר פעילות ריבונית אוטונומית ונשפר את המערך בהרבה'",
+   "status": "delivered",
+   "evidence": "Deeper-and-wider pass delivered: complete-prove-validate-break-through across the array (worklog R44)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R45",
+   "date": "2026-09-18",
+   "session": "R45",
+   "text": "'Continue deeper and wider than all directions, all roles, all requirements - there is a lot, a lot of open things, holes, fixes, improvements'",
+   "textHe": "'תמשיך עמוק נרחב יותר מכל הכיוונים לכל התפקידים לכל הדרישות יש המון המון דברים פתוחים חורים תיקונים שיפורים מלא'",
+   "status": "delivered",
+   "evidence": "Deep array-wide examination: bleeding points found in live evidence, full cure, and sovereign-autonomous expansion (worklog R45)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R46",
+   "date": "2026-09-18",
+   "session": "R46",
+   "text": "'This is really not enough - it needs much more depth, width, comprehensiveness and quality; do it again more seriously than before'",
+   "textHe": "'זה ממש לא מספיק צריך הרבה יותר עמוק נרחב מקיף ואיכותי תעשה שוב יותר רציני ממקודם'",
+   "status": "delivered",
+   "evidence": "Systematic deep re-examination (live data, APIs, views, agents, engine, git history), true bleeding points found in live evidence, root cures, end-to-end proof (worklog R46)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R47",
+   "date": "2026-09-18",
+   "session": "R47",
+   "text": "'This is really not enough and not verified; examine yourself, do not trust your own arguments, everything must be proven on the network. Much more depth, comprehensiveness and width is needed, and surely to verify, to make sure, to activate, to fix - whatever else is faulty and bleeding must be put in order'",
+   "textHe": "'זה ממש לא מספיק ולא מאומת בחן את עצמך אל תסמוך על הטיעונים שלך הכל חייב להיות מוכח על הרשת. צריך הרבה יותר מזה יותר עמוק מקיף נרחב ביותר וודאי לאמת לוודא להפעיל לתקן מה עוד תקול ומדמם יש לסדר הכל'",
+   "status": "delivered",
+   "evidence": "Self-examination trusting no past argument: everything measured live against the network, full bleeding cure delivered (worklog R47)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R48",
+   "date": "2026-09-18",
+   "session": "R48",
+   "text": "(Direct continuation) Full raw-evidence audit of the whole array + the APY lie root cure + the demo-position disclosure + the stale bridgehead refresh",
+   "textHe": "(המשך ישיר) ביקורת-ראיות-גולמיות מלאה של כל המערך + ריפוי שורש של שקר ה-APY + גילוי-עמדת-ההדגמה + רענון bridgehead מיושן",
+   "status": "delivered-public",
+   "evidence": "Calibration-truth + demo-disclosure delivered (Console 431c9ac, 2026-09-18 22:58Z): the savings-era APY lie root-cured, the demo position disclosed, the bridgehead refreshed (worklog R48)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R49",
+   "date": "2026-09-18",
+   "session": "(מספור חסר)",
+   "text": "(Missing numbering - no surviving worklog record carries this number)",
+   "textHe": "(מספור חסר - אין רישום שורד ביומן למספר זה)",
+   "status": "no-surviving-record",
+   "evidence": "Numbering gap discovered during the R64 ledger repair: no worklog section carries R49; the era between R48 (Console 431c9ac, 2026-09-18 22:58Z) and the webnet request R50. Not guessed - documented in TRUTH-AUDIT section 9",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R50",
+   "date": "2026-09-19",
+   "session": "R50 + השלמת-הוכחה",
+   "text": "'I want to turn my network into a server and storage where I can upload sites, apps and content... what do the anchors give us... full sovereign infrastructure... I have something ready, a zip of games I want sitting on the network so they can play it all... lying is forbidden - the truth is the server's own verification on the network'",
+   "textHe": "'אני רוצה להפוך את הרשת שלי לשרת ואחסון שאני יוכל להעלות אתרים אפליקציות ותוכן... מה העוגנים נותנים לנו... תשתית ריבונית מלאה... יש לי משהו מוכן קובץ זיפ של משחקים שאני רוצה שישב על הרשת ויוכלו לשחק בו והכל... אסור לשקר האמת היא האימות של השרת על הרשת'",
+   "status": "delivered-public",
+   "evidence": "The SAOS WEB sovereign storage network built end-to-end with live proof; the bugs found on the way were fixed before the completion proof (worklog R50 + R50 completion)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R51",
+   "date": "2026-09-19",
+   "session": "R51",
+   "text": "'Examine well what you did, develop it to the maximum possible and beyond - correct, improve, optimize much more'",
+   "textHe": "'בחן היטב את מה שעשית תפתח את זה למקסימום האפשרי ויותר תקן שפר ייעל עוד הרבה גם מעבר לזה'",
+   "status": "delivered-public",
+   "evidence": "Chain-aware deep scan (Steem 100-limit measured, not assumed) + webnet v2 max development beyond the existing (Zip ab21925 'R51 webnet v2'; worklog R51)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R52",
+   "date": "2026-09-19",
+   "session": "R52 + R52-b",
+   "text": "(Direct continuation of R51) Aggressive server optimization + live self-verification (proofs and measurements only)",
+   "textHe": "(המשך ישיר ל-R51) ייעול-שרת אגרסיבי + אימות-עצמי חי (הוכחות ומדידות בלבד)",
+   "status": "delivered",
+   "evidence": "Aggressive optimization + live self-verification delivered; the defi-cache root truth found in the scan (a cache that was read but never saved - worklog R52, R52-b)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R53",
+   "date": "2026-09-19",
+   "session": "R53",
+   "text": "'Do not trust your claims, check again and improve the server. If you wrote that you did something it does not mean it happened or that it is good without proofs'",
+   "textHe": "'אל תסמוך על הטענות שלך תבדוק שוב ותשפר את השרת. אם כתבת שעשית משהו זה לא אומר שזה קרה או שזה טוב בלי הוכחות'",
+   "status": "delivered",
+   "evidence": "Honest re-examination of every R52/R52-b claim vs live behavior; the gap between 'valid code' and 'a good server' found; one architectural root cure delivered (worklog R53)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R54",
+   "date": "2026-09-19",
+   "session": "R54",
+   "text": "The operator's 4-channel protocol: every claim [verified-now] or [needs-verification] - fresh raw proofs per channel (live page, RPC, Actions, ZIP), endpoint latency under a 500ms threshold",
+   "textHe": "פרוטוקול 4 הערוצים מהמפעיל: כל טענה [מאומת-כעת] או [טעון-אימות] - הוצאת הוכחות גולמיות טריות לכל ערוץ (דף-חי · RPC · Actions · ZIP), ועריכת נקודות-קצה עם סף 500ms",
+   "status": "delivered-public",
+   "evidence": "Fresh raw proofs extracted for all four channels; endpoint-truth delivered: sovereignty 5.6s -> 8ms steady (SWR 60s, Zip 0989f8f 'R54 endpoint-truth'; worklog R54)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R55",
+   "date": "2026-09-19",
+   "session": "R55",
+   "text": "'I want deeper and more comprehensive - go over things, verify, make sure, fix, improve... the game I asked for is luck games like a casino but not designed to be a casino... if I upload to a GitHub repo they can block me... I want it to never touch the repo, to live only on the network... first prepare and verify the ground for me'",
+   "textHe": "'אני רוצה יותר עמוק יותר מקיף לעבור על הדברים לאמת לוודא לתקן לשפר... המשחק שביקשתי זה משחקי מזל כמו קזינו אבל לא מתוכנן להיות קזינו... אם אעלה לריפו גיטהאב יכולים לחסום אותי... אני רוצה שהוא לא יגע בריפו שיהיה רק ברשת... קודם תכין ותוודא לי את השטח'",
+   "status": "delivered-public",
+   "evidence": "Sovereign luck-games (entertainment only) that never touch the repo, living on the storage network: repo cut + local-first publish + games hub (worklog R55). Later fully retired by explicit operator order in R61 - the operator has their own games",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R56",
+   "date": "2026-09-19",
+   "session": "R56",
+   "text": "(1) (continuation) An agents browser for network use (live z.ai connection + smart linker) + a sovereign domains center with a full deployment kit (2) The operator's engineering score: 1/10",
+   "textHe": "(1) (המשך) דפדפן סוכנים לשימוש ברשת (חיבור חי ל-z.ai + קישורית חכמה) + מרכז דומיינים ריבוניים עם ערכת-פריסה מלאה (2) הפעלת ניקוד הנדסי 1/10 מהמפעיל",
+   "status": "delivered-public",
+   "evidence": "(1) Agent browser + domains center with deploy kit delivered; (2) the 1/10 score accepted as measured truth, not argued with: BENCHMARK.md born - the truth machine scripts/benchmark-truth.cjs + the honest comparison vs industry standards + the road from 1 to 10 with measurable exit gates only (worklog R56; first gate run truth-gate-2026-09-19T07-39-05-555Z.json: 3 RED measured)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R57",
+   "date": "2026-09-19",
+   "session": "R57",
+   "text": "(Direct continuation of receiving the operator's score - curing the three measured reds)",
+   "textHe": "(המשך ישיר לקבלת ניקוד המפעיל - ריפוי שלושת האדומים שנמדדו)",
+   "status": "delivered-public",
+   "evidence": "Root cure of the 3 reds (G2/G5/G6): single truth restored (retired twin files deleted), one format under one name, bridgehead synced; the decisive run ALL-GREEN 7 PASS / 0 FAIL (truth-gate-2026-09-19T09-54-37-329Z.json); BENCHMARK 2.2 -> 3.7 measured",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R58",
+   "date": "2026-09-19",
+   "session": "R58",
+   "text": "(Operator approval) 'Your preparation is better than lies - more'",
+   "textHe": "(אישור המפעיל) 'הכנות שלך טובה משקרים - עוד'",
+   "status": "delivered-public",
+   "evidence": "Stage 2 closed on measurement (single interface generation: 10 retired fronts as permanent redirects, G8 born) + stage 3 live (hourly CI truth gate measuring the deployed site, public verdict + history, a red fails the Actions run in public); receipts-wall explorer links healed by the machine itself; the 11:08 clobber incident caught by the machines and root-cured with doctrine (Console 95365a1, 0a4baad, bf1cc03; Zip dbc66be); BENCHMARK 3.7 -> 5.4 (the full table of that hour: 4.6 - the arithmetic error self-caught and recorded in R59)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R59",
+   "date": "2026-09-19",
+   "session": "R59",
+   "text": "(Operator approval) 'Your preparation is better than lies - more'",
+   "textHe": "(אישור המפעיל) 'הכנות שלך טובה משקרים - עוד'",
+   "status": "delivered-public",
+   "evidence": "Stage 4 live on measurement: public SLO + error budgets (truth/slo.json: four targets, trailing 30-day window with gap-filled daily buckets, burn log never erased, honesty rules failure-tested before deployment) + gate G9 in both machines + the truth page SLO section in both languages; the R58 arithmetic self-catch recorded in TRUTH-AUDIT section 6; from R59 every rescore publishes the full 10-row table (R59: 50/10 = 5.0; commits Console 820c21d + 7847985 + a826a14)",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R60",
+   "date": "2026-09-19",
+   "session": "R60",
+   "text": "'Check the history... check yourself - words you told me vs actual truth in code and on the network' + closing the pending tasks",
+   "textHe": "'תבדוק את ההיסטוריה... תבדוק את עצמך מילים שאמרת לי מול אמת בפועל בקוד וברשת' + סגירת המטלות התלויות",
+   "status": "delivered-public",
+   "evidence": "The history audit caught a real lie: 'the games live on the network' - only a hash seal ever reached Hive (0 of 12,860 chunks uploaded); 17 game evidence shots removed from the private repo index + blocked in .gitignore; the real mobile anchor fix delivered (26/26 routes 390=390 - the previous fix was inert and documented as such); sovereign code pushed",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
+  },
+  {
+   "id": "R61",
+   "date": "2026-09-19",
+   "session": "R61-A..D",
+   "text": "(Operator order) A full truth audit of every claim vs code and network, and the public site restored as one complete, comprehensive, professional thing. All games work explicitly cancelled - the operator has their own games",
+   "textHe": "(הוראת המפעיל) ביקורת-אמת מלאה של כל הטענות מול הקוד והרשת, והשבת האתר הציבורי לישות אחת מלאה, מקיפה ומקצועית. ביטול מפורש של כל עבודת המשחקים - למפעיל משחקים משלו",
+   "status": "delivered-public",
+   "evidence": "The nine system fronts restored full-size from git history + the complete-map doctrine (G8 rewritten from 'retired stubs' to 'full map'); 33 conversation-artifact files removed from the public site; the games view retired from the console (Console ee9df46, 594e656); both truth machines green after",
+   "ledgeredAt": "2026-09-20 (retroactive - R64 ledger repair; source: sovereign worklog + git history)"
   }
  ]
 }

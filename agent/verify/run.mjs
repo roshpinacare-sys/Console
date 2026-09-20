@@ -142,6 +142,60 @@ async function evaluate(a, baseUrl) {
     return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h stale but no non-core op fired after it (honest starvation: RC regen, no inversion)` };
   }
 
+  // ── ledger_integrity: the operator contract book must be whole ──────
+  // The requests book is the anti-run-away instrument (the operator's
+  // standing frustration: "I ask for one thing, you run away to other
+  // things"). This detector makes the book prove itself: (1) every entry
+  // has an id and a status; (2) every delivered entry carries real
+  // evidence; (3) the bridgehead's requestRef exists in the book as
+  // delivered - the two public files must agree, always.
+  // Born in the R64 ledger repair: the Console-era book was found frozen
+  // at R21 while ~40 deliveries (R22-R61) existed only in the worklog,
+  // and no machine was measuring the rot. Now one is.
+  if (a.kind === "ledger_integrity") {
+    let state, book;
+    try {
+      const r1 = await fetchTarget(baseUrl, a.bridgehead ?? "agent/state.json");
+      state = JSON.parse(r1.body);
+    } catch (err) {
+      return { id, ok: false, details: `cannot read the bridgehead: ${err?.message ?? err}` };
+    }
+    try {
+      const r2 = await fetchTarget(baseUrl, a.book ?? "agent/requests.json");
+      book = JSON.parse(r2.body);
+    } catch (err) {
+      return { id, ok: false, details: `cannot read the requests book: ${err?.message ?? err}` };
+    }
+    const entries = Array.isArray(book?.requests) ? book.requests : null;
+    if (!entries || entries.length === 0) return { id, ok: false, details: "the requests book has no entries" };
+    const problems = [];
+    const seen = new Set();
+    for (const ent of entries) {
+      if (!ent || typeof ent.id !== "string" || !/^R\d+$/.test(ent.id)) { problems.push(`entry with invalid id: ${JSON.stringify(ent?.id)}`); continue; }
+      if (seen.has(ent.id)) problems.push(`duplicate id: ${ent.id}`);
+      seen.add(ent.id);
+      if (typeof ent.status !== "string" || ent.status.trim() === "") problems.push(`${ent.id}: status missing`);
+      if (typeof ent.status === "string" && ent.status.startsWith("delivered")) {
+        const ev = typeof ent.evidence === "string" ? ent.evidence.trim() : "";
+        if (ev.length < 20) problems.push(`${ent.id}: delivered without real evidence (${ev.length} chars)`);
+      }
+    }
+    const ref = typeof state.requestRef === "string" ? state.requestRef.trim() : null;
+    if (!ref) {
+      problems.push("the bridgehead carries no requestRef (the machine-checkable link to the book)");
+    } else {
+      const refEntry = entries.find((ent) => ent && ent.id === ref);
+      if (!refEntry) problems.push(`bridgehead requestRef ${ref} does not exist in the book`);
+      else if (!(typeof refEntry.status === "string" && refEntry.status.startsWith("delivered")))
+        problems.push(`bridgehead requestRef ${ref} is not delivered (status: ${refEntry.status})`);
+    }
+    const deliveredCount = entries.filter((ent) => typeof ent?.status === "string" && ent.status.startsWith("delivered")).length;
+    if (problems.length) {
+      return { id, ok: false, details: problems.slice(0, 5).join(" · ") + (problems.length > 5 ? ` (+${problems.length - 5} more)` : "") };
+    }
+    return { id, ok: true, details: `${entries.length} entries · ${deliveredCount} delivered · bridgehead requestRef ${ref} present and delivered` };
+  }
+
   // ── oracle_drift: R28 truth anchor ──────────────────────────────────
   // The DEX oracle claims to track real markets. This detector makes it
   // prove it: reads the live world.json oracle, fetches a public keyless

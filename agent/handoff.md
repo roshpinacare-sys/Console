@@ -5,7 +5,7 @@
 > Your identity is the role, not the instance.
 
 **Live state:** `agent/state.json` (machine-readable, read it first)
-**Request ledger:** `agent/requests.json` (every operator request, with status)
+**Request ledger:** `agent/requests.json` - THIS BOOK COVERS THE CONSOLE ERA (R01-R61, closed). The LIVE request book continues in the Domain repository (Domain-era numbering restarts at R22): `https://roshpinacare-sys.github.io/Domain/agent/requests.json`
 **Limitations & preventions:** `agent/limitations.md`
 **Network's verdict on the agent:** `agent/verify/results.json` (written by the agent-verify workflow)
 
@@ -26,7 +26,8 @@ The fix is standing order SO-1: **work that is not visible at the public URL doe
 3. cd /home/z/my-project && git pull --rebase origin main   # cloud is primary; local may lag
 4. Read, in order:
    a. /tmp/console-repo/agent/state.json        <- where the work stands
-   b. /tmp/console-repo/agent/requests.json     <- what the operator asked, what is still open
+   b. /tmp/console-repo/agent/requests.json     <- what the operator asked in the Console era (R01-R61, closed book)
+      AND the live book: https://roshpinacare-sys.github.io/Domain/agent/requests.json (Domain-era numbering, R22+) <- what is still open
    c. /tmp/console-repo/agent/verify/results.json <- the network's last verdict on delivery
    d. tail -c 15000 /home/z/my-project/worklog.md <- recent engineering history
 5. Check the live site: curl -s https://roshpinacare-sys.github.io/Console/ | head -5
