@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-20T11:45:48Z",
+ "generatedAt": "2026-09-20T12:50:06Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -146,10 +146,10 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 46.9
+    "avgDurS": 46.8
    },
    "lastRun": {
-    "at": "2026-09-20T10:45:48Z",
+    "at": "2026-09-20T11:45:12Z",
     "conclusion": "success"
    }
   },
@@ -182,7 +182,7 @@
     "avgDurS": 15.2
    },
    "lastRun": {
-    "at": "2026-09-20T10:53:05Z",
+    "at": "2026-09-20T11:53:17Z",
     "conclusion": "success"
    }
   },
@@ -215,7 +215,7 @@
     "avgDurS": 13.9
    },
    "lastRun": {
-    "at": "2026-09-20T11:32:29Z",
+    "at": "2026-09-20T12:36:50Z",
     "conclusion": "success"
    }
   },
@@ -245,10 +245,10 @@
     "failure": 3,
     "other": 0,
     "successRate": 97,
-    "avgDurS": 15.3
+    "avgDurS": 15.2
    },
    "lastRun": {
-    "at": "2026-09-20T11:43:34Z",
+    "at": "2026-09-20T12:46:06Z",
     "conclusion": "success"
    }
   },
@@ -278,10 +278,10 @@
     "failure": 0,
     "other": 8,
     "successRate": 92,
-    "avgDurS": 40.5
+    "avgDurS": 40.6
    },
    "lastRun": {
-    "at": "2026-09-20T11:43:49Z",
+    "at": "2026-09-20T12:46:19Z",
     "conclusion": "success"
    }
   },
@@ -306,15 +306,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 30,
-    "success": 29,
+    "runs_sampled": 31,
+    "success": 30,
     "failure": 1,
     "other": 0,
-    "successRate": 96.7,
+    "successRate": 96.8,
     "avgDurS": 23.1
    },
    "lastRun": {
-    "at": "2026-09-20T11:20:12Z",
+    "at": "2026-09-20T12:25:18Z",
     "conclusion": "success"
    }
   },
@@ -348,72 +348,6 @@
    },
    "lastRun": {
     "at": "2026-09-20T08:29:21Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-control-center-control-center-build",
-   "name": "control-center-build",
-   "repo": "saos-control-center",
-   "visibility": "public",
-   "schedule": "daily 12:37 UTC",
-   "layer": "QA",
-   "role": {
-    "en": "Control center quality gate - installs dependencies from the frozen lockfile, generates the Prisma client, runs a full typecheck and a production build. Every failed step is recorded honestly.",
-    "he": "שעת איכות של מרכז הבקרה - מתקין תלויות מהנעילה הקפואה, מייצר לקוח Prisma, מריץ בדיקת טיפוסים מלאה ובילד ייצור. כל שלב שנכשל נרשם בכנות."
-   },
-   "input": {
-    "en": "source + lockfile",
-    "he": "קוד + נעילה"
-   },
-   "output": {
-    "en": "agent/status.json build verdict",
-    "he": "פסק בילד ב-agent/status.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 6,
-    "success": 4,
-    "failure": 2,
-    "other": 0,
-    "successRate": 66.7,
-    "avgDurS": 44.5
-   },
-   "lastRun": {
-    "at": "2026-09-19T12:44:55Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-dex-dex-beat",
-   "name": "dex-beat",
-   "repo": "saos-dex",
-   "visibility": "public",
-   "schedule": "every 2h :23",
-   "layer": "ALWAYS-UP",
-   "role": {
-    "en": "The exchange's cloud heart - loads the chain snapshot, runs deterministic ticks, verifies deposit claims against the public ledger, credits them, commits and publishes state to the public console.",
-    "he": "הלב הענן של הבורסה - טוען את תמונת-המצב, מריץ טיקים דטרמיניסטיים, מאמת תביעות הפקדה מול הספר הציבורי, מזכה, מבצע commit ומפרסם את המצב לקונסולה הציבורית."
-   },
-   "input": {
-    "en": "chain snapshot + signed deposit claims",
-    "he": "תמונת-מצב שרשרת + תביעות הפקדה חתומות"
-   },
-   "output": {
-    "en": "credits, chain commit, public state publish",
-    "he": "זיכויים, commit לשרשרת, פרסום מצב ציבורי"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 84,
-    "success": 83,
-    "failure": 1,
-    "other": 0,
-    "successRate": 98.8,
-    "avgDurS": 44.2
-   },
-   "lastRun": {
-    "at": "2026-09-20T10:31:28Z",
     "conclusion": "success"
    }
   },
@@ -583,72 +517,6 @@
    }
   },
   {
-   "id": "steem-cloud-heart",
-   "name": "cloud-heart",
-   "repo": "steem",
-   "visibility": "public",
-   "schedule": "every 30 min",
-   "layer": "ALWAYS-UP",
-   "role": {
-    "en": "The fleet executor outside the sandbox - reads the living-attest from Steem/Hive over public RPC; fresh attest means sandbox alive (verify only), stale means takeover: key restore, full agent cycle, on-chain leadership marker, push.",
-    "he": "המבצע של הצי מחוץ לסנדבוקס - קורא את אימות-החיים מ-Steem/Hive דרך RPC ציבורי; אימות טרי = סנדבוקס חי (אימות בלבד), אימות בלהות = השתלטות: שחזור מפתח, מחזור סוכן מלא, סמן מנהיגות on-chain, דחיפה."
-   },
-   "input": {
-    "en": "public Steem/Hive RPC + fresh clone",
-    "he": "RPC ציבורי של Steem/Hive + קלון טרי"
-   },
-   "output": {
-    "en": "saosnet beat --live, chain attest, gitkeeper push",
-    "he": "saosnet beat --live, אימות שרשרת, דחיפת gitkeeper"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 59
-   },
-   "lastRun": {
-    "at": "2026-09-20T11:33:52Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "zip-weave-anchor-lines",
-   "name": "weave-anchor-lines",
-   "repo": "Zip",
-   "visibility": "public",
-   "schedule": "bi-hourly :20 + on every beat",
-   "layer": "WITNESS",
-   "role": {
-    "en": "Sequences both witness lines as one run - anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",
-    "he": "מריץ את שני קווי העדות כרצף אחד - מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."
-   },
-   "input": {
-    "en": "latest checkpoint root",
-    "he": "root של הצ'קפוינט האחרון"
-   },
-   "output": {
-    "en": "anchor txids recorded back into the ledger",
-    "he": "מזהי טרנזקציות העיגון חוזרים לספר"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 45.5
-   },
-   "lastRun": {
-    "at": "2026-09-20T11:08:11Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "zip-weave-ecosystem",
    "name": "weave-ecosystem",
    "repo": "Zip",
@@ -707,10 +575,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 39.3
+    "avgDurS": 39.5
    },
    "lastRun": {
-    "at": "2026-09-20T11:07:40Z",
+    "at": "2026-09-20T12:09:47Z",
     "conclusion": "success"
    }
   },
@@ -806,11 +674,143 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 21.7
+    "avgDurS": 21.9
    },
    "lastRun": {
-    "at": "2026-09-20T11:29:35Z",
+    "at": "2026-09-20T12:35:30Z",
     "conclusion": "success"
+   }
+  },
+  {
+   "id": "saos-control-center-control-center-build",
+   "name": "control-center-build",
+   "repo": "saos-control-center",
+   "visibility": "public",
+   "schedule": "daily 12:37 UTC",
+   "layer": "QA",
+   "role": {
+    "en": "Control center quality gate - installs dependencies from the frozen lockfile, generates the Prisma client, runs a full typecheck and a production build. Every failed step is recorded honestly.",
+    "he": "שעת איכות של מרכז הבקרה - מתקין תלויות מהנעילה הקפואה, מייצר לקוח Prisma, מריץ בדיקת טיפוסים מלאה ובילד ייצור. כל שלב שנכשל נרשם בכנות."
+   },
+   "input": {
+    "en": "source + lockfile",
+    "he": "קוד + נעילה"
+   },
+   "output": {
+    "en": "agent/status.json build verdict",
+    "he": "פסק בילד ב-agent/status.json"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 7,
+    "success": 4,
+    "failure": 3,
+    "other": 0,
+    "successRate": 57.1,
+    "avgDurS": 38.7
+   },
+   "lastRun": {
+    "at": "2026-09-20T12:45:13Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-dex-dex-beat",
+   "name": "dex-beat",
+   "repo": "saos-dex",
+   "visibility": "public",
+   "schedule": "every 2h :23",
+   "layer": "ALWAYS-UP",
+   "role": {
+    "en": "The exchange's cloud heart - loads the chain snapshot, runs deterministic ticks, verifies deposit claims against the public ledger, credits them, commits and publishes state to the public console.",
+    "he": "הלב הענן של הבורסה - טוען את תמונת-המצב, מריץ טיקים דטרמיניסטיים, מאמת תביעות הפקדה מול הספר הציבורי, מזכה, מבצע commit ומפרסם את המצב לקונסולה הציבורית."
+   },
+   "input": {
+    "en": "chain snapshot + signed deposit claims",
+    "he": "תמונת-מצב שרשרת + תביעות הפקדה חתומות"
+   },
+   "output": {
+    "en": "credits, chain commit, public state publish",
+    "he": "זיכויים, commit לשרשרת, פרסום מצב ציבורי"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 85,
+    "success": 83,
+    "failure": 2,
+    "other": 0,
+    "successRate": 97.6,
+    "avgDurS": 43.3
+   },
+   "lastRun": {
+    "at": "2026-09-20T12:35:55Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "steem-cloud-heart",
+   "name": "cloud-heart",
+   "repo": "steem",
+   "visibility": "public",
+   "schedule": "every 30 min",
+   "layer": "ALWAYS-UP",
+   "role": {
+    "en": "The fleet executor outside the sandbox - reads the living-attest from Steem/Hive over public RPC; fresh attest means sandbox alive (verify only), stale means takeover: key restore, full agent cycle, on-chain leadership marker, push.",
+    "he": "המבצע של הצי מחוץ לסנדבוקס - קורא את אימות-החיים מ-Steem/Hive דרך RPC ציבורי; אימות טרי = סנדבוקס חי (אימות בלבד), אימות בלהות = השתלטות: שחזור מפתח, מחזור סוכן מלא, סמן מנהיגות on-chain, דחיפה."
+   },
+   "input": {
+    "en": "public Steem/Hive RPC + fresh clone",
+    "he": "RPC ציבורי של Steem/Hive + קלון טרי"
+   },
+   "output": {
+    "en": "saosnet beat --live, chain attest, gitkeeper push",
+    "he": "saosnet beat --live, אימות שרשרת, דחיפת gitkeeper"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 99,
+    "failure": 1,
+    "other": 0,
+    "successRate": 99,
+    "avgDurS": 57.3
+   },
+   "lastRun": {
+    "at": "2026-09-20T12:38:22Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "zip-weave-anchor-lines",
+   "name": "weave-anchor-lines",
+   "repo": "Zip",
+   "visibility": "public",
+   "schedule": "bi-hourly :20 + on every beat",
+   "layer": "WITNESS",
+   "role": {
+    "en": "Sequences both witness lines as one run - anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",
+    "he": "מריץ את שני קווי העדות כרצף אחד - מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."
+   },
+   "input": {
+    "en": "latest checkpoint root",
+    "he": "root של הצ'קפוינט האחרון"
+   },
+   "output": {
+    "en": "anchor txids recorded back into the ledger",
+    "he": "מזהי טרנזקציות העיגון חוזרים לספר"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 99,
+    "failure": 1,
+    "other": 0,
+    "successRate": 99,
+    "avgDurS": 45
+   },
+   "lastRun": {
+    "at": "2026-09-20T12:36:09Z",
+    "conclusion": "failure"
    }
   },
   {
