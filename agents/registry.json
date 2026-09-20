@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-20T13:46:36Z",
+ "generatedAt": "2026-09-20T15:46:08Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -108,15 +108,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 63,
-    "success": 60,
+    "runs_sampled": 64,
+    "success": 61,
     "failure": 3,
     "other": 0,
-    "successRate": 95.2,
+    "successRate": 95.3,
     "avgDurS": 17.8
    },
    "lastRun": {
-    "at": "2026-09-20T12:58:17Z",
+    "at": "2026-09-20T14:58:15Z",
     "conclusion": "success"
    }
   },
@@ -146,10 +146,10 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 46.6
+    "avgDurS": 47
    },
    "lastRun": {
-    "at": "2026-09-20T12:49:29Z",
+    "at": "2026-09-20T14:45:50Z",
     "conclusion": "success"
    }
   },
@@ -179,10 +179,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15
+    "avgDurS": 14.9
    },
    "lastRun": {
-    "at": "2026-09-20T12:55:37Z",
+    "at": "2026-09-20T14:53:24Z",
     "conclusion": "success"
    }
   },
@@ -212,10 +212,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14
+    "avgDurS": 13.8
    },
    "lastRun": {
-    "at": "2026-09-20T13:32:29Z",
+    "at": "2026-09-20T15:32:47Z",
     "conclusion": "success"
    }
   },
@@ -248,7 +248,7 @@
     "avgDurS": 15.3
    },
    "lastRun": {
-    "at": "2026-09-20T13:41:38Z",
+    "at": "2026-09-20T15:44:35Z",
     "conclusion": "success"
    }
   },
@@ -274,14 +274,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 90,
+    "success": 92,
     "failure": 0,
-    "other": 10,
-    "successRate": 90,
-    "avgDurS": 39.8
+    "other": 8,
+    "successRate": 92,
+    "avgDurS": 25
    },
    "lastRun": {
-    "at": "2026-09-20T13:41:52Z",
+    "at": "2026-09-20T15:44:46Z",
     "conclusion": "success"
    }
   },
@@ -306,15 +306,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 32,
-    "success": 31,
+    "runs_sampled": 34,
+    "success": 33,
     "failure": 1,
     "other": 0,
-    "successRate": 96.9,
-    "avgDurS": 23.2
+    "successRate": 97.1,
+    "avgDurS": 23.4
    },
    "lastRun": {
-    "at": "2026-09-20T13:20:43Z",
+    "at": "2026-09-20T15:20:44Z",
     "conclusion": "success"
    }
   },
@@ -414,39 +414,6 @@
    },
    "lastRun": {
     "at": "2026-09-20T10:35:41Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saosmartwallet-wallet-verify",
-   "name": "wallet-verify",
-   "repo": "Saosmartwallet",
-   "visibility": "public",
-   "schedule": "daily 14:43 UTC",
-   "layer": "QA",
-   "role": {
-    "en": "Wallet quality gate - installs dependencies, generates the Prisma client, runs a full typecheck and a production build of the seven-network wallet, and confirms the system-status reports exist.",
-    "he": "שעת איכות של הארנק - מתקין תלויות, מייצר לקוח Prisma, מריץ בדיקת טיפוסים מלאה ובילד ייצור של ארנק שבע-הרשתות, ומאשר שדוחות מצב-המערכת קיימים."
-   },
-   "input": {
-    "en": "source + lockfile",
-    "he": "קוד + נעילה"
-   },
-   "output": {
-    "en": "agent/status.json verify verdict",
-    "he": "פסק אימות ב-agent/status.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 7,
-    "success": 4,
-    "failure": 3,
-    "other": 0,
-    "successRate": 57.1,
-    "avgDurS": 83
-   },
-   "lastRun": {
-    "at": "2026-09-19T14:50:02Z",
     "conclusion": "success"
    }
   },
@@ -636,15 +603,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 85,
+    "runs_sampled": 86,
     "success": 83,
-    "failure": 2,
+    "failure": 3,
     "other": 0,
-    "successRate": 97.6,
-    "avgDurS": 43.3
+    "successRate": 96.5,
+    "avgDurS": 41.6
    },
    "lastRun": {
-    "at": "2026-09-20T12:35:55Z",
+    "at": "2026-09-20T14:31:20Z",
     "conclusion": "failure"
    }
   },
@@ -682,6 +649,39 @@
    }
   },
   {
+   "id": "saosmartwallet-wallet-verify",
+   "name": "wallet-verify",
+   "repo": "Saosmartwallet",
+   "visibility": "public",
+   "schedule": "daily 14:43 UTC",
+   "layer": "QA",
+   "role": {
+    "en": "Wallet quality gate - installs dependencies, generates the Prisma client, runs a full typecheck and a production build of the seven-network wallet, and confirms the system-status reports exist.",
+    "he": "שעת איכות של הארנק - מתקין תלויות, מייצר לקוח Prisma, מריץ בדיקת טיפוסים מלאה ובילד ייצור של ארנק שבע-הרשתות, ומאשר שדוחות מצב-המערכת קיימים."
+   },
+   "input": {
+    "en": "source + lockfile",
+    "he": "קוד + נעילה"
+   },
+   "output": {
+    "en": "agent/status.json verify verdict",
+    "he": "פסק אימות ב-agent/status.json"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 8,
+    "success": 4,
+    "failure": 4,
+    "other": 0,
+    "successRate": 50,
+    "avgDurS": 73.3
+   },
+   "lastRun": {
+    "at": "2026-09-20T14:50:48Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "steem-cloud-heart",
    "name": "cloud-heart",
    "repo": "steem",
@@ -703,14 +703,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 97,
-    "failure": 3,
+    "success": 93,
+    "failure": 7,
     "other": 0,
-    "successRate": 97,
-    "avgDurS": 54.6
+    "successRate": 93,
+    "avgDurS": 49
    },
    "lastRun": {
-    "at": "2026-09-20T13:33:55Z",
+    "at": "2026-09-20T15:34:10Z",
     "conclusion": "failure"
    }
   },
@@ -736,14 +736,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 99,
-    "failure": 1,
+    "success": 98,
+    "failure": 2,
     "other": 0,
-    "successRate": 99,
-    "avgDurS": 45
+    "successRate": 98,
+    "avgDurS": 44.9
    },
    "lastRun": {
-    "at": "2026-09-20T12:36:09Z",
+    "at": "2026-09-20T14:31:48Z",
     "conclusion": "failure"
    }
   },
@@ -769,14 +769,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 99,
-    "failure": 1,
+    "success": 97,
+    "failure": 3,
     "other": 0,
-    "successRate": 99,
-    "avgDurS": 38.7
+    "successRate": 97,
+    "avgDurS": 36.9
    },
    "lastRun": {
-    "at": "2026-09-20T13:06:53Z",
+    "at": "2026-09-20T15:07:33Z",
     "conclusion": "failure"
    }
   },
@@ -802,14 +802,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 97,
-    "failure": 3,
+    "success": 91,
+    "failure": 9,
     "other": 0,
-    "successRate": 97,
-    "avgDurS": 20.5
+    "successRate": 91,
+    "avgDurS": 18
    },
    "lastRun": {
-    "at": "2026-09-20T13:29:59Z",
+    "at": "2026-09-20T15:30:06Z",
     "conclusion": "failure"
    }
   },
