@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SAOS · עוגן ריבוני · Sovereign Anchor</title>
+<meta name="description" content="העוגן הריבוני: הפעלת קו העדות ב-Steem ישירות מהדפדפן. אפס תלות ב-GitHub, בדקות-Actions או בכל מתווך. המפתח לעולם לא עוזב את הלשונית.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Console/sovereign-anchor.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8' fill='none' stroke='%2310b981' stroke-width='1.8' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='12' r='3' fill='none' stroke='%2310b981' stroke-width='1.8'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b;--bg2:#101013;--panel:rgba(255,255,255,.03);--panel2:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);
+  --acc:#10b981;--acc-bright:#34d399;--acc-bg:rgba(16,185,129,.10);--acc-line:rgba(16,185,129,.35);
+  --green:#22c55e;--red:#ef4444;--amber:#eab308;
+  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px;width:100%}
+a{color:var(--acc-bright);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
+header.sov-head{border-bottom:1px solid var(--line);padding:16px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
+.sov-head .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{width:32px;height:32px;flex:none}
+.sov-head h1{font-size:18px;font-weight:700;letter-spacing:.3px}
+.sov-head .sub{font-size:12px;color:var(--mut)}
+.badge{font-size:11px;color:var(--acc-bright);border:1px solid var(--acc-line);border-radius:999px;padding:2px 10px;white-space:nowrap;background:var(--acc-bg)}
+main{flex:1;padding:30px 0 60px}
+footer{border-top:1px solid var(--line);padding:18px 0;font-size:12px;color:var(--dim);text-align:center}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+.card h2{font-size:15.5px;margin-bottom:14px;color:var(--tx);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:6px}
+input[type=password],input[type=text]{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;color:var(--tx);padding:12px 14px;font-size:15px;font-family:var(--mono)}
+input:focus{outline:none;border-color:var(--acc-line);box-shadow:0 0 0 3px rgba(16,185,129,.12)}
+.field{margin-bottom:14px}
+.hint{font-size:12px;color:var(--dim);margin-top:6px}
+button{cursor:pointer;font-family:var(--sans)}
+.btn-main{width:100%;background:var(--acc);color:#06251a;border:none;border-radius:10px;padding:14px;font-size:15.5px;font-weight:700;transition:filter .15s,transform .05s}
+.btn-main:hover:not(:disabled){filter:brightness(1.12)}
+.btn-main:active:not(:disabled){transform:scale(.99)}
+.btn-main:disabled{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--mut);border:1px solid var(--line2);border-radius:10px;padding:10px 16px;font-size:13px;transition:border-color .15s,color .15s}
+.btn-ghost:hover{border-color:var(--acc-line);color:var(--tx)}
+.status{margin-top:12px;font-size:13.5px;min-height:20px;color:var(--mut)}
+.status.err{color:var(--red)}
+.status.ok{color:var(--green)}
+.status.warn{color:var(--amber)}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--dim);border-top-color:var(--acc);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-inline-end:7px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13.5px;align-items:baseline}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--mut);flex:none}
+.kv .v{font-family:var(--mono);font-size:12px;text-align:left;direction:ltr;word-break:break-all}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px}
+.dot.g{background:var(--green);box-shadow:0 0 8px var(--green)}
+.dot.y{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.dot.r{background:var(--red);box-shadow:0 0 8px var(--red)}
+.verdict{border-radius:10px;padding:14px;font-size:13.5px;border:1px solid var(--line2);background:var(--bg2);display:none;margin-top:12px}
+.verdict.show{display:block}
+.verdict.good{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.07)}
+.verdict.bad{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.06)}
+.verdict b{display:block;margin-bottom:6px;font-size:14.5px}
+.payload{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;font-family:var(--mono);font-size:11.5px;direction:ltr;text-align:left;white-space:pre;overflow-x:auto;color:var(--mut);margin-top:10px}
+.payload::-webkit-scrollbar{height:8px}
+.payload::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+.roles{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.role-chip{font-size:11.5px;font-family:var(--mono);border:1px solid var(--line2);border-radius:999px;padding:3px 12px;color:var(--dim)}
+.role-chip.on{border-color:rgba(34,197,94,.5);color:var(--green)}
+.role-chip.on::before{content:"OK "}
+.opsafe{font-size:12px;color:var(--dim);line-height:1.7;margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+.txbox{margin-top:14px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;display:none}
+.txbox.show{display:block}
+.txbox .txid{color:var(--acc-bright);font-family:var(--mono);font-size:12px;word-break:break-all;direction:ltr;text-align:left}
+.txbox .links{margin-top:8px;display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px}
+.warnbox{border:1px solid rgba(234,179,8,.35);background:rgba(234,179,8,.06);border-radius:10px;padding:12px 14px;font-size:12.5px;color:#d4b106;line-height:1.65;margin-top:12px;display:none}
+.warnbox.show{display:block}
+.rcbar{height:7px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:8px}
+.rcbar>div{height:100%;border-radius:4px;transition:width .4s}
+@media(max-width:640px){.card{padding:18px}}
+</style>
+</head>
+<body>
+<header class="sov-head">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" stroke="#10b981" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="#10b981" stroke-width="1.8"/></svg>
+    <div>
+      <h1>עוגן ריבוני · Sovereign Anchor</h1>
+      <div class="sub">קו העדות של THE WEAVE — ישירות מהדפדפן אל השרשרת</div>
+    </div>
+    <span class="badge" style="margin-inline-start:auto">אפס תלות · zero-dependency</span>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 · מצב הקו החי -->
+  <section class="card" aria-labelledby="h-live">
+    <h2 id="h-live">מצב קו העדות <span class="en">· the witness line, live from the chain</span></h2>
+    <div class="kv"><span class="k">פסק-דין טריות</span><span class="v" id="lv-verdict">…</span></div>
+    <div class="kv"><span class="k">עדות אחרונה בשרשרת</span><span class="v" id="lv-last">…</span></div>
+    <div class="kv"><span class="k">מספר עדים בהיסטוריה</span><span class="v" id="lv-count">…</span></div>
+    <div class="kv"><span class="k">ראש הספר הציבורי (מראה)</span><span class="v" id="lv-mirror">…</span></div>
+    <div class="kv"><span class="k">עתיד להיבחן</span><span class="v" id="lv-target">…</span></div>
+    <div class="warnbox" id="lv-warn"></div>
+    <button class="btn-ghost" style="margin-top:14px" id="reloadBtn" type="button">טעינה מחדש</button>
+  </section>
+
+  <!-- 2 · המפתח -->
+  <section class="card" aria-labelledby="h-key">
+    <h2 id="h-key">מפתח העד <span class="en">· the witness key — WIF or master password</span></h2>
+    <div class="field">
+      <label for="sec">הדבק כאן WIF (מתחיל ב-5/K/L) או סיסמת-אב של החשבון</label>
+      <input type="password" id="sec" autocomplete="off" spellcheck="false" placeholder="5… / K… / L… / סיסמת-אב">
+      <div class="hint">הערך מפורש בתוך הדף הזה בלבד, בזיכרון, ונמחק בנעילת הלשונית. לעולם לא נשמר, לא נרשם ולא משודר — רק המפתח הציבורי הנגזר נבדק מול השרשרת.</div>
+    </div>
+    <button class="btn-main" id="verifyBtn" type="button">בדיקת המפתח מול השרשרת</button>
+    <div class="status" id="keyStatus"></div>
+    <div class="verdict" id="keyVerdict"></div>
+    <div class="roles" id="roleChips"></div>
+    <div class="opsafe">
+      אבטחה: המפתח מפורש על-ידי gate-crypto.js (ריבוני, אפס תלות, מאומת מול steem-js) בתוך הדף הזה בלבד. השער חותם custom_json בלבד — רשות posting בלבד; השרשרת עצמה אוסרת על המפתח הזה להזיז כספים. אין כאן שרת, אין טופס, אין ניתוח: הדף מוגש סטטי מ-GitHub Pages ופועל אך ורק מול צמתי RPC ציבוריים.
+    </div>
+  </section>
+
+  <!-- 3 · העיגון -->
+  <section class="card" aria-labelledby="h-anchor">
+    <h2 id="h-anchor">עיגון העדות <span class="en">· anchor the public head on-chain</span></h2>
+    <div class="kv"><span class="k">מנת RC של העד (Steem)</span><span class="v" id="rc-val">…</span></div>
+    <div class="rcbar" aria-hidden="true"><div id="rc-bar" style="width:0%;background:var(--red)"></div></div>
+    <div class="kv" style="margin-top:10px"><span class="k">תוכן העדות (יפורסם כמות שהוא)</span><span class="v" style="color:var(--dim)">custom_json · saos.weave.core.v1</span></div>
+    <div class="payload" id="payloadBox">—</div>
+    <button class="btn-main" id="anchorBtn" type="button" disabled>עיגון עכשיו</button>
+    <div class="hint">הכפתור נפתח רק אחרי התאמת מפתח מלאה ומנת RC בריאה. העדות נחתמת, נשודרת לשרשרת הציבורית, ומקבלת txid — הוכחה או לא קרה.</div>
+    <div class="status" id="anchorStatus"></div>
+    <div class="txbox" id="txResult"></div>
+  </section>
+
+  <!-- 4 · הסבר -->
+  <section class="card" aria-labelledby="h-why">
+    <h2 id="h-why">למה זה ריבוני <span class="en">· why this is sovereign</span></h2>
+    <div style="font-size:13.5px;color:var(--mut);line-height:1.8">
+      קו העדות של THE WEAVE אמור להיות מעוגן כל שעה. כשהדקות החינמיות של GitHub Actions נגמרות בריפואים הפרטיים, המכונות שותקות — אבל <b style="color:var(--tx)">השרשרת לא שופטת מי משדר</b>: כל עסקה חתומה כהלכה מתקבלת. הדף הזה הוא נתיב עיגון עצמאי לחלוטין — בלי GitHub Actions, בלי דקות, בלי מתווך. המפתח בידך, החתימה בדפדפן שלך, העדות על השרשרת הציבורית.<br><br>
+      אחרי השידור: מכונת הקונסולה (ריפו ציבורי, דקות בלתי-מוגבלות) תקרוא את העדות בקריאה הבאה שלה ותרענן את status.json — הקו חוזר לירוק בכוח השרשרת עצמה.
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>THE WEAVE · sovereign anchor · השרשרת היא השופט · <a href="./">אל הקונסולה</a></footer>
+
+<script src="gate-crypto.js"></script>
+<script>
+"use strict";
+/* ────────────────────────────────────────────────────────────────
+ * sovereign-anchor.html — the zero-dependency witness path.
+ *
+ * Doctrine: the chain is the judge. The key never leaves this tab.
+ * Only custom_json (posting authority) is ever signed — the chain
+ * itself forbids this key from moving funds.
+ * ──────────────────────────────────────────────────────────────── */
+const OP_ID = "saos.weave.core.v1";
+const ACCOUNT = "cashmachine";
+const KNOWN = ["cashmachine", "headcorner", "lsa"];
+const NODES = ["https://api.steemit.com", "https://api.justyy.com", "https://steem.61bts.com"];
+const FRESH_THRESHOLD_H = 26;
+const RC_FLOOR = 200e6;
+const RC_REGEN_SEC = 432000;
+const $ = (id) => document.getElementById(id);
+const state = { priv: null, pub: null, matched: null, mirror: null, status: null, rcOk: false };
+
+function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function rpc(method, params) {
+  let lastErr = null;
+  for (const node of NODES) {
+    try {
+      const ctrl = new AbortController();
+      const tm = setTimeout(() => ctrl.abort(), 20000);
+      const res = await fetch(node, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }), signal: ctrl.signal,
+      });
+      clearTimeout(tm);
+      const j = await res.json();
+      if (j.error) throw new Error(j.error.message || "rpc error");
+      return j.result;
+    } catch (e) { lastErr = e; }
+  }
+  throw new Error("all public RPC nodes failed: " + (lastErr ? lastErr.message : ""));
+}
+
+/* ── 1 · the live line ── */
+async function loadLive() {
+  $("lv-verdict").innerHTML = '<span class="spin"></span>';
+  try {
+    const [st, mir] = await Promise.all([
+      fetch("status.json", { cache: "no-store" }).then((r) => r.json()),
+      fetch("mirror.json", { cache: "no-store" }).then((r) => r.json()),
+    ]);
+    state.status = st; state.mirror = mir;
+    const f = st.freshness || {};
+    const fresh = f.verdict === "FRESH";
+    $("lv-verdict").innerHTML =
+      '<span class="dot ' + (fresh ? "g" : "r") + '"></span>' +
+      esc(f.verdict || "?") + " · " + (f.ageHours != null ? f.ageHours : "?") + "ש׳ (סף " + FRESH_THRESHOLD_H + "ש׳)";
+    const w = st.witness || {};
+    $("lv-last").textContent = (w.checkpoint != null ? "cp#" + w.checkpoint + " · " : "") + String(w.at || "?").slice(0, 19).replace("T", " ") + "Z" + (w.txid ? " · " + w.txid.slice(0, 14) + "…" : "");
+    const recent = (st.recent || []).length;
+    $("lv-count").textContent = recent + " בספר הציבורי";
+    const ms = mir.stats || {};
+    const mAge = mir.generatedAt ? Math.round((Date.now() - new Date(mir.generatedAt).getTime()) / 60000) : null;
+    $("lv-mirror").textContent = "cp#" + (ms.checkpoints ?? "?") + " · root " + String(ms.headHash || "?").slice(0, 14) + "… · " + (ms.attestations ?? "?") + " אימותים" + (mAge != null ? " · לפני " + mAge + " דק'" : "");
+    $("lv-target").textContent = "cp#" + (ms.checkpoints ?? "?") + " · " + String(ms.headHash || "?").slice(0, 22) + "…";
+    if (!fresh) {
+      const wb = $("lv-warn");
+      wb.className = "warnbox show";
+      wb.innerHTML = "הקו יבש (age " + (f.ageHours ?? "?") + "ש׳ מעל הסף). זה בדיוק מה שהעוגן הריבוני מתקן: עדות חדשה בשרשרת מרעננת את הקו מיד — בלי דקות-Actions, בלי מתווך.";
+    }
+    buildPayloadPreview();
+  } catch (e) {
+    $("lv-verdict").innerHTML = '<span class="dot r"></span>קריאה נכשלה: ' + esc(e.message);
+  }
+}
+
+/* ── payload from the public mirror (the honest current head) ── */
+function buildPayload() {
+  const ms = (state.mirror && state.mirror.stats) || {};
+  const att = typeof ms.attestations === "number" ? ms.attestations : null;
+  return {
+    protocol: "saos-weave-core/v1",
+    action: "checkpoint",
+    at: new Date().toISOString(),
+    net: "weave-core",
+    repo: "sovereign-browser",
+    checkpoint: typeof ms.checkpoints === "number" ? ms.checkpoints : null,
+    root: String(ms.headHash || ""),
+    attFrom: att, attTo: att,
+    attestations: att,
+    headHash: String(ms.headHash || ""),
+    commit: "browser",
+    rail: "sovereign-browser",
+  };
+}
+function buildPayloadPreview() {
+  if (!state.mirror) return;
+  const p = buildPayload();
+  $("payloadBox").textContent = JSON.stringify(p, null, 2);
+}
+
+/* ── 2 · key verdict (bit-by-bit, like key-verify — but instant) ── */
+async function verifyKey() {
+  const sec = $("sec").value.trim();
+  const ks = $("keyStatus"), kv = $("keyVerdict"), chips = $("roleChips");
+  kv.className = "verdict"; chips.innerHTML = "";
+  if (!sec) { ks.textContent = "הדבק מפתח קודם"; ks.className = "status err"; return; }
+  $("verifyBtn").disabled = true;
+  ks.className = "status";
+  ks.innerHTML = '<span class="spin"></span>גוזר מפתחות מהקלט (מקומי, בזיכרון)…';
+  await sleep(30);
+  try {
+    let posting = null;
+    try { posting = await GateCrypto.deriveAny(sec, ACCOUNT, "posting"); }
+    catch (e) { posting = null; }
+    if (!posting) {
+      ks.textContent = "";
+      kv.className = "verdict bad show";
+      kv.innerHTML = "<b>הקלט לא התגלגל למפתח</b>לא WIF תקין ולא סיסמת-אב שניתן לגזור ממנה מפתח. בדוק שהערך מלא (WIF-ים ארוכים — 51-52 תווים).";
+      $("anchorBtn").disabled = true;
+      state.priv = null; state.pub = null; state.matched = null;
+      return;
+    }
+    ks.innerHTML = '<span class="spin"></span>קורא רשויות מהשרשרת הציבורית…';
+    const accs = await rpc("condenser_api.get_accounts", [KNOWN]);
+    if (!accs || !accs.length) throw new Error("חשבונות הצי לא נקראו מהשרשרת");
+    const matchInfo = [];
+    const rolesOf = {};
+    for (const acc of ["owner", "active", "posting", "memo"]) {
+      try { rolesOf[acc] = await GateCrypto.deriveAny(sec, ACCOUNT, acc); } catch (e) { /* not a master password */ }
+    }
+    for (const a of accs) {
+      const name = String(a.name || "").toLowerCase();
+      const auth = {
+        owner: (a.owner && a.owner.key_auths || []).map((k) => k[0]),
+        active: (a.active && a.active.key_auths || []).map((k) => k[0]),
+        posting: (a.posting && a.posting.key_auths || []).map((k) => k[0]),
+        memo: [a.memo_key],
+      };
+      for (const role of ["owner", "active", "posting", "memo"]) {
+        const d = rolesOf[role];
+        if (d && auth[role] && auth[role].includes(d.pub)) matchInfo.push({ name, role, d });
+      }
+      if (auth.posting.includes(posting.pub)) matchInfo.push({ name, role: "posting", d: posting });
+    }
+    const dedup = [];
+    const seen = new Set();
+    for (const m of matchInfo) { const k = m.name + ":" + m.role; if (!seen.has(k)) { seen.add(k); dedup.push(m); } }
+    /* chips: which of the witness account's roles did this input unlock */
+    const own = dedup.filter((m) => m.name === ACCOUNT);
+    for (const role of ["owner", "active", "posting", "memo"]) {
+      const c = document.createElement("span");
+      c.className = "role-chip" + (own.some((m) => m.role === role) ? " on" : "");
+      c.textContent = role;
+      chips.appendChild(c);
+    }
+    ks.textContent = "";
+    if (own.some((m) => m.role === "posting")) {
+      state.priv = posting.priv; state.pub = posting.pub; state.matched = own;
+      kv.className = "verdict good show";
+      kv.innerHTML = "<b>מפתח העד אומת — התאמה מלאה לרשות ה-posting של @" + esc(ACCOUNT) + "</b>" +
+        "המפתח הציבורי הנגזר: <span class='mono'>" + esc(posting.pub) + "</span><br>" +
+        (dedup.length > own.length ? "התאמות נוספות: " + esc(dedup.filter((m) => m.name !== ACCOUNT).map((m) => "@" + m.name + ":" + m.role).join(" · ")) + "<br>" : "") +
+        "העיגון נפתח.";
+      await checkRc();
+      maybeUnlock();
+    } else if (dedup.length > 0) {
+      state.priv = null; state.pub = null;
+      kv.className = "verdict bad show";
+      kv.innerHTML = "<b>המפתח זוהה — אבל של חשבון אחר</b>" +
+        "התאמות: " + esc(dedup.map((m) => "@" + m.name + " (" + m.role + ")").join(" · ")) + ".<br>" +
+        "קו העדות חותם רק עם רשות ה-posting של <span class='mono'>@" + esc(ACCOUNT) + "</span> — סירוב כנה, שום דבר לא שודר.";
+      $("anchorBtn").disabled = true;
+    } else {
+      state.priv = null; state.pub = null;
+      kv.className = "verdict bad show";
+      kv.innerHTML = "<b>לא זוהה אף חשבון צי</b>" +
+        "המפתח הציבורי הנגזר: <span class='mono'>" + esc(posting.pub) + "</span><br>" +
+        "אין התאמה לרשויות של @" + esc(KNOWN.join(", @")) + " (נבדקו owner/active/posting/memo לכל אחד). הערך שהוזן אינו מפתח העד. סירוב כנה — שום דבר לא שודר.";
+      $("anchorBtn").disabled = true;
+    }
+  } catch (e) {
+    ks.className = "status err";
+    ks.textContent = String(e.message || e);
+    $("anchorBtn").disabled = true;
+  } finally {
+    $("verifyBtn").disabled = false;
+  }
+}
+
+/* ── RC gate (same formula as the machine, regen-aware) ── */
+async function checkRc() {
+  const el = $("rc-val"), bar = $("rc-bar");
+  el.innerHTML = '<span class="spin"></span>';
+  try {
+    const [rc, dgp] = await Promise.all([
+      rpc("rc_api.find_rc_accounts", { accounts: [ACCOUNT] }),
+      rpc("condenser_api.get_dynamic_global_properties", []),
+    ]);
+    const a = rc && rc.rc_accounts && rc.rc_accounts[0];
+    if (!a) throw new Error("rc_api לא החזיר את החשבון");
+    const max = Number(a.max_rc);
+    const now = Math.floor(new Date(dgp.time + "Z").getTime() / 1000);
+    const lut = Number(a.rc_manabar.last_update_time);
+    const mana = Math.min(max, Number(a.rc_manabar.current_mana) + Math.max(0, now - lut) * (max / RC_REGEN_SEC));
+    const pct = Math.max(1, Math.round((mana / max) * 100));
+    bar.style.width = pct + "%";
+    state.rcOk = mana >= RC_FLOOR;
+    bar.style.background = state.rcOk ? "var(--green)" : (mana >= RC_FLOOR / 4 ? "var(--amber)" : "var(--red)");
+    el.innerHTML = (state.rcOk ? '<span class="dot g"></span>' : '<span class="dot y"></span>') +
+      (mana / 1e6).toFixed(1) + "M / " + (max / 1e9).toFixed(1) + "B (" + pct + "%)" +
+      (state.rcOk ? " · בריא" : " · מתחת לרצפה (" + (RC_FLOOR / 1e6) + "M) — העדות עלולה להידחות על-ידי השרשרת; המנה מתחדשת מעצמה");
+  } catch (e) {
+    state.rcOk = false;
+    el.innerHTML = '<span class="dot r"></span>קריאת RC נכשלה: ' + esc(String(e.message).slice(0, 60));
+  }
+  maybeUnlock();
+}
+
+function maybeUnlock() {
+  const ready = !!(state.priv && state.matched && state.matched.length);
+  $("anchorBtn").disabled = !ready;
+}
+
+/* ── 3 · the anchor itself ── */
+async function doAnchor() {
+  if (!state.priv) return;
+  const btn = $("anchorBtn"), st = $("anchorStatus"), txr = $("txResult");
+  btn.disabled = true;
+  st.className = "status";
+  st.innerHTML = '<span class="spin"></span>בונה עסקה חתומה (ref_block מהשרשרת)…';
+  txr.className = "txbox";
+  buildPayloadPreview();
+  try {
+    const payload = buildPayload();
+    if (payload.checkpoint == null || !payload.root) throw new Error("אין ראש ספר ציבורי לעגן (mirror.json לא נקרא)");
+    /* honest no-op guard: if the line is fresh AND the witnessed root is already this root */
+    const f = (state.status && state.status.freshness) || {};
+    const w = (state.status && state.status.witness) || {};
+    if (f.verdict === "FRESH" && w.root === payload.root) {
+      st.className = "status ok";
+      st.textContent = "אין מה לעגן — הקו טרי וכבר מעגן את הראש הזה בדיוק (cp#" + w.checkpoint + "). אין כאן צביעת ירוק.";
+      btn.disabled = false;
+      return;
+    }
+    const ops = [[
+      "custom_json",
+      {
+        required_auths: [],
+        required_posting_auths: [ACCOUNT],
+        id: OP_ID,
+        json: JSON.stringify(payload),
+      },
+    ]];
+    st.innerHTML = '<span class="spin"></span>חותם ומשדר לשרשרת הציבורית…';
+    await sleep(30);
+    const signed = await GateCrypto.buildSignedTx(ops, state.priv,
+      () => rpc("condenser_api.get_dynamic_global_properties", []),
+      (n) => rpc("condenser_api.get_block_header", [n]));
+    const res = await rpc("condenser_api.broadcast_transaction", [signed]);
+    const txid = (res && res.id) || "שודר (הצומת לא החזיר id — בדוק בהיסטוריה)";
+    st.className = "status ok";
+    st.textContent = "העדות שודרה לשרשרת ✓";
+    txr.className = "txbox show";
+    txr.innerHTML =
+      "<div style='color:var(--green);font-weight:700;margin-bottom:6px'>txid:</div>" +
+      "<div class='txid'>" + esc(txid) + "</div>" +
+      "<div class='links'>" +
+      "<a href='https://steemscan.com/transaction/" + esc(txid) + "' target='_blank' rel='noopener'>steemscan</a>" +
+      "<a href='https://steemit.com/@" + esc(ACCOUNT) + "' target='_blank' rel='noopener'>היסטוריית העד בשרשרת</a>" +
+      "</div>" +
+      "<div style='margin-top:10px;font-size:12px;color:var(--mut)'>מכונת הקונסולה תקרוא את העדות במחזור הבא (עד שעה) ו-status.json יתרענן. אפשר לוודא כבר עכשיו בהיסטוריית החשבון.</div>";
+    /* wipe the key after use — one-shot discipline */
+    $("sec").value = "";
+    state.priv = null; state.pub = null; state.matched = null;
+    $("keyVerdict").className = "verdict";
+    $("roleChips").innerHTML = "";
+    $("anchorBtn").disabled = true;
+  } catch (e) {
+    st.className = "status err";
+    st.textContent = String(e.message || e);
+    btn.disabled = false;
+  }
+}
+
+$("verifyBtn").addEventListener("click", verifyKey);
+$("anchorBtn").addEventListener("click", doAnchor);
+$("reloadBtn").addEventListener("click", () => { loadLive(); checkRc(); });
+$("sec").addEventListener("keydown", (e) => { if (e.key === "Enter") verifyKey(); });
+loadLive();
+checkRc();
+</script>
+</body>
+</html>
