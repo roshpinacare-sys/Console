@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-21T10:48:13Z",
+ "generatedAt": "2026-09-21T11:48:40Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -42,15 +42,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 73,
-    "success": 70,
+    "runs_sampled": 74,
+    "success": 71,
     "failure": 3,
     "other": 0,
     "successRate": 95.9,
-    "avgDurS": 17.7
+    "avgDurS": 17.8
    },
    "lastRun": {
-    "at": "2026-09-21T08:58:52Z",
+    "at": "2026-09-21T10:58:20Z",
     "conclusion": "success"
    }
   },
@@ -80,10 +80,10 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 51.2
+    "avgDurS": 51.5
    },
    "lastRun": {
-    "at": "2026-09-21T09:48:19Z",
+    "at": "2026-09-21T10:47:26Z",
     "conclusion": "success"
    }
   },
@@ -116,7 +116,7 @@
     "avgDurS": 15.7
    },
    "lastRun": {
-    "at": "2026-09-21T09:54:43Z",
+    "at": "2026-09-21T10:54:05Z",
     "conclusion": "success"
    }
   },
@@ -149,7 +149,7 @@
     "avgDurS": 13.4
    },
    "lastRun": {
-    "at": "2026-09-21T10:33:37Z",
+    "at": "2026-09-21T11:35:05Z",
     "conclusion": "success"
    }
   },
@@ -179,10 +179,10 @@
     "failure": 2,
     "other": 0,
     "successRate": 98,
-    "avgDurS": 16.3
+    "avgDurS": 15.9
    },
    "lastRun": {
-    "at": "2026-09-21T10:43:12Z",
+    "at": "2026-09-21T11:44:19Z",
     "conclusion": "success"
    }
   },
@@ -208,14 +208,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 93,
+    "success": 91,
     "failure": 0,
-    "other": 7,
-    "successRate": 93,
-    "avgDurS": 41.7
+    "other": 9,
+    "successRate": 91,
+    "avgDurS": 43.7
    },
    "lastRun": {
-    "at": "2026-09-21T10:43:24Z",
+    "at": "2026-09-21T11:44:31Z",
     "conclusion": "success"
    }
   },
@@ -240,15 +240,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 53,
-    "success": 52,
+    "runs_sampled": 54,
+    "success": 53,
     "failure": 1,
     "other": 0,
     "successRate": 98.1,
     "avgDurS": 23.4
    },
    "lastRun": {
-    "at": "2026-09-21T10:22:30Z",
+    "at": "2026-09-21T11:22:19Z",
     "conclusion": "success"
    }
   },
@@ -315,6 +315,39 @@
    },
    "lastRun": {
     "at": "2026-09-21T07:25:41Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "project-files-archive-keeper",
+   "name": "archive-keeper",
+   "repo": "Project-files",
+   "visibility": "public",
+   "schedule": "weekly Mon 11:31 UTC",
+   "layer": "ARCHIVE",
+   "role": {
+    "en": "Archive keeper - opens every canonical zip archive end to end to prove it is not corrupt, builds a SHA-256 manifest and a size catalog. A corrupt archive is a red mark.",
+    "he": "שומר הארכיון - פותח כל ארכיון קנוני מקצה לקצה כדי להוכיח שאינו מושחת, בונה מניפסט SHA-256 וקטלוג גדלים. ארכיון מושחת הוא סימן אדום."
+   },
+   "input": {
+    "en": "canonical zip archives",
+    "he": "ארכיוני zip קנוניים"
+   },
+   "output": {
+    "en": "agent/status.json + archives.sha256",
+    "he": "דוח agent/status.json + מניפסט ארכיונים"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 3,
+    "success": 1,
+    "failure": 2,
+    "other": 0,
+    "successRate": 33.3,
+    "avgDurS": 6.3
+   },
+   "lastRun": {
+    "at": "2026-09-21T11:41:25Z",
     "conclusion": "failure"
    }
   },
@@ -604,14 +637,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 55,
-    "failure": 45,
+    "success": 53,
+    "failure": 47,
     "other": 0,
-    "successRate": 55,
-    "avgDurS": 4.3
+    "successRate": 53,
+    "avgDurS": 4.2
    },
    "lastRun": {
-    "at": "2026-09-21T10:35:29Z",
+    "at": "2026-09-21T11:36:46Z",
     "conclusion": "failure"
    }
   },
@@ -703,14 +736,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 78,
-    "failure": 22,
+    "success": 77,
+    "failure": 23,
     "other": 0,
-    "successRate": 78,
-    "avgDurS": 19.7
+    "successRate": 77,
+    "avgDurS": 18.7
    },
    "lastRun": {
-    "at": "2026-09-21T10:08:14Z",
+    "at": "2026-09-21T11:08:07Z",
     "conclusion": "failure"
    }
   },
@@ -736,14 +769,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 35,
-    "failure": 65,
+    "success": 33,
+    "failure": 67,
     "other": 0,
-    "successRate": 35,
-    "avgDurS": 3.6
+    "successRate": 33,
+    "avgDurS": 3.7
    },
    "lastRun": {
-    "at": "2026-09-21T10:31:32Z",
+    "at": "2026-09-21T11:12:28Z",
     "conclusion": "failure"
    }
   },
@@ -777,39 +810,6 @@
    },
    "lastRun": {
     "at": "2026-09-18T02:20:36Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "project-files-archive-keeper",
-   "name": "archive-keeper",
-   "repo": "Project-files",
-   "visibility": "public",
-   "schedule": "weekly Mon 11:31 UTC",
-   "layer": "ARCHIVE",
-   "role": {
-    "en": "Archive keeper - opens every canonical zip archive end to end to prove it is not corrupt, builds a SHA-256 manifest and a size catalog. A corrupt archive is a red mark.",
-    "he": "שומר הארכיון - פותח כל ארכיון קנוני מקצה לקצה כדי להוכיח שאינו מושחת, בונה מניפסט SHA-256 וקטלוג גדלים. ארכיון מושחת הוא סימן אדום."
-   },
-   "input": {
-    "en": "canonical zip archives",
-    "he": "ארכיוני zip קנוניים"
-   },
-   "output": {
-    "en": "agent/status.json + archives.sha256",
-    "he": "דוח agent/status.json + מניפסט ארכיונים"
-   },
-   "state": "dormant",
-   "stats": {
-    "runs_sampled": 2,
-    "success": 1,
-    "failure": 1,
-    "other": 0,
-    "successRate": 50,
-    "avgDurS": 7
-   },
-   "lastRun": {
-    "at": "2026-09-16T21:11:56Z",
     "conclusion": "success"
    }
   },
