@@ -40,6 +40,7 @@ jobs:
       - name: Money path watch (fuel landing + redemption verdict)
         env:
           AGENTS_WATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}
+          TWIN_DISPATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}   # r68: cross-repo dispatch of the Domain dex-grid twin
         run: node agents/money-watch.mjs
 
       - name: Publish the money path state

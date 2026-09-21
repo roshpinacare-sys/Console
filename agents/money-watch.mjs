@@ -30,8 +30,8 @@ const BANDWIDTH_COST_TRX = 0.35; // נמדד חי: שידור TRX מחשבון �
 const SEND_NOW_MULTIPLE = 3;    // שולחים רק כשהתיבה ≥ 3× עלות השידור
 const LANDING_JUMP_STEEM = 50;   // סף קפיצת-מלאי שנחשב לנחיתת-דלק (מעל כל רעש גריד)
 
-async function gh(url, method = "GET", body = null) {
-  const TOKEN = process.env.AGENTS_WATCH_TOKEN;
+async function gh(url, method = "GET", body = null, token = null) {
+  const TOKEN = token || process.env.AGENTS_WATCH_TOKEN;
   if (!TOKEN) throw new Error("AGENTS_WATCH_TOKEN missing");
   const r = await fetch(url, {
     method,
@@ -233,6 +233,20 @@ if (landing && landingKey && alreadyDispatched !== landingKey) {
     dispatch.note = "dex-grid dispatched immediately - fuel enters the market within minutes of landing";
   } catch (e) {
     dispatch.note = `dispatch failed: ${String(e.message).slice(0, 90)} (daily 03:17 run is the safety net)`;
+  }
+  // r68 backstop: הזנקת התאום הציבורי (Domain) בנוסף למקור — כל-עוד מכסת
+  // הדקות של הריפו-הפרטי מוצתה, הזנקת-המקור מתה איתה והדלק היה ממתין עד
+  // הריצה היומית. הגריד אטומי-יומי מעצם עיצובו — הזנקה כפולה בשני בתים
+  // חיים היא פרישה-חוזרת חסרת-נזק.
+  try {
+    await gh(`https://api.github.com/repos/${OWNER}/Domain/actions/workflows/dex-grid.yml/dispatches`, "POST", { ref: "main" }, process.env.TWIN_DISPATCH_TOKEN || null);
+    dispatch.twin = { ok: true, note: "domain twin dispatched (public minutes - carries the fuel while the private original is quota-dead)" };
+    if (!dispatch.ok) {
+      dispatch.ok = true;
+      dispatch.note = "twin dispatched (original dispatch failed - see twin note)";
+    }
+  } catch (e) {
+    dispatch.twin = { ok: false, note: `twin dispatch failed: ${String(e.message).slice(0, 90)}` };
   }
 } else if (landing && alreadyDispatched === landingKey) {
   dispatch = { attempted: false, ok: true, forPayout: landingKey, note: "already dispatched for this payment" };
