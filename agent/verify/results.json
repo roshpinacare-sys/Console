@@ -1,20 +1,20 @@
 {
   "format": "agent-verify-results-v1",
-  "generatedAt": "2026-09-21T07:01:44.332Z",
+  "generatedAt": "2026-09-21T08:59:02.888Z",
   "runBy": "github-actions",
-  "durationMs": 1037,
+  "durationMs": 952,
   "summary": {
     "total": 49,
-    "passed": 48,
-    "failed": 1,
-    "verdict": "HAS_FAILURES"
+    "passed": 49,
+    "failed": 0,
+    "verdict": "ALL_PASS"
   },
   "results": [
     {
       "id": "A01",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 133
+      "ms": 152
     },
     {
       "id": "A02",
@@ -38,7 +38,7 @@
       "id": "A05",
       "ok": true,
       "details": "\"fleet-live\" found in body",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A06",
@@ -50,25 +50,25 @@
       "id": "A07",
       "ok": true,
       "details": "11 occurrence(s) of \"saos1\", minimum is 5",
-      "ms": 42
+      "ms": 27
     },
     {
       "id": "A08",
       "ok": true,
       "details": "agents.length = 28, minimum is 13",
-      "ms": 20
+      "ms": 24
     },
     {
       "id": "A09",
       "ok": true,
       "details": "stats.attestations = 292, minimum is 100",
-      "ms": 25
+      "ms": 28
     },
     {
       "id": "A10",
       "ok": true,
       "details": "field \"freshness.verdict\" = \"FRESH\", expected \"FRESH\"",
-      "ms": 31
+      "ms": 12
     },
     {
       "id": "A11",
@@ -80,13 +80,13 @@
       "id": "A12",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 44
+      "ms": 14
     },
     {
       "id": "A13",
       "ok": true,
       "details": "requests.length = 61, minimum is 12",
-      "ms": 35
+      "ms": 31
     },
     {
       "id": "A14",
@@ -110,7 +110,7 @@
       "id": "A20",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 13
+      "ms": 14
     },
     {
       "id": "A21",
@@ -128,7 +128,7 @@
       "id": "A23",
       "ok": true,
       "details": "HTTP 404 (retired, as required)",
-      "ms": 25
+      "ms": 12
     },
     {
       "id": "A24",
@@ -140,7 +140,7 @@
       "id": "A28",
       "ok": true,
       "details": "\"no key, no auth\" found in body",
-      "ms": 23
+      "ms": 10
     },
     {
       "id": "A29",
@@ -152,19 +152,19 @@
       "id": "A30",
       "ok": true,
       "details": "repos.length = 14, minimum is 10",
-      "ms": 12
+      "ms": 13
     },
     {
       "id": "A31",
       "ok": true,
-      "details": "core anchor 21.9h old (fresh, <= 26h)",
-      "ms": 116
+      "details": "core anchor 23.8h old (fresh, <= 26h)",
+      "ms": 119
     },
     {
       "id": "A32",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 15
+      "ms": 11
     },
     {
       "id": "A33",
@@ -175,32 +175,32 @@
     {
       "id": "A34",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-09-20T03:30:32.899Z\", age 27.52h, maximum 30h",
+      "details": "field \"publishedAt\" = \"2026-09-20T03:30:32.899Z\", age 29.47h, maximum 30h",
       "ms": 0
     },
     {
       "id": "A35",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 14
+      "ms": 24
     },
     {
       "id": "A36",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-09-21T05:00:52.001Z\", age 2.01h, maximum 6h",
-      "ms": 0
+      "details": "field \"publishedAt\" = \"2026-09-21T07:02:11.242Z\", age 1.95h, maximum 6h",
+      "ms": 1
     },
     {
       "id": "A37",
       "ok": true,
-      "details": "7 assets vs coingecko: WSTEEM +0.23%, PHIVE -0.85%, WSBD -0.01%, WSOL -0.63%, WTRX +0.08%, ETH +0.02%, BTC -0.31% · worst PHIVE 0.85%, limit 5%",
-      "ms": 105
+      "details": "7 assets vs coingecko: WSTEEM -0.96%, PHIVE -1.21%, WSBD -0.00%, WSOL -2.91%, WTRX -0.44%, ETH -1.30%, BTC -2.54% · worst WSOL 2.91%, limit 5%",
+      "ms": 92
     },
     {
       "id": "A38",
       "ok": true,
       "details": "state.income.treasuryProfitEverMu = 213752, minimum is 213752",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A39",
@@ -212,12 +212,12 @@
       "id": "A40",
       "ok": true,
       "details": "25/25 pages healthy (200 + content floor)",
-      "ms": 301
+      "ms": 292
     },
     {
       "id": "A43",
-      "ok": false,
-      "details": "markets.1.bestAsk = 0, minimum is 1",
+      "ok": true,
+      "details": "markets.1.bestAsk = 57, minimum is 1",
       "ms": 0
     },
     {
@@ -230,13 +230,13 @@
       "id": "A53",
       "ok": true,
       "details": "1/1 retired fronts serve permanent redirect stubs (<= 2500B)",
-      "ms": 17
+      "ms": 8
     },
     {
       "id": "A54",
       "ok": true,
       "details": "13/13 required system hrefs present on the home page",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A55",
@@ -254,7 +254,7 @@
       "id": "A57",
       "ok": true,
       "details": "2 occurrence(s) of \"truth.html\", minimum is 2",
-      "ms": 1
+      "ms": 0
     },
     {
       "id": "A58",
@@ -266,13 +266,13 @@
       "id": "A59",
       "ok": true,
       "details": "field \"format\" = \"truth-gate-v1\", expected \"truth-gate-v1\"",
-      "ms": 11
+      "ms": 10
     },
     {
       "id": "A60",
       "ok": true,
       "details": "field \"format\" = \"slo-v1\", expected \"slo-v1\"",
-      "ms": 12
+      "ms": 9
     },
     {
       "id": "A61",
@@ -296,13 +296,13 @@
       "id": "A64",
       "ok": true,
       "details": "2/2 artifact paths serve no content (banned, as required)",
-      "ms": 26
+      "ms": 30
     },
     {
       "id": "A65",
       "ok": true,
       "details": "61 entries · 55 delivered · bridgehead requestRef R61 present and delivered",
-      "ms": 1
+      "ms": 2
     }
   ]
 }
