@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-21T05:48:44Z",
+ "generatedAt": "2026-09-21T06:54:52Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -21,39 +21,6 @@
  ],
  "reposIdle": [],
  "agents": [
-  {
-   "id": "adsmarket-claims-guard",
-   "name": "claims-guard",
-   "repo": "Adsmarket",
-   "visibility": "public",
-   "schedule": "daily 06:11 UTC",
-   "layer": "INTEGRITY",
-   "role": {
-    "en": "Marketing truth guard - enforces the repo iron principle: landing pages complete, zero forbidden glyphs per operator policy, live links (a dead link to our own network is a failure), and counts the txid receipts backing the claims.",
-    "he": "שומר האמת של השיווק - אוכף את עקרון הברזל של הריפו: עמודי נחיתה שלמים, אפס גליפים אסורים לפי מדיניות המפעיל, קישורים חיים (קישור מת של הרשת שלנו הוא כשל), וספירת קבלות ה-txid שמגבות את הטענות."
-   },
-   "input": {
-    "en": "marketing pages + documents",
-    "he": "עמודי שיווק + מסמכים"
-   },
-   "output": {
-    "en": "agent/status.json truth report",
-    "he": "דוח אמת agent/status.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 8,
-    "success": 5,
-    "failure": 3,
-    "other": 0,
-    "successRate": 62.5,
-    "avgDurS": 11.1
-   },
-   "lastRun": {
-    "at": "2026-09-20T06:26:52Z",
-    "conclusion": "success"
-   }
-  },
   {
    "id": "anchor-baseline-baseline-integrity",
    "name": "baseline-integrity",
@@ -146,10 +113,10 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 49.7
+    "avgDurS": 50.6
    },
    "lastRun": {
-    "at": "2026-09-21T04:49:20Z",
+    "at": "2026-09-21T05:48:02Z",
     "conclusion": "success"
    }
   },
@@ -179,10 +146,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.9
+    "avgDurS": 15.9
    },
    "lastRun": {
-    "at": "2026-09-21T04:56:03Z",
+    "at": "2026-09-21T05:55:16Z",
     "conclusion": "success"
    }
   },
@@ -212,10 +179,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.6
+    "avgDurS": 13.4
    },
    "lastRun": {
-    "at": "2026-09-21T05:34:11Z",
+    "at": "2026-09-21T06:45:07Z",
     "conclusion": "success"
    }
   },
@@ -248,7 +215,7 @@
     "avgDurS": 16.2
    },
    "lastRun": {
-    "at": "2026-09-21T05:43:57Z",
+    "at": "2026-09-21T06:50:22Z",
     "conclusion": "success"
    }
   },
@@ -274,14 +241,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 96,
+    "success": 97,
     "failure": 0,
-    "other": 4,
-    "successRate": 96,
-    "avgDurS": 26.8
+    "other": 3,
+    "successRate": 97,
+    "avgDurS": 25.8
    },
    "lastRun": {
-    "at": "2026-09-21T05:44:10Z",
+    "at": "2026-09-21T06:50:36Z",
     "conclusion": "success"
    }
   },
@@ -306,15 +273,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 48,
-    "success": 47,
+    "runs_sampled": 49,
+    "success": 48,
     "failure": 1,
     "other": 0,
-    "successRate": 97.9,
-    "avgDurS": 23.1
+    "successRate": 98,
+    "avgDurS": 23.2
    },
    "lastRun": {
-    "at": "2026-09-21T05:21:54Z",
+    "at": "2026-09-21T06:29:15Z",
     "conclusion": "success"
    }
   },
@@ -418,6 +385,39 @@
    }
   },
   {
+   "id": "adsmarket-claims-guard",
+   "name": "claims-guard",
+   "repo": "Adsmarket",
+   "visibility": "public",
+   "schedule": "daily 06:11 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "Marketing truth guard - enforces the repo iron principle: landing pages complete, zero forbidden glyphs per operator policy, live links (a dead link to our own network is a failure), and counts the txid receipts backing the claims.",
+    "he": "שומר האמת של השיווק - אוכף את עקרון הברזל של הריפו: עמודי נחיתה שלמים, אפס גליפים אסורים לפי מדיניות המפעיל, קישורים חיים (קישור מת של הרשת שלנו הוא כשל), וספירת קבלות ה-txid שמגבות את הטענות."
+   },
+   "input": {
+    "en": "marketing pages + documents",
+    "he": "עמודי שיווק + מסמכים"
+   },
+   "output": {
+    "en": "agent/status.json truth report",
+    "he": "דוח אמת agent/status.json"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 9,
+    "success": 5,
+    "failure": 4,
+    "other": 0,
+    "successRate": 55.6,
+    "avgDurS": 10.3
+   },
+   "lastRun": {
+    "at": "2026-09-21T06:30:46Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-control-center-control-center-build",
    "name": "control-center-build",
    "repo": "saos-control-center",
@@ -471,15 +471,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 93,
+    "runs_sampled": 94,
     "success": 83,
-    "failure": 10,
+    "failure": 11,
     "other": 0,
-    "successRate": 89.2,
-    "avgDurS": 34.5
+    "successRate": 88.3,
+    "avgDurS": 32.5
    },
    "lastRun": {
-    "at": "2026-09-21T04:34:31Z",
+    "at": "2026-09-21T06:41:05Z",
     "conclusion": "failure"
    }
   },
@@ -604,14 +604,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 65,
-    "failure": 35,
+    "success": 63,
+    "failure": 37,
     "other": 0,
-    "successRate": 65,
-    "avgDurS": 10.9
+    "successRate": 63,
+    "avgDurS": 8
    },
    "lastRun": {
-    "at": "2026-09-21T05:35:52Z",
+    "at": "2026-09-21T06:42:44Z",
     "conclusion": "failure"
    }
   },
@@ -637,14 +637,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 91,
-    "failure": 9,
+    "success": 90,
+    "failure": 10,
     "other": 0,
-    "successRate": 91,
-    "avgDurS": 37.8
+    "successRate": 90,
+    "avgDurS": 36.6
    },
    "lastRun": {
-    "at": "2026-09-21T04:34:50Z",
+    "at": "2026-09-21T06:41:12Z",
     "conclusion": "failure"
    }
   },
@@ -703,14 +703,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 83,
-    "failure": 17,
+    "success": 82,
+    "failure": 18,
     "other": 0,
-    "successRate": 83,
-    "avgDurS": 23.2
+    "successRate": 82,
+    "avgDurS": 22.5
    },
    "lastRun": {
-    "at": "2026-09-21T05:08:13Z",
+    "at": "2026-09-21T06:11:47Z",
     "conclusion": "failure"
    }
   },
@@ -736,14 +736,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 49,
-    "failure": 51,
+    "success": 46,
+    "failure": 54,
     "other": 0,
-    "successRate": 49,
+    "successRate": 46,
     "avgDurS": 3.5
    },
    "lastRun": {
-    "at": "2026-09-21T05:31:54Z",
+    "at": "2026-09-21T06:41:39Z",
     "conclusion": "failure"
    }
   },
