@@ -115,9 +115,9 @@ button{cursor:pointer;font-family:var(--sans)}
 
   <!-- 2 · המפתח -->
   <section class="card" aria-labelledby="h-key">
-    <h2 id="h-key">מפתח העד <span class="en">· the witness key — WIF or master password</span></h2>
+    <h2 id="h-key">מפתח העד <span class="en">· the witness key — WIF or master password of any fleet account</span></h2>
     <div class="field">
-      <label for="sec">הדבק כאן WIF (מתחיל ב-5/K/L) או סיסמת-אב של החשבון</label>
+      <label for="sec">הדבק כאן WIF (מתחיל ב-5/K/L) או סיסמת-אב של חשבון-צי (@cashmachine / @headcorner / @lsa)</label>
       <input type="password" id="sec" autocomplete="off" spellcheck="false" placeholder="5… / K… / L… / סיסמת-אב">
       <div class="hint">הערך מפורש בתוך הדף הזה בלבד, בזיכרון, ונמחק בנעילת הלשונית. לעולם לא נשמר, לא נרשם ולא משודר — רק המפתח הציבורי הנגזר נבדק מול השרשרת.</div>
     </div>
@@ -175,7 +175,7 @@ const FRESH_THRESHOLD_H = 26;
 const RC_FLOOR = 200e6;
 const RC_REGEN_SEC = 432000;
 const $ = (id) => document.getElementById(id);
-const state = { priv: null, pub: null, matched: null, mirror: null, status: null, rcOk: false };
+const state = { priv: null, pub: null, matched: null, signAs: null, mirror: null, status: null, rcOk: false };
 
 function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -248,6 +248,7 @@ function buildPayload() {
     attestations: att,
     headHash: String(ms.headHash || ""),
     commit: "browser",
+    witness: (state.signAs || ACCOUNT),
     rail: "sovereign-browser",
   };
 }
@@ -268,44 +269,54 @@ async function verifyKey() {
   ks.innerHTML = '<span class="spin"></span>גוזר מפתחות מהקלט (מקומי, בזיכרון)…';
   await sleep(30);
   try {
-    let posting = null;
-    try { posting = await GateCrypto.deriveAny(sec, ACCOUNT, "posting"); }
-    catch (e) { posting = null; }
-    if (!posting) {
-      ks.textContent = "";
-      kv.className = "verdict bad show";
-      kv.innerHTML = "<b>הקלט לא התגלגל למפתח</b>לא WIF תקין ולא סיסמת-אב שניתן לגזור ממנה מפתח. בדוק שהערך מלא (WIF-ים ארוכים — 51-52 תווים).";
-      $("anchorBtn").disabled = true;
-      state.priv = null; state.pub = null; state.matched = null;
-      return;
-    }
+    /* R75 — מטריצת הזיהוי המלאה: WIF אחד מול כל רשויות הצי, או סיסמת-אב
+       הנגזרת לכל חשבון-צי × כל תפקיד (12 גזירות — כמו key-verify). עד כאן
+       סיסמת-אב נגזרה תחת חשבון אחד בלבד, וה-owner של המפעיל נדחה בטעות
+       ("לא זוהה אף חשבון צי") — הבאג נסגר כאן. המפתח מכריז את החותם. */
     ks.innerHTML = '<span class="spin"></span>קורא רשויות מהשרשרת הציבורית…';
     const accs = await rpc("condenser_api.get_accounts", [KNOWN]);
     if (!accs || !accs.length) throw new Error("חשבונות הצי לא נקראו מהשרשרת");
+    const ROLES = ["owner", "active", "posting", "memo"];
+    const authOf = (a) => ({
+      owner: ((a.owner && a.owner.key_auths) || []).map((k) => k[0]),
+      active: ((a.active && a.active.key_auths) || []).map((k) => k[0]),
+      posting: ((a.posting && a.posting.key_auths) || []).map((k) => k[0]),
+      memo: [a.memo_key],
+    });
     const matchInfo = [];
-    const rolesOf = {};
-    for (const acc of ["owner", "active", "posting", "memo"]) {
-      try { rolesOf[acc] = await GateCrypto.deriveAny(sec, ACCOUNT, acc); } catch (e) { /* not a master password */ }
-    }
-    for (const a of accs) {
-      const name = String(a.name || "").toLowerCase();
-      const auth = {
-        owner: (a.owner && a.owner.key_auths || []).map((k) => k[0]),
-        active: (a.active && a.active.key_auths || []).map((k) => k[0]),
-        posting: (a.posting && a.posting.key_auths || []).map((k) => k[0]),
-        memo: [a.memo_key],
-      };
-      for (const role of ["owner", "active", "posting", "memo"]) {
-        const d = rolesOf[role];
-        if (d && auth[role] && auth[role].includes(d.pub)) matchInfo.push({ name, role, d });
+    let wifKey = null;
+    try {
+      const priv = await GateCrypto.wifToPriv(sec);
+      wifKey = { priv, pub: await GateCrypto.pubToSTM(GateCrypto.privToPubBytes(priv)) };
+    } catch (e) { wifKey = null; }
+    if (wifKey) {
+      for (const a of accs) {
+        const name = String(a.name || "").toLowerCase();
+        const auth = authOf(a);
+        for (const role of ROLES) {
+          if (auth[role] && auth[role].includes(wifKey.pub)) matchInfo.push({ name, role, d: wifKey });
+        }
       }
-      if (auth.posting.includes(posting.pub)) matchInfo.push({ name, role: "posting", d: posting });
+    } else {
+      for (const name of KNOWN) {
+        const a = accs.find((x) => String(x.name || "").toLowerCase() === name);
+        if (!a) continue;
+        const auth = authOf(a);
+        for (const role of ROLES) {
+          let d = null;
+          try { d = await GateCrypto.deriveAny(sec, name, role); } catch (e) { d = null; }
+          if (d && auth[role] && auth[role].includes(d.pub)) matchInfo.push({ name, role, d });
+        }
+      }
     }
     const dedup = [];
     const seen = new Set();
     for (const m of matchInfo) { const k = m.name + ":" + m.role; if (!seen.has(k)) { seen.add(k); dedup.push(m); } }
-    /* chips: which of the witness account's roles did this input unlock */
-    const own = dedup.filter((m) => m.name === ACCOUNT);
+    /* החותם = התאמת ה-posting (מכל חשבונות הצי) — המפתח מכריז מי חותם */
+    const postingMatch = dedup.find((m) => m.role === "posting");
+    const signAs = postingMatch ? postingMatch.name : null;
+    /* chips: which of the matched account's roles did this input unlock */
+    const own = dedup.filter((m) => m.name === (signAs || ACCOUNT));
     for (const role of ["owner", "active", "posting", "memo"]) {
       const c = document.createElement("span");
       c.className = "role-chip" + (own.some((m) => m.role === role) ? " on" : "");
@@ -313,28 +324,30 @@ async function verifyKey() {
       chips.appendChild(c);
     }
     ks.textContent = "";
-    if (own.some((m) => m.role === "posting")) {
-      state.priv = posting.priv; state.pub = posting.pub; state.matched = own;
+    if (signAs) {
+      state.priv = postingMatch.d.priv; state.pub = postingMatch.d.pub; state.matched = own; state.signAs = signAs;
       kv.className = "verdict good show";
-      kv.innerHTML = "<b>מפתח העד אומת — התאמה מלאה לרשות ה-posting של @" + esc(ACCOUNT) + "</b>" +
-        "המפתח הציבורי הנגזר: <span class='mono'>" + esc(posting.pub) + "</span><br>" +
-        (dedup.length > own.length ? "התאמות נוספות: " + esc(dedup.filter((m) => m.name !== ACCOUNT).map((m) => "@" + m.name + ":" + m.role).join(" · ")) + "<br>" : "") +
+      kv.innerHTML = "<b>מפתח העד אומת — התאמה מלאה לרשות ה-posting של @" + esc(signAs) + "</b>" +
+        "המפתח הציבורי הנגזר: <span class='mono'>" + esc(postingMatch.d.pub) + "</span><br>" +
+        (own.length > 1 ? "הסיסמה פותחת גם: " + esc(own.filter((m) => m.role !== "posting").map((m) => m.role).join(" · ")) + " — הקו חותם ב-posting בלבד.<br>" : "") +
+        "העדות תחתם מהשרשרת בשם @" + esc(signAs) + ".<br>" +
         "העיגון נפתח.";
       await checkRc();
       maybeUnlock();
     } else if (dedup.length > 0) {
-      state.priv = null; state.pub = null;
+      state.priv = null; state.pub = null; state.signAs = null;
       kv.className = "verdict bad show";
-      kv.innerHTML = "<b>המפתח זוהה — אבל של חשבון אחר</b>" +
+      kv.innerHTML = "<b>המפתח זוהה — אך לא ברשות posting</b>" +
         "התאמות: " + esc(dedup.map((m) => "@" + m.name + " (" + m.role + ")").join(" · ")) + ".<br>" +
-        "קו העדות חותם רק עם רשות ה-posting של <span class='mono'>@" + esc(ACCOUNT) + "</span> — סירוב כנה, שום דבר לא שודר.";
+        "קו העדות חותם בסמכות posting בלבד (כל חשבונות הצי: @" + esc(KNOWN.join(", @")) + ") — סירוב כנה, שום דבר לא שודר.";
       $("anchorBtn").disabled = true;
     } else {
-      state.priv = null; state.pub = null;
+      state.priv = null; state.pub = null; state.signAs = null;
       kv.className = "verdict bad show";
       kv.innerHTML = "<b>לא זוהה אף חשבון צי</b>" +
-        "המפתח הציבורי הנגזר: <span class='mono'>" + esc(posting.pub) + "</span><br>" +
-        "אין התאמה לרשויות של @" + esc(KNOWN.join(", @")) + " (נבדקו owner/active/posting/memo לכל אחד). הערך שהוזן אינו מפתח העד. סירוב כנה — שום דבר לא שודר.";
+        (wifKey ? "המפתח הציבורי הנגזר: <span class='mono'>" + esc(wifKey.pub) + "</span><br>" : "") +
+        "נבדקו " + (wifKey ? "כל רשויות הצי מול ה-WIF" : "12 גזירות סיסמת-אב — כל חשבון-צי × כל תפקיד") +
+        " (owner/active/posting/memo לכל אחד) מול השרשרת החיה (@" + esc(KNOWN.join(", @")) + "). הערך שהוזן אינו מפתח העד. סירוב כנה — שום דבר לא שודר.";
       $("anchorBtn").disabled = true;
     }
   } catch (e) {
@@ -352,7 +365,7 @@ async function checkRc() {
   el.innerHTML = '<span class="spin"></span>';
   try {
     const [rc, dgp] = await Promise.all([
-      rpc("rc_api.find_rc_accounts", { accounts: [ACCOUNT] }),
+      rpc("rc_api.find_rc_accounts", { accounts: [state.signAs || ACCOUNT] }),
       rpc("condenser_api.get_dynamic_global_properties", []),
     ]);
     const a = rc && rc.rc_accounts && rc.rc_accounts[0];
@@ -405,7 +418,7 @@ async function doAnchor() {
       "custom_json",
       {
         required_auths: [],
-        required_posting_auths: [ACCOUNT],
+        required_posting_auths: [state.signAs || ACCOUNT],
         id: OP_ID,
         json: JSON.stringify(payload),
       },
@@ -425,12 +438,12 @@ async function doAnchor() {
       "<div class='txid'>" + esc(txid) + "</div>" +
       "<div class='links'>" +
       "<a href='https://steemscan.com/transaction/" + esc(txid) + "' target='_blank' rel='noopener'>steemscan</a>" +
-      "<a href='https://steemit.com/@" + esc(ACCOUNT) + "' target='_blank' rel='noopener'>היסטוריית העד בשרשרת</a>" +
+      "<a href='https://steemit.com/@" + esc(state.signAs || ACCOUNT) + "' target='_blank' rel='noopener'>היסטוריית העד בשרשרת</a>" +
       "</div>" +
       "<div style='margin-top:10px;font-size:12px;color:var(--mut)'>מכונת הקונסולה תקרוא את העדות במחזור הבא (עד שעה) ו-status.json יתרענן. אפשר לוודא כבר עכשיו בהיסטוריית החשבון.</div>";
     /* wipe the key after use — one-shot discipline */
     $("sec").value = "";
-    state.priv = null; state.pub = null; state.matched = null;
+    state.priv = null; state.pub = null; state.matched = null; state.signAs = null;
     $("keyVerdict").className = "verdict";
     $("roleChips").innerHTML = "";
     $("anchorBtn").disabled = true;
