@@ -1,0 +1,67 @@
+# GRID-PULSE — פעימת הגריד הריבונית (R83)
+#
+# מנוע ה-grid המקורי (saos-dex/grid-beat) מת עם מכסת הדקות של הריפואים
+# הפרטיים — ו-dex/grid.json הציבורי קפא (45.5 שעות, נמדד חי). התשובה
+# הריבונית: מראת-מדידה חסרת-מפתחות שרצה כאן — על הריפו הציבורי, שבו
+# ה-Actions חינם לנצח. הסוכן מודד מהשרשרת הציבורית (Steem RPC + פידי-USD)
+# ומפרסם את dex/grid.json פעמיים ביום — בלי מפתח, בלי שידור, בלי סוד.
+#
+# אין מצב שעושים תוכנית ואז מחכים למשהו תקוע שיזוז: הדקות יחזרו כשיחזרו
+# (הקנרית של הצייד בודקת כל 6 שעות), ובינתיים האמת זורמת מכאן.
+
+name: grid-pulse
+
+on:
+  schedule:
+    - cron: '7 3,15 * * *'   # פעמיים ביום — ריווח נוח מול חלון ה-30ש' של A34
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: grid-pulse
+  cancel-in-progress: false
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Measure the grid from the public chain (keyless)
+        run: node agents/grid-pulse.mjs
+
+      - name: Publish the grid state
+        if: always()
+        run: |
+          if [ ! -f dex/grid.json ]; then
+            echo "grid.json missing - the agent wrote nothing (honest failure or polite step-aside); nothing to commit"
+            exit 0
+          fi
+          git config user.name "grid-pulse[bot]"
+          git config user.email "grid-pulse[bot]@users.noreply.github.com"
+          git add dex/grid.json
+          if git diff --cached --quiet; then
+            echo "grid state unchanged - no commit"
+            exit 0
+          fi
+          VERDICT="$(node -p "require('./dex/grid.json').verdict")"
+          OPEN="$(node -p "require('./dex/grid.json').openOrdersNow")"
+          for attempt in 1 2 3; do
+            git commit -m "grid-pulse: ${VERDICT} · ${OPEN} open orders · sovereign keyless mirror · $(date -u +%Y-%m-%dT%H:%M:%SZ)" || exit 0
+            git pull --rebase origin main
+            if git push; then
+              echo "grid state committed on attempt ${attempt}: ${VERDICT} ${OPEN} open"
+              exit 0
+            fi
+          done
+          echo "push failed after 3 attempts - next run rebases and continues"
+          exit 1
