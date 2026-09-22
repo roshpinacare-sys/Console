@@ -212,9 +212,14 @@ if (existsSync(OUT_PATH)) {
   try { prev = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { prev = null; }
 }
 
-// שומר-נסיגה: אם מישהו (המנוע המקורי שחזר לחיים) פרסם בשעה האחרונה — לא נדרוס
-if (prev?.publishedAt && Date.now() - Date.parse(prev.publishedAt) < BACKOFF_IF_PUBLISHED_WITHIN_MS) {
-  console.log(`[grid-pulse] fresh publication detected (${prev.publishedAt}, engine: ${String(prev.engine ?? "?").slice(0, 50)}) — stepping aside politely, no write`);
+// שומר-מקורי-חי: אם המנוע המקורי חזר לחיים (הדקות הוחזרו) ופרסם בשעה
+// האחרונה — הסוכן נסוגה בכנות לפני כל כתיבה (אותו-דפוס-שמירה של R68).
+// פרסום-עצמי קודם של התאום אינו נחשב — המשכיות-עצמית היא העיצוב עצמו
+// (שיעור-ריצה שנייה: התאום חסם את עצמו בטעות, נמדד חי 02:36Z, תוקן).
+const prevEngine = String(prev?.engine ?? "");
+const prevIsTheOriginal = prevEngine.includes("grid-beat") && !prevEngine.includes("grid-pulse");
+if (prev?.publishedAt && prevIsTheOriginal && Date.now() - Date.parse(prev.publishedAt) < BACKOFF_IF_PUBLISHED_WITHIN_MS) {
+  console.log(`[grid-pulse] the original engine published recently (${prev.publishedAt}) — it is alive again; the twin steps aside, no write`);
   process.exit(0);
 }
 
