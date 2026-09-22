@@ -69,28 +69,49 @@ async function jget(url, timeoutMs = 9000) {
   }
 }
 
-/* ── פידי-USD חיים (אותם מקורות של /api/money) ── */
+/* ── פידי-USD חיים (אותם מקורות של /api/money) ──
+ * שיעור-ריצה-ראשונה (נמדד חי 02:34Z): בינאנס חסום-גיאו מה-IP-ים של
+ * GitHub Actions — steemUsd הגיע null וקו-הזהות אבד. שלוש שכבות-נפילה
+ * כנות עתה: בינאנס → CoinGecko → money.json של הצופה (רענן כל רבע-שעה).
+ * כל שכבה מתעדת את מקורה — הצרכן תמיד יודע מאיפה המספר. */
 async function marksSide() {
   const sources = {};
   let steemUsd = null;
   let sbdUsd = null;
+
+  // שכבה 1 — בינאנס (המחיר החי הטוב ביותר) עם ניסיון-כפול
+  for (let attempt = 0; attempt < 2 && steemUsd == null; attempt++) {
+    try {
+      const j = await jget("https://api.binance.com/api/v3/ticker/price?symbol=STEEMUSDT", 8000);
+      if (Number(j.price) > 0) {
+        steemUsd = Number(j.price);
+        sources.steem = "binance:STEEMUSDT";
+      }
+    } catch { /* נפילה לשכבה הבאה */ }
+  }
+
+  // שכבה 2 — CoinGecko (עובד מה-runnerים של GitHub; כך גם בצופה-הכסף)
   try {
-    const j = await jget("https://api.binance.com/api/v3/ticker/price?symbol=STEEMUSDT", 8000);
-    steemUsd = Number(j.price);
-    sources.steem = "binance:STEEMUSDT";
-  } catch { /* נפילה למטה */ }
-  try {
-    const j = await jget("https://api.coingecko.com/api/v3/simple/price?ids=steem-dollars,tron&vs_currencies=usd", 9000);
+    const j = await jget("https://api.coingecko.com/api/v3/simple/price?ids=steem,steem-dollars&vs_currencies=usd", 9000);
+    if (steemUsd == null && typeof j?.steem?.usd === "number" && j.steem.usd > 0) {
+      steemUsd = j.steem.usd;
+      sources.steem = "coingecko:steem";
+    }
     if (typeof j?.["steem-dollars"]?.usd === "number") {
       sbdUsd = j["steem-dollars"].usd;
       sources.sbd = "coingecko:steem-dollars";
     }
-  } catch { /* נפילה למטה */ }
-  if (sbdUsd == null) {
-    // נפילה-כנה: money.json של הקונסולה (עדכני מהצופה שרץ כל רבע-שעה)
+  } catch { /* נפילה לשכבה 3 */ }
+
+  // שכבה 3 — money.json של הצופה (הצופה רץ כל רבע-שעה על CoinGecko מהריפו הזה)
+  if (steemUsd == null || sbdUsd == null) {
     try {
       const m = await jget("https://roshpinacare-sys.github.io/Console/dex/money.json", 8000);
-      if (typeof m?.marks?.sbdUsd === "number") {
+      if (steemUsd == null && typeof m?.marks?.steemUsd === "number" && m.marks.steemUsd > 0) {
+        steemUsd = m.marks.steemUsd;
+        sources.steem = `console:money.json@${String(m.publishedAt ?? "?").slice(0, 16)}Z`;
+      }
+      if (sbdUsd == null && typeof m?.marks?.sbdUsd === "number") {
         sbdUsd = m.marks.sbdUsd;
         sources.sbd = `console:money.json@${String(m.publishedAt ?? "?").slice(0, 16)}Z`;
       }
