@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-23T21:46:52Z",
+ "generatedAt": "2026-09-23T22:46:59Z",
  "source": "github-actions-api",
  "reposTotal": 14,
  "reposWithAgents": [
@@ -80,10 +80,43 @@
     "failure": 0,
     "other": 1,
     "successRate": 99,
-    "avgDurS": 55.4
+    "avgDurS": 55.5
    },
    "lastRun": {
-    "at": "2026-09-23T20:46:26Z",
+    "at": "2026-09-23T21:46:09Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "console-console-publish",
+   "name": "console-publish",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "on push to main",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
+    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
+   },
+   "input": {
+    "en": "push to main",
+    "he": "דחיפה ל-main"
+   },
+   "output": {
+    "en": "live console pages",
+    "he": "דפי קונסולה חיים"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 98,
+    "failure": 2,
+    "other": 0,
+    "successRate": 98,
+    "avgDurS": 17.3
+   },
+   "lastRun": {
+    "at": "2026-09-23T21:53:19Z",
     "conclusion": "success"
    }
   },
@@ -116,7 +149,7 @@
     "avgDurS": 14.7
    },
    "lastRun": {
-    "at": "2026-09-23T21:33:20Z",
+    "at": "2026-09-23T22:32:40Z",
     "conclusion": "success"
    }
   },
@@ -179,10 +212,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 17.1
+    "avgDurS": 17.5
    },
    "lastRun": {
-    "at": "2026-09-23T21:42:28Z",
+    "at": "2026-09-23T22:45:15Z",
     "conclusion": "success"
    }
   },
@@ -208,14 +241,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 73,
+    "success": 75,
     "failure": 1,
-    "other": 26,
-    "successRate": 73,
-    "avgDurS": 23.8
+    "other": 24,
+    "successRate": 75,
+    "avgDurS": 25.4
    },
    "lastRun": {
-    "at": "2026-09-23T21:42:40Z",
+    "at": "2026-09-23T22:45:27Z",
     "conclusion": "success"
    }
   },
@@ -245,10 +278,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 27.1
+    "avgDurS": 27
    },
    "lastRun": {
-    "at": "2026-09-23T21:21:55Z",
+    "at": "2026-09-23T22:21:09Z",
     "conclusion": "success"
    }
   },
@@ -315,39 +348,6 @@
    },
    "lastRun": {
     "at": "2026-09-23T07:24:26Z",
-    "conclusion": "failure"
-   }
-  },
-  {
-   "id": "console-console-publish",
-   "name": "console-publish",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "on push to main",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
-    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "live console pages",
-    "he": "דפי קונסולה חיים"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 98,
-    "failure": 2,
-    "other": 0,
-    "successRate": 98,
-    "avgDurS": 17.4
-   },
-   "lastRun": {
-    "at": "2026-09-23T20:53:12Z",
     "conclusion": "failure"
    }
   },
