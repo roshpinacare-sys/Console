@@ -1,20 +1,20 @@
 {
   "format": "agent-verify-results-v1",
-  "generatedAt": "2026-09-23T02:58:21.018Z",
+  "generatedAt": "2026-09-23T04:58:35.661Z",
   "runBy": "github-actions",
-  "durationMs": 3949,
+  "durationMs": 2128,
   "summary": {
     "total": 49,
-    "passed": 49,
-    "failed": 0,
-    "verdict": "ALL_PASS"
+    "passed": 48,
+    "failed": 1,
+    "verdict": "HAS_FAILURES"
   },
   "results": [
     {
       "id": "A01",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 185
+      "ms": 163
     },
     {
       "id": "A02",
@@ -50,49 +50,49 @@
       "id": "A07",
       "ok": true,
       "details": "11 occurrence(s) of \"saos1\", minimum is 5",
-      "ms": 89
+      "ms": 47
     },
     {
       "id": "A08",
       "ok": true,
       "details": "agents.length = 29, minimum is 13",
-      "ms": 74
+      "ms": 40
     },
     {
       "id": "A09",
       "ok": true,
-      "details": "stats.attestations = 409, minimum is 100",
-      "ms": 76
+      "details": "stats.attestations = 415, minimum is 100",
+      "ms": 49
     },
     {
       "id": "A10",
       "ok": true,
       "details": "field \"freshness.verdict\" = \"FRESH\", expected \"FRESH\"",
-      "ms": 85
+      "ms": 35
     },
     {
       "id": "A11",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 97
+      "ms": 34
     },
     {
       "id": "A12",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 84
+      "ms": 46
     },
     {
       "id": "A13",
       "ok": true,
       "details": "requests.length = 61, minimum is 12",
-      "ms": 79
+      "ms": 60
     },
     {
       "id": "A14",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A15",
@@ -110,7 +110,7 @@
       "id": "A20",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 83
+      "ms": 41
     },
     {
       "id": "A21",
@@ -122,13 +122,13 @@
       "id": "A22",
       "ok": true,
       "details": "2 occurrence(s) of \"wallet.html\", minimum is 2",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A23",
       "ok": true,
       "details": "HTTP 404 (retired, as required)",
-      "ms": 80
+      "ms": 31
     },
     {
       "id": "A24",
@@ -140,7 +140,7 @@
       "id": "A28",
       "ok": true,
       "details": "\"no key, no auth\" found in body",
-      "ms": 85
+      "ms": 38
     },
     {
       "id": "A29",
@@ -152,19 +152,19 @@
       "id": "A30",
       "ok": true,
       "details": "repos.length = 14, minimum is 10",
-      "ms": 74
+      "ms": 31
     },
     {
       "id": "A31",
       "ok": true,
-      "details": "core anchor 65.8h stale but no non-core op fired after it (honest starvation: RC regen, no inversion)",
-      "ms": 310
+      "details": "core anchor 67.8h stale but no non-core op fired after it (honest starvation: RC regen, no inversion)",
+      "ms": 291
     },
     {
       "id": "A32",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 82
+      "ms": 34
     },
     {
       "id": "A33",
@@ -175,26 +175,26 @@
     {
       "id": "A34",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-09-22T15:17:00.524Z\", age 11.69h, maximum 30h",
+      "details": "field \"publishedAt\" = \"2026-09-23T03:17:03.572Z\", age 1.69h, maximum 30h",
       "ms": 0
     },
     {
       "id": "A35",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 86
+      "ms": 38
     },
     {
       "id": "A36",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-09-23T01:00:39.102Z\", age 1.96h, maximum 6h",
+      "details": "field \"publishedAt\" = \"2026-09-23T02:58:34.888Z\", age 2.00h, maximum 6h",
       "ms": 0
     },
     {
       "id": "A37",
-      "ok": true,
-      "details": "7 assets vs coingecko: WSTEEM +0.20%, PHIVE -1.30%, WSBD +0.01%, WSOL +0.46%, WTRX -0.56%, ETH +0.06%, BTC -0.06% · worst PHIVE 1.30%, limit 5%",
-      "ms": 189
+      "ok": false,
+      "details": "7 assets vs coingecko: WSTEEM -1.39%, PHIVE -0.83%, WSBD -7.11%, WSOL -1.15%, WTRX -0.07%, ETH -0.86%, BTC -0.84% · worst WSBD 7.11%, limit 5%",
+      "ms": 73
     },
     {
       "id": "A38",
@@ -206,13 +206,13 @@
       "id": "A39",
       "ok": true,
       "details": "state.rail.equityMu = 18114806, minimum is 17975080",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A40",
       "ok": true,
       "details": "25/25 pages healthy (200 + content floor)",
-      "ms": 1778
+      "ms": 828
     },
     {
       "id": "A43",
@@ -230,7 +230,7 @@
       "id": "A53",
       "ok": true,
       "details": "1/1 retired fronts serve permanent redirect stubs (<= 2500B)",
-      "ms": 90
+      "ms": 31
     },
     {
       "id": "A54",
@@ -266,13 +266,13 @@
       "id": "A59",
       "ok": true,
       "details": "field \"format\" = \"truth-gate-v1\", expected \"truth-gate-v1\"",
-      "ms": 75
+      "ms": 110
     },
     {
       "id": "A60",
       "ok": true,
       "details": "field \"format\" = \"slo-v1\", expected \"slo-v1\"",
-      "ms": 89
+      "ms": 35
     },
     {
       "id": "A61",
@@ -296,13 +296,13 @@
       "id": "A64",
       "ok": true,
       "details": "2/2 artifact paths serve no content (banned, as required)",
-      "ms": 158
+      "ms": 68
     },
     {
       "id": "A65",
       "ok": true,
       "details": "61 entries · 55 delivered · bridgehead requestRef R61 present and delivered",
-      "ms": 1
+      "ms": 2
     }
   ]
 }
