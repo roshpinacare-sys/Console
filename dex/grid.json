@@ -1,6 +1,6 @@
 {
  "ok": true,
- "publishedAt": "2026-09-23T15:16:36.472Z",
+ "publishedAt": "2026-09-24T03:16:45.303Z",
  "engine": "Console/agents/grid-pulse · R83 sovereign grid mirror — keyless measurement, signs nothing",
  "account": "headcorner",
  "chain": "STEEM-internal-market",
@@ -8,7 +8,7 @@
  "armed": true,
  "verdict": "ARMED-LIVE",
  "blocker": [
-  "buy-side waiting for SBD inventory: 0.044 SBD commitable < 0.15 needed"
+  "buy-side waiting for SBD inventory: 0.039 SBD commitable < 0.15 needed"
  ],
  "policy": {
   "principle": "never sell STEEM below its external USD value; every buy below parity is measured surplus",
@@ -21,9 +21,9 @@
   "directiveR24": "powerdown is read-only here: never opened, never replaced, fleet RC is sacred"
  },
  "marks": {
-  "steemUsd": 0.059507,
-  "sbdUsd": 0.527983,
-  "paritySbdPerSteem": 0.1127062803158435,
+  "steemUsd": 0.067619,
+  "sbdUsd": 0.525603,
+  "paritySbdPerSteem": 0.12865033114346758,
   "sources": {
    "steem": "coingecko:steem",
    "sbd": "coingecko:steem-dollars"
@@ -31,32 +31,32 @@
  },
  "fuel": {
   "powerdownActive": true,
-  "weeklySp": 475.55266986593716,
-  "weeklyUsd": 28.3,
-  "remainingSp": 1902.2106794625097,
+  "weeklySp": 475.5688458645723,
+  "weeklyUsd": 32.16,
+  "remainingSp": 1902.2753834570503,
   "remainingWeeks": 4,
   "nextPayout": "2026-09-26T02:01:27",
-  "rcFuelSp": 150.1109177159575
+  "rcFuelSp": 150.11602376236195
  },
  "inventory": {
   "steem": 0,
-  "sbd": 0.049
+  "sbd": 0.044
  },
  "book": {
-  "bestBid": 0.10082338186378756,
-  "bestAsk": 0.10586491636671606,
-  "mid": 0.1033441491152518,
-  "spreadBps": 500
+  "bestBid": 0.0970990990990991,
+  "bestAsk": 0.10416015014075695,
+  "mid": 0.10062962461992803,
+  "spreadBps": 727
  },
  "openOrdersNow": 3,
  "run": {
   "placed": 0,
   "cancelled": 0,
-  "observedPlacements": 0,
+  "observedPlacements": 3,
   "observedCancellations": 5,
   "observedFills": 0,
-  "placedTotal": 16,
-  "cancelledTotal": 19,
+  "placedTotal": 19,
+  "cancelledTotal": 24,
   "filledTotal": 1,
   "note": "keyless measurement cycle: on-chain placements/cancellations are the R81 mover's (via /api/money, key derived in-run only); this agent observes and counts, signs nothing"
  },
@@ -194,8 +194,8 @@
    "sell": "47.513 STEEM",
    "receive": "5.486 SBD",
    "priceSbdPerSteem": 0.11546313640477343,
-   "status": "open",
-   "lastSeenAt": "2026-09-23T15:16:36.472Z"
+   "status": "cancelled",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z"
   },
   {
    "id": 2026092302,
@@ -205,8 +205,8 @@
    "sell": "47.513 STEEM",
    "receive": "5.514 SBD",
    "priceSbdPerSteem": 0.11605244880348538,
-   "status": "open",
-   "lastSeenAt": "2026-09-23T15:16:36.472Z"
+   "status": "cancelled",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z"
   },
   {
    "id": 2026092301,
@@ -217,8 +217,8 @@
    "sell": "0.020 HIVE",
    "receive": "0.001 HBD",
    "priceSbdPerSteem": 0.055387879632589065,
-   "status": "open",
-   "lastSeenAt": "2026-09-23T15:16:36.472Z"
+   "status": "cancelled",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z"
   },
   {
    "id": 2026092302,
@@ -229,8 +229,8 @@
    "sell": "0.020 HIVE",
    "receive": "0.001 HBD",
    "priceSbdPerSteem": 0.05566344122280096,
-   "status": "open",
-   "lastSeenAt": "2026-09-23T15:16:36.472Z"
+   "status": "cancelled",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z"
   },
   {
    "id": 2026092303,
@@ -241,8 +241,8 @@
    "sell": "0.020 HIVE",
    "receive": "0.001 HBD",
    "priceSbdPerSteem": 0.05593900281301284,
-   "status": "open",
-   "lastSeenAt": "2026-09-23T15:16:36.472Z"
+   "status": "cancelled",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z"
   },
   {
    "id": 2026092304,
@@ -267,6 +267,42 @@
    "priceSbdPerSteem": 0.05339415920510786,
    "status": "cancelled",
    "lastSeenAt": "2026-09-23T15:16:36.472Z"
+  },
+  {
+   "id": 2026092401,
+   "at": "2026-09-24T03:09:15Z",
+   "txid": null,
+   "side": "ask",
+   "sell": "158.879 STEEM",
+   "receive": "20.636 SBD",
+   "priceSbdPerSteem": 0.129885,
+   "status": "open",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z",
+   "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
+  },
+  {
+   "id": 2026092402,
+   "at": "2026-09-24T03:09:21Z",
+   "txid": null,
+   "side": "ask",
+   "sell": "158.879 STEEM",
+   "receive": "20.842 SBD",
+   "priceSbdPerSteem": 0.131182,
+   "status": "open",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z",
+   "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
+  },
+  {
+   "id": 2026092403,
+   "at": "2026-09-24T03:09:27Z",
+   "txid": null,
+   "side": "ask",
+   "sell": "158.879 STEEM",
+   "receive": "21.049 SBD",
+   "priceSbdPerSteem": 0.132484,
+   "status": "open",
+   "lastSeenAt": "2026-09-24T03:16:45.303Z",
+   "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   }
  ],
  "honesty": "מדוד מול ספר-STEEM הציבורי ופידי-USD חיים. מילויים מסומנים בזמן-הגילוי (marked-at-detection); המעקה מתעד את הציון שנמדד. ה-SBD הפנימי נסחר בפרימיום מול הציון החיצוני; קו-הזהות מוצג בגלוי כדי שכל אחד יוכל לאמת שאנחנו לא מוכרים מתחת לערך. סוכן זה חסר-מפתחות מהיסוד: אין לו יכולת שידור, ולכן שום נתון כאן אינו תלוי בסוד כלשהו."
