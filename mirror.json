@@ -1,19 +1,19 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-09-24T05:21:51.537Z",
+  "generatedAt": "2026-09-24T06:28:03.625Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth - no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 496,
-    "checkpoints": 486,
+    "attestations": 498,
+    "checkpoints": 488,
     "agents": 13,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 495
+      "VERIFIED": 497
     },
-    "headHash": "0x4f377dc5498998dda97e6e253141b19b23e346813acf54f1dfc111c95c1d683b"
+    "headHash": "0x81c8e8d485df7ad8cf16572359fd1d57eea6d71270ccccde03c4c6e438096b22"
   },
   "agents": [
     {
@@ -93,9 +93,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 467,
-      "lastAttestationSeq": 496,
-      "lastAttestationAt": "2026-09-24T04:42:06.134Z"
+      "attestations": 469,
+      "lastAttestationSeq": 498,
+      "lastAttestationAt": "2026-09-24T05:23:37.757Z"
     },
     {
       "name": "weave-market-regulator",
@@ -135,6 +135,22 @@
     }
   ],
   "attestations": [
+    {
+      "seq": 498,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-24T05:23:37.757Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #487 root 0x3339b04570669897… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
+    },
+    {
+      "seq": 497,
+      "type": "ANCHOR",
+      "status": "VERIFIED",
+      "at": "2026-09-24T05:22:54.805Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "קו Steem/Hive: checkpoint #486 root 0x4f377dc5498998dd… עוגן on-chain כ-custom_json saos.weave.core.v1 מאת @headcorner (סמכות posting, מזוהה מהמפתח - ברירת המחדל @cashmachine) - עד חיצוני ציבורי ובלתי-תלוי בגיטהאב לאמת הספר."
+    },
     {
       "seq": 496,
       "type": "ANCHOR",
@@ -1078,32 +1094,36 @@
       "at": "2026-09-22T17:22:07.482Z",
       "agentName": "weave-cloud-heart",
       "claim": "קו Steem/Hive: checkpoint #371 root 0x8223b6f8de9e5b13… עוגן on-chain כ-custom_json saos.weave.core.v1 מאת @headcorner (סמכות posting, מזוהה מהמפתח - ברירת המחדל @cashmachine) - עד חיצוני ציבורי ובלתי-תלוי בגיטהאב לאמת הספר."
-    },
-    {
-      "seq": 378,
-      "type": "ANCHOR",
-      "status": "VERIFIED",
-      "at": "2026-09-22T16:40:56.286Z",
-      "agentName": "weave-cloud-heart",
-      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #370 root 0xd8c364071863a63a… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
-    },
-    {
-      "seq": 377,
-      "type": "ANCHOR",
-      "status": "VERIFIED",
-      "at": "2026-09-22T16:40:40.133Z",
-      "agentName": "weave-cloud-heart",
-      "claim": "קו Steem/Hive: checkpoint #369 root 0x1c8b75ba3d499ff6… עוגן on-chain כ-custom_json saos.weave.core.v1 מאת @headcorner (סמכות posting, מזוהה מהמפתח - ברירת המחדל @cashmachine) - עד חיצוני ציבורי ובלתי-תלוי בגיטהאב לאמת הספר."
     }
   ],
   "checkpoints": [
+    {
+      "index": 488,
+      "root": "0x81c8e8d485df7ad8cf16572359fd1d57eea6d71270ccccde03c4c6e438096b22",
+      "attFrom": 498,
+      "attTo": 498,
+      "at": "2026-09-24T05:23:37.805Z",
+      "anchoredOn": []
+    },
+    {
+      "index": 487,
+      "root": "0x3339b0457066989722a8f59b4c93edce8e59c23eb8933c65576605ad6da1704a",
+      "attFrom": 497,
+      "attTo": 497,
+      "at": "2026-09-24T05:22:54.862Z",
+      "anchoredOn": [
+        "zero"
+      ]
+    },
     {
       "index": 486,
       "root": "0x4f377dc5498998dda97e6e253141b19b23e346813acf54f1dfc111c95c1d683b",
       "attFrom": 496,
       "attTo": 496,
       "at": "2026-09-24T04:42:06.152Z",
-      "anchoredOn": []
+      "anchoredOn": [
+        "steem"
+      ]
     },
     {
       "index": 485,
@@ -1368,36 +1388,10 @@
       "anchoredOn": [
         "steem"
       ]
-    },
-    {
-      "index": 458,
-      "root": "0x8862528fdc7e66f3e5f871614530f3374ce7dd67fb3eae5294c4ec3932a694a9",
-      "attFrom": 468,
-      "attTo": 468,
-      "at": "2026-09-23T20:38:52.283Z",
-      "anchoredOn": [
-        "zero"
-      ]
-    },
-    {
-      "index": 457,
-      "root": "0x8b0a022b1268ede5a69cf2aa3b8d461c35c14f70335d55f12c6bb92dacb2419c",
-      "attFrom": 467,
-      "attTo": 467,
-      "at": "2026-09-23T20:25:39.113Z",
-      "anchoredOn": [
-        "steem"
-      ]
     }
   ],
   "anchorLines": {
     "steem": [
-      {
-        "checkpoint": 476,
-        "at": "2026-09-24T02:23:30.491Z",
-        "txid": "5abd0777ae100b506e745c7904250db07abe653a",
-        "hiveTxid": null
-      },
       {
         "checkpoint": 478,
         "at": "2026-09-24T02:39:48.941Z",
@@ -1421,15 +1415,15 @@
         "at": "2026-09-24T04:40:07.103Z",
         "txid": "4b7c6ba0dffd79709bc04e9b10dca3d444d4b4ff",
         "hiveTxid": null
+      },
+      {
+        "checkpoint": 486,
+        "at": "2026-09-24T05:22:36.840Z",
+        "txid": "6e5ddbe8df19b4bb16198ea322ce5d4177b9b070",
+        "hiveTxid": null
       }
     ],
     "zero": [
-      {
-        "checkpoint": 477,
-        "at": "2026-09-24T02:25:22.788Z",
-        "txid": "0x64345229c2f8affe8097cb659b260411c4d809eec1f2724b5f02cd0b249f117e",
-        "explorer": "https://zscan.live/tx/0x64345229c2f8affe8097cb659b260411c4d809eec1f2724b5f02cd0b249f117e"
-      },
       {
         "checkpoint": 479,
         "at": "2026-09-24T02:41:40.845Z",
@@ -1453,6 +1447,12 @@
         "at": "2026-09-24T04:41:58.546Z",
         "txid": "0x4bbbb5f23a29db93999aba364860dc4c4b903135af8a51c4756360cff5b7b874",
         "explorer": "https://zscan.live/tx/0x4bbbb5f23a29db93999aba364860dc4c4b903135af8a51c4756360cff5b7b874"
+      },
+      {
+        "checkpoint": 487,
+        "at": "2026-09-24T05:23:29.456Z",
+        "txid": "0xfa5f5807790275ce296e3a2e53773601a9485b9d0bc073246e71cc855d5ce8c1",
+        "explorer": "https://zscan.live/tx/0xfa5f5807790275ce296e3a2e53773601a9485b9d0bc073246e71cc855d5ce8c1"
       }
     ]
   },
@@ -1553,7 +1553,7 @@
       "fingerprint": "nv-fp:1e332f98b5ef7b9b",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-24T01:22:18.872Z"
+      "verifiedAt": "2026-09-24T05:23:27.661Z"
     },
     {
       "fingerprint": "nv-fp:531b3f28a4c50a9a",
@@ -1565,7 +1565,7 @@
       "fingerprint": "nv-fp:596ae055a9069b87",
       "status": "verified",
       "lastCode": "200",
-      "verifiedAt": "2026-09-24T04:24:45.001Z"
+      "verifiedAt": "2026-09-24T05:23:28.098Z"
     }
   ],
   "discoveries": []
