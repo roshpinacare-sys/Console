@@ -1,11 +1,11 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-09-23T23:18:48.775Z",
+  "generatedAt": "2026-09-24T00:29:19.058Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "9ac42df4e84ad0f55aba2408bdad61353d0598b7ece95ebd4e3ad1f195fdb0f5",
+  "stateRoot": "311af20d2bf1b1fa87463ec421f8698efd949fea8c5725ea246568804e340dbd",
   "genesis": {
     "done": true,
-    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+    "treasury": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
     "txid": null,
     "symbol": "SAOS",
     "initialMint": "126682000",
@@ -17,6 +17,12 @@
       "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
         "pub": "STM6EML1FKrnTGHMkkudANMxvLejGfzi3qCkZZUrtfxggLafF6ZwW",
         "nick": "network-treasury",
+        "at": null,
+        "txid": null
+      },
+      "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP": {
+        "pub": "STM8m3rBLd8CA2KkY764fkFBnYGoCaK1ktDjn825HUbq25i52N9cw",
+        "nick": "headcorner",
         "at": null,
         "txid": null
       }
@@ -32,8 +38,11 @@
       }
     },
     "balances": {
+      "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP": {
+        "SAOS": "4000"
+      },
       "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
-        "SAOS": "126682000"
+        "SAOS": "126678000"
       }
     },
     "supply": {
@@ -82,12 +91,50 @@
         "to": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
         "amount": "126682000"
       }
+    },
+    {
+      "id": "1790205364290-086d1136dce0",
+      "k": "wallet.create",
+      "by": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
+      "at": "2026-09-24T00:29:19.056Z",
+      "txid": "bbc7031a1496d36d6ef2154e16d92a6a16012eb4",
+      "block": 109843428,
+      "summary": "רישום ארנק \"headcorner\" saos14wWGYvq…",
+      "d": null
+    },
+    {
+      "id": "1790205755658-18530445c213",
+      "k": "token.transfer",
+      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+      "at": "2026-09-24T00:29:19.056Z",
+      "txid": "7eef6c5ed8027df6afed064a26704d8574c2d3bf",
+      "block": 109843557,
+      "summary": "2,000 SAOS · saos14wWGYvq…",
+      "d": {
+        "symbol": "SAOS",
+        "to": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
+        "amount": "2000"
+      }
+    },
+    {
+      "id": "1790206245548-3db7e8d64d65",
+      "k": "token.transfer",
+      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+      "at": "2026-09-24T00:29:19.056Z",
+      "txid": "79ba17feca30d13c266eb523b2e8a6e2c44ec0f4",
+      "block": 109843720,
+      "summary": "2,000 SAOS · saos14wWGYvq…",
+      "d": {
+        "symbol": "SAOS",
+        "to": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
+        "amount": "2000"
+      }
     }
   ],
   "invalid": [],
   "verify": {
-    "replayed": 3,
-    "valid": 3,
+    "replayed": 6,
+    "valid": 6,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
