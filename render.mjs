@@ -21,7 +21,7 @@
 
 const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
-const NODES = ["https://api.steemit.com", "https://api.justyy.com", "https://steem.61bts.com"];
+const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
 const PAGE = 100; // condenser_api.get_account_history hard upper limit per call
 const MAX_PAGES = 30; // ~3000 ops back per account: days of fleet noise, always enough for the anchor line
