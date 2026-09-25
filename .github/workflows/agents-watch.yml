@@ -60,7 +60,7 @@ jobs:
             git config user.name "agents-watch"
             git config user.email "actions@users.noreply.github.com"
             git add agents/registry.json agents/gh-snapshot.json
-            git commit -m "agents-watch: $(date -u +%Y-%m-%dT%H:%M:%SZ) · $(node -e 'const r=require("./agents/registry.json");console.log(r.agents.length+" agents · "+r.reposWithAgents.length+"/14 repos")') · snapshot $(node -e 'const s=require("./agents/gh-snapshot.json");console.log((s.repos||[]).length+" repos")' 2>/dev/null || echo kept)"
+            git commit -m "agents-watch: $(date -u +%Y-%m-%dT%H:%M:%SZ) · $(node -e 'const r=require("./agents/registry.json");console.log(r.agents.length+" agents · "+r.reposWithAgents.length+" agent-repos (live count)")') · snapshot $(node -e 'const s=require("./agents/gh-snapshot.json");console.log((s.repos||[]).length+" repos")' 2>/dev/null || echo kept)"
             git push
           else
             echo "registry and snapshot unchanged - no commit"
