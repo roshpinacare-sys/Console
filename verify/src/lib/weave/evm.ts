@@ -18,6 +18,7 @@ import {
   toBeHex,
   recoverAddress,
 } from "ethers";
+import type { TypedDataField } from "ethers";
 
 export interface AgentIdentity {
   address: string; // כתובת Ethereum (checksum)
@@ -72,7 +73,9 @@ export const WEAVE_DOMAIN = {
   chainId: 31337, // devnet מקומי — מתועד, לא מוסתר
 } as const;
 
-export const CHECKPOINT_TYPES = {
+// הערה: טיפוס מפורש (ולא `as const`) — הספרייה דורשת מערכים ניתנים-לשינוי
+// של TypedDataField[]; `as const` הופך אותם ל-readonly ונכשל בהשמה.
+export const CHECKPOINT_TYPES: Record<string, TypedDataField[]> = {
   Checkpoint: [
     { name: "index", type: "uint256" },
     { name: "attFrom", type: "uint256" },
@@ -80,7 +83,7 @@ export const CHECKPOINT_TYPES = {
     { name: "root", type: "bytes32" },
     { name: "prevRoot", type: "bytes32" },
   ],
-} as const;
+};
 
 export interface CheckpointValue {
   index: number;
