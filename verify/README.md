@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-# weave-core — ה-verifier הציבורי של THE WEAVE
+# ה-verifier הציבורי של THE WEAVE
 
 **אמת = חישוב-מחדש.** הריפו הזה הוא הנתיב הציבורי לחוק 13 של הרשת:
 כל טענה של THE WEAVE על הספר שלה — כמות האימותים, שלמות השרשרת,
@@ -10,8 +10,8 @@
 ## שלוש פקודות לכל בודק
 
 ```bash
-git clone https://github.com/roshpinacare-sys/weave-core.git
-cd weave-core
+git clone https://github.com/roshpinacare-sys/Console.git
+cd Console/verify
 bun install && bun run verify:book
 ```
 
