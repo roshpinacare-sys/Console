@@ -8,19 +8,29 @@ lives in this repository.
 
 ## What updates it
 
-Nothing pushes to this repository from the outside. A workflow inside this
-repository runs every 6 hours and:
+Two hearts keep this console alive, both visible in the commit history:
 
-1. reads THE WEAVE's anchor line back from a public Steem RPC node (deduplicated by checkpoint - a re-anchored checkpoint is one row, its newest witness)
-   (custom_json `saos.weave.core.v1` from the witness account, posting
-   authority: free, zero capital risk, already public on-chain)
-2. renders `status.json` from what the chain returned
-3. commits it and deploys GitHub Pages, using only this repository's own
-   GITHUB_TOKEN
+1. **The in-repo beacon** - a workflow inside this repository runs hourly
+   at :45 (see `.github/workflows/console-publish.yml`) and:
 
-The workflow holds zero secrets. There is no credential to leak: the public
-chain is the source of truth. The commit history of this repository is the
-publish beacon: one commit per cycle, timestamped, auditable by anyone.
+   1. reads THE WEAVE's anchor line back from a public Steem RPC node (deduplicated by checkpoint - a re-anchored checkpoint is one row, its newest witness)
+      (custom_json `saos.weave.core.v1` from the witness account, posting
+      authority: free, zero capital risk, already public on-chain)
+   2. renders `status.json` from what the chain returned
+   3. commits it and deploys GitHub Pages, using only this repository's own
+      GITHUB_TOKEN
+
+   The in-repo workflow holds zero secrets: the public chain is the source
+   of truth for the beacon.
+
+2. **The sovereign heart** - the operator's sovereign machine additionally
+   syncs the mirror, the ledger books and the console assets (this README,
+   `render.mjs`, `wallet.html`, the public verifier under `verify/`) into
+   this repository via a scoped PAT - honest, timestamped commits by the
+   `weave-*` bots, one file per change.
+
+The commit history of this repository is the publish beacon: timestamped,
+auditable by anyone.
 
 ## What it contains
 
