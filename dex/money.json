@@ -1,13 +1,13 @@
 {
  "ok": true,
  "format": "money-watch-v1",
- "publishedAt": "2026-09-26T02:17:47.799Z",
+ "publishedAt": "2026-09-26T02:43:50.418Z",
  "engine": "Console/agents/money-watch · R39 money path sentinel",
  "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
  "fuel": {
   "ok": true,
   "account": "headcorner",
-  "steem": 524.651,
+  "steem": 480.533,
   "sbd": 0.044,
   "powerdown": {
    "active": true,
@@ -17,23 +17,11 @@
    "remainingVests": 1535407020914
   }
  },
- "landing": {
-  "at": "2026-09-26T02:17:44.938Z",
-  "paymentDue": "2026-09-26T02:01:27",
-  "landedSteem": 524.65,
-  "balanceAfter": 524.651,
-  "note": "powerdown payment detected: balance jumped and the next payout advanced",
-  "dispatched": true
- },
+ "landing": null,
  "dispatch": {
-  "attempted": true,
-  "ok": true,
-  "forPayout": "2026-09-26T02:01:27",
-  "note": "dex-grid dispatched immediately - fuel enters the market within minutes of landing",
-  "twin": {
-   "ok": true,
-   "note": "domain twin dispatched (public minutes - carries the fuel while the private original is quota-dead)"
-  }
+  "attempted": false,
+  "ok": false,
+  "note": "no landing detected"
  },
  "redemption": {
   "ok": true,
@@ -80,9 +68,9 @@
   "scope": "all wallets + all pools (full conservation)"
  },
  "marks": {
-  "steemUsd": 0.068316,
-  "sbdUsd": 0.559616,
-  "trxUsd": 0.337395
+  "steemUsd": 0.068274,
+  "sbdUsd": 0.56022,
+  "trxUsd": 0.337498
  },
  "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
