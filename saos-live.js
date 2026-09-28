@@ -81,6 +81,14 @@ function makeSaosLive(C) {
     if (i < 0 || i > 3) return null;
     const r = C.fromBE(sig.slice(1, 33));
     const s = C.fromBE(sig.slice(33, 65));
+    /* HARDEN (2026-09-28): סגירת-מחלקת-החתימות-הניתנות-לעיוות (malleability).
+     * 1) טווח-מלא: 1 <= r,s < N — נדרש ב-ECDSA תקין (לפני-כאן: הכל התקבל).
+     * 2) low-s בלבד: s > N/2 נדחה — החותם שלנו מנרמל ל-low-s (gate-crypto),
+     *    ולכן (r, N-s, i^1) אינו חתימה חוקית על הספר הזה. מיישר-קו עם
+     *    מדיניות BIP-62/boringssl — אותו-היגיון, בדיוק-כאן. */
+    const N = (C._dbg && C._dbg.N) || 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
+    if (!(r > 0n && r < N) || !(s > 0n && s < N)) return null;
+    if (s > N / 2n) return null; // low-s בלבד — מבטל-עיוות
     const e = C.fromBE(digest32);
     const pub = C._dbg.tryRecover(e, r, s, i);
     return pub;
