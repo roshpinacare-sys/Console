@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "version": 1,
+  "version": 2,
   "createdAt": "2026-09-28",
   "createdBy": "AGENT-Z (R130)",
   "doctrine": "כלל בלי ראיה לא נכנס לספר. כלל חדש = קומיט עם נימוק ומדידה.",
@@ -74,6 +74,26 @@
       "cooldownSeconds": 3600,
       "consumer": "keeper+publisher",
       "why": "הפקדה חוץ ראשונה/חדשה — אירוע-רשת מדרגה ראשונה: מאשרים בספר ומפרסמים הוכחה."
+    },
+    {
+      "id": "T-RELAY-GAS-READY",
+      "type": "gt",
+      "source": "proof/pipeline.json",
+      "field": "best.anchorsAffordable",
+      "threshold": 730,
+      "cooldownSeconds": 86400,
+      "consumer": "evm-anchor [שער-מפעיל לחתימה]",
+      "why": "R132 פקודת-המפעיל 'פתרונות מהקיים': מדידה חייה גילתה שה-EOA הריבוני ממומן לשנים של אנקורים יומיים על OP/Base במחירי-גז הנוכחיים. כש-best.anchorsAffordable > 730 (שנתיים) — הרשת עצמה דורשת את החתימה הריבונית: הספר proof/pipeline.json מכיל calldata מוכן-לחתימה ל-anchor() של SAOSRelay החי. חסר-מפתחות; החתימה = כספת-המפעיל."
+    },
+    {
+      "id": "T-PIPELINE-STALE",
+      "type": "age_hours",
+      "source": "proof/pipeline.json",
+      "field": "publishedAt",
+      "threshold": 48,
+      "cooldownSeconds": 21600,
+      "consumer": "keeper",
+      "why": "ספר-ההוכחות רקוב >48 שעות — צינור-ה-measure→digest→ready-to-sign זקוק להזנקה (המשך משפחת T-*-STALE)."
     }
   ]
 }
