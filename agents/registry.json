@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-28T09:53:14Z",
+ "generatedAt": "2026-09-28T11:52:58Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
@@ -52,7 +52,7 @@
     "avgDurS": 18.3
    },
    "lastRun": {
-    "at": "2026-09-28T09:00:41Z",
+    "at": "2026-09-28T11:00:15Z",
     "conclusion": "success"
    }
   },
@@ -82,10 +82,43 @@
     "failure": 0,
     "other": 1,
     "successRate": 99,
-    "avgDurS": 89.9
+    "avgDurS": 90.1
    },
    "lastRun": {
-    "at": "2026-09-28T08:51:22Z",
+    "at": "2026-09-28T10:50:52Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "console-console-publish",
+   "name": "console-publish",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "on push to main",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
+    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
+   },
+   "input": {
+    "en": "push to main",
+    "he": "דחיפה ל-main"
+   },
+   "output": {
+    "en": "live console pages",
+    "he": "דפי קונסולה חיים"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 39,
+    "failure": 61,
+    "other": 0,
+    "successRate": 39,
+    "avgDurS": 15.2
+   },
+   "lastRun": {
+    "at": "2026-09-28T10:56:43Z",
     "conclusion": "success"
    }
   },
@@ -115,10 +148,43 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.9
+    "avgDurS": 15.4
    },
    "lastRun": {
-    "at": "2026-09-28T09:38:47Z",
+    "at": "2026-09-28T11:37:45Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "console-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 1,
+    "failure": 0,
+    "other": 0,
+    "successRate": 100,
+    "avgDurS": 15
+   },
+   "lastRun": {
+    "at": "2026-09-28T11:32:09Z",
     "conclusion": "success"
    }
   },
@@ -143,15 +209,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 16,
-    "success": 16,
+    "runs_sampled": 17,
+    "success": 17,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.6
+    "avgDurS": 16.5
    },
    "lastRun": {
-    "at": "2026-09-28T03:18:39Z",
+    "at": "2026-09-28T11:32:31Z",
     "conclusion": "success"
    }
   },
@@ -181,10 +247,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.9
+    "avgDurS": 16.1
    },
    "lastRun": {
-    "at": "2026-09-28T09:47:59Z",
+    "at": "2026-09-28T11:47:46Z",
     "conclusion": "success"
    }
   },
@@ -210,14 +276,47 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 74,
+    "success": 73,
     "failure": 0,
-    "other": 26,
-    "successRate": 74,
-    "avgDurS": 25.4
+    "other": 27,
+    "successRate": 73,
+    "avgDurS": 27.3
    },
    "lastRun": {
-    "at": "2026-09-28T09:48:14Z",
+    "at": "2026-09-28T11:48:00Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "console-trigger-mesh",
+   "name": "trigger-mesh",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 2,
+    "failure": 0,
+    "other": 0,
+    "successRate": 100,
+    "avgDurS": 10
+   },
+   "lastRun": {
+    "at": "2026-09-28T11:38:09Z",
     "conclusion": "success"
    }
   },
@@ -247,10 +346,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 24.6
+    "avgDurS": 24.4
    },
    "lastRun": {
-    "at": "2026-09-28T09:26:56Z",
+    "at": "2026-09-28T11:23:30Z",
     "conclusion": "success"
    }
   },
@@ -280,10 +379,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.1
+    "avgDurS": 19.2
    },
    "lastRun": {
-    "at": "2026-09-28T09:06:36Z",
+    "at": "2026-09-28T11:05:26Z",
     "conclusion": "success"
    }
   },
@@ -316,7 +415,7 @@
     "avgDurS": 92.8
    },
    "lastRun": {
-    "at": "2026-09-28T09:47:12Z",
+    "at": "2026-09-28T11:47:09Z",
     "conclusion": "success"
    }
   },
@@ -346,10 +445,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 38
+    "avgDurS": 37.8
    },
    "lastRun": {
-    "at": "2026-09-28T09:33:06Z",
+    "at": "2026-09-28T11:31:06Z",
     "conclusion": "success"
    }
   },
@@ -412,10 +511,10 @@
     "failure": 5,
     "other": 0,
     "successRate": 95,
-    "avgDurS": 12
+    "avgDurS": 12.1
    },
    "lastRun": {
-    "at": "2026-09-28T08:53:10Z",
+    "at": "2026-09-28T10:52:49Z",
     "conclusion": "success"
    }
   },
@@ -440,15 +539,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 89,
-    "success": 89,
+    "runs_sampled": 90,
+    "success": 90,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 45.6
+    "avgDurS": 46.2
    },
    "lastRun": {
-    "at": "2026-09-28T09:00:45Z",
+    "at": "2026-09-28T11:00:07Z",
     "conclusion": "success"
    }
   },
@@ -514,7 +613,7 @@
     "avgDurS": 13.7
    },
    "lastRun": {
-    "at": "2026-09-28T08:57:24Z",
+    "at": "2026-09-28T10:56:33Z",
     "conclusion": "success"
    }
   },
@@ -544,10 +643,43 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 18
+    "avgDurS": 18.2
    },
    "lastRun": {
-    "at": "2026-09-28T09:40:55Z",
+    "at": "2026-09-28T11:40:35Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "domain-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 1,
+    "failure": 0,
+    "other": 0,
+    "successRate": 100,
+    "avgDurS": 13
+   },
+   "lastRun": {
+    "at": "2026-09-28T11:32:17Z",
     "conclusion": "success"
    }
   },
@@ -577,10 +709,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.9
+    "avgDurS": 16.8
    },
    "lastRun": {
-    "at": "2026-09-28T09:51:45Z",
+    "at": "2026-09-28T11:51:03Z",
     "conclusion": "success"
    }
   },
@@ -610,10 +742,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17.4
+    "avgDurS": 17.5
    },
    "lastRun": {
-    "at": "2026-09-28T09:35:51Z",
+    "at": "2026-09-28T11:32:22Z",
     "conclusion": "success"
    }
   },
@@ -639,14 +771,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 87,
+    "success": 86,
     "failure": 0,
-    "other": 13,
-    "successRate": 87,
-    "avgDurS": 31.2
+    "other": 14,
+    "successRate": 86,
+    "avgDurS": 27.3
    },
    "lastRun": {
-    "at": "2026-09-28T09:51:56Z",
+    "at": "2026-09-28T11:51:19Z",
     "conclusion": "success"
    }
   },
@@ -676,10 +808,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 22
+    "avgDurS": 22.4
    },
    "lastRun": {
-    "at": "2026-09-28T09:25:04Z",
+    "at": "2026-09-28T11:21:41Z",
     "conclusion": "success"
    }
   },
@@ -704,15 +836,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 18,
-    "success": 18,
+    "runs_sampled": 20,
+    "success": 20,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.1
+    "avgDurS": 16
    },
    "lastRun": {
-    "at": "2026-09-28T09:28:27Z",
+    "at": "2026-09-28T11:24:42Z",
     "conclusion": "success"
    }
   },
@@ -742,10 +874,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 69.2
+    "avgDurS": 69.8
    },
    "lastRun": {
-    "at": "2026-09-28T09:27:45Z",
+    "at": "2026-09-28T11:24:52Z",
     "conclusion": "success"
    }
   },
@@ -808,10 +940,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 37.1
+    "avgDurS": 38.9
    },
    "lastRun": {
-    "at": "2026-09-28T09:26:57Z",
+    "at": "2026-09-28T11:23:32Z",
     "conclusion": "success"
    }
   },
@@ -844,7 +976,7 @@
     "avgDurS": 16.1
    },
    "lastRun": {
-    "at": "2026-09-28T09:01:45Z",
+    "at": "2026-09-28T11:01:08Z",
     "conclusion": "success"
    }
   },
@@ -874,10 +1006,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 21
+    "avgDurS": 21.2
    },
    "lastRun": {
-    "at": "2026-09-28T09:38:04Z",
+    "at": "2026-09-28T11:36:32Z",
     "conclusion": "success"
    }
   },
@@ -948,39 +1080,6 @@
    }
   },
   {
-   "id": "console-console-publish",
-   "name": "console-publish",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "on push to main",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
-    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "live console pages",
-    "he": "דפי קונסולה חיים"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 40,
-    "failure": 60,
-    "other": 0,
-    "successRate": 40,
-    "avgDurS": 14.7
-   },
-   "lastRun": {
-    "at": "2026-09-28T08:57:28Z",
-    "conclusion": "failure"
-   }
-  },
-  {
    "id": "defi-canary",
    "name": "canary",
    "repo": "Defi",
@@ -1010,6 +1109,39 @@
    },
    "lastRun": {
     "at": "2026-09-28T09:28:15Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "defi-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Defi",
+   "visibility": "public",
+   "schedule": "automatic",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "GitHub Pages automatic deployment of the public site.",
+    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+   },
+   "input": {
+    "en": "pages build",
+    "he": "בילד דפים"
+   },
+   "output": {
+    "en": "live GitHub Pages site",
+    "he": "אתר GitHub Pages חי"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 4,
+    "success": 0,
+    "failure": 4,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 3.5
+   },
+   "lastRun": {
+    "at": "2026-09-28T11:36:49Z",
     "conclusion": "failure"
    }
   },
@@ -1100,15 +1232,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 3,
+    "runs_sampled": 4,
     "success": 1,
-    "failure": 2,
+    "failure": 3,
     "other": 0,
-    "successRate": 33.3,
-    "avgDurS": 6.3
+    "successRate": 25,
+    "avgDurS": 6
    },
    "lastRun": {
-    "at": "2026-09-21T11:41:25Z",
+    "at": "2026-09-28T11:44:08Z",
     "conclusion": "failure"
    }
   },
@@ -1265,15 +1397,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 14,
+    "runs_sampled": 15,
     "success": 5,
-    "failure": 9,
+    "failure": 10,
     "other": 0,
-    "successRate": 35.7,
-    "avgDurS": 9.6
+    "successRate": 33.3,
+    "avgDurS": 9.3
    },
    "lastRun": {
-    "at": "2026-09-27T10:36:38Z",
+    "at": "2026-09-28T10:39:12Z",
     "conclusion": "failure"
    }
   },
