@@ -21,7 +21,17 @@
 
 const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
-const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
+// fleet-2-c fix: three nodes, all probed live 2026-09-28 (HTTP 200 + valid result).
+// console-publish was failing ~60% of runs when both previous nodes were flaky
+// in the same window ("Upstream temporarily unavailable" + abort) — one more
+// independent node plus a per-node retry keeps the keyless beacon alive.
+const NODES = [
+  "https://api.steemit.com",
+  "https://api.justyy.com",
+  "https://api.steem.fans",
+];
+const NODE_ATTEMPTS = 2; // transient upstream errors retry once per node
+const NODE_RETRY_MS = 1500;
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
 const PAGE = 100; // condenser_api.get_account_history hard upper limit per call
 const MAX_PAGES = 30; // ~3000 ops back per account: days of fleet noise, always enough for the anchor line
@@ -50,6 +60,7 @@ async function rpc(node, method, params) {
 async function readAnchorLine() {
   let lastErr = null;
   for (const node of NODES) {
+    for (let attempt = 1; attempt <= NODE_ATTEMPTS; attempt++) {
     try {
       const anchors = [];
       for (const account of FLEET) {
@@ -107,7 +118,13 @@ async function readAnchorLine() {
       return { node, anchors: unique };
     } catch (e) {
       lastErr = e;
-      console.log(`[render] node ${node} failed: ${e && e.message ? e.message : e}`);
+      console.log(`[render] node ${node} failed (attempt ${attempt}/${NODE_ATTEMPTS}): ${e && e.message ? e.message : e}`);
+      if (attempt < NODE_ATTEMPTS) {
+        await new Promise((r) => setTimeout(r, NODE_RETRY_MS));
+        continue;
+      }
+    }
+    break; // this node succeeded — no retry
     }
   }
   throw new Error(`all public RPC nodes failed (last: ${lastErr && lastErr.message})`);
