@@ -21,21 +21,7 @@
 
 const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
-// Z-14 hardening: a 2-node ladder died on a transient blip (run 36432539809:
-// "all public RPC nodes failed - Upstream temporarily unavailable"). The
-// beacon is the fleet's public face; a transient node outage must never
-// break it. Six independent public nodes, two rounds with backoff, and a
-// fail-soft honest UNREACHABLE beacon if everything is truly down.
-const NODES = [
-  "https://api.steemit.com",
-  "https://api.justyy.com",
-  "https://api.steemitdev.com",
-  "https://steem.61bts.com",
-  "https://api.steem.fans",
-  "https://rpc.ausbit.dev",
-];
-const ROUNDS = 2; // passes over the node ladder; backoff between rounds
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
 const PAGE = 100; // condenser_api.get_account_history hard upper limit per call
 const MAX_PAGES = 30; // ~3000 ops back per account: days of fleet noise, always enough for the anchor line
@@ -63,9 +49,7 @@ async function rpc(node, method, params) {
 
 async function readAnchorLine() {
   let lastErr = null;
-  for (let round = 0; round < ROUNDS; round++) {
-    if (round > 0) await sleep(3000 * round); // backoff: give blipped nodes a second chance
-    for (const node of NODES) {
+  for (const node of NODES) {
     try {
       const anchors = [];
       for (const account of FLEET) {
@@ -123,39 +107,13 @@ async function readAnchorLine() {
       return { node, anchors: unique };
     } catch (e) {
       lastErr = e;
-      console.log(`[render] node ${node} failed (round ${round + 1}/${ROUNDS}): ${e && e.message ? e.message : e}`);
-    }
+      console.log(`[render] node ${node} failed: ${e && e.message ? e.message : e}`);
     }
   }
-  throw new Error(`all public RPC nodes failed (${NODES.length} nodes × ${ROUNDS} rounds; last: ${lastErr && lastErr.message})`);
+  throw new Error(`all public RPC nodes failed (last: ${lastErr && lastErr.message})`);
 }
 
-let read;
-try {
-  read = await readAnchorLine();
-} catch (readErr) {
-  // Z-14 FAIL-SOFT BEACON: if every public node × every round is
-  // unreachable, publish an honest UNREACHABLE beacon and exit 0 so the
-  // commit still lands. The page then says the truth ("the chain is
-  // unreachable right now") instead of silently showing an old
-  // FRESH-looking snapshot with no warning. Honest red on the page beats
-  // a dead beacon and a red run on a transient blip.
-  console.log(`[render] HONEST UNREACHABLE: ${readErr && readErr.message ? readErr.message : readErr}`);
-  const unreachable = {
-    format: "weave-console-chain-v1",
-    generatedAt: new Date().toISOString(),
-    source: { kind: "steem-public-rpc-unreachable", node: null, accounts: FLEET, account: null, opId: OP_ID },
-    freshness: { verdict: "UNREACHABLE", ageHours: null, thresholdHours: FRESH_THRESHOLD_H, cadence: "1h" },
-    witness: { account: null, opId: OP_ID, txid: "", block: null, explorer: "", at: null, checkpoint: null, root: "", attFrom: null, attTo: null, attestations: null, headHash: "", commit: "" },
-    recent: [],
-    unreachable: { message: String((readErr && readErr.message) || "all public RPC nodes unreachable"), nodesTried: NODES.length, rounds: ROUNDS },
-  };
-  const { writeFileSync } = await import("fs");
-  writeFileSync(new URL("./status.json", import.meta.url), JSON.stringify(unreachable, null, 2) + "\n");
-  console.log(`[render] beacon committed as UNREACHABLE (${NODES.length} nodes × ${ROUNDS} rounds tried) - honest red on the page, beacon stays alive`);
-  process.exit(0);
-}
-const { node, anchors } = read;
+const { node, anchors } = await readAnchorLine();
 if (anchors.length === 0) {
   throw new Error(`no ${OP_ID} anchors found in fleet history (${FLEET.join(", ")}): the chain is the source, an empty read is a red run`);
 }
