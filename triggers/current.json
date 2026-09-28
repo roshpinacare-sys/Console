@@ -1,30 +1,18 @@
 {
   "ok": true,
-  "publishedAt": "2026-09-28T11:38:14.236Z",
+  "publishedAt": "2026-09-28T12:41:33.137Z",
   "engine": "trigger-mesh v1.0.0 (R130, keyless)",
   "rulesTotal": 7,
-  "fired": [
-    {
-      "id": "T-PARITY-MOVE",
-      "consumer": "money-mover [שער-מפעיל]",
-      "source": "dex/grid.json",
-      "field": "marks.paritySbdPerSteem",
-      "value": 274.3,
-      "threshold": 50,
-      "at": "2026-09-28T11:38:14.236Z",
-      "status": "FIRED",
-      "evidence": "dex/grid.json#marks.paritySbdPerSteem=274.3 vs 50"
-    }
-  ],
+  "fired": [],
   "waited": [
     {
       "id": "T-GRID-STALE",
       "consumer": "keeper",
       "source": "dex/grid.json",
       "field": "publishedAt",
-      "value": 0.092431,
+      "value": 1.147681,
       "threshold": 30,
-      "at": "2026-09-28T11:38:14.231Z",
+      "at": "2026-09-28T12:41:33.130Z",
       "status": "WAIT"
     },
     {
@@ -32,9 +20,9 @@
       "consumer": "keeper",
       "source": "dex/money.json",
       "field": "publishedAt",
-      "value": 0.273091,
+      "value": 0.279129,
       "threshold": 30,
-      "at": "2026-09-28T11:38:14.235Z",
+      "at": "2026-09-28T12:41:33.136Z",
       "status": "WAIT"
     },
     {
@@ -42,9 +30,9 @@
       "consumer": "keeper",
       "source": "status.json",
       "field": "freshness.ageHours",
-      "value": 0.3,
+      "value": 0.5,
       "threshold": 26,
-      "at": "2026-09-28T11:38:14.235Z",
+      "at": "2026-09-28T12:41:33.136Z",
       "status": "WAIT"
     },
     {
@@ -54,7 +42,7 @@
       "field": "fuel.rcFuelSp",
       "value": 150.160349,
       "threshold": 50,
-      "at": "2026-09-28T11:38:14.235Z",
+      "at": "2026-09-28T12:41:33.136Z",
       "status": "WAIT"
     },
     {
@@ -64,7 +52,17 @@
       "field": "fuel.remainingWeeks",
       "value": 4,
       "threshold": 1,
-      "at": "2026-09-28T11:38:14.236Z",
+      "at": "2026-09-28T12:41:33.136Z",
+      "status": "WAIT"
+    },
+    {
+      "id": "T-PARITY-MOVE",
+      "consumer": "money-mover [שער-מפעיל]",
+      "source": "dex/grid.json",
+      "field": "marks.paritySbdPerSteem",
+      "value": 0,
+      "threshold": 50,
+      "at": "2026-09-28T12:41:33.137Z",
       "status": "WAIT"
     },
     {
@@ -74,7 +72,7 @@
       "field": "deposits",
       "value": 0,
       "threshold": 0,
-      "at": "2026-09-28T11:38:14.236Z",
+      "at": "2026-09-28T12:41:33.137Z",
       "status": "WAIT"
     }
   ],
