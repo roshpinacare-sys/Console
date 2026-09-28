@@ -1,18 +1,30 @@
 {
   "ok": true,
-  "publishedAt": "2026-09-28T11:23:14.715Z",
+  "publishedAt": "2026-09-28T11:38:14.236Z",
   "engine": "trigger-mesh v1.0.0 (R130, keyless)",
   "rulesTotal": 7,
-  "fired": [],
+  "fired": [
+    {
+      "id": "T-PARITY-MOVE",
+      "consumer": "money-mover [שער-מפעיל]",
+      "source": "dex/grid.json",
+      "field": "marks.paritySbdPerSteem",
+      "value": 274.3,
+      "threshold": 50,
+      "at": "2026-09-28T11:38:14.236Z",
+      "status": "FIRED",
+      "evidence": "dex/grid.json#marks.paritySbdPerSteem=274.3 vs 50"
+    }
+  ],
   "waited": [
     {
       "id": "T-GRID-STALE",
       "consumer": "keeper",
       "source": "dex/grid.json",
       "field": "publishedAt",
-      "value": 7.423303,
+      "value": 0.092431,
       "threshold": 30,
-      "at": "2026-09-28T11:23:14.707Z",
+      "at": "2026-09-28T11:38:14.231Z",
       "status": "WAIT"
     },
     {
@@ -20,9 +32,9 @@
       "consumer": "keeper",
       "source": "dex/money.json",
       "field": "publishedAt",
-      "value": 0.023224,
+      "value": 0.273091,
       "threshold": 30,
-      "at": "2026-09-28T11:23:14.714Z",
+      "at": "2026-09-28T11:38:14.235Z",
       "status": "WAIT"
     },
     {
@@ -32,7 +44,7 @@
       "field": "freshness.ageHours",
       "value": 0.3,
       "threshold": 26,
-      "at": "2026-09-28T11:23:14.714Z",
+      "at": "2026-09-28T11:38:14.235Z",
       "status": "WAIT"
     },
     {
@@ -40,9 +52,9 @@
       "consumer": "money-mover [שער-מפעיל]",
       "source": "dex/grid.json",
       "field": "fuel.rcFuelSp",
-      "value": 150.157126,
+      "value": 150.160349,
       "threshold": 50,
-      "at": "2026-09-28T11:23:14.714Z",
+      "at": "2026-09-28T11:38:14.235Z",
       "status": "WAIT"
     },
     {
@@ -52,17 +64,7 @@
       "field": "fuel.remainingWeeks",
       "value": 4,
       "threshold": 1,
-      "at": "2026-09-28T11:23:14.714Z",
-      "status": "WAIT"
-    },
-    {
-      "id": "T-PARITY-MOVE",
-      "consumer": "money-mover [שער-מפעיל]",
-      "source": "dex/grid.json",
-      "field": "marks.paritySbdPerSteem",
-      "value": 0,
-      "threshold": 50,
-      "at": "2026-09-28T11:23:14.715Z",
+      "at": "2026-09-28T11:38:14.236Z",
       "status": "WAIT"
     },
     {
@@ -72,7 +74,7 @@
       "field": "deposits",
       "value": 0,
       "threshold": 0,
-      "at": "2026-09-28T11:23:14.715Z",
+      "at": "2026-09-28T11:38:14.236Z",
       "status": "WAIT"
     }
   ],
