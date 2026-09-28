@@ -1,79 +1,79 @@
 {
   "format": "truth-gate-v1",
   "runner": "github-actions",
-  "at": "2026-09-28T18:27:36.781Z",
+  "at": "2026-09-28T19:23:16.319Z",
   "target": "https://roshpinacare-sys.github.io/Console",
-  "verdict": "ALL-GREEN",
+  "verdict": "1 RED",
   "counts": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "skip": 2
   },
-  "durationMs": 26998,
-  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/36465251616",
+  "durationMs": 5094,
+  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/36471847969",
   "results": [
     {
       "gate": "G1-site-up",
       "status": "PASS",
       "measured": "HTTP 200 · 166014 bytes",
       "note": "",
-      "at": "2026-09-28T18:27:10.137Z"
+      "at": "2026-09-28T19:23:11.418Z"
     },
     {
       "gate": "G2-zero-broken-links",
-      "status": "PASS",
-      "measured": "14 pages · 84 links · 0 broken · 5 undetermined",
-      "note": "",
-      "at": "2026-09-28T18:27:35.506Z"
+      "status": "FAIL",
+      "measured": "14 pages · 84 links · 1 broken · 5 undetermined",
+      "note": "hub/index.html: articles/en/02-why-everyone-claims-and-nobody-proves.html → HTTP 503",
+      "at": "2026-09-28T19:23:16.153Z"
     },
     {
       "gate": "G3-witness-freshness",
       "status": "PASS",
-      "measured": "cp#826 · att 836 · age 2.2h (threshold 26h)",
+      "measured": "cp#836 · att 846 · age 0.4h (threshold 26h)",
       "note": "",
-      "at": "2026-09-28T18:27:35.760Z"
+      "at": "2026-09-28T19:23:16.165Z"
     },
     {
       "gate": "G5-live-format-consistency",
       "status": "PASS",
       "measured": "public book format=\"saos-live-v1\"",
       "note": "",
-      "at": "2026-09-28T18:27:35.984Z"
+      "at": "2026-09-28T19:23:16.184Z"
     },
     {
       "gate": "G6-bridgehead-sane",
       "status": "PASS",
       "measured": "format=\"agent-bridgehead-state-v1\" · phase task present",
       "note": "",
-      "at": "2026-09-28T18:27:36.212Z"
+      "at": "2026-09-28T19:23:16.201Z"
     },
     {
       "gate": "G8-complete-map",
       "status": "PASS",
       "measured": "9 system pages (min 10000B) · index links 9/9 · sitemap 9/9 · roast stub ok · hub/docs/reports 404 (banned, as required)",
       "note": "",
-      "at": "2026-09-28T18:27:36.779Z"
+      "at": "2026-09-28T19:23:16.317Z"
     },
     {
       "gate": "G4-no-forged-twins",
       "status": "SKIP",
       "measured": "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)",
       "note": "",
-      "at": "2026-09-28T18:27:36.780Z"
+      "at": "2026-09-28T19:23:16.317Z"
     },
     {
       "gate": "G7-dev-server",
       "status": "SKIP",
       "measured": "sandbox-only (the work server is not public infrastructure)",
       "note": "",
-      "at": "2026-09-28T18:27:36.780Z"
+      "at": "2026-09-28T19:23:16.317Z"
     },
     {
       "gate": "G9-slo-published",
       "status": "PASS",
-      "measured": "4 SLOs · window 30d · 10 day buckets · fill 31% · since 2026-09-19",
+      "measured": "4 SLOs · window 30d · 10 day buckets · fill 31.2% · since 2026-09-19",
       "note": "",
-      "at": "2026-09-28T18:27:36.781Z"
+      "at": "2026-09-28T19:23:16.319Z"
     }
   ]
 }
