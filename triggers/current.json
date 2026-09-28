@@ -1,18 +1,30 @@
 {
   "ok": true,
-  "publishedAt": "2026-09-28T13:35:29.259Z",
+  "publishedAt": "2026-09-28T13:41:13.918Z",
   "engine": "trigger-mesh v1.0.0 (R130, keyless)",
-  "rulesTotal": 7,
-  "fired": [],
+  "rulesTotal": 9,
+  "fired": [
+    {
+      "id": "T-RELAY-GAS-READY",
+      "consumer": "evm-anchor [שער-מפעיל לחתימה]",
+      "source": "proof/pipeline.json",
+      "field": "best.anchorsAffordable",
+      "value": 2789,
+      "threshold": 730,
+      "at": "2026-09-28T13:41:13.918Z",
+      "status": "FIRED",
+      "evidence": "proof/pipeline.json#best.anchorsAffordable=2789 vs 730"
+    }
+  ],
   "waited": [
     {
       "id": "T-GRID-STALE",
       "consumer": "keeper",
       "source": "dex/grid.json",
       "field": "publishedAt",
-      "value": 2.046603,
+      "value": 2.142343,
       "threshold": 30,
-      "at": "2026-09-28T13:35:29.251Z",
+      "at": "2026-09-28T13:41:13.913Z",
       "status": "WAIT"
     },
     {
@@ -20,9 +32,9 @@
       "consumer": "keeper",
       "source": "dex/money.json",
       "field": "publishedAt",
-      "value": 0.255188,
+      "value": 0.350926,
       "threshold": 30,
-      "at": "2026-09-28T13:35:29.258Z",
+      "at": "2026-09-28T13:41:13.917Z",
       "status": "WAIT"
     },
     {
@@ -32,7 +44,7 @@
       "field": "freshness.ageHours",
       "value": 0.5,
       "threshold": 26,
-      "at": "2026-09-28T13:35:29.258Z",
+      "at": "2026-09-28T13:41:13.918Z",
       "status": "WAIT"
     },
     {
@@ -42,7 +54,7 @@
       "field": "fuel.rcFuelSp",
       "value": 150.160349,
       "threshold": 50,
-      "at": "2026-09-28T13:35:29.258Z",
+      "at": "2026-09-28T13:41:13.918Z",
       "status": "WAIT"
     },
     {
@@ -52,7 +64,7 @@
       "field": "fuel.remainingWeeks",
       "value": 4,
       "threshold": 1,
-      "at": "2026-09-28T13:35:29.258Z",
+      "at": "2026-09-28T13:41:13.918Z",
       "status": "WAIT"
     },
     {
@@ -62,7 +74,7 @@
       "field": "marks.paritySbdPerSteem",
       "value": 0,
       "threshold": 50,
-      "at": "2026-09-28T13:35:29.259Z",
+      "at": "2026-09-28T13:41:13.918Z",
       "status": "WAIT"
     },
     {
@@ -72,7 +84,17 @@
       "field": "deposits",
       "value": 0,
       "threshold": 0,
-      "at": "2026-09-28T13:35:29.259Z",
+      "at": "2026-09-28T13:41:13.918Z",
+      "status": "WAIT"
+    },
+    {
+      "id": "T-PIPELINE-STALE",
+      "consumer": "keeper",
+      "source": "proof/pipeline.json",
+      "field": "publishedAt",
+      "value": 0.032636,
+      "threshold": 48,
+      "at": "2026-09-28T13:41:13.918Z",
       "status": "WAIT"
     }
   ],
