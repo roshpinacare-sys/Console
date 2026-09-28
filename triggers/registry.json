@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "version": 1,
+  "createdAt": "2026-09-28",
+  "createdBy": "AGENT-Z (R130)",
+  "doctrine": "כלל בלי ראיה לא נכנס לספר. כלל חדש = קומיט עם נימוק ומדידה.",
+  "rules": [
+    {
+      "id": "T-GRID-STALE",
+      "type": "age_hours",
+      "source": "dex/grid.json",
+      "field": "publishedAt",
+      "threshold": 30,
+      "cooldownSeconds": 10800,
+      "consumer": "keeper",
+      "why": "פרסום-גריד רקוב >30 שעות = הדקות/המנוע מתו — מדליקים את השומר (המשך R83 A34)."
+    },
+    {
+      "id": "T-MONEY-STALE",
+      "type": "age_hours",
+      "source": "dex/money.json",
+      "field": "publishedAt",
+      "threshold": 30,
+      "cooldownSeconds": 10800,
+      "consumer": "keeper",
+      "why": "פרסום-כסף רקוב — ראוטינת המשמרת זקוקה להדלקה."
+    },
+    {
+      "id": "T-ANCHOR-MISS",
+      "type": "gt",
+      "source": "status.json",
+      "field": "freshness.ageHours",
+      "threshold": 26,
+      "cooldownSeconds": 7200,
+      "consumer": "keeper",
+      "why": "צ'קפוינט-עיגון פסוח >26 שעות (סף ה-FRESH הקיים) — רכבת-העדות היא לב הרשת."
+    },
+    {
+      "id": "T-RC-LOW",
+      "type": "lt",
+      "source": "dex/grid.json",
+      "field": "fuel.rcFuelSp",
+      "threshold": 50,
+      "cooldownSeconds": 21600,
+      "consumer": "money-mover [שער-מפעיל]",
+      "why": "רעב-דלק RC: מתחת ל-50 SP שמורים — המוביל מעביר דלק (R101)."
+    },
+    {
+      "id": "T-FUEL-END",
+      "type": "lte",
+      "source": "dex/grid.json",
+      "field": "fuel.remainingWeeks",
+      "threshold": 1,
+      "cooldownSeconds": 86400,
+      "consumer": "operator-broadcast [שער-מפעיל]",
+      "why": "פאוורדאון נגמר בעוד שבוע — החלטת-הון לחידוש דלק היא של המפעיל, בזמן ולא בדיעבד."
+    },
+    {
+      "id": "T-PARITY-MOVE",
+      "type": "diff_bps_gt",
+      "source": "dex/grid.json",
+      "field": "marks.paritySbdPerSteem",
+      "threshold": 50,
+      "cooldownSeconds": 7200,
+      "consumer": "money-mover [שער-מפעיל]",
+      "why": "פאריטה זזה >50bps מהריצה הקודמת — הסולם נגרר (המשך T1 של R83)."
+    },
+    {
+      "id": "T-DEPOSIT-IN",
+      "type": "array_len_gt",
+      "source": "dex/deposits.json",
+      "field": "deposits",
+      "threshold": 0,
+      "cooldownSeconds": 3600,
+      "consumer": "keeper+publisher",
+      "why": "הפקדה חוץ ראשונה/חדשה — אירוע-רשת מדרגה ראשונה: מאשרים בספר ומפרסמים הוכחה."
+    }
+  ]
+}

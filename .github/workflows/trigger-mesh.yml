@@ -1,0 +1,35 @@
+name: trigger-mesh
+
+# ספר-הטריגרים · "דבר גורר דבר" · R130
+# רץ על הריפו הציבורי (דקות חינם), חסר-מפתחות מהיסוד:
+# קורא פרסומים פומביים, מפעיל כללים גלויים, מפרסם ספר מדולק.
+# אין סודות, אין שידור, אין חתימה — מראת-מדידה טהורה (דוקטרינת R83).
+
+on:
+  schedule:
+    - cron: "23 * * * *" # שעתית ב:23 — מחוץ לשעות-העומס של הסוכנים הקיימים
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trigger-mesh
+  cancel-in-progress: false
+
+jobs:
+  mesh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: הפעלת מנוע-הטריגרים
+        run: node agents/trigger-mesh.mjs
+
+      - name: פרסום ספר-הטריגרים
+        run: |
+          git config user.name "trigger-mesh[bot]"
+          git config user.email "trigger-mesh@users.noreply.github.com"
+          git add triggers/current.json triggers/log.jsonl triggers/state.json || true
+          git diff --cached --quiet && echo "no trigger changes" || git commit -m "trigger-mesh: publish trigger book $(date -u +%FT%TZ)"
+          git push
