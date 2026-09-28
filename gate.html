@@ -408,11 +408,14 @@ function lock() {
 async function loadNet() {
   try {
     const s = await (await fetch("status.json", { cache: "no-store" })).json();
-    $("netCp").textContent = "cp#" + s.witness.checkpoint;
-    $("netAtt").textContent = (s.witness.attestations != null ? s.witness.attestations : "·") + " אימותים";
+    // Z-14: the beacon may be an honest UNREACHABLE snapshot (all public RPC
+    // nodes down when it rendered) - show that truth instead of crashing.
+    const unw = s.freshness.verdict === "UNREACHABLE";
+    $("netCp").textContent = unw ? "cp#·" : "cp#" + s.witness.checkpoint;
+    $("netAtt").textContent = (s.witness && s.witness.attestations != null ? s.witness.attestations : "·") + " אימותים";
     const h = s.freshness.ageHours;
     $("netFresh").innerHTML = '<span class="dot ' + (s.freshness.verdict === "FRESH" ? "g" : "y") + '"></span>' +
-      s.freshness.verdict + " · " + h + "ש׳";
+      s.freshness.verdict + (h != null ? " · " + h + "ש׳" : "");
     $("netRoot").textContent = String(s.witness.root || "").slice(0, 22) + "…";
   } catch (e) {
     $("netCp").textContent = "לא נקרא";
