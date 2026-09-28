@@ -40,6 +40,28 @@ const MIN_LEVEL_SBD = 0.05;
 const PARITY_BAND_BPS = 5_000;
 const BACKOFF_IF_PUBLISHED_WITHIN_MS = 55 * 60 * 1000; // נסיגה מנומסת אם המקורי חי
 
+// R130 · Z-5 · צריכת ספר-הטריגרים (Console/triggers/current.json — מפורסם שעתית ע"י trigger-mesh).
+// חוק-ברזל: הסוכן הזה **קורא ומדווח** — הוא לא מחליט על כסף. המוביל (R81, שער-מפעיל)
+// נשאר החותם היחיד; הצריכה כאן היא עדות שהלולאה "דבר גורר דבר" מחוברת וחיה.
+const TRIGGERS_PATH = process.env.TRIGGERS_CURRENT || "triggers/current.json";
+const GRID_TRIGGER_IDS = ["T-GRID-STALE", "T-PARITY-MOVE", "T-RC-LOW", "T-FUEL-END"];
+function consumeTriggers() {
+  try {
+    const book = JSON.parse(readFileSync(TRIGGERS_PATH, "utf8"));
+    const consumed = (book.fired || []).filter((f) => GRID_TRIGGER_IDS.includes(f.id)).map((f) => f.id);
+    return {
+      source: TRIGGERS_PATH,
+      bookPublishedAt: book.publishedAt ?? null,
+      consumed,
+      note: consumed.length
+        ? "grid-relevant triggers fired — operator-gated executor (money-mover) decides"
+        : "no grid-relevant triggers fired",
+    };
+  } catch {
+    return { source: TRIGGERS_PATH, consumed: [], note: "trigger book not yet published — mesh seeds it hourly" };
+  }
+}
+
 const n = (s) => (s ? parseFloat(String(s).replace(/[A-Za-z ]+/g, "")) : 0);
 const dp3 = (v) => v.toFixed(3);
 const r6 = (v) => Math.round(v * 1e6) / 1e6;
@@ -333,6 +355,7 @@ const doc = {
     directiveR24: "powerdown is read-only here: never opened, never replaced, fleet RC is sacred",
   },
   marks: { steemUsd, sbdUsd, paritySbdPerSteem: parity, sources: marks.sources },
+  triggers: consumeTriggers(), // R130 · Z-5 — הלולאה מחוברת
   fuel: {
     powerdownActive: snap.powerdown.active,
     weeklySp: snap.powerdown.weeklySp,

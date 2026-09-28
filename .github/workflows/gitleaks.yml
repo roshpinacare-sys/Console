@@ -1,0 +1,24 @@
+name: gitleaks-secret-scan
+
+# סריקת-סודות בכל push/PR — הגנה קבועה מתוך PHASE-0 (R130)
+# מצב: רץ-מיד, ללא סודות, ללא גישה חוץ. כישלון = push נעצר.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
