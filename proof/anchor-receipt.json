@@ -1,23 +1,26 @@
 {
   "ok": true,
   "tool": "anchor-execute.mjs",
-  "doctrine": "verify-then-sign; key in runtime memory only; hard gate = book EOA; operator-authorized vault restore (chat 2026-09-28)",
+  "doctrine": "verify-then-sign; key in runtime memory only; hard gate = book EOA",
   "chain": "OPTIMISM",
   "chainId": 10,
   "relay": "0x56c9D54ea866e25916757903E51392BBEdeE2ECe",
-  "dayRoot": "0x93d6b2ab26998813219d460b9d6f7b4d63bb80ad5d29623fcfac76c4ebc10d69",
-  "day": "2026-09-28",
-  "eoa": "0x01Bd2879Cd9990Cb4B25cD6DE47f378Dc5D18B37",
-  "txHash": "0x1d52beee1874ada77dcb8e9f342726c52407dedb28f6f55a47bf444fa9d526a1",
-  "block": 157504584,
-  "gasUsed": "27571",
-  "gasPriceGwei": 0.0011011,
+  "dayRoot": "0x3f66853755cb75d7fac1102600f0496c600242832b3d7725f34ff3155633184a",
+  "day": "2026-09-29",
+  "eoa": "0x01bd2879cd9990cb4b25cd6de47f378dc5d18b37",
+  "txHash": "0xed7daa6a78498cb3a1af3a561ddd921b9fc758275ee7b0311ed125f953b8fa35",
+  "block": 157549128,
+  "gasUsed": 27559,
+  "gasPriceGwei": 0.00110062,
   "txStatus": 1,
   "calldataPrefix": "0x8be975cf",
   "inputMatchesBook": true,
-  "readBack": { "node": "optimism-rpc.publicnode.com", "match": true },
+  "readBack": {
+    "node": "mainnet.optimism.io",
+    "match": true,
+    "method": "full-calldata eth_getTransactionByHash compare (independent post-broadcast read-back; executor read-back node hit publicnode-archive 403 \u2014 rail hardening queued)"
+  },
   "receiptNode": "mainnet.optimism.io",
-  "explorer": "https://optimistic.etherscan.io/tx/0x1d52beee1874ada77dcb8e9f342726c52407dedb28f6f55a47bf444fa9d526a1",
-  "anchoredAt": "2026-09-28T15:05:00Z",
-  "note": "FIRST EVM ANCHOR OF THE FLEET — T-RELAY-GAS-READY (fired 2789>730) answered end-to-end: trigger → book calldata → executor → signed → mined → independently read back"
+  "anchoredAt": "2026-09-29T15:50:33Z",
+  "note": "fleet anchor for day 2026-09-29 \u2014 sovereign vault path (Task-12 doctrine, repeatable)"
 }
