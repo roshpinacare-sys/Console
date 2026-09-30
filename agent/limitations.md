@@ -29,7 +29,7 @@ resets to seed; daemons die. Observed: the "dead daily agent" illusion - the loc
 
 **How the network prevents it:**
 - SO-3: the sandbox is a workbench, never a dependency.
-- Cloud truth: 13 agents run in GitHub Actions; mirrors and chains serve the public site.
+- Cloud truth: agents run in GitHub Actions (the hardcoded "13" here is a stale narrative snapshot — live counts are measured hourly into agents/registry.json by agents-watch); mirrors and chains serve the public site.
 - The public console reads only cloud mirrors - a sandbox death changes nothing visible.
 - Assertions A08-A10 measure the cloud, not the sandbox.
 
