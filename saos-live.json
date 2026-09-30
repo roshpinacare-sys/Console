@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-09-30T18:27:04.823Z",
+  "generatedAt": "2026-09-30T19:25:34.666Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "311af20d2bf1b1fa87463ec421f8698efd949fea8c5725ea246568804e340dbd",
+  "stateRoot": "9ac42df4e84ad0f55aba2408bdad61353d0598b7ece95ebd4e3ad1f195fdb0f5",
   "genesis": {
     "done": true,
     "treasury": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
@@ -19,12 +19,6 @@
         "nick": "network-treasury",
         "at": null,
         "txid": null
-      },
-      "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP": {
-        "pub": "STM8m3rBLd8CA2KkY764fkFBnYGoCaK1ktDjn825HUbq25i52N9cw",
-        "nick": "headcorner",
-        "at": null,
-        "txid": null
       }
     },
     "tokens": {
@@ -38,11 +32,8 @@
       }
     },
     "balances": {
-      "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP": {
-        "SAOS": "4000"
-      },
       "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
-        "SAOS": "126678000"
+        "SAOS": "126682000"
       }
     },
     "supply": {
@@ -93,16 +84,6 @@
       }
     },
     {
-      "id": "1790205364290-086d1136dce0",
-      "k": "wallet.create",
-      "by": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
-      "at": "2026-09-24T00:29:19.056Z",
-      "txid": "bbc7031a1496d36d6ef2154e16d92a6a16012eb4",
-      "block": 109843428,
-      "summary": "רישום ארנק \"headcorner\" saos14wWGYvq…",
-      "d": null
-    },
-    {
       "id": "1790205755658-18530445c213",
       "k": "token.transfer",
       "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
@@ -131,10 +112,21 @@
       }
     }
   ],
-  "invalid": [],
+  "invalid": [
+    {
+      "id": "1790205755658-18530445c213",
+      "k": "token.transfer",
+      "err": "no-recipient"
+    },
+    {
+      "id": "1790206245548-3db7e8d64d65",
+      "k": "token.transfer",
+      "err": "no-recipient"
+    }
+  ],
   "verify": {
-    "replayed": 6,
-    "valid": 6,
+    "replayed": 5,
+    "valid": 3,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
