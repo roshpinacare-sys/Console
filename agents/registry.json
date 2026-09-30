@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-09-30T16:53:40Z",
+ "generatedAt": "2026-09-30T17:52:19Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
@@ -28,19 +28,19 @@
    "name": "agent-verify",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "every 2h at :55",
+   "layer": "QA",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "The network verifies the agent - reads the assertions contract beside it, measures the LIVE public site (never the repo) and publishes results.json; exit code is always 0 and every failure is recorded honestly as data.",
+    "he": "הרשת מאמתת את הסוכן - קורא את חוזה-הטענות שלצידו, מודד את האתר החי הציבורי (לא את הריפו) ומפרסם results.json; קוד-היציאה תמיד 0 וכל כשל נרשם בכנות כנתון."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "agent/verify/assertions.json + live site",
+    "he": "agent/verify/assertions.json + האתר החי"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "agent/verify/results.json",
+    "he": "agent/verify/results.json"
    },
    "state": "live",
    "stats": {
@@ -49,10 +49,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 20.4
+    "avgDurS": 20.5
    },
    "lastRun": {
-    "at": "2026-09-30T15:04:32Z",
+    "at": "2026-09-30T17:00:49Z",
     "conclusion": "success"
    }
   },
@@ -61,19 +61,19 @@
    "name": "agents-watch",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
+   "schedule": "hourly :37",
    "layer": "PUBLISH",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "The fleet census - asks the GitHub Actions API for the real state of every workflow in the 16 agent-repos (runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",
+    "he": "מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows ב-16 הריפואים (ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "GitHub Actions API (16 repos)",
+    "he": "API של GitHub Actions (16 ריפואים)"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "agents/registry.json + agents/gh-snapshot.json",
+    "he": "agents/registry.json + agents/gh-snapshot.json"
    },
    "state": "live",
    "stats": {
@@ -82,10 +82,10 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 123.4
+    "avgDurS": 124.5
    },
    "lastRun": {
-    "at": "2026-09-30T16:37:05Z",
+    "at": "2026-09-30T16:51:29Z",
     "conclusion": "success"
    }
   },
@@ -115,10 +115,10 @@
     "failure": 49,
     "other": 0,
     "successRate": 51,
-    "avgDurS": 14.6
+    "avgDurS": 14.7
    },
    "lastRun": {
-    "at": "2026-09-30T16:00:01Z",
+    "at": "2026-09-30T16:57:45Z",
     "conclusion": "success"
    }
   },
@@ -148,10 +148,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.8
+    "avgDurS": 15.2
    },
    "lastRun": {
-    "at": "2026-09-30T16:39:18Z",
+    "at": "2026-09-30T17:35:36Z",
     "conclusion": "success"
    }
   },
@@ -160,19 +160,19 @@
    "name": "gitleaks-secret-scan",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "on push / PR",
+   "layer": "INTEGRITY",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Secret scanner on every push and PR - gitleaks over the full history; a finding stops the push. Part of PHASE-0 key hygiene.",
+    "he": "סורק-סודות על כל push ו-PR - gitleaks על כל ההיסטוריה; ממצא עוצר את הדחיפה. חלק מהיגיינת-המפתחות של PHASE-0."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "full git history (fetch-depth 0)",
+    "he": "היסטוריית גיט מלאה"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "scan verdict (block or pass)",
+    "he": "פסק סריקה (חסימה או מעבר)"
    },
    "state": "live",
    "stats": {
@@ -181,10 +181,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.2
+    "avgDurS": 16.3
    },
    "lastRun": {
-    "at": "2026-09-30T16:44:01Z",
+    "at": "2026-09-30T17:45:32Z",
     "conclusion": "success"
    }
   },
@@ -193,19 +193,19 @@
    "name": "grid-pulse",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "twice daily 03:07 / 15:07 UTC",
+   "layer": "MIRROR",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "The sovereign grid pulse - a keyless measurement mirror on the public repo: reads what the grid engine published to the public chain and re-publishes dex/grid.json twice a day, immune to private-runner minute-quota outages.",
+    "he": "פעימת הגריד הריבונית - מראת-מדידה חסרת-מפתחות על הריפו הציבורי: קורא מהשרשרת הציבורית את מה שמנוע-הגריד פרסם ומפרסם dex/grid.json פעמיים ביום, חסינה למכסת-הדקות של הראנר הפרטי."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "public chain publications",
+    "he": "פרסומים ציבוריים בשרשרת"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "dex/grid.json keyless mirror",
+    "he": "מראת dex/grid.json חסרת-מפתחות"
    },
    "state": "live",
    "stats": {
@@ -247,10 +247,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.6
+    "avgDurS": 15.7
    },
    "lastRun": {
-    "at": "2026-09-30T16:47:27Z",
+    "at": "2026-09-30T17:45:52Z",
     "conclusion": "success"
    }
   },
@@ -259,19 +259,19 @@
    "name": "pages-build-deployment",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -280,10 +280,10 @@
     "failure": 0,
     "other": 28,
     "successRate": 72,
-    "avgDurS": 36.9
+    "avgDurS": 31.9
    },
    "lastRun": {
-    "at": "2026-09-30T16:47:41Z",
+    "at": "2026-09-30T17:46:05Z",
     "conclusion": "success"
    }
   },
@@ -292,31 +292,31 @@
    "name": "trigger-mesh",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "hourly :23",
+   "layer": "MIRROR",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "The thing-drags-thing engine - a keyless agent that reads the network's own public publications (dex/*.json, ledger books) and derives the next triggers, publishing the trigger book the whole system runs on.",
+    "he": "מנוע דבר-גורר-דבר - סוכן חסר-מפתחות שקורא את הפרסומים הציבוריים של הרשת עצמה וגוזר מהם את הטריגרים הבאים, ומפרסם את ספר-הטריגרים שכל-המערכת רצה עליו."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "public publications (dex/*.json, books)",
+    "he": "פרסומים ציבוריים (dex/*.json, ספרים)"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "triggers/registry.json + current.json + log.jsonl",
+    "he": "triggers/registry.json + current.json + log.jsonl"
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 56,
-    "success": 56,
+    "runs_sampled": 57,
+    "success": 57,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 11.1
    },
    "lastRun": {
-    "at": "2026-09-30T16:36:25Z",
+    "at": "2026-09-30T17:33:38Z",
     "conclusion": "success"
    }
   },
@@ -325,19 +325,19 @@
    "name": "truth-gate",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "hourly :07",
+   "layer": "QA",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "The truth machine - measures the LIVE deployed site from Actions (site-up, zero broken links, witness freshness, live-format, bridgehead sanity, complete-map, SLO published) and commits the verdict publicly; any FAIL turns the run red in public.",
+    "he": "מכונת האמת - מודדת מ-Actions את האתר החי הפרוס (אתר-עולה, אפס קישורים שבורים, טריות-עד, פורמט-חי, תקינות-ראש-גשר, מפה-מלאה, SLO מפורסם) וקומיטת את פסק-הדין בפומבי; כל FAIL מאדים את הריצה לעין כל."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "live deployed site (never the repo)",
+    "he": "האתר הפרוס החי (לעולם לא הריפו)"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "truth/latest.json + history.json + slo.json",
+    "he": "truth/latest.json + history.json + slo.json"
    },
    "state": "live",
    "stats": {
@@ -346,10 +346,10 @@
     "failure": 2,
     "other": 0,
     "successRate": 98,
-    "avgDurS": 25.6
+    "avgDurS": 25.8
    },
    "lastRun": {
-    "at": "2026-09-30T16:27:42Z",
+    "at": "2026-09-30T17:24:44Z",
     "conclusion": "success"
    }
   },
@@ -358,19 +358,19 @@
    "name": "agent-verify",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -379,10 +379,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.7
+    "avgDurS": 19.9
    },
    "lastRun": {
-    "at": "2026-09-30T16:37:48Z",
+    "at": "2026-09-30T17:05:48Z",
     "conclusion": "success"
    }
   },
@@ -391,19 +391,19 @@
    "name": "agents-watch",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -412,10 +412,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 127.9
+    "avgDurS": 129.6
    },
    "lastRun": {
-    "at": "2026-09-30T16:46:53Z",
+    "at": "2026-09-30T17:45:12Z",
     "conclusion": "success"
    }
   },
@@ -424,31 +424,31 @@
    "name": "anchor-execute",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 54,
-    "success": 52,
+    "runs_sampled": 55,
+    "success": 53,
     "failure": 2,
     "other": 0,
-    "successRate": 96.3,
+    "successRate": 96.4,
     "avgDurS": 18
    },
    "lastRun": {
-    "at": "2026-09-30T16:05:26Z",
+    "at": "2026-09-30T17:04:03Z",
     "conclusion": "success"
    }
   },
@@ -457,19 +457,19 @@
    "name": "bootstrap-pages",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -490,19 +490,19 @@
    "name": "cloud-heart",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -511,10 +511,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 36.8
+    "avgDurS": 37.2
    },
    "lastRun": {
-    "at": "2026-09-30T16:33:12Z",
+    "at": "2026-09-30T17:30:32Z",
     "conclusion": "success"
    }
   },
@@ -523,19 +523,19 @@
    "name": "cloud-pulse",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -556,19 +556,19 @@
    "name": "console-publish",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -577,10 +577,10 @@
     "failure": 3,
     "other": 0,
     "successRate": 97,
-    "avgDurS": 17.7
+    "avgDurS": 16.8
    },
    "lastRun": {
-    "at": "2026-09-30T15:54:36Z",
+    "at": "2026-09-30T16:52:51Z",
     "conclusion": "success"
    }
   },
@@ -589,19 +589,19 @@
    "name": "content-campaign",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -622,19 +622,19 @@
    "name": "daily-claim",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -655,19 +655,19 @@
    "name": "daily-digest",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -688,19 +688,19 @@
    "name": "dex-beat",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -709,10 +709,10 @@
     "failure": 12,
     "other": 0,
     "successRate": 88,
-    "avgDurS": 45.5
+    "avgDurS": 45
    },
    "lastRun": {
-    "at": "2026-09-30T16:37:50Z",
+    "at": "2026-09-30T17:00:56Z",
     "conclusion": "success"
    }
   },
@@ -721,19 +721,19 @@
    "name": "dex-grid",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -754,19 +754,19 @@
    "name": "dex-mirror",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -775,10 +775,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.2
+    "avgDurS": 15.3
    },
    "lastRun": {
-    "at": "2026-09-30T16:00:00Z",
+    "at": "2026-09-30T16:57:42Z",
     "conclusion": "success"
    }
   },
@@ -787,19 +787,19 @@
    "name": "dex-watch",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -808,10 +808,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.9
+    "avgDurS": 14.4
    },
    "lastRun": {
-    "at": "2026-09-30T16:41:12Z",
+    "at": "2026-09-30T17:38:16Z",
     "conclusion": "success"
    }
   },
@@ -820,19 +820,19 @@
    "name": "foundry-mesh-tests",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -853,19 +853,19 @@
    "name": "gitleaks-secret-scan",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -886,19 +886,19 @@
    "name": "grid-trigger-twin",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -910,7 +910,7 @@
     "avgDurS": 19.4
    },
    "lastRun": {
-    "at": "2026-09-30T16:50:12Z",
+    "at": "2026-09-30T17:49:07Z",
     "conclusion": "success"
    }
   },
@@ -919,19 +919,19 @@
    "name": "moment-watch",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -940,10 +940,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.4
+    "avgDurS": 18.9
    },
    "lastRun": {
-    "at": "2026-09-30T16:51:19Z",
+    "at": "2026-09-30T17:50:10Z",
     "conclusion": "success"
    }
   },
@@ -952,19 +952,19 @@
    "name": "money-watch",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -976,7 +976,7 @@
     "avgDurS": 17.4
    },
    "lastRun": {
-    "at": "2026-09-30T16:44:43Z",
+    "at": "2026-09-30T17:43:05Z",
     "conclusion": "success"
    }
   },
@@ -985,19 +985,19 @@
    "name": "pages-build-deployment",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1006,10 +1006,10 @@
     "failure": 0,
     "other": 14,
     "successRate": 86,
-    "avgDurS": 42.3
+    "avgDurS": 39.3
    },
    "lastRun": {
-    "at": "2026-09-30T16:51:34Z",
+    "at": "2026-09-30T17:50:24Z",
     "conclusion": "success"
    }
   },
@@ -1018,19 +1018,19 @@
    "name": "proof-pipeline",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1051,19 +1051,19 @@
    "name": "seal-adopt",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1084,19 +1084,19 @@
    "name": "self-audience",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1117,19 +1117,19 @@
    "name": "sovereign-selftests",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1150,19 +1150,19 @@
    "name": "tri-bridge",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1183,19 +1183,19 @@
    "name": "truth-gate",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1207,7 +1207,7 @@
     "avgDurS": 25.8
    },
    "lastRun": {
-    "at": "2026-09-30T16:25:42Z",
+    "at": "2026-09-30T17:22:38Z",
     "conclusion": "success"
    }
   },
@@ -1216,31 +1216,31 @@
    "name": "watchdog",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 73,
-    "success": 73,
+    "runs_sampled": 74,
+    "success": 74,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 18.9
+    "avgDurS": 19
    },
    "lastRun": {
-    "at": "2026-09-30T16:28:55Z",
+    "at": "2026-09-30T17:26:09Z",
     "conclusion": "success"
    }
   },
@@ -1249,19 +1249,19 @@
    "name": "weave-anchor-lines",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1270,10 +1270,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 62.7
+    "avgDurS": 62.8
    },
    "lastRun": {
-    "at": "2026-09-30T16:41:37Z",
+    "at": "2026-09-30T17:25:13Z",
     "conclusion": "success"
    }
   },
@@ -1282,19 +1282,19 @@
    "name": "weave-ecosystem",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1315,19 +1315,19 @@
    "name": "weave-heart",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1336,10 +1336,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 38.1
+    "avgDurS": 37.7
    },
    "lastRun": {
-    "at": "2026-09-30T16:27:48Z",
+    "at": "2026-09-30T17:24:43Z",
     "conclusion": "success"
    }
   },
@@ -1348,19 +1348,19 @@
    "name": "weave-mirror",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1372,7 +1372,7 @@
     "avgDurS": 16.9
    },
    "lastRun": {
-    "at": "2026-09-30T16:03:20Z",
+    "at": "2026-09-30T17:02:04Z",
     "conclusion": "success"
    }
   },
@@ -1381,19 +1381,19 @@
    "name": "web-publish",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "live",
    "stats": {
@@ -1402,10 +1402,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 21.2
+    "avgDurS": 22
    },
    "lastRun": {
-    "at": "2026-09-30T16:38:40Z",
+    "at": "2026-09-30T17:34:43Z",
     "conclusion": "success"
    }
   },
@@ -1413,7 +1413,7 @@
    "id": "adsmarket-claims-guard",
    "name": "claims-guard",
    "repo": "Adsmarket",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 06:11 UTC",
    "layer": "INTEGRITY",
    "role": {
@@ -1443,10 +1443,43 @@
    }
   },
   {
+   "id": "adsmarket-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Adsmarket",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 0,
+    "failure": 2,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 4
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:45:29Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "anchor-baseline-baseline-integrity",
    "name": "baseline-integrity",
    "repo": "anchor-baseline",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 07:13 UTC",
    "layer": "INTEGRITY",
    "role": {
@@ -1476,23 +1509,56 @@
    }
   },
   {
+   "id": "anchor-baseline-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "anchor-baseline",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 0,
+    "failure": 2,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 5
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:45:20Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "console-key-verify",
    "name": "key-verify",
    "repo": "Console",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "manual (workflow_dispatch)",
+   "layer": "INTEGRITY",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Key proof - derives the active public key from the key material held only as a GitHub Actions secret and compares it against the LIVE chain authorities of the account; an honest no-secret skip when the secret is absent, and a public receipt of the match when it is not. No secret value ever enters the repo or the logs.",
+    "he": "הוכחת-מפתח - גוזר את המפתח-הציבורי מחומר-המפתח שמוחזק אך ורק כ-secret של GitHub Actions ומשווה מול רשויות-המפתח החיות בשרשרת; דילוג כנה כשאין סוד, וקבלה ציבורית של ההתאמה כשיש. ערך-הסוד אף פעם לא נכנס לריפו או ללוגים."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "GitHub Actions secret (memory only) + chain authorities",
+    "he": "secret של GitHub Actions (זיכרון בלבד) + רשויות-שרשרת"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "receipts/key-check.json (public-key match receipt)",
+    "he": "receipts/key-check.json (קבלת התאמת-מפתח-ציבורי)"
    },
    "state": "degraded",
    "stats": {
@@ -1512,20 +1578,20 @@
    "id": "defi-canary",
    "name": "canary",
    "repo": "Defi",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -1545,20 +1611,20 @@
    "id": "defi-gitleaks-secret-scan",
    "name": "gitleaks-secret-scan",
    "repo": "Defi",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -1570,7 +1636,7 @@
     "avgDurS": 9.1
    },
    "lastRun": {
-    "at": "2026-09-30T16:47:36Z",
+    "at": "2026-09-30T16:57:50Z",
     "conclusion": "failure"
    }
   },
@@ -1579,19 +1645,19 @@
    "name": "key-verify",
    "repo": "Domain",
    "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -1611,7 +1677,7 @@
    "id": "project-files-archive-keeper",
    "name": "archive-keeper",
    "repo": "Project-files",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "weekly Mon 11:31 UTC",
    "layer": "ARCHIVE",
    "role": {
@@ -1641,10 +1707,43 @@
    }
   },
   {
+   "id": "project-files-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Project-files",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 0,
+    "failure": 2,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 4.5
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:45:07Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "roshpina-controls-audit",
    "name": "controls-audit",
    "repo": "roshpina",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 08:17 UTC",
    "layer": "INTEGRITY",
    "role": {
@@ -1674,10 +1773,43 @@
    }
   },
   {
+   "id": "roshpina-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "roshpina",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 3,
+    "success": 0,
+    "failure": 3,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 5
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:45:35Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-control-center-control-center-build",
    "name": "control-center-build",
    "repo": "saos-control-center",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 12:37 UTC",
    "layer": "QA",
    "role": {
@@ -1707,10 +1839,43 @@
    }
   },
   {
+   "id": "saos-control-center-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-control-center",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 1,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 4
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:17:39Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-dex-dex-beat",
    "name": "dex-beat",
    "repo": "saos-dex",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "every 2h :23",
    "layer": "ALWAYS-UP",
    "role": {
@@ -1743,20 +1908,20 @@
    "id": "saos-dex-dex-grid",
    "name": "dex-grid",
    "repo": "saos-dex",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -1773,23 +1938,56 @@
    }
   },
   {
+   "id": "saos-dex-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-dex",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 1,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 4
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:48:12Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-dex-grid-trigger",
    "name": "grid-trigger",
    "repo": "saos-dex",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -1806,10 +2004,43 @@
    }
   },
   {
+   "id": "saos-jummper-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-jummper",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 1,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 3
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:48:20Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-jummper-jumpper-tests",
    "name": "jumpper-tests",
    "repo": "saos-jummper",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 10:29 UTC",
    "layer": "QA",
    "role": {
@@ -1842,7 +2073,7 @@
    "id": "saos-sovereign-foundry-ci",
    "name": "CI",
    "repo": "saos-sovereign-foundry",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "push / PR",
    "layer": "QA",
    "role": {
@@ -1864,10 +2095,10 @@
     "failure": 99,
     "other": 0,
     "successRate": 1,
-    "avgDurS": 111.4
+    "avgDurS": 108
    },
    "lastRun": {
-    "at": "2026-09-30T16:37:06Z",
+    "at": "2026-09-30T17:17:22Z",
     "conclusion": "failure"
    }
   },
@@ -1875,32 +2106,32 @@
    "id": "saos-sovereign-foundry-gitleaks-secret-scan",
    "name": "gitleaks-secret-scan",
    "repo": "saos-sovereign-foundry",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 6,
+    "runs_sampled": 7,
     "success": 0,
-    "failure": 6,
+    "failure": 7,
     "other": 0,
     "successRate": 0,
-    "avgDurS": 8.2
+    "avgDurS": 7.4
    },
    "lastRun": {
-    "at": "2026-09-30T16:37:06Z",
+    "at": "2026-09-30T17:17:22Z",
     "conclusion": "failure"
    }
   },
@@ -1908,32 +2139,65 @@
    "id": "saos-sovereign-platform-foundry-tests",
    "name": "foundry-tests",
    "repo": "saos-sovereign-platform",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 11,
+    "runs_sampled": 13,
     "success": 0,
-    "failure": 11,
+    "failure": 13,
     "other": 0,
     "successRate": 0,
-    "avgDurS": 4.2
+    "avgDurS": 6.9
    },
    "lastRun": {
-    "at": "2026-09-30T16:49:57Z",
+    "at": "2026-09-30T17:48:18Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-sovereign-platform-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-sovereign-platform",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 1,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 3
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:48:18Z",
     "conclusion": "failure"
    }
   },
@@ -1941,7 +2205,7 @@
    "id": "saos-sovereign-platform-platform-selftest",
    "name": "platform-selftest",
    "repo": "saos-sovereign-platform",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 13:41 UTC",
    "layer": "QA",
    "role": {
@@ -1971,10 +2235,43 @@
    }
   },
   {
+   "id": "saosmartwallet-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Saosmartwallet",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 1,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 3
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:17:34Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saosmartwallet-wallet-verify",
    "name": "wallet-verify",
    "repo": "Saosmartwallet",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 14:43 UTC",
    "layer": "QA",
    "role": {
@@ -2004,10 +2301,43 @@
    }
   },
   {
+   "id": "sdk-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Sdk",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 2,
+    "success": 0,
+    "failure": 2,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 3
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:45:17Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "sdk-sdk-verify",
    "name": "sdk-verify",
    "repo": "Sdk",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 09:23 UTC",
    "layer": "INTEGRITY",
    "role": {
@@ -2040,7 +2370,7 @@
    "id": "steem-cloud-heart",
    "name": "cloud-heart",
    "repo": "steem",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "every 30 min",
    "layer": "ALWAYS-UP",
    "role": {
@@ -2070,23 +2400,56 @@
    }
   },
   {
+   "id": "steem-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "steem",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 1,
+    "success": 0,
+    "failure": 1,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 4
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:48:15Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "steem-self-audience",
    "name": "self-audience",
    "repo": "steem",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -2103,10 +2466,43 @@
    }
   },
   {
+   "id": "zip-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Zip",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 3,
+    "success": 0,
+    "failure": 3,
+    "other": 0,
+    "successRate": 0,
+    "avgDurS": 3.7
+   },
+   "lastRun": {
+    "at": "2026-09-30T17:26:16Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "zip-weave-anchor-lines",
    "name": "weave-anchor-lines",
    "repo": "Zip",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "bi-hourly :20 + on every beat",
    "layer": "WITNESS",
    "role": {
@@ -2139,7 +2535,7 @@
    "id": "zip-weave-brain-restore",
    "name": "weave-brain-restore",
    "repo": "Zip",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "one-shot (manual)",
    "layer": "RECOVERY",
    "role": {
@@ -2172,7 +2568,7 @@
    "id": "zip-weave-ecosystem",
    "name": "weave-ecosystem",
    "repo": "Zip",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "daily 05:30",
    "layer": "ENFORCEMENT",
    "role": {
@@ -2205,7 +2601,7 @@
    "id": "zip-weave-heart",
    "name": "weave-heart",
    "repo": "Zip",
-   "visibility": "public",
+   "visibility": "private",
    "schedule": "hourly :00",
    "layer": "ALWAYS-UP",
    "role": {
@@ -2238,20 +2634,20 @@
    "id": "zip-web-probe",
    "name": "web-probe",
    "repo": "Zip",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -2271,20 +2667,20 @@
    "id": "zip-web-probe2",
    "name": "web-probe2",
    "repo": "Zip",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
@@ -2304,20 +2700,20 @@
    "id": "zip-web-publish",
    "name": "web-publish",
    "repo": "Zip",
-   "visibility": "public",
-   "schedule": "automatic",
-   "layer": "PUBLISH",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
    "role": {
-    "en": "GitHub Pages automatic deployment of the public site.",
-    "he": "פריסה אוטומטית של GitHub Pages לאתר הציבורי."
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
    },
    "input": {
-    "en": "pages build",
-    "he": "בילד דפים"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "output": {
-    "en": "live GitHub Pages site",
-    "he": "אתר GitHub Pages חי"
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
    },
    "state": "degraded",
    "stats": {
