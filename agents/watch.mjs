@@ -72,6 +72,34 @@ const CATALOG = {
     role:{en:"SDK content verifier - confirms the docs and broadcasts directories exist and are not empty, builds a SHA-256 manifest and counts the document inventory.",he:"מאמת תוכן ה-SDK - מאשר שתיקיות התיעוד והשידורים קיימות ולא ריקות, בונה מניפסט SHA-256 וסופר את מלאי המסמכים."},
     input:{en:"docs + broadcasts",he:"תיעוד + שידורים"},
     output:{en:"agent/status.json + manifest.sha256",he:"דוח agent/status.json + מניפסט SHA-256"}},
+  "Console|agent-verify": { layer:"QA", schedule:"every 2h at :55",
+    role:{en:"The network verifies the agent - reads the assertions contract beside it, measures the LIVE public site (never the repo) and publishes results.json; exit code is always 0 and every failure is recorded honestly as data.",he:"הרשת מאמתת את הסוכן - קורא את חוזה-הטענות שלצידו, מודד את האתר החי הציבורי (לא את הריפו) ומפרסם results.json; קוד-היציאה תמיד 0 וכל כשל נרשם בכנות כנתון."},
+    input:{en:"agent/verify/assertions.json + live site",he:"agent/verify/assertions.json + האתר החי"},
+    output:{en:"agent/verify/results.json",he:"agent/verify/results.json"}},
+  "Console|agents-watch": { layer:"PUBLISH", schedule:"hourly :37",
+    role:{en:"The fleet census - asks the GitHub Actions API for the real state of every workflow in the 16 agent-repos (runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",he:"מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows ב-16 הריפואים (ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."},
+    input:{en:"GitHub Actions API (16 repos)",he:"API של GitHub Actions (16 ריפואים)"},
+    output:{en:"agents/registry.json + agents/gh-snapshot.json",he:"agents/registry.json + agents/gh-snapshot.json"}},
+  "Console|gitleaks-secret-scan": { layer:"INTEGRITY", schedule:"on push / PR",
+    role:{en:"Secret scanner on every push and PR - gitleaks over the full history; a finding stops the push. Part of PHASE-0 key hygiene.",he:"סורק-סודות על כל push ו-PR - gitleaks על כל ההיסטוריה; ממצא עוצר את הדחיפה. חלק מהיגיינת-המפתחות של PHASE-0."},
+    input:{en:"full git history (fetch-depth 0)",he:"היסטוריית גיט מלאה"},
+    output:{en:"scan verdict (block or pass)",he:"פסק סריקה (חסימה או מעבר)"}},
+  "Console|grid-pulse": { layer:"MIRROR", schedule:"twice daily 03:07 / 15:07 UTC",
+    role:{en:"The sovereign grid pulse - a keyless measurement mirror on the public repo: reads what the grid engine published to the public chain and re-publishes dex/grid.json twice a day, immune to private-runner minute-quota outages.",he:"פעימת הגריד הריבונית - מראת-מדידה חסרת-מפתחות על הריפו הציבורי: קורא מהשרשרת הציבורית את מה שמנוע-הגריד פרסם ומפרסם dex/grid.json פעמיים ביום, חסינה למכסת-הדקות של הראנר הפרטי."},
+    input:{en:"public chain publications",he:"פרסומים ציבוריים בשרשרת"},
+    output:{en:"dex/grid.json keyless mirror",he:"מראת dex/grid.json חסרת-מפתחות"}},
+  "Console|key-verify": { layer:"INTEGRITY", schedule:"manual (workflow_dispatch)",
+    role:{en:"Key proof - derives the active public key from the key material held only as a GitHub Actions secret and compares it against the LIVE chain authorities of the account; an honest no-secret skip when the secret is absent, and a public receipt of the match when it is not. No secret value ever enters the repo or the logs.",he:"הוכחת-מפתח - גוזר את המפתח-הציבורי מחומר-המפתח שמוחזק אך ורק כ-secret של GitHub Actions ומשווה מול רשויות-המפתח החיות בשרשרת; דילוג כנה כשאין סוד, וקבלה ציבורית של ההתאמה כשיש. ערך-הסוד אף פעם לא נכנס לריפו או ללוגים."},
+    input:{en:"GitHub Actions secret (memory only) + chain authorities",he:"secret של GitHub Actions (זיכרון בלבד) + רשויות-שרשרת"},
+    output:{en:"receipts/key-check.json (public-key match receipt)",he:"receipts/key-check.json (קבלת התאמת-מפתח-ציבורי)"}},
+  "Console|trigger-mesh": { layer:"MIRROR", schedule:"hourly :23",
+    role:{en:"The thing-drags-thing engine - a keyless agent that reads the network's own public publications (dex/*.json, ledger books) and derives the next triggers, publishing the trigger book the whole system runs on.",he:"מנוע דבר-גורר-דבר - סוכן חסר-מפתחות שקורא את הפרסומים הציבוריים של הרשת עצמה וגוזר מהם את הטריגרים הבאים, ומפרסם את ספר-הטריגרים שכל-המערכת רצה עליו."},
+    input:{en:"public publications (dex/*.json, books)",he:"פרסומים ציבוריים (dex/*.json, ספרים)"},
+    output:{en:"triggers/registry.json + current.json + log.jsonl",he:"triggers/registry.json + current.json + log.jsonl"}},
+  "Console|truth-gate": { layer:"QA", schedule:"hourly :07",
+    role:{en:"The truth machine - measures the LIVE deployed site from Actions (site-up, zero broken links, witness freshness, live-format, bridgehead sanity, complete-map, SLO published) and commits the verdict publicly; any FAIL turns the run red in public.",he:"מכונת האמת - מודדת מ-Actions את האתר החי הפרוס (אתר-עולה, אפס קישורים שבורים, טריות-עד, פורמט-חי, תקינות-ראש-גשר, מפה-מלאה, SLO מפורסם) וקומיטת את פסק-הדין בפומבי; כל FAIL מאדים את הריצה לעין כל."},
+    input:{en:"live deployed site (never the repo)",he:"האתר הפרוס החי (לעולם לא הריפו)"},
+    output:{en:"truth/latest.json + history.json + slo.json",he:"truth/latest.json + history.json + slo.json"}},
   "saos-jummper|jumpper-tests": { layer:"QA", schedule:"daily 10:29 UTC",
     role:{en:"Notary test suite - runs the full unit tests of the cross-chain proof notary (the hard gate), compiles the whole package, and attempts the live read-only witness demo with honest reporting of network failures.",he:"מבחני הנוטריון - מריץ את מלוא מבחני היחידה של נוטריון ההוכחות חוצה-השרשרות (השער הקשה), מקמפל את החבילה כולה, ומנסה את הדמו החי של עד הראייה הקריא עם דיווח כנה על כשלי רשת."},
     input:{en:"test suite + package source",he:"מבחנים + קוד החבילה"},
@@ -93,10 +121,15 @@ const CATALOG = {
     input:{en:"source + lockfile",he:"קוד + נעילה"},
     output:{en:"agent/status.json verify verdict",he:"פסק אימות ב-agent/status.json"}},
 };
-const GENERIC = { layer:"PUBLISH", schedule:"automatic",
-  role:{en:"GitHub Pages automatic deployment of the public site.",he:"פריסה אוטומטית של GitHub Pages לאתר הציבורי."},
-  input:{en:"pages build",he:"בילד דפים"}, output:{en:"live GitHub Pages site",he:"אתר GitHub Pages חי"} };
-const REPO_VIS = { Console:"public" };  // measured 2026-09-16: every repo except Console is private
+// Truth rule (Task 11-e audit): an uncatalogued workflow must NOT wear a
+// borrowed description. It gets an explicit not-catalogued label while its
+// run stats stay fully measured.
+const GENERIC = { layer:"UNCATALOGUED", schedule:"measured-from-runs",
+  role:{en:"Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",he:"טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."},
+  input:{en:"not catalogued",he:"טרם קוטלג"}, output:{en:"not catalogued",he:"טרם קוטלג"} };
+// Measured 2026-09-30 via the authenticated repos API: Console AND Domain
+// are public; the other 14 are private.
+const REPO_VIS = { Console:"public", Domain:"public" };
 
 async function api(url) {
   const r = await fetch(url, { headers: { Authorization: `token ${TOKEN}`, "User-Agent": "agents-watch", Accept: "application/vnd.github+json" } });
@@ -136,7 +169,7 @@ for (const repo of REPOS) {
     const cat = CATALOG[`${repo}|${w.name}`] || GENERIC;
     agents.push({
       id: `${repo.toLowerCase()}-${w.name.toLowerCase().replace(/ /g, "-")}`,
-      name: w.name, repo, visibility: REPO_VIS[repo] || "public",
+      name: w.name, repo, visibility: REPO_VIS[repo] || "private",
       schedule: cat.schedule, layer: cat.layer, role: cat.role, input: cat.input, output: cat.output,
       state: stateOf(w.name, last.conclusion, last.run_started_at),
       stats: { runs_sampled: runs.length, success: succ, failure: fail, other: runs.length - succ - fail,
@@ -164,7 +197,7 @@ const out = process.env.REGISTRY_PATH || "agents/registry.json";
 const prev = existsSync(out) ? JSON.parse(readFileSync(out, "utf8")) : null;
 writeFileSync(out, JSON.stringify(reg, null, 1) + "\n");
 const changed = !prev || JSON.stringify(prev.agents) !== JSON.stringify(reg.agents);
-console.log(`agents: ${agents.length} | repos with agents: ${withAgent.size}/14 | changed: ${changed}`);
+console.log(`agents: ${agents.length} | repos with agents: ${withAgent.size}/${REPOS.length} | changed: ${changed}`);
 process.env.REGISTRY_CHANGED = changed ? "1" : "0";
 
 // ═══ GH-SNAPSHOT (Task 49) - רשת-ביטחון למכסת-הדפדפן ═══
