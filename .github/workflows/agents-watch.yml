@@ -4,6 +4,11 @@
 # כל הסוכנים בכל 14 הריפואים ומרענן את agents/registry.json שתצוגת
 # הסוכנים בקונסולה הציבורית קוראת. אפס-סנדבוקס, אפס-סודות בקוד -
 # ה-token חי רק ב-Actions Secret. הרישום לעולם לא מתיישן.
+#
+# r141 · תיקון-שורש נמדד: הריצה ב-15:53 נכשלה בדחיפה (rejected, fetch
+# first) — מירוץ-כותבים פנימי-צי: dex-watch/money-watch דוחפים כל
+# 15-20 דק' והרענון השעתי הפסיד בגזירה. מעתה: pull --rebase לפני
+# דחיפה + ניסיון-חוזה (3 ניסיונות) — המירוץ נגמר בהתאחדות ולא בכישלון.
 
 name: agents-watch
 
@@ -61,7 +66,21 @@ jobs:
             git config user.email "actions@users.noreply.github.com"
             git add agents/registry.json agents/gh-snapshot.json
             git commit -m "agents-watch: $(date -u +%Y-%m-%dT%H:%M:%SZ) · $(node -e 'const r=require("./agents/registry.json");console.log(r.agents.length+" agents · "+r.reposWithAgents.length+" agent-repos (live count)")') · snapshot $(node -e 'const s=require("./agents/gh-snapshot.json");console.log((s.repos||[]).length+" repos")' 2>/dev/null || echo kept)"
-            git push
+            # r141 · מירוץ-כותבים: rebase על הרחוק וניסיון-חוזה — 3 ניסיונות
+            PUSHED=0
+            for attempt in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push; then
+                PUSHED=1
+                echo "pushed on attempt ${attempt}"
+                break
+              fi
+              echo "push attempt ${attempt} lost the race - rebasing on the newest fleet state and retrying"
+              sleep 5
+            done
+            if [ "$PUSHED" != "1" ]; then
+              echo "::error::push failed after 3 rebases - the registry stays local; next hourly run will measure again"
+              exit 1
+            fi
           else
             echo "registry and snapshot unchanged - no commit"
           fi
