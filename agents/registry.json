@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-10-01T05:54:10Z",
+ "generatedAt": "2026-10-01T06:58:29Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
@@ -23,6 +23,39 @@
  ],
  "reposIdle": [],
  "agents": [
+  {
+   "id": "adsmarket-claims-guard",
+   "name": "claims-guard",
+   "repo": "Adsmarket",
+   "visibility": "private",
+   "schedule": "daily 06:11 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "Marketing truth guard - enforces the repo iron principle: landing pages complete, zero forbidden glyphs per operator policy, live links (a dead link to our own network is a failure), and counts the txid receipts backing the claims.",
+    "he": "שומר האמת של השיווק - אוכף את עקרון הברזל של הריפו: עמודי נחיתה שלמים, אפס גליפים אסורים לפי מדיניות המפעיל, קישורים חיים (קישור מת של הרשת שלנו הוא כשל), וספירת קבלות ה-txid שמגבות את הטענות."
+   },
+   "input": {
+    "en": "marketing pages + documents",
+    "he": "עמודי שיווק + מסמכים"
+   },
+   "output": {
+    "en": "agent/status.json truth report",
+    "he": "דוח אמת agent/status.json"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 19,
+    "success": 6,
+    "failure": 13,
+    "other": 0,
+    "successRate": 31.6,
+    "avgDurS": 7.1
+   },
+   "lastRun": {
+    "at": "2026-10-01T06:32:57Z",
+    "conclusion": "success"
+   }
+  },
   {
    "id": "console-agent-verify",
    "name": "agent-verify",
@@ -82,10 +115,10 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 125.6
+    "avgDurS": 126.1
    },
    "lastRun": {
-    "at": "2026-10-01T04:52:37Z",
+    "at": "2026-10-01T05:51:54Z",
     "conclusion": "success"
    }
   },
@@ -111,14 +144,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 60,
-    "failure": 40,
+    "success": 61,
+    "failure": 39,
     "other": 0,
-    "successRate": 60,
+    "successRate": 61,
     "avgDurS": 14.2
    },
    "lastRun": {
-    "at": "2026-10-01T04:58:31Z",
+    "at": "2026-10-01T05:58:44Z",
     "conclusion": "success"
    }
   },
@@ -151,7 +184,7 @@
     "avgDurS": 13.6
    },
    "lastRun": {
-    "at": "2026-10-01T05:36:31Z",
+    "at": "2026-10-01T06:27:10Z",
     "conclusion": "success"
    }
   },
@@ -184,7 +217,7 @@
     "avgDurS": 11.1
    },
    "lastRun": {
-    "at": "2026-10-01T05:24:49Z",
+    "at": "2026-10-01T06:32:08Z",
     "conclusion": "success"
    }
   },
@@ -247,10 +280,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16
+    "avgDurS": 15.8
    },
    "lastRun": {
-    "at": "2026-10-01T05:46:46Z",
+    "at": "2026-10-01T06:40:24Z",
     "conclusion": "success"
    }
   },
@@ -276,14 +309,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 75,
+    "success": 74,
     "failure": 0,
-    "other": 25,
-    "successRate": 75,
-    "avgDurS": 22.1
+    "other": 26,
+    "successRate": 74,
+    "avgDurS": 23.4
    },
    "lastRun": {
-    "at": "2026-10-01T05:47:00Z",
+    "at": "2026-10-01T06:42:36Z",
     "conclusion": "success"
    }
   },
@@ -308,15 +341,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 69,
-    "success": 69,
+    "runs_sampled": 70,
+    "success": 70,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 12.1
+    "avgDurS": 11.9
    },
    "lastRun": {
-    "at": "2026-10-01T05:34:18Z",
+    "at": "2026-10-01T06:42:28Z",
     "conclusion": "success"
    }
   },
@@ -346,10 +379,10 @@
     "failure": 2,
     "other": 0,
     "successRate": 98,
-    "avgDurS": 25.7
+    "avgDurS": 25.6
    },
    "lastRun": {
-    "at": "2026-10-01T05:24:12Z",
+    "at": "2026-10-01T06:31:41Z",
     "conclusion": "success"
    }
   },
@@ -374,15 +407,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 59,
-    "success": 1,
+    "runs_sampled": 60,
+    "success": 2,
     "failure": 58,
     "other": 0,
-    "successRate": 1.7,
+    "successRate": 3.3,
     "avgDurS": 6.1
    },
    "lastRun": {
-    "at": "2026-10-01T00:40:42Z",
+    "at": "2026-10-01T06:38:47Z",
     "conclusion": "success"
    }
   },
@@ -445,10 +478,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 134.9
+    "avgDurS": 135.1
    },
    "lastRun": {
-    "at": "2026-10-01T05:46:26Z",
+    "at": "2026-10-01T06:51:59Z",
     "conclusion": "success"
    }
   },
@@ -473,15 +506,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 67,
-    "success": 65,
+    "runs_sampled": 68,
+    "success": 66,
     "failure": 2,
     "other": 0,
-    "successRate": 97,
+    "successRate": 97.1,
     "avgDurS": 17.6
    },
    "lastRun": {
-    "at": "2026-10-01T05:03:49Z",
+    "at": "2026-10-01T06:05:41Z",
     "conclusion": "success"
    }
   },
@@ -544,10 +577,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 36.9
+    "avgDurS": 36.8
    },
    "lastRun": {
-    "at": "2026-10-01T05:30:21Z",
+    "at": "2026-10-01T06:38:18Z",
     "conclusion": "success"
    }
   },
@@ -610,10 +643,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 16.5
+    "avgDurS": 16.3
    },
    "lastRun": {
-    "at": "2026-10-01T04:54:22Z",
+    "at": "2026-10-01T05:54:22Z",
     "conclusion": "success"
    }
   },
@@ -808,10 +841,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.3
+    "avgDurS": 15.1
    },
    "lastRun": {
-    "at": "2026-10-01T04:58:19Z",
+    "at": "2026-10-01T05:58:42Z",
     "conclusion": "success"
    }
   },
@@ -841,10 +874,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.9
+    "avgDurS": 14.8
    },
    "lastRun": {
-    "at": "2026-10-01T05:39:23Z",
+    "at": "2026-10-01T06:29:21Z",
     "conclusion": "success"
    }
   },
@@ -940,10 +973,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.8
+    "avgDurS": 19.4
    },
    "lastRun": {
-    "at": "2026-10-01T05:49:45Z",
+    "at": "2026-10-01T06:55:29Z",
     "conclusion": "success"
    }
   },
@@ -973,10 +1006,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.7
+    "avgDurS": 15.6
    },
    "lastRun": {
-    "at": "2026-10-01T05:51:43Z",
+    "at": "2026-10-01T06:56:25Z",
     "conclusion": "success"
    }
   },
@@ -1006,10 +1039,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.7
+    "avgDurS": 15.6
    },
    "lastRun": {
-    "at": "2026-10-01T05:33:28Z",
+    "at": "2026-10-01T06:49:52Z",
     "conclusion": "success"
    }
   },
@@ -1068,14 +1101,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 89,
+    "success": 88,
     "failure": 0,
-    "other": 11,
-    "successRate": 89,
-    "avgDurS": 27.6
+    "other": 12,
+    "successRate": 88,
+    "avgDurS": 27.3
    },
    "lastRun": {
-    "at": "2026-10-01T05:51:55Z",
+    "at": "2026-10-01T06:56:38Z",
     "conclusion": "success"
    }
   },
@@ -1199,15 +1232,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 3,
-    "success": 3,
+    "runs_sampled": 4,
+    "success": 4,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 93.7
+    "avgDurS": 91
    },
    "lastRun": {
-    "at": "2026-09-30T06:35:03Z",
+    "at": "2026-10-01T06:36:44Z",
     "conclusion": "success"
    }
   },
@@ -1303,10 +1336,10 @@
     "failure": 3,
     "other": 0,
     "successRate": 97,
-    "avgDurS": 24.6
+    "avgDurS": 24.5
    },
    "lastRun": {
-    "at": "2026-10-01T05:22:21Z",
+    "at": "2026-10-01T06:29:22Z",
     "conclusion": "success"
    }
   },
@@ -1331,15 +1364,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 86,
-    "success": 86,
+    "runs_sampled": 87,
+    "success": 87,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.3
+    "avgDurS": 16.2
    },
    "lastRun": {
-    "at": "2026-10-01T05:25:39Z",
+    "at": "2026-10-01T06:32:58Z",
     "conclusion": "success"
    }
   },
@@ -1369,10 +1402,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 63.5
+    "avgDurS": 63.1
    },
    "lastRun": {
-    "at": "2026-10-01T05:24:53Z",
+    "at": "2026-10-01T06:47:15Z",
     "conclusion": "success"
    }
   },
@@ -1397,15 +1430,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 11,
-    "success": 11,
+    "runs_sampled": 12,
+    "success": 12,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 60.9
+    "avgDurS": 60.8
    },
    "lastRun": {
-    "at": "2026-09-30T06:50:53Z",
+    "at": "2026-10-01T06:51:58Z",
     "conclusion": "success"
    }
   },
@@ -1435,10 +1468,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 37.1
+    "avgDurS": 36.9
    },
    "lastRun": {
-    "at": "2026-10-01T05:24:15Z",
+    "at": "2026-10-01T06:31:40Z",
     "conclusion": "success"
    }
   },
@@ -1468,10 +1501,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.4
+    "avgDurS": 16.2
    },
    "lastRun": {
-    "at": "2026-10-01T05:01:50Z",
+    "at": "2026-10-01T06:03:21Z",
     "conclusion": "success"
    }
   },
@@ -1501,10 +1534,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 20.2
+    "avgDurS": 20.1
    },
    "lastRun": {
-    "at": "2026-10-01T05:35:35Z",
+    "at": "2026-10-01T06:24:25Z",
     "conclusion": "success"
    }
   },
@@ -1562,15 +1595,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 10,
-    "success": 3,
+    "runs_sampled": 11,
+    "success": 4,
     "failure": 7,
     "other": 0,
-    "successRate": 30,
-    "avgDurS": 25.2
+    "successRate": 36.4,
+    "avgDurS": 29.8
    },
    "lastRun": {
-    "at": "2026-10-01T04:32:55Z",
+    "at": "2026-10-01T05:58:34Z",
     "conclusion": "success"
    }
   },
@@ -1595,49 +1628,16 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 52,
-    "success": 18,
+    "runs_sampled": 57,
+    "success": 23,
     "failure": 34,
     "other": 0,
-    "successRate": 34.6,
-    "avgDurS": 14
+    "successRate": 40.4,
+    "avgDurS": 16.7
    },
    "lastRun": {
-    "at": "2026-10-01T05:25:47Z",
+    "at": "2026-10-01T06:52:58Z",
     "conclusion": "success"
-   }
-  },
-  {
-   "id": "adsmarket-claims-guard",
-   "name": "claims-guard",
-   "repo": "Adsmarket",
-   "visibility": "private",
-   "schedule": "daily 06:11 UTC",
-   "layer": "INTEGRITY",
-   "role": {
-    "en": "Marketing truth guard - enforces the repo iron principle: landing pages complete, zero forbidden glyphs per operator policy, live links (a dead link to our own network is a failure), and counts the txid receipts backing the claims.",
-    "he": "שומר האמת של השיווק - אוכף את עקרון הברזל של הריפו: עמודי נחיתה שלמים, אפס גליפים אסורים לפי מדיניות המפעיל, קישורים חיים (קישור מת של הרשת שלנו הוא כשל), וספירת קבלות ה-txid שמגבות את הטענות."
-   },
-   "input": {
-    "en": "marketing pages + documents",
-    "he": "עמודי שיווק + מסמכים"
-   },
-   "output": {
-    "en": "agent/status.json truth report",
-    "he": "דוח אמת agent/status.json"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 18,
-    "success": 5,
-    "failure": 13,
-    "other": 0,
-    "successRate": 27.8,
-    "avgDurS": 6.8
-   },
-   "lastRun": {
-    "at": "2026-09-30T06:30:49Z",
-    "conclusion": "failure"
    }
   },
   {
