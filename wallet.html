@@ -188,7 +188,10 @@ footer.site a{color:var(--dim)}
 
 @media(max-width:760px){
   .brand small{display:none}
-  nav.tabs{position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(5,5,7,.97);border-bottom:1px solid var(--line);padding:8px 12px;z-index:40}
+  /* in-flow scrollable tab strip instead of a fixed overlay that covered content (R-wallet-tabs-1) */
+  nav.tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 12px;border-bottom:1px solid var(--line);background:rgba(5,5,7,.92);margin-inline-start:0}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs .tab{white-space:nowrap;flex:0 0 auto}
   .pill{display:none}
 }
 @media(max-width:520px){
@@ -304,6 +307,13 @@ footer.site a{color:var(--dim)}
         <p class="sub" data-i="wNewP">A fresh key is generated with the browser's secure random generator. It never leaves this tab's memory.</p>
         <button class="btn gold" id="btn-new-wallet" data-i="wNewBtn">Create wallet</button>
         <div class="note" data-i="wNewNote">Write the key down or save the encrypted backup. If it is lost, the wallet is lost. There is no reset.</div>
+        <div id="restore-local" style="display:none;margin-top:12px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel2)">
+          <div style="font-size:12.5px;margin-bottom:8px" data-i="wRestoreLocalT">An encrypted backup exists in this browser</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost sm" id="btn-restore-local" data-i="wRestoreLocalBtn">Restore with password</button>
+            <button class="btn ghost sm" id="btn-forget-local" data-i="wForgetLocalBtn">Forget it</button>
+          </div>
+        </div>
       </div>
       <div class="card">
         <h2 data-i="wImpT">Restore a backup</h2>
@@ -733,7 +743,10 @@ en: {
   tErr:{ create:"Wallet creation failed: ", import:"Restore failed: ", sign:"Signing failed: ", badAddr:"Not a valid SAOS address (saos1...)",
     badAmt:"Invalid amount", badPrice:"Invalid price", badCur:"Currency symbol: 2 to 10 capital letters", badRef:"Reference: 6 to 90 characters",
     noSymbol:"Pick a currency", emptyQueue:"The queue is empty", relayFail:"Broadcast failed: ", noToken:"No token selected", badSym:"Symbol: capital A-Z, 3 to 8 characters" },
-  status:{ registered:"Registered on chain", pendingReg:"Waiting for registration on chain", treasury:"Network treasury" },
+  status:{ registered:"Registered on chain", pendingReg:"Waiting for registration on chain", treasury:"Network treasury",
+    newReg:"Step 1 of 3: sign your registration", newHint:"Tap Register below. Your registration is signed on this device and nothing leaves it until you broadcast it.",
+    queuedReg:"Step 2 of 3: signed and queued", queuedHint:"Your registration is signed on this device. Open Broadcast below and relay it with a Steem posting key; the network fold then lists your wallet (step 3)." },
+  wRestoreLocalT:"An encrypted backup exists in this browser", wRestoreLocalBtn:"Restore with password", wForgetLocalBtn:"Forget it",
   empty:{ ops:"No operations yet. The first ones will appear here.", offers:"No open offers yet.", mine:"Open a wallet to see your offers.",
     addrs:"No deposit addresses published yet. They appear here the moment the treasury publishes them.",
     claims:"No deposits yet. Yours will show up here.", cred:"No credits yet.", holders:"The ledger is being born. Holders will appear here.",
@@ -847,7 +860,10 @@ he: {
   tErr:{ create:"יצירת הארנק נכשלה: ", import:"שחזור נכשל: ", sign:"החתימה נכשלה: ", badAddr:"כתובת SAOS לא תקינה (saos1...)",
     badAmt:"כמות לא תקינה", badPrice:"מחיר לא תקין", badCur:"סמל מטבע: 2 עד 10 אותיות גדולות", badRef:"אסמכתה: 6 עד 90 תווים",
     noSymbol:"בחר מטבע", emptyQueue:"התור ריק", relayFail:"השידור נכשל: ", noToken:"לא נבחר טוקן", badSym:"סמל: אותיות גדולות A-Z, 3 עד 8 תווים" },
-  status:{ registered:"רשום על השרשרת", pendingReg:"ממתין לרישום על השרשרת", treasury:"אוצר הרשת" },
+  status:{ registered:"רשום על השרשרת", pendingReg:"ממתין לרישום על השרשרת", treasury:"אוצר הרשת",
+    newReg:"שלב 1 מתוך 3: חתימת ההרשמה", newHint:"לחצו 'רישום על השרשרת' למטה. ההרשמה נחתמת במכשיר שלכם ושום דבר לא יוצא ממנו עד שתשדרו אותה.",
+    queuedReg:"שלב 2 מתוך 3: נחתם וממתין בתור", queuedHint:"ההרשמה נחתמה במכשיר שלכם. פתחו את כרטיס 'שידור' למטה ושדרו עם מפתח posting של Steem; אז הרשת תכניס את הארנק לספר (שלב 3)." },
+  wRestoreLocalT:"קיים גיבוי מוצפן בדפדפן הזה", wRestoreLocalBtn:"שחזור עם סיסמה", wForgetLocalBtn:"מחיקה",
   empty:{ ops:"אין עדיין פעולות. הראשונות יופיעו כאן.", offers:"אין עדיין הצעות פתוחות.", mine:"פתח ארנק כדי לראות את ההצעות שלך.",
     addrs:"טרם פורסמו כתובות הפקדה. הן יופיעו כאן ברגע שהאוצר יפרסם אותן.",
     claims:"אין עדיין הפקדות. שלך תופיע כאן.", cred:"אין עדיין זיכויים.", holders:"הספר בהקמה. מחזיקים יופיעו כאן.",
@@ -1253,7 +1269,8 @@ let WALLET = null; // { priv:Uint8Array, pubSTM, addr }
 let QUEUE = [];
 try { QUEUE = JSON.parse(localStorage.getItem("saos.queue") || "[]"); } catch { QUEUE = []; }
 const saveQueue = () => { localStorage.setItem("saos.queue", JSON.stringify(QUEUE)); renderQueue(); };
-addEventListener("beforeunload", () => { WALLET = null; });
+/* R-wallet-persist-1: the page unload no longer needs an explicit wipe — tab memory dies with the tab.
+   Persistence is offered ONLY as the user's encrypted keystore (password-protected, below). */
 
 function renderWalletUI() {
   const on = !!WALLET;
@@ -1264,9 +1281,14 @@ function renderWalletUI() {
     $("wallet-pub").textContent = WALLET.pubSTM;
     const w = LIVE?.state?.wallets?.[WALLET.addr];
     const isTreasury = LIVE?.state?.treasury && WALLET.addr === LIVE.state.treasury;
+    /* honest 3-step status instead of an eternal amber "waiting" (R-wallet-status-1):
+       step 1 = wallet exists locally, step 2 = registration signed+queued, step 3 = folded on chain */
+    const queued = QUEUE.some((e) => e && e.k === "wallet.create");
     $("wallet-reg").innerHTML = w
       ? `<span class="ok">${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
-      : `<span class="warn">${esc(t("status.pendingReg"))}</span>`;
+      : (queued
+        ? `<span class="warn">${esc(t("status.queuedReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.queuedHint"))}</div>`
+        : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`);
     renderWalletBalances();
     refreshSendSymbols();
   }
@@ -1373,6 +1395,7 @@ $("btn-export-keystore").addEventListener("click", async () => {
     : "Password for the encrypted backup (AES-256-GCM). No recovery without it, no copy is kept:");
   if (!pass || pass.length < 8) { if (pass !== null) toast(t("tErr.badRef"), false); return; }
   const ks = await keystoreEncrypt(WALLET.priv, WALLET.pubSTM, pass);
+  try { localStorage.setItem("saos.keystore", JSON.stringify(ks)); } catch { /* private mode: file download still works */ }
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(ks, null, 2)], { type: "application/json" }));
   a.download = "saos-wallet-" + WALLET.addr.slice(5, 15) + ".json";
@@ -1440,7 +1463,7 @@ $("btn-register").addEventListener("click", async () => {
   const fields = { k: "wallet.create" };
   if (nick) fields.nick = nick;
   const env = await enqueue(fields);
-  if (env) toast(t("tOk.registered"));
+  if (env) { toast(t("tOk.registered")); renderWalletUI(); }
 });
 $("btn-send").addEventListener("click", async () => {
   const symbol = $("send-symbol").value;
@@ -1559,7 +1582,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
   out.textContent = LANG === "he" ? "קורא את השרשרת הציבורית…" : "reading the public chain...";
   out.style.color = "var(--dim)";
   try {
-    const accounts = ["cashmachine", "headcorner"];
+    const accounts = ["cashmachine", "headcorner", "haran", "israelnews", "lsa", "macrame", "siq", "tov", "wic", "wog", "woq"];
     const envelopes = [];
     for (const acc of accounts) {
       let start = -1;
@@ -1615,6 +1638,36 @@ $("langbtn").addEventListener("click", () => {
   if (saved === "he" || saved === "en") LANG = saved;
   else if (/^he/i.test(navigator.language || "")) LANG = "he";
 })();
+
+/* local encrypted keystore: one-click restore path (R-wallet-persist-1) */
+function showRestoreLocal() {
+  let has = false;
+  try { has = !!localStorage.getItem("saos.keystore"); } catch {}
+  $("restore-local").style.display = has ? "" : "none";
+}
+$("btn-restore-local").addEventListener("click", async () => {
+  try {
+    const ks = JSON.parse(localStorage.getItem("saos.keystore") || "null");
+    if (!ks || ks.format !== "saos-keystore-v1") throw new Error("format");
+    const pass = prompt(LANG === "he" ? "סיסמת הגיבוי:" : "Backup password:");
+    if (!pass) return;
+    const { priv, pubSTM } = await keystoreDecrypt(ks, pass);
+    WALLET = { priv, pubSTM, addr: await SL.addressFromPubSTM(pubSTM) };
+    $("key-reveal").style.display = "none";
+    renderWalletUI();
+    renderLive();
+    toast(t("tOk.restored"));
+    location.hash = "#wallet";
+  } catch (err) {
+    toast(t("tErr.import") + (err.message || ""), false);
+  }
+});
+$("btn-forget-local").addEventListener("click", () => {
+  try { localStorage.removeItem("saos.keystore"); } catch {}
+  showRestoreLocal();
+  toast(t("tOk.wiped"));
+});
+showRestoreLocal();
 
 renderQueue();
 applyLang();
