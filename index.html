@@ -78,8 +78,9 @@ nav.sections a.on{color:#09090b;background:#fafafa;font-weight:600;box-shadow:0 
 
 /* ── submenu bar ── */
 .subbar{border-bottom:1px solid var(--line);background:rgba(9,9,11,.55)}
-.subbar .in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:8px 0}
+.subbar .in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:8px 0;scroll-snap-type:x proximity;scroll-behavior:smooth}
 .subbar .in::-webkit-scrollbar{display:none}
+.subbar a{scroll-snap-align:start}
 .subbar a{white-space:nowrap;padding:7px 14px;border-radius:999px;font-size:12.5px;color:var(--faint);min-height:34px;display:inline-flex;align-items:center}
 .subbar a:hover{color:var(--text);text-decoration:none;background:rgba(255,255,255,.05)}
 .subbar a.on{color:#09090b;background:#fafafa;font-weight:600}
@@ -150,7 +151,7 @@ html[dir="ltr"] .loop-arr svg{transform:scaleX(-1)}
 
 /* tables */
 .tblwrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel)}
-.tblscroll{max-height:420px;overflow-y:auto}
+.tblscroll{max-height:420px;overflow:auto;-webkit-overflow-scrolling:touch}
 .tblscroll::-webkit-scrollbar{width:9px}
 .tblscroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:9px}
 .tblscroll::-webkit-scrollbar-track{background:transparent}
@@ -249,6 +250,8 @@ footer.site a:hover{color:var(--text)}
   .hero{padding:38px 0 6px}
   .fgrid{grid-template-columns:1fr}
   .brand small{display:none}
+  table{font-size:12px}
+  th,td{padding:9px 10px}
 }
 </style>
 </head>
@@ -1061,6 +1064,10 @@ function route(){
   if(sub) $("sub-"+sec+"-"+sub).classList.add("on");
   renderSubnav(sec, sub);
   renderMobnav(sec, sub);
+  /* mobile: the menu must close on every navigation, not just burger taps (R-mobnav-1) */
+  const mn = $("mobnav");
+  mn.classList.remove("open");
+  $("burger").setAttribute("aria-expanded", "false");
   document.querySelector(".subbar").style.display = SECTIONS[sec].subs.length ? "" : "none";
   window.scrollTo({top:0});
 }
@@ -1098,6 +1105,14 @@ $("burger").addEventListener("click", ()=>{
   const mn = $("mobnav");
   mn.classList.toggle("open");
   $("burger").setAttribute("aria-expanded", mn.classList.contains("open")?"true":"false");
+});
+/* any link tap inside the mobile menu closes it, even when the hash does not change */
+$("mobnav").addEventListener("click", (e)=>{
+  if(e.target.closest("a")){
+    const mn = $("mobnav");
+    mn.classList.remove("open");
+    $("burger").setAttribute("aria-expanded", "false");
+  }
 });
 
 /* ═══════════ language ═══════════ */
@@ -1283,7 +1298,7 @@ function renderHome(){
   const tb = $("home-beats");
   if(mi && mi.attestations){
     tb.innerHTML = mi.attestations.slice(0,6).map(a=>
-      "<tr><td class='mono strong'>"+a.seq+"</td><td>"+esc(a.type)+"</td><td>"+esc(a.agentName||"…")+"</td><td style='max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap' title='"+esc(a.claim||"")+"'>"+esc((a.claim||"").slice(0,140))+"</td><td class='num'>"+timeAgo(a.at)+"</td></tr>"
+      "<tr><td class='mono strong'>"+a.seq+"</td><td>"+esc(a.type)+"</td><td>"+esc(a.agentName||"…")+"</td><td style='max-width:420px' title='"+esc(a.claim||"")+"'>"+esc((a.claim||"").slice(0,140))+"</td><td class='num'>"+timeAgo(a.at)+"</td></tr>"
     ).join("");
   } else {
     tb.innerHTML = "<tr><td colspan='5' class='failhonest'>"+esc(t("fail.fetch"))+"</td></tr>";
