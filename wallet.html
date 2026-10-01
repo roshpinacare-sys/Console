@@ -746,6 +746,14 @@ en: {
   status:{ registered:"Registered on chain", pendingReg:"Waiting for registration on chain", treasury:"Network treasury",
     newReg:"Step 1 of 3: sign your registration", newHint:"Tap Register below. Your registration is signed on this device and nothing leaves it until you broadcast it.",
     queuedReg:"Step 2 of 3: signed and queued", queuedHint:"Your registration is signed on this device. Open Broadcast below and relay it with a Steem posting key; the network fold then lists your wallet (step 3)." },
+  /* r144-g2 — hosted-relay states for step 2 → 3 (honest: every state is a real one) */
+  relay:{ sending:"signed — handing to the hosted relay", sent:(id)=>"signed — sent for broadcast (ref: "+id+")",
+    queued:(id)=>"the relay queued it for the next fold publish (ref: "+id+")",
+    registered:(ref)=>"registered on chain ("+ref+")",
+    failed:"the hosted relay did not answer — your signature stays in the local queue",
+    deepBtn:"Complete registration in the Console",
+    hashTitle:"A wallet registration was passed from another device", hashGo:"Relay it via the hosted relay",
+    hashFail:"the relay did not accept it — nothing was changed", hashNone:"no hosted relay is known to this page yet" },
   wRestoreLocalT:"An encrypted backup exists in this browser", wRestoreLocalBtn:"Restore with password", wForgetLocalBtn:"Forget it",
   empty:{ ops:"No operations yet. The first ones will appear here.", offers:"No open offers yet.", mine:"Open a wallet to see your offers.",
     addrs:"No deposit addresses published yet. They appear here the moment the treasury publishes them.",
@@ -863,6 +871,14 @@ he: {
   status:{ registered:"רשום על השרשרת", pendingReg:"ממתין לרישום על השרשרת", treasury:"אוצר הרשת",
     newReg:"שלב 1 מתוך 3: חתימת ההרשמה", newHint:"לחצו 'רישום על השרשרת' למטה. ההרשמה נחתמת במכשיר שלכם ושום דבר לא יוצא ממנו עד שתשדרו אותה.",
     queuedReg:"שלב 2 מתוך 3: נחתם וממתין בתור", queuedHint:"ההרשמה נחתמה במכשיר שלכם. פתחו את כרטיס 'שידור' למטה ושדרו עם מפתח posting של Steem; אז הרשת תכניס את הארנק לספר (שלב 3)." },
+  /* r144-g2 — מצבי הריליי המאורח לשלב 2 ← 3 (כנות: כל מצב אמיתי) */
+  relay:{ sending:"נחתם — נשלח לריליי המאורח", sent:(id)=>"חתום — נשלח לשידור (מזהה: "+id+")",
+    queued:(id)=>"הריליי תיקב אותה לתור לפרסום-הקיפול הבא (מזהה: "+id+")",
+    registered:(ref)=>"נרשם על השרשרת ("+ref+")",
+    failed:"הריליי המאורח לא נענה — החתימה שלכם נשארת בתור המקומי",
+    deepBtn:"השלם רישום בקונסולה",
+    hashTitle:"הרשמת-ארנק הועברה ממכשיר אחר", hashGo:"שדר דרך הריליי המאורח",
+    hashFail:"הריליי לא קיבל אותה — לא השתנה דבר", hashNone:"אין עדיין ריליי מאורח מוכר לדף הזה" },
   wRestoreLocalT:"קיים גיבוי מוצפן בדפדפן הזה", wRestoreLocalBtn:"שחזור עם סיסמה", wForgetLocalBtn:"מחיקה",
   empty:{ ops:"אין עדיין פעולות. הראשונות יופיעו כאן.", offers:"אין עדיין הצעות פתוחות.", mine:"פתח ארנק כדי לראות את ההצעות שלך.",
     addrs:"טרם פורסמו כתובות הפקדה. הן יופיעו כאן ברגע שהאוצר יפרסם אותן.",
@@ -1062,6 +1078,7 @@ async function boot() {
     pullDexWorld(), // R33: the depositor's USDS must be visible next to the SAOS balances
   ]);
   renderAll();
+  relayKick(); // r144-g2: תור קיים עם ריליי מוכר? ממשיך משלב 2 לשלב 3 מעצמו
   probeChain();
   setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 120 * 1000);
   setInterval(pullDexWorld, 120 * 1000); // R33: the dex mirror rides the same cadence
@@ -1286,8 +1303,7 @@ function renderWalletUI() {
     const queued = QUEUE.some((e) => e && e.k === "wallet.create");
     $("wallet-reg").innerHTML = w
       ? `<span class="ok">${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
-      : (queued
-        ? `<span class="warn">${esc(t("status.queuedReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.queuedHint"))}</div>`
+      : (queued ? relayRegStatusHtml()
         : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`);
     renderWalletBalances();
     refreshSendSymbols();
@@ -1463,7 +1479,7 @@ $("btn-register").addEventListener("click", async () => {
   const fields = { k: "wallet.create" };
   if (nick) fields.nick = nick;
   const env = await enqueue(fields);
-  if (env) { toast(t("tOk.registered")); renderWalletUI(); }
+  if (env) { toast(t("tOk.registered")); renderWalletUI(); relayKick(); }
 });
 $("btn-send").addEventListener("click", async () => {
   const symbol = $("send-symbol").value;
@@ -1511,6 +1527,89 @@ $("btn-copy-queue").addEventListener("click", () => {
   if (!QUEUE.length) { toast(t("tErr.emptyQueue"), false); return; }
   copyText(JSON.stringify(QUEUE, null, 2), "JSON");
 });
+
+/* ═══════════ hosted relay (r144-g2): step 2 → step 3 over the fold's own relay ═══════════
+   The relay URL is not invented here: it is only known when the home platform publishes it
+   in the live book itself (saos-live.json → relay.url). No URL = no relay = the local queue
+   and the manual Steem-WIF broadcast below remain the way (stated honestly). Relay states
+   live in their own localStorage map — envelopes stay canon-clean for the fold. */
+let RELAYMAP = {};
+try { RELAYMAP = JSON.parse(localStorage.getItem("saos.relay") || "{}"); } catch { RELAYMAP = {}; }
+const saveRelayMap = () => { try { localStorage.setItem("saos.relay", JSON.stringify(RELAYMAP)); } catch { /* private mode */ } };
+function relayBase() {
+  const u = LIVE?.relay?.url;
+  return typeof u === "string" && /^https:\/\//.test(u) ? u.replace(/\/+$/, "") : null;
+}
+function regEnv() { return QUEUE.find((e) => e && e.k === "wallet.create") || null; }
+function relayRegStatusHtml() {
+  const qe = regEnv();
+  const rs = qe ? RELAYMAP[qe.id] : null;
+  const base = relayBase();
+  const foldNote = LANG === "he"
+    ? "השרשרת מקפלת בעצמה — הספר החי יזקוף את הארנק בבלוק הבא (שלב 3)."
+    : "the chain folds itself — the live book credits the wallet in the next block (step 3).";
+  let html = "";
+  if (rs && rs.status === "sending") html += `<span class="warn">${esc(t("relay.sending"))}…</span>`;
+  else if (rs && rs.status === "broadcast") html += `<span class="warn">${esc(t("relay.sent")(rs.ref || "…"))}</span><div class="hint" style="margin-top:6px">${esc(foldNote)}</div>`;
+  else if (rs && rs.status === "queued") html += `<span class="warn">${esc(t("relay.queued")(rs.ref || "…"))}</span>`;
+  else if (rs && rs.status === "failed") html += `<span class="warn">${esc(t("relay.failed"))}</span>`;
+  else html += `<span class="warn">${esc(t("status.queuedReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.queuedHint"))}</div>`;
+  if (base && qe && (!rs || rs.status === "failed")) {
+    html += `<a class="btn ghost sm" style="margin-top:8px;display:inline-block" href="${esc(base)}/#saos-reg=${encodeURIComponent(JSON.stringify(qe))}">${esc(t("relay.deepBtn"))}</a>`;
+  }
+  return html;
+}
+async function relaySend(env) {
+  RELAYMAP[env.id] = { status: "sending", at: Date.now() }; saveRelayMap(); renderWalletUI();
+  try {
+    const r = await fetch(relayBase() + "/api/saos/relay", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ envelope: env, signedAt: new Date().toISOString() }),
+    });
+    const j = await r.json().catch(() => null);
+    if (j && j.ok && j.status === "broadcast") {
+      RELAYMAP[env.id] = { status: "broadcast", ref: j.opRef || j.txid || "", at: Date.now() };
+      saveRelayMap(); renderWalletUI(); relayPoll(env);
+    } else if (j && j.ok && (j.queued || j.status === "queued")) {
+      RELAYMAP[env.id] = { status: "queued", ref: j.queueId || env.id, at: Date.now() };
+      saveRelayMap(); renderWalletUI();
+    } else if (j && j.ok && j.status === "registered") {
+      afterRegistered(env);
+    } else {
+      RELAYMAP[env.id] = { status: "failed", detail: (j && (j.detail || j.err)) || "HTTP " + r.status, at: Date.now() };
+      saveRelayMap(); renderWalletUI();
+    }
+  } catch (e) {
+    RELAYMAP[env.id] = { status: "failed", detail: (e.message || "").slice(0, 60), at: Date.now() };
+    saveRelayMap(); renderWalletUI();
+  }
+}
+async function relayPoll(env, tries = 0) {
+  if (tries > 15) return; // ~2 דק' — הקיפול דן בבלוקים; מה שלא נקלט ייקלט ברענון הבא
+  try {
+    const r = await fetch(relayBase() + "/api/saos/relay?address=" + encodeURIComponent(env.by), { cache: "no-store" });
+    const j = await r.json();
+    if (j && j.ok && j.status === "registered") { afterRegistered(env); return; }
+    if (j && j.ok && j.status === "broadcast" && RELAYMAP[env.id] && j.opRef) {
+      RELAYMAP[env.id].ref = j.opRef; saveRelayMap(); renderWalletUI();
+    }
+  } catch { /* the chain decides; the next round retries */ }
+  setTimeout(() => relayPoll(env, tries + 1), 8000);
+}
+function afterRegistered(env) {
+  const i = QUEUE.findIndex((e) => e && e.id === env.id);
+  if (i >= 0) { QUEUE.splice(i, 1); saveQueue(); } // הרישום על השרשרת — אין מה לשדר ידנית
+  delete RELAYMAP[env.id]; saveRelayMap();
+  toast(t("relay.registered")("✓"));
+  jget("saos-live.json").then((l) => { LIVE = l; renderLive(); renderWalletUI(); }).catch(() => {});
+}
+function relayKick() {
+  const base = relayBase();
+  const qe = regEnv();
+  if (!base || !qe) return;        // אין ריליי מוכר — התור המקומי נשאר הדרך (כנות)
+  if (RELAYMAP[qe.id]) return;     // כבר בטיפול — אפס ספאם
+  relaySend(qe);
+}
 
 /* ═══════════ exchange + earn actions ═══════════ */
 $("btn-offer").addEventListener("click", async () => {
@@ -1668,6 +1767,42 @@ $("btn-forget-local").addEventListener("click", () => {
   toast(t("tOk.wiped"));
 });
 showRestoreLocal();
+
+/* r144-g2 — deep-link receiver: מעטפה חתומה שהועברה ממכשיר אחר (#saos-reg=…).
+   הדף לא עושה שום דבר עם מעטפה זולת שידור-תעבורה דרך ריליי מוכר —
+   ואם אין ריליי מוכר, הוא אומר זאת בכנות ולא משקר. */
+(function relayHashReceiver() {
+  const m = /saos-reg=([^&]+)/.exec(location.hash || "");
+  if (!m) return;
+  let env = null;
+  try { env = JSON.parse(decodeURIComponent(m[1])); } catch { return; }
+  if (!env || env.k !== "wallet.create" || typeof env.sig !== "string") return;
+  const card = document.createElement("div");
+  card.style.cssText = "position:fixed;bottom:18px;inset-inline-start:18px;z-index:60;border:1px solid var(--line2);border-radius:10px;padding:12px 14px;font-size:13px;max-width:330px;box-shadow:0 8px 30px rgba(0,0,0,.4);background:var(--panel)";
+  card.innerHTML = `<b style="display:block;margin-bottom:6px">${esc(t("relay.hashTitle"))}</b><div class="mono" style="color:var(--dim);font-size:11.5px;margin-bottom:8px">${esc(String(env.by).slice(0, 20))}…</div>`;
+  const go = document.createElement("button");
+  go.className = "btn gold sm";
+  go.textContent = t("relay.hashGo");
+  go.addEventListener("click", async () => {
+    go.disabled = true;
+    go.textContent = "…";
+    const base = relayBase();
+    if (!base) { card.innerHTML = `<span class="warn">${esc(t("relay.hashNone"))}</span>`; return; }
+    try {
+      const r = await fetch(base + "/api/saos/relay", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ envelope: env, signedAt: new Date().toISOString() }) });
+      const j = await r.json().catch(() => null);
+      card.innerHTML = (j && j.ok && j.status === "registered")
+        ? `<span class="ok">${esc(t("relay.registered")(j.opRef || "—"))}</span>`
+        : (j && j.ok && j.status === "broadcast")
+          ? `<span class="ok">${esc(t("relay.sent")(j.opRef || j.txid || "—"))}</span>`
+          : (j && j.ok && (j.queued || j.status === "queued"))
+            ? `<span class="ok">${esc(t("relay.queued")(j.queueId || env.id))}</span>`
+            : `<span class="warn">${esc(t("relay.hashFail"))}</span>`;
+    } catch { card.innerHTML = `<span class="warn">${esc(t("relay.hashFail"))}</span>`; }
+  });
+  card.appendChild(go);
+  document.body.appendChild(card);
+})();
 
 renderQueue();
 applyLang();
