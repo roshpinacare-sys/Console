@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-10-01T06:58:29Z",
+ "generatedAt": "2026-10-01T07:53:39Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
@@ -57,6 +57,39 @@
    }
   },
   {
+   "id": "anchor-baseline-baseline-integrity",
+   "name": "baseline-integrity",
+   "repo": "anchor-baseline",
+   "visibility": "private",
+   "schedule": "daily 07:13 UTC",
+   "layer": "INTEGRITY",
+   "role": {
+    "en": "Baseline history keeper - builds a SHA-256 manifest of all broadcasts, docs and downloads, compares to the previous manifest, reports additions and changes, and fails when history files are deleted.",
+    "he": "שומר ההיסטוריה של קו הבסיס - בונה מניפסט SHA-256 של כל השידורים, המסמכים וההורדות, משווה לקודם, מדווח תוספות ושינויים, ונכשל כשקבצי היסטוריה נמחקים."
+   },
+   "input": {
+    "en": "broadcasts + docs + download",
+    "he": "שידורים + מסמכים + הורדות"
+   },
+   "output": {
+    "en": "agent/status.json + manifest.sha256",
+    "he": "דוח agent/status.json + מניפסט SHA-256"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 17,
+    "success": 6,
+    "failure": 11,
+    "other": 0,
+    "successRate": 35.3,
+    "avgDurS": 5.9
+   },
+   "lastRun": {
+    "at": "2026-10-01T07:29:03Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "console-agent-verify",
    "name": "agent-verify",
    "repo": "Console",
@@ -82,10 +115,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 20.9
+    "avgDurS": 21.6
    },
    "lastRun": {
-    "at": "2026-10-01T05:00:44Z",
+    "at": "2026-10-01T07:03:52Z",
     "conclusion": "success"
    }
   },
@@ -118,7 +151,7 @@
     "avgDurS": 126.1
    },
    "lastRun": {
-    "at": "2026-10-01T05:51:54Z",
+    "at": "2026-10-01T06:56:23Z",
     "conclusion": "success"
    }
   },
@@ -151,7 +184,7 @@
     "avgDurS": 14.2
    },
    "lastRun": {
-    "at": "2026-10-01T05:58:44Z",
+    "at": "2026-10-01T07:01:05Z",
     "conclusion": "success"
    }
   },
@@ -181,10 +214,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.6
+    "avgDurS": 13.2
    },
    "lastRun": {
-    "at": "2026-10-01T06:27:10Z",
+    "at": "2026-10-01T07:38:29Z",
     "conclusion": "success"
    }
   },
@@ -214,10 +247,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 11.1
+    "avgDurS": 10.9
    },
    "lastRun": {
-    "at": "2026-10-01T06:32:08Z",
+    "at": "2026-10-01T07:27:56Z",
     "conclusion": "success"
    }
   },
@@ -280,10 +313,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.8
+    "avgDurS": 15.5
    },
    "lastRun": {
-    "at": "2026-10-01T06:40:24Z",
+    "at": "2026-10-01T07:47:55Z",
     "conclusion": "success"
    }
   },
@@ -309,14 +342,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 74,
+    "success": 75,
     "failure": 0,
-    "other": 26,
-    "successRate": 74,
-    "avgDurS": 23.4
+    "other": 25,
+    "successRate": 75,
+    "avgDurS": 26.4
    },
    "lastRun": {
-    "at": "2026-10-01T06:42:36Z",
+    "at": "2026-10-01T07:48:06Z",
     "conclusion": "success"
    }
   },
@@ -341,15 +374,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 70,
-    "success": 70,
+    "runs_sampled": 71,
+    "success": 71,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 11.9
+    "avgDurS": 11.7
    },
    "lastRun": {
-    "at": "2026-10-01T06:42:28Z",
+    "at": "2026-10-01T07:36:19Z",
     "conclusion": "success"
    }
   },
@@ -379,10 +412,10 @@
     "failure": 2,
     "other": 0,
     "successRate": 98,
-    "avgDurS": 25.6
+    "avgDurS": 25.8
    },
    "lastRun": {
-    "at": "2026-10-01T06:31:41Z",
+    "at": "2026-10-01T07:27:09Z",
     "conclusion": "success"
    }
   },
@@ -445,10 +478,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 20
+    "avgDurS": 19.9
    },
    "lastRun": {
-    "at": "2026-10-01T05:05:57Z",
+    "at": "2026-10-01T07:07:17Z",
     "conclusion": "success"
    }
   },
@@ -478,10 +511,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 135.1
+    "avgDurS": 135
    },
    "lastRun": {
-    "at": "2026-10-01T06:51:59Z",
+    "at": "2026-10-01T07:47:06Z",
     "conclusion": "success"
    }
   },
@@ -506,15 +539,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 68,
-    "success": 66,
+    "runs_sampled": 69,
+    "success": 67,
     "failure": 2,
     "other": 0,
     "successRate": 97.1,
-    "avgDurS": 17.6
+    "avgDurS": 17.4
    },
    "lastRun": {
-    "at": "2026-10-01T06:05:41Z",
+    "at": "2026-10-01T07:05:46Z",
     "conclusion": "success"
    }
   },
@@ -577,10 +610,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 36.8
+    "avgDurS": 37
    },
    "lastRun": {
-    "at": "2026-10-01T06:38:18Z",
+    "at": "2026-10-01T07:33:11Z",
     "conclusion": "success"
    }
   },
@@ -643,10 +676,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 16.3
+    "avgDurS": 16.1
    },
    "lastRun": {
-    "at": "2026-10-01T05:54:22Z",
+    "at": "2026-10-01T06:57:48Z",
     "conclusion": "success"
    }
   },
@@ -775,10 +808,10 @@
     "failure": 12,
     "other": 0,
     "successRate": 88,
-    "avgDurS": 46.3
+    "avgDurS": 46.7
    },
    "lastRun": {
-    "at": "2026-10-01T05:00:48Z",
+    "at": "2026-10-01T07:03:47Z",
     "conclusion": "success"
    }
   },
@@ -841,10 +874,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.1
+    "avgDurS": 14.8
    },
    "lastRun": {
-    "at": "2026-10-01T05:58:42Z",
+    "at": "2026-10-01T07:01:00Z",
     "conclusion": "success"
    }
   },
@@ -874,10 +907,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.8
+    "avgDurS": 15.2
    },
    "lastRun": {
-    "at": "2026-10-01T06:29:21Z",
+    "at": "2026-10-01T07:40:54Z",
     "conclusion": "success"
    }
   },
@@ -973,10 +1006,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.4
+    "avgDurS": 19.5
    },
    "lastRun": {
-    "at": "2026-10-01T06:55:29Z",
+    "at": "2026-10-01T07:50:19Z",
     "conclusion": "success"
    }
   },
@@ -1006,10 +1039,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.6
+    "avgDurS": 15.5
    },
    "lastRun": {
-    "at": "2026-10-01T06:56:25Z",
+    "at": "2026-10-01T07:51:21Z",
     "conclusion": "success"
    }
   },
@@ -1039,10 +1072,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.6
+    "avgDurS": 15.7
    },
    "lastRun": {
-    "at": "2026-10-01T06:49:52Z",
+    "at": "2026-10-01T07:36:09Z",
     "conclusion": "success"
    }
   },
@@ -1105,10 +1138,10 @@
     "failure": 0,
     "other": 12,
     "successRate": 88,
-    "avgDurS": 27.3
+    "avgDurS": 29.5
    },
    "lastRun": {
-    "at": "2026-10-01T06:56:38Z",
+    "at": "2026-10-01T07:51:34Z",
     "conclusion": "success"
    }
   },
@@ -1336,10 +1369,10 @@
     "failure": 3,
     "other": 0,
     "successRate": 97,
-    "avgDurS": 24.5
+    "avgDurS": 24.3
    },
    "lastRun": {
-    "at": "2026-10-01T06:29:22Z",
+    "at": "2026-10-01T07:24:49Z",
     "conclusion": "success"
    }
   },
@@ -1364,15 +1397,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 87,
-    "success": 87,
+    "runs_sampled": 88,
+    "success": 88,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 16.2
    },
    "lastRun": {
-    "at": "2026-10-01T06:32:58Z",
+    "at": "2026-10-01T07:28:55Z",
     "conclusion": "success"
    }
   },
@@ -1405,7 +1438,7 @@
     "avgDurS": 63.1
    },
    "lastRun": {
-    "at": "2026-10-01T06:47:15Z",
+    "at": "2026-10-01T07:28:04Z",
     "conclusion": "success"
    }
   },
@@ -1468,10 +1501,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 36.9
+    "avgDurS": 37
    },
    "lastRun": {
-    "at": "2026-10-01T06:31:40Z",
+    "at": "2026-10-01T07:27:25Z",
     "conclusion": "success"
    }
   },
@@ -1504,7 +1537,7 @@
     "avgDurS": 16.2
    },
    "lastRun": {
-    "at": "2026-10-01T06:03:21Z",
+    "at": "2026-10-01T07:04:12Z",
     "conclusion": "success"
    }
   },
@@ -1534,10 +1567,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 20.1
+    "avgDurS": 19.2
    },
    "lastRun": {
-    "at": "2026-10-01T06:24:25Z",
+    "at": "2026-10-01T07:39:06Z",
     "conclusion": "success"
    }
   },
@@ -1562,15 +1595,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 11,
-    "success": 4,
+    "runs_sampled": 12,
+    "success": 5,
     "failure": 7,
     "other": 0,
-    "successRate": 36.4,
-    "avgDurS": 15.8
+    "successRate": 41.7,
+    "avgDurS": 16.8
    },
    "lastRun": {
-    "at": "2026-10-01T05:01:43Z",
+    "at": "2026-10-01T07:04:45Z",
     "conclusion": "success"
    }
   },
@@ -1595,15 +1628,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 11,
-    "success": 4,
+    "runs_sampled": 12,
+    "success": 5,
     "failure": 7,
     "other": 0,
-    "successRate": 36.4,
-    "avgDurS": 29.8
+    "successRate": 41.7,
+    "avgDurS": 33.8
    },
    "lastRun": {
-    "at": "2026-10-01T05:58:34Z",
+    "at": "2026-10-01T07:33:50Z",
     "conclusion": "success"
    }
   },
@@ -1628,15 +1661,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 57,
-    "success": 23,
+    "runs_sampled": 60,
+    "success": 26,
     "failure": 34,
     "other": 0,
-    "successRate": 40.4,
-    "avgDurS": 16.7
+    "successRate": 43.3,
+    "avgDurS": 18.6
    },
    "lastRun": {
-    "at": "2026-10-01T06:52:58Z",
+    "at": "2026-10-01T07:28:58Z",
     "conclusion": "success"
    }
   },
@@ -1670,39 +1703,6 @@
    },
    "lastRun": {
     "at": "2026-09-30T19:46:48Z",
-    "conclusion": "failure"
-   }
-  },
-  {
-   "id": "anchor-baseline-baseline-integrity",
-   "name": "baseline-integrity",
-   "repo": "anchor-baseline",
-   "visibility": "private",
-   "schedule": "daily 07:13 UTC",
-   "layer": "INTEGRITY",
-   "role": {
-    "en": "Baseline history keeper - builds a SHA-256 manifest of all broadcasts, docs and downloads, compares to the previous manifest, reports additions and changes, and fails when history files are deleted.",
-    "he": "שומר ההיסטוריה של קו הבסיס - בונה מניפסט SHA-256 של כל השידורים, המסמכים וההורדות, משווה לקודם, מדווח תוספות ושינויים, ונכשל כשקבצי היסטוריה נמחקים."
-   },
-   "input": {
-    "en": "broadcasts + docs + download",
-    "he": "שידורים + מסמכים + הורדות"
-   },
-   "output": {
-    "en": "agent/status.json + manifest.sha256",
-    "he": "דוח agent/status.json + מניפסט SHA-256"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 16,
-    "success": 5,
-    "failure": 11,
-    "other": 0,
-    "successRate": 31.3,
-    "avgDurS": 5.6
-   },
-   "lastRun": {
-    "at": "2026-09-30T07:28:58Z",
     "conclusion": "failure"
    }
   },
