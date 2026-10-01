@@ -74,6 +74,52 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 .src{font-size:11px;color:var(--dim);margin-top:10px}
 .livedot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-inline-end:6px;vertical-align:1px}
 .deaddot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-inline-end:6px;vertical-align:1px}
+
+/* ═══════ Z-29-a design-system upgrade · graphite base, gold sovereign accent ═══════ */
+:root{
+  --panel:rgba(255,255,255,.032);--panel2:rgba(255,255,255,.055);
+  --border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.18);
+  --gold-bright:#f0d060;
+}
+body{
+  background:
+    radial-gradient(rgba(255,255,255,.04) 1px, transparent 1.5px) 0 0/28px 28px,
+    radial-gradient(880px 420px at 82% -140px, rgba(212,175,55,.07), transparent 68%),
+    radial-gradient(680px 400px at 8% -160px, rgba(167,139,250,.05), transparent 68%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(212,175,55,.30);color:#fafafa}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
+h1,h2,h3{text-wrap:balance}
+h1{letter-spacing:-.3px}
+.card{box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 34px -26px rgba(0,0,0,.9)}
+.card h2{letter-spacing:-.2px}
+.card h2 .en{font-family:var(--mono)}
+main table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+main table::-webkit-scrollbar{height:8px}
+main table::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
+main th{position:sticky;top:0;background:#101013;z-index:1;font-weight:600;letter-spacing:.04em}
+.pcard{box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 34px -26px rgba(0,0,0,.9);transition:transform .18s,border-color .18s}
+.pcard:hover{transform:translateY(-2px);border-color:var(--border2)}
+header.nhead{background:linear-gradient(180deg,rgba(9,9,11,.95),rgba(9,9,11,.84))}
+.nhead h1{font-size:19px;letter-spacing:-.3px}
+.badge{background:rgba(212,175,55,.08);letter-spacing:.03em}
+footer{background:rgba(255,255,255,.012)}
+.mburger{display:none;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--tx);border-radius:10px;width:44px;height:44px;cursor:pointer;align-items:center;justify-content:center;margin-inline-start:auto;flex:none}
+.mburger:hover{border-color:var(--border2);background:rgba(255,255,255,.06)}
+@media(max-width:760px){
+  .mburger{display:inline-flex}
+  .nhead nav.links{display:none;position:absolute;top:100%;inset-inline:0;margin:0;flex-direction:column;gap:2px;padding:10px 20px 16px;background:rgba(9,9,11,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 24px 40px -24px rgba(0,0,0,.9)}
+  header.nav-open nav.links{display:flex}
+  .nhead nav.links a{display:flex;align-items:center;min-height:46px;padding:10px 14px;border-radius:10px;border:1px solid transparent;font-size:15px}
+  .nhead nav.links a:hover{background:rgba(255,255,255,.05);border-color:var(--border);text-decoration:none}
+  th,td{padding:10px 9px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
@@ -83,6 +129,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <span class="badge">R33 · היום</span>
     <span class="sub">מה קורה ברגע שנכנס כסף</span>
     <nav class="links"><a href="index.html">קונסולה</a><a href="readiness.html">מוכנות</a><a href="money.html">נתיב הכסף</a><a href="defi.html">חדשנות</a></nav>
+    <button class="mburger" id="mburger" aria-label="תפריט" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </header>
 <main>
@@ -266,6 +313,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   }
   pull();
   setInterval(pull, 60*1000);
+})();
+</script>
+
+<script>
+/* Z-29-a mobile menu · Z-28 pattern: closes on link tap, outside click, Esc, route change */
+(function(){
+  var hd=document.querySelector('header.nhead'),b=document.getElementById('mburger');
+  if(!hd||!b)return;
+  function set(o){hd.classList.toggle('nav-open',o);b.setAttribute('aria-expanded',o?'true':'false');}
+  b.addEventListener('click',function(e){e.stopPropagation();set(!hd.classList.contains('nav-open'));});
+  document.addEventListener('click',function(e){if(hd.classList.contains('nav-open')&&!hd.contains(e.target))set(false);});
+  hd.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('a'))set(false);});
+  window.addEventListener('hashchange',function(){set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
 })();
 </script>
 </body>

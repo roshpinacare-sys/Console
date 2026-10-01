@@ -40,7 +40,13 @@ body{
   min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
-#bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;background:radial-gradient(640px 320px at 82% -60px, rgba(16,185,129,.08), transparent 70%),radial-gradient(520px 300px at 12% -80px, rgba(255,255,255,.05), transparent 70%)}
+/* #bg refined: layered sovereign glows + faint engineering dot-grid + vignette */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.75;
+  background:
+    radial-gradient(rgba(255,255,255,.045) 1px, transparent 1.5px) 0 0/28px 28px,
+    radial-gradient(640px 320px at 82% -60px, rgba(16,185,129,.10), transparent 70%),
+    radial-gradient(520px 300px at 12% -80px, rgba(255,255,255,.055), transparent 70%),
+    radial-gradient(1100px 500px at 50% 118%, rgba(16,185,129,.05), transparent 70%)}
 main{position:relative;z-index:1;flex:1;width:100%}
 a{color:var(--acc-bright);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -252,6 +258,39 @@ footer.site a:hover{color:var(--text)}
   .brand small{display:none}
   table{font-size:12px}
   th,td{padding:9px 10px}
+}
+
+/* ═══════ Z-29-a design-system upgrade · emerald/graphite tokens, premium chrome ═══════ */
+::selection{background:rgba(16,185,129,.28);color:#fafafa}
+html{scrollbar-color:rgba(255,255,255,.16) transparent}
+body::-webkit-scrollbar{width:10px}
+body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px;border:2px solid var(--bg)}
+body::-webkit-scrollbar-track{background:transparent}
+.card{box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 30px -24px rgba(0,0,0,.9)}
+.card.hov:hover{border-color:var(--acc-line);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 14px 34px -22px rgba(0,0,0,.95),0 0 0 1px rgba(16,185,129,.10),0 8px 28px -14px rgba(16,185,129,.16)}
+.loop-gate:hover{box-shadow:0 0 0 1px rgba(16,185,129,.10),0 10px 30px -18px rgba(16,185,129,.18)}
+.pathlink:hover{box-shadow:0 0 0 1px rgba(16,185,129,.10),0 12px 32px -20px rgba(16,185,129,.16)}
+.hero h1 em{background:linear-gradient(92deg,#34d399 10%,#a7f3d0 55%,#34d399 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#34d399}
+.btn{background:linear-gradient(180deg,#ffffff,#e4e4e7);box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 8px 22px -12px rgba(0,0,0,.7)}
+.btn:hover{background:linear-gradient(180deg,#ffffff,#f4f4f5);box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 10px 26px -12px rgba(0,0,0,.75),0 0 0 1px rgba(16,185,129,.14)}
+.btn.ghost:hover{box-shadow:none;border-color:rgba(52,211,153,.45);color:var(--acc-bright)}
+.btn.emerald{background:linear-gradient(180deg,#10b981,#059669);border-color:rgba(16,185,129,.6);color:#022c22;box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 8px 22px -12px rgba(16,185,129,.55)}
+.btn.emerald:hover{background:linear-gradient(180deg,#10b981,#047857);filter:none}
+.note,.opcard,.tblwrap{box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.opcard{box-shadow:inset 0 1px 0 rgba(212,175,55,.14),0 14px 40px -28px rgba(212,175,55,.35)}
+header.site{background:linear-gradient(180deg,rgba(9,9,11,.92),rgba(9,9,11,.82))}
+.burger,.langbtn{width:44px;height:44px;min-height:44px}
+.langbtn{width:auto;padding-inline:14px}
+nav.sections a{min-height:38px}
+.mobilenav a{display:flex;align-items:center;min-height:46px}
+.subbar a{min-height:40px}
+footer.site{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.005))}
+.kpi{background:linear-gradient(180deg,#fafafa,#d4d4d8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.kpi .u{-webkit-text-fill-color:var(--faint)}
+.loop-k{background:linear-gradient(180deg,#6ee7b7,#34d399);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>

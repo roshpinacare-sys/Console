@@ -109,6 +109,50 @@ footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-
   main{padding:24px 0 44px}
   .gate-head h1{font-size:16px}
 }
+
+/* ═══════ Z-29-a design-system upgrade · graphite base, gold sovereign accent ═══════ */
+:root{
+  --panel:rgba(255,255,255,.032);--panel2:rgba(255,255,255,.055);
+  --border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.18);
+  --gold-bright:#f0d060;
+}
+body{
+  background:
+    radial-gradient(rgba(255,255,255,.04) 1px, transparent 1.5px) 0 0/28px 28px,
+    radial-gradient(880px 420px at 82% -140px, rgba(212,175,55,.07), transparent 68%),
+    radial-gradient(680px 400px at 8% -160px, rgba(167,139,250,.05), transparent 68%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(212,175,55,.30);color:#fafafa}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
+h1,h2,h3{text-wrap:balance}
+.card{box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 34px -26px rgba(0,0,0,.9)}
+.card h2{letter-spacing:-.2px}
+header.gate-head{background:linear-gradient(180deg,rgba(9,9,11,.95),rgba(9,9,11,.84))}
+.gate-head h1{letter-spacing:-.3px}
+header.nhead{background:linear-gradient(180deg,rgba(9,9,11,.95),rgba(9,9,11,.84))}
+.nhead h1{letter-spacing:-.3px}
+.badge{background:rgba(212,175,55,.08);letter-spacing:.03em}
+.pcard{box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 34px -26px rgba(0,0,0,.9);transition:transform .18s,border-color .18s}
+.pcard:hover{transform:translateY(-2px);border-color:var(--border2)}
+.btn-main{background:linear-gradient(180deg,#e7c959,#c9a22e);box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 10px 26px -14px rgba(212,175,55,.5)}
+.btn-main:hover:not(:disabled){filter:brightness(1.06)}
+.btn-sec{min-height:46px}
+footer{background:rgba(255,255,255,.012)}
+@media(max-width:640px){
+  footer .wrap a{display:inline-flex;align-items:center;min-height:44px}
+  th,td{padding:10px 9px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+
+main table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+main table::-webkit-scrollbar{height:8px}
+main table::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
+main th{position:sticky;top:0;background:#101013;z-index:1;font-weight:600;letter-spacing:.04em}
 </style>
 </head>
 <body>
