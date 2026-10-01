@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-10-01T19:51:32Z",
+ "generatedAt": "2026-10-01T20:53:04Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
@@ -123,6 +123,39 @@
    }
   },
   {
+   "id": "anchor-baseline-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "anchor-baseline",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 4,
+    "success": 1,
+    "failure": 3,
+    "other": 0,
+    "successRate": 25,
+    "avgDurS": 6
+   },
+   "lastRun": {
+    "at": "2026-10-01T19:52:28Z",
+    "conclusion": "success"
+   }
+  },
+  {
    "id": "console-agent-verify",
    "name": "agent-verify",
    "repo": "Console",
@@ -181,10 +214,43 @@
     "failure": 1,
     "other": 1,
     "successRate": 98,
-    "avgDurS": 135.7
+    "avgDurS": 136.1
    },
    "lastRun": {
-    "at": "2026-10-01T18:53:10Z",
+    "at": "2026-10-01T19:49:21Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "console-console-publish",
+   "name": "console-publish",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "on push to main",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
+    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
+   },
+   "input": {
+    "en": "push to main",
+    "he": "דחיפה ל-main"
+   },
+   "output": {
+    "en": "live console pages",
+    "he": "דפי קונסולה חיים"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 72,
+    "failure": 28,
+    "other": 0,
+    "successRate": 72,
+    "avgDurS": 14.8
+   },
+   "lastRun": {
+    "at": "2026-10-01T19:55:42Z",
     "conclusion": "success"
    }
   },
@@ -214,10 +280,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.6
+    "avgDurS": 13.7
    },
    "lastRun": {
-    "at": "2026-10-01T19:35:57Z",
+    "at": "2026-10-01T20:38:26Z",
     "conclusion": "success"
    }
   },
@@ -247,10 +313,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 12.4
+    "avgDurS": 12.7
    },
    "lastRun": {
-    "at": "2026-10-01T19:45:52Z",
+    "at": "2026-10-01T20:25:43Z",
     "conclusion": "success"
    }
   },
@@ -309,14 +375,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 98,
-    "failure": 2,
+    "success": 97,
+    "failure": 3,
     "other": 0,
-    "successRate": 98,
-    "avgDurS": 16.4
+    "successRate": 97,
+    "avgDurS": 16.7
    },
    "lastRun": {
-    "at": "2026-10-01T19:45:10Z",
+    "at": "2026-10-01T20:47:24Z",
     "conclusion": "success"
    }
   },
@@ -346,10 +412,10 @@
     "failure": 0,
     "other": 31,
     "successRate": 69,
-    "avgDurS": 28.2
+    "avgDurS": 29.8
    },
    "lastRun": {
-    "at": "2026-10-01T19:45:52Z",
+    "at": "2026-10-01T20:47:37Z",
     "conclusion": "success"
    }
   },
@@ -374,15 +440,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 83,
-    "success": 83,
+    "runs_sampled": 84,
+    "success": 84,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 11.9
    },
    "lastRun": {
-    "at": "2026-10-01T19:34:21Z",
+    "at": "2026-10-01T20:36:22Z",
     "conclusion": "success"
    }
   },
@@ -412,10 +478,10 @@
     "failure": 3,
     "other": 0,
     "successRate": 97,
-    "avgDurS": 25.9
+    "avgDurS": 26
    },
    "lastRun": {
-    "at": "2026-10-01T19:24:15Z",
+    "at": "2026-10-01T20:25:14Z",
     "conclusion": "success"
    }
   },
@@ -474,14 +540,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 4,
-    "failure": 96,
+    "success": 6,
+    "failure": 94,
     "other": 0,
-    "successRate": 4,
-    "avgDurS": 9.6
+    "successRate": 6,
+    "avgDurS": 9.9
    },
    "lastRun": {
-    "at": "2026-10-01T19:46:10Z",
+    "at": "2026-10-01T20:48:07Z",
     "conclusion": "success"
    }
   },
@@ -544,10 +610,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 148.6
+    "avgDurS": 149.5
    },
    "lastRun": {
-    "at": "2026-10-01T19:44:33Z",
+    "at": "2026-10-01T20:46:37Z",
     "conclusion": "success"
    }
   },
@@ -572,15 +638,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 81,
-    "success": 79,
+    "runs_sampled": 82,
+    "success": 80,
     "failure": 2,
     "other": 0,
-    "successRate": 97.5,
-    "avgDurS": 17.5
+    "successRate": 97.6,
+    "avgDurS": 17.6
    },
    "lastRun": {
-    "at": "2026-10-01T19:03:30Z",
+    "at": "2026-10-01T20:02:38Z",
     "conclusion": "success"
    }
   },
@@ -643,10 +709,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 36.4
+    "avgDurS": 36.8
    },
    "lastRun": {
-    "at": "2026-10-01T19:30:42Z",
+    "at": "2026-10-01T20:32:49Z",
     "conclusion": "success"
    }
   },
@@ -709,10 +775,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 16.4
+    "avgDurS": 16.5
    },
    "lastRun": {
-    "at": "2026-10-01T18:54:33Z",
+    "at": "2026-10-01T19:51:02Z",
     "conclusion": "success"
    }
   },
@@ -907,10 +973,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.7
+    "avgDurS": 14.8
    },
    "lastRun": {
-    "at": "2026-10-01T18:58:47Z",
+    "at": "2026-10-01T19:55:21Z",
     "conclusion": "success"
    }
   },
@@ -940,10 +1006,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.2
+    "avgDurS": 14.3
    },
    "lastRun": {
-    "at": "2026-10-01T19:38:24Z",
+    "at": "2026-10-01T20:40:30Z",
     "conclusion": "success"
    }
   },
@@ -1039,10 +1105,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.1
+    "avgDurS": 18.9
    },
    "lastRun": {
-    "at": "2026-10-01T19:48:09Z",
+    "at": "2026-10-01T20:49:44Z",
     "conclusion": "success"
    }
   },
@@ -1072,10 +1138,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17
+    "avgDurS": 17.1
    },
    "lastRun": {
-    "at": "2026-10-01T19:49:14Z",
+    "at": "2026-10-01T20:50:46Z",
     "conclusion": "success"
    }
   },
@@ -1105,10 +1171,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.9
+    "avgDurS": 16.7
    },
    "lastRun": {
-    "at": "2026-10-01T19:32:53Z",
+    "at": "2026-10-01T20:34:56Z",
     "conclusion": "success"
    }
   },
@@ -1167,14 +1233,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 85,
+    "success": 84,
     "failure": 0,
-    "other": 15,
-    "successRate": 85,
-    "avgDurS": 43.2
+    "other": 16,
+    "successRate": 84,
+    "avgDurS": 41.8
    },
    "lastRun": {
-    "at": "2026-10-01T19:49:30Z",
+    "at": "2026-10-01T20:51:01Z",
     "conclusion": "success"
    }
   },
@@ -1402,10 +1468,10 @@
     "failure": 3,
     "other": 0,
     "successRate": 97,
-    "avgDurS": 23.8
+    "avgDurS": 24.1
    },
    "lastRun": {
-    "at": "2026-10-01T19:22:27Z",
+    "at": "2026-10-01T20:23:16Z",
     "conclusion": "success"
    }
   },
@@ -1435,10 +1501,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17
+    "avgDurS": 17.1
    },
    "lastRun": {
-    "at": "2026-10-01T19:26:05Z",
+    "at": "2026-10-01T20:27:32Z",
     "conclusion": "success"
    }
   },
@@ -1468,10 +1534,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 66.3
+    "avgDurS": 64.6
    },
    "lastRun": {
-    "at": "2026-10-01T19:24:50Z",
+    "at": "2026-10-01T20:42:09Z",
     "conclusion": "success"
    }
   },
@@ -1534,10 +1600,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 36.4
+    "avgDurS": 36.5
    },
    "lastRun": {
-    "at": "2026-10-01T19:24:15Z",
+    "at": "2026-10-01T20:25:18Z",
     "conclusion": "success"
    }
   },
@@ -1570,7 +1636,7 @@
     "avgDurS": 16.1
    },
    "lastRun": {
-    "at": "2026-10-01T19:01:29Z",
+    "at": "2026-10-01T20:00:13Z",
     "conclusion": "success"
    }
   },
@@ -1600,10 +1666,43 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 22.9
+    "avgDurS": 23
    },
    "lastRun": {
-    "at": "2026-10-01T19:35:18Z",
+    "at": "2026-10-01T20:37:26Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "project-files-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Project-files",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 4,
+    "success": 1,
+    "failure": 3,
+    "other": 0,
+    "successRate": 25,
+    "avgDurS": 7
+   },
+   "lastRun": {
+    "at": "2026-10-01T19:51:36Z",
     "conclusion": "success"
    }
   },
@@ -1868,6 +1967,39 @@
    },
    "lastRun": {
     "at": "2026-10-01T10:39:58Z",
+    "conclusion": "success"
+   }
+  },
+  {
+   "id": "saos-sovereign-foundry-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-sovereign-foundry",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "live",
+   "stats": {
+    "runs_sampled": 10,
+    "success": 1,
+    "failure": 9,
+    "other": 0,
+    "successRate": 10,
+    "avgDurS": 7.4
+   },
+   "lastRun": {
+    "at": "2026-10-01T19:53:42Z",
     "conclusion": "success"
    }
   },
@@ -2189,15 +2321,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 96,
-    "success": 58,
-    "failure": 38,
+    "runs_sampled": 100,
+    "success": 63,
+    "failure": 37,
     "other": 0,
-    "successRate": 60.4,
+    "successRate": 63,
     "avgDurS": 136
    },
    "lastRun": {
-    "at": "2026-10-01T19:25:53Z",
+    "at": "2026-10-01T20:43:03Z",
     "conclusion": "success"
    }
   },
@@ -2367,72 +2499,6 @@
    }
   },
   {
-   "id": "anchor-baseline-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "anchor-baseline",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 3,
-    "success": 0,
-    "failure": 3,
-    "other": 0,
-    "successRate": 0,
-    "avgDurS": 4.7
-   },
-   "lastRun": {
-    "at": "2026-09-30T19:47:05Z",
-    "conclusion": "failure"
-   }
-  },
-  {
-   "id": "console-console-publish",
-   "name": "console-publish",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "on push to main",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
-    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "live console pages",
-    "he": "דפי קונסולה חיים"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 71,
-    "failure": 29,
-    "other": 0,
-    "successRate": 71,
-    "avgDurS": 14.9
-   },
-   "lastRun": {
-    "at": "2026-10-01T18:58:49Z",
-    "conclusion": "failure"
-   }
-  },
-  {
    "id": "console-key-verify",
    "name": "key-verify",
    "repo": "Console",
@@ -2519,15 +2585,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 9,
+    "runs_sampled": 10,
     "success": 3,
-    "failure": 6,
+    "failure": 7,
     "other": 0,
-    "successRate": 33.3,
-    "avgDurS": 96.2
+    "successRate": 30,
+    "avgDurS": 93.2
    },
    "lastRun": {
-    "at": "2026-10-01T13:59:00Z",
+    "at": "2026-10-01T19:54:51Z",
     "conclusion": "failure"
    }
   },
@@ -2561,39 +2627,6 @@
    },
    "lastRun": {
     "at": "2026-09-28T11:44:08Z",
-    "conclusion": "failure"
-   }
-  },
-  {
-   "id": "project-files-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "Project-files",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 3,
-    "success": 0,
-    "failure": 3,
-    "other": 0,
-    "successRate": 0,
-    "avgDurS": 4
-   },
-   "lastRun": {
-    "at": "2026-09-30T19:46:54Z",
     "conclusion": "failure"
    }
   },
@@ -2689,43 +2722,10 @@
     "failure": 99,
     "other": 0,
     "successRate": 1,
-    "avgDurS": 101.5
+    "avgDurS": 102.9
    },
    "lastRun": {
-    "at": "2026-09-30T19:47:20Z",
-    "conclusion": "failure"
-   }
-  },
-  {
-   "id": "saos-sovereign-foundry-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "saos-sovereign-foundry",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 9,
-    "success": 0,
-    "failure": 9,
-    "other": 0,
-    "successRate": 0,
-    "avgDurS": 6.8
-   },
-   "lastRun": {
-    "at": "2026-09-30T19:47:20Z",
+    "at": "2026-10-01T19:53:42Z",
     "conclusion": "failure"
    }
   },
