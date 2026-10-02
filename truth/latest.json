@@ -1,7 +1,7 @@
 {
   "format": "truth-gate-v1",
   "runner": "github-actions",
-  "at": "2026-10-02T06:30:07.668Z",
+  "at": "2026-10-02T07:26:53.748Z",
   "target": "https://roshpinacare-sys.github.io/Console",
   "verdict": "2 RED",
   "counts": {
@@ -9,71 +9,71 @@
     "fail": 2,
     "skip": 2
   },
-  "durationMs": 24747,
-  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/36973793322",
+  "durationMs": 10135,
+  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/36978571094",
   "results": [
     {
       "gate": "G1-site-up",
       "status": "PASS",
       "measured": "HTTP 200 · 169760 bytes",
       "note": "",
-      "at": "2026-10-02T06:29:43.402Z"
+      "at": "2026-10-02T07:26:43.809Z"
     },
     {
       "gate": "G2-zero-broken-links",
       "status": "FAIL",
       "measured": "14 pages · 85 links · 1 broken · 5 undetermined",
       "note": "wallet.html: ${esc(base)}/#saos-reg=${encodeURIComponent(JSON.stringify(qe))} → HTTP 404",
-      "at": "2026-10-02T06:30:06.403Z"
+      "at": "2026-10-02T07:26:53.398Z"
     },
     {
       "gate": "G3-witness-freshness",
       "status": "PASS",
-      "measured": "cp#1106 · att 1116 · age 0.6h (threshold 26h)",
+      "measured": "cp#1110 · att 1120 · age 0.4h (threshold 26h)",
       "note": "",
-      "at": "2026-10-02T06:30:06.635Z"
+      "at": "2026-10-02T07:26:53.409Z"
     },
     {
       "gate": "G5-live-format-consistency",
       "status": "PASS",
       "measured": "public book format=\"saos-live-v1\"",
       "note": "",
-      "at": "2026-10-02T06:30:06.866Z"
+      "at": "2026-10-02T07:26:53.486Z"
     },
     {
       "gate": "G6-bridgehead-sane",
       "status": "PASS",
       "measured": "format=\"agent-bridgehead-state-v1\" · phase task present",
       "note": "",
-      "at": "2026-10-02T06:30:07.097Z"
+      "at": "2026-10-02T07:26:53.497Z"
     },
     {
       "gate": "G8-complete-map",
       "status": "FAIL",
       "measured": "9 system pages (min 10000B) · index links 9/9 · sitemap 9/9 · roast stub BROKEN · hub/docs/reports 404 (banned, as required)",
       "note": "roast stub broken",
-      "at": "2026-10-02T06:30:07.667Z"
+      "at": "2026-10-02T07:26:53.746Z"
     },
     {
       "gate": "G4-no-forged-twins",
       "status": "SKIP",
       "measured": "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)",
       "note": "",
-      "at": "2026-10-02T06:30:07.667Z"
+      "at": "2026-10-02T07:26:53.746Z"
     },
     {
       "gate": "G7-dev-server",
       "status": "SKIP",
       "measured": "sandbox-only (the work server is not public infrastructure)",
       "note": "",
-      "at": "2026-10-02T06:30:07.667Z"
+      "at": "2026-10-02T07:26:53.746Z"
     },
     {
       "gate": "G9-slo-published",
       "status": "PASS",
-      "measured": "4 SLOs · window 30d · 14 day buckets · fill 42.7% · since 2026-09-19",
+      "measured": "4 SLOs · window 30d · 14 day buckets · fill 42.8% · since 2026-09-19",
       "note": "",
-      "at": "2026-10-02T06:30:07.668Z"
+      "at": "2026-10-02T07:26:53.747Z"
     }
   ]
 }
