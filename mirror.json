@@ -1,28 +1,28 @@
 {
   "format": "weave-console-mirror-v1",
-  "generatedAt": "2026-10-02T00:00:58.171Z",
+  "generatedAt": "2026-10-02T00:14:02.194Z",
   "source": "the sovereign ledger (Zip repo, cloud heart beat)",
   "doctrine": "derived public truth - no keys, no vault blocks, no secrets; the ledger and the chains remain the source of truth",
   "stats": {
-    "attestations": 1096,
-    "checkpoints": 1086,
+    "attestations": 1097,
+    "checkpoints": 1087,
     "agents": 13,
     "brainKeys": 3,
     "brainLive": 3,
     "attByStatus": {
       "UNMEASURED": 1,
-      "VERIFIED": 1095
+      "VERIFIED": 1096
     },
-    "headHash": "0x35ac9c96074d32d41e7cd495bcf61be67acf71db72deaf068da174e22b4991a1",
+    "headHash": "0x654483d88885c96e4ec3c546369e27367ce602e6891037df226daaab0cb872ec",
     "vitality": {
-      "atts24h": 79,
-      "atts7d": 533,
+      "atts24h": 80,
+      "atts7d": 534,
       "signers24h": 1,
-      "checkpoints24h": 79,
+      "checkpoints24h": 80,
       "marketEvents24h": 0,
       "aliveDays": 19,
       "lastAttAgeMin": 0,
-      "computedAtIso": "2026-10-02T00:00:58.171Z"
+      "computedAtIso": "2026-10-02T00:14:02.194Z"
     }
   },
   "agents": [
@@ -103,9 +103,9 @@
       "role": "RELAYER",
       "status": "ACTIVE",
       "address": "0xaB07095053FC50a306A6d26FAa2c8887c5827B92",
-      "attestations": 1066,
-      "lastAttestationSeq": 1096,
-      "lastAttestationAt": "2026-10-02T00:00:58.074Z"
+      "attestations": 1067,
+      "lastAttestationSeq": 1097,
+      "lastAttestationAt": "2026-10-02T00:14:02.144Z"
     },
     {
       "name": "weave-market-regulator",
@@ -146,12 +146,20 @@
   ],
   "attestations": [
     {
+      "seq": 1097,
+      "type": "AUDIT",
+      "status": "VERIFIED",
+      "at": "2026-10-02T00:14:02.144Z",
+      "agentName": "weave-cloud-heart",
+      "claim": "ביקורת יכולת-חתימה יומית: 13 זהויות תפקיד בספר, 1 חותמים בפועל (sealed) · השאר memory-only - מפתחותיהם חיו ב-DB סביבתי ומתים עם הסביבה · הפונקציות שלהם נבלעו בלב (gitkeeper·דחיפות, scout·סריקת האקוסיסטם) או ממתינות (relayer·עדות הפוכה)"
+    },
+    {
       "seq": 1096,
       "type": "AUDIT",
       "status": "VERIFIED",
-      "at": "2026-10-02T00:00:58.074Z",
+      "at": "2026-10-02T00:14:02.111Z",
       "agentName": "weave-cloud-heart",
-      "claim": "ביקורת יכולת-חתימה יומית: 13 זהויות תפקיד בספר, 1 חותמים בפועל (sealed) · השאר memory-only - מפתחותיהם חיו ב-DB סביבתי ומתים עם הסביבה · הפונקציות שלהם נבלעו בלב (gitkeeper·דחיפות, scout·סריקת האקוסיסטם) או ממתינות (relayer·עדות הפוכה)"
+      "claim": "מדידת אקוסיסטם (G6) הונחה בספר: dup=0.0216 - 34 עותקים יתרים מתוך 1573 קבצי-סטטוס שנמדדו (20 קבוצות שכפול) · יעד <0.2 מוחזק"
     },
     {
       "seq": 1095,
@@ -1096,23 +1104,23 @@
       "at": "2026-09-30T11:24:12.420Z",
       "agentName": "weave-cloud-heart",
       "claim": "קו Steem/Hive: checkpoint #967 root 0xb91f1a2cce364b14… עוגן on-chain כ-custom_json saos.weave.core.v1 מאת @headcorner (סמכות posting, מזוהה מהמפתח - ברירת המחדל @cashmachine) - עד חיצוני ציבורי ובלתי-תלוי בגיטהאב לאמת הספר."
-    },
-    {
-      "seq": 977,
-      "type": "ANCHOR",
-      "status": "VERIFIED",
-      "at": "2026-09-30T10:42:24.975Z",
-      "agentName": "weave-cloud-heart",
-      "claim": "קו ה-ZERO (Z Chain 9369, גז-אפס): checkpoint #966 root 0x9f4ca46ded9db01e… עוגן כטרנזקציית EVM אמיתית ממפתח הרשת (סלקטור 0xa9059cbb + מטען קנוני, ממוען-עצמית ל-EOA אינרטי) - עד EVM ציבורי בלתי-תלוי בגיטהאב, בעלות מדודה 0.000000."
     }
   ],
   "checkpoints": [
     {
+      "index": 1087,
+      "root": "0x654483d88885c96e4ec3c546369e27367ce602e6891037df226daaab0cb872ec",
+      "attFrom": 1097,
+      "attTo": 1097,
+      "at": "2026-10-02T00:14:02.162Z",
+      "anchoredOn": []
+    },
+    {
       "index": 1086,
-      "root": "0x35ac9c96074d32d41e7cd495bcf61be67acf71db72deaf068da174e22b4991a1",
+      "root": "0x59e634ddbbcfaae9171f942d1425a7c617eb7dc9c4f9bb48af4adb4fb6569c88",
       "attFrom": 1096,
       "attTo": 1096,
-      "at": "2026-10-02T00:00:58.104Z",
+      "at": "2026-10-02T00:14:02.135Z",
       "anchoredOn": []
     },
     {
@@ -1387,16 +1395,6 @@
       "at": "2026-10-01T15:28:02.083Z",
       "anchoredOn": [
         "steem"
-      ]
-    },
-    {
-      "index": 1057,
-      "root": "0x8e1209f50e716e09fff33f4d322cafef53d470b19684f69d02cefe3a237efd5f",
-      "attFrom": 1067,
-      "attTo": 1067,
-      "at": "2026-10-01T15:27:39.646Z",
-      "anchoredOn": [
-        "zero"
       ]
     }
   ],
