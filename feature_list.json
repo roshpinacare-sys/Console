@@ -1,0 +1,52 @@
+{
+  "features": [
+    {
+      "id": "feat-001",
+      "name": "Ops status + public ledger replay",
+      "description": "status.json + ledger.json: the public replay book of what the estate did, mirrored keylessly",
+      "dependencies": [],
+      "status": "done",
+      "evidence": "init.sh validates both JSONs; money-watch/dex-watch/weave-console bots land updates on cadence"
+    },
+    {
+      "id": "feat-002",
+      "name": "Trigger mesh",
+      "description": "triggers/ records what was measured and what fired — visible to every agent and any human",
+      "dependencies": ["feat-001"],
+      "status": "done",
+      "evidence": ".github/workflows/trigger-mesh.yml on cadence"
+    },
+    {
+      "id": "feat-003",
+      "name": "Shared mobile layer on every page",
+      "description": "assets/site.css + assets/site.js on all console pages, mobile-first; layer-drop regression class permanently guarded",
+      "dependencies": [],
+      "status": "done",
+      "evidence": "r147-b regression caught+restored by 15-b; Task 14 mobile redesign wave verified in browser"
+    },
+    {
+      "id": "feat-004",
+      "name": "Mirror whitelist discipline",
+      "description": "mirror workflows copy data-JSON only on an explicit whitelist; no number transformation in transit",
+      "dependencies": ["feat-001"],
+      "status": "done",
+      "evidence": "Task 14: mirror-from-console.yml cut to data-JSON whitelist (Domain side)"
+    },
+    {
+      "id": "feat-005",
+      "name": "LHE harness protocol adoption (this repo)",
+      "description": "AGENTS.md protocol + feature_list.json + progress.md + session-handoff.md + init.sh at repo root",
+      "dependencies": [],
+      "status": "done",
+      "evidence": "Task 19 — validator score recorded in the Task 19 worklog section"
+    },
+    {
+      "id": "feat-006",
+      "name": "Truth gates (agent-verify + truth-gate CI)",
+      "description": "Fresh-context judge runs verify pages/books honesty; key-verify proves keyless pages stay keyless",
+      "dependencies": ["feat-005"],
+      "status": "done",
+      "evidence": ".github/workflows/agent-verify.yml + truth-gate.yml + key-verify.yml"
+    }
+  ]
+}
