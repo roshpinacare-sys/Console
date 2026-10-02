@@ -10,30 +10,23 @@
 <style>
 :root{--bg:#09090b;--panel:rgba(255,255,255,.03);--line:rgba(255,255,255,.09);--acc:#10b981;--text:#fafafa;--dim:#a1a1aa;--faint:#71717a}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans Hebrew",sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-main{max-width:560px;width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:32px 28px;text-align:center}
-h1{font-size:19px;font-weight:700;letter-spacing:.01em}
+body{background:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1.5px) 0 0/28px 28px,radial-gradient(680px 340px at 80% -120px,rgba(16,185,129,.09),transparent 68%),var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans Hebrew",sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased}
+main{max-width:560px;width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:32px 28px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 44px -30px rgba(0,0,0,.95)}
+h1{font-size:19px;font-weight:700}
 h2{font-size:12px;font-weight:600;color:var(--faint);margin-top:6px;font-family:ui-monospace,Menlo,Consolas,monospace}
 p{font-size:14px;color:var(--dim);line-height:1.7;margin-top:14px}
 p.en{font-size:12.5px;color:var(--faint)}
 a.btn{display:inline-block;margin-top:20px;padding:11px 22px;border-radius:10px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);color:#34d399;font-weight:600;font-size:14px;text-decoration:none}
 a.btn:hover{background:rgba(16,185,129,.2)}
-
-/* ═══════ Z-29-a design-system upgrade ═══════ */
-body{background:
-  radial-gradient(rgba(255,255,255,.04) 1px, transparent 1.5px) 0 0/28px 28px,
-  radial-gradient(680px 340px at 80% -120px, rgba(16,185,129,.09), transparent 68%),
-  var(--bg);-webkit-font-smoothing:antialiased}
 ::selection{background:rgba(16,185,129,.28);color:#fafafa}
-a.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:10px}
-main{box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 44px -30px rgba(0,0,0,.95)}
+a.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style>
 </head>
 <body>
 <main>
 <h1>הרוסט ההנדסי יצא מהמחזור</h1>
 <h2>roast.html · retired R58</h2>
-<p>דף זה השתייך לדור ממשק קודם של הקונסולה. החזיתות מדורות שונים אינן מתקיימות במקביל: דור אחד, אמת אחת.</p>
+<p>דף זה השתייך לדור ממשק קודם של הקונסולה. החזיתות מדורות שונות אינן מתקיימות במקביל: דור אחד, אמת אחת.</p>
 <p class="en">This page belonged to a previous interface generation of the console. One generation, one truth.</p>
 <a class="btn" href="/Console/">הקונסולה הנוכחית · The current console</a>
 </main>

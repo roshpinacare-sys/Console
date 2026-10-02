@@ -168,8 +168,11 @@ function bucketFor(days, date) {
     for (const h of hrefs) {
       if (!h || h.startsWith("#") || h.startsWith("data:") || h.startsWith("javascript:") ||
           h.startsWith("mailto:") || h.startsWith("tel:")) continue;
-      // inline-JS template fragments (href built by string concat) are code, not links
-      if (h.includes(String.fromCharCode(39)) || h.includes("+") || h.includes("<")) continue;
+      // inline-JS template fragments (href built by string concat) are code, not links:
+      // quotes, plus-concat, raw "<", and any unexpanded ${...} template expression
+      // can never be a real href at render time (wallet.html r144-g2 deep-link builder).
+      if (h.includes(String.fromCharCode(39)) || h.includes("+") || h.includes("<") ||
+          h.includes("${")) continue;
       let url;
       try { url = new URL(h, base); } catch { continue; }
       if (url.protocol !== "http:" && url.protocol !== "https:") continue;
