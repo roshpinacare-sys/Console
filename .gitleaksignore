@@ -1,6 +1,13 @@
 # .gitleaksignore — triaged 2026-10-01 by Task 13-d2 (org-gitleaks run 36763896413)
 # one fingerprint per line; git form (commit:file:rule:line) + HEAD-only form (file:rule:line)
 # so full-history AND --no-git scans agree. No secret material in this file (fingerprints+comments only).
+#
+# 2026-10-02 (Task 14-a): the fingerprints below are SUPERSEDED as the working
+# mechanism by the rule-level allowlist in .gitleaks.toml — the ledger-publish bot
+# rewrites ledger.json every publish, so line-number fingerprints shifted
+# (15543→17478) and re-flagged (org receipts findingsHead=8, asOf 07:58Z).
+# Kept for history/documentation; the .gitleaks.toml allowlist is what makes
+# HEAD and history scans 0 today (proven there, negative test included).
 
 # false-positive: AES-256-GCM ciphertext envelope fields (encKey/keyIv/keyTag) of the by-design secret-free ledger book (plaintext valueless without the seal password, which is not in the repo)
 b87a0d11ce823b35da74902ff4c7947d0f295111:ledger.json:generic-api-key:8928

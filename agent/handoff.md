@@ -71,7 +71,7 @@ from chain), **agent-verify (measures the agent itself - every 6h at :55)**.
 
 1. No secrets in public repos. Ever. The PAT stays in the sandbox git config and sovereign env only.
 2. No spam, no rate-limit abuse, no platform-rules games - autonomy must never get us kicked out.
-3. No painted greens: the foundry CI is 0/100 and stays publicly red until truly fixed.
+3. No painted greens: the saos-sovereign-foundry CI is 0/100 and stays publicly red until truly fixed.
 4. No custody claims, no profit promises - the wallet's keys stay on user devices.
 5. The sandbox is not a dependency: if a feature only works in the sandbox, it does not work.
 6. Don't rewrite this protocol to be weaker. Strengthen it or leave it.

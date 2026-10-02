@@ -1,0 +1,59 @@
+# .gitleaks.toml — Console (Task 14-a, 2026-10-02)
+#
+# WHY THIS FILE EXISTS: the weave ledger-publish bot rewrites ledger.json every
+# ~1-2h, so the line-number fingerprints in .gitleaksignore (Task 13-d2) shift
+# on every publish and re-flag honestly (org-gitleaks regression findingsHead=8
+# asOf 2026-10-02T07:58Z). Line fingerprints can never win that race; a NARROW
+# RULE-LEVEL allowlist can.
+#
+# WHAT IT ALLOWS — exactly one known-inert class, nothing else:
+# ledger.json `.brain[N].{encKey,keyIv,keyTag}` — the AES-256-GCM envelope of
+# the weave brain-key pool, published BY DESIGN in the public replay book:
+#   · keyIv = 12-byte GCM nonce, keyTag = 16-byte GCM auth tag — ciphertext
+#     METADATA, not secret material, in any GCM scheme;
+#   · encKey = the ciphertext itself. Its KEK is derived as
+#     keccak256("weave-daemon/v1:weave-brain:" + devKeyHex) where devKeyHex
+#     lives ONLY in the Zip operator DB ("חוק הברזל — אין devKeyHex בקובץ",
+#     Zip/src/lib/weave/ledger-sync.ts iron law). The repo alone cannot open
+#     these blobs — seal path read and verified before writing this allowlist.
+# The allowlist is attached to the DEFAULT `generic-api-key` rule via same-ID
+# merge (config.go extend(): a same-ID rule appends its allowlists to the base
+# rule; leaving Regex empty keeps the base regex) with condition=and, so a
+# finding is suppressed ONLY if it is in ledger.json AND its match is one of
+# the three envelope fields with a hex value. Any OTHER field in ledger.json
+# (or any other file) still scans normally — proven by negative test (a fake
+# `fakeApiKey` injected into ledger.json stays flagged; Task 14-a).
+#
+# GITLEAKS v8.24.3 TRAPS — all verified empirically and against the v8.24.3
+# source, recorded so the next triager does not burn an hour on them:
+#   1. The config file MUST be named `.gitleaks.toml` (dot-prefixed). A plain
+#      `gitleaks.toml` in the source root is SILENTLY IGNORED (debug log:
+#      "no gitleaks config found") unless passed via --config.
+#   2. A GLOBAL `[allowlist]` with a matching `paths` entry makes the directory
+#      walker SKIP WHOLE FILES ("Skipping file due to global allowlist") —
+#      a real secret added to ledger.json would never be scanned. That is a
+#      blanket file exclusion and is NOT acceptable doctrine; that is why the
+#      allowlist here is RULE-level, evaluated per-finding.
+#   3. `regexes`/`paths` are COMMA-SEPARATED LISTS. A regex containing a
+#      literal comma (e.g. `[0-9a-f]{12,}`) is split into broken fragments and
+#      silently never matches. Hence `[0-9a-f][0-9a-f]+` below, not `{12,}`.
+#   4. Allowlist `condition` defaults to OR, under which a matching path alone
+#      suppresses every finding in the file (regex never consulted).
+#      `condition = "and"` is what makes path+regex both required.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"  # same-ID stub: base regex/entropy kept, allowlist appended
+
+[rules.allowlists]
+description = "weave ledger sealed-envelope fields (by-design inert GCM ciphertext metadata; KEK never in repo — Task 14-a triage of org-gitleaks findingsHead=8)"
+condition = "and"
+paths = '''(^|/)ledger\.json$'''
+regexTarget = "match"
+# regexTarget=match: gitleaks' Match for generic-api-key starts mid-field
+# (verified shape `encKey": "…"`), so the field-name key is unquoted here.
+# Hex-gated (no comma allowed — trap 3) so a non-hex value in these fields
+# would still flag.
+regexes = '''(encKey|keyIv|keyTag)":\s*"[0-9a-f][0-9a-f]+'''

@@ -1,0 +1,73 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   site.css — Console shared mobile layer (Task 14-a, 2026-10-02)
+   ONE shared mobile drawer nav for every page of the ops console. Pages used
+   to duplicate inline navs that broke on phones (owner: "תפריט שבור בסלולר").
+   Palette: the existing dark zinc system — no new hues, no blue/indigo.
+   Everything is scoped under .sw-* to never fight a page's own styles.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── the burger (injected by site.js when a page has no mobile menu) ── */
+.sw-burger{display:none;background:rgba(255,255,255,.04);border:1px solid var(--line,#27272a);
+  color:var(--text,#fafafa);border-radius:999px;width:44px;height:44px;min-width:44px;min-height:44px;
+  cursor:pointer;align-items:center;justify-content:center;padding:0;flex:none}
+.sw-burger svg{width:20px;height:20px;pointer-events:none}
+.sw-burger:focus-visible{outline:2px solid var(--text,#fafafa);outline-offset:2px}
+.sw-burger:active{transform:scale(.96)}
+@media(max-width:900px){.sw-burger{display:inline-flex}}
+
+/* ── the scrim + drawer ── */
+.sw-scrim{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:2147483000}
+.sw-scrim[data-open="1"]{opacity:1;pointer-events:auto}
+.sw-drawer{position:fixed;top:0;inset-inline-end:0;height:100dvh;width:min(85vw,360px);
+  background:var(--sw-bg,#0c0c0e);color:var(--text,#fafafa);border-inline-start:1px solid var(--line,#27272a);
+  box-shadow:-18px 0 50px rgba(0,0,0,.5);z-index:2147483001;overflow-y:auto;overscroll-behavior:contain;
+  transform:translateX(100%);transition:transform .24s ease;
+  padding:14px 14px calc(18px + env(safe-area-inset-bottom,0px)) 14px;
+  padding-top:calc(14px + env(safe-area-inset-top,0px))}
+html[dir="rtl"] .sw-drawer{transform:translateX(-100%)}
+/* the open state must BEAT the rtl hidden rule (same shape of selector, later + equal
+   specificity chain) — browser-proven 2026-10-02: RTL pages otherwise never open */
+html[dir="rtl"] .sw-drawer[data-open="1"]{transform:translateX(0)}
+.sw-drawer[data-open="1"]{transform:translateX(0)}
+.sw-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.sw-head b{font-size:13px;letter-spacing:.4px;color:var(--faint,#a1a1aa);text-transform:uppercase}
+.sw-close{background:rgba(255,255,255,.04);border:1px solid var(--line,#27272a);color:var(--text,#fafafa);
+  border-radius:999px;width:44px;height:44px;min-width:44px;min-height:44px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;padding:0}
+.sw-close svg{width:18px;height:18px;pointer-events:none}
+.sw-close:focus-visible{outline:2px solid var(--text,#fafafa);outline-offset:2px}
+.sw-group{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint,#a1a1aa);
+  margin:14px 6px 6px;font-weight:700}
+.sw-group:first-of-type{margin-top:4px}
+.sw-drawer nav a{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 14px;
+  border-radius:12px;font-size:15px;font-weight:500;color:var(--dim,#d4d4d8);
+  text-decoration:none;border:1px solid transparent}
+.sw-drawer nav a:hover,.sw-drawer nav a:focus-visible{color:var(--text,#fafafa);background:rgba(255,255,255,.06);text-decoration:none;outline:none}
+.sw-drawer nav a:focus-visible{outline:2px solid var(--text,#fafafa);outline-offset:2px}
+.sw-drawer nav a:active{transform:scale(.99)}
+.sw-drawer nav a.on{color:var(--text,#fafafa);background:rgba(255,255,255,.09);border-color:var(--line,#27272a);font-weight:600}
+.sw-drawer nav a svg{width:18px;height:18px;flex:none;opacity:.85}
+/* ── header action buttons (langbtn/backlink/etc.): pages ship ~31px pills —
+   under 44px touch minimum on phones (owner complaint class). Scoped, mobile
+   only, so desktop metrics stay pixel-identical. ── */
+@media(max-width:900px){
+  header .langbtn,header .backlink,header .hd-actions a,header .hd-actions button{
+    min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sw-drawer,.sw-scrim{transition:none}
+}
+
+/* ── sticky footer (only when site.js proves a direct-child footer exists):
+   the footer must hug the viewport bottom on short pages and be pushed down
+   naturally on long ones — never float with a gap below. ── */
+body.sw-sticky{min-height:100svh;display:flex;flex-direction:column}
+body.sw-sticky>main{flex:1 0 auto;width:100%}
+/* width:100% restores block-like sizing: a direct-child main that also carries
+   .wrap (margin:0 auto) is a flex item here — without an explicit width it
+   shrink-to-fits its widest table and re-introduces horizontal scroll
+   (browser-proven on truth.html at 390px, 2026-10-02). max-width+auto margins
+   still center it on desktop exactly as the page's own CSS intends. */
+body.sw-sticky>footer{margin-top:auto}

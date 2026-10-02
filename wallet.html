@@ -232,6 +232,8 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
   html{scroll-behavior:auto}
 }
 </style>
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/site.js" defer></script>
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -775,6 +777,14 @@ en: {
     queued:(id)=>"the relay queued it for the next fold publish (ref: "+id+")",
     registered:(ref)=>"registered on chain ("+ref+")",
     failed:"the hosted relay did not answer — your signature stays in the local queue",
+    /* 14-a wallet-truth: the live book can REFUSE an envelope. That is a real answer,
+       not a waiting state — the page used to keep showing "step 2 of 3" forever. */
+    rejected:(err)=>"the network rejected this registration ("+err+")",
+    rejectedHint:"The live book refused the envelope — that is the network's real answer, not a waiting state. Fix what it refused (duplicate or malformed registration) and sign a fresh one.",
+    rejectedClear:"Remove the rejected envelope",
+    stale:"signed and sent, but the chain has not folded this wallet yet",
+    staleHint:"The fold decides, not this page. Watch the live book; if it stays unfolded, sign a fresh registration.",
+    doorBtn:"Watch the live book (Truth Gate)",
     deepBtn:"Complete registration in the Console",
     hashTitle:"A wallet registration was passed from another device", hashGo:"Relay it via the hosted relay",
     hashFail:"the relay did not accept it — nothing was changed", hashNone:"no hosted relay is known to this page yet" },
@@ -900,6 +910,13 @@ he: {
     queued:(id)=>"הריליי תיקב אותה לתור לפרסום-הקיפול הבא (מזהה: "+id+")",
     registered:(ref)=>"נרשם על השרשרת ("+ref+")",
     failed:"הריליי המאורח לא נענה — החתימה שלכם נשארת בתור המקומי",
+    /* 14-a אמת-הארנק: הספר החי יכול לדחות מעטפת — תשובה אמיתית של הרשת, לא מצב-המתנה */
+    rejected:(err)=>"הרשת דחתה את ההרשמה ("+err+")",
+    rejectedHint:"הספר החי סירב למעטפת — זו תשובת הרשת בפועל, לא מצב-המתנה. תקנו מה שנדחה (רישום כפול או פגום) וחתמו הרשמה חדשה.",
+    rejectedClear:"הסר את המעטפת הנדחית",
+    stale:"נחתם ונשלח — השרשרת עוד לא קיפלה את הארנק",
+    staleHint:"הקיפול מחליט, לא הדף. עקבו אחרי הספר החי; אם הוא לא נקפל, חתמו הרשמה חדשה.",
+    doorBtn:"עקבו אחרי הספר החי (שער האמת)",
     deepBtn:"השלם רישום בקונסולה",
     hashTitle:"הרשמת-ארנק הועברה ממכשיר אחר", hashGo:"שדר דרך הריליי המאורח",
     hashFail:"הריליי לא קיבל אותה — לא השתנה דבר", hashNone:"אין עדיין ריליי מאורח מוכר לדף הזה" },
@@ -1327,8 +1344,9 @@ function renderWalletUI() {
     const queued = QUEUE.some((e) => e && e.k === "wallet.create");
     $("wallet-reg").innerHTML = w
       ? `<span class="ok">${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
-      : (queued ? relayRegStatusHtml()
-        : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`);
+      : (rejectedReg() ? relayRegStatusHtml()
+        : (queued ? relayRegStatusHtml()
+        : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`));
     renderWalletBalances();
     refreshSendSymbols();
   }
@@ -1565,6 +1583,13 @@ function relayBase() {
   return typeof u === "string" && /^https:\/\//.test(u) ? u.replace(/\/+$/, "") : null;
 }
 function regEnv() { return QUEUE.find((e) => e && e.k === "wallet.create") || null; }
+/* 14-a wallet-truth: the live book publishes REJECTED envelopes in LIVE.invalid.
+   If the network refused OUR wallet.create, that is a real verdict — show it,
+   never an eternal "step 2 of 3". Match by envelope id against the local queue. */
+function rejectedReg() {
+  if (!LIVE || !Array.isArray(LIVE.invalid)) return null;
+  return LIVE.invalid.find((x) => x && x.k === "wallet.create" && QUEUE.some((e) => e && e.id === x.id)) || null;
+}
 function relayRegStatusHtml() {
   const qe = regEnv();
   const rs = qe ? RELAYMAP[qe.id] : null;
@@ -1572,24 +1597,41 @@ function relayRegStatusHtml() {
   const foldNote = LANG === "he"
     ? "השרשרת מקפלת בעצמה — הספר החי יזקוף את הארנק בבלוק הבא (שלב 3)."
     : "the chain folds itself — the live book credits the wallet in the next block (step 3).";
+  const door = ` <a class="btn ghost sm" style="margin-top:8px;display:inline-block" href="truth.html">${esc(t("relay.doorBtn"))}</a>`;
   let html = "";
+  const rej = rejectedReg();
+  if (rej) {
+    /* 14-a: a refused registration is the network's honest answer — show it with a way out */
+    html += `<span class="warn">${esc(t("relay.rejected")(rej.err || "invalid"))}</span>`;
+    html += `<div class="hint" style="margin-top:6px">${esc(t("relay.rejectedHint"))}</div>`;
+    html += `<button class="btn ghost sm" data-reject-id="${esc(rej.id)}" style="margin-top:8px">${esc(t("relay.rejectedClear"))}</button>`;
+    html += door;
+    return html;
+  }
   if (rs && rs.status === "sending") html += `<span class="warn">${esc(t("relay.sending"))}…</span>`;
   else if (rs && rs.status === "broadcast") html += `<span class="warn">${esc(t("relay.sent")(rs.ref || "…"))}</span><div class="hint" style="margin-top:6px">${esc(foldNote)}</div>`;
   else if (rs && rs.status === "queued") html += `<span class="warn">${esc(t("relay.queued")(rs.ref || "…"))}</span>`;
+  else if (rs && rs.status === "stale") html += `<span class="warn">${esc(t("relay.stale"))}</span><div class="hint" style="margin-top:6px">${esc(t("relay.staleHint"))}</div>`;
   else if (rs && rs.status === "failed") html += `<span class="warn">${esc(t("relay.failed"))}</span>`;
   else html += `<span class="warn">${esc(t("status.queuedReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.queuedHint"))}</div>`;
   if (base && qe && (!rs || rs.status === "failed")) {
     html += `<a class="btn ghost sm" style="margin-top:8px;display:inline-block" href="${esc(base)}/#saos-reg=${encodeURIComponent(JSON.stringify(qe))}">${esc(t("relay.deepBtn"))}</a>`;
   }
+  if (qe) html += door; /* 14-a: the live book is the truth source for every queued state */
   return html;
 }
 async function relaySend(env) {
   RELAYMAP[env.id] = { status: "sending", at: Date.now() }; saveRelayMap(); renderWalletUI();
   try {
+    /* 14-a: a fetch with no timeout hangs "sending" forever — cap it honestly at 12s */
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 12000);
     const r = await fetch(relayBase() + "/api/saos/relay", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ envelope: env, signedAt: new Date().toISOString() }),
+      signal: ctl.signal,
     });
+    clearTimeout(timer);
     const j = await r.json().catch(() => null);
     if (j && j.ok && j.status === "broadcast") {
       RELAYMAP[env.id] = { status: "broadcast", ref: j.opRef || j.txid || "", at: Date.now() };
@@ -1609,7 +1651,15 @@ async function relaySend(env) {
   }
 }
 async function relayPoll(env, tries = 0) {
-  if (tries > 15) return; // ~2 דק' — הקיפול דן בבלוקים; מה שלא נקלט ייקלט ברענון הבא
+  if (tries > 15) { // ~2 דק' — הקיפול דן בבלוקים; מה שלא נקלט ייקלט ברענון הבא
+    /* 14-a: never leave a silent poller — an unfolded envelope becomes an honest
+       "stale" state with a next action, not an eternal amber line */
+    if (RELAYMAP[env.id] && RELAYMAP[env.id].status === "broadcast") {
+      RELAYMAP[env.id] = { status: "stale", ref: RELAYMAP[env.id].ref || "", at: Date.now() };
+      saveRelayMap(); renderWalletUI();
+    }
+    return;
+  }
   try {
     const r = await fetch(relayBase() + "/api/saos/relay?address=" + encodeURIComponent(env.by), { cache: "no-store" });
     const j = await r.json();
@@ -1634,6 +1684,19 @@ function relayKick() {
   if (RELAYMAP[qe.id]) return;     // כבר בטיפול — אפס ספאם
   relaySend(qe);
 }
+
+/* 14-a: clear a network-rejected registration from the local queue (event delegation —
+   the button lives inside re-rendered innerHTML) */
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-reject-id]");
+  if (!b) return;
+  const id = b.getAttribute("data-reject-id");
+  const i = QUEUE.findIndex((en) => en && en.id === id);
+  if (i >= 0) { QUEUE.splice(i, 1); saveQueue(); }
+  delete RELAYMAP[id]; saveRelayMap();
+  renderWalletUI();
+  toast(LANG === "he" ? "המעטפת הנדחית הוסרה מהתור" : "the rejected envelope was removed from the queue");
+});
 
 /* ═══════════ exchange + earn actions ═══════════ */
 $("btn-offer").addEventListener("click", async () => {

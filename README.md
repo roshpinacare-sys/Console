@@ -116,3 +116,85 @@ documents, or personal information. The renderer runs a secret gate on
 every publish and refuses to commit anything matching key or token
 patterns. The operator's key lives only in the operator's browser session
 (memory), never in this repository or its history.
+
+## Console truth — 2026-10-02 (Task 14-a, measured, only proven claims)
+
+**Security verdict (gitleaks, pinned v8.24.3, same invocation as the org
+workflow — `detect --source .` over full history + `dir` at HEAD):**
+
+- The 8 HEAD findings reported by the org receipts (findingsHead=8,
+  asOf 2026-10-02T07:58Z) were triaged one-by-one: all 8 are the same
+  known-inert class — `ledger.json` weave brain-seal envelope fields
+  (`encKey` / `keyIv` / `keyTag`), the by-design PUBLIC replay book's
+  AES-256-GCM ciphertext and its 12-byte nonce / 16-byte auth tag. Ciphertext
+  metadata, not secret material; the KEK is derived outside this repository
+  (devKeyHex never enters any repo — the Zip iron law was re-verified).
+  **Zero real secrets at HEAD.**
+- Root cause of the regression: the ledger-publish bot rewrites
+  `ledger.json` every publish, so 13-d2's line-number fingerprints in
+  `.gitleaksignore` shift and re-flag. Line fingerprints can never win that
+  race. Fix: a **rule-level allowlist** in the new `.gitleaks.toml`
+  (same-ID merge onto `generic-api-key`, `condition = "and"`, path gated to
+  `ledger.json` AND hex-gated to the three envelope fields). GitHub's
+  auto-config precedence (`(target path)/.gitleaks.toml`) means the org
+  workflow picks it up with zero workflow edits.
+- Proven: HEAD re-scan = **0 findings**; full-history re-scan = **0 findings**
+  (even with `.gitleaksignore` disabled); negative tests = a fake
+  `fakeApiKey` injected into `ledger.json` is STILL flagged (path-only
+  suppression is impossible by construction), hex-shaped secrets in other
+  fields still scan.
+
+**Mobile revolution (owner: "תפריט שבור בסלולר"):** one shared layer
+`assets/site.css` + `assets/site.js` now governs every front. Browser-verified
+at 390x844 across 24 pages (agent-browser sweep, re-run and re-verified by
+the finishing agent): burger 44px, drawer opens/closes
+(`aria-expanded` + Escape + focus return), drawer links ≥48px with correct
+depth-prefixed hrefs (about/, pitch/, pitch/en, onepager/, deck/, receipts/,
+hub/, hub/api/, hub/articles/en/), zero horizontal scroll on all 24 pages,
+header actions lifted to 44px on mobile only, sticky footer hugs the viewport
+on short pages. Four real bugs found by the sweeps and fixed: an RTL
+specificity bug that made the drawer never open on Hebrew pages, a flex
+shrink-to-fit interaction that re-introduced horizontal scroll on truth.html,
+64-char txids forcing 649px min-content on onepager, and the four rewritten
+marketing twins (pitch/, pitch/en.html, onepager/, deck/) wiring the shared
+layer with a root-level `assets/` prefix that 404s one directory deep —
+fixed to `../assets/`. Desktop 1280x900 unchanged (burger hidden, metrics
+identical, VLM visual check OK on mobile drawer + desktop home).
+
+**Wallet truth:** the registration flow now ends in real states only —
+signed-locally → queued (with instructions) → broadcast / **rejected**
+(the live book's own `invalid[]` verdict, matched by envelope id, with the
+reason and a clear action) / **stale** (broadcast but not folded within the
+poll window — the fold decides, not this page) / failed (relay did not
+answer, 12s timeout). No infinite "step 2 of 3", no simulated success. With
+no relay URL published in the live book (`relay.url = null` today), the
+local queue + manual Steem-posting-key broadcast remain the stated way, and
+the truth gate (truth.html) is linked from every queued state.
+
+**Console ↔ Domain de-dup:** Console = operations (live book, truth gate,
+triggers, receipts, wallet, verify). The duplicated marketing twins now
+point at their single maintained copy on the public sovereign face
+(https://roshpinacare-sys.github.io/Domain/…): pitch/, onepager/, deck/
+and about/ carry a canonical link plus a short ops-focused summary instead
+of a second full copy, and left this repo's sitemap (61→56 URLs, matching
+canonicals). **versus.html keeps its full body by necessity** — the R61
+complete-map gate requires all nine system fronts >10KB and sitemapped —
+so it received the canonical link only (plus a source comment recording
+the constraint). roast.html was compacted back under the gate's 2500-byte
+stub cap (its shared-layer wiring was dead weight there — no header, no
+drawer — and it had pushed the stub to 2547B, one of the two red gates of
+2026-10-01/02). The other red gate (G2) was a checker false-positive:
+the link extractor's own doctrine says inline-JS template fragments are
+code, not links, but its filter missed `${…}` interpolation and fetched
+the deep-link SOURCE inside wallet.html's script as a live URL (404).
+The filter now skips `${` fragments; real DOM links are still checked.
+All five rewritten twins carry EXACTLY ONE canonical each — versus.html's
+legacy self-canonical was removed in the same pass (a page with two
+different canonicals is an SEO error). Every canonical target was
+live-verified HTTP 200 on the Domain Pages site before delegating.
+No files deleted — bots own their paths. Bare `foundry` references (the
+repo was renamed saos-sovereign-foundry) were qualified in hub prose and
+agent notes; the watch bot itself untouched. Domain-side follow-up (not
+this repo): Domain/versus.html carries its self-canonical twice, and
+Domain's pitch/onepager/deck pages carry no self-canonical — both harmless
+to this delegation, one-line fixes on the Domain side.
