@@ -232,8 +232,6 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
   html{scroll-behavior:auto}
 }
 </style>
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js" defer></script>
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -399,7 +397,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
           <div class="feed" id="queue-list"></div>
           <button class="btn ghost sm" id="btn-copy-queue" style="margin-top:12px" data-i="wQueueCopy">Copy signed JSON</button>
         </div>
-        <div class="card">
+        <div class="card" id="card-broadcast">
           <h2 data-i="wRelayT">Broadcast</h2>
           <p class="sub" data-i="wRelayP">A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.</p>
           <div class="frow">
@@ -773,18 +771,19 @@ en: {
     newReg:"Step 1 of 3: sign your registration", newHint:"Tap Register below. Your registration is signed on this device and nothing leaves it until you broadcast it.",
     queuedReg:"Step 2 of 3: signed and queued", queuedHint:"Your registration is signed on this device. Open Broadcast below and relay it with a Steem posting key; the network fold then lists your wallet (step 3)." },
   /* r144-g2 — hosted-relay states for step 2 → 3 (honest: every state is a real one) */
+  /* r147-b — no-relay dead end replaced by a measured state machine: WHY it waits
+     (relay.url measured in the live book), since when, and what unblocks it. */
   relay:{ sending:"signed — handing to the hosted relay", sent:(id)=>"signed — sent for broadcast (ref: "+id+")",
     queued:(id)=>"the relay queued it for the next fold publish (ref: "+id+")",
     registered:(ref)=>"registered on chain ("+ref+")",
     failed:"the hosted relay did not answer — your signature stays in the local queue",
-    /* 14-a wallet-truth: the live book can REFUSE an envelope. That is a real answer,
-       not a waiting state — the page used to keep showing "step 2 of 3" forever. */
-    rejected:(err)=>"the network rejected this registration ("+err+")",
-    rejectedHint:"The live book refused the envelope — that is the network's real answer, not a waiting state. Fix what it refused (duplicate or malformed registration) and sign a fresh one.",
-    rejectedClear:"Remove the rejected envelope",
-    stale:"signed and sent, but the chain has not folded this wallet yet",
-    staleHint:"The fold decides, not this page. Watch the live book; if it stays unfolded, sign a fresh registration.",
-    doorBtn:"Watch the live book (Truth Gate)",
+    noRelayTitle:"Step 2 of 3: signed — waiting for broadcast. No hosted relay is declared in the live book",
+    noRelayWhy:(gen)=>"measured from saos-live.json (book generated "+gen+"): relay.url = null — the home platform has not declared a public URL yet (operator gate WEAVE_PUBLIC_URL). Nothing was sent: there is nowhere to send it to.",
+    noRelayWay1:"Real ways forward: (1) broadcast yourself with a Steem posting key in the Broadcast card — works today, no relay needed; (2) once a public relay is declared in the book, this page relays your signed registration automatically (rechecks every 2 minutes).",
+    recheck:"Recheck the live book now", rechecking:"checking…",
+    goToBroadcast:"Open the Broadcast card",
+    recheckFound:"relay is now declared — handing your signed registration over",
+    recheckStill:"rechecked: the book still declares no hosted relay (relay.url = null)",
     deepBtn:"Complete registration in the Console",
     hashTitle:"A wallet registration was passed from another device", hashGo:"Relay it via the hosted relay",
     hashFail:"the relay did not accept it — nothing was changed", hashNone:"no hosted relay is known to this page yet" },
@@ -906,17 +905,19 @@ he: {
     newReg:"שלב 1 מתוך 3: חתימת ההרשמה", newHint:"לחצו 'רישום על השרשרת' למטה. ההרשמה נחתמת במכשיר שלכם ושום דבר לא יוצא ממנו עד שתשדרו אותה.",
     queuedReg:"שלב 2 מתוך 3: נחתם וממתין בתור", queuedHint:"ההרשמה נחתמה במכשיר שלכם. פתחו את כרטיס 'שידור' למטה ושדרו עם מפתח posting של Steem; אז הרשת תכניס את הארנק לספר (שלב 3)." },
   /* r144-g2 — מצבי הריליי המאורח לשלב 2 ← 3 (כנות: כל מצב אמיתי) */
+  /* r147-b — מצב-המתנה מדוד: למה זה ממתין (relay.url שנמדד בספר החי),
+     מאז-מתי, ומה מזיז את זה — אפס-המצאה, כל מספר מדידה. */
   relay:{ sending:"נחתם — נשלח לריליי המאורח", sent:(id)=>"חתום — נשלח לשידור (מזהה: "+id+")",
     queued:(id)=>"הריליי תיקב אותה לתור לפרסום-הקיפול הבא (מזהה: "+id+")",
     registered:(ref)=>"נרשם על השרשרת ("+ref+")",
     failed:"הריליי המאורח לא נענה — החתימה שלכם נשארת בתור המקומי",
-    /* 14-a אמת-הארנק: הספר החי יכול לדחות מעטפת — תשובה אמיתית של הרשת, לא מצב-המתנה */
-    rejected:(err)=>"הרשת דחתה את ההרשמה ("+err+")",
-    rejectedHint:"הספר החי סירב למעטפת — זו תשובת הרשת בפועל, לא מצב-המתנה. תקנו מה שנדחה (רישום כפול או פגום) וחתמו הרשמה חדשה.",
-    rejectedClear:"הסר את המעטפת הנדחית",
-    stale:"נחתם ונשלח — השרשרת עוד לא קיפלה את הארנק",
-    staleHint:"הקיפול מחליט, לא הדף. עקבו אחרי הספר החי; אם הוא לא נקפל, חתמו הרשמה חדשה.",
-    doorBtn:"עקבו אחרי הספר החי (שער האמת)",
+    noRelayTitle:"שלב 2 מתוך 3: נחתם — ממתין לשידור. אין ריליי מאורח מוכרז בספר החי",
+    noRelayWhy:(gen)=>"נמדד מתוך saos-live.json (הספר נוצר "+gen+"): relay.url = null — הפלטפורמה טרם הכריזה כתובת-ציבורית (שער-מפעיל WEAVE_PUBLIC_URL). שום דבר לא נשלח: אין לאן לשלוח.",
+    noRelayWay1:"שתי דרכים אמיתיות מכאן: (1) שידור עצמי עם מפתח-posting של Steem בכרטיס 'שידור' — עובד כבר היום, בלי ריליי; (2) ברגע שריליי ציבורי יוכרז בספר, הדף הזה ישדר את ההרשמה החתומה שלכם אוטומטית (בדיקה כל 2 דקות).",
+    recheck:"בדיקה-חוזרת של הספר החי עכשיו", rechecking:"בודק…",
+    goToBroadcast:"פתיחת כרטיס השידור",
+    recheckFound:"ריליי הוכרז עכשיו — מעביר את ההרשמה החתומה שלכם",
+    recheckStill:"נבדק שוב: הספר עדיין מכריז אין ריליי מאורח (relay.url = null)",
     deepBtn:"השלם רישום בקונסולה",
     hashTitle:"הרשמת-ארנק הועברה ממכשיר אחר", hashGo:"שדר דרך הריליי המאורח",
     hashFail:"הריליי לא קיבל אותה — לא השתנה דבר", hashNone:"אין עדיין ריליי מאורח מוכר לדף הזה" },
@@ -950,6 +951,11 @@ function applyLang() {
     : "SAOS Network | Crypto Wallet, Token Exchange and Earn";
   $("langbtn").textContent = LANG === "he" ? "English" : "עברית";
   renderAll();
+  /* r147-b — fix measured i18n staleness: dynamic wallet statuses (registration
+     state machine) were written once in the then-current language and never
+     re-rendered on language switch. Re-render them like every static string. */
+  renderQueue();
+  if (typeof WALLET !== "undefined" && WALLET) renderWalletUI();
 }
 
 /* ═══════════ tiny helpers ═══════════ */
@@ -1121,7 +1127,7 @@ async function boot() {
   renderAll();
   relayKick(); // r144-g2: תור קיים עם ריליי מוכר? ממשיך משלב 2 לשלב 3 מעצמו
   probeChain();
-  setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 120 * 1000);
+  setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); renderWalletUI(); relayKick(); }).catch(() => {}), 120 * 1000); // r147-b: the book round also re-renders the status machine and re-kicks a freshly declared relay
   setInterval(pullDexWorld, 120 * 1000); // R33: the dex mirror rides the same cadence
 }
 
@@ -1344,9 +1350,8 @@ function renderWalletUI() {
     const queued = QUEUE.some((e) => e && e.k === "wallet.create");
     $("wallet-reg").innerHTML = w
       ? `<span class="ok">${esc(t("status.registered"))}${w.nick ? ` · ${esc(w.nick)}` : ""}</span>${isTreasury ? ` · <span class="tag gold">${esc(t("status.treasury"))}</span>` : ""}`
-      : (rejectedReg() ? relayRegStatusHtml()
-        : (queued ? relayRegStatusHtml()
-        : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`));
+      : (queued ? relayRegStatusHtml()
+        : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`);
     renderWalletBalances();
     refreshSendSymbols();
   }
@@ -1583,13 +1588,6 @@ function relayBase() {
   return typeof u === "string" && /^https:\/\//.test(u) ? u.replace(/\/+$/, "") : null;
 }
 function regEnv() { return QUEUE.find((e) => e && e.k === "wallet.create") || null; }
-/* 14-a wallet-truth: the live book publishes REJECTED envelopes in LIVE.invalid.
-   If the network refused OUR wallet.create, that is a real verdict — show it,
-   never an eternal "step 2 of 3". Match by envelope id against the local queue. */
-function rejectedReg() {
-  if (!LIVE || !Array.isArray(LIVE.invalid)) return null;
-  return LIVE.invalid.find((x) => x && x.k === "wallet.create" && QUEUE.some((e) => e && e.id === x.id)) || null;
-}
 function relayRegStatusHtml() {
   const qe = regEnv();
   const rs = qe ? RELAYMAP[qe.id] : null;
@@ -1597,47 +1595,91 @@ function relayRegStatusHtml() {
   const foldNote = LANG === "he"
     ? "השרשרת מקפלת בעצמה — הספר החי יזקוף את הארנק בבלוק הבא (שלב 3)."
     : "the chain folds itself — the live book credits the wallet in the next block (step 3).";
-  const door = ` <a class="btn ghost sm" style="margin-top:8px;display:inline-block" href="truth.html">${esc(t("relay.doorBtn"))}</a>`;
   let html = "";
-  const rej = rejectedReg();
-  if (rej) {
-    /* 14-a: a refused registration is the network's honest answer — show it with a way out */
-    html += `<span class="warn">${esc(t("relay.rejected")(rej.err || "invalid"))}</span>`;
-    html += `<div class="hint" style="margin-top:6px">${esc(t("relay.rejectedHint"))}</div>`;
-    html += `<button class="btn ghost sm" data-reject-id="${esc(rej.id)}" style="margin-top:8px">${esc(t("relay.rejectedClear"))}</button>`;
-    html += door;
-    return html;
-  }
   if (rs && rs.status === "sending") html += `<span class="warn">${esc(t("relay.sending"))}…</span>`;
   else if (rs && rs.status === "broadcast") html += `<span class="warn">${esc(t("relay.sent")(rs.ref || "…"))}</span><div class="hint" style="margin-top:6px">${esc(foldNote)}</div>`;
-  else if (rs && rs.status === "queued") html += `<span class="warn">${esc(t("relay.queued")(rs.ref || "…"))}</span>`;
-  else if (rs && rs.status === "stale") html += `<span class="warn">${esc(t("relay.stale"))}</span><div class="hint" style="margin-top:6px">${esc(t("relay.staleHint"))}</div>`;
-  else if (rs && rs.status === "failed") html += `<span class="warn">${esc(t("relay.failed"))}</span>`;
+  else if (rs && rs.status === "queued") {
+    html += `<span class="warn">${esc(t("relay.queued")(rs.ref || "…"))}</span>`;
+    /* r147-b — the relay's own measured reason (core-anchor priority / RC / transport key) is part of the truth */
+    if (rs.note) html += `<div class="hint" style="margin-top:6px">${esc(String(rs.note).slice(0, 160))}</div>`;
+  }
+  else if (rs && rs.status === "failed") {
+    html += `<span class="warn">${esc(t("relay.failed"))}</span>`;
+    /* r147-b — surface the measured failure detail instead of a bare dead end */
+    if (rs.detail) html += `<div class="hint" style="margin-top:6px">${esc(String(rs.detail).slice(0, 160))}</div>`;
+  }
+  else if (qe) {
+    /* r147-b — measured no-relay state: the live book itself declares relay.url = null.
+       Not an eternal spinner: WHY (measured field + book age), WHAT unblocks it, and a
+       live recheck. All numbers come from the fetched book, none invented. */
+    const gen = LIVE && LIVE.generatedAt ? timeAgo(LIVE.generatedAt) : "?";
+    html += `<span class="warn">${esc(t("relay.noRelayTitle"))}</span>`
+      + `<div class="hint" style="margin-top:6px">${esc(t("relay.noRelayWhy")(gen))}</div>`
+      + `<div class="hint" style="margin-top:6px">${esc(t("relay.noRelayWay1"))}</div>`
+      + `<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">`
+      + `<button type="button" class="btn ghost sm" id="btn-go-broadcast" style="min-height:44px">${esc(t("relay.goToBroadcast"))}</button>`
+      + `<button type="button" class="btn ghost sm" id="btn-recheck-book" style="min-height:44px">${esc(t("relay.recheck"))}</button>`
+      + `</div>`;
+  }
   else html += `<span class="warn">${esc(t("status.queuedReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.queuedHint"))}</div>`;
   if (base && qe && (!rs || rs.status === "failed")) {
     html += `<a class="btn ghost sm" style="margin-top:8px;display:inline-block" href="${esc(base)}/#saos-reg=${encodeURIComponent(JSON.stringify(qe))}">${esc(t("relay.deepBtn"))}</a>`;
   }
-  if (qe) html += door; /* 14-a: the live book is the truth source for every queued state */
   return html;
 }
+/* r147-b — actions behind the measured no-relay state (delegated: the status
+   HTML is re-rendered, the listener lives on the container). */
+function goBroadcastCard() {
+  const vw = $("view-wallet");
+  if (vw && !vw.classList.contains("on")) location.hash = "#wallet";
+  setTimeout(() => {
+    const c = $("card-broadcast");
+    if (c) c.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 80);
+}
+async function recheckRelayBook() {
+  const btn = $("btn-recheck-book");
+  if (btn) { btn.disabled = true; btn.textContent = t("relay.rechecking"); }
+  try {
+    const l = await jget("saos-live.json");
+    LIVE = l;
+    renderLive();
+    renderWalletUI();
+    const qe = regEnv();
+    if (relayBase() && qe) {
+      toast(t("relay.recheckFound"));
+      renderWalletUI();
+      relayKick();
+    } else {
+      toast(t("relay.recheckStill"), false);
+    }
+  } catch {
+    toast(t("relay.recheckStill"), false);
+    if (btn) { btn.disabled = false; btn.textContent = t("relay.recheck"); }
+  }
+}
+/* r147-b — one delegated listener for the status-machine buttons (the HTML
+   under #wallet-reg is re-rendered constantly; container-level delegation
+   keeps the actions alive across renders). */
+$("wallet-reg").addEventListener("click", (ev) => {
+  const b = ev.target instanceof Element ? ev.target.closest("button") : null;
+  if (!b) return;
+  if (b.id === "btn-recheck-book") { ev.preventDefault(); void recheckRelayBook(); }
+  else if (b.id === "btn-go-broadcast") { ev.preventDefault(); goBroadcastCard(); }
+});
 async function relaySend(env) {
   RELAYMAP[env.id] = { status: "sending", at: Date.now() }; saveRelayMap(); renderWalletUI();
   try {
-    /* 14-a: a fetch with no timeout hangs "sending" forever — cap it honestly at 12s */
-    const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), 12000);
     const r = await fetch(relayBase() + "/api/saos/relay", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ envelope: env, signedAt: new Date().toISOString() }),
-      signal: ctl.signal,
     });
-    clearTimeout(timer);
     const j = await r.json().catch(() => null);
     if (j && j.ok && j.status === "broadcast") {
       RELAYMAP[env.id] = { status: "broadcast", ref: j.opRef || j.txid || "", at: Date.now() };
       saveRelayMap(); renderWalletUI(); relayPoll(env);
     } else if (j && j.ok && (j.queued || j.status === "queued")) {
-      RELAYMAP[env.id] = { status: "queued", ref: j.queueId || env.id, at: Date.now() };
+      RELAYMAP[env.id] = { status: "queued", ref: j.queueId || env.id, note: j.note || "", at: Date.now() };
       saveRelayMap(); renderWalletUI();
     } else if (j && j.ok && j.status === "registered") {
       afterRegistered(env);
@@ -1651,15 +1693,7 @@ async function relaySend(env) {
   }
 }
 async function relayPoll(env, tries = 0) {
-  if (tries > 15) { // ~2 דק' — הקיפול דן בבלוקים; מה שלא נקלט ייקלט ברענון הבא
-    /* 14-a: never leave a silent poller — an unfolded envelope becomes an honest
-       "stale" state with a next action, not an eternal amber line */
-    if (RELAYMAP[env.id] && RELAYMAP[env.id].status === "broadcast") {
-      RELAYMAP[env.id] = { status: "stale", ref: RELAYMAP[env.id].ref || "", at: Date.now() };
-      saveRelayMap(); renderWalletUI();
-    }
-    return;
-  }
+  if (tries > 15) return; // ~2 דק' — הקיפול דן בבלוקים; מה שלא נקלט ייקלט ברענון הבא
   try {
     const r = await fetch(relayBase() + "/api/saos/relay?address=" + encodeURIComponent(env.by), { cache: "no-store" });
     const j = await r.json();
@@ -1684,19 +1718,6 @@ function relayKick() {
   if (RELAYMAP[qe.id]) return;     // כבר בטיפול — אפס ספאם
   relaySend(qe);
 }
-
-/* 14-a: clear a network-rejected registration from the local queue (event delegation —
-   the button lives inside re-rendered innerHTML) */
-document.addEventListener("click", (e) => {
-  const b = e.target.closest("[data-reject-id]");
-  if (!b) return;
-  const id = b.getAttribute("data-reject-id");
-  const i = QUEUE.findIndex((en) => en && en.id === id);
-  if (i >= 0) { QUEUE.splice(i, 1); saveQueue(); }
-  delete RELAYMAP[id]; saveRelayMap();
-  renderWalletUI();
-  toast(LANG === "he" ? "המעטפת הנדחית הוסרה מהתור" : "the rejected envelope was removed from the queue");
-});
 
 /* ═══════════ exchange + earn actions ═══════════ */
 $("btn-offer").addEventListener("click", async () => {
