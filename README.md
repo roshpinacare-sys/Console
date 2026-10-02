@@ -198,3 +198,69 @@ agent notes; the watch bot itself untouched. Domain-side follow-up (not
 this repo): Domain/versus.html carries its self-canonical twice, and
 Domain's pitch/onepager/deck pages carry no self-canonical — both harmless
 to this delegation, one-line fixes on the Domain side.
+
+## Console truth — 2026-10-02 (Task 15-b, integration integrity + design pass, only proven claims)
+
+**Org-gitleaks receipt is now GREEN for Console — observed, not just expected.**
+The org run of 2026-10-02T11:40:59Z
+(https://roshpinacare-sys.github.io/Domain/receipts/gitleaks/STATUS.json,
+fetched live during this task) reports Console `findingsHistory=0,
+findingsHead=0, conclusion=success` — the 14-a rule-level `.gitleaks.toml`
+allowlist held against a fresh bot-rewrite of `ledger.json`. The 14-a note
+"expected at next run" is hereby discharged with the receipt itself. (Zip
+reports findingsHead=8 / failure in the same receipt — different repo, not
+touched here, flagged for its owners.)
+
+**r147-b × 14-a integrity audit (sibling-wave integration):** r147-b's
+truthful no-relay waiting state (measured `relay.url = null` + book age +
+live recheck + auto-relay when declared) is real and kept. The audit found
+two regressions it introduced against 14-a's honest-state doctrine, both
+fixed here on top of (not instead of) r147-b's machine:
+1. wallet.html silently lost the shared mobile layer — r147-b's head edit
+   dropped `assets/site.css` + `assets/site.js`, removing the page from the
+   browser-verified 390x844 sweep (no drawer, no safe-areas, no sticky
+   footer, no focus ring). Re-wired; re-verified in a real browser.
+2. The live book's REJECTED verdict (`LIVE.invalid[]`, matched by envelope
+   id) and the poll-exhaustion **stale** state were removed — a broadcast
+   envelope refused by the fold would have sat under "the chain folds
+   itself — the live book credits the wallet in the next block" forever,
+   i.e. a fake pending again. Restored exactly as 14-a specified
+   (rejected-first precedence, reason + clear action + truth-gate door;
+   stale after the ~2min poll window), keeping r147-b's recheck button,
+   measured no-relay text, i18n re-render fix and 44px targets.
+
+**Browser proof (agent-browser, real UI, this repo at 390x844):** wallet
+drawer opens (aria-expanded=true) and closes on Escape, drawer links 48px;
+a real local wallet was created, a real registration signed into the
+queue, and the status machine verified end-to-end: measured no-relay state
+(book age + relay.url=null) → "Recheck the live book now" against a book
+declaring the envelope in `invalid[]` → **rejected** state with the real
+reason + "Remove the rejected envelope" → removal returns to honest step 1.
+truth.html: sticky table header now actually sticky (it shipped without
+`position:sticky`), zero horizontal scroll (390==390). index.html mobile
+menu toggles, zero horizontal scroll; receipts/ and hub/fleet/ verified
+depth-correct. Desktop 1280x900: burger hidden, layout unchanged.
+
+**Hub-tree parity:** all 44 `hub/**` pages already carry the shared layer
+with depth-correct `../../` / `../../../` prefixes (verified by scan +
+browser spot-check) — zero pages to wire. The only unwired pages were
+wallet.html (fixed above) and roast.html (intentional noindex meta-refresh
+stub, 34 lines, gate-capped — left unwired by design).
+
+**Ops design-token pass (assets/site.css, additive only):** semantic
+status tokens (`--sw-pass/--sw-wait/--sw-fail` = green/amber/red on the
+existing zinc+gold palette — no blue, no indigo), a 6-step type scale and
+4px spacing rhythm as custom properties, tabular (monospaced-width)
+numerics on every ledger table, faint zebra striping + sticky headers
+inside the `.tblscroll` wells, one gold `:focus-visible` ring via
+`:where()` (zero specificity — any page's own focus style still wins),
+additive hover transition timing under `prefers-reduced-motion`. No page
+stylesheet was overridden: every new rule is zero-specificity or
+`.sw-*`/`.tblscroll`-scoped.
+
+**OG/META:** every root page now carries exactly one self-canonical plus
+honest og/twitter tags derived ONLY from that page's own title and
+description (acid, defi, deposits, gate, money, net, readiness, sovereign
+ gained canonicals; sovereign-anchor, truth, 404, versus gained og).
+Noindex directives preserved untouched; roast.html intentionally remains a
+bare redirect stub. Site-wide scan: 15/15 root pages single-canonical.

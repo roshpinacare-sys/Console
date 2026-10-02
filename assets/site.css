@@ -71,3 +71,49 @@ body.sw-sticky>main{flex:1 0 auto;width:100%}
    (browser-proven on truth.html at 390px, 2026-10-02). max-width+auto margins
    still center it on desktop exactly as the page's own CSS intends. */
 body.sw-sticky>footer{margin-top:auto}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   15-b — ops design-token pass (2026-10-02). ADDITIVE ONLY: every rule here is
+   either zero-specificity (inside :where()) or scoped to .sw-*/.tblscroll, so
+   it can never fight a page's own stylesheet (site.css loads last by design).
+   Palette law holds: zinc + gold only — status hues are semantic, not decor:
+   green = measured pass · amber = waiting on a real, measured cause ·
+   red = rejected/failed. No blue, no indigo, anywhere.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root{
+  /* status semantics — one meaning per hue, everywhere */
+  --sw-pass:#22c55e;   /* measured OK / registered / green gate */
+  --sw-wait:#eab308;   /* pending on a real cause / amber gate  */
+  --sw-fail:#ef4444;   /* rejected / failed / red gate          */
+  /* type scale (13px base keeps ledgers dense on ops screens) */
+  --sw-fs--1:11px; --sw-fs-0:13px; --sw-fs-1:15px; --sw-fs-2:17px; --sw-fs-3:22px; --sw-fs-4:28px;
+  /* spacing rhythm (4px grid) */
+  --sw-gap-1:4px; --sw-gap-2:8px; --sw-gap-3:12px; --sw-gap-4:16px; --sw-gap-6:24px; --sw-gap-8:32px;
+  /* mono numerics for ledgers; gold focus ring */
+  --sw-mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sw-ring:#f0d060;
+}
+/* semantic status utilities for ops surfaces — use instead of ad-hoc hues */
+.sw-pass{color:var(--sw-pass)}
+.sw-wait{color:var(--sw-wait)}
+.sw-fail{color:var(--sw-fail)}
+/* monospace numerics: ledger digits align in columns on every table site-wide */
+table{font-variant-numeric:tabular-nums}
+td,th{font-variant-numeric:tabular-nums}
+.sw-num{font-family:var(--sw-mono);font-variant-numeric:tabular-nums}
+/* ledger tables inside the .tblscroll wells (index.html, truth.html): faint
+   zebra striping + a sticky header. :where() keeps any page's own tr:hover /
+   th rule winning where it exists — truth.html gains the sticky header it
+   lacked; index.html already ships the same values, so nothing changes. */
+:where(tbody tr:nth-child(even)) td{background:rgba(255,255,255,.014)}
+:where(.tblscroll) thead th{position:sticky;top:0;z-index:1;background:#101013}
+/* one consistent focus ring. :where() = zero specificity: pages that style
+   their own :focus-visible still win; unstyled controls get the gold ring. */
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
+  outline:2px solid var(--sw-ring);outline-offset:2px}
+/* hover motion: additive transition timing only — pages keep their own hover
+   colors; reduced-motion users get no added motion */
+@media (prefers-reduced-motion:no-preference){
+  :where(a,button,summary){transition:opacity .15s ease,color .15s ease,
+    background-color .15s ease,border-color .15s ease}
+}
