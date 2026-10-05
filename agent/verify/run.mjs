@@ -96,50 +96,76 @@ async function evaluate(a, baseUrl) {
   // mint fired while the anchor line waited and the network stayed STALE
   // for 32.7h). Independent of the Console target: the chain is a second
   // witness, not a page fetch.
+  //
+  // T-A 2026-10-05 — R75 multi-signer alignment (measured, not weakened):
+  // the anchor line is multi-signer by doctrine (render.mjs R75: "the key
+  // declares who signs" — cashmachine / headcorner / lsa). The line moved
+  // accounts on-chain: last cashmachine-signed saos.weave.core.v1 =
+  // 2026-09-20T09:08:45Z; the resumed line signs as @headcorner (the WIF
+  // secret identifies the witness, first op 2026-10-04). Pointing the
+  // detector at one hard-coded name turned a live line into a false
+  // alarm. The detector now reads the WHOLE witness line: the freshest
+  // core op across all listed accounts is the anchor that must be fresh;
+  // priority inversion is still judged per-account (the RC budget an op
+  // consumes belongs to its own account). Every fail branch of R27 is
+  // preserved: no core op anywhere in any window = fail; stale core with
+  // a later non-core op on the witness account = fail.
   if (a.kind === "steem_priority") {
-    const account = String(a.account ?? "cashmachine");
+    const accounts = (Array.isArray(a.accounts) && a.accounts.length
+      ? a.accounts.map((x) => String(x).toLowerCase())
+      : [String(a.account ?? "cashmachine").toLowerCase()]);
     const coreOp = String(a.coreOp ?? "saos.weave.core.v1");
     const staleHours = Number(a.staleHours ?? 26);
     if (!Number.isFinite(staleHours)) return { id, ok: false, details: "invalid assertion: staleHours is not a number" };
     const rpc = String(a.rpc ?? "https://api.steemit.com");
-    let hist;
-    try {
-      const r = await fetch(rpc, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [account, -1, 100] }),
-        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      });
-      const j = await r.json();
-      hist = j?.result;
-      if (!Array.isArray(hist)) return { id, ok: false, details: `rpc returned no history array (HTTP ${r.status})` };
-    } catch (err) {
-      return { id, ok: false, details: `rpc fetch failed: ${err?.message ?? err}` };
-    }
-    let coreTs = "";
-    let nonCore = null;
-    for (const [, entry] of hist) {
-      const op = entry?.op;
-      if (!op || op[0] !== "custom_json") continue;
-      const body = op[1] ?? {};
-      if (!Array.isArray(body.required_posting_auths) || !body.required_posting_auths.includes(account)) continue;
-      const ts = String(entry.timestamp ?? "");
-      if (!ts) continue;
-      if (body.id === coreOp) {
-        if (ts > coreTs) coreTs = ts;
-      } else if (!nonCore || ts > nonCore.ts) {
-        nonCore = { id: String(body.id ?? "?"), ts };
+    let lead = null; // { account, ts, nonCore } — the freshest core anchor on the line
+    const errors = [];
+    for (const account of accounts) {
+      let hist;
+      try {
+        const r = await fetch(rpc, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [account, -1, 100] }),
+          signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+        });
+        const j = await r.json();
+        hist = j?.result;
+        if (!Array.isArray(hist)) { errors.push(`@${account}: rpc returned no history array (HTTP ${r.status})`); continue; }
+      } catch (err) {
+        errors.push(`@${account}: rpc fetch failed: ${err?.message ?? err}`);
+        continue;
       }
+      let coreTs = "";
+      let nonCore = null;
+      for (const [, entry] of hist) {
+        const op = entry?.op;
+        if (!op || op[0] !== "custom_json") continue;
+        const body = op[1] ?? {};
+        if (!Array.isArray(body.required_posting_auths) || !body.required_posting_auths.includes(account)) continue;
+        const ts = String(entry.timestamp ?? "");
+        if (!ts) continue;
+        if (body.id === coreOp) {
+          if (ts > coreTs) coreTs = ts;
+        } else if (!nonCore || ts > nonCore.ts) {
+          nonCore = { id: String(body.id ?? "?"), ts };
+        }
+      }
+      if (coreTs && (!lead || coreTs > lead.ts)) lead = { account, ts: coreTs, nonCore };
     }
-    if (!coreTs) return { id, ok: false, details: `core op ${coreOp} not found in last 100 ops of @${account}` };
-    const coreAgeH = (Date.now() - Date.parse(coreTs + "Z")) / 3_600_000;
+    if (!lead) {
+      const errNote = errors.length ? ` (${errors.slice(0, 2).join("; ")})` : "";
+      return { id, ok: false, details: `core op ${coreOp} not found in last 100 ops of any witness on the line [${accounts.join(", ")}]${errNote}` };
+    }
+    const coreAgeH = (Date.now() - Date.parse(lead.ts + "Z")) / 3_600_000;
     if (coreAgeH <= staleHours) {
-      return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h old (fresh, <= ${staleHours}h)` };
+      const errNote = errors.length ? ` · ${errors.length} witness read(s) failed` : "";
+      return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h old (fresh, <= ${staleHours}h) · witness @${lead.account}${errNote}` };
     }
-    if (nonCore && nonCore.ts > coreTs) {
-      return { id, ok: false, details: `priority inversion: core ${coreAgeH.toFixed(1)}h stale while ${nonCore.id} fired later (${nonCore.ts}Z) and consumed the anchor budget` };
+    if (lead.nonCore && lead.nonCore.ts > lead.ts) {
+      return { id, ok: false, details: `priority inversion: core ${coreAgeH.toFixed(1)}h stale on @${lead.account} while ${lead.nonCore.id} fired later (${lead.nonCore.ts}Z) and consumed the anchor budget` };
     }
-    return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h stale but no non-core op fired after it (honest starvation: RC regen, no inversion)` };
+    return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h stale on @${lead.account} but no non-core op fired after it (honest starvation: RC regen, no inversion)` };
   }
 
   // ── ledger_integrity: the operator contract book must be whole ──────
@@ -288,6 +314,14 @@ async function evaluate(a, baseUrl) {
   // console root, canonical present. Anything bigger or livelier is a
   // second-generation front coexisting with the current one (the exact
   // disease this detector refuses to bless).
+  //
+  // T-A 2026-10-05 — the same stub law now also guards the de-duplicated
+  // marketing twins (deck / onepager / pitch, Task 14-a 2026-10-02:
+  // "one copy, one truth" - the full pages live on Domain, the Console
+  // serves the redirect stub). A page entry may carry its own redirect
+  // target (the single canonical on Domain); entries without one fall
+  // back to the assertion-level redirectTo. The law is unchanged:
+  // 200 + tiny + refresh + canonical - now pointed at the truth.
   if (a.kind === "retired_pages") {
     const pages = Array.isArray(a.pages) ? a.pages : [];
     if (pages.length === 0) return { id, ok: false, details: "invalid assertion: pages list is empty" };
@@ -295,16 +329,18 @@ async function evaluate(a, baseUrl) {
     const redirectTo = String(a.redirectTo ?? "/Console/");
     const bad = [];
     for (const p of pages) {
-      const path = String(p ?? "");
+      const path = typeof p === "string" ? p : String(p?.path ?? "");
+      const target = (p && typeof p === "object" && p.redirectTo) ? String(p.redirectTo) : redirectTo;
+      if (!path) { bad.push(`<empty-path>:invalid`); continue; }
       const r = await fetchTarget(baseUrl, path);
       if (r.error) { bad.push(`${path}:fetch-error`); continue; }
       if (r.status !== 200) { bad.push(`${path}:HTTP${r.status}`); continue; }
       if (r.body.length > maxBytes) { bad.push(`${path}:${r.body.length}B>${maxBytes}B`); continue; }
-      if (!r.body.includes(`content="0; url=${redirectTo}"`)) { bad.push(`${path}:no-refresh`); continue; }
+      if (!r.body.includes(`content="0; url=${target}"`)) { bad.push(`${path}:no-refresh`); continue; }
       if (!r.body.includes(`rel="canonical"`)) { bad.push(`${path}:no-canonical`); continue; }
     }
     const ok = bad.length === 0;
-    return { id, ok, details: ok ? `${pages.length}/${pages.length} retired fronts serve permanent redirect stubs (<= ${maxBytes}B)` : `${pages.length - bad.length}/${pages.length} stubs healthy · failing: ${bad.join(", ")}` };
+    return { id, ok, details: ok ? `${pages.length}/${pages.length} retired or de-duplicated fronts serve permanent redirect stubs (<= ${maxBytes}B)` : `${pages.length - bad.length}/${pages.length} stubs healthy · failing: ${bad.join(", ")}` };
   }
 
   // ── home_links: the complete map (R61) ─────────────────────────────

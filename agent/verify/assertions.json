@@ -260,11 +260,11 @@
   {
    "id": "A31",
    "desc": {
-    "en": "No priority inversion on Steem: when the core anchor is stale, no non-core op from the witness account may have fired after it and consumed its RC budget (R27 detector, keyless chain read)",
-    "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה רעב, שום פעולה אחרת של חשבון העדות לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח)"
+    "en": "No priority inversion on Steem: when the freshest core anchor on the fleet witness line is stale, no non-core op from the account that carries it may have fired after it and consumed its RC budget (R27 detector, keyless chain read). T-A cure 2026-10-05, measured not weakened: the line is multi-signer by R75 doctrine (render.mjs: the key declares who signs). On-chain history: last cashmachine-signed saos.weave.core.v1 = 2026-09-20T09:08:45Z; the resumed line signs as @headcorner (the WIF secret identifies the witness; first op 2026-10-04, Domain coord-bus names headcorner the fleet head). The old single-account mapping kept failing on a live line; the detector now reads every account of the witness line and judges the freshest core anchor, with every R27 fail branch preserved.",
+    "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה הטרי ביותר על קו העדות של הצי רעב, שום פעולה אחרת של החשבון שנושא אותו לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח). ריפוי T-A 2026-10-05, נמדד ולא נחלש: הקו רב-חותמים לפי דוקטרינת R75 (render.mjs: המפתח מכריז מי חותם). היסטוריית השרשרת: עוגן ה-saos.weave.core.v1 האחרון של cashmachine = 2026-09-20T09:08:45Z; הקו שחזר חותם בשם @headcorner (סוד ה-WIF מזהה את העד; פעולה ראשונה 2026-10-04, coord-bus של Domain מכנה את headcorner ראש הצי). המיפוי החד-חשבוני הישן המשיך להיכשל על קו חי; המגלה קורא עכשיו כל חשבון בקו העדות ושופט את עוגן הליבה הטרי ביותר, כל ענפי הכישלון של R27 נשמרו."
    },
    "kind": "steem_priority",
-   "account": "cashmachine",
+   "accounts": ["cashmachine", "headcorner", "lsa"],
    "coreOp": "saos.weave.core.v1",
    "staleHours": 26
   },
@@ -367,8 +367,8 @@
   {
    "id": "A40",
    "desc": {
-    "en": "R61 inventory sweep: the full current-generation page set answers 200 with real content (nine restored system fronts included; the retired roast front is covered by A53)",
-    "he": "סריקת מלאי R61: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (כולל תשע חזיתות המערכת המשוחזרות; חזית הרוסט שיצאה מהמחזור מכוסה על ידי A53)"
+    "en": "R61 inventory sweep: the full current-generation page set answers 200 with real content (nine restored system fronts included; the retired roast front is covered by A53). T-A mapping cure 2026-10-05: deck, onepager and pitch left this list - they were deliberately de-duplicated to Domain on 2026-10-02 (Task 14-a, single-copy doctrine: Domain owns the public face, Console owns ops, AGENTS.md scope rule), each serves a permanent redirect stub to its Domain canonical and is guarded by A53's stub law instead of a content floor. Demanding 4000B from them demanded the duplication disease back.",
+    "he": "סריקת מלאי R61: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (כולל תשע חזיתות המערכת המשוחזרות; חזית הרוסט שיצאה מהמחזור מכוסה על ידי A53). תיקון-מיפוי T-A 2026-10-05: deck, onepager ו-pitch יצאו מהרשימה - הם הועברו בכוונה ל-Domain ב-2026-10-02 (משימה 14-a, דוקטרינת עותק-אחד: Domain הוא הפנים הציבוריות, Console הוא ההפעלה, כלל-ההיקף ב-AGENTS.md), כל אחד מגיש סטאב-הפניה קבוע ל-canonical שלו ב-Domain ומוגן על ידי חוק-הסטאבים של A53 במקום רצפת-תוכן. לדרוש מהם 4000B = לדרוש את מחלת השכפול בחזרה."
    },
    "kind": "pages_ok",
    "pages": [
@@ -414,18 +414,6 @@
     },
     {
      "path": "receipts/index.html",
-     "minBytes": 4000
-    },
-    {
-     "path": "deck/index.html",
-     "minBytes": 4000
-    },
-    {
-     "path": "onepager/index.html",
-     "minBytes": 4000
-    },
-    {
-     "path": "pitch/index.html",
      "minBytes": 4000
     },
     {
@@ -499,14 +487,26 @@
   {
    "id": "A53",
    "desc": {
-    "en": "R61: the single retired front (a stale claims-audit snapshot superseded by the living truth gate) serves its permanent redirect stub (200, tiny, http-equiv refresh to the console, canonical present)",
-    "he": "R61: החזית היחידה שיצאה מהמחזור (תמונת-מצב מיושנת של ביקורת טענות, שהוחלפה בשער האמת החי) מגישה הפניה קבועה (200, קטן, refresh לקונסולה, canonical קיים)"
+    "en": "R61 stub law: every front that left the current generation serves its permanent redirect stub (200, tiny, http-equiv refresh to its single canonical, canonical present). Two honest populations: (1) retired fronts (the stale claims-audit snapshot superseded by the living truth gate); (2) de-duplicated marketing twins (deck, onepager, pitch) - moved to Domain on 2026-10-02 by Task 14-a single-copy doctrine, the Console stub refreshes to the Domain canonical. T-A 2026-10-05: the twins gained their real refresh meta (they were explanatory stubs without one) and joined this law.",
+    "he": "חוק-הסטאבים R61: כל חזית שיצאה מהדור הנוכחי מגישה הפניה קבועה (200, קטן, refresh ל-canonical היחיד שלה, canonical קיים). שתי אוכלוסיות-כנות: (1) חזיתות שיצאו מהמחזור (תמונת-מצב מיושנת של ביקורת טענות, שהוחלפה בשער האמת החי); (2) התאומים-השיווקיים שעברו דה-דופליקציה (deck, onepager, pitch) - עברו ל-Domain ב-2026-10-02 לפי דוקטרינת עותק-אחד (משימה 14-a), סטאב הקונסולה עושה refresh ל-canonical של Domain. T-A 2026-10-05: התאומים קיבלו את מטת ה-refresh האמיתית שלהם (היו סטאבים-הסבר בלי אחד) והצטרפו לחוק הזה."
    },
    "kind": "retired_pages",
    "pages": [
-    "roast.html"
+    "roast.html",
+    {
+     "path": "deck/index.html",
+     "redirectTo": "https://roshpinacare-sys.github.io/Domain/deck/"
+    },
+    {
+     "path": "onepager/index.html",
+     "redirectTo": "https://roshpinacare-sys.github.io/Domain/onepager/"
+    },
+    {
+     "path": "pitch/index.html",
+     "redirectTo": "https://roshpinacare-sys.github.io/Domain/pitch/"
+    }
    ],
-   "maxBytes": 2500,
+   "maxBytes": 3500,
    "redirectTo": "/Console/"
   },
   {
