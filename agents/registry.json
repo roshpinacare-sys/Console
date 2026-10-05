@@ -1,12 +1,11 @@
 {
  "ok": true,
- "generatedAt": "2026-10-05T11:56:08Z",
+ "generatedAt": "2026-10-05T14:57:16Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
   "Adsmarket",
   "anchor-baseline",
-  "Console",
   "Defi",
   "Domain",
   "Project-files",
@@ -21,7 +20,9 @@
   "steem",
   "Zip"
  ],
- "reposIdle": [],
+ "reposIdle": [
+  "Console"
+ ],
  "agents": [
   {
    "id": "adsmarket-claims-guard",
@@ -222,369 +223,6 @@
    }
   },
   {
-   "id": "console-agent-verify",
-   "name": "agent-verify",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "every 2h at :55",
-   "layer": "QA",
-   "role": {
-    "en": "The network verifies the agent - reads the assertions contract beside it, measures the LIVE public site (never the repo) and publishes results.json; exit code is always 0 and every failure is recorded honestly as data.",
-    "he": "הרשת מאמתת את הסוכן - קורא את חוזה-הטענות שלצידו, מודד את האתר החי הציבורי (לא את הריפו) ומפרסם results.json; קוד-היציאה תמיד 0 וכל כשל נרשם בכנות כנתון."
-   },
-   "input": {
-    "en": "agent/verify/assertions.json + live site",
-    "he": "agent/verify/assertions.json + האתר החי"
-   },
-   "output": {
-    "en": "agent/verify/results.json",
-    "he": "agent/verify/results.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 18.2
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:01:25Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-agents-watch",
-   "name": "agents-watch",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "hourly :37",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "The fleet census - asks the GitHub Actions API for the real state of every workflow in the 16 agent-repos (runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",
-    "he": "מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows ב-16 הריפואים (ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."
-   },
-   "input": {
-    "en": "GitHub Actions API (16 repos)",
-    "he": "API של GitHub Actions (16 ריפואים)"
-   },
-   "output": {
-    "en": "agents/registry.json + agents/gh-snapshot.json",
-    "he": "agents/registry.json + agents/gh-snapshot.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 98,
-    "failure": 1,
-    "other": 1,
-    "successRate": 98,
-    "avgDurS": 138.6
-   },
-   "lastRun": {
-    "at": "2026-10-05T10:52:48Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-console-publish",
-   "name": "console-publish",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "on push to main",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
-    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "live console pages",
-    "he": "דפי קונסולה חיים"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 96,
-    "failure": 4,
-    "other": 0,
-    "successRate": 96,
-    "avgDurS": 16.7
-   },
-   "lastRun": {
-    "at": "2026-10-05T10:59:05Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-dex-watch",
-   "name": "dex-watch",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "every 20 min :07/:27/:47",
-   "layer": "MIRROR",
-   "role": {
-    "en": "The public deposits watcher - scans the real deposit addresses (TRON/ETH/SOL/BTC) over public RPC and updates the open deposits ledger the site displays and the DEX verifies against.",
-    "he": "צופה ההפקדות הציבורי - סורק את כתובות ההפקדה האמיתיות (TRON/ETH/SOL/BTC) ב-RPC ציבורי ומעדכן את ספר ההפקדות הפתוח שהאתר מציג והדקס מאמת מולו."
-   },
-   "input": {
-    "en": "public RPC: TRON / ETH / SOL / BTC",
-    "he": "RPC ציבורי: TRON / ETH / SOL / BTC"
-   },
-   "output": {
-    "en": "dex/deposits.json - the open deposits ledger",
-    "he": "dex/deposits.json - ספר ההפקדות הפתוח"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 13
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:39:56Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "on push / PR",
-   "layer": "INTEGRITY",
-   "role": {
-    "en": "Secret scanner on every push and PR - gitleaks over the full history; a finding stops the push. Part of PHASE-0 key hygiene.",
-    "he": "סורק-סודות על כל push ו-PR - gitleaks על כל ההיסטוריה; ממצא עוצר את הדחיפה. חלק מהיגיינת-המפתחות של PHASE-0."
-   },
-   "input": {
-    "en": "full git history (fetch-depth 0)",
-    "he": "היסטוריית גיט מלאה"
-   },
-   "output": {
-    "en": "scan verdict (block or pass)",
-    "he": "פסק סריקה (חסימה או מעבר)"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 11.8
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:25:48Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-grid-pulse",
-   "name": "grid-pulse",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "twice daily 03:07 / 15:07 UTC",
-   "layer": "MIRROR",
-   "role": {
-    "en": "The sovereign grid pulse - a keyless measurement mirror on the public repo: reads what the grid engine published to the public chain and re-publishes dex/grid.json twice a day, immune to private-runner minute-quota outages.",
-    "he": "פעימת הגריד הריבונית - מראת-מדידה חסרת-מפתחות על הריפו הציבורי: קורא מהשרשרת הציבורית את מה שמנוע-הגריד פרסם ומפרסם dex/grid.json פעמיים ביום, חסינה למכסת-הדקות של הראנר הפרטי."
-   },
-   "input": {
-    "en": "public chain publications",
-    "he": "פרסומים ציבוריים בשרשרת"
-   },
-   "output": {
-    "en": "dex/grid.json keyless mirror",
-    "he": "מראת dex/grid.json חסרת-מפתחות"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 31,
-    "success": 31,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 16.4
-   },
-   "lastRun": {
-    "at": "2026-10-05T03:19:59Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-money-watch",
-   "name": "money-watch",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "every 15 min :02/:17/:32/:47",
-   "layer": "MONEY-PATH",
-   "role": {
-    "en": "Money path sentinel - watches the two chokepoints of the real money path: detects the weekly powerdown landing within minutes and dispatches the external grid immediately (instead of waiting for the daily run), and rules SEND-NOW/WAIT on the redemption outbox versus the measured TRON broadcast cost.",
-    "he": "צופה נתיב הכסף - קולט את נחיתת ה-powerdown השבועית בתוך דקות ומזניק את הגריד החוץ מיד (במקום להמתין לריצה היומית), ופוסק SEND-NOW/WAIT על תיבת הפדיון מול עלות השידור הנמדדת ב-TRON."
-   },
-   "input": {
-    "en": "Steem public RPC (account+powerdown) + world.json + trongrid + CoinGecko",
-    "he": "RPC ציבורי של Steem (חשבון+powerdown) + world.json + trongrid + CoinGecko"
-   },
-   "output": {
-    "en": "dex/money.json + immediate dex-grid dispatch on landing",
-    "he": "dex/money.json + הזנקת dex-grid מיידית בנחיתה"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 97,
-    "failure": 3,
-    "other": 0,
-    "successRate": 97,
-    "avgDurS": 14.8
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:49:49Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-pages-build-deployment",
-   "name": "pages-build-deployment",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 72,
-    "failure": 0,
-    "other": 28,
-    "successRate": 72,
-    "avgDurS": 39
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:50:01Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-trigger-mesh",
-   "name": "trigger-mesh",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "hourly :23",
-   "layer": "MIRROR",
-   "role": {
-    "en": "The thing-drags-thing engine - a keyless agent that reads the network's own public publications (dex/*.json, ledger books) and derives the next triggers, publishing the trigger book the whole system runs on.",
-    "he": "מנוע דבר-גורר-דבר - סוכן חסר-מפתחות שקורא את הפרסומים הציבוריים של הרשת עצמה וגוזר מהם את הטריגרים הבאים, ומפרסם את ספר-הטריגרים שכל-המערכת רצה עליו."
-   },
-   "input": {
-    "en": "public publications (dex/*.json, books)",
-    "he": "פרסומים ציבוריים (dex/*.json, ספרים)"
-   },
-   "output": {
-    "en": "triggers/registry.json + current.json + log.jsonl",
-    "he": "triggers/registry.json + current.json + log.jsonl"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 11.5
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:37:41Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-truth-gate",
-   "name": "truth-gate",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "hourly :07",
-   "layer": "QA",
-   "role": {
-    "en": "The truth machine - measures the LIVE deployed site from Actions (site-up, zero broken links, witness freshness, live-format, bridgehead sanity, complete-map, SLO published) and commits the verdict publicly; any FAIL turns the run red in public.",
-    "he": "מכונת האמת - מודדת מ-Actions את האתר החי הפרוס (אתר-עולה, אפס קישורים שבורים, טריות-עד, פורמט-חי, תקינות-ראש-גשר, מפה-מלאה, SLO מפורסם) וקומיטת את פסק-הדין בפומבי; כל FAIL מאדים את הריצה לעין כל."
-   },
-   "input": {
-    "en": "live deployed site (never the repo)",
-    "he": "האתר הפרוס החי (לעולם לא הריפו)"
-   },
-   "output": {
-    "en": "truth/latest.json + history.json + slo.json",
-    "he": "truth/latest.json + history.json + slo.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 88,
-    "failure": 12,
-    "other": 0,
-    "successRate": 88,
-    "avgDurS": 22.3
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:25:18Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 80,
-    "success": 63,
-    "failure": 0,
-    "other": 17,
-    "successRate": 78.8,
-    "avgDurS": 6.8
-   },
-   "lastRun": {
-    "at": "2026-10-05T11:25:48Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "defi-canary",
    "name": "canary",
    "repo": "Defi",
@@ -605,15 +243,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 85,
-    "success": 27,
+    "runs_sampled": 86,
+    "success": 28,
     "failure": 58,
     "other": 0,
-    "successRate": 31.8,
+    "successRate": 32.6,
     "avgDurS": 9.4
    },
    "lastRun": {
-    "at": "2026-10-05T09:04:43Z",
+    "at": "2026-10-05T12:39:45Z",
     "conclusion": "success"
    }
   },
@@ -643,10 +281,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 9.5
+    "avgDurS": 9.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:46:46Z",
+    "at": "2026-10-05T14:18:10Z",
     "conclusion": "success"
    }
   },
@@ -671,15 +309,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 46,
-    "success": 46,
+    "runs_sampled": 50,
+    "success": 50,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 8.9
+    "avgDurS": 11
    },
    "lastRun": {
-    "at": "2026-10-05T11:46:46Z",
+    "at": "2026-10-05T14:18:10Z",
     "conclusion": "success"
    }
   },
@@ -709,10 +347,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 18.7
+    "avgDurS": 18.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:02:05Z",
+    "at": "2026-10-05T13:06:34Z",
     "conclusion": "success"
    }
   },
@@ -742,10 +380,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17.4
+    "avgDurS": 17.2
    },
    "lastRun": {
-    "at": "2026-10-05T11:04:32Z",
+    "at": "2026-10-05T14:06:30Z",
     "conclusion": "success"
    }
   },
@@ -770,15 +408,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 16,
-    "success": 16,
+    "runs_sampled": 19,
+    "success": 19,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.6
+    "avgDurS": 15.4
    },
    "lastRun": {
-    "at": "2026-10-05T11:24:56Z",
+    "at": "2026-10-05T14:29:46Z",
     "conclusion": "success"
    }
   },
@@ -874,10 +512,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 34.6
+    "avgDurS": 33.9
    },
    "lastRun": {
-    "at": "2026-10-05T11:33:01Z",
+    "at": "2026-10-05T14:36:30Z",
     "conclusion": "success"
    }
   },
@@ -935,15 +573,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 8,
-    "success": 8,
+    "runs_sampled": 9,
+    "success": 9,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 30.5
+    "avgDurS": 29.7
    },
    "lastRun": {
-    "at": "2026-10-04T18:21:27Z",
+    "at": "2026-10-05T13:28:31Z",
     "conclusion": "success"
    }
   },
@@ -1001,15 +639,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 6,
-    "success": 6,
+    "runs_sampled": 7,
+    "success": 7,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17.3
+    "avgDurS": 19.3
    },
    "lastRun": {
-    "at": "2026-10-05T02:49:55Z",
+    "at": "2026-10-05T13:07:01Z",
     "conclusion": "success"
    }
   },
@@ -1072,10 +710,10 @@
     "failure": 12,
     "other": 0,
     "successRate": 88,
-    "avgDurS": 73.8
+    "avgDurS": 75.3
    },
    "lastRun": {
-    "at": "2026-10-05T11:01:29Z",
+    "at": "2026-10-05T13:06:23Z",
     "conclusion": "success"
    }
   },
@@ -1100,15 +738,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 17,
-    "success": 17,
+    "runs_sampled": 20,
+    "success": 20,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.6
+    "avgDurS": 14.8
    },
    "lastRun": {
-    "at": "2026-10-05T11:51:50Z",
+    "at": "2026-10-05T14:53:10Z",
     "conclusion": "success"
    }
   },
@@ -1171,10 +809,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.9
+    "avgDurS": 17.1
    },
    "lastRun": {
-    "at": "2026-10-05T10:59:07Z",
+    "at": "2026-10-05T14:01:55Z",
     "conclusion": "success"
    }
   },
@@ -1199,15 +837,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 17,
-    "success": 17,
+    "runs_sampled": 20,
+    "success": 20,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.3
+    "avgDurS": 14.5
    },
    "lastRun": {
-    "at": "2026-10-05T11:41:04Z",
+    "at": "2026-10-05T14:42:18Z",
     "conclusion": "success"
    }
   },
@@ -1232,15 +870,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 16,
-    "success": 16,
+    "runs_sampled": 19,
+    "success": 19,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17
+    "avgDurS": 16.4
    },
    "lastRun": {
-    "at": "2026-10-05T11:00:03Z",
+    "at": "2026-10-05T14:03:02Z",
     "conclusion": "success"
    }
   },
@@ -1265,15 +903,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 36,
-    "success": 36,
+    "runs_sampled": 42,
+    "success": 42,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 18.6
+    "avgDurS": 18.9
    },
    "lastRun": {
-    "at": "2026-10-05T11:50:50Z",
+    "at": "2026-10-05T14:52:12Z",
     "conclusion": "success"
    }
   },
@@ -1298,15 +936,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 18,
-    "success": 17,
+    "runs_sampled": 19,
+    "success": 18,
     "failure": 1,
     "other": 0,
-    "successRate": 94.4,
-    "avgDurS": 24.1
+    "successRate": 94.7,
+    "avgDurS": 24
    },
    "lastRun": {
-    "at": "2026-10-05T08:28:35Z",
+    "at": "2026-10-05T12:31:24Z",
     "conclusion": "success"
    }
   },
@@ -1331,15 +969,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 34,
-    "success": 31,
+    "runs_sampled": 36,
+    "success": 33,
     "failure": 3,
     "other": 0,
-    "successRate": 91.2,
-    "avgDurS": 250.4
+    "successRate": 91.7,
+    "avgDurS": 238.3
    },
    "lastRun": {
-    "at": "2026-10-05T10:37:20Z",
+    "at": "2026-10-05T14:40:00Z",
     "conclusion": "success"
    }
   },
@@ -1364,15 +1002,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 37,
-    "success": 36,
+    "runs_sampled": 43,
+    "success": 42,
     "failure": 1,
     "other": 0,
-    "successRate": 97.3,
-    "avgDurS": 17.4
+    "successRate": 97.7,
+    "avgDurS": 16.7
    },
    "lastRun": {
-    "at": "2026-10-05T11:36:48Z",
+    "at": "2026-10-05T14:39:34Z",
     "conclusion": "success"
    }
   },
@@ -1501,10 +1139,10 @@
     "failure": 31,
     "other": 0,
     "successRate": 69,
-    "avgDurS": 15.4
+    "avgDurS": 15.7
    },
    "lastRun": {
-    "at": "2026-10-05T11:50:13Z",
+    "at": "2026-10-05T14:51:26Z",
     "conclusion": "success"
    }
   },
@@ -1529,15 +1167,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 18,
-    "success": 18,
+    "runs_sampled": 21,
+    "success": 21,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 31.3
+    "avgDurS": 29.7
    },
    "lastRun": {
-    "at": "2026-10-05T11:24:18Z",
+    "at": "2026-10-05T14:29:31Z",
     "conclusion": "success"
    }
   },
@@ -1562,15 +1200,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 10,
-    "success": 10,
+    "runs_sampled": 11,
+    "success": 11,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 32.8
    },
    "lastRun": {
-    "at": "2026-10-05T06:55:59Z",
+    "at": "2026-10-05T12:53:43Z",
     "conclusion": "success"
    }
   },
@@ -1595,15 +1233,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 39,
-    "success": 38,
+    "runs_sampled": 45,
+    "success": 44,
     "failure": 1,
     "other": 0,
-    "successRate": 97.4,
-    "avgDurS": 14
+    "successRate": 97.8,
+    "avgDurS": 13.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:38:44Z",
+    "at": "2026-10-05T14:40:27Z",
     "conclusion": "success"
    }
   },
@@ -1628,15 +1266,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 59,
-    "success": 59,
+    "runs_sampled": 62,
+    "success": 62,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15.4
+    "avgDurS": 15.5
    },
    "lastRun": {
-    "at": "2026-10-05T11:31:03Z",
+    "at": "2026-10-05T14:35:04Z",
     "conclusion": "success"
    }
   },
@@ -1666,10 +1304,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 15
+    "avgDurS": 15.3
    },
    "lastRun": {
-    "at": "2026-10-05T11:53:00Z",
+    "at": "2026-10-05T14:54:11Z",
     "conclusion": "success"
    }
   },
@@ -1695,14 +1333,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 85,
+    "success": 80,
     "failure": 0,
-    "other": 15,
-    "successRate": 85,
-    "avgDurS": 26.9
+    "other": 20,
+    "successRate": 80,
+    "avgDurS": 40.8
    },
    "lastRun": {
-    "at": "2026-10-05T11:53:13Z",
+    "at": "2026-10-05T14:54:24Z",
     "conclusion": "success"
    }
   },
@@ -1826,15 +1464,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 10,
-    "success": 7,
+    "runs_sampled": 11,
+    "success": 8,
     "failure": 3,
     "other": 0,
-    "successRate": 70,
-    "avgDurS": 370.3
+    "successRate": 72.7,
+    "avgDurS": 343.5
    },
    "lastRun": {
-    "at": "2026-10-04T20:32:58Z",
+    "at": "2026-10-05T14:49:53Z",
     "conclusion": "success"
    }
   },
@@ -1958,15 +1596,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 36,
-    "success": 36,
+    "runs_sampled": 42,
+    "success": 42,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 17.3
+    "avgDurS": 14.7
    },
    "lastRun": {
-    "at": "2026-10-05T11:28:12Z",
+    "at": "2026-10-05T14:32:50Z",
     "conclusion": "success"
    }
   },
@@ -1991,15 +1629,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 40,
-    "success": 40,
+    "runs_sampled": 46,
+    "success": 46,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.9
+    "avgDurS": 13.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:45:21Z",
+    "at": "2026-10-05T14:46:20Z",
     "conclusion": "success"
    }
   },
@@ -2161,10 +1799,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.3
+    "avgDurS": 16.2
    },
    "lastRun": {
-    "at": "2026-10-05T11:27:07Z",
+    "at": "2026-10-05T14:31:51Z",
     "conclusion": "success"
    }
   },
@@ -2194,10 +1832,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 49.9
+    "avgDurS": 49.5
    },
    "lastRun": {
-    "at": "2026-10-05T11:25:52Z",
+    "at": "2026-10-05T14:45:03Z",
     "conclusion": "success"
    }
   },
@@ -2222,15 +1860,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 35,
-    "success": 35,
+    "runs_sampled": 38,
+    "success": 38,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 7.4
+    "avgDurS": 7.5
    },
    "lastRun": {
-    "at": "2026-10-05T11:20:35Z",
+    "at": "2026-10-05T14:24:46Z",
     "conclusion": "success"
    }
   },
@@ -2293,10 +1931,10 @@
     "failure": 1,
     "other": 0,
     "successRate": 99,
-    "avgDurS": 35.8
+    "avgDurS": 36
    },
    "lastRun": {
-    "at": "2026-10-05T11:25:20Z",
+    "at": "2026-10-05T14:30:40Z",
     "conclusion": "success"
    }
   },
@@ -2326,10 +1964,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 14.5
+    "avgDurS": 14.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:02:30Z",
+    "at": "2026-10-05T14:04:58Z",
     "conclusion": "success"
    }
   },
@@ -2359,10 +1997,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 19.2
+    "avgDurS": 19.4
    },
    "lastRun": {
-    "at": "2026-10-05T11:54:25Z",
+    "at": "2026-10-05T14:40:15Z",
     "conclusion": "success"
    }
   },
@@ -2618,15 +2256,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 21,
-    "success": 8,
+    "runs_sampled": 22,
+    "success": 9,
     "failure": 13,
     "other": 0,
-    "successRate": 38.1,
-    "avgDurS": 26.2
+    "successRate": 40.9,
+    "avgDurS": 27.6
    },
    "lastRun": {
-    "at": "2026-10-04T18:19:18Z",
+    "at": "2026-10-05T12:53:50Z",
     "conclusion": "success"
    }
   },
@@ -2717,15 +2355,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 35,
-    "success": 33,
+    "runs_sampled": 41,
+    "success": 39,
     "failure": 2,
     "other": 0,
-    "successRate": 94.3,
-    "avgDurS": 27.4
+    "successRate": 95.1,
+    "avgDurS": 28.1
    },
    "lastRun": {
-    "at": "2026-10-05T11:38:56Z",
+    "at": "2026-10-05T14:40:48Z",
     "conclusion": "success"
    }
   },
@@ -2783,15 +2421,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 22,
-    "success": 14,
+    "runs_sampled": 23,
+    "success": 15,
     "failure": 8,
     "other": 0,
-    "successRate": 63.6,
-    "avgDurS": 39.8
+    "successRate": 65.2,
+    "avgDurS": 40
    },
    "lastRun": {
-    "at": "2026-10-04T04:31:19Z",
+    "at": "2026-10-05T12:56:12Z",
     "conclusion": "success"
    }
   },
@@ -2816,15 +2454,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 73,
-    "success": 66,
+    "runs_sampled": 74,
+    "success": 67,
     "failure": 7,
     "other": 0,
-    "successRate": 90.4,
-    "avgDurS": 30.4
+    "successRate": 90.5,
+    "avgDurS": 30.6
    },
    "lastRun": {
-    "at": "2026-10-05T09:45:18Z",
+    "at": "2026-10-05T13:08:16Z",
     "conclusion": "success"
    }
   },
@@ -2915,15 +2553,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 37,
-    "success": 37,
+    "runs_sampled": 38,
+    "success": 38,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 9.7
    },
    "lastRun": {
-    "at": "2026-10-05T09:45:18Z",
+    "at": "2026-10-05T13:08:16Z",
     "conclusion": "success"
    }
   },
@@ -3113,15 +2751,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 81,
-    "success": 63,
+    "runs_sampled": 83,
+    "success": 65,
     "failure": 18,
     "other": 0,
-    "successRate": 77.8,
-    "avgDurS": 20.2
+    "successRate": 78.3,
+    "avgDurS": 20
    },
    "lastRun": {
-    "at": "2026-10-05T11:36:52Z",
+    "at": "2026-10-05T12:33:59Z",
     "conclusion": "success"
    }
   },
@@ -3146,15 +2784,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 69,
-    "success": 63,
+    "runs_sampled": 71,
+    "success": 65,
     "failure": 6,
     "other": 0,
-    "successRate": 91.3,
-    "avgDurS": 19.8
+    "successRate": 91.5,
+    "avgDurS": 19.9
    },
    "lastRun": {
-    "at": "2026-10-05T11:36:52Z",
+    "at": "2026-10-05T12:33:59Z",
     "conclusion": "success"
    }
   },
@@ -3179,15 +2817,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 21,
-    "success": 8,
+    "runs_sampled": 22,
+    "success": 9,
     "failure": 13,
     "other": 0,
-    "successRate": 38.1,
-    "avgDurS": 9
+    "successRate": 40.9,
+    "avgDurS": 9.4
    },
    "lastRun": {
-    "at": "2026-10-04T18:23:03Z",
+    "at": "2026-10-05T13:53:57Z",
     "conclusion": "success"
    }
   },
@@ -3212,15 +2850,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 20,
-    "success": 20,
+    "runs_sampled": 22,
+    "success": 22,
     "failure": 0,
     "other": 0,
     "successRate": 100,
     "avgDurS": 10
    },
    "lastRun": {
-    "at": "2026-10-05T11:36:52Z",
+    "at": "2026-10-05T12:33:59Z",
     "conclusion": "success"
    }
   },
@@ -3476,15 +3114,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 62,
-    "success": 55,
+    "runs_sampled": 68,
+    "success": 61,
     "failure": 0,
     "other": 7,
-    "successRate": 88.7,
-    "avgDurS": 10.5
+    "successRate": 89.7,
+    "avgDurS": 11.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:23:34Z",
+    "at": "2026-10-05T14:07:06Z",
     "conclusion": "success"
    }
   },
@@ -3510,14 +3148,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 98,
-    "failure": 2,
+    "success": 100,
+    "failure": 0,
     "other": 0,
-    "successRate": 98,
-    "avgDurS": 33.1
+    "successRate": 100,
+    "avgDurS": 32.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:52:22Z",
+    "at": "2026-10-05T14:45:49Z",
     "conclusion": "success"
    }
   },
@@ -3550,7 +3188,7 @@
     "avgDurS": 63.6
    },
    "lastRun": {
-    "at": "2026-10-05T11:20:40Z",
+    "at": "2026-10-05T14:24:52Z",
     "conclusion": "success"
    }
   },
@@ -3707,49 +3345,16 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 94,
-    "success": 94,
+    "runs_sampled": 100,
+    "success": 100,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 12.1
+    "avgDurS": 13.2
    },
    "lastRun": {
-    "at": "2026-10-05T11:52:22Z",
+    "at": "2026-10-05T14:45:49Z",
     "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-key-verify",
-   "name": "key-verify",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "manual (workflow_dispatch)",
-   "layer": "INTEGRITY",
-   "role": {
-    "en": "Key proof - derives the active public key from the key material held only as a GitHub Actions secret and compares it against the LIVE chain authorities of the account; an honest no-secret skip when the secret is absent, and a public receipt of the match when it is not. No secret value ever enters the repo or the logs.",
-    "he": "הוכחת-מפתח - גוזר את המפתח-הציבורי מחומר-המפתח שמוחזק אך ורק כ-secret של GitHub Actions ומשווה מול רשויות-המפתח החיות בשרשרת; דילוג כנה כשאין סוד, וקבלה ציבורית של ההתאמה כשיש. ערך-הסוד אף פעם לא נכנס לריפו או ללוגים."
-   },
-   "input": {
-    "en": "GitHub Actions secret (memory only) + chain authorities",
-    "he": "secret של GitHub Actions (זיכרון בלבד) + רשויות-שרשרת"
-   },
-   "output": {
-    "en": "receipts/key-check.json (public-key match receipt)",
-    "he": "receipts/key-check.json (קבלת התאמת-מפתח-ציבורי)"
-   },
-   "state": "degraded",
-   "stats": {
-    "runs_sampled": 3,
-    "success": 2,
-    "failure": 1,
-    "other": 0,
-    "successRate": 66.7,
-    "avgDurS": 18.3
-   },
-   "lastRun": {
-    "at": "2026-09-30T15:32:20Z",
-    "conclusion": "failure"
    }
   },
   {
@@ -3773,15 +3378,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 24,
+    "runs_sampled": 25,
     "success": 12,
-    "failure": 12,
+    "failure": 13,
     "other": 0,
-    "successRate": 50,
-    "avgDurS": 79.1
+    "successRate": 48,
+    "avgDurS": 79.4
    },
    "lastRun": {
-    "at": "2026-10-05T07:58:23Z",
+    "at": "2026-10-05T14:01:05Z",
     "conclusion": "failure"
    }
   },
@@ -3939,14 +3544,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 80,
-    "failure": 20,
+    "success": 74,
+    "failure": 26,
     "other": 0,
-    "successRate": 80,
-    "avgDurS": 78.8
+    "successRate": 74,
+    "avgDurS": 80.8
    },
    "lastRun": {
-    "at": "2026-10-05T11:23:34Z",
+    "at": "2026-10-05T14:07:06Z",
     "conclusion": "failure"
    }
   },
@@ -4004,15 +3609,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 6,
+    "runs_sampled": 7,
     "success": 4,
-    "failure": 2,
+    "failure": 3,
     "other": 0,
-    "successRate": 66.7,
-    "avgDurS": 25.2
+    "successRate": 57.1,
+    "avgDurS": 25.9
    },
    "lastRun": {
-    "at": "2026-10-05T06:58:42Z",
+    "at": "2026-10-05T12:56:37Z",
     "conclusion": "failure"
    }
   },
