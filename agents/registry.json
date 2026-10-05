@@ -1,6 +1,6 @@
 {
  "ok": true,
- "generatedAt": "2026-10-05T19:03:19Z",
+ "generatedAt": "2026-10-05T21:55:18Z",
  "source": "github-actions-api",
  "reposTotal": 16,
  "reposWithAgents": [
@@ -77,15 +77,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 11,
-    "success": 8,
+    "runs_sampled": 12,
+    "success": 9,
     "failure": 3,
     "other": 0,
-    "successRate": 72.7,
-    "avgDurS": 7.7
+    "successRate": 75,
+    "avgDurS": 8.1
    },
    "lastRun": {
-    "at": "2026-10-04T21:51:26Z",
+    "at": "2026-10-05T21:51:50Z",
     "conclusion": "success"
    }
   },
@@ -110,15 +110,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 4,
-    "success": 4,
+    "runs_sampled": 5,
+    "success": 5,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 16.5
+    "avgDurS": 15.2
    },
    "lastRun": {
-    "at": "2026-10-04T21:51:26Z",
+    "at": "2026-10-05T21:51:50Z",
     "conclusion": "success"
    }
   },
@@ -222,105 +222,6 @@
    }
   },
   {
-   "id": "console-agent-verify",
-   "name": "agent-verify",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "every 2h at :55",
-   "layer": "QA",
-   "role": {
-    "en": "The network verifies the agent - reads the assertions contract beside it, measures the LIVE public site (never the repo) and publishes results.json; exit code is always 0 and every failure is recorded honestly as data.",
-    "he": "הרשת מאמתת את הסוכן - קורא את חוזה-הטענות שלצידו, מודד את האתר החי הציבורי (לא את הריפו) ומפרסם results.json; קוד-היציאה תמיד 0 וכל כשל נרשם בכנות כנתון."
-   },
-   "input": {
-    "en": "agent/verify/assertions.json + live site",
-    "he": "agent/verify/assertions.json + האתר החי"
-   },
-   "output": {
-    "en": "agent/verify/results.json",
-    "he": "agent/verify/results.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 19.3
-   },
-   "lastRun": {
-    "at": "2026-10-05T17:01:03Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-agents-watch",
-   "name": "agents-watch",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "hourly :37",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "The fleet census - asks the GitHub Actions API for the real state of every workflow in the 16 agent-repos (runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",
-    "he": "מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows ב-16 הריפואים (ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."
-   },
-   "input": {
-    "en": "GitHub Actions API (16 repos)",
-    "he": "API של GitHub Actions (16 ריפואים)"
-   },
-   "output": {
-    "en": "agents/registry.json + agents/gh-snapshot.json",
-    "he": "agents/registry.json + agents/gh-snapshot.json"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 98,
-    "failure": 1,
-    "other": 1,
-    "successRate": 98,
-    "avgDurS": 154.3
-   },
-   "lastRun": {
-    "at": "2026-10-05T17:52:13Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "console-console-publish",
-   "name": "console-publish",
-   "repo": "Console",
-   "visibility": "public",
-   "schedule": "on push to main",
-   "layer": "PUBLISH",
-   "role": {
-    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
-    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
-   },
-   "input": {
-    "en": "push to main",
-    "he": "דחיפה ל-main"
-   },
-   "output": {
-    "en": "live console pages",
-    "he": "דפי קונסולה חיים"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 95,
-    "failure": 5,
-    "other": 0,
-    "successRate": 95,
-    "avgDurS": 16.3
-   },
-   "lastRun": {
-    "at": "2026-10-05T17:58:44Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "console-dex-watch",
    "name": "dex-watch",
    "repo": "Console",
@@ -342,14 +243,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
+    "success": 93,
+    "failure": 7,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 13.8
+    "successRate": 93,
+    "avgDurS": 205.9
    },
    "lastRun": {
-    "at": "2026-10-05T18:46:56Z",
+    "at": "2026-10-05T21:37:39Z",
     "conclusion": "success"
    }
   },
@@ -379,10 +280,10 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.6
+    "avgDurS": 14
    },
    "lastRun": {
-    "at": "2026-10-05T18:30:50Z",
+    "at": "2026-10-05T21:32:31Z",
     "conclusion": "success"
    }
   },
@@ -441,14 +342,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 97,
-    "failure": 3,
+    "success": 93,
+    "failure": 7,
     "other": 0,
-    "successRate": 97,
-    "avgDurS": 15.7
+    "successRate": 93,
+    "avgDurS": 129.2
    },
    "lastRun": {
-    "at": "2026-10-05T18:52:54Z",
+    "at": "2026-10-05T21:47:57Z",
     "conclusion": "success"
    }
   },
@@ -474,14 +375,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 74,
-    "failure": 0,
-    "other": 26,
-    "successRate": 74,
-    "avgDurS": 46.8
+    "success": 71,
+    "failure": 1,
+    "other": 28,
+    "successRate": 71,
+    "avgDurS": 90.3
    },
    "lastRun": {
-    "at": "2026-10-05T18:53:10Z",
+    "at": "2026-10-05T21:48:11Z",
     "conclusion": "success"
    }
   },
@@ -507,14 +408,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
+    "success": 98,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 11.6
+    "successRate": 98,
+    "avgDurS": 58.1
    },
    "lastRun": {
-    "at": "2026-10-05T18:42:00Z",
+    "at": "2026-10-05T21:35:08Z",
     "conclusion": "success"
    }
   },
@@ -540,14 +441,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 88,
-    "failure": 12,
+    "success": 86,
+    "failure": 14,
     "other": 0,
-    "successRate": 88,
-    "avgDurS": 24.3
+    "successRate": 86,
+    "avgDurS": 82.3
    },
    "lastRun": {
-    "at": "2026-10-05T18:30:10Z",
+    "at": "2026-10-05T21:24:13Z",
     "conclusion": "success"
    }
   },
@@ -573,179 +474,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 77,
+    "success": 76,
     "failure": 0,
-    "other": 23,
-    "successRate": 77,
-    "avgDurS": 9.2
+    "other": 24,
+    "successRate": 76,
+    "avgDurS": 9.3
    },
    "lastRun": {
-    "at": "2026-10-05T18:30:50Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "defi-canary",
-   "name": "canary",
-   "repo": "Defi",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 88,
-    "success": 30,
-    "failure": 58,
-    "other": 0,
-    "successRate": 34.1,
-    "avgDurS": 9.6
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:38:01Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "defi-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "Defi",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 9.9
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:41:52Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "defi-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "Defi",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 55,
-    "success": 55,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 11
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:41:52Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "domain-agent-verify",
-   "name": "agent-verify",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 18.8
-   },
-   "lastRun": {
-    "at": "2026-10-05T17:01:23Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "domain-anchor-execute",
-   "name": "anchor-execute",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 17.6
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:05:22Z",
+    "at": "2026-10-05T21:32:31Z",
     "conclusion": "success"
    }
   },
@@ -770,15 +506,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 23,
-    "success": 23,
-    "failure": 0,
+    "runs_sampled": 26,
+    "success": 24,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 15.4
+    "successRate": 92.3,
+    "avgDurS": 107.5
    },
    "lastRun": {
-    "at": "2026-10-05T18:29:35Z",
+    "at": "2026-10-05T21:23:36Z",
     "conclusion": "success"
    }
   },
@@ -870,14 +606,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
+    "success": 95,
+    "failure": 5,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 34.6
+    "successRate": 95,
+    "avgDurS": 156.4
    },
    "lastRun": {
-    "at": "2026-10-05T18:37:36Z",
+    "at": "2026-10-05T21:31:16Z",
     "conclusion": "success"
    }
   },
@@ -1047,39 +783,6 @@
    }
   },
   {
-   "id": "domain-dex-beat",
-   "name": "dex-beat",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 88,
-    "failure": 12,
-    "other": 0,
-    "successRate": 88,
-    "avgDurS": 77.4
-   },
-   "lastRun": {
-    "at": "2026-10-05T17:01:14Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "domain-dex-core",
    "name": "dex-core",
    "repo": "Domain",
@@ -1100,15 +803,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 24,
-    "success": 24,
-    "failure": 0,
+    "runs_sampled": 27,
+    "success": 25,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 19.6
+    "successRate": 92.6,
+    "avgDurS": 89.1
    },
    "lastRun": {
-    "at": "2026-10-05T18:55:53Z",
+    "at": "2026-10-05T21:50:13Z",
     "conclusion": "success"
    }
   },
@@ -1146,39 +849,6 @@
    }
   },
   {
-   "id": "domain-dex-mirror",
-   "name": "dex-mirror",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 17.4
-   },
-   "lastRun": {
-    "at": "2026-10-05T17:59:01Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "domain-dex-router",
    "name": "dex-router",
    "repo": "Domain",
@@ -1199,48 +869,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 24,
-    "success": 24,
-    "failure": 0,
+    "runs_sampled": 27,
+    "success": 25,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 14.7
+    "successRate": 92.6,
+    "avgDurS": 81.2
    },
    "lastRun": {
-    "at": "2026-10-05T18:44:55Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "domain-dex-xc",
-   "name": "dex-xc",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 23,
-    "success": 23,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 18
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:00:22Z",
+    "at": "2026-10-05T21:39:18Z",
     "conclusion": "success"
    }
   },
@@ -1265,81 +902,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 50,
-    "success": 50,
-    "failure": 0,
+    "runs_sampled": 56,
+    "success": 52,
+    "failure": 4,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 19.4
+    "successRate": 92.9,
+    "avgDurS": 135
    },
    "lastRun": {
-    "at": "2026-10-05T18:54:14Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "domain-econ-desk",
-   "name": "econ-desk",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 20,
-    "success": 19,
-    "failure": 1,
-    "other": 0,
-    "successRate": 95,
-    "avgDurS": 23.9
-   },
-   "lastRun": {
-    "at": "2026-10-05T16:26:42Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "domain-economy-engine",
-   "name": "economy-engine",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 38,
-    "success": 35,
-    "failure": 3,
-    "other": 0,
-    "successRate": 92.1,
-    "avgDurS": 229.6
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:41:58Z",
+    "at": "2026-10-05T21:49:02Z",
     "conclusion": "success"
    }
   },
@@ -1364,15 +935,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 51,
-    "success": 50,
-    "failure": 1,
+    "runs_sampled": 57,
+    "success": 52,
+    "failure": 5,
     "other": 0,
-    "successRate": 98,
-    "avgDurS": 14.9
+    "successRate": 91.2,
+    "avgDurS": 124.4
    },
    "lastRun": {
-    "at": "2026-10-05T18:41:16Z",
+    "at": "2026-10-05T21:34:50Z",
     "conclusion": "success"
    }
   },
@@ -1497,14 +1068,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 69,
-    "failure": 31,
+    "success": 65,
+    "failure": 35,
     "other": 0,
-    "successRate": 69,
-    "avgDurS": 17.5
+    "successRate": 65,
+    "avgDurS": 129.8
    },
    "lastRun": {
-    "at": "2026-10-05T18:53:23Z",
+    "at": "2026-10-05T21:48:20Z",
     "conclusion": "success"
    }
   },
@@ -1529,15 +1100,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 25,
-    "success": 25,
-    "failure": 0,
+    "runs_sampled": 28,
+    "success": 26,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 28.2
+    "successRate": 92.9,
+    "avgDurS": 114.1
    },
    "lastRun": {
-    "at": "2026-10-05T18:29:06Z",
+    "at": "2026-10-05T21:23:31Z",
     "conclusion": "success"
    }
   },
@@ -1595,15 +1166,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 53,
-    "success": 52,
-    "failure": 1,
+    "runs_sampled": 59,
+    "success": 53,
+    "failure": 6,
     "other": 0,
-    "successRate": 98.1,
-    "avgDurS": 13.5
+    "successRate": 89.8,
+    "avgDurS": 130.8
    },
    "lastRun": {
-    "at": "2026-10-05T18:42:49Z",
+    "at": "2026-10-05T21:36:09Z",
     "conclusion": "success"
    }
   },
@@ -1628,15 +1199,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 66,
-    "success": 66,
-    "failure": 0,
+    "runs_sampled": 69,
+    "success": 67,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 16.2
+    "successRate": 97.1,
+    "avgDurS": 64.9
    },
    "lastRun": {
-    "at": "2026-10-05T18:35:24Z",
+    "at": "2026-10-05T21:29:27Z",
     "conclusion": "success"
    }
   },
@@ -1662,14 +1233,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 99,
-    "failure": 0,
-    "other": 1,
-    "successRate": 99,
-    "avgDurS": 15.3
+    "success": 95,
+    "failure": 5,
+    "other": 0,
+    "successRate": 95,
+    "avgDurS": 145.1
    },
    "lastRun": {
-    "at": "2026-10-05T18:29:37Z",
+    "at": "2026-10-05T21:51:43Z",
     "conclusion": "success"
    }
   },
@@ -1695,14 +1266,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 76,
-    "failure": 0,
-    "other": 24,
-    "successRate": 76,
-    "avgDurS": 47.6
+    "success": 71,
+    "failure": 1,
+    "other": 28,
+    "successRate": 71,
+    "avgDurS": 97.6
    },
    "lastRun": {
-    "at": "2026-10-05T18:54:34Z",
+    "at": "2026-10-05T21:51:56Z",
     "conclusion": "success"
    }
   },
@@ -1958,15 +1529,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 51,
-    "success": 50,
-    "failure": 0,
-    "other": 1,
-    "successRate": 98,
-    "avgDurS": 11
+    "runs_sampled": 56,
+    "success": 52,
+    "failure": 4,
+    "other": 0,
+    "successRate": 92.9,
+    "avgDurS": 130.8
    },
    "lastRun": {
-    "at": "2026-10-05T18:32:51Z",
+    "at": "2026-10-05T21:26:53Z",
     "conclusion": "success"
    }
   },
@@ -1991,15 +1562,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 54,
-    "success": 54,
-    "failure": 0,
+    "runs_sampled": 60,
+    "success": 55,
+    "failure": 5,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 15.8
+    "successRate": 91.7,
+    "avgDurS": 130.6
    },
    "lastRun": {
-    "at": "2026-10-05T18:48:28Z",
+    "at": "2026-10-05T21:43:20Z",
     "conclusion": "success"
    }
   },
@@ -2124,14 +1695,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
+    "success": 98,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 16.3
+    "successRate": 98,
+    "avgDurS": 70.5
    },
    "lastRun": {
-    "at": "2026-10-05T18:31:50Z",
+    "at": "2026-10-05T21:25:49Z",
     "conclusion": "success"
    }
   },
@@ -2157,14 +1728,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 99,
-    "failure": 1,
+    "success": 98,
+    "failure": 2,
     "other": 0,
-    "successRate": 99,
-    "avgDurS": 50.2
+    "successRate": 98,
+    "avgDurS": 71.9
    },
    "lastRun": {
-    "at": "2026-10-05T18:47:28Z",
+    "at": "2026-10-05T21:32:38Z",
     "conclusion": "success"
    }
   },
@@ -2189,15 +1760,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 42,
-    "success": 42,
-    "failure": 0,
+    "runs_sampled": 45,
+    "success": 43,
+    "failure": 2,
     "other": 0,
-    "successRate": 100,
-    "avgDurS": 7.8
+    "successRate": 95.6,
+    "avgDurS": 74.1
    },
    "lastRun": {
-    "at": "2026-10-05T18:24:14Z",
+    "at": "2026-10-05T21:19:14Z",
     "conclusion": "success"
    }
   },
@@ -2256,47 +1827,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 99,
-    "failure": 1,
+    "success": 97,
+    "failure": 3,
     "other": 0,
-    "successRate": 99,
-    "avgDurS": 35.9
+    "successRate": 97,
+    "avgDurS": 92.3
    },
    "lastRun": {
-    "at": "2026-10-05T18:30:19Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "domain-weave-mirror",
-   "name": "weave-mirror",
-   "repo": "Domain",
-   "visibility": "public",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 15.1
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:02:51Z",
+    "at": "2026-10-05T21:24:32Z",
     "conclusion": "success"
    }
   },
@@ -2322,14 +1860,14 @@
    "state": "live",
    "stats": {
     "runs_sampled": 100,
-    "success": 99,
-    "failure": 0,
+    "success": 91,
+    "failure": 8,
     "other": 1,
-    "successRate": 99,
-    "avgDurS": 19.3
+    "successRate": 91,
+    "avgDurS": 219.3
    },
    "lastRun": {
-    "at": "2026-10-05T18:42:33Z",
+    "at": "2026-10-05T21:36:07Z",
     "conclusion": "success"
    }
   },
@@ -2519,15 +2057,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 12,
-    "success": 8,
+    "runs_sampled": 13,
+    "success": 9,
     "failure": 4,
     "other": 0,
-    "successRate": 66.7,
-    "avgDurS": 8.3
+    "successRate": 69.2,
+    "avgDurS": 8.5
    },
    "lastRun": {
-    "at": "2026-10-04T21:52:23Z",
+    "at": "2026-10-05T21:52:46Z",
     "conclusion": "success"
    }
   },
@@ -2552,15 +2090,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 4,
-    "success": 4,
+    "runs_sampled": 5,
+    "success": 5,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 7.8
+    "avgDurS": 8.4
    },
    "lastRun": {
-    "at": "2026-10-04T21:52:23Z",
+    "at": "2026-10-05T21:52:46Z",
     "conclusion": "success"
    }
   },
@@ -2598,72 +2136,6 @@
    }
   },
   {
-   "id": "saos-control-center-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "saos-control-center",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 10,
-    "success": 7,
-    "failure": 3,
-    "other": 0,
-    "successRate": 70,
-    "avgDurS": 8.9
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:05:58Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-control-center-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "saos-control-center",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 4,
-    "success": 4,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 7.5
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:05:58Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "saos-dex-arb-scan",
    "name": "arb-scan",
    "repo": "saos-dex",
@@ -2684,15 +2156,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 49,
-    "success": 47,
-    "failure": 2,
+    "runs_sampled": 55,
+    "success": 48,
+    "failure": 7,
     "other": 0,
-    "successRate": 95.9,
-    "avgDurS": 28.5
+    "successRate": 87.3,
+    "avgDurS": 156.5
    },
    "lastRun": {
-    "at": "2026-10-05T18:42:58Z",
+    "at": "2026-10-05T21:36:17Z",
     "conclusion": "success"
    }
   },
@@ -2895,39 +2367,6 @@
    }
   },
   {
-   "id": "saos-jummper-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "saos-jummper",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 14,
-    "success": 10,
-    "failure": 4,
-    "other": 0,
-    "successRate": 71.4,
-    "avgDurS": 8.4
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:00:48Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "saos-jummper-jumpper-tests",
    "name": "jumpper-tests",
    "repo": "saos-jummper",
@@ -2957,171 +2396,6 @@
    },
    "lastRun": {
     "at": "2026-10-05T10:41:39Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-jummper-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "saos-jummper",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 4,
-    "success": 4,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 9
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:00:48Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-sovereign-foundry-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "saos-sovereign-foundry",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 17,
-    "success": 8,
-    "failure": 9,
-    "other": 0,
-    "successRate": 47.1,
-    "avgDurS": 8.4
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:09:58Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-sovereign-foundry-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "saos-sovereign-foundry",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 4,
-    "success": 4,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 8.8
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:09:58Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-sovereign-platform-foundry-tests",
-   "name": "foundry-tests",
-   "repo": "saos-sovereign-platform",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 83,
-    "success": 65,
-    "failure": 18,
-    "other": 0,
-    "successRate": 78.3,
-    "avgDurS": 20
-   },
-   "lastRun": {
-    "at": "2026-10-05T12:33:59Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saos-sovereign-platform-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "saos-sovereign-platform",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 71,
-    "success": 65,
-    "failure": 6,
-    "other": 0,
-    "successRate": 91.5,
-    "avgDurS": 19.9
-   },
-   "lastRun": {
-    "at": "2026-10-05T12:33:59Z",
     "conclusion": "success"
    }
   },
@@ -3159,72 +2433,6 @@
    }
   },
   {
-   "id": "saos-sovereign-platform-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "saos-sovereign-platform",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 22,
-    "success": 22,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 10
-   },
-   "lastRun": {
-    "at": "2026-10-05T12:33:59Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "saosmartwallet-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "Saosmartwallet",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 10,
-    "success": 7,
-    "failure": 3,
-    "other": 0,
-    "successRate": 70,
-    "avgDurS": 15.6
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:02:09Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "saosmartwallet-wallet-verify",
    "name": "wallet-verify",
    "repo": "Saosmartwallet",
@@ -3258,39 +2466,6 @@
    }
   },
   {
-   "id": "saosmartwallet-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "Saosmartwallet",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 4,
-    "success": 4,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 9
-   },
-   "lastRun": {
-    "at": "2026-10-04T21:02:09Z",
-    "conclusion": "success"
-   }
-  },
-  {
    "id": "sdk-gitleaks-secret-scan",
    "name": "gitleaks-secret-scan",
    "repo": "Sdk",
@@ -3311,15 +2486,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 11,
-    "success": 8,
+    "runs_sampled": 12,
+    "success": 9,
     "failure": 3,
     "other": 0,
-    "successRate": 72.7,
-    "avgDurS": 8.1
+    "successRate": 75,
+    "avgDurS": 8.2
    },
    "lastRun": {
-    "at": "2026-10-04T21:49:23Z",
+    "at": "2026-10-05T21:49:46Z",
     "conclusion": "success"
    }
   },
@@ -3377,15 +2552,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 4,
-    "success": 4,
+    "runs_sampled": 5,
+    "success": 5,
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 8.3
+    "avgDurS": 8
    },
    "lastRun": {
-    "at": "2026-10-04T21:49:23Z",
+    "at": "2026-10-05T21:49:46Z",
     "conclusion": "success"
    }
   },
@@ -3443,114 +2618,15 @@
    },
    "state": "live",
    "stats": {
-    "runs_sampled": 8,
-    "success": 5,
-    "failure": 3,
+    "runs_sampled": 13,
+    "success": 6,
+    "failure": 7,
     "other": 0,
-    "successRate": 62.5,
-    "avgDurS": 74.8
+    "successRate": 46.2,
+    "avgDurS": 427.6
    },
    "lastRun": {
-    "at": "2026-10-05T18:38:31Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "steem-workflow-yaml-guard",
-   "name": "workflow-yaml-guard",
-   "repo": "steem",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 79,
-    "success": 71,
-    "failure": 0,
-    "other": 8,
-    "successRate": 89.9,
-    "avgDurS": 10.9
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:19:53Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "zip-gitleaks-secret-scan",
-   "name": "gitleaks-secret-scan",
-   "repo": "Zip",
-   "visibility": "private",
-   "schedule": "measured-from-runs",
-   "layer": "UNCATALOGUED",
-   "role": {
-    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
-    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
-   },
-   "input": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "output": {
-    "en": "not catalogued",
-    "he": "טרם קוטלג"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 100,
-    "failure": 0,
-    "other": 0,
-    "successRate": 100,
-    "avgDurS": 34
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:48:21Z",
-    "conclusion": "success"
-   }
-  },
-  {
-   "id": "zip-weave-anchor-lines",
-   "name": "weave-anchor-lines",
-   "repo": "Zip",
-   "visibility": "private",
-   "schedule": "bi-hourly :20 + on every beat",
-   "layer": "WITNESS",
-   "role": {
-    "en": "Sequences both witness lines as one run - anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",
-    "he": "מריץ את שני קווי העדות כרצף אחד - מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."
-   },
-   "input": {
-    "en": "latest checkpoint root",
-    "he": "root של הצ'קפוינט האחרון"
-   },
-   "output": {
-    "en": "anchor txids recorded back into the ledger",
-    "he": "מזהי טרנזקציות העיגון חוזרים לספר"
-   },
-   "state": "live",
-   "stats": {
-    "runs_sampled": 100,
-    "success": 70,
-    "failure": 29,
-    "other": 1,
-    "successRate": 70,
-    "avgDurS": 62.4
-   },
-   "lastRun": {
-    "at": "2026-10-05T18:24:20Z",
+    "at": "2026-10-05T21:31:49Z",
     "conclusion": "success"
    }
   },
@@ -3712,11 +2788,110 @@
     "failure": 0,
     "other": 0,
     "successRate": 100,
-    "avgDurS": 13.5
+    "avgDurS": 28
    },
    "lastRun": {
-    "at": "2026-10-05T18:48:21Z",
+    "at": "2026-10-05T21:33:29Z",
     "conclusion": "success"
+   }
+  },
+  {
+   "id": "console-agent-verify",
+   "name": "agent-verify",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "every 2h at :55",
+   "layer": "QA",
+   "role": {
+    "en": "The network verifies the agent - reads the assertions contract beside it, measures the LIVE public site (never the repo) and publishes results.json; exit code is always 0 and every failure is recorded honestly as data.",
+    "he": "הרשת מאמתת את הסוכן - קורא את חוזה-הטענות שלצידו, מודד את האתר החי הציבורי (לא את הריפו) ומפרסם results.json; קוד-היציאה תמיד 0 וכל כשל נרשם בכנות כנתון."
+   },
+   "input": {
+    "en": "agent/verify/assertions.json + live site",
+    "he": "agent/verify/assertions.json + האתר החי"
+   },
+   "output": {
+    "en": "agent/verify/results.json",
+    "he": "agent/verify/results.json"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 98,
+    "failure": 2,
+    "other": 0,
+    "successRate": 98,
+    "avgDurS": 63.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:01:18Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "console-agents-watch",
+   "name": "agents-watch",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "hourly :37",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "The fleet census - asks the GitHub Actions API for the real state of every workflow in the 16 agent-repos (runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",
+    "he": "מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows ב-16 הריפואים (ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."
+   },
+   "input": {
+    "en": "GitHub Actions API (16 repos)",
+    "he": "API של GitHub Actions (16 ריפואים)"
+   },
+   "output": {
+    "en": "agents/registry.json + agents/gh-snapshot.json",
+    "he": "agents/registry.json + agents/gh-snapshot.json"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 97,
+    "failure": 2,
+    "other": 1,
+    "successRate": 97,
+    "avgDurS": 200.5
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:53:11Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "console-console-publish",
+   "name": "console-publish",
+   "repo": "Console",
+   "visibility": "public",
+   "schedule": "on push to main",
+   "layer": "PUBLISH",
+   "role": {
+    "en": "Publishes the public console pages - validates and ships every change to the site the world sees.",
+    "he": "מפרסם את דפי הקונסולה הציבוריים - מאמת ומשטח כל שינוי לאתר שהעולם רואה."
+   },
+   "input": {
+    "en": "push to main",
+    "he": "דחיפה ל-main"
+   },
+   "output": {
+    "en": "live console pages",
+    "he": "דפי קונסולה חיים"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 92,
+    "failure": 8,
+    "other": 0,
+    "successRate": 92,
+    "avgDurS": 104.5
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:59:09Z",
+    "conclusion": "failure"
    }
   },
   {
@@ -3753,6 +2928,336 @@
    }
   },
   {
+   "id": "defi-canary",
+   "name": "canary",
+   "repo": "Defi",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 89,
+    "success": 30,
+    "failure": 59,
+    "other": 0,
+    "successRate": 33.7,
+    "avgDurS": 32.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:04:42Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "defi-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Defi",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 97,
+    "failure": 3,
+    "other": 0,
+    "successRate": 97,
+    "avgDurS": 77.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:46:13Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "defi-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "Defi",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 58,
+    "success": 55,
+    "failure": 3,
+    "other": 0,
+    "successRate": 94.8,
+    "avgDurS": 78.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:46:13Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-agent-verify",
+   "name": "agent-verify",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 98,
+    "failure": 2,
+    "other": 0,
+    "successRate": 98,
+    "avgDurS": 63.1
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:01:23Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-anchor-execute",
+   "name": "anchor-execute",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 97,
+    "failure": 3,
+    "other": 0,
+    "successRate": 97,
+    "avgDurS": 106.1
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:03:35Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-dex-beat",
+   "name": "dex-beat",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 86,
+    "failure": 14,
+    "other": 0,
+    "successRate": 86,
+    "avgDurS": 118.8
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:01:18Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-dex-mirror",
+   "name": "dex-mirror",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 97,
+    "failure": 3,
+    "other": 0,
+    "successRate": 97,
+    "avgDurS": 98.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:59:14Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-dex-xc",
+   "name": "dex-xc",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 26,
+    "success": 23,
+    "failure": 3,
+    "other": 0,
+    "successRate": 88.5,
+    "avgDurS": 140.8
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:00:02Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-econ-desk",
+   "name": "econ-desk",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 21,
+    "success": 19,
+    "failure": 2,
+    "other": 0,
+    "successRate": 90.5,
+    "avgDurS": 68.4
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:26:15Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "domain-economy-engine",
+   "name": "economy-engine",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 39,
+    "success": 35,
+    "failure": 4,
+    "other": 0,
+    "successRate": 89.7,
+    "avgDurS": 248.7
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:36:35Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "domain-org-gitleaks",
    "name": "org-gitleaks",
    "repo": "Domain",
@@ -3773,15 +3278,15 @@
    },
    "state": "degraded",
    "stats": {
-    "runs_sampled": 25,
+    "runs_sampled": 26,
     "success": 12,
-    "failure": 13,
+    "failure": 14,
     "other": 0,
-    "successRate": 48,
-    "avgDurS": 79.4
+    "successRate": 46.2,
+    "avgDurS": 184.5
    },
    "lastRun": {
-    "at": "2026-10-05T14:01:05Z",
+    "at": "2026-10-05T19:57:33Z",
     "conclusion": "failure"
    }
   },
@@ -3852,6 +3357,105 @@
    }
   },
   {
+   "id": "domain-weave-mirror",
+   "name": "weave-mirror",
+   "repo": "Domain",
+   "visibility": "public",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 97,
+    "failure": 3,
+    "other": 0,
+    "successRate": 97,
+    "avgDurS": 90.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:01:59Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-control-center-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-control-center",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 11,
+    "success": 7,
+    "failure": 4,
+    "other": 0,
+    "successRate": 63.6,
+    "avgDurS": 138
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:16:04Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-control-center-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "saos-control-center",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 5,
+    "success": 4,
+    "failure": 1,
+    "other": 0,
+    "successRate": 80,
+    "avgDurS": 300
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:16:04Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-dex-grid-trigger",
    "name": "grid-trigger",
    "repo": "saos-dex",
@@ -3885,6 +3489,72 @@
    }
   },
   {
+   "id": "saos-jummper-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-jummper",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 15,
+    "success": 10,
+    "failure": 5,
+    "other": 0,
+    "successRate": 66.7,
+    "avgDurS": 92.5
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:12:48Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-jummper-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "saos-jummper",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 5,
+    "success": 4,
+    "failure": 1,
+    "other": 0,
+    "successRate": 80,
+    "avgDurS": 238.8
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:12:48Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "saos-sovereign-foundry-ci",
    "name": "CI",
    "repo": "saos-sovereign-foundry",
@@ -3910,10 +3580,241 @@
     "failure": 95,
     "other": 0,
     "successRate": 5,
-    "avgDurS": 106.3
+    "avgDurS": 125.6
    },
    "lastRun": {
-    "at": "2026-10-04T21:09:58Z",
+    "at": "2026-10-05T21:18:11Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-sovereign-foundry-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-sovereign-foundry",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 18,
+    "success": 8,
+    "failure": 10,
+    "other": 0,
+    "successRate": 44.4,
+    "avgDurS": 58.4
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:18:11Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-sovereign-foundry-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "saos-sovereign-foundry",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 5,
+    "success": 4,
+    "failure": 1,
+    "other": 0,
+    "successRate": 80,
+    "avgDurS": 189
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:18:11Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-sovereign-platform-foundry-tests",
+   "name": "foundry-tests",
+   "repo": "saos-sovereign-platform",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 84,
+    "success": 65,
+    "failure": 19,
+    "other": 0,
+    "successRate": 77.4,
+    "avgDurS": 42.2
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:16:51Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-sovereign-platform-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "saos-sovereign-platform",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 72,
+    "success": 65,
+    "failure": 7,
+    "other": 0,
+    "successRate": 90.3,
+    "avgDurS": 42.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:16:51Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saos-sovereign-platform-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "saos-sovereign-platform",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 23,
+    "success": 22,
+    "failure": 1,
+    "other": 0,
+    "successRate": 95.7,
+    "avgDurS": 49.3
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:16:51Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saosmartwallet-gitleaks-secret-scan",
+   "name": "gitleaks-secret-scan",
+   "repo": "Saosmartwallet",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 11,
+    "success": 7,
+    "failure": 4,
+    "other": 0,
+    "successRate": 63.6,
+    "avgDurS": 117.5
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:15:23Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "saosmartwallet-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "Saosmartwallet",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 5,
+    "success": 4,
+    "failure": 1,
+    "other": 0,
+    "successRate": 80,
+    "avgDurS": 234.4
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:15:23Z",
     "conclusion": "failure"
    }
   },
@@ -3939,14 +3840,14 @@
    "state": "degraded",
    "stats": {
     "runs_sampled": 100,
-    "success": 63,
-    "failure": 36,
-    "other": 1,
-    "successRate": 63,
-    "avgDurS": 90.3
+    "success": 60,
+    "failure": 40,
+    "other": 0,
+    "successRate": 60,
+    "avgDurS": 178.6
    },
    "lastRun": {
-    "at": "2026-10-05T18:19:53Z",
+    "at": "2026-10-05T20:06:59Z",
     "conclusion": "failure"
    }
   },
@@ -3984,6 +3885,39 @@
    }
   },
   {
+   "id": "steem-workflow-yaml-guard",
+   "name": "workflow-yaml-guard",
+   "repo": "steem",
+   "visibility": "private",
+   "schedule": "measured-from-runs",
+   "layer": "UNCATALOGUED",
+   "role": {
+    "en": "Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",
+    "he": "טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."
+   },
+   "input": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "output": {
+    "en": "not catalogued",
+    "he": "טרם קוטלג"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 82,
+    "success": 71,
+    "failure": 4,
+    "other": 7,
+    "successRate": 86.6,
+    "avgDurS": 105.4
+   },
+   "lastRun": {
+    "at": "2026-10-05T20:06:59Z",
+    "conclusion": "failure"
+   }
+  },
+  {
    "id": "zip-fleet-audit",
    "name": "fleet-audit",
    "repo": "Zip",
@@ -4006,13 +3940,46 @@
    "stats": {
     "runs_sampled": 8,
     "success": 4,
-    "failure": 3,
-    "other": 1,
+    "failure": 4,
+    "other": 0,
     "successRate": 50,
-    "avgDurS": 22.6
+    "avgDurS": 135.4
    },
    "lastRun": {
-    "at": "2026-10-05T12:56:37Z",
+    "at": "2026-10-05T18:54:12Z",
+    "conclusion": "failure"
+   }
+  },
+  {
+   "id": "zip-weave-anchor-lines",
+   "name": "weave-anchor-lines",
+   "repo": "Zip",
+   "visibility": "private",
+   "schedule": "bi-hourly :20 + on every beat",
+   "layer": "WITNESS",
+   "role": {
+    "en": "Sequences both witness lines as one run - anchors the checkpoint root to Steem/Hive, then to Z Chain (zero-gas EVM), then exports and pushes once. Carries the merged anchor function of the two legacy lines (Task 24; their standalone workflows retired 2026-09-16).",
+    "he": "מריץ את שני קווי העדות כרצף אחד - מעגן את root הצ'קפוינט ל-Steem/Hive, אחר-כך ל-Z Chain‏ (EVM בגז-אפס), ומייצא ודוחף פעם אחת. נושא את פונקציית העיגון הממוזגת של שני הקווים ההיסטוריים (Task 24; ה-workflow העצמאי שלהם יצא לגמלאות ב-2026-09-16)."
+   },
+   "input": {
+    "en": "latest checkpoint root",
+    "he": "root של הצ'קפוינט האחרון"
+   },
+   "output": {
+    "en": "anchor txids recorded back into the ledger",
+    "he": "מזהי טרנזקציות העיגון חוזרים לספר"
+   },
+   "state": "degraded",
+   "stats": {
+    "runs_sampled": 100,
+    "success": 69,
+    "failure": 30,
+    "other": 1,
+    "successRate": 69,
+    "avgDurS": 70.9
+   },
+   "lastRun": {
+    "at": "2026-10-05T21:32:01Z",
     "conclusion": "failure"
    }
   },
