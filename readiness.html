@@ -23,115 +23,232 @@
 <meta name="twitter:description" content="הבדיקה המלאה שדרש המפעיל: בלי סמכות על טענות. מה נמצא, מה תוקן באוויר, מה חסר לנו מול הרשתות המובילות במדידה חיה, נתיבי הכסף של הקריפטו והמקבילות שלנו, הפוטנציאל, ואיפה עוד לא מוכנים.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='9' r='2' fill='%23d4af37'/%3E%3Ccircle cx='8.5' cy='15' r='2' fill='%23a78bfa'/%3E%3Ccircle cx='15.5' cy='15' r='2' fill='%23a78bfa'/%3E%3C/svg%3E">
 <style>
+/* ═══ SAOS Console design system · midnight command center (R62+) ═══
+   Rebuilt against the home page reference (styles.refero.design grade):
+   achromatic zinc canvas, one rationed gold accent, hairline borders,
+   inset key-highlight on every raised surface, layered atmosphere,
+   mono numerals, zero decoration without information. */
 :root{
-  --bg:#09090b;--panel:#18181b;--panel2:#131316;--border:#27272a;--border2:#3f3f46;
-  --tx:#fafafa;--mut:#a1a1aa;--dim:#71717a;
-  --gold:#d4af37;--gold-dim:#8a7423;--purple:#a78bfa;--green:#22c55e;--yellow:#eab308;--red:#ef4444;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --bg:#09090b; --bg2:#0c0c0e; --bg3:#101013;
+  --panel:rgba(255,255,255,.03); --panel2:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --gold:#d4af37; --gold-bright:#e9c767; --gold-dim:rgba(212,175,55,.12); --gold-line:rgba(212,175,55,.42);
+  --green:#22c55e; --amber:#eab308; --red:#ef4444; --purple:#a78bfa;
+  --text:#fafafa; --dim:#a1a1aa; --faint:#71717a;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
+  --r:16px; --r-sm:12px; --r-lg:20px; --nav-h:62px;
+  --key:inset 0 1px 0 rgba(255,255,255,.055);
+  --key-hover:inset 0 1px 0 rgba(255,255,255,.09),0 12px 34px rgba(0,0,0,.38);
+  /* legacy aliases: content markup and inline styles keep resolving */
+  --tx:var(--text); --mut:var(--dim); --yellow:var(--amber);
+  --border:var(--line); --border2:var(--line2);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
-.wrap{max-width:1020px;margin:0 auto;padding:0 20px;width:100%}
-a{color:var(--gold);text-decoration:none}
-a:hover{text-decoration:underline}
-.mono{font-family:var(--mono);direction:ltr;unicode-bidi:embed}
-header.nhead{border-bottom:1px solid var(--border);padding:18px 0;position:sticky;top:0;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);z-index:50}
-.nhead .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.nhead h1{font-size:18px;font-weight:700}
-.nhead .sub{font-size:12px;color:var(--mut)}
-.badge{font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;padding:2px 10px;white-space:nowrap}
-.links{margin-inline-start:auto;display:flex;gap:14px;font-size:13px}
-main{flex:1;padding:30px 0 56px}
-.lede{font-size:14.5px;color:var(--mut);line-height:1.75;margin-bottom:26px;max-width:880px}
-.lede b{color:var(--tx)}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
-.card h2{font-size:15px;margin-bottom:14px;color:var(--gold);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.card h2 .en{color:var(--dim);font-size:11.5px;font-weight:400}
-.card p{font-size:13.5px;color:var(--mut);line-height:1.75;margin-bottom:10px}
-.card p b{color:var(--tx)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-.card table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.card table::-webkit-scrollbar{height:6px}
-.card table::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-th{color:var(--dim);font-weight:400;font-size:11.5px;text-align:right;padding:6px 8px;border-bottom:1px solid var(--border2)}
-td{padding:8px;border-bottom:1px dashed var(--border);vertical-align:top}
-tr:last-child td{border-bottom:none}
-.num{font-family:var(--mono);direction:ltr;unicode-bidi:embed;white-space:nowrap}
-.tag{font-size:10.5px;font-family:var(--mono);border:1px solid var(--border2);border-radius:5px;padding:1px 7px;color:var(--mut);white-space:nowrap}
-.tag.g{border-color:#2d5a3d;color:var(--green)}
-.tag.y{border-color:#5a512d;color:var(--yellow)}
-.tag.r{border-color:#5a2d2d;color:var(--red)}
-.tag.p{border-color:#4a3f6e;color:var(--purple)}
-footer{border-top:1px solid var(--border);padding:18px 0;margin-top:auto}
-footer .wrap{font-size:12px;color:var(--dim);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.note{font-size:12px;color:var(--dim);border-right:3px solid var(--gold-dim);padding-right:12px;margin-top:14px;line-height:1.7}
-.src{font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.8}
-.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:20px}
-.vcard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
-.vcard h3{font-size:15px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.vcard ul{list-style:none}
-.vcard li{font-size:13px;color:var(--mut);line-height:1.7;padding:7px 0;border-bottom:1px dashed var(--border)}
-.vcard li:last-child{border-bottom:none}
-.vcard li b{color:var(--tx)}
-.vcard.red{border-color:#5a2d2d}
-.vcard.green{border-color:#2d5a3d}
-.vcard.purple{border-color:#4a3f6e}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
-.dot.g{background:var(--green)} .dot.r{background:var(--red)} .dot.y{background:var(--yellow)} .dot.p{background:var(--purple)}
-.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
-.pcard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
-.pcard .v{font-size:20px;font-weight:800;color:var(--gold);font-family:var(--mono);direction:ltr}
-.pcard .v.red{color:var(--red)}
-.pcard .v.green{color:var(--green)}
-.pcard .l{font-size:11.5px;color:var(--mut);margin-top:2px}
-.gap-col{color:var(--red)}
-@media(max-width:640px){.card{padding:16px}.nhead h1{font-size:16px}}
-
-/* ═══════ Z-29-a design-system upgrade · graphite base, gold sovereign accent ═══════ */
-:root{
-  --panel:rgba(255,255,255,.032);--panel2:rgba(255,255,255,.055);
-  --border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.18);
-  --gold-bright:#f0d060;
-}
+html{scroll-behavior:smooth;background:var(--bg)}
 body{
-  background:
-    radial-gradient(rgba(255,255,255,.04) 1px, transparent 1.5px) 0 0/28px 28px,
-    radial-gradient(880px 420px at 82% -140px, rgba(212,175,55,.07), transparent 68%),
-    radial-gradient(680px 400px at 8% -160px, rgba(167,139,250,.05), transparent 68%),
-    var(--bg);
+  color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.65;
+  min-height:100vh; min-height:100svh; display:flex; flex-direction:column; overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
-::selection{background:rgba(212,175,55,.30);color:#fafafa}
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
+/* layered atmosphere: one gold-tinted dawn line + a fading dot grid */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(1100px 560px at 50% -180px, rgba(212,175,55,.075), transparent 62%),
+    radial-gradient(760px 420px at 88% 4%, rgba(212,175,55,.035), transparent 60%),
+    var(--bg);
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1.4px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 52%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 52%);
+}
+::selection{background:rgba(212,175,55,.28)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px;border-radius:4px}
 h1,h2,h3{text-wrap:balance}
-h1{letter-spacing:-.3px}
-.card{box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 34px -26px rgba(0,0,0,.9)}
-.card h2{letter-spacing:-.2px}
-.card h2 .en{font-family:var(--mono)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+.num,.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.num{white-space:nowrap}
+
+/* ── glass sticky header ─────────────────── */
+header.nhead{
+  position:sticky;top:0;z-index:900;height:var(--nav-h);
+  background:rgba(9,9,11,.72);
+  backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid var(--line);
+}
+.nhead .wrap{display:flex;align-items:center;gap:12px;height:100%}
+.bseal{display:inline-flex;align-items:center;flex:none}
+.bseal svg{width:30px;height:30px;filter:drop-shadow(0 0 14px rgba(212,175,55,.35))}
+/* the page title rides the command bar as the highlighted current-page pill */
+.nhead h1{
+  font-size:15px;font-weight:650;letter-spacing:-.2px;white-space:nowrap;flex:none;
+  background:var(--panel2);color:var(--gold-bright);border-radius:999px;padding:8px 16px;
+  box-shadow:var(--key);
+}
+.nhead h1 .sub{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.8px;color:var(--faint);text-transform:uppercase}
+.nhead .badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.4px;color:var(--gold-bright);
+  border:1px solid var(--gold-line);background:var(--gold-dim);border-radius:999px;
+  padding:5px 12px;white-space:nowrap;flex:none;
+}
+.nhead nav.links{
+  display:flex;align-items:center;gap:2px;
+  background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px;
+  box-shadow:var(--key);margin-inline-start:auto;
+}
+.nhead nav.links a{
+  padding:7px 14px;min-height:20px;border-radius:999px;font-size:13px;color:var(--dim);
+  white-space:nowrap;transition:color .15s,background .15s;
+}
+.nhead nav.links a:hover{color:var(--text);background:var(--panel2)}
+.mburger{
+  display:none;background:var(--panel);border:1px solid var(--line);color:var(--text);
+  border-radius:var(--r-sm);width:44px;height:44px;min-width:44px;min-height:44px;cursor:pointer;
+  align-items:center;justify-content:center;margin-inline-start:auto;flex:none;box-shadow:var(--key);
+}
+.mburger:hover{border-color:var(--line2);background:var(--panel2)}
+.mburger svg{width:20px;height:20px;pointer-events:none}
+
+/* ── page body ───────────────────────────── */
+main{flex:1;padding:34px 0 64px}
+.lede{font-size:15px;color:var(--dim);line-height:1.75;margin-bottom:26px;max-width:70ch}
+.lede b{color:var(--text);font-weight:600}
+
+/* ── stat rail: one hairline-divided strip, not a card pile ── */
+.pulse{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--key);margin-bottom:30px;
+}
+.pcard{
+  background:rgba(12,12,14,.86);padding:18px 16px 15px;text-align:start;
+  display:flex;flex-direction:column;gap:7px;transition:background .18s;
+}
+.pcard:hover{background:var(--bg3)}
+.pcard .v{
+  font-family:var(--mono);font-size:clamp(1.15rem,1.9vw,1.55rem);font-weight:620;
+  direction:ltr;unicode-bidi:isolate;line-height:1.05;font-variant-numeric:tabular-nums;
+  color:var(--gold-bright);
+}
+.pcard .v.red{color:var(--red)}
+.pcard .v.green{color:var(--green)}
+.pcard .l{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);line-height:1.5}
+
+/* ── raised surfaces ─────────────────────── */
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:24px;margin-bottom:20px;box-shadow:var(--key);
+  transition:border-color .18s,transform .18s,box-shadow .18s;
+}
+.card:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:var(--key-hover)}
+.card h2{
+  font-size:clamp(1.05rem,1.7vw,1.3rem);font-weight:650;letter-spacing:-.2px;color:var(--text);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding-bottom:12px;margin-bottom:16px;border-bottom:1px solid var(--line);
+}
+.card h2 .en{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold-bright)}
+.card p{font-size:13.5px;color:var(--dim);line-height:1.75;margin-bottom:10px}
+.card p b{color:var(--text);font-weight:600}
+
+/* ── tables ──────────────────────────────── */
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 main table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
 main table::-webkit-scrollbar{height:8px}
-main table::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
-main th{position:sticky;top:0;background:#101013;z-index:1;font-weight:600;letter-spacing:.04em}
-.pcard{box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 34px -26px rgba(0,0,0,.9);transition:transform .18s,border-color .18s}
-.pcard:hover{transform:translateY(-2px);border-color:var(--border2)}
-header.nhead{background:linear-gradient(180deg,rgba(9,9,11,.95),rgba(9,9,11,.84))}
-.nhead h1{font-size:19px;letter-spacing:-.3px}
-.badge{background:rgba(212,175,55,.08);letter-spacing:.03em}
-footer{background:rgba(255,255,255,.012)}
-.mburger{display:none;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--tx);border-radius:10px;width:44px;height:44px;cursor:pointer;align-items:center;justify-content:center;margin-inline-start:auto;flex:none}
-.mburger:hover{border-color:var(--border2);background:rgba(255,255,255,.06)}
+main table::-webkit-scrollbar-thumb{background:var(--line2);border-radius:8px}
+main table::-webkit-scrollbar-track{background:transparent}
+th{
+  text-align:start;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);
+  font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line2);
+  position:sticky;top:0;background:var(--bg2);z-index:1;
+}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:var(--panel2)}
+.gap-col{color:var(--red)}
+
+/* ── status tags: semantic hues only ─────── */
+.tag{
+  font-family:var(--mono);font-size:10.5px;border:1px solid var(--line2);border-radius:999px;
+  padding:3px 10px;color:var(--dim);white-space:nowrap;display:inline-block;
+}
+.tag.g{border-color:rgba(34,197,94,.4);color:var(--green)}
+.tag.y{border-color:rgba(234,179,8,.4);color:var(--amber)}
+.tag.r{border-color:rgba(239,68,68,.4);color:var(--red)}
+.tag.p{border-color:rgba(167,139,250,.45);color:var(--purple)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
+.dot.g{background:var(--green)} .dot.r{background:var(--red)} .dot.y{background:var(--amber)} .dot.p{background:var(--purple)}
+
+/* ── verdict cards ───────────────────────── */
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:14px;margin-bottom:18px}
+.vcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--key)}
+.vcard h3{font-size:15px;font-weight:650;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--text)}
+.vcard ul{list-style:none}
+.vcard li{font-size:13px;color:var(--dim);line-height:1.7;padding:8px 0;border-bottom:1px solid var(--line)}
+.vcard li:last-child{border-bottom:none}
+.vcard li b{color:var(--text);font-weight:600}
+.vcard.red{border-color:rgba(239,68,68,.35)}
+.vcard.green{border-color:rgba(34,197,94,.35)}
+.vcard.purple{border-color:rgba(167,139,250,.35)}
+
+/* ── notes and sources ───────────────────── */
+.note{
+  font-size:12.5px;color:var(--dim);line-height:1.7;margin-top:14px;
+  border:1px solid var(--line);border-inline-start:3px solid var(--gold);
+  background:var(--gold-dim);border-radius:var(--r-sm);padding:14px 16px;box-shadow:var(--key);
+}
+.src{font-size:11px;color:var(--faint);margin-top:12px;line-height:1.8}
+
+/* ── footer ──────────────────────────────── */
+footer{
+  border-top:1px solid var(--line);background:rgba(12,12,14,.9);
+  padding:18px 0;margin-top:auto;position:relative;
+}
+footer::before{
+  content:"";position:absolute;top:-1px;left:0;right:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,.35),transparent);
+}
+footer .wrap{font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer a{color:var(--dim);transition:color .15s}
+footer a:hover{color:var(--gold-bright)}
+
+/* ── responsive ──────────────────────────── */
+@media(max-width:1020px){
+  header.nhead{height:auto;min-height:var(--nav-h)}
+  .nhead .wrap{flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+}
 @media(max-width:760px){
   .mburger{display:inline-flex}
-  .nhead nav.links{display:none;position:absolute;top:100%;inset-inline:0;margin:0;flex-direction:column;gap:2px;padding:10px 20px 16px;background:rgba(9,9,11,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 24px 40px -24px rgba(0,0,0,.9)}
+  .nhead nav.links{
+    display:none;position:absolute;top:100%;inset-inline:0;margin:0;border-radius:0;
+    flex-direction:column;gap:2px;align-items:stretch;padding:10px 20px 16px;
+    background:rgba(9,9,11,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);box-shadow:0 24px 40px -24px rgba(0,0,0,.9);
+  }
   header.nav-open nav.links{display:flex}
-  .nhead nav.links a{display:flex;align-items:center;min-height:46px;padding:10px 14px;border-radius:10px;border:1px solid transparent;font-size:15px}
-  .nhead nav.links a:hover{background:rgba(255,255,255,.05);border-color:var(--border);text-decoration:none}
-  th,td{padding:10px 9px}
+  .nhead nav.links a{display:flex;align-items:center;min-height:46px;padding:10px 14px;border-radius:var(--r-sm);font-size:15px}
+  .nhead nav.links a:hover{background:var(--panel2)}
+  .card{padding:18px 16px}
+  th,td{padding:9px 8px}
+}
+@media(max-width:640px){
+  .wrap{padding:0 16px}
+  .pulse{grid-template-columns:repeat(2,1fr)}
+  main{padding:26px 0 52px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
+}
+@media print{
+  body::before,body::after{display:none}
+  header.nhead{position:static;background:var(--bg)}
 }
 </style>
   <link rel="stylesheet" href="assets/site.css">
@@ -144,9 +261,10 @@ footer{background:rgba(255,255,255,.012)}
 <body>
 <header class="nhead">
   <div class="wrap">
+    <a class="bseal" href="index.html" aria-label="SAOS Console"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="2.4" fill="#d4af37"/><circle cx="7.5" cy="15.5" r="1.5" fill="#a78bfa"/><circle cx="16.5" cy="15.5" r="1.5" fill="#a78bfa"/></svg></a>
     <h1>מבחן המוכנות <span class="sub">· readiness exam</span></h1>
     <span class="badge">R26 · נבדק ואומת 2026-09-17</span>
-    <nav class="links">
+    <nav class="links" aria-label="דפי הקונסולה">
       <a href="index.html">קונסולה</a>
       <a href="sovereign.html">ריבונות</a>
       <a href="money.html">נתיב הכסף</a>
@@ -324,11 +442,11 @@ footer{background:rgba(255,255,255,.012)}
     <div class="card">
       <h2><span class="dot g"></span>ד. מה כן יש לנו · היתרונות שנמדדו, לא נטענו <span class="en">real advantages</span></h2>
       <ul style="list-style:none">
-        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>מיקרו ללא עמלת רשת:</b> מנת מסילה של <span class="mono">150kµ</span> שורפת <span class="mono">100µ</span> גז, שיעור <span class="mono">0.067%</span>. על רשת ציבורית מובילה אותה מנה בלתי כדאית מלכתחילה בגז של <span class="mono">$1-5</span> לעסקה. זה היתרון המבני היחיד שלנו שקיים גם היום, והוא אמיתי רק אם הנזילות אמיתית.</li>
-        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>אפס MEV:</b> אין ממפול ציבורי, סדר דטרמיניסטי. אין כריכות סנדוויץ׳. המחיר שווידאנו היום שהוא אמיתי.</li>
-        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>מסדרון אמת שמרפא את עצמו:</b> היום הוכח מקצה לקצה: באגית נמצאה, תוקנה, ואומתה באוויר באותו היום, ומעכשיו מדיניות העוגן רצה בכל פעימה לבד.</li>
-        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>GitHub כלב פעימות:</b> עלות תשתית אפס, כל הראיות ציבוריות בריפו, כל פעימה חתומה וניתנת לריפליי. אף רשת מובילה לא נותנת שקיפות כזאת של הליבון עצמו.</li>
-        <li style="padding:7px 0;border-bottom:1px dashed var(--border)"><b>נזילות בבעלות מלאה 100%:</b> אין LP חיצוני שימשוך שטיח. הסימון מחדש של היום היה אפשרי רק בגלל זה, בלי לגעת בכסף של אף אחד.</li>
+        <li style="padding:7px 0;border-bottom:1px solid var(--line)"><b>מיקרו ללא עמלת רשת:</b> מנת מסילה של <span class="mono">150kµ</span> שורפת <span class="mono">100µ</span> גז, שיעור <span class="mono">0.067%</span>. על רשת ציבורית מובילה אותה מנה בלתי כדאית מלכתחילה בגז של <span class="mono">$1-5</span> לעסקה. זה היתרון המבני היחיד שלנו שקיים גם היום, והוא אמיתי רק אם הנזילות אמיתית.</li>
+        <li style="padding:7px 0;border-bottom:1px solid var(--line)"><b>אפס MEV:</b> אין ממפול ציבורי, סדר דטרמיניסטי. אין כריכות סנדוויץ׳. המחיר שווידאנו היום שהוא אמיתי.</li>
+        <li style="padding:7px 0;border-bottom:1px solid var(--line)"><b>מסדרון אמת שמרפא את עצמו:</b> היום הוכח מקצה לקצה: באגית נמצאה, תוקנה, ואומתה באוויר באותו היום, ומעכשיו מדיניות העוגן רצה בכל פעימה לבד.</li>
+        <li style="padding:7px 0;border-bottom:1px solid var(--line)"><b>GitHub כלב פעימות:</b> עלות תשתית אפס, כל הראיות ציבוריות בריפו, כל פעימה חתומה וניתנת לריפליי. אף רשת מובילה לא נותנת שקיפות כזאת של הליבון עצמו.</li>
+        <li style="padding:7px 0;border-bottom:1px solid var(--line)"><b>נזילות בבעלות מלאה 100%:</b> אין LP חיצוני שימשוך שטיח. הסימון מחדש של היום היה אפשרי רק בגלל זה, בלי לגעת בכסף של אף אחד.</li>
         <li style="padding:7px 0"><b>המנוע כבר מכיל את רוב המכשירים של הענף:</b> ספר, AMM, כספת CDP, נעילות והצבעות, בונדים, DCA, טריגרים, לונצ׳פד, הזמנות COW, אורקל חי. הפער הוא לא בקוד של המכשירים, הוא בכסף שנכנס אליהם.</li>
       </ul>
     </div>
@@ -401,9 +519,9 @@ footer{background:rgba(255,255,255,.012)}
     <div class="card">
       <h2><span class="dot p"></span>ח. איך כל זה נבדק <span class="en">verification</span></h2>
       <ul style="list-style:none">
-        <li style="padding:6px 0;border-bottom:1px dashed var(--border)">מחירי העולם: DefiLlama coins API, נמשך חי היום, STEEM <span class="mono">$0.0541</span>, סולנה <span class="mono">$101.3</span>, ביטקוין <span class="mono">$76,787</span>, אתריום <span class="mono">$2,470</span>.</li>
-        <li style="padding:6px 0;border-bottom:1px dashed var(--border)">TVL ועמלות ונפחים: ממשקי DefiLlama הציבוריים chains / fees / dexs, נמשק היום בשעה 17:50Z, ללא הרשאות.</li>
-        <li style="padding:6px 0;border-bottom:1px dashed var(--border)">הנתונים שלנו: המראות החיות world.json ו-state.json בגובה <span class="mono">h19034</span>, כולל טבלת הלפני/אחרי של הריפוי.</li>
+        <li style="padding:6px 0;border-bottom:1px solid var(--line)">מחירי העולם: DefiLlama coins API, נמשך חי היום, STEEM <span class="mono">$0.0541</span>, סולנה <span class="mono">$101.3</span>, ביטקוין <span class="mono">$76,787</span>, אתריום <span class="mono">$2,470</span>.</li>
+        <li style="padding:6px 0;border-bottom:1px solid var(--line)">TVL ועמלות ונפחים: ממשקי DefiLlama הציבוריים chains / fees / dexs, נמשק היום בשעה 17:50Z, ללא הרשאות.</li>
+        <li style="padding:6px 0;border-bottom:1px solid var(--line)">הנתונים שלנו: המראות החיות world.json ו-state.json בגובה <span class="mono">h19034</span>, כולל טבלת הלפני/אחרי של הריפוי.</li>
         <li style="padding:6px 0">הריפוי עצמו: הוכחה מקומית על עותק של השרשרת החיה, 480 טיקים, ביקורת הברזל ירוקה, ואז פריסה באוויר ואימות חוזר בגובה <span class="mono">h19034</span>.</li>
       </ul>
     </div>
