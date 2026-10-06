@@ -61,8 +61,8 @@ jobs:
             LAST_TS="$(git log -1 --format=%cI -- agents/registry.json agents/gh-snapshot.json)"
             LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
             AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
-            if [ "$SEM_NOW" = "$SEM_PREV" ] && [ "$AGE_H" -lt 3 ]; then
-              echo "fleet semantically unchanged and heartbeat fresh (${AGE_H}h < 3h) - no commit, Pages quota spared"
+            if [ "$SEM_NOW" = "$SEM_PREV" ] && [ "$AGE_H" -lt 6 ]; then
+              echo "fleet semantically unchanged and heartbeat fresh (${AGE_H}h < 6h) - no commit, Pages quota spared"
               exit 0
             fi
             git config user.name "agents-watch"
