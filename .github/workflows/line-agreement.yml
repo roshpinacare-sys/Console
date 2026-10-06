@@ -42,14 +42,18 @@ jobs:
       - name: Publish the agreement book (a red verdict is committed first, then the run fails)
         if: always()
         run: |
+          git config user.name "line-agreement"
+          git config user.email "line-agreement@users.noreply.github.com"
           git add weave/agreement.json
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             MIS="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(String(d.mismatches))}catch{process.stdout.write("?")}')"
-            git config user.name "line-agreement"
-            git config user.email "line-agreement@users.noreply.github.com"
             git commit -m "line-agreement: ${VERDICT} · ${MIS} mismatches · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            # משמעות-דחיפה של הבית: rebase וניסיון-חוזר מול התנגשויות
+            for i in 1 2 3; do
+              if git pull --rebase origin main && git push; then break; fi
+              echo "push race, retry ${i}"; sleep 8
+            done
           else
             echo "no agreement change to publish"
           fi

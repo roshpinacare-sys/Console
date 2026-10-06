@@ -42,15 +42,20 @@ jobs:
       - name: Publish the census book
         if: always()
         run: |
+          git config user.name "weave-census"
+          git config user.email "weave-census@users.noreply.github.com"
           git add weave/census.json
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{const d=require("./weave/census.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             CPS="$(node -e 'try{const d=require("./weave/census.json");process.stdout.write(String(d.totals&&d.totals.uniqueCheckpoints||0))}catch{process.stdout.write("0")}')"
             LATEST="$(node -e 'try{const d=require("./weave/census.json");process.stdout.write("cp#"+(d.latest&&d.latest.checkpoint||0))}catch{process.stdout.write("cp#0")}')"
-            git config user.name "weave-census"
-            git config user.email "weave-census@users.noreply.github.com"
             git commit -m "weave-census: ${VERDICT} · ${CPS} anchors · latest ${LATEST} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            # משמעות-דחיפה של הבית: המנועים רצים במקביל ויכולים להתנגש —
+            # rebase וניסיון-חוזר, כמו כל בוט בצי
+            for i in 1 2 3; do
+              if git pull --rebase origin main && git push; then break; fi
+              echo "push race, retry ${i}"; sleep 8
+            done
           else
             echo "no census change to publish"
           fi

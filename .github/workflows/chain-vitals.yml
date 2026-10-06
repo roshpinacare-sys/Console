@@ -40,14 +40,18 @@ jobs:
       - name: Publish the vitals book
         if: always()
         run: |
+          git config user.name "chain-vitals"
+          git config user.email "chain-vitals@users.noreply.github.com"
           git add weave/vitals.json
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{const d=require("./weave/vitals.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             UP="$(node -e 'try{const d=require("./weave/vitals.json");process.stdout.write(d.summary.up+"/"+d.summary.lines)}catch{process.stdout.write("?")}')"
-            git config user.name "chain-vitals"
-            git config user.email "chain-vitals@users.noreply.github.com"
             git commit -m "chain-vitals: ${VERDICT} · ${UP} lines up · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            # משמעות-דחיפה של הבית: rebase וניסיון-חוזר מול התנגשויות
+            for i in 1 2 3; do
+              if git pull --rebase origin main && git push; then break; fi
+              echo "push race, retry ${i}"; sleep 8
+            done
           else
             echo "no vitals change to publish"
           fi
