@@ -6,8 +6,8 @@ the result in public.
 
 The flow: **request · build · the network measures · public result.**
 
-- `assertions.json` - the machine-checkable contract: 36 assertions over
-  the live site (HTTP reachability, required page structures, live-data
+- `assertions.json` - the machine-checkable contract: 49 evaluated assertions
+  over the live site (HTTP reachability, required page structures, live-data
   minima, the FRESH verdict, the zero-emoji policy, publisher liveness
   via json_age, and the R27 priority-inversion detector reading the Steem
   chain itself keyless). Bilingual, versioned with the repo, changed only
@@ -47,7 +47,7 @@ No secrets, no emojis, no claims without measurement.
 
 הזרימה: **בקשה · בנייה · הרשת מודדת · תוצאה ציבורית.**
 
-- `assertions.json` - החוזה הנבדק-מכונה: 15 טענות על האתר החי (זמינות
+- `assertions.json` - החוזה הנבדק-מכונה: 49 טענות מדידה על האתר החי (זמינות
   HTTP, מבני עמוד חובה, מינימום נתונים חיים, פסק הדין FRESH, מדיניות
   האפס-אימוג'י). דו-לשוני, מנוהל בגרסאות בריפו, משתנה רק בעריכה מפורשת.
 - `run.mjs` - המאמת. אפס תלויות, Node 20+ (fetch גלובלי). מוריד את האתר
