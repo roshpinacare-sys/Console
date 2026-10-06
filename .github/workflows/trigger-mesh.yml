@@ -4,10 +4,16 @@ name: trigger-mesh
 # רץ על הריפו הציבורי (דקות חינם), חסר-מפתחות מהיסוד:
 # קורא פרסומים פומביים, מפעיל כללים גלויים, מפרסם ספר מדולק.
 # אין סודות, אין שידור, אין חתימה — מראת-מדידה טהורה (דוקטרינת R83).
+#
+# R67-A דיאטת-מכסה: כל 3 שעות ב:23 (היתה שעתית). ה-commit עצמו משוער
+# סמנטית: current.json/state.json נושאים חותמות-זמן שמשתנות בכל ריצה, וריצה
+# שעתית עם diff גולמי = 24 commits ו-24 בניינות-Pages ביום. מעתה commit
+# רק כשתוצאות-הכללים משתנות באמת (ok/rulesTotal/fired/waited/broken) או
+# כשפעימת-הלב המפורסמת האחרונה ישנה מ-6 שעות.
 
 on:
   schedule:
-    - cron: "23 * * * *" # שעתית ב:23 — מחוץ לשעות-העומס של הסוכנים הקיימים
+    - cron: "23 */3 * * *" # כל 3 שעות ב:23 — מחוץ לשעות-העומס של הסוכנים הקיימים
   workflow_dispatch:
 
 permissions:
@@ -20,6 +26,7 @@ concurrency:
 jobs:
   mesh:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
 
@@ -30,6 +37,18 @@ jobs:
         run: |
           git config user.name "trigger-mesh[bot]"
           git config user.email "trigger-mesh@users.noreply.github.com"
+          # R67-A שער-סמנטי: תוצאות-הכללים בלבד — לעולם לא חותמות-הזמן
+          SIG_NOW="$(node -e 'const d=require("./triggers/current.json");console.log([d.ok,d.rulesTotal,(d.fired||[]).map(f=>f.id).join(";"),(d.waited||[]).map(w=>w.id).join(";"),d.broken].join("|"))' 2>/dev/null || echo x)"
+          git show HEAD:triggers/current.json > /tmp/prev-trig.json 2>/dev/null \
+            && SIG_PREV="$(node -e 'const d=require("/tmp/prev-trig.json");console.log([d.ok,d.rulesTotal,(d.fired||[]).map(f=>f.id).join(";"),(d.waited||[]).map(w=>w.id).join(";"),d.broken].join("|"))' 2>/dev/null || echo y)" \
+            || SIG_PREV=""
+          LAST_TS="$(git log -1 --format=%cI -- triggers/current.json)"
+          LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
+          AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
+          if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_H" -lt 6 ]; then
+            echo "trigger book semantically unchanged and heartbeat fresh (${AGE_H}h < 6h) - no commit, Pages quota spared"
+            exit 0
+          fi
           git add triggers/current.json triggers/log.jsonl triggers/state.json || true
           git diff --cached --quiet && echo "no trigger changes" || git commit -m "trigger-mesh: publish trigger book $(date -u +%FT%TZ)"
           git push

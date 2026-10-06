@@ -8,15 +8,18 @@
 # A red verdict commits FIRST (the truth is always recorded), then fails
 # the workflow run itself - a red X in the public Actions history.
 #
-# Cadence: console-publish commits the beacon at :45; Pages deploys it a
-# few minutes later; this gate runs at :07 of the next hour and grades
-# what the world actually sees.
+# Cadence (R67-A minute/Pages-quota diet): every 3h at :07. console-publish
+# commits the beacon at :45; Pages deploys it; this gate grades what the world
+# actually sees. The commit itself is semantically gated - latest.json carries
+# run timestamps, so a raw diff would commit (and rebuild Pages) on every run.
+# Commit only when the verdict, counts, or per-gate statuses truly change, or
+# when the last committed heartbeat is older than 6h (liveness proof, sparse).
 
 name: truth-gate
 
 on:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '7 */3 * * *'
   workflow_dispatch:
 
 permissions:
@@ -50,6 +53,18 @@ jobs:
           set +e
           git config user.name "truth-gate[bot]"
           git config user.email "truth-gate[bot]@users.noreply.github.com"
+          # R67-A semantic gate: verdict+counts+gate statuses (never the timestamps)
+          SIG_NOW="$(node -e 'const d=require("./truth/latest.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo x)"
+          git show HEAD:truth/latest.json > /tmp/prev-truth.json 2>/dev/null \
+            && SIG_PREV="$(node -e 'const d=require("/tmp/prev-truth.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo y)" \
+            || SIG_PREV=""
+          LAST_TS="$(git log -1 --format=%cI -- truth/latest.json)"
+          LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
+          AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
+          if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_H" -lt 6 ]; then
+            echo "verdict semantically unchanged and heartbeat fresh (${AGE_H}h < 6h) - no commit, Pages quota spared"
+            exit 0
+          fi
           for attempt in 1 2 3; do
             git add truth/latest.json truth/history.json truth/slo.json
             if git diff --cached --quiet; then
