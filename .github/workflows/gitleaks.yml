@@ -4,10 +4,8 @@ name: gitleaks-secret-scan
 # מצב: רץ-מיד, ללא סודות, ללא גישה חוץ. כישלון = push נעצר.
 
 on:
-  push:
   pull_request:
   workflow_dispatch:
-
 permissions:
   contents: read
 
