@@ -36,3 +36,24 @@ Deviation note (honest): the provisional r144-h assignment suggested agents-watc
 ## Rule for every future capability
 
 **New capability lands in exactly one repo.** Truth computation / keys / proof / ledger / anchor → Console. Audience-facing content / SEO / research / market → Domain. A Domain page that needs a truth number mirrors the file; it never recomputes it. If you find yourself editing the same capability in both repos, stop — one owner, one mirror line.
+
+## r68 — נוע-הרשת על השרשרת (2026-10-06)
+
+**היכולת החדשה נחתה ב-Console בלבד** (חוק r144-h): שלושה מנועי-שרשרת
+חסרי-מפתח על רצים ציבוריים — מדידת פרוטוקול ה-weave ישירות מהשרשרת,
+לא מהספרים הנגזרים:
+
+| מנוע | ספר (סופר יחיד) | קדנס | מה הוא מוכיח |
+|---|---|---|---|
+| `weave-census` (`agents/weave-census.mjs`) | `weave/census.json` | כל שעתיים :08 | מפקד-עומק של קו העוגן: עוגנים ייחודיים, דילוגי-קצב, טיפול-עדויות (TILED/HOLED), עדי-חתימה, קדנס. פסק-דין חיות: LIVE/IRREGULAR/STALLED/SPARSE |
+| `chain-vitals` (`agents/chain-vitals.mjs`) | `weave/vitals.json` | כל שעתיים :50 | דופק כל קווי הרשת במקביל: Steem/Hive/Blurt, Relay ריבוני (ETH/OP/BASE), פקדות (TRON/BTC/SOL). שורה אדומה נשארת בספר |
+| `line-agreement` (`agents/line-agreement.mjs`) | `weave/agreement.json` | כל שעתיים :14 (אחרי המפקד) | השער הכבד: headHash של mirror.json חייב עדות עוגן על השרשרת + מונוטוניות cp/att בסובלנות-פיגור +20. DIVERGE נקומע ואז מאדים את הריצה (דוקטרינת truth-gate) |
+
+**Domain:** משקף את שלושת הספרים (whitelist `mirror-from-console`) ומציג
+אותם ב-`net.html`. לעולם לא מחשב אותם. ההצגה חסרת-המפתחות כמו כל הבית.
+
+**המדידות המייסדות (2026-10-06, לפני-הקומיט):** השרשרת על cp#1491 כשהספר
+על 1487 (השרשרת מקדימה — סובלנות-הפיגור היא החוק); קצב-עיגון חציוני
+~29–40 דק' מול קצב-checkpoints מהר יותר (דילוגי-הקצב הם פרוטוקול, לא
+שבר — השיפוט הוא על חיות-הקו ועל עדות-ה-headHash, לא על רצף-צמוד);
+8/9 קווי-רשת חיים מקומית (Blurt נפל מהסנדבוקס — יימדד שוב מהרצים).

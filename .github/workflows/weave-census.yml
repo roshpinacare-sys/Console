@@ -1,0 +1,56 @@
+# WEAVE-CENSUS — מפקד-העומק של קו העוגן, על השרשרת עצמה (R68)
+#
+# המנוע הראשון בשכבת "מנועי-הרשת על השרשרת": במקום לסמוך על הספרים
+# הנגזרים, המנוע קורא את פרוטוקול ה-weave ישירות מ-RPC ציבורי של
+# Steem (custom_json id=saos.weave.core.v1, חשבונות הצי) ובונה מפקד
+# עצמאי: עוגנים ייחודיים, דילוגי-קצב, טיפול-עדויות, עדי-חתימה, קדנס.
+#
+# ריבונות-מכסה (R67-C): הריפו ציבורי — דקות-Actions חינמיות, אפס
+# מפתחות, אפס סודות. כל שעתיים ב:08 (שעות זוגיות, מחוץ למפת-הדקות
+# של שאר המנועים: truth :07 3ש' · trigger :23 3ש' · money :31 ·
+# agents :37 · publish :45 · verify :55 4ש').
+
+name: weave-census
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '8 */2 * * *'
+permissions:
+  contents: write
+
+concurrency:
+  group: weave-census
+  cancel-in-progress: false
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Chain census (keyless deep read of the anchor protocol)
+        run: node agents/weave-census.mjs
+
+      - name: Publish the census book
+        if: always()
+        run: |
+          git add weave/census.json
+          if ! git diff --cached --quiet; then
+            VERDICT="$(node -e 'try{const d=require("./weave/census.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
+            CPS="$(node -e 'try{const d=require("./weave/census.json");process.stdout.write(String(d.totals&&d.totals.uniqueCheckpoints||0))}catch{process.stdout.write("0")}')"
+            LATEST="$(node -e 'try{const d=require("./weave/census.json");process.stdout.write("cp#"+(d.latest&&d.latest.checkpoint||0))}catch{process.stdout.write("cp#0")}')"
+            git config user.name "weave-census"
+            git config user.email "weave-census@users.noreply.github.com"
+            git commit -m "weave-census: ${VERDICT} · ${CPS} anchors · latest ${LATEST} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "no census change to publish"
+          fi

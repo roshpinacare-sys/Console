@@ -1,0 +1,55 @@
+# LINE-AGREEMENT — ספר-הרשת מול השרשרת עצמה (R68)
+#
+# המנוע השלישי בשכבת "מנועי-הרשת על השרשרת", והשער הכי כבד שבה:
+# הספר הנגזר (mirror.json) מוצב מול המפקד העצמאי (weave/census.json):
+#   · headHash שהספר מכריז חייב עדות עוגן על השרשרת
+#   · checkpoints/attestations: השרשרת בגובה הספר או מעט מעליו
+#
+# דוקטרינת truth-gate: פסק-דין אדום נקומע קודם ואז מאדים את הריצה
+# בפומבי — סטייה בין הספר לשרשרת נרשמת בספר שלה (DIVERGE) ורק אז
+# הריצה נכשלת. ריבונות-מכסה (R67-C): כל שעתיים ב:14, אפס סודות,
+# רץ אחרי המפקד (:08) כדי שהמפקד יהיה טרי.
+
+name: line-agreement
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '14 */2 * * *'
+permissions:
+  contents: write
+
+concurrency:
+  group: line-agreement
+  cancel-in-progress: false
+
+jobs:
+  agreement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ledger-vs-chain agreement gate
+        run: node agents/line-agreement.mjs
+
+      - name: Publish the agreement book (a red verdict is committed first, then the run fails)
+        if: always()
+        run: |
+          git add weave/agreement.json
+          if ! git diff --cached --quiet; then
+            VERDICT="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
+            MIS="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(String(d.mismatches))}catch{process.stdout.write("?")}')"
+            git config user.name "line-agreement"
+            git config user.email "line-agreement@users.noreply.github.com"
+            git commit -m "line-agreement: ${VERDICT} · ${MIS} mismatches · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "no agreement change to publish"
+          fi

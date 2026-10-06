@@ -1,0 +1,53 @@
+# CHAIN-VITALS — דופק כל קווי השרשראות של הרשת, keyless (R68)
+#
+# המנוע השני בשכבת "מנועי-הרשת על השרשרת": הרשת רצה על Steem/Hive/
+# Blurt (קווי-עוגן), על ה-Relay הריבוני ב-Ethereum/Optimism/Base,
+# ועל שרשראות-הפקדות TRON/Bitcoin/Solana. המנוע מודד את כולן
+# במקביל עם נקודות-קצה ציבוריות בלבד וכותב ספר-דופק אחד.
+#
+# קו שנופל הוא שורה אדומה בספר — לא קריסת-ריצה. הכנות היא המשטר.
+# ריבונות-מכסה (R67-C): כל שעתיים ב:50, שעות זוגיות, אפס סודות.
+
+name: chain-vitals
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '50 */2 * * *'
+permissions:
+  contents: write
+
+concurrency:
+  group: chain-vitals
+  cancel-in-progress: false
+
+jobs:
+  vitals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: All-lines pulse (keyless parallel measurement)
+        run: node agents/chain-vitals.mjs
+
+      - name: Publish the vitals book
+        if: always()
+        run: |
+          git add weave/vitals.json
+          if ! git diff --cached --quiet; then
+            VERDICT="$(node -e 'try{const d=require("./weave/vitals.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
+            UP="$(node -e 'try{const d=require("./weave/vitals.json");process.stdout.write(d.summary.up+"/"+d.summary.lines)}catch{process.stdout.write("?")}')"
+            git config user.name "chain-vitals"
+            git config user.email "chain-vitals@users.noreply.github.com"
+            git commit -m "chain-vitals: ${VERDICT} · ${UP} lines up · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "no vitals change to publish"
+          fi
