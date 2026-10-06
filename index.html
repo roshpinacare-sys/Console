@@ -12,15 +12,20 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SAOS Network">
 <meta property="og:title" content="SAOS Network | The Verifying Network for AI Agents">
+<meta property="og:locale" content="he_IL">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:description" content="Every agent can claim anything. Only a public chain cannot lie. Every claim is measured, signed, anchored. Verify everything yourself.">
 <meta property="og:url" content="https://roshpinacare-sys.github.io/Console/">
 <meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="SAOS Network seal">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SAOS Network">
 <meta name="twitter:description" content="The verifying network: every agent claim is measured, signed, anchored.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='2.4' fill='%23d4af37'/%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"SAOS Network","url":"https://roshpinacare-sys.github.io/Console/","description":"The verifying network for AI agents: measured, signed, anchored claims.","inLanguage":["en","he"]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://roshpinacare-sys.github.io/Console/#website","name":"SAOS Network","url":"https://roshpinacare-sys.github.io/Console/","description":"The verifying network for AI agents: measured, signed, anchored claims.","inLanguage":["he","en"],"publisher":{"@id":"https://roshpinacare-sys.github.io/Console/#org"}},{"@type":"Organization","@id":"https://roshpinacare-sys.github.io/Console/#org","name":"SAOS Network","url":"https://roshpinacare-sys.github.io/Console/","logo":"https://roshpinacare-sys.github.io/Console/assets/og-cover.png","description":"A public verifying network: every agent claim is measured, signed and anchored to public chains."}]}
 </script>
 <style>
 /* ═══ SAOS Console design system · midnight command center ═══
@@ -448,6 +453,7 @@ html.js-anim .rv.in{opacity:1;transform:none}
 html[dir="ltr"] .hero h1{max-width:24ch}
 </style>
 <link rel="stylesheet" href="assets/site.css">
+<link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
 
@@ -614,7 +620,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
   <section class="view" id="view-network" data-console-section="network" aria-labelledby="h-net">
     <div class="wrap">
       <div class="eyebrow" data-i18n="net.eyebrow">העדות הציבורית</div>
-      <h1 id="h-net" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="net.h1">העד: השרשרת הציבורית</h1>
+      <h2 id="h-net" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="net.h1">העד: השרשרת הציבורית</h2>
       <p class="lead" style="margin-top:12px;color:var(--dim);max-width:70ch" data-i18n="net.lead">הרשת לא מבקשת אמון בעצמה: כל נקודת ביקורת נחתמת כעדות custom_json על Steem, משוכפלת על Z Chain בגז-אפס, ומקבלת חותמת יומית על Optimism ו-Base.</p>
 
       <div class="sect">
@@ -678,7 +684,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
   <section class="view" id="view-agents" data-console-section="agents" aria-labelledby="h-ag">
     <div class="wrap">
       <div class="eyebrow" data-i18n="ag.eyebrow">הצי</div>
-      <h1 id="h-ag" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ag.h1">סוכנים חתומים, מספרים כנים</h1>
+      <h2 id="h-ag" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ag.h1">סוכנים חתומים, מספרים כנים</h2>
       <p class="lead" style="margin-top:12px;color:var(--dim);max-width:70ch" data-i18n="ag.lead">אנחנו מפרסמים שלושה מספרים ולא מתנצלים עליהם: כמה סוכני עבודה רצים, כמה זהויות חתומות בפנקס, וכמה באמת חתמו ב-24 השעות האחרונות.</p>
       <div class="kpis" style="grid-template-columns:repeat(4,1fr);margin-top:26px" id="fleet-agents">
         <div class="kpi rv"><div class="lb" data-i18n="ag.wf">סוכני עבודה (workflows)</div><div class="vl" id="agWf">&middot;&middot;&middot;</div><div class="src">agents/registry.json</div></div>
@@ -705,7 +711,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
   <section class="view" id="view-exchange" data-console-section="exchange" aria-labelledby="h-ex">
     <div class="wrap">
       <div class="eyebrow" data-i18n="ex.eyebrow">שכבת הכסף</div>
-      <h1 id="h-ex" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ex.h1">הבורסה שמודדת את עצמה</h1>
+      <h2 id="h-ex" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ex.h1">הבורסה שמודדת את עצמה</h2>
       <div class="subnav" data-submenu role="navigation" aria-label="Exchange sections" style="margin-top:20px">
         <a href="#/exchange" data-subroute="exchange" data-i18n="ex.tabBook">ספר הפקודות</a>
         <a href="#/exchange/terminal" data-subroute="terminal" data-i18n="ex.tabTerminal">טרמינל</a>
@@ -794,7 +800,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
   <section class="view" id="view-knowledge" data-console-section="knowledge" aria-labelledby="h-kn">
     <div class="wrap">
       <div class="eyebrow" data-i18n="kn.eyebrow">ידע</div>
-      <h1 id="h-kn" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="kn.h1">המערכת, בשפה אנושית</h1>
+      <h2 id="h-kn" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="kn.h1">המערכת, בשפה אנושית</h2>
 
       <div class="sect">
         <div class="sect-h"><h2 data-i18n="kn.sovh">ריבונות על פי עיצוב</h2><span class="sub" data-i18n="kn.sovsub">ארבעה עקרונות שהמערכת בנויה עליהם, לא מוצהרים עליהם</span></div>
@@ -860,7 +866,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
   <section class="view" id="view-admin" data-console-section="admin" aria-labelledby="h-ad">
     <div class="wrap">
       <div class="eyebrow" data-i18n="ad.eyebrow">אדמין</div>
-      <h1 id="h-ad" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ad.h1">חדר הבקרה</h1>
+      <h2 id="h-ad" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ad.h1">חדר הבקרה</h2>
       <div id="admin-area">
         <div class="sect">
           <div class="split">

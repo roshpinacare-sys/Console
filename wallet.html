@@ -11,9 +11,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SAOS Network">
 <meta property="og:title" content="SAOS Network | Crypto Wallet, Token Exchange and Earn">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="he_IL">
 <meta property="og:description" content="A free wallet with your own address, a transparent exchange, and a currency you can verify line by line. No custody, no middleman.">
 <meta property="og:url" content="https://roshpinacare-sys.github.io/Console/wallet.html">
 <meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="SAOS Network seal">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SAOS Network">
 <meta name="twitter:description" content="Free wallet, transparent exchange, open ledger. Your keys stay on your device.">
@@ -232,6 +237,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
   html{scroll-behavior:auto}
 }
 </style>
+<link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -322,7 +328,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
 
   <!-- ═══════════ WALLET ═══════════ -->
   <section class="view" id="view-wallet">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="wTitle">Your wallet</h1>
+    <h2 style="font-size:26px;margin-bottom:6px" data-i="wTitle">Your wallet</h2>
     <p class="sect-sub" data-i="wSub">A personal SAOS address that belongs to the key on your device. Register it once and the whole network can see it.</p>
 
     <div id="wallet-empty" class="grid g2">
@@ -413,7 +419,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
 
   <!-- ═══════════ EXCHANGE ═══════════ -->
   <section class="view" id="view-exchange">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h1>
+    <h2 style="font-size:26px;margin-bottom:6px" data-i="xTitle">Exchange</h2>
     <p class="sect-sub" data-i="xSub">Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.</p>
 
     <div class="grid g2">
@@ -460,7 +466,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
   <section class="view" id="view-dex">
     <div class="hero" style="padding:36px 0 8px">
       <div class="chip"><span data-i="dexChip">the network's own exchange terminal</span></div>
-      <h1><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h1>
+      <h2><span data-i="dexTitle">Sovereign DEX</span> <span class="grad" data-i="dexGrad">Terminal</span></h2>
       <p class="lead" style="max-width:780px;margin:12px auto 0" data-i="dexLead">The exact terminal the chain runs: a deterministic order book, AMM pools, an autonomous soldier arena, sealed anchors and a live tape, mirrored publicly and refreshed with every cloud beat. Read-only mirror; trading runs on the sovereign side.</p>
     </div>
     <div class="dex-strip" id="dex-strip" aria-live="polite">
@@ -482,7 +488,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
 
   <!-- ═══════════ EARN ═══════════ -->
   <section class="view" id="view-earn">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="eTitle">Deposit and earn</h1>
+    <h2 style="font-size:26px;margin-bottom:6px" data-i="eTitle">Deposit and earn</h2>
     <p class="sect-sub" data-i="eSub">Fund the network with any listed currency. Your deposit is recorded on chain, credited in SAOS at the current rate, and tracked in the open ledger.</p>
 
     <div class="grid g3">
@@ -534,7 +540,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
 
   <!-- ═══════════ CURRENCY ═══════════ -->
   <section class="view" id="view-currency">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="cTitle">The SAOS currency</h1>
+    <h2 style="font-size:26px;margin-bottom:6px" data-i="cTitle">The SAOS currency</h2>
     <p class="sect-sub" data-i="cSub">A currency you can verify line by line. Fixed rules, public state, no administrator can bend it quietly.</p>
 
     <div class="grid g4">
@@ -568,7 +574,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
 
   <!-- ═══════════ TOKENS ═══════════ -->
   <section class="view" id="view-tokens">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="tTitle">Token factory</h1>
+    <h2 style="font-size:26px;margin-bottom:6px" data-i="tTitle">Token factory</h2>
     <p class="sect-sub" data-i="tSub">Deploy a real smart contract: fixed parameters, signed, and verified by every node that reads the chain.</p>
 
     <div class="grid g2">
@@ -606,7 +612,7 @@ header.site{background:linear-gradient(180deg,rgba(5,5,7,.94),rgba(5,5,7,.84))}
 
   <!-- ═══════════ NETWORK ═══════════ -->
   <section class="view" id="view-network">
-    <h1 style="font-size:26px;margin-bottom:6px" data-i="nTitle">Network</h1>
+    <h2 style="font-size:26px;margin-bottom:6px" data-i="nTitle">Network</h2>
     <p class="sect-sub" data-i="nSub">A validation network that runs on public chains and publishes its own proof of life.</p>
 
     <div class="grid g4">
