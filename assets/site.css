@@ -37,7 +37,7 @@ html[dir="rtl"] .sw-drawer[data-open="1"]{transform:translateX(0)}
   display:inline-flex;align-items:center;justify-content:center;padding:0}
 .sw-close svg{width:18px;height:18px;pointer-events:none}
 .sw-close:focus-visible{outline:2px solid var(--text,#fafafa);outline-offset:2px}
-.sw-group{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint,#a1a1aa);
+.sw-group{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint,#a1a1aa);
   margin:14px 6px 6px;font-weight:700}
 .sw-group:first-of-type{margin-top:4px}
 .sw-drawer nav a{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 14px;
@@ -173,4 +173,46 @@ html[dir="rtl"] .sw-progress{--sw-progress-origin:right}
 @media (prefers-reduced-motion:no-preference){
   .sw-pend{animation:sw-pulse-dim 1.6s ease-in-out infinite}
   @keyframes sw-pulse-dim{0%,100%{opacity:.45}50%{opacity:1}}
+}
+
+/* ═══ R66 · proportion & hygiene laws (shared layer) ═══
+   Law 1 — nothing may push a page wider than the viewport:
+   long tokens (tx hashes, addresses, URLs, EVM calldata) must wrap
+   inside prose instead of stretching the document. */
+main :is(p, li, td, th, dd, dt, figcaption, blockquote, h1, h2, h3, h4,
+        .note, .what, .ours, .claim, .lede, .src, .sub, .d, .b, .sec-note) {
+  overflow-wrap: break-word;
+}
+main :is(code, kbd, samp, a, b, strong) { overflow-wrap: anywhere; }
+
+/* Law 2 — measure discipline: prose lines stop running edge-to-edge on
+   wide screens. 70ch is the classic readable measure (~60-75 glyphs);
+   tables, headers and nav are untouched. */
+@media (min-width: 1024px) {
+  main :is(p, li, blockquote, .what, .ours, .claim, .note, .lede, .src, .sub, .d, .b, .payload, .opsafe, .sec-note) {
+    max-width: 70ch;
+  }
+}
+
+/* Law 3 — footer text links get a real touch target via pad+negative-margin
+   (zero layout shift; structural button links keep their own padding). */
+footer :is(a):not(.btn):not([class*="pill"]) { display:inline-block; padding:8px 6px; margin:-8px -6px; }
+
+/* Law 4 — data tables scroll, never crush: tables with 4+ columns keep their
+   proportions and slide in a scroller on small screens instead of squeezing
+   into one-word-per-line columns. Narrow tables (<4 cols) wrap as before;
+   inline min-width overrides (wallet feed) still win. */
+@media (max-width: 760px) {
+  main table:has(tr > :nth-child(4)) {
+    display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  main table:has(tr > :nth-child(4)) :is(td, th) { min-width: 150px; }
+}
+/* Law 5 — hub header pills stay compact on small screens; below 421px they
+   step aside for the shared drawer (which carries the same links). */
+@media (max-width: 560px) {
+  header.top .lnk { font-size: 12px; padding: 8px 10px; white-space: nowrap; }
+}
+@media (max-width: 420px) {
+  header.top .lnk { display: none; }
 }

@@ -170,6 +170,9 @@ footer a:hover{color:var(--gold-bright)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
 }
+
+/* R66: classless prose divs keep a readable measure; interactive grids untouched */
+main .card > div:not([class]){max-width:70ch}
 </style>
   <link rel="stylesheet" href="assets/site.css">
   <script src="assets/site.js" defer></script>

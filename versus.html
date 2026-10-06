@@ -527,7 +527,7 @@ var SNAP = {
   save: null
 };
 var LLAMA = "https://api.llama.fi/tvl/";
-var B = location.href.indexOf("/Console/") >= 0 ? "/Console/" : "/";
+var B = (location.href.match(/\/[Cc]onsole\//) || ["/"])[0];
 function jget(u){return fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).catch(function(){return null;});}
 function bil(v){ if(v>=1e9) return "$"+(v/1e9).toFixed(1)+"B"; if(v>=1e6) return "$"+(v/1e6).toFixed(1)+"M"; if(v>=1e3) return "$"+(v/1e3).toFixed(1)+"K"; return "$"+v.toFixed(0); }
 function mus(v){ return "$"+(v/1e3).toFixed(v>=1e5?0:2); } /* µ במנוע = מילי-דולר - המרה-אמת (R40) */

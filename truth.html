@@ -83,7 +83,7 @@ header.site{position:sticky;top:0;z-index:900;background:rgba(9,9,11,.72);
 .brand > div{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .brand .logo{width:30px;height:30px;color:var(--acc);display:grid;place-items:center;flex:none;
   filter:drop-shadow(0 0 14px rgba(16,185,129,.35))}
-.brand small{display:block;font-weight:500;color:var(--faint);font-size:10px;letter-spacing:.6px}
+.brand small{display:block;font-weight:500;color:var(--faint);font-size:11px;letter-spacing:.6px}
 .hd-actions{display:flex;align-items:center;gap:10px;flex:none}
 .langbtn{font-family:var(--mono);font-size:12px;color:var(--dim);border:1px solid var(--line);
   background:var(--panel);padding:8px 15px;min-height:38px;border-radius:999px;cursor:pointer;
@@ -235,6 +235,9 @@ footer a:hover{color:var(--acc-bright);text-decoration:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
 }
+
+/* R66: run links in history tables get a real touch target */
+.tblscroll td a{display:inline-block;padding:8px 6px;margin:-8px -6px}
 </style>
   <link rel="stylesheet" href="assets/site.css">
   <script src="assets/site.js" defer></script>

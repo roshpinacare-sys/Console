@@ -108,10 +108,10 @@ table tr:hover{background:rgba(255,255,255,.02)}
 .dot.p{background:var(--purple);box-shadow:0 0 8px rgba(167,139,250,.55)}
 
 /* ── hairline stat rail (R62+ KPI treatment) ── */
-.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--key);margin-bottom:24px}
+.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--key);margin-bottom:24px}
 .pcard{background:rgba(12,12,14,.86);padding:18px 16px 15px;display:flex;flex-direction:column;gap:7px;transition:background .18s}
 .pcard:hover{background:var(--bg3)}
-.pcard .v{font-family:var(--mono);font-size:clamp(1.45rem,2.6vw,1.875rem);font-weight:620;color:var(--gold-bright);direction:ltr;unicode-bidi:isolate;line-height:1.08;font-variant-numeric:tabular-nums}
+.pcard .v{font-family:var(--mono);font-size:clamp(1.3rem,2.6vw,1.875rem);font-weight:620;color:var(--gold-bright);direction:ltr;unicode-bidi:isolate;line-height:1.08;font-variant-numeric:tabular-nums}
 .pcard .v.red{color:var(--red)}
 .pcard .v.green{color:var(--green)}
 .pcard .v.purple{color:var(--purple)}
@@ -152,6 +152,9 @@ footer a:hover{color:var(--gold-bright)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
 }
+
+/* R66: the shared drawer owns mobile nav now - legacy burger retires */
+.mburger{display:none!important}
 </style>
   <link rel="stylesheet" href="assets/site.css">
   <script src="assets/site.js" defer></script>

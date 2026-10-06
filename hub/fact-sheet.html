@@ -43,6 +43,9 @@ footer.site{border-top:1px solid var(--line);padding:16px 22px;text-align:center
 footer.site a{color:var(--dim)}
 .mono{font-family:var(--mono)}
 @media print{body{background:#fff;color:#111}header.top{position:static}}
+
+/* R66: inline links get a real touch target (~30px) via pad+negative-margin, zero layout shift */
+.tbl a,footer.site a{display:inline-block;padding:8px 8px;margin:-8px -8px}
 </style>
   <link rel="stylesheet" href="../assets/site.css">
   <script src="../assets/site.js" defer></script>
