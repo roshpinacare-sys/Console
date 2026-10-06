@@ -48,8 +48,8 @@
   --green:#22c55e; --amber:#eab308; --red:#ef4444;
   --purple:#a78bfa; --violet:#a78bfa; /* legacy alias kept for existing rules */
   --text:#fafafa; --dim:#a1a1aa; --faint:#71717a;
-  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
-  --sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sans:'Heebo',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
   --r:16px; --r-sm:12px; --r-lg:20px; --nav-h:62px;
   --key:inset 0 1px 0 rgba(255,255,255,.055);
   --key-hover:inset 0 1px 0 rgba(255,255,255,.09),0 12px 34px rgba(0,0,0,.38);
@@ -339,6 +339,10 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
 }
 </style>
 <link rel="manifest" href="manifest.webmanifest">
+<!-- R65: wallet was the last page outside the shared layer - it now loads the
+     same fonts, motion and a11y layers as every other console page. The shared
+     drawer complements (never replaces) the wallet's own in-page tab strip. -->
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -386,7 +390,7 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
     <div class="sect">
       <div class="strip">
       <div class="kpi"><div class="k" data-i="kSupply">SAOS supply</div><div class="v num" id="st-sup">126,682</div><div class="s" data-i="kSupplySub">hard cap 21,000,000</div></div>
-      <div class="kpi"><div class="k" data-i="kWallets">Wallets on chain</div><div class="v num" id="st-wal">0</div><div class="s" data-i="kWalletsSub">personal addresses</div></div>
+      <div class="kpi"><div class="k" data-i="kWallets">Wallets on chain</div><div class="v num" id="st-wal">0</div><div class="s" data-i="kWalletsSub">personal addresses · book just opened</div></div>
       <div class="kpi"><div class="k" data-i="kContracts">Token contracts</div><div class="v num" id="st-tok">0</div><div class="s" data-i="kContractsSub">real on-chain contracts</div></div>
       <div class="kpi"><div class="k" data-i="kValidations">Network validations</div><div class="v num" id="st-att">0</div><div class="s" id="st-cp">0 checkpoints</div></div>
       </div>
@@ -797,7 +801,7 @@ en: {
   heroTop:"Your money.", heroGrad:"Your network.", heroBottom:"SAOS.",
   heroLead:"Open a free wallet in seconds, hold the SAOS currency, exchange at network rates and fund the network while following every coin in an open ledger. No custody, no middleman: your keys never leave your device.",
   ctaWallet:"Open a free wallet", ctaExchange:"See the exchange",
-  kSupply:"SAOS supply", kSupplySub:"hard cap 21,000,000", kWallets:"Wallets on chain", kWalletsSub:"personal addresses",
+  kSupply:"SAOS supply", kSupplySub:"hard cap 21,000,000", kWallets:"Wallets on chain", kWalletsSub:"personal addresses · book just opened",
   kContracts:"Token contracts", kContractsSub:"real on-chain contracts", kValidations:"Network validations",
   featTitle:"What you can do here", featSub:"Everything runs from public connections. This page is itself a network node.",
   feat1T:"Free wallet", feat1P:"Your own SAOS address in seconds. The key is born on your device and the address is derived from it. No account, no email, no approval.",
@@ -922,7 +926,7 @@ he: {
   heroTop:"הכסף שלך.", heroGrad:"הרשת שלך.", heroBottom:"SAOS.",
   heroLead:"פתח ארנק חינם בשניות, החזק את המטבע SAOS, סחור בשערי הרשת וממן את הרשת כשכל מטבע נראה בספר פתוח. בלי כתובת-שרת, בלי מתווך: המפתחות שלך לא עוזבים את המכשיר.",
   ctaWallet:"פתיחת ארנק חינם", ctaExchange:"לבורסה",
-  kSupply:"אספקת SAOS", kSupplySub:"תקרה קבועה 21,000,000", kWallets:"ארנקים בשרשרת", kWalletsSub:"כתובות אישיות",
+  kSupply:"אספקת SAOS", kSupplySub:"תקרה קבועה 21,000,000", kWallets:"ארנקים בשרשרת", kWalletsSub:"כתובות אישיות · תחילת הפנקס",
   kContracts:"חוזי טוקנים", kContractsSub:"חוזים אמיתיים על השרשרת", kValidations:"אימותי רשת",
   featTitle:"מה אפשר לעשות כאן", featSub:"הכל רץ מחיבורים ציבוריים. העמוד הזה הוא בעצמו צומת של הרשת.",
   feat1T:"ארנק חינם", feat1P:"כתובת SAOS אישית משלך בשניות. המפתח נולד במכשיר שלך והכתובת נגזרת ממנו. בלי חשבון, בלי מייל, בלי אישור.",
@@ -1951,5 +1955,6 @@ renderQueue();
 applyLang();
 boot();
 </script>
+<script src="assets/site.js" defer></script>
 </body>
 </html>

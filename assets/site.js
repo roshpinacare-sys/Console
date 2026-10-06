@@ -12,6 +12,9 @@
      drawer is not injected — the page keeps its own menu; the sticky-footer
      helper still applies when a direct-child <footer> exists.
    · No simulation: every link points at a page that exists in this repo.
+   · R65 (2026-10-06): a second IIFE below adds the motion & life layer —
+     reading progress, count-up on live data landing, pending shimmer.
+     All information-bearing, all reduced-motion aware, all fail-silent.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
   "use strict";
@@ -175,4 +178,124 @@
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
+})();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   R65 — motion & life layer (2026-10-06, see DESIGN.md R65)
+   Three information-bearing behaviors, nothing decorative:
+   1. reading progress — a gold hairline measuring how much receipt is left;
+   2. count-up — live numbers roll once when their data lands (the console is
+      a live machine; a static number claiming to be live reads broken);
+   3. pending shimmer — honest "measuring" state for the ... placeholders
+      while a source is in flight.
+   All three respect prefers-reduced-motion; all three fail silently.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  "use strict";
+
+  var reduced = false;
+  try {
+    reduced = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (e) { reduced = false; }
+
+  /* ── 1. reading progress + header separation on scroll ── */
+  function initProgress() {
+    var bar = document.createElement("div");
+    bar.className = "sw-progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+    var doc = document.documentElement;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var max = doc.scrollHeight - window.innerHeight;
+      var y = window.scrollY || doc.scrollTop || 0;
+      var r = max > 40 ? Math.min(1, Math.max(0, y / max)) : 0;
+      bar.style.transform = "scaleX(" + r + ")";
+      if (y > 6) doc.classList.add("sw-scrolled");
+      else doc.classList.remove("sw-scrolled");
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  /* ── 2. count-up when a live value lands ──
+     Matches strict numerals only: optional $/#/₪ prefix, comma-grouped digits,
+     optional decimals. Everything else ("0.5h", "15:25", txids) never moves. */
+  var NUM_RE = /^([$#\u20AA])?\s?([\d][\d,]*(?:\.\d+)?)$/;
+
+  function animate(el, finalText, m) {
+    var prefix = m[1] || "";
+    var target = parseFloat(m[2].replace(/,/g, ""));
+    var dec = (m[2].split(".")[1] || "").length;
+    if (isNaN(target) || target === 0) {
+      /* zero / unparseable: nothing to roll. Mark as seen WITHOUT rewriting -
+         a rewrite here would re-enter this observer forever (browser-proven
+         2026-10-06: honest "0" values locked the page in a mutation loop). */
+      el.dataset.swCounted = finalText;
+      return;
+    }
+    el.dataset.swCounting = "1";
+    var dur = 650;
+    var t0 = null;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      var e = 1 - Math.pow(1 - p, 3); /* ease-out cubic */
+      el.textContent = prefix + (target * e)
+        .toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+      if (p < 1) requestAnimationFrame(step);
+      else {
+        el.dataset.swCounted = finalText; /* mark BEFORE the write it legitimizes */
+        el.textContent = finalText;       /* exact original form wins */
+        delete el.dataset.swCounting;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function watchCounts() {
+    var obs = new MutationObserver(function (muts) {
+      for (var i = 0; i < muts.length; i++) {
+        var mu = muts[i];
+        var node = mu.target;
+        var el = node.nodeType === 3 ? node.parentElement : node;
+        if (!el || el.nodeType !== 1) continue;
+        if (el.classList.contains("sw-pend")) el.classList.remove("sw-pend");
+        var t = (el.textContent || "").trim();
+        var d = el.dataset;
+        if (d && (d.swCounting || d.swCounted === t)) continue;
+        var m = NUM_RE.exec(t);
+        if (m && !reduced) animate(el, t, m);
+      }
+    });
+    obs.observe(document.body, { childList: true, characterData: true, subtree: true });
+  }
+
+  /* ── 3. honest measuring state for "..." placeholders ── */
+  var PEND_RE = /^\s*([$#\u20AA])?\s*(\.\.\.|\u2026)\s*$/;
+  function markPending() {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var hits = [];
+    while (walker.nextNode()) {
+      var n = walker.currentNode;
+      if (PEND_RE.test(n.nodeValue || "") && n.parentElement) hits.push(n.parentElement);
+    }
+    for (var i = 0; i < hits.length; i++) hits[i].classList.add("sw-pend");
+  }
+
+  function boot() {
+    try { initProgress(); } catch (e) {}
+    try { markPending(); } catch (e) {}
+    try { watchCounts(); } catch (e) {}
+    /* late placeholders (data landed, other sources still pending) */
+    setTimeout(function () { try { markPending(); } catch (e) {} }, 1500);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 })();

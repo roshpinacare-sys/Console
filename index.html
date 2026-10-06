@@ -41,8 +41,8 @@
   --gold:#d4af37; --gold-bright:#e9c767; --gold-dim:rgba(212,175,55,.12); --gold-line:rgba(212,175,55,.42);
   --green:#22c55e; --red:#ef4444; --amber:#eab308; --purple:#a78bfa;
   --text:#fafafa; --dim:#a1a1aa; --faint:#71717a;
-  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
-  --sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sans:'Heebo',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
   --r:16px; --r-sm:12px; --r-lg:20px; --nav-h:62px;
   --key:inset 0 1px 0 rgba(255,255,255,.055);
   --key-hover:inset 0 1px 0 rgba(255,255,255,.09),0 12px 34px rgba(0,0,0,.38);
@@ -212,6 +212,9 @@ main{flex:1;display:flex;flex-direction:column;position:relative}
 .scell .vl{font-family:var(--mono);font-size:clamp(1.15rem,1.9vw,1.55rem);font-weight:620;direction:ltr;unicode-bidi:isolate;line-height:1.05;font-variant-numeric:tabular-nums}
 .scell .vl.ok{color:var(--green)}
 .scell .vl.gold{color:var(--gold-bright)}
+/* R65: the freshness cell carries words, not digits — it reads at a smaller
+   size on one line so the six-cell rail keeps one visual rhythm */
+#kFresh{font-size:clamp(.98rem,1.5vw,1.28rem);white-space:nowrap;letter-spacing:.3px}
 .scell .src{font-size:10px;color:var(--faint);font-family:var(--mono);direction:ltr;unicode-bidi:isolate;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* ── kpis (in-view stat grids) ─────────── */

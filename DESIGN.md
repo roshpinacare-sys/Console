@@ -36,6 +36,36 @@ discipline of the catalog's own "midnight command center" entries:
    everything after 3s, and print/no-JS never lose a byte. No crawler, no
    capture and no reader may ever meet an invisible section.
 
+## R65 refinement (2026-10-06): brand voice + a living machine
+
+Two amendments to the laws above, both driven by the refero-grade bar:
+
+1. **Self-hosted brand typography (amends "No webfonts")** - the intent of the
+   old law was "no third-party CDN, no render-blocking external requests".
+   R65 keeps the intent and drops the blanket ban: `assets/fonts/` now ships
+   three subset variable woff2 files (Heebo hebrew + latin, JetBrains Mono
+   latin; ~74KB total, `font-display: swap`, no CDN, no tracking). Every page
+   token becomes `--sans:'Heebo',-apple-system,...` and
+   `--mono:'JetBrains Mono',ui-monospace,...`. Heebo renders the true
+   600/650 weights the system stack used to round away; JetBrains Mono gives
+   every numeral, txid and timestamp one identical ledger voice.
+2. **Motion & life layer (amends "No other animation")** - shared, additive,
+   in `assets/site.js` + `assets/site.css`, all `prefers-reduced-motion`
+   aware and fail-silent:
+   - reading progress: a 2px gold hairline fixed at the very top, scaleX by
+     scroll ratio (information: how much receipt is left to verify);
+   - count-up: when a live value lands and its text is a strict numeral
+     (optional `$`/`#`/`₪` prefix, comma digits, optional decimals), it rolls
+     once for 650ms ease-out. Mixed strings ("0.5h", "FRESH · 0.5h", "125 /
+     16") and txids never move; the final text is always set byte-exact;
+   - pending shimmer: text placeholders (`...`, `$…`) get `.sw-pend` - a dim
+     1.6s opacity pulse - until their data lands, replacing the dead "..."
+     look with an honest "measuring" state;
+   - header separation: `html.sw-scrolled` adds a hairline + shadow to the
+     glass header after 6px of scroll;
+   - proof tables: `tbody tr` get a faint hover wash; every page's own hover
+     rule still wins (`:where()` zero specificity).
+
 All prior laws below remain in force.
 
 ## Story
