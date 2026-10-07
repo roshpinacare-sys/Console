@@ -155,6 +155,15 @@ function sequenceSkips(uniqueDesc) {
 
 // טיפול: איחוד טווחי העדויות ואיתור חורים/כפילויות — ספירה אמת,
 // רשימה מצונזרת בגלישה, ומצב עובדתי בלבד (TILED/HOLED/SPARSE).
+//
+// קריאת-החורים הכפולה (r68-f, החלטת-מפעיל מאושרת): HOLED הוא מצב
+// עובדתי שמערבב שני מיני-חורים שונים בתכלית. נמדד על הספר הרשמי
+// (2026-10-07): 428 חורים על 439 טווחים — אבל 3 חורי-ענק (35/74/342 ids)
+// מעידן-הג'נזיס אוכלים כ-43% מהכיסוי החסר, ו-425 רסיסים קטנים (חציון 3,
+// בעידן היציב 1–3) הם דפוס-קצב העיגון (checkpoint מתקדם מהר מהעוגן).
+// הספר ממשיך לומר HOLED — ומוסיף את הפיצול, שהכיסוי החסר יהיה קריא:
+// מרוכז במעט חורי-ענק (פצע-עידן) או מפוזר ברסיסי-קצב (דפוס).
+const WIDE_HOLE_MIN = 30; // נמדד: רסיסי-הקצב ≤17 בכל הספר; חורי-הענק ≥35. הסף 30 מפריד בלי לגעת בשניהם
 function attestationTiling(uniqueDesc) {
   const ranges = uniqueDesc
     .filter((a) => typeof a.attFrom === "number" && typeof a.attTo === "number" && a.attFrom <= a.attTo)
@@ -178,6 +187,10 @@ function attestationTiling(uniqueDesc) {
   if (cur) covered += cur.to - cur.from + 1;
   const span = ranges.length ? ranges[ranges.length - 1].to - ranges[0].from + 1 : 0;
   const state = ranges.length < 5 ? "SPARSE" : holes.length === 0 ? "TILED" : "HOLED";
+  const holeSize = (h) => h.to - h.from + 1;
+  const wide = holes.filter((h) => holeSize(h) >= WIDE_HOLE_MIN).sort((a, b) => holeSize(b) - holeSize(a));
+  const missingTotal = span - covered; // = סכום כל החורים (האיחוד רציף בין חורים)
+  const wideUncovered = wide.reduce((s, h) => s + holeSize(h), 0);
   return {
     ranges: ranges.length,
     covered,
@@ -188,6 +201,14 @@ function attestationTiling(uniqueDesc) {
     holesTruncated: holes.length > 30,
     overlapsTotal: overlaps.length,
     overlaps: overlaps.slice(0, 30),
+    // פיצול-החורים (r68-f): איפה הכיסוי החסר באמת יושב
+    wideHoleMin: WIDE_HOLE_MIN,
+    widestHole: holes.length ? Math.max(...holes.map(holeSize)) : 0,
+    wideHolesTotal: wide.length,
+    wideHoles: wide.slice(0, 30), // מעטים מטבעם — בלי צנזורה
+    wideUncovered,
+    sliversTotal: holes.length - wide.length,
+    sliverUncovered: missingTotal - wideUncovered,
     state,
   };
 }
@@ -240,6 +261,11 @@ const uniqueDesc = anchors.filter((a) => {
 
 const witnesses = {};
 for (const a of uniqueDesc) witnesses[a.witness] = (witnesses[a.witness] || 0) + 1;
+// חשבונות-צי שמעולם לא עגנו נכנסים לספר עם 0 מפורש (r68-f, החלטת-מפעיל):
+// lsa נסרק עד תחתית ההיסטוריה המלאה בכל ריצה (perAccount.stoppedBy =
+// depth-end) והאפס הוא מדידה, לא חוסר-קריאה. החשבון נשאר בניטור —
+// אם יעגן יום אחד, המפקד יראה מיד.
+for (const acc of FLEET) if (!(acc in witnesses)) witnesses[acc] = 0;
 
 const skips = sequenceSkips(uniqueDesc);
 const tiling = attestationTiling(uniqueDesc);
@@ -360,7 +386,7 @@ writeFileSync(new URL("../weave/census.json", import.meta.url), text);
 log(
   `${verdict} (recent ${RECENT_H}h: ${recentVerdict}, ${recentTimes.length} anchors, max gap ${maxRecentGapMin === null ? "n/a" : Math.round(maxRecentGapMin) + "m"}, open gap ${openGapMin === null ? "n/a" : Math.round(openGapMin) + "m"}) · ` +
   `${uniqueDesc.length} unique anchors (cp#${minCp}..${maxCp}) · ` +
-  `${skips.total} cps skipped by cadence · tiling ${tiling.state} (${tiling.holesTotal} holes, coverage ${tiling.coverageRatio}) · ` +
+  `${skips.total} cps skipped by cadence · tiling ${tiling.state} (${tiling.holesTotal} holes, coverage ${tiling.coverageRatio}, wide≥${tiling.wideHoleMin}: ${tiling.wideHolesTotal} holes/${tiling.wideUncovered} ids, slivers: ${tiling.sliversTotal}/${tiling.sliverUncovered} ids) · ` +
   `cadence median ${Math.round(medMin)}m max ${Math.round(maxMin)}m · latest ${Math.round(latestAgeH * 10) / 10}h old · ` +
   `witnesses ${JSON.stringify(witnesses)} · window ${Math.round(spanDays * 10) / 10}d · ${opsScanned} ops scanned`
 );

@@ -353,7 +353,12 @@ Promise.allSettled([
       " · " + esc(d.recent?.anchorsInWindow ?? "?") + " עוגנים, פער-מרבי " + esc(d.recent?.maxGapMinutes ?? "?") + " דק'" +
       " · פער-פתוח " + esc(d.recent?.openGapMinutes === null || d.recent?.openGapMinutes === undefined ? "?" : (d.recent.openGapMinutes >= 60 ? Math.round(d.recent.openGapMinutes / 6) / 10 + "ש'" : d.recent.openGapMinutes + " דק'")) +
       " · דילוגי-קצב " + esc(skip.total ?? 0) + " · טיפול-עדויות " + esc(d.attestations?.state) +
-      " (כיסוי " + esc(Math.round((d.attestations?.coverageRatio ?? 0) * 100)) + "%) · עדי-חתימה " +
+      " (כיסוי " + esc(Math.round((d.attestations?.coverageRatio ?? 0) * 100)) + "%" +
+      (d.attestations?.wideHolesTotal !== undefined
+        ? " · מהחסר: " + esc(d.attestations.wideHolesTotal) + " חורי-ענק (" + esc(d.attestations.wideUncovered ?? 0) +
+          " ids) + " + esc(d.attestations.sliversTotal ?? 0) + " רסיסי-קצב (" + esc(d.attestations.sliverUncovered ?? 0) + " ids)"
+        : "") +
+      ") · עדי-חתימה " +
       esc(Object.entries(w).map(([k, n]) => "@" + k + "×" + n).join(" · "));
   })(), (d) => (d.recent ? vtag(d.recent.verdict) : "")));
   parts.push(book("chain-vitals", vitals, (() => {
