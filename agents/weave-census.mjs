@@ -266,6 +266,23 @@ else if (latestAgeH > FRESH_H) verdict = "STALLED";
 else if (maxMin !== null && maxMin > IRREGULAR_GAP_MIN) verdict = "IRREGULAR";
 else verdict = "LIVE";
 
+// קריאת-חיות דו-שכבתית (r68-c): הפסיקה ההיסטורית למעלה שופטת את כל
+// חלון-המפקד — ולכן פערי-ג'נזיס עתיקים שומרים אותה IRREGULAR גם כשהקו
+// סדיר כבר שבועות. פסיקת-החלון האחרון (26ש', דוקטרינת-החיים של הבית)
+// מספרת את החיות-עכשיו בלבד. שתי הקריאות נמדדות, שתיהן בספר —
+// ההיסטוריה לא נמחקת, והעכשיו לא מוסתר.
+const RECENT_H = FRESH_H;
+const recentCutoff = Date.now() - RECENT_H * 3600000;
+const recentTimes = times.filter((t) => t >= recentCutoff);
+const recentGaps = [];
+for (let i = 1; i < recentTimes.length; i++) recentGaps.push((recentTimes[i - 1] - recentTimes[i]) / 60000);
+const maxRecentGapMin = recentGaps.length ? Math.max(...recentGaps) : null;
+let recentVerdict;
+if (recentTimes.length === 0) recentVerdict = "STALLED";      // אפס עוגנים ב-26ש'
+else if (recentTimes.length < 5) recentVerdict = "SPARSE";    // קצב קרס או הקו חזר מפיגור
+else if (maxRecentGapMin !== null && maxRecentGapMin > IRREGULAR_GAP_MIN) recentVerdict = "IRREGULAR";
+else recentVerdict = "LIVE";
+
 const book = {
   format: "weave-census-v1",
   generatedAt: new Date().toISOString(),
@@ -289,6 +306,12 @@ const book = {
     spanDays: Math.round(spanDays * 100) / 100,
   },
   verdict,
+  recent: {
+    windowHours: RECENT_H,
+    anchorsInWindow: recentTimes.length,
+    maxGapMinutes: maxRecentGapMin === null ? null : Math.round(maxRecentGapMin),
+    verdict: recentVerdict,
+  },
   freshness: {
     latestAgeHours: Math.round(latestAgeH * 10) / 10,
     thresholdHours: FRESH_H,
@@ -326,7 +349,8 @@ mkdirSync(new URL("../weave/", import.meta.url), { recursive: true });
 writeFileSync(new URL("../weave/census.json", import.meta.url), text);
 
 log(
-  `${verdict} · ${uniqueDesc.length} unique anchors (cp#${minCp}..${maxCp}) · ` +
+  `${verdict} (recent ${RECENT_H}h: ${recentVerdict}, ${recentTimes.length} anchors, max gap ${maxRecentGapMin === null ? "n/a" : Math.round(maxRecentGapMin) + "m"}) · ` +
+  `${uniqueDesc.length} unique anchors (cp#${minCp}..${maxCp}) · ` +
   `${skips.total} cps skipped by cadence · tiling ${tiling.state} (${tiling.holesTotal} holes, coverage ${tiling.coverageRatio}) · ` +
   `cadence median ${Math.round(medMin)}m max ${Math.round(maxMin)}m · latest ${Math.round(latestAgeH * 10) / 10}h old · ` +
   `witnesses ${JSON.stringify(witnesses)} · window ${Math.round(spanDays * 10) / 10}d · ${opsScanned} ops scanned`

@@ -318,9 +318,9 @@ function render(m) {
 // הוא שורה כנה בכרטיס שלו, לא קריסת-הכרטיס ולא המצאת נתון.
 const VCLS = { LIVE:"g", TILED:"g", AGREE:"g", "ALL-LINES-UP":"g", IRREGULAR:"y", HOLED:"y", DEGRADED:"y", SPARSE:"y", "CENSUS-STALE":"y", "LEDGER-STALE":"y", STALLED:"r", DIVERGE:"r", DARK:"r" };
 const vtag = (v) => '<span class="tag ' + (VCLS[v] ?? "") + '">' + esc(v) + "</span>";
-const book = (label, res, html) =>
+const book = (label, res, html, chip) =>
   '<div class="arow"><div class="top"><span class="type">' + esc(label) + "</span>" +
-  (res.status === "fulfilled" ? vtag(res.value.verdict) + '<span class="when">' + esc(ago(res.value.generatedAt)) + "</span>"
+  (res.status === "fulfilled" ? vtag(res.value.verdict) + (chip ? chip(res.value) : "") + '<span class="when">' + esc(ago(res.value.generatedAt)) + "</span>"
                               : '<span class="tag r">ספר לא זמין</span>') +
   '</div><div class="claim">' + (res.status === "fulfilled" ? html : "המנוע לא נקרא — הריצה שלו אדומה בפומבי או שהמפקד מפגר") + "</div></div>";
 
@@ -349,10 +349,12 @@ Promise.allSettled([
     const skip = d.anchoring?.skippedCheckpoints ?? {};
     return esc(d.totals.uniqueCheckpoints) + " עוגנים ייחודיים (cp#" + esc(d.window?.fromCp) + "…cp#" + esc(d.window?.toCp) +
       ", חלון " + esc(d.window?.spanDays) + " ימים) · קצב חציוני " + esc(Math.round(d.cadence?.medianMinutes ?? 0)) +
-      " דק' · דילוגי-קצב " + esc(skip.total ?? 0) + " · טיפול-עדויות " + esc(d.attestations?.state) +
+      " דק' · חיות-עכשיו (" + esc(d.recent?.windowHours ?? 26) + "ש'): " + esc(d.recent?.verdict ?? "?") +
+      " · " + esc(d.recent?.anchorsInWindow ?? "?") + " עוגנים, פער-מרבי " + esc(d.recent?.maxGapMinutes ?? "?") + " דק'" +
+      " · דילוגי-קצב " + esc(skip.total ?? 0) + " · טיפול-עדויות " + esc(d.attestations?.state) +
       " (כיסוי " + esc(Math.round((d.attestations?.coverageRatio ?? 0) * 100)) + "%) · עדי-חתימה " +
       esc(Object.entries(w).map(([k, n]) => "@" + k + "×" + n).join(" · "));
-  })()));
+  })(), (d) => (d.recent ? vtag(d.recent.verdict) : "")));
   parts.push(book("chain-vitals", vitals, (() => {
     if (vitals.status !== "fulfilled") return "";
     const d = vitals.value;
