@@ -337,6 +337,28 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
 }
+/* ═══ R69 · wallet overhaul: QR, portfolio value, my activity, network lines, modals ═══
+   Same design law as the page: achromatic canvas, rationed gold, hairlines, no webfonts. */
+.mo-ovl{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.mo-ovl[hidden]{display:none!important}
+.mo-card{background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r);padding:20px;max-width:440px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.5);max-height:88vh;overflow-y:auto}
+.mo-card h3{font-size:17px}
+.pv-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+.pv-row:last-child{border-bottom:none}
+.pv-total{font-size:15px;font-weight:800;color:var(--gold-bright)}
+.act-dir{font-size:10px;padding:2px 7px;border-radius:999px;border:1px solid var(--line2);letter-spacing:.06em;white-space:nowrap}
+.act-in{color:#86efac;border-color:rgba(34,197,94,.4)}
+.act-out{color:var(--gold-bright);border-color:var(--gold-line)}
+.act-pend{color:var(--amber);border-color:rgba(234,179,8,.4)}
+.vchip{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--dim);white-space:nowrap}
+.vchip i{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:none}
+.vchip.up i{background:var(--green)}
+.vchip.down i{background:var(--red)}
+.vchip.verdict{color:var(--gold-bright);border-color:var(--gold-line)}
+.vchip.verdict.down{color:#fca5a5;border-color:rgba(239,68,68,.45)}
+#my-activity::-webkit-scrollbar{width:8px}
+#my-activity::-webkit-scrollbar-thumb{background:var(--line2);border-radius:8px}
+@media (max-width:640px){ .mo-card{padding:16px} }
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 </head>
@@ -438,6 +460,14 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
     <h2 data-i="wTitle">Your wallet</h2>
     <p class="sect-sub" data-i="wSub">A personal SAOS address that belongs to the key on your device. Register it once and the whole network can see it.</p>
 
+    <div class="card" style="margin-top:16px;padding:12px 16px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)" data-i="vitT">Network lines</span>
+        <span id="vitals-strip" style="display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0"></span>
+        <span id="vitals-age" style="color:var(--faint);font-size:11px;white-space:nowrap"></span>
+      </div>
+    </div>
+
     <div id="wallet-empty" class="grid g2">
       <div class="card">
         <h2 data-i="wNewT">Create a new wallet</h2>
@@ -466,6 +496,11 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
           <h2 data-i="wAddrT">Your address</h2>
           <p class="sub" id="wallet-reg"></p>
           <div class="addrbox"><span class="a" id="wallet-addr"></span><button class="copy" id="btn-copy-addr" data-i="copy">Copy</button></div>
+          <div id="qr-box" style="display:none;margin-top:14px">
+            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:8px" data-i="wQrT">Address QR</div>
+            <canvas id="qr-canvas" style="border-radius:10px;background:#fff;display:block"></canvas>
+            <div class="hint" style="margin-top:6px" data-i="wQrP">Scan with a camera to share this address. The code holds the address only — never keys.</div>
+          </div>
           <p class="hint mono" id="wallet-pub" style="margin-top:10px;word-break:break-all"></p>
           <div class="keybox" id="key-reveal" style="display:none;margin-top:14px">
             <div style="font-size:12px;color:var(--amber);margin-bottom:6px" data-i="wWifT">Your private key (shown once)</div>
@@ -481,6 +516,7 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
           <h2 data-i="wBalT">Balances</h2>
           <p class="sub" data-i="wBalP">As folded from the public chain.</p>
           <div style="font-size:24px;font-weight:800;color:var(--gold-bright)" id="wallet-bal">0</div>
+          <div id="wallet-pv" style="margin-top:10px"></div>
           <div id="dex-bal" style="display:none;margin-top:12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel2)">
             <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)" data-i="wDexT">DEX balance (USDS)</div>
             <div style="font-size:19px;font-weight:800;color:var(--violet)" id="dex-bal-v">0</div>
@@ -498,9 +534,15 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
         <div class="frow">
           <div class="field"><label class="f" data-i="wSendSym">Currency</label><select id="send-symbol"></select></div>
           <div class="field" style="flex:2"><label class="f" data-i="wSendTo">Recipient address (saos1...)</label><input class="mono" id="send-to" placeholder="saos1..."></div>
-          <div class="field"><label class="f" data-i="wSendAmt">Amount</label><input class="mono" id="send-amount" placeholder="0.000"></div>
+          <div class="field"><label class="f" data-i="wSendAmt">Amount</label><div style="display:flex;gap:8px;align-items:center"><input class="mono" id="send-amount" placeholder="0.000" style="flex:1;min-width:0"><button type="button" class="btn ghost sm" id="btn-send-max" style="flex:none">MAX</button></div></div>
         </div>
         <button class="btn gold" id="btn-send" data-i="wSendBtn">Sign transfer</button>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2 data-i="wActT">My activity</h2>
+        <p class="sub" data-i="wActP">Everything the chain folded for your address, newest first — plus what you signed and is waiting.</p>
+        <div class="feed" id="my-activity" style="max-height:300px;overflow-y:auto"></div>
       </div>
 
       <div class="grid g2" style="margin-top:16px">
@@ -777,6 +819,37 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
 
 <div id="toast" role="status" aria-live="polite"></div>
 
+<!-- R69 · masked password modal — no native prompt() ever touches a keystore password -->
+<div id="pw-modal" class="mo-ovl" hidden>
+  <div class="mo-card" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+    <h3 id="pw-title" style="margin-bottom:4px"></h3>
+    <p class="sub" id="pw-sub" style="margin-bottom:12px"></p>
+    <div class="field"><label class="f" data-i="pwLabel">Password</label>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="pw-input" autocomplete="new-password" style="flex:1;min-width:0">
+        <button type="button" class="btn ghost sm" id="pw-eye" style="flex:none">Show</button>
+      </div>
+    </div>
+    <div class="hint" id="pw-err" style="color:var(--amber);min-height:16px"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:10px">
+      <button class="btn ghost" id="pw-cancel" data-i="pwCancel">Cancel</button>
+      <button class="btn gold" id="pw-ok" data-i="pwOk">Confirm</button>
+    </div>
+  </div>
+</div>
+<!-- R69 · transfer review modal — a transfer is signed only after its facts are shown -->
+<div id="rev-modal" class="mo-ovl" hidden>
+  <div class="mo-card" role="dialog" aria-modal="true" aria-labelledby="rev-title">
+    <h3 id="rev-title" style="margin-bottom:10px" data-i="revT">Review transfer</h3>
+    <div id="rev-body"></div>
+    <div class="hint" id="rev-note" style="margin-top:10px" data-i="revNote"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
+      <button class="btn ghost" id="rev-cancel" data-i="pwCancel">Cancel</button>
+      <button class="btn gold" id="rev-ok" data-i="revOk">Sign transfer</button>
+    </div>
+  </div>
+</div>
+
 <script src="gate-crypto.js"></script>
 <script type="module">
 import * as SL from "./saos-live.js";
@@ -829,6 +902,16 @@ en: {
   wQueueT:"Signed operations queue", wQueueP:"Signed and waiting. Copy them for the network, or broadcast below.", wQueueCopy:"Copy signed JSON",
   wRelayT:"Broadcast", wRelayP:"A Steem account key is transport only: it cannot change your operations. The inner signature is the authority.",
   wRelayAcc:"Steem account", wRelayWif:"Posting key (WIF)", wRelayBtn:"Broadcast queue",
+  wQrT:"Address QR", wQrP:"Scan with a camera to share this address. The code holds the address only — never keys.",
+  wPvT:"Estimated value", wPvNote:"Mid prices of the public DEX pools — an estimate, never a promise.", wPvNone:"No public pool prices for this token yet.",
+  wActT:"My activity", wActP:"Everything the chain folded for your address, newest first — plus what you signed and is waiting.",
+  vitT:"Network lines", vitUp:n=>n+" of "+n+" measured up", vitDown:(u,n)=>u+" of "+n+" lines up", vitNone:"network lines: not readable from here — try a refresh",
+  pwLabel:"Password", pwShow:"Show", pwHide:"Hide", pwCancel:"Cancel", pwOk:"Confirm", pwShort:"At least 8 characters",
+  pwExportT:"Encrypted backup password", pwExportP:"AES-256-GCM · PBKDF2-310k. Without it there is no recovery, and no copy is kept anywhere.",
+  pwImportT:"Backup password", pwImportP:"The file opens locally. The password never leaves this tab.",
+  revT:"Review transfer", revOk:"Sign transfer",
+  revNote:"Signing happens on this device. The signed envelope lands in the queue below — the chain folds it once it is broadcast.",
+  miscMaxLabel:"entire balance",
   xTitle:"Exchange", xSub:"Sell SAOS for listed currencies at your price. Your SAOS sits in deterministic escrow on chain until the deal settles or you cancel.",
   xRatesT:"Network rates", xRatesP:"Reference rates published on chain by network governance.",
   xPair:"Pair", xPrice:"Price",
@@ -885,7 +968,8 @@ en: {
     claimSigned:"Deposit claim signed and queued", offerSigned:"Sell offer signed and queued", cancelSigned:"Cancel signed and queued" },
   tErr:{ create:"Wallet creation failed: ", import:"Restore failed: ", sign:"Signing failed: ", badAddr:"Not a valid SAOS address (saos1...)",
     badAmt:"Invalid amount", badPrice:"Invalid price", badCur:"Currency symbol: 2 to 10 capital letters", badRef:"Reference: 6 to 90 characters",
-    noSymbol:"Pick a currency", emptyQueue:"The queue is empty", relayFail:"Broadcast failed: ", noToken:"No token selected", badSym:"Symbol: capital A-Z, 3 to 8 characters" },
+    noSymbol:"Pick a currency", emptyQueue:"The queue is empty", relayFail:"Broadcast failed: ", noToken:"No token selected", badSym:"Symbol: capital A-Z, 3 to 8 characters",
+    overBal:"Amount exceeds your balance for this token" },
   status:{ registered:"Registered on chain", pendingReg:"Waiting for registration on chain", treasury:"Network treasury",
     newReg:"Step 1 of 3: sign your registration", newHint:"Tap Register below. Your registration is signed on this device and nothing leaves it until you broadcast it.",
     queuedReg:"Step 2 of 3: signed and queued", queuedHint:"Your registration is signed on this device. Open Broadcast below and relay it with a Steem posting key; the network fold then lists your wallet (step 3)." },
@@ -902,11 +986,15 @@ en: {
     addrs:"No deposit addresses published yet. They appear here the moment the treasury publishes them.",
     claims:"No deposits yet. Yours will show up here.", cred:"No credits yet.", holders:"The ledger is being born. Holders will appear here.",
     tokens:"No token contracts yet. SAOS deploys with the genesis.", cps:"No checkpoints yet.", anch:"No anchors yet.",
-    atts:"No attestations in the mirror yet." },
+    atts:"No attestations in the mirror yet.",
+    myActs:"Nothing folded for your address yet — it appears here with the first operation.",
+    actOpen:"Open a wallet and everything the chain folds for you appears here." },
   misc:{ chainLive:(b,m)=>"live · block "+b+" · "+m+" min ago", chainDown:"chain: RPC not answering", you:"you", escrow:"escrow",
     fillOf:"fill", genesisSoon:"ledger genesis: the network is laying it now, numbers appear when it lands",
     agoNow:"just now", agoMin:n=>n+" min ago", agoH:n=>n+" h ago", agoD:n=>n+" d ago", never:"never",
-    deposited:"deposited", credited:"credited", rewards:"reward", myAddr:"my address", cancel:"cancel", page:"page" },
+    deposited:"deposited", credited:"credited", rewards:"reward", myAddr:"my address", cancel:"cancel", page:"page",
+    balAfter:"Balance after", estVal:"Estimated value", maxBtn:"MAX",
+    pending:"signed", pending2:"waiting for fold", inDir:"in", outDir:"out" },
 },
 he: {
   brandSub:"רשת", navConsole:"הקונסולה", navHome:"ראשי", navWallet:"ארנק", navExchange:"בורסה", navEarn:"הפקדה ורווחים",
@@ -954,6 +1042,16 @@ he: {
   wQueueT:"תור פעולות חתומות", wQueueP:"חתומות וממתינות. העתק אותן לרשת, או שדר למטה.", wQueueCopy:"העתקת JSON חתום",
   wRelayT:"שידור", wRelayP:"מפתח של חשבון Steem הוא תעבורה בלבד: הוא לא יכול לשנות את הפעולות שלך. החתימה הפנימית היא הסמכות.",
   wRelayAcc:"חשבון Steem", wRelayWif:"מפתח posting (WIF)", wRelayBtn:"שידור התור",
+  wQrT:"QR של הכתובת", wQrP:"סרקו עם מצלמה כדי לשתף את הכתובת. הקוד מכיל את הכתובת בלבד — לעולם לא מפתחות.",
+  wPvT:"שווי מוערך", wPvNote:"מחירי ביניים של בריכות ה-DEX הציבוריות — הערכה בלבד, לעולם לא הבטחה.", wPvNone:"אין עדיין מחיר בריכה ציבורי לטוקן הזה.",
+  wActT:"הפעולות שלי", wActP:"כל מה שהשרשרת קיפלה לכתובת שלך, החדש קודם — וגם מה שחתמת ועוד ממתין.",
+  vitT:"קווי הרשת", vitUp:n=>n+" מתוך "+n+" נמדדו למעלה", vitDown:(u,n)=>u+" מתוך "+n+" קווים למעלה", vitNone:"קווי הרשת: לא נקראים מכאן — נסו רענון",
+  pwLabel:"סיסמה", pwShow:"הצג", pwHide:"הסתר", pwCancel:"ביטול", pwOk:"אישור", pwShort:"לפחות 8 תווים",
+  pwExportT:"סיסמת הגיבוי המוצפן", pwExportP:"AES-256-GCM · PBKDF2-310k. בלעדיה אין שחזור, ולא נשמר עותק בשום מקום.",
+  pwImportT:"סיסמת הגיבוי", pwImportP:"הקובץ נפתח מקומית. הסיסמה לא עוזבת את הלשונית הזו.",
+  revT:"אישור העברה", revOk:"חתימת העברה",
+  revNote:"החתימה מתבצעת במכשיר הזה. המעטפת החתומה נוחתת בתור למטה — השרשרת תקפל אותה ברגע שתשודר.",
+  miscMaxLabel:"כל היתרה",
   xTitle:"בורסה", xSub:"מכור SAOS תמורת המטבעות הרשומים במחיר שאתה קובע. ה-SAOS שלך יושב בנאמנות דטרמיניסטית על השרשרת עד שהעסקה נסגרת או שאתה מבטל.",
   xRatesT:"שערי הרשת", xRatesP:"שערי ייחוס שמתפרסמים על השרשרת בהחלטת ממשל הרשת.",
   xPair:"זוג", xPrice:"שער",
@@ -1010,7 +1108,8 @@ he: {
     claimSigned:"תביעת ההפקדה נחתמה והועברה לתור", offerSigned:"הצעת המכירה נחתמה והועברה לתור", cancelSigned:"הביטול נחתם והועבר לתור" },
   tErr:{ create:"יצירת הארנק נכשלה: ", import:"שחזור נכשל: ", sign:"החתימה נכשלה: ", badAddr:"כתובת SAOS לא תקינה (saos1...)",
     badAmt:"כמות לא תקינה", badPrice:"מחיר לא תקין", badCur:"סמל מטבע: 2 עד 10 אותיות גדולות", badRef:"אסמכתה: 6 עד 90 תווים",
-    noSymbol:"בחר מטבע", emptyQueue:"התור ריק", relayFail:"השידור נכשל: ", noToken:"לא נבחר טוקן", badSym:"סמל: אותיות גדולות A-Z, 3 עד 8 תווים" },
+    noSymbol:"בחר מטבע", emptyQueue:"התור ריק", relayFail:"השידור נכשל: ", noToken:"לא נבחר טוקן", badSym:"סמל: אותיות גדולות A-Z, 3 עד 8 תווים",
+    overBal:"הכמות גדולה מהיתרה שלך למטבע הזה" },
   status:{ registered:"רשום על השרשרת", pendingReg:"ממתין לרישום על השרשרת", treasury:"אוצר הרשת",
     newReg:"שלב 1 מתוך 3: חתימת ההרשמה", newHint:"לחצו 'רישום על השרשרת' למטה. ההרשמה נחתמת במכשיר שלכם ושום דבר לא יוצא ממנו עד שתשדרו אותה.",
     queuedReg:"שלב 2 מתוך 3: נחתם וממתין בתור", queuedHint:"ההרשמה נחתמה במכשיר שלכם. פתחו את כרטיס 'שידור' למטה ושדרו עם מפתח posting של Steem; אז הרשת תכניס את הארנק לספר (שלב 3)." },
@@ -1027,11 +1126,15 @@ he: {
     addrs:"טרם פורסמו כתובות הפקדה. הן יופיעו כאן ברגע שהאוצר יפרסם אותן.",
     claims:"אין עדיין הפקדות. שלך תופיע כאן.", cred:"אין עדיין זיכויים.", holders:"הספר בהקמה. מחזיקים יופיעו כאן.",
     tokens:"אין עדיין חוזי טוקנים. SAOS נפרס עם הג'נזיס.", cps:"אין עדיין נקודות-ביקורת.", anch:"אין עדיין עוגנים.",
-    atts:"אין עדיין עדויות במראה." },
+    atts:"אין עדיין עדויות במראה.",
+    myActs:"עוד לא קופל דבר לכתובת שלך — יופיע כאן עם הפעולה הראשונה.",
+    actOpen:"פתחו ארנק וכל מה שהשרשרת קופלת לכתובתכם יופיע כאן." },
   misc:{ chainLive:(b,m)=>"חי · בלוק "+b+" · לפני "+m+" דק'", chainDown:"שרשרת: RPC לא עונה", you:"אתה", escrow:"נאמנות",
     fillOf:"מילוי", genesisSoon:"ג'נזיס הספר: הרשת מניחה אותו עכשיו, המספרים יופיעו כשהוא ינחת",
     agoNow:"עכשיו", agoMin:n=>"לפני "+n+" דק'", agoH:n=>"לפני "+n+" שע'", agoD:n=>"לפני "+n+" ימים", never:"מעולם",
-    deposited:"הפקדה", credited:"זיכוי", rewards:"תגמול", myAddr:"הכתובת שלי", cancel:"ביטול", page:"עמוד" },
+    deposited:"הפקדה", credited:"זיכוי", rewards:"תגמול", myAddr:"הכתובת שלי", cancel:"ביטול", page:"עמוד",
+    balAfter:"יתרה אחרי", estVal:"שווי מוערך", maxBtn:"MAX",
+    pending:"נחתם", pending2:"ממתין לקיפול", inDir:"נכנס", outDir:"יוצא" },
 }};
 
 let LANG = "en";
@@ -1219,12 +1322,14 @@ async function boot() {
     jget("mirror.json").then((m) => (MIRROR = m)).catch(() => {}),
     jget("saos-live.json").then((l) => (LIVE = l)).catch(() => {}),
     pullDexWorld(), // R33: the depositor's USDS must be visible next to the SAOS balances
+    pullVitals(), // R69: the wallet page carries the measured network truth too
   ]);
   renderAll();
   relayKick(); // r144-g2: תור קיים עם ריליי מוכר? ממשיך משלב 2 לשלב 3 מעצמו
   probeChain();
   setInterval(() => jget("saos-live.json").then((l) => { LIVE = l; renderLive(); }).catch(() => {}), 120 * 1000);
   setInterval(pullDexWorld, 120 * 1000); // R33: the dex mirror rides the same cadence
+  setInterval(pullVitals, 120 * 1000); // R69: measured lines at the house freshness cadence
 }
 
 async function probeChain() {
@@ -1422,13 +1527,14 @@ function renderLive() {
 
   renderWalletBalances();
   refreshSendSymbols();
+  renderMyActivity(); // R69: my activity rides the same live book
 }
 
 /* ═══════════ wallet ═══════════ */
 let WALLET = null; // { priv:Uint8Array, pubSTM, addr }
 let QUEUE = [];
 try { QUEUE = JSON.parse(localStorage.getItem("saos.queue") || "[]"); } catch { QUEUE = []; }
-const saveQueue = () => { localStorage.setItem("saos.queue", JSON.stringify(QUEUE)); renderQueue(); };
+const saveQueue = () => { localStorage.setItem("saos.queue", JSON.stringify(QUEUE)); renderQueue(); renderMyActivity(); };
 /* R-wallet-persist-1: the page unload no longer needs an explicit wipe — tab memory dies with the tab.
    Persistence is offered ONLY as the user's encrypted keystore (password-protected, below). */
 
@@ -1450,7 +1556,9 @@ function renderWalletUI() {
         : `<span class="warn">${esc(t("status.newReg"))}</span><div class="hint" style="margin-top:6px">${esc(t("status.newHint"))}</div>`);
     renderWalletBalances();
     refreshSendSymbols();
+    renderQr(); // R69: the address becomes scannable
   }
+  renderMyActivity(); // R69: the feed speaks even before a wallet exists
 }
 function renderWalletBalances() {
   if (!WALLET || !LIVE?.state) return;
@@ -1460,7 +1568,38 @@ function renderWalletBalances() {
   $("wallet-bal").textContent = entries.length
     ? entries.map(([sym, v]) => `${nice(fmtSaos(v, tokens[sym]?.decimals ?? 0))} ${sym}`).join(" · ")
     : "0";
+  renderPv();
   renderDexBalance();
+}
+/* R69: portfolio value — mid prices of the public DEX pools, honest estimate only */
+function tokenPriceUsds(sym) {
+  if (sym === "USDS") return 1; // the unit itself
+  if (!DEXW?.pools?.length) return null;
+  /* world.json anatomy: a pool "A/B" carries mid = 1000 * (units of B per unit of A) */
+  const p1 = DEXW.pools.find((p) => p.key === sym + "/USDS");
+  if (p1 && p1.mid > 0) return p1.mid / 1000;
+  const p2 = DEXW.pools.find((p) => p.key === "USDS/" + sym);
+  if (p2 && p2.mid > 0) return 1000 / p2.mid;
+  return null;
+}
+function renderPv() {
+  const box = $("wallet-pv");
+  if (!box || !WALLET || !LIVE?.state) return;
+  const bal = LIVE.state.balances?.[WALLET.addr] || {};
+  const entries = Object.entries(bal).filter(([, v]) => BigInt(v) > 0n);
+  let total = 0, anyPrice = false;
+  const rows = entries.map(([sym, v]) => {
+    const amt = Number(v) / 1000;
+    const price = tokenPriceUsds(sym);
+    if (price !== null) { total += amt * price; anyPrice = true; }
+    return `<div class="pv-row"><span class="mono" style="color:var(--dim)">${esc(sym)}</span><span style="color:var(--faint);font-size:11.5px">${price === null ? esc(t("wPvNone")) : "≈ " + esc(nice(amt * price)) + " USDS"}</span></div>`;
+  });
+  box.innerHTML = (entries.length
+    ? `<div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:8px 0 2px">${esc(t("wPvT"))}</div>`
+      + `<div class="pv-total">${anyPrice ? "≈ " + esc(nice(total)) + " USDS" : "—"}</div>`
+      + rows.join("")
+      + `<div class="hint" style="margin-top:6px">${esc(t("wPvNote"))}</div>`
+    : "");
 }
 /* R33 · the depositor's money must be visible: the DEX chain holds USDS credits under the
    canonical engine account name ("u:" + the address lowercased — the kernel normalizes
@@ -1549,10 +1688,9 @@ async function keystoreDecrypt(ks, password) {
 }
 $("btn-export-keystore").addEventListener("click", async () => {
   if (!WALLET) return;
-  const pass = prompt(LANG === "he"
-    ? "סיסמה לגיבוי המוצפן (AES-256-GCM). אין שחזור בלעדיה, לא נשמר עותק:"
-    : "Password for the encrypted backup (AES-256-GCM). No recovery without it, no copy is kept:");
-  if (!pass || pass.length < 8) { if (pass !== null) toast(t("tErr.badRef"), false); return; }
+  /* R69: masked modal replaces native prompt() — a keystore password must never sit in a plain browser dialog */
+  const pass = await askPassword({ title: t("pwExportT"), sub: t("pwExportP") });
+  if (!pass) return;
   const ks = await keystoreEncrypt(WALLET.priv, WALLET.pubSTM, pass);
   try { localStorage.setItem("saos.keystore", JSON.stringify(ks)); } catch { /* private mode: file download still works */ }
   const a = document.createElement("a");
@@ -1569,7 +1707,7 @@ $("import-file").addEventListener("change", async (e) => {
   try {
     const ks = JSON.parse(await f.text());
     if (ks.format !== "saos-keystore-v1") throw new Error("format");
-    const pass = prompt(LANG === "he" ? "סיסמת הגיבוי:" : "Backup password:");
+    const pass = await askPassword({ title: t("pwImportT"), sub: t("pwImportP") });
     if (!pass) return;
     const { priv, pubSTM } = await keystoreDecrypt(ks, pass);
     WALLET = { priv, pubSTM, addr: await SL.addressFromPubSTM(pubSTM) };
@@ -1633,7 +1771,41 @@ $("btn-send").addEventListener("click", async () => {
   const dec = LIVE?.state?.tokens?.[symbol]?.decimals ?? 0;
   const units = toUnits(amount, dec);
   if (units === null) { toast(t("tErr.badAmt"), false); return; }
-  const env = await enqueue({ k: "token.transfer", symbol, to, amount: units });
+  /* R69: local honesty guard — the fold would reject a transfer bigger than the balance;
+     catching it here costs nothing and tells the truth before a signature exists */
+  if (WALLET) {
+    const balUnits = BigInt(LIVE?.state?.balances?.[WALLET.addr]?.[symbol] || "0");
+    if (BigInt(units) > balUnits) { toast(t("tErr.overBal"), false); return; }
+  }
+  openSendReview({ symbol, to, units, dec });
+});
+/* R69: the review step — the facts of a transfer are shown before any signature exists */
+let REV = null;
+function openSendReview(r) {
+  REV = r;
+  const price = tokenPriceUsds(r.symbol); // null = no public pool price for this token yet
+  const val = price === null ? null : (Number(r.units) / 1000) * price;
+  const balAfter = WALLET
+    ? (BigInt(LIVE?.state?.balances?.[WALLET.addr]?.[r.symbol] || "0") - BigInt(r.units)).toString()
+    : null;
+  const row = (label, v, mono = true) => `<div class="pv-row"><span style="color:var(--dim)">${esc(label)}</span><span ${mono ? 'class="mono" style="font-size:12px;word-break:break-all;text-align:end"' : 'style="text-align:end"'}>${v}</span></div>`;
+  $("rev-body").innerHTML = [
+    row(t("wSendTo"), esc(r.to)),
+    row(t("wSendAmt"), esc(nice(SL.fmt(r.units, r.dec))) + " " + esc(r.symbol)),
+    row(t("wPvT"), val === null ? esc(t("wPvNone")) : esc(nice(val)) + " USDS"),
+    balAfter === null ? null : row(t("misc.balAfter"), esc(nice(SL.fmt(balAfter, r.dec))) + " " + esc(r.symbol)),
+  ].filter(Boolean).join("");
+  $("rev-modal").hidden = false;
+  $("rev-ok").focus();
+}
+function closeSendReview() { $("rev-modal").hidden = true; REV = null; }
+$("rev-cancel").addEventListener("click", closeSendReview);
+$("rev-modal").addEventListener("click", (e) => { if (e.target === $("rev-modal")) closeSendReview(); });
+$("rev-ok").addEventListener("click", async () => {
+  if (!REV) return;
+  const r = REV;
+  closeSendReview();
+  const env = await enqueue({ k: "token.transfer", symbol: r.symbol, to: r.to, amount: r.units });
   if (env) { toast(t("tOk.signed")); $("send-to").value = ""; $("send-amount").value = ""; }
 });
 function toUnits(amount, decimals) {
@@ -1868,6 +2040,286 @@ $("btn-verify-chain").addEventListener("click", async () => {
   }
 });
 
+/* ═══════════ R69 · wallet overhaul ═══════════ */
+
+/* R69-QR-BEGIN — QR encoder: byte mode, ECC M, versions 1-4.
+   Ports the proven public qrcode-generator anatomy: GF(256) Reed-Solomon,
+   BCH(15,5) format info, finder/timing/alignment patterns, zigzag placement,
+   remainder bits, all 8 masks scored with the standard penalty rules.
+   Block structure per spec: v1-3 single block, v4 = two interleaved (50,32) blocks.
+   A structural self-check runs on every encode — a broken matrix throws. */
+const QR = (() => {
+  const EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+  for (let i = 0, x = 1; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+  for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  const mul = (a, b) => (a && b) ? EXP[LOG[a] + LOG[b]] : 0;
+  /* v: [size, alignmentCenters, ecPerBlock, dataCodewordsPerBlock[]] — ECC M */
+  const SPEC = { 1: [21, [], 10, [16]], 2: [25, [6, 18], 16, [28]], 3: [29, [6, 22], 26, [44]], 4: [33, [6, 26], 18, [32, 32]] };
+  function rsDivisor(n) {
+    const d = new Array(n).fill(0); d[n - 1] = 1; let root = 1;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) { d[j] = mul(d[j], root); if (j + 1 < n) d[j] ^= d[j + 1]; }
+      root = mul(root, 2);
+    }
+    return d;
+  }
+  function rsRemainder(data, d) {
+    const res = new Array(d.length).fill(0);
+    for (const b of data) {
+      const f = b ^ res.shift(); res.push(0);
+      for (let j = 0; j < d.length; j++) res[j] ^= mul(d[j], f);
+    }
+    return res;
+  }
+  const digits = (x) => { let n = 0; while (x) { n++; x >>>= 1; } return n; };
+  function bchFormat(data) { /* ECC M = 00 → data is the 3 mask bits */
+    let d = data << 10;
+    while (digits(d) - digits(0x537) >= 0) d ^= 0x537 << (digits(d) - digits(0x537));
+    return ((data << 10) | d) ^ 0x5412;
+  }
+  const MASKS = [
+    (r, c) => (r + c) % 2 === 0,
+    (r) => r % 2 === 0,
+    (r, c) => c % 3 === 0,
+    (r, c) => (r + c) % 3 === 0,
+    (r, c) => ((r >> 1) + Math.floor(c / 3)) % 2 === 0,
+    (r, c) => ((r * c) % 2) + ((r * c) % 3) === 0,
+    (r, c) => (((r * c) % 2) + ((r * c) % 3)) % 2 === 0,
+    (r, c) => (((r * c) % 3) + ((r + c) % 2)) % 2 === 0,
+  ];
+  function build(text) {
+    const bytes = [...new TextEncoder().encode(String(text))];
+    const v = [1, 2, 3, 4].find((k) => 12 + bytes.length * 8 <= SPEC[k][3].reduce((a, b) => a + b, 0) * 8);
+    if (!v) throw new Error("payload too long for QR");
+    const [size, align, ec, dcs] = SPEC[v];
+    const cap = dcs.reduce((a, b) => a + b, 0) * 8;
+    const bits = [];
+    const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    put(4, 4); put(bytes.length, 8); for (const b of bytes) put(b, 8);
+    put(0, Math.min(4, cap - bits.length));               // terminator (spec: may truncate)
+    while (bits.length % 8) bits.push(0);
+    for (let i = 0; bits.length < cap; i++) put(i % 2 ? 0x11 : 0xec, 8); // pad codewords
+    const cw = [];
+    for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; cw.push(b); }
+    /* split into RS blocks, compute each block's EC, interleave (spec section 8.5) */
+    const blocks = [];
+    for (let off = 0, i = 0; i < dcs.length; off += dcs[i], i++) blocks.push(cw.slice(off, off + dcs[i]));
+    const ecs = blocks.map((b) => rsRemainder(b, rsDivisor(ec)));
+    const all = [];
+    for (let i = 0; i < Math.max(...dcs); i++) for (const b of blocks) if (i < b.length) all.push(b[i]);
+    for (let i = 0; i < ec; i++) for (const e of ecs) all.push(e[i]);
+    const make = (mask, test) => {
+      const m = Array.from({ length: size }, () => new Array(size).fill(null));
+      const finder = (r0, c0) => {
+        for (let r = -1; r <= 7; r++) { const rr = r0 + r; if (rr < 0 || rr >= size) continue;
+          for (let c = -1; c <= 7; c++) { const cc = c0 + c; if (cc < 0 || cc >= size) continue;
+            m[rr][cc] = (r >= 0 && r <= 6 && (c === 0 || c === 6)) || (c >= 0 && c <= 6 && (r === 0 || r === 6)) || (r >= 2 && r <= 4 && c >= 2 && c <= 4); } } };
+      finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+      for (let i = 8; i < size - 8; i++) { if (m[i][6] === null) m[i][6] = i % 2 === 0; if (m[6][i] === null) m[6][i] = i % 2 === 0; }
+      for (const r of align) for (const c of align) {
+        if (m[r][c] !== null) continue;
+        for (let dr = -2; dr <= 2; dr++) for (let dc2 = -2; dc2 <= 2; dc2++) m[r + dr][c + dc2] = Math.max(Math.abs(dr), Math.abs(dc2)) !== 1;
+      }
+      const fb = bchFormat(mask);
+      for (let i = 0; i < 15; i++) {
+        const mod = !test && ((fb >> i) & 1) === 1;
+        if (i < 6) m[i][8] = mod; else if (i < 8) m[i + 1][8] = mod; else m[size - 15 + i][8] = mod;
+        if (i < 8) m[8][size - 1 - i] = mod; else if (i < 9) m[8][15 - i] = mod; else m[8][14 - i] = mod;
+      }
+      m[size - 8][8] = !test; // the dark module — always dark
+      let inc = -1, row = size - 1, bi = 7, byi = 0;
+      for (let col = size - 1; col > 0; col -= 2) {
+        if (col === 6) col--;
+        while (true) {
+          for (let c = 0; c < 2; c++) {
+            if (m[row][col - c] === null) {
+              let dark = false;
+              if (byi < all.length) dark = ((all[byi] >>> bi) & 1) === 1;
+              if (MASKS[mask](row, col - c)) dark = !dark;
+              m[row][col - c] = dark;
+              bi--; if (bi < 0) { byi++; bi = 7; }
+            }
+          }
+          row += inc;
+          if (row < 0 || row >= size) { row -= inc; inc = -inc; break; }
+        }
+      }
+      return m;
+    };
+    const penalty = (m) => {
+      const n = m.length; let pen = 0;
+      const line = (get) => { // rule 1: runs of 5+
+        for (let a = 0; a < n; a++) {
+          let col0 = get(a, 0), len = 1;
+          for (let b = 1; b < n; b++) {
+            const cur = get(a, b);
+            if (cur === col0) { len++; if (len === 5) pen += 3; else if (len > 5) pen += 1; }
+            else { col0 = cur; len = 1; }
+          }
+        }
+      };
+      line((r, c) => m[r][c]); line((r, c) => m[c][r]);
+      for (let r = 0; r < n - 1; r++) for (let c = 0; c < n - 1; c++) { // rule 2: 2x2 blocks
+        const k = m[r][c];
+        if (k === m[r][c + 1] && k === m[r + 1][c] && k === m[r + 1][c + 1]) pen += 3;
+      }
+      const PA = [false, false, false, false, true, false, true, true, true, false, true]; // rule 3: 1011101 with 4 light on a side
+      const pats = [{ bits: PA, vertical: false }, { bits: [...PA].reverse(), vertical: false }, { bits: PA, vertical: true }, { bits: [...PA].reverse(), vertical: true }];
+      for (const p of pats) for (let r0 = 0; r0 < (p.vertical ? n - 10 : n); r0++) for (let c0 = 0; c0 < (p.vertical ? n : n - 10); c0++) {
+        let ok = true;
+        for (let i = 0; i < 11 && ok; i++) {
+          const cell = p.vertical ? m[r0 + i][c0] : m[r0][c0 + i];
+          if (cell !== p.bits[i]) ok = false;
+        }
+        if (ok) pen += 40;
+      }
+      let dark = 0; for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (m[r][c]) dark++;
+      pen += 10 * Math.floor(Math.abs((dark * 100) / (n * n) - 50) / 5); // rule 4
+      return pen;
+    };
+    let best = 0, bestPen = Infinity;
+    for (let mask = 0; mask < 8; mask++) { const p = penalty(make(mask, true)); if (p < bestPen) { bestPen = p; best = mask; } }
+    const m = make(best, false);
+    /* structural self-check — a wrong matrix must never leave this function */
+    const isFinderDark = (r, c) => (r === 0 || r === 6 || c === 0 || c === 6) || (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+    for (const [r0, c0] of [[0, 0], [0, size - 7], [size - 7, 0]])
+      for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++)
+        if (m[r0 + r][c0 + c] !== isFinderDark(r, c)) throw new Error("qr self-check: finder");
+    for (let i = 8; i < size - 8; i++) if (m[i][6] !== (i % 2 === 0) || m[6][i] !== (i % 2 === 0)) throw new Error("qr self-check: timing");
+    if (m[size - 8][8] !== true) throw new Error("qr self-check: dark module");
+    return { size, get: (r, c) => m[r][c] };
+  }
+  return { encode: build };
+})();
+/* R69-QR-END */
+
+/* R69: masked password modal — a keystore password never sits in a native prompt() */
+let PWCTX = null;
+function setPwVisible(v) {
+  $("pw-input").type = v ? "text" : "password";
+  $("pw-eye").textContent = v ? t("pwHide") : t("pwShow");
+}
+function askPassword({ title, sub }) {
+  return new Promise((resolve) => {
+    PWCTX = { resolve };
+    $("pw-title").textContent = title;
+    $("pw-sub").textContent = sub || "";
+    $("pw-input").value = "";
+    $("pw-err").textContent = "";
+    setPwVisible(false);
+    $("pw-modal").hidden = false;
+    setTimeout(() => $("pw-input").focus(), 30);
+  });
+}
+function closePassword(val) {
+  $("pw-modal").hidden = true;
+  const r = PWCTX; PWCTX = null;
+  if (r) r.resolve(val);
+}
+$("pw-cancel").addEventListener("click", () => closePassword(null));
+$("pw-eye").addEventListener("click", () => setPwVisible($("pw-input").type === "password"));
+$("pw-ok").addEventListener("click", () => {
+  const v = $("pw-input").value;
+  if (v.length < 8) { $("pw-err").textContent = t("pwShort"); return; }
+  closePassword(v);
+});
+$("pw-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") $("pw-ok").click();
+  if (e.key === "Escape") closePassword(null);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (!$("pw-modal").hidden) closePassword(null);
+    if (!$("rev-modal").hidden) closeSendReview();
+  }
+});
+
+/* R69: the address becomes scannable — QR holds the address only, never keys */
+function renderQr() {
+  const box = $("qr-box"), cv = $("qr-canvas");
+  if (!box || !cv || !WALLET) { if (box) box.style.display = "none"; return; }
+  if (box.dataset.addr === WALLET.addr && box.style.display !== "none") return;
+  try {
+    const q = QR.encode(WALLET.addr);
+    const quiet = 4, target = 148;
+    const scale = Math.max(2, Math.floor(target / (q.size + quiet * 2)));
+    const px = (q.size + quiet * 2) * scale;
+    cv.width = px; cv.height = px;
+    cv.style.width = px + "px"; cv.style.height = px + "px";
+    const ctx = cv.getContext("2d");
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, px, px);
+    ctx.fillStyle = "#101013";
+    for (let r = 0; r < q.size; r++) for (let c = 0; c < q.size; c++)
+      if (q.get(r, c)) ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+    box.dataset.addr = WALLET.addr;
+    box.style.display = "";
+  } catch { box.style.display = "none"; }
+}
+
+/* R69: MAX fills the entire balance of the chosen symbol */
+$("btn-send-max").addEventListener("click", () => {
+  if (!WALLET) { toast(t("tOk.needWallet"), false); return; }
+  const symbol = $("send-symbol").value;
+  if (!symbol) return;
+  const dec = LIVE?.state?.tokens?.[symbol]?.decimals ?? 0;
+  const units = LIVE?.state?.balances?.[WALLET.addr]?.[symbol] || "0";
+  $("send-amount").value = SL.fmt(String(units), dec);
+});
+
+/* R69: my activity — the chain folded these for your address, newest first;
+   signed-but-unfolded queue items ride on top with an honest pending chip */
+function renderMyActivity() {
+  const box = $("my-activity");
+  if (!box) return;
+  if (!WALLET) {
+    box.innerHTML = `<div class="op-row"><span style="color:var(--faint)">${esc(t("empty.actOpen"))}</span></div>`;
+    return;
+  }
+  const a = WALLET.addr;
+  const short = (s) => esc(String(s).length > 15 ? String(s).slice(0, 8) + "…" + String(s).slice(-5) : String(s));
+  const pending = QUEUE.filter((e) => e && e.k !== "wallet.create").reverse().map((e) =>
+    `<div class="op-row"><span class="act-dir act-pend">${esc(t("misc.pending"))}</span><span style="flex:1;min-width:0;color:var(--dim);font-size:11.5px">${esc(queueSummary(e))}</span><span class="when">${esc(t("misc.pending2"))}</span></div>`);
+  const folded = (LIVE?.ops || [])
+    .filter((o) => o.by === a || (o.d && o.d.to === a))
+    .slice(-14).reverse()
+    .map((o) => {
+      const incoming = o.d && o.d.to === a && o.by !== a;
+      const dir = o.by === a && (o.d && o.d.to === a) ? `<span class="act-dir act-out">↔</span>`
+        : incoming ? `<span class="act-dir act-in">← ${esc(t("misc.inDir"))}</span>` : `<span class="act-dir act-out">→ ${esc(t("misc.outDir"))}</span>`;
+      const body = o.k === "token.transfer" && o.d
+        ? `${nice(fmtSaos(o.d.amount, LIVE?.state?.tokens?.[o.d.symbol]?.decimals ?? 0))} ${esc(o.d.symbol)} · ${short(incoming ? o.by : o.d.to)}`
+        : (o.summary || o.k);
+      return `<div class="op-row"><span class="k">${esc(o.k)}</span><span style="flex:1;min-width:0;color:var(--dim)">${dir} <span style="color:var(--text)">${esc(String(body).slice(0, 90))}</span>${o.block ? ` · <span class="mono" style="font-size:10px;color:var(--faint)">#${o.block}</span>` : ""}</span><span class="when">${timeAgo(o.at)}</span></div>`;
+    });
+  box.innerHTML = (pending.length || folded.length)
+    ? pending.join("") + folded.join("")
+    : `<div class="op-row"><span style="color:var(--faint)">${esc(t("empty.myActs"))}</span></div>`;
+}
+
+/* R69: network lines — the wallet page carries the same measured truth the engine room publishes */
+let VITALS = null;
+async function pullVitals() {
+  try { VITALS = await jget("weave/vitals.json"); } catch { VITALS = null; }
+  renderVitals();
+}
+function renderVitals() {
+  const box = $("vitals-strip"), age = $("vitals-age");
+  if (!box) return;
+  if (!VITALS || !Array.isArray(VITALS.lines)) {
+    box.innerHTML = `<span class="vchip down"><i></i>${esc(t("vitNone"))}</span>`;
+    if (age) age.textContent = "";
+    return;
+  }
+  const lines = VITALS.lines;
+  const up = lines.filter((l) => l.ok).length;
+  const allUp = up === lines.length;
+  const verdict = `<span class="vchip verdict${allUp ? "" : " down"}"><i></i>${esc(VITALS.verdict || "")}</span>`
+    + `<span class="vchip${allUp ? " up" : " down"}"><i></i>${esc(allUp ? t("vitUp")(up) : t("vitDown")(up, lines.length))}</span>`;
+  box.innerHTML = verdict + lines.map((l) =>
+    `<span class="vchip${l.ok ? " up" : " down"}" title="${esc(l.role || "")}"><i></i>${esc(l.line)}${l.latencyMs ? " · " + l.latencyMs + "ms" : ""}</span>`).join("");
+  if (age) age.textContent = VITALS.generatedAt ? timeAgo(VITALS.generatedAt) : "";
+}
+
 /* ═══════════ language ═══════════ */
 $("langbtn").addEventListener("click", () => {
   LANG = LANG === "he" ? "en" : "he";
@@ -1891,7 +2343,7 @@ $("btn-restore-local").addEventListener("click", async () => {
   try {
     const ks = JSON.parse(localStorage.getItem("saos.keystore") || "null");
     if (!ks || ks.format !== "saos-keystore-v1") throw new Error("format");
-    const pass = prompt(LANG === "he" ? "סיסמת הגיבוי:" : "Backup password:");
+    const pass = await askPassword({ title: t("pwImportT"), sub: t("pwImportP") });
     if (!pass) return;
     const { priv, pubSTM } = await keystoreDecrypt(ks, pass);
     WALLET = { priv, pubSTM, addr: await SL.addressFromPubSTM(pubSTM) };
