@@ -89,7 +89,7 @@ async function evaluate(a, baseUrl) {
   if (typeof a.kind !== "string") return { id, ok: false, details: "invalid assertion: kind is missing" };
 
   // ── steem_priority: the R27 priority-inversion detector ──────────────
-  // Keyless public-history read from a Steem RPC. If the core anchor op
+  // Keyless public-history read from Steem RPC nodes. If the core anchor op
   // is older than staleHours AND a newer non-core custom_json op from the
   // same account exists, the anchor's RC budget was consumed by a
   // lower-priority op: exactly the 2026-09-17 incident (genesis deploy +
@@ -108,8 +108,23 @@ async function evaluate(a, baseUrl) {
   // core op across all listed accounts is the anchor that must be fresh;
   // priority inversion is still judged per-account (the RC budget an op
   // consumes belongs to its own account). Every fail branch of R27 is
-  // preserved: no core op anywhere in any window = fail; stale core with
-  // a later non-core op on the witness account = fail.
+  // preserved: no core op anywhere in the measured window = fail; stale
+  // core with a later non-core op on the witness account = fail.
+  //
+  // T-B 2026-10-07 — deep window (r68-e, measured not weakened): the
+  // fixed last-100-ops window broke against a real network change, not a
+  // line stall. The fleet's DEX engine (same witness accounts) fires
+  // seals + limit orders at ~5 ops/min, so 100 ops now span only ~20
+  // minutes of history and a 4h-young anchor reads as "not found" — a
+  // false alarm at 01:06Z while the census book read LIVE on the same
+  // chain. The detector now pages BACKWARD (condenser caps 100/page)
+  // until: a core op is found (that is the freshest on this account —
+  // backward order guarantees it); or the page's oldest entry predates
+  // the staleness window (deeper core ops could not change the verdict);
+  // or history depth ends; or the page budget is spent (honest stop,
+  // reason recorded). Reads fail over across public nodes per page — a
+  // single load-balanced node indexed the 01:52Z anchor minutes late
+  // and hid it from a naive read. Every fail branch of R27 is intact.
   if (a.kind === "steem_priority") {
     const accounts = (Array.isArray(a.accounts) && a.accounts.length
       ? a.accounts.map((x) => String(x).toLowerCase())
@@ -117,50 +132,82 @@ async function evaluate(a, baseUrl) {
     const coreOp = String(a.coreOp ?? "saos.weave.core.v1");
     const staleHours = Number(a.staleHours ?? 26);
     if (!Number.isFinite(staleHours)) return { id, ok: false, details: "invalid assertion: staleHours is not a number" };
-    const rpc = String(a.rpc ?? "https://api.steemit.com");
+    const staleMs = staleHours * 3_600_000;
+    const maxPages = Number(a.maxPages ?? 120); // 120 pages ≈ 12,000 ops ≈ the whole ~26h even at dex-flood cadence
+    const nodes = Array.isArray(a.rpcNodes) && a.rpcNodes.length
+      ? a.rpcNodes.map(String)
+      : [String(a.rpc ?? "https://api.steemit.com"), "https://api.justyy.com"];
     let lead = null; // { account, ts, nonCore } — the freshest core anchor on the line
     const errors = [];
-    for (const account of accounts) {
-      let hist;
-      try {
-        const r = await fetch(rpc, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [account, -1, 100] }),
-          signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-        });
-        const j = await r.json();
-        hist = j?.result;
-        if (!Array.isArray(hist)) { errors.push(`@${account}: rpc returned no history array (HTTP ${r.status})`); continue; }
-      } catch (err) {
-        errors.push(`@${account}: rpc fetch failed: ${err?.message ?? err}`);
-        continue;
+    async function pageOf(account, start) {
+      let lastErr = null;
+      for (const node of nodes) {
+        try {
+          const r = await fetch(node, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [account, start, 100] }),
+            signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+          });
+          const j = await r.json();
+          if (j?.error) { lastErr = new Error(String(j.error?.message ?? "rpc error").slice(0, 80)); continue; } // try next node
+          if (!Array.isArray(j?.result)) { lastErr = new Error(`no history array (HTTP ${r.status})`); continue; }
+          return j.result;
+        } catch (err) { lastErr = err; }
       }
+      throw lastErr ?? new Error("all nodes failed");
+    }
+    for (const account of accounts) {
       let coreTs = "";
       let nonCore = null;
-      for (const [, entry] of hist) {
-        const op = entry?.op;
-        if (!op || op[0] !== "custom_json") continue;
-        const body = op[1] ?? {};
-        if (!Array.isArray(body.required_posting_auths) || !body.required_posting_auths.includes(account)) continue;
-        const ts = String(entry.timestamp ?? "");
-        if (!ts) continue;
-        if (body.id === coreOp) {
-          if (ts > coreTs) coreTs = ts;
-        } else if (!nonCore || ts > nonCore.ts) {
-          nonCore = { id: String(body.id ?? "?"), ts };
+      let pages = 0;
+      let start = -1;
+      let stop = "";
+      try {
+        while (pages < maxPages) {
+          const hist = await pageOf(account, start);
+          pages++;
+          let oldestTs = "";
+          for (const [, entry] of hist) {
+            const op = entry?.op;
+            if (!op) continue;
+            const ts = String(entry.timestamp ?? "");
+            if (ts && (!oldestTs || ts < oldestTs)) oldestTs = ts;
+            if (op[0] !== "custom_json") continue;
+            const body = op[1] ?? {};
+            if (!Array.isArray(body.required_posting_auths) || !body.required_posting_auths.includes(account)) continue;
+            if (!ts) continue;
+            if (body.id === coreOp) {
+              if (ts > coreTs) coreTs = ts; // backward pages: the first hit is the freshest; keep scanning this page only
+            } else if (!nonCore || ts > nonCore.ts) {
+              nonCore = { id: String(body.id ?? "?"), ts };
+            }
+          }
+          if (coreTs) { stop = "core-found"; break; } // freshest possible on this account
+          const low = hist[0]?.[0];
+          if (low === 0 || low === undefined) { stop = "depth-end"; break; }
+          if (oldestTs && Date.parse(oldestTs + "Z") < Date.now() - staleMs) { stop = "window-covered"; break; }
+          start = low - 1;
         }
+        if (!coreTs && !stop) stop = "budget-spent";
+      } catch (err) {
+        stop = "rpc-fail";
+        errors.push(`@${account}: ${stop} at page ${pages}: ${err?.message ?? err}`);
       }
+      if (stop === "rpc-fail") continue;
       if (coreTs && (!lead || coreTs > lead.ts)) lead = { account, ts: coreTs, nonCore };
+      else if (!coreTs && stop !== "window-covered" && stop !== "depth-end") {
+        errors.push(`@${account}: no core op in ${pages * 100} ops (${stop})`);
+      }
     }
     if (!lead) {
       const errNote = errors.length ? ` (${errors.slice(0, 2).join("; ")})` : "";
-      return { id, ok: false, details: `core op ${coreOp} not found in last 100 ops of any witness on the line [${accounts.join(", ")}]${errNote}` };
+      return { id, ok: false, details: `core op ${coreOp} not found within the ${staleHours}h window of any witness on the line [${accounts.join(", ")}]${errNote}` };
     }
     const coreAgeH = (Date.now() - Date.parse(lead.ts + "Z")) / 3_600_000;
     if (coreAgeH <= staleHours) {
-      const errNote = errors.length ? ` · ${errors.length} witness read(s) failed` : "";
-      return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h old (fresh, <= ${staleHours}h) · witness @${lead.account}${errNote}` };
+      const errNote = errors.length ? ` · ${errors.length} witness read note(s)` : "";
+      return { id, ok: true, details: `core anchor ${coreAgeH.toFixed(1)}h old (fresh, <= ${staleHours}h) · witness @${lead.account} · ${errors.length ? errors.length + " note(s), " : ""}deep-window read${errNote}` };
     }
     if (lead.nonCore && lead.nonCore.ts > lead.ts) {
       return { id, ok: false, details: `priority inversion: core ${coreAgeH.toFixed(1)}h stale on @${lead.account} while ${lead.nonCore.id} fired later (${lead.nonCore.ts}Z) and consumed the anchor budget` };

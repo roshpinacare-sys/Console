@@ -351,6 +351,7 @@ Promise.allSettled([
       ", חלון " + esc(d.window?.spanDays) + " ימים) · קצב חציוני " + esc(Math.round(d.cadence?.medianMinutes ?? 0)) +
       " דק' · חיות-עכשיו (" + esc(d.recent?.windowHours ?? 26) + "ש'): " + esc(d.recent?.verdict ?? "?") +
       " · " + esc(d.recent?.anchorsInWindow ?? "?") + " עוגנים, פער-מרבי " + esc(d.recent?.maxGapMinutes ?? "?") + " דק'" +
+      " · פער-פתוח " + esc(d.recent?.openGapMinutes === null || d.recent?.openGapMinutes === undefined ? "?" : (d.recent.openGapMinutes >= 60 ? Math.round(d.recent.openGapMinutes / 6) / 10 + "ש'" : d.recent.openGapMinutes + " דק'")) +
       " · דילוגי-קצב " + esc(skip.total ?? 0) + " · טיפול-עדויות " + esc(d.attestations?.state) +
       " (כיסוי " + esc(Math.round((d.attestations?.coverageRatio ?? 0) * 100)) + "%) · עדי-חתימה " +
       esc(Object.entries(w).map(([k, n]) => "@" + k + "×" + n).join(" · "));
