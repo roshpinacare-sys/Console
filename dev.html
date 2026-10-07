@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAOS · ספרי-הרשת הפומביים · תיעוד למפתחים</title>
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Domain/dev.html">
+<meta name="description" content="ה-API הפומבי של רשת SAOS: ספרי JSON חיים ללא מפתחות וללא הרשאות. ספר ה-DEX, הגשר הריבוי-שרשראות, פנקסי-העדויות ושער-האמת. כל מה שהממשק שלנו קורא, אתם יכולים לקרוא.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SAOS Network">
+<meta property="og:title" content="SAOS · ספרי-הרשת הפומביים · תיעוד למפתחים">
+<meta property="og:locale" content="he_IL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:description" content="ה-API הפומבי של רשת SAOS: ספרי JSON חיים ללא מפתחות וללא הרשאות. כל מה שהממשק שלנו קורא, אתם יכולים לקרוא.">
+<meta property="og:url" content="https://roshpinacare-sys.github.io/Domain/dev.html">
+<meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="SAOS Network seal">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SAOS Network · Developer API">
+<meta name="twitter:description" content="The public JSON books of the SAOS network: keyless, permissionless, live.">
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#09090b; --bg2:#0c0c0e; --bg3:#101013;
+  --panel:rgba(255,255,255,.03); --panel2:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --gold:#d4af37; --gold-bright:#e9c767; --gold-dim:rgba(212,175,55,.12); --gold-line:rgba(212,175,55,.42);
+  --green:#22c55e; --amber:#eab308; --red:#ef4444;
+  --text:#fafafa; --dim:#a1a1aa; --faint:#71717a;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sans:'Heebo',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
+  --r:16px; --r-sm:12px; --r-lg:20px;
+  --key:inset 0 1px 0 rgba(255,255,255,.055);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{color:var(--text);font-family:var(--sans);min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow-x:hidden;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(1100px 560px at 50% -180px, rgba(212,175,55,.075), transparent 62%),radial-gradient(900px 500px at 85% 115%, rgba(212,175,55,.05), transparent 60%)}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
+a{color:var(--gold-bright);text-decoration:none}
+a:hover{text-decoration:underline}
+header.nhead{position:sticky;top:0;z-index:50;background:rgba(9,9,11,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nhead .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.2px;color:var(--text)}
+.brand svg{flex-shrink:0}
+.brand small{display:block;font-weight:400;font-size:10.5px;color:var(--dim);letter-spacing:.4px}
+.nlinks{display:flex;gap:4px;margin-inline-start:auto;align-items:center}
+.nlinks a{color:var(--dim);font-size:13.5px;padding:7px 12px;border-radius:999px}
+.nlinks a:hover{color:var(--text);background:var(--panel2);text-decoration:none}
+.langbtn{cursor:pointer;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:7px 14px;font-size:12.5px;font-family:var(--sans);font-weight:600}
+.langbtn:hover{background:rgba(255,255,255,.1)}
+main{flex:1}
+.hero{padding:54px 0 26px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:700;letter-spacing:-.6px;line-height:1.15}
+h1 em{font-style:normal;color:var(--gold-bright)}
+.lead{font-size:clamp(1rem,1.6vw,1.14rem);color:var(--dim);max-width:760px;margin-top:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--text)}
+.chip b{color:var(--gold-bright);font-weight:600}
+section.blk{padding:26px 0}
+h2{font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:700;letter-spacing:-.3px}
+.sub{color:var(--dim);font-size:14px;margin-top:6px}
+.blk-h{margin-bottom:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--key)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:start;font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--faint);text-transform:uppercase;padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;unicode-bidi:isolate;direction:ltr}
+.path{font-family:var(--mono);font-size:12px;color:var(--gold-bright);direction:ltr;unicode-bidi:isolate;display:inline-block}
+.age{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:999px;white-space:nowrap;display:inline-block}
+.age.fresh{color:var(--green);background:rgba(34,197,94,.12)}
+.age.old{color:var(--amber);background:rgba(234,179,8,.12)}
+.age.dead{color:var(--red);background:rgba(239,68,68,.12)}
+.age.na{color:var(--faint);background:rgba(255,255,255,.06)}
+select.booksel{background:var(--bg3);color:var(--text);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;font-size:13px;outline:none;font-family:var(--sans);width:100%;max-width:420px}
+button.go{cursor:pointer;background:var(--gold);color:#1a1405;border:0;border-radius:999px;padding:10px 22px;font-size:13.5px;font-weight:700;font-family:var(--sans)}
+button.go:hover{background:var(--gold-bright)}
+pre{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.7;color:#d8d8dc;direction:ltr;text-align:left;max-height:420px;overflow-y:auto}
+pre .k{color:var(--gold-bright)}
+pre .s{color:#7dd88f}
+pre .n{color:#8ab8ff}
+pre .c{color:var(--faint)}
+.playmeta{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-top:10px}
+.pill{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:3px 11px;font-size:11.5px}
+.pill.ok{color:var(--green);border-color:rgba(34,197,94,.35)}
+.pill.err{color:var(--red);border-color:rgba(239,68,68,.35)}
+.note{font-size:12.5px;color:var(--faint);margin-top:12px;line-height:1.7}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 30px;margin-top:auto}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--faint)}
+.bookrow{cursor:pointer}
+.bookrow:hover td{background:rgba(255,255,255,.025)}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.toc a{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:6px 13px;color:var(--dim)}
+.toc a:hover{color:var(--text);text-decoration:none;background:var(--panel2)}
+</style>
+</head>
+<body>
+<header class="nhead">
+  <div class="wrap">
+    <a class="brand" href="index.html" style="text-decoration:none">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z"/><circle cx="12" cy="12" r="3" fill="#d4af37" stroke="none"/></svg>
+      <span>SAOS <small data-t="brand.sub">הרשת המאמתת לסוכני AI</small></span>
+    </a>
+    <nav class="nlinks" aria-label="main">
+      <a href="index.html#/exchange/swap" data-t="nav.swap">הבורסה</a>
+      <a href="wallet.html" data-t="nav.wallet">הארנק</a>
+      <a href="truth.html" data-t="nav.truth">שער האמת</a>
+      <button type="button" class="langbtn" id="langBtn">EN</button>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow" data-t="dev.eyebrow">תיעוד למפתחים</div>
+      <h1 data-t="dev.h1">ספרי-הרשת הפומביים. <em>בלי מפתחות, בלי הרשאות, בלי חשבון.</em></h1>
+      <p class="lead" data-t="dev.lead">כל מה שהממשק שלנו מציג נקרא מקבצי JSON פומביים שמפרסמים בוטים על GitHub Pages. אותם קבצים, אותן כתובות, אותם מספרים. הביאו את ה-fetch שלכם וקראו את הרשת ישירות: ספר ה-DEX, הגשר, פנקסי-העדויות ושער-האמת שבודק אותנו כל שעה.</p>
+      <div class="chips">
+        <span class="chip"><b data-t="c.k1">אפס-מפתחות</b> · <span data-t="c.k1d">GET בלבד, CORS פתוח</span></span>
+        <span class="chip"><b data-t="c.k2">כנות-קצב</b> · <span data-t="c.k2d">לכל ספר publishedAt משלו</span></span>
+        <span class="chip"><b data-t="c.k3">גלוי-לרבוטים</b> · <span data-t="c.k3d">הבוט שבודק אותנו פומבי</span></span>
+        <span class="chip"><b data-t="c.k4">אימות-עצמאי</b> · <span data-t="c.k4d">כל טענה נבדקת מול השרשרת</span></span>
+      </div>
+      <div class="toc">
+        <a href="#books" data-t="toc.books">קטלוג הספרים</a>
+        <a href="#playground" data-t="toc.play">גן-משחק חי</a>
+        <a href="#quote" data-t="toc.quote">מתמטיקת-הציטוט</a>
+        <a href="#recipes" data-t="toc.recipes">מתכוני-קוד</a>
+        <a href="#rules" data-t="toc.rules">חוקי-הבית</a>
+      </div>
+    </div>
+
+    <section class="blk" id="books">
+      <div class="blk-h"><h2 data-t="books.h">קטלוג הספרים</h2><p class="sub" data-t="books.sub">כל שורה חיה: הגיל נמדד עכשיו מהקובץ עצמו. הקליקו שורה כדי לטעון אותה בגן-המשחק.</p></div>
+      <div class="card" style="padding:6px 4px;overflow-x:auto">
+        <table>
+          <thead><tr><th data-t="th.book">ספר</th><th data-t="th.path">נתיב</th><th data-t="th.what">מה יש בפנים</th><th data-t="th.cadence">קצב-פרסום</th><th data-t="th.age">גיל עכשיו</th></tr></thead>
+          <tbody id="bookRows"></tbody>
+        </table>
+      </div>
+      <p class="note" data-t="books.note">הנתיבים יחסיים לשורש הבית. מ-GitHub Pages: <span class="path">https://roshpinacare-sys.github.io/Console/&lt;path&gt;</span> · מקומית מהקונסולה: <span class="path">&lt;path&gt;</span> יחסית לדף. הגיל מוצג כפי שהוא: ספר שמתעדכן פעם-ביום יראה גיל-יום, וזו האמת.</p>
+    </section>
+
+    <section class="blk" id="playground">
+      <div class="blk-h"><h2 data-t="play.h">גן-משחק חי</h2><p class="sub" data-t="play.sub">בחרו ספר, טענו, וראו את המבנה האמיתי. הבקשות יוצאות מהדפדפן שלכם ישירות אל הקובץ הפומבי.</p></div>
+      <div class="card">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <select class="booksel" id="playSel" aria-label="בחירת ספר"></select>
+          <button type="button" class="go" id="playGo" data-t="play.go">טען ספר</button>
+        </div>
+        <div class="playmeta" id="playMeta" hidden></div>
+        <pre id="playOut" hidden></pre>
+      </div>
+    </section>
+
+    <section class="blk" id="quote">
+      <div class="blk-h"><h2 data-t="quote.h">מתמטיקת-הציטוט · אותו ראוטר כמו הממשק</h2><p class="sub" data-t="quote.sub">חלון ההחלפה מחשב ציטוטים מהספר הפומבי בדיוק כך. העתיקו והריצו משלכם: אותן בריכות, אותן עמלות, אותה תוצאה.</p></div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="font-size:14.5px;margin-bottom:10px" data-t="quote.rulesh">הכללים</h3>
+          <ul style="font-size:13.5px;color:var(--dim);line-height:2;padding-inline-start:18px">
+            <li data-t="quote.r1">בריכה = constant-product · עמלת הבריכה היא <span class="mono">feeBps</span> האמיתי מהספר, מתוך <span class="mono">amount</span>.</li>
+            <li data-t="quote.r2">בריכה בלי נתון-עמלה נפסלת מהמסלול: לא ממציאים עמלה.</li>
+            <li data-t="quote.r3">רגלי-עטיפה 1:1: <span class="mono">STEEM/WSTEEM</span>, <span class="mono">BLURT/WBLURT</span>.</li>
+            <li data-t="quote.r4">הראוטר מחפש המרה עד 3 רגלי-בריכה ובוחר בתוצאה הגבוהה.</li>
+            <li data-t="quote.r5">יחידות: המנוע עובד במילי-יחידות (µ). <span class="mono">1000 µ = 1 אסימון</span>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14.5px;margin-bottom:10px" data-t="quote.codeh">ראוטר מינימלי (JS)</h3>
+<pre>async function quote(pools, from, to, amtMu) {
+  const adj = {};
+  for (const p of pools) {
+    if (typeof p.feeBps !== "number") continue; // no fee data, no route
+    (adj[p.a] ??= []).push({ p, from: p.a, to: p.b });
+    (adj[p.b] ??= []).push({ p, from: p.b, to: p.a });
+  }
+  let best = { out: 0, path: null };
+  const seen = new Set([from]);
+  (function walk(node, amt, path) {
+    if (node === to && path.length && amt > best.out)
+      best = { out: amt, path: path.slice() };
+    if (path.length >= 3) return;
+    for (const e of adj[node] || []) {
+      if (seen.has(e.to)) continue;
+      const fee = Math.floor(amt * e.p.feeBps / 10000);
+      const inAfter = amt - fee;
+      const ra = e.from === e.p.a ? e.p.ra : e.p.rb;
+      const rb = e.from === e.p.a ? e.p.rb : e.p.ra;
+      const out = Math.floor(rb * inAfter / (ra + inAfter));
+      if (out <= 0) continue;
+      seen.add(e.to); path.push(e);
+      walk(e.to, out, path);
+      path.pop(); seen.delete(e.to);
+    }
+  })(from, amtMu, []);
+  return best; // { out, path } in milli-units
+}</pre>
+          <p class="note" data-t="quote.note">זו אותה משפחת-מתמטיקה שמוטמעת בחלון ההחלפה של הקונסולה · ההפרש מול המנוע: המנוע מבצע בקונצנזוס, הציטוט כאן הוא אומדן חי מהספר.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk" id="recipes">
+      <div class="blk-h"><h2 data-t="rec.h">מתכוני-קוד</h2><p class="sub" data-t="rec.sub">מהשורה ומהדפדפן. אין טוקנים, אין headers, אין חתימות.</p></div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="font-size:14.5px;margin-bottom:10px">curl</h3>
+<pre>curl -s https://roshpinacare-sys.github.io/Console/dex/world.json \
+  | jq '{publishedAt, markets: [.markets[] | {key, fair, spreadBps}], pools: [.pools[] | {key, mid, feeBps}]}'</pre>
+          <p class="note" data-t="rec.curlnote">הספר המלא של ה-DEX: שווקים, בריכות, ארנקי-רשת, זירת-הסוכנים, קלטת וחתימות-גיבוב.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14.5px;margin-bottom:10px">JavaScript</h3>
+<pre>const base = "https://roshpinacare-sys.github.io/Console/";
+const world = await (await fetch(base + "dex/world.json")).json();
+const saos = world.markets.find(m => m.key === "SAOS/USDS");
+console.log("SAOS mid:", saos.poolMid / 1000, "USDS");
+console.log("book age min:",
+  (Date.now() - Date.parse(world.publishedAt)) / 60000);
+
+const verify = await (await fetch(base + "agent/verify/results.json")).json();
+console.log("truth gate:", verify.summary.verdict,
+  verify.summary.passed + "/" + verify.summary.total);</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk" id="rules">
+      <div class="blk-h"><h2 data-t="rules.h">חוקי-הבית לצרכני-הספרים</h2><p class="sub" data-t="rules.sub">חמישה כללים שמבדילים צרכן-טוב מצרכן-שיישרף.</p></div>
+      <div class="grid2">
+        <div class="card">
+          <ul style="font-size:13.5px;color:var(--dim);line-height:2.1;padding-inline-start:18px">
+            <li data-t="rules.r1">תמיד קראו <span class="mono">publishedAt</span> והציגו גיל. ספר הוא מדידה, לא הבטחה.</li>
+            <li data-t="rules.r2">אל תבנו על קצב: קראו את הקצב המתועד לכל ספר למעלה.</li>
+            <li data-t="rules.r3">fail-closed: אם הספר לא נטען, אל תמציאו מחיר. הציגו שאין נתון.</li>
+            <li data-t="rules.r4">אל תשמרו בצד יותר מהצורך: הספר הוא המקור, המטמון הוא חוב.</li>
+            <li data-t="rules.r5">אמתו לבד: יש לכם <span class="path">agent/verify/run.mjs</span> מלא בגיט שמראה בדיוק איך אנחנו בודקים את עצמנו.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14.5px;margin-bottom:10px" data-t="rules.gateh">שער-האמת · הספר שבודק את הספרים</h3>
+          <p style="font-size:13.5px;color:var(--dim);line-height:1.9" data-t="rules.gated">בוט פומבי מריץ כל שעה עשרות בדיקות על הספרים האלה: טריות, עקביות, עוגני-שרשרת, היפוכי-עדיפות. התוצאות עצמן ספר פומבי. אין לנו סטטוס-עמוד נסתר: יש לנו שופט עם גיט.</p>
+          <div class="toc" style="margin-top:14px">
+            <a href="truth.html" data-t="rules.t1">שער האמת</a>
+            <a href="index.html#/exchange/swap" data-t="rules.t2">חלון ההחלפה (מימוש-התייחסות)</a>
+            <a href="wallet.html" data-t="rules.t3">הארנק הריבוני</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span><span data-t="ft.line">ספריים הם הפוליסה שלך · </span><a href="index.html">Console</a> · <a href="truth.html" data-t="ft.truth">שער האמת</a> · <a href="versus.html" data-t="ft.versus">ההשוואה הכנה</a> · <a href="https://github.com/roshpinacare-sys/Console" target="_blank" rel="noopener">GitHub</a></span>
+    <span data-t="ft.right">הכל פומבי · אימתו הכל · אל תסמכו, בדקו</span>
+  </div>
+</footer>
+<script>
+(function(){
+"use strict";
+var HE = location.pathname.indexOf("Console") >= 0 ? "" : ""; /* paths are relative in both homes */
+var BOOKS = [
+  { path:"dex/world.json",        cadence:"daily + event", w:"ספר מנוע-ה-DEX המלא: שווקים, סולמות, בריכות, ארנקי-רשת, זירה, קלטת, חתימות-גיבוב ומצב-גובה", wh:"the full DEX engine book: markets, ladders, pools, network wallets, arena, tape, hash seals and chain state" },
+  { path:"dex/bridge.json",       cadence:"daily + event", w:"הגשר הריבוי-שרשראות: 8 מסילות, אסקרו, כוונות, תקרות-תביעה וחוזה-האנקור ב-Ethereum", wh:"the multi-chain bridge: 8 rails, escrow, intents, claim caps and the Ethereum anchor contract" },
+  { path:"dex/deposits.json",     cadence:"20 min", w:"פנקס ההפקדות מהצופה הציבורי על 4 שרשראות", wh:"the deposit ledger from the public watcher on 4 chains" },
+  { path:"weave/vitals.json",     cadence:"6 h", w:"תמצית חיות: 9 קווי-עוגן, חביון, פסק-דין", wh:"liveness digest: 9 anchor lines, lag, verdict" },
+  { path:"weave/census.json",     cadence:"daily", w:"מפקד-העדויות: טיפול, כיסוי, חורים ועדי-חתימה", wh:"attestation census: tiling, coverage, holes and witness signatures" },
+  { path:"agent/state.json",      cadence:"daily", w:"ראש-הגשר: קומיט-אחרון, requestRef, גרסה", wh:"bridgehead: last commit, requestRef, version" },
+  { path:"agent/verify/results.json", cadence:"hourly", w:"שער-האמת: 53 בדיקות, פסק-דין, זמני-ריצה", wh:"the truth gate: 53 assertions, verdict, run times" },
+  { path:"dex/portfolio.json",    cadence:"daily", w:"תיק הרשת: שווי מאוחד במילי-יחידות", wh:"network portfolio: unified value in milli-units" },
+  { path:"dex/money.json",        cadence:"daily", w:"נתיב הכסף: פדיונות, דלק, כספת-משמר", wh:"money path: redemptions, fuel, custody" },
+  { path:"dex/fleet.json",        cadence:"daily", w:"צי הסוכנים: חיילי-הגריד ומצבם", wh:"the agent fleet: grid soldiers and their state" }
+];
+var BASES = [
+  { name:"Console (Pages)", url:"https://roshpinacare-sys.github.io/Console/" },
+  { name:"Domain (Pages)",  url:"https://roshpinacare-sys.github.io/Domain/" }
+];
+var LANG = "he";
+function t(he, en){ return LANG === "en" ? en : he; }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function ageCls(h){ return h <= 2 ? "fresh" : (h <= 30 ? "old" : "dead"); }
+function ageTxt(h){
+  if (h < 1) return Math.max(1, Math.round(h * 60)) + "m";
+  if (h < 48) return h.toFixed(1) + "h";
+  return Math.round(h / 24) + "d";
+}
+function fetchBook(path){
+  /* same-origin first (the sandbox mirror), then the two public Pages homes */
+  var tries = ["", BASES[0].url, BASES[1].url].filter(function(u, i){ return i === 0 ? location.protocol.indexOf("http") === 0 : true; });
+  var i = 0;
+  function tryOne(){
+    return fetch(tries[i] + path, { cache:"no-store" }).then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).catch(function(err){
+      i++;
+      if (i < tries.length) return tryOne();
+      throw err;
+    });
+  }
+  return tryOne();
+}
+/* ── catalog ── */
+var rowsEl = document.getElementById("bookRows");
+function renderCatalog(){
+  rowsEl.innerHTML = BOOKS.map(function(b, idx){
+    var w = LANG === "en" ? b.wh : b.w;
+    return '<tr class="bookrow" data-book="' + idx + '" tabindex="0" role="button" aria-label="' + esc(b.path) + '">' +
+      "<td>" + esc(b.path.split("/").pop()) + "</td>" +
+      '<td><span class="path">' + esc(b.path) + "</span></td>" +
+      '<td style="color:var(--dim);font-size:12.5px;min-width:220px">' + esc(w) + "</td>" +
+      '<td class="mono" style="font-size:11.5px;color:var(--faint)">' + esc(b.cadence) + "</td>" +
+      '<td><span class="age na" data-age="' + idx + '">·</span></td></tr>';
+  }).join("");
+  measureAges();
+}
+function measureAges(){
+  BOOKS.forEach(function(b, idx){
+    fetchBook(b.path).then(function(j){
+      var el = document.querySelector('[data-age="' + idx + '"]');
+      if (!el) return;
+      var ts = j && (j.publishedAt || j.generatedAt || j.updatedAt || (j.state && j.state.at) || j.at);
+      if (!ts){ el.className = "age na"; el.textContent = t("אין חותמת", "no timestamp"); return; }
+      var h = (Date.now() - Date.parse(ts)) / 3600000;
+      if (!isFinite(h)){ el.className = "age na"; el.textContent = "?"; return; }
+      el.className = "age " + ageCls(h);
+      el.textContent = ageTxt(h);
+      b._age = h;
+    }).catch(function(){
+      var el = document.querySelector('[data-age="' + idx + '"]');
+      if (el){ el.className = "age dead"; el.textContent = "404"; }
+    });
+  });
+}
+/* ── playground ── */
+var sel = document.getElementById("playSel"), meta = document.getElementById("playMeta"), out = document.getElementById("playOut");
+function fillSel(){
+  sel.innerHTML = BOOKS.map(function(b, i){ return '<option value="' + i + '">' + esc(b.path) + "</option>"; }).join("");
+}
+function hi(v){
+  /* tiny JSON highlighter, safe: text is escaped before spans are injected */
+  var s = esc(JSON.stringify(v, null, 2));
+  s = s.replace(/&quot;([^&]*?)&quot;(\s*:)/g, '<span class="k">"$1"</span>$2');
+  s = s.replace(/: &quot;([^&]*?)&quot;/g, ': <span class="s">"$1"</span>');
+  s = s.replace(/: (-?\d+\.?\d*(e-?\d+)?)/g, ': <span class="n">$1</span>');
+  return s;
+}
+function loadPlay(){
+  var b = BOOKS[Number(sel.value) || 0];
+  meta.hidden = false;
+  out.hidden = false;
+  out.textContent = t("טוען…", "loading…");
+  var t0 = performance.now();
+  fetchBook(b.path).then(function(j){
+    var ms = Math.round(performance.now() - t0);
+    var ts = j && (j.publishedAt || j.generatedAt || (j.state && j.state.at) || j.at);
+    var age = ts ? ((Date.now() - Date.parse(ts)) / 3600000) : null;
+    meta.innerHTML =
+      '<span class="pill ok">200 OK</span>' +
+      '<span class="pill">' + ms + " ms</span>" +
+      '<span class="pill">' + (JSON.stringify(j).length / 1024).toFixed(1) + " KB</span>" +
+      (age !== null && isFinite(age) ? '<span class="pill">' + t("גיל ", "age ") + ageTxt(age) + "</span>" : "") +
+      (j && typeof j === "object" ? '<span class="pill mono">' + esc(Object.keys(j).slice(0,8).join(" · ")) + "</span>" : "");
+    out.innerHTML = hi(j);
+  }).catch(function(err){
+    meta.innerHTML = '<span class="pill err">' + t("נכשל: ", "failed: ") + esc(String(err.message || err)) + "</span>";
+    out.hidden = true;
+  });
+}
+document.getElementById("playGo").addEventListener("click", loadPlay);
+rowsEl.addEventListener("click", function(e){
+  var tr = e.target.closest ? e.target.closest("[data-book]") : null;
+  if (!tr) return;
+  sel.value = tr.getAttribute("data-book");
+  loadPlay();
+  document.getElementById("playground").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+rowsEl.addEventListener("keydown", function(e){
+  if (e.key !== "Enter" && e.key !== " ") return;
+  var tr = e.target.closest ? e.target.closest("[data-book]") : null;
+  if (!tr) return;
+  e.preventDefault();
+  sel.value = tr.getAttribute("data-book");
+  loadPlay();
+});
+/* ── i18n toggle ── */
+var DICT = {
+  he: {
+    "brand.sub":"הרשת המאמתת לסוכני AI","nav.swap":"הבורסה","nav.wallet":"הארנק","nav.truth":"שער האמת",
+    "dev.eyebrow":"תיעוד למפתחים",
+    "dev.h1":"ספרי-הרשת הפומביים. <em>בלי מפתחות, בלי הרשאות, בלי חשבון.</em>",
+    "dev.lead":"כל מה שהממשק שלנו מציג נקרא מקבצי JSON פומביים שמפרסמים בוטים על GitHub Pages. אותם קבצים, אותן כתובות, אותם מספרים. הביאו את ה-fetch שלכם וקראו את הרשת ישירות: ספר ה-DEX, הגשר, פנקסי-העדויות ושער-האמת שבודק אותנו כל שעה.",
+    "c.k1":"אפס-מפתחות","c.k1d":"GET בלבד, CORS פתוח","c.k2":"כנות-קצב","c.k2d":"לכל ספר publishedAt משלו","c.k3":"גלוי-לרבוטים","c.k3d":"הבוט שבודק אותנו פומבי","c.k4":"אימות-עצמאי","c.k4d":"כל טענה נבדקת מול השרשרת",
+    "toc.books":"קטלוג הספרים","toc.play":"גן-משחק חי","toc.quote":"מתמטיקת-הציטוט","toc.recipes":"מתכוני-קוד","toc.rules":"חוקי-הבית",
+    "books.h":"קטלוג הספרים","books.sub":"כל שורה חיה: הגיל נמדד עכשיו מהקובץ עצמו. הקליקו שורה כדי לטעון אותה בגן-המשחק.",
+    "th.book":"ספר","th.path":"נתיב","th.what":"מה יש בפנים","th.cadence":"קצב-פרסום","th.age":"גיל עכשיו",
+    "books.note":"הנתיבים יחסיים לשורש הבית. מ-GitHub Pages: roshpinacare-sys.github.io/Console/ + נתיב · מקומית: נתיב יחסי לדף. הגיל מוצג כפי שהוא: ספר שמתעדכן פעם-ביום יראה גיל-יום, וזו האמת.",
+    "play.h":"גן-משחק חי","play.sub":"בחרו ספר, טענו, וראו את המבנה האמיתי. הבקשות יוצאות מהדפדפן שלכם ישירות אל הקובץ הפומבי.","play.go":"טען ספר",
+    "quote.h":"מתמטיקת-הציטוט · אותו ראוטר כמו הממשק","quote.sub":"חלון ההחלפה מחשב ציטוטים מהספר הפומבי בדיוק כך. העתיקו והריצו משלכם: אותן בריכות, אותן עמלות, אותה תוצאה.",
+    "quote.rulesh":"הכללים",
+    "quote.r1":'בריכה = constant-product · עמלת הבריכה היא feeBps האמיתי מהספר, מתוך הסכום.',
+    "quote.r2":"בריכה בלי נתון-עמלה נפסלת מהמסלול: לא ממציאים עמלה.",
+    "quote.r3":"רגלי-עטיפה 1:1: STEEM/WSTEEM, BLURT/WBLURT.",
+    "quote.r4":"הראוטר מחפש המרה עד 3 רגלי-בריכה ובוחר בתוצאה הגבוהה.",
+    "quote.r5":"יחידות: המנוע עובד במילי-יחידות (µ). 1000 µ = 1 אסימון.",
+    "quote.codeh":"ראוטר מינימלי (JS)",
+    "quote.note":"זו אותה משפחת-מתמטיקה שמוטמעת בחלון ההחלפה של הקונסולה · ההפרש מול המנוע: המנוע מבצע בקונצנזוס, הציטוט כאן הוא אומדן חי מהספר.",
+    "rec.h":"מתכוני-קוד","rec.sub":"מהשורה ומהדפדפן. אין טוקנים, אין headers, אין חתימות.",
+    "rec.curlnote":"הספר המלא של ה-DEX: שווקים, בריכות, ארנקי-רשת, זירת-הסוכנים, קלטת וחתימות-גיבוב.",
+    "rules.h":"חוקי-הבית לצרכני-הספרים","rules.sub":"חמישה כללים שמבדילים צרכן-טוב מצרכן-שיישרף.",
+    "rules.r1":'תמיד קראו publishedAt והציגו גיל. ספר הוא מדידה, לא הבטחה.',
+    "rules.r2":"אל תבנו על קצב: קראו את הקצב המתועד לכל ספר בקטלוג.",
+    "rules.r3":"fail-closed: אם הספר לא נטען, אל תמציאו מחיר. הציגו שאין נתון.",
+    "rules.r4":"אל תשמרו בצד יותר מהצורך: הספר הוא המקור, המטמון הוא חוב.",
+    "rules.r5":"אמתו לבד: יש לכם agent/verify/run.mjs מלא בגיט שמראה בדיוק איך אנחנו בודקים את עצמנו.",
+    "rules.gateh":"שער-האמת · הספר שבודק את הספרים",
+    "rules.gated":"בוט פומבי מריץ כל שעה עשרות בדיקות על הספרים האלה: טריות, עקביות, עוגני-שרשרת, היפוכי-עדיפות. התוצאות עצמן ספר פומבי. אין לנו סטטוס-עמוד נסתר: יש לנו שופט עם גיט.",
+    "rules.t1":"שער האמת","rules.t2":"חלון ההחלפה (מימוש-התייחסות)","rules.t3":"הארנק הריבוני",
+    "ft.line":"ספריים הם הפוליסה שלך · ","ft.truth":"שער האמת","ft.versus":"ההשוואה הכנה","ft.right":"הכל פומבי · אימתו הכל · אל תסמכו, בדקו"
+  },
+  en: {
+    "brand.sub":"The verifying network for AI agents","nav.swap":"Exchange","nav.wallet":"Wallet","nav.truth":"Truth gate",
+    "dev.eyebrow":"Developer docs",
+    "dev.h1":"The public network books. <em>No keys, no permissions, no account.</em>",
+    "dev.lead":"Everything our interface shows is read from public JSON files that bots publish to GitHub Pages. Same files, same URLs, same numbers. Bring your own fetch and read the network directly: the DEX book, the bridge, the attestation ledgers and the truth gate that audits us every hour.",
+    "c.k1":"Keyless","c.k1d":"GET only, open CORS","c.k2":"Cadence honesty","c.k2d":"every book carries its own publishedAt","c.k3":"Bot-audited","c.k3d":"the bot that audits us is public","c.k4":"Independent verification","c.k4d":"every claim is checked against chains",
+    "toc.books":"Book catalog","toc.play":"Live playground","toc.quote":"Quote math","toc.recipes":"Code recipes","toc.rules":"House rules",
+    "books.h":"Book catalog","books.sub":"Every row is live: the age is measured right now from the file itself. Click a row to load it in the playground.",
+    "th.book":"Book","th.path":"Path","th.what":"What is inside","th.cadence":"Cadence","th.age":"Age now",
+    "books.note":"Paths are relative to the home root. On GitHub Pages: roshpinacare-sys.github.io/Console/ + path · locally: path relative to the page. The age is shown as it is: a daily book shows a day-old age, and that is the truth.",
+    "play.h":"Live playground","play.sub":"Pick a book, load it, inspect the real shape. Requests go from your browser straight to the public file.","play.go":"Load book",
+    "quote.h":"Quote math · the same router as the UI","quote.sub":"The swap window computes quotes from the public book exactly like this. Copy and run your own: same pools, same fees, same result.",
+    "quote.rulesh":"The rules",
+    "quote.r1":"Pool = constant-product · the pool fee is the book's real feeBps, taken from the amount.",
+    "quote.r2":"A pool without fee data is excluded from routing: no invented fees.",
+    "quote.r3":"Wrap legs are 1:1: STEEM/WSTEEM, BLURT/WBLURT.",
+    "quote.r4":"The router searches conversions of up to 3 pool legs and picks the highest output.",
+    "quote.r5":"Units: the engine works in milli-units (µ). 1000 µ = 1 token.",
+    "quote.codeh":"Minimal router (JS)",
+    "quote.note":"This is the same math family embedded in the console's swap window · the difference from the engine: the engine executes in consensus, the quote here is a live estimate from the book.",
+    "rec.h":"Code recipes","rec.sub":"From the shell and from the browser. No tokens, no headers, no signatures.",
+    "rec.curlnote":"The full DEX book: markets, pools, network wallets, the agent arena, tape and hash seals.",
+    "rules.h":"House rules for book consumers","rules.sub":"Five rules that separate a good consumer from one that gets burned.",
+    "rules.r1":"Always read publishedAt and show the age. A book is a measurement, not a promise.",
+    "rules.r2":"Do not assume cadence: read the documented cadence for each book in the catalog.",
+    "rules.r3":"Fail-closed: if the book does not load, do not invent a price. Show that there is no data.",
+    "rules.r4":"Do not cache beyond need: the book is the source, the cache is a debt.",
+    "rules.r5":"Verify yourself: agent/verify/run.mjs is fully public in git and shows exactly how we audit ourselves.",
+    "rules.gateh":"The truth gate · the book that audits the books",
+    "rules.gated":"A public bot runs dozens of checks against these books every hour: freshness, consistency, chain anchors, priority inversions. The results are themselves a public book. We have no hidden status page: we have a judge with a git repo.",
+    "rules.t1":"The truth gate","rules.t2":"The swap window (reference implementation)","rules.t3":"The sovereign wallet",
+    "ft.line":"The books are your policy · ","ft.truth":"Truth gate","ft.versus":"The honest versus","ft.right":"All public · verify everything · don't trust, check"
+  }
+};
+document.getElementById("langBtn").addEventListener("click", function(){
+  LANG = LANG === "he" ? "en" : "he";
+  this.textContent = LANG === "he" ? "EN" : "עברית";
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === "en" ? "ltr" : "rtl";
+  var d = DICT[LANG];
+  document.querySelectorAll("[data-t]").forEach(function(el){
+    var v = d[el.getAttribute("data-t")];
+    if (typeof v === "string") el.innerHTML = v;
+  });
+  renderCatalog();
+  meta.hidden = true; out.hidden = true;
+});
+/* ── boot ── */
+fillSel();
+renderCatalog();
+})();
+</script>
+</body>
+</html>

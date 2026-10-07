@@ -782,10 +782,20 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           #sub-exchange-swap .sw-depthwrap{width:100%;max-width:480px;background:var(--dxc);border:1px solid var(--dxline);border-radius:20px;padding:14px 16px;color:var(--dxt1);margin-top:12px}
           #sub-exchange-swap .sw-depth{display:block;width:100%;height:120px}
           #sub-exchange-swap .sw-pools{width:100%;max-width:480px;margin-top:16px;display:grid;grid-template-columns:1fr;gap:8px}
+          #sub-exchange-swap .sw-candlecard{width:100%;max-width:480px;padding:14px 16px;color:var(--dxt1);margin-top:12px}
+          #sub-exchange-swap .sw-candle{display:block;width:100%;height:150px;margin-top:10px}
+          #sub-exchange-swap .sw-sel{background:var(--dxr);color:var(--dxt1);border:1px solid var(--dxline);border-radius:12px;padding:8px 10px;font-size:12px;outline:none}
+          #sub-exchange-swap .sw-liminp{background:var(--dxr);border:1px solid var(--dxline);border-radius:12px;padding:8px 10px;font-size:12px;outline:none;color:var(--dxt1);width:100%;font-family:ui-monospace,"JetBrains Mono",monospace;direction:ltr}
+          #sub-exchange-swap .sw-liminp:focus{border-color:rgba(255,255,255,.28)}
           @media (max-width:520px){#sub-exchange-swap .sw-strip{grid-template-columns:1fr 1fr}}
         </style>
         <div class="sw-stage">
           <div class="sw-mkthead" id="swMktHead" data-testid="market-header" hidden></div>
+          <div class="dx-card sw-candlecard" id="swCandleCard" data-testid="candles-card" hidden>
+            <div style="display:flex;align-items:center;justify-content:space-between"><h3 style="font-size:13px;font-weight:600;margin:0" data-i18n="sw.candleh">נרות שוק · יומי מהספר + סשן מהמכשיר שלך</h3><span class="dx-num" id="swCandleMeta" style="font-size:10px;color:var(--dxt3)"></span></div>
+            <canvas id="swCandle" class="sw-candle" height="150" aria-label="תרשים נרות שוק חי" data-i18n-aria="sw.candlearia"></canvas>
+            <div style="font-size:9.5px;color:var(--dxt3);margin-top:4px;line-height:1.5" data-i18n="sw.candlenote">הנר היומי נגזר מ-stats24 של הספר הרשמי · נרות-הסשן נמדדים במכשירך מרענוני הספר ונשמרים מקומית · המנוע סופר 290 נרות-דקה וטרם מפרסם אותם · ברגע שיפורסמו תיכנס ההיסטוריה המלאה</div>
+          </div>
           <div class="dx-card sw-card" data-testid="swap-view">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
               <h1 style="font-size:18px;font-weight:600;margin:0" data-i18n="sw.title">החלפה</h1>
@@ -836,6 +846,22 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             <p id="swQueuedNote" style="font-size:11px;text-align:center;color:var(--dxt2);margin-top:8px" hidden data-i18n="sw.queued">ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע</p>
             <p id="swOffline" style="font-size:11px;text-align:center;color:var(--dxamber);margin-top:8px" hidden data-i18n="sw.offline">המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן</p>
           </div>
+          <div class="dx-card sw-card" id="swLimitCard" data-testid="limit-orders" style="margin-top:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><h3 style="font-size:15px;font-weight:600;margin:0" data-i18n="sw.limith">פקודות-כוונה · מקומי</h3><span class="dx-num" id="swLimitCount" style="font-size:10px;color:var(--dxt3)"></span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+              <div style="display:flex;flex-direction:column;gap:4px;flex:0 0 auto"><label for="swLimSide" style="font-size:10.5px;color:var(--dxt2)" data-i18n="sw.limside">כיוון</label>
+                <select id="swLimSide" class="sw-sel"><option value="buy" data-i18n="sw.limbuy">קנייה</option><option value="sell" data-i18n="sw.limsell">מכירה</option></select></div>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:0 0 auto"><label for="swLimAsset" style="font-size:10.5px;color:var(--dxt2)" data-i18n="sw.limasset">מטבע</label>
+                <select id="swLimAsset" class="sw-sel" aria-label="מטבע לפקודה"></select></div>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 84px;min-width:84px"><label for="swLimSize" style="font-size:10.5px;color:var(--dxt2)" data-i18n="sw.limsize">כמות</label>
+                <input id="swLimSize" class="sw-liminp" inputmode="decimal" placeholder="0.0" autocomplete="off"></div>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1 1 100px;min-width:100px"><label for="swLimTarget" style="font-size:10.5px;color:var(--dxt2)" data-i18n="sw.limtarget">מחיר-יעד (USDS)</label>
+                <input id="swLimTarget" class="sw-liminp" inputmode="decimal" placeholder="0.0" autocomplete="off"></div>
+              <button id="swLimAdd" class="dx-cta" style="height:36px;padding:0 16px;font-size:12.5px" data-i18n="sw.limadd">הצב פקודה</button>
+            </div>
+            <div id="swLimList" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>
+            <p style="font-size:10.5px;color:var(--dxt2);margin-top:10px;line-height:1.6" data-i18n="sw.limnote">פקודות-כוונה נשמרות במכשירך בלבד · נבדקות מול הספר החי בכל רענון · ביצוע ידני בחלון ההחלפה · אינן מונחות על השרשרת עדיין</p>
+          </div>
           <div id="swStale" class="sw-stale" role="status" hidden><span style="width:6px;height:6px;border-radius:50%;background:var(--dxamber);display:inline-block"></span><span data-i18n="sw.stale">נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה</span></div>
           <div id="swStrip" class="sw-strip" data-testid="market-strip"></div>
           <div class="sw-depthwrap" id="swDepthCard" data-testid="depth-card" hidden>
@@ -844,6 +870,12 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:6px"><span style="color:var(--dxgreen)" data-i18n="ex.bids2">קונים</span><span id="swDepthSpread" class="dx-num" style="color:var(--dxt3)"></span><span style="color:var(--dxred)" data-i18n="ex.asks2">מוכרים</span></div>
           </div>
           <div class="sw-pools" id="swPools" data-testid="pools-strip"></div>
+          <div class="dx-card sw-card" id="swBridgeCard" data-testid="bridge-card" style="margin-top:16px" hidden>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><h3 style="font-size:13px;font-weight:600;margin:0" data-i18n="sw.bridgeh">גשר ריבוי-שרשראות · המסילות החיות</h3><span class="dx-num" id="swBridgeFresh" style="font-size:10px;color:var(--dxt3)"></span></div>
+            <div id="swBridgeChains" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+            <div id="swBridgeKpis" class="dx-num" style="font-size:10.5px;color:var(--dxt2);margin-top:10px;display:flex;gap:10px;flex-wrap:wrap"></div>
+            <p id="swBridgeNote" style="font-size:10px;color:var(--dxt3);margin-top:8px;line-height:1.5"></p>
+          </div>
           <div style="width:100%;max-width:480px;margin-top:14px;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between">
             <span style="font-size:12px;color:var(--dim)" data-i18n="inv.band">בוחנים אותנו? הכל פתוח:</span>
             <span style="display:flex;gap:8px;flex-wrap:wrap">
@@ -851,6 +883,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               <a href="versus.html" class="dx-chip" style="padding:4px 12px;font-size:11.5px;color:var(--text);text-decoration:none" data-i18n="inv.versus">ההשוואה הכנה</a>
               <a href="truth.html" class="dx-chip" style="padding:4px 12px;font-size:11.5px;color:var(--text);text-decoration:none" data-i18n="inv.truth">שער האמת</a>
               <a href="receipts/index.html" class="dx-chip" style="padding:4px 12px;font-size:11.5px;color:var(--text);text-decoration:none" data-i18n="inv.receipts">קיר הקבלות</a>
+              <a href="dev.html" class="dx-chip" style="padding:4px 12px;font-size:11.5px;color:var(--text);text-decoration:none" data-i18n="inv.dev">תיעוד למפתחים</a>
             </span>
           </div>
         </div>
@@ -1059,8 +1092,10 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             renderStrip();
             renderFresh();
             renderMktHead();
+            renderCandles();
             renderDepth();
             renderPools();
+            renderLimits();
           }
           function renderStrip(){
             var strip = $("swStrip");
@@ -1186,6 +1221,195 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             s.textContent = ((TOKEN_META[sym] && TOKEN_META[sym].name) || sym).slice(0,1);
             return s;
           }
+          // ── R73: נרות שוק · היומי נגזר מ-stats24 (open = last/(1+chg24Bps/1e4)) ·
+          //    נרות-סשן נמדדים במכשיר מרענוני הספר (מיכלי-דקה על publishedAt) ונשמרים
+          //    ב-localStorage · המנוע מדליק candles1m וטרם מפרסם את הנתונים · כנות מלאה. ──
+          var CAND_KEY = "saos.sw.candles.v1";
+          function loadCands(){ try { var a = JSON.parse(localStorage.getItem(CAND_KEY)); return Array.isArray(a) ? a : []; } catch(e){ return []; } }
+          function saveCands(c){ try { localStorage.setItem(CAND_KEY, JSON.stringify(c.slice(-400))); } catch(e){} }
+          function recordSessionCandle(w){
+            if (!w || !w.markets || !w.markets[0]) return;
+            var m = w.markets[0];
+            var p = typeof m.poolMid === "number" ? m.poolMid : (m.stats24 && m.stats24.last);
+            if (typeof p !== "number") return;
+            var ts = Date.parse(w.publishedAt || "") || Date.now();
+            var b = Math.floor(ts / 60000);
+            var c = loadCands();
+            var last = c[c.length - 1];
+            if (last && last.b === b){ last.c = p; if (p > last.h) last.h = p; if (p < last.l) last.l = p; }
+            else if (last && b < last.b) return; // דגימה ישנה מהספר · מתעלמים
+            else c.push({ b:b, o:p, h:p, l:p, c:p });
+            saveCands(c);
+          }
+          function dailyCandle(){
+            var m = world && world.markets && world.markets[0];
+            var s = m && m.stats24;
+            if (!s || typeof s.last !== "number") return null;
+            var chg = s.chg24Bps || 0;
+            var open = Math.round(s.last / (1 + chg / 10000));
+            return { o:open, h:Math.max(s.high24, open, s.last), l:Math.min(s.low24, open, s.last), c:s.last };
+          }
+          function renderCandles(){
+            var card = $("swCandleCard"), cv = $("swCandle");
+            if (!card || !cv) return;
+            var d = dailyCandle(); var sess = loadCands();
+            if (!d && !sess.length){ card.hidden = true; return; }
+            card.hidden = false;
+            var c = cv.getContext("2d");
+            var w = cv.parentElement.clientWidth - 32 || 440, h = 150;
+            cv.width = w*2; cv.height = h*2; c.setTransform(2,0,0,2,0,0); c.clearRect(0,0,w,h);
+            var series = [];
+            if (d) series.push({ daily:true, o:d.o, h:d.h, l:d.l, c:d.c });
+            sess.slice(-36).forEach(function(k){ series.push(k); });
+            var lo = Math.min.apply(null, series.map(function(k){ return k.l; }));
+            var hi = Math.max.apply(null, series.map(function(k){ return k.h; }));
+            var pad = (hi - lo) * 0.12 || 1; lo -= pad; hi += pad;
+            var Y = function(p){ return h - 14 - ((p - lo) / (hi - lo)) * (h - 30); };
+            var slot = (w - 8) / series.length;
+            var bw = Math.max(3, Math.min(9, slot * 0.55));
+            [hi, (lo + hi) / 2, lo].forEach(function(g){
+              c.beginPath(); c.setLineDash([2,4]); c.moveTo(2, Y(g)); c.lineTo(w-2, Y(g));
+              c.strokeStyle = "rgba(255,255,255,.07)"; c.lineWidth = 1; c.stroke(); c.setLineDash([]);
+              c.fillStyle = "rgba(255,255,255,.3)"; c.font = "9px ui-monospace,monospace"; c.textAlign = "left";
+              c.fillText(fmtPrice(Math.round(g)), 3, Y(g) - 3);
+            });
+            series.forEach(function(k, i){
+              var x = 4 + i * slot + slot / 2;
+              var up = k.c >= k.o;
+              var col = k.daily ? "#d4af37" : (up ? "#21c95e" : "#ff593c");
+              c.beginPath(); c.moveTo(x, Y(k.h)); c.lineTo(x, Y(k.l));
+              c.strokeStyle = col; c.lineWidth = 1; c.stroke();
+              var y1 = Y(Math.max(k.o, k.c)), y2 = Y(Math.min(k.o, k.c));
+              c.fillStyle = k.daily ? "rgba(212,175,55,.8)" : (up ? "rgba(33,201,94,.75)" : "rgba(255,89,60,.75)");
+              c.fillRect(x - bw/2, y1, bw, Math.max(1.2, y2 - y1));
+              if (k.daily){ c.strokeStyle = "#d4af37"; c.lineWidth = 1; c.strokeRect(x - bw/2, y1, bw, Math.max(1.2, y2 - y1)); }
+            });
+            var lastP = series[series.length - 1].c;
+            c.beginPath(); c.setLineDash([4,3]); c.moveTo(2, Y(lastP)); c.lineTo(w-2, Y(lastP));
+            c.strokeStyle = "rgba(255,255,255,.35)"; c.lineWidth = 1; c.stroke(); c.setLineDash([]);
+            $("swCandleMeta").textContent = (d ? T("יומי 24ש' ","24h daily ") + fmtPrice(d.o) + "·" + fmtPrice(d.c) + " · " : "") + (sess.length ? sess.length + T(" נרות-סשן"," session candles") : T("אין עדיין נרות-סשן","no session candles yet"));
+          }
+          // ── R73: פקודות-כוונה · מקומיות למכשיר · בדיקה מול הספר החי · ביצוע ידני.
+          //    לעולם לא מבצעות אוטומטית ולעולם לא מעמידות פני פקודה-על-שרשרת. ──
+          var LIM_KEY = "saos.sw.limits.v1";
+          function loadLimits(){ try { var a = JSON.parse(localStorage.getItem(LIM_KEY)); return Array.isArray(a) ? a : []; } catch(e){ return []; } }
+          function saveLimits(l){ try { localStorage.setItem(LIM_KEY, JSON.stringify(l.slice(-50))); } catch(e){} }
+          function bookPriceMu(asset){
+            if (asset === "USDS") return 1000;
+            if (!world || !Array.isArray(world.pools)) return null;
+            var m = world.markets && world.markets[0];
+            if (m && asset === m.base && typeof m.fair === "number") return m.fair;
+            for (var i = 0; i < world.pools.length; i++){
+              var p = world.pools[i];
+              if (typeof p.mid !== "number" || !p.mid) continue;
+              if (p.a === asset && p.b === "USDS") return p.mid;
+              if (p.b === asset && p.a === "USDS") return Math.round(1000000 / p.mid);
+            }
+            return null;
+          }
+          function limitMarketable(o){
+            var px = bookPriceMu(o.asset);
+            var target = parseFloat(o.targetStr) * MU;
+            if (px === null || !isFinite(target) || target <= 0) return false;
+            return o.side === "buy" ? px <= target : px >= target;
+          }
+          function limitAdd(){
+            var side = $("swLimSide").value, asset = $("swLimAsset").value;
+            var sizeStr = $("swLimSize").value.replace(/[^0-9.]/g, "");
+            var targetStr = $("swLimTarget").value.replace(/[^0-9.]/g, "");
+            if (!(parseFloat(sizeStr) > 0) || !(parseFloat(targetStr) > 0)){
+              $("swLimitCount").textContent = T("הזינו כמות ומחיר-יעד","enter size and target");
+              return;
+            }
+            var l = loadLimits();
+            l.push({ id: Date.now(), side: side, asset: asset, sizeStr: sizeStr, targetStr: targetStr, at: Date.now() });
+            saveLimits(l);
+            $("swLimSize").value = ""; $("swLimTarget").value = ""; $("swLimitCount").textContent = "";
+            renderLimits();
+          }
+          function limitCancel(id){
+            saveLimits(loadLimits().filter(function(o){ return o.id !== id; }));
+            renderLimits();
+          }
+          function limitExecute(id){
+            var o = null, l = loadLimits();
+            for (var i = 0; i < l.length; i++) if (l[i].id === id) o = l[i];
+            if (!o) return;
+            assetIn = o.side === "buy" ? "USDS" : o.asset;
+            assetOut = o.side === "buy" ? o.asset : "USDS";
+            amountStr = o.sizeStr; $("swAmtIn").value = o.sizeStr;
+            refreshQuote();
+            var card = document.querySelector('[data-testid="swap-view"]');
+            if (card && card.scrollIntoView) card.scrollIntoView({ behavior:"smooth", block:"center" });
+          }
+          function renderLimits(){
+            var el = $("swLimList"); if (!el) return;
+            var list = loadLimits();
+            $("swLimitCount").textContent = list.length ? list.length + " " + T("פקודות","orders") : "";
+            if (!list.length){
+              el.innerHTML = '<p style="font-size:11.5px;color:var(--dxt3);margin:2px 0 0">' + T("אין פקודות-כוונה עדיין · הציבו יעד והחלון יציג מתי המחיר החי מגיע אליו","No intent orders yet · set a target and the window shows when the live price reaches it") + "</p>";
+              return;
+            }
+            el.innerHTML = list.map(function(o){
+              var px = bookPriceMu(o.asset);
+              var target = Math.round(parseFloat(o.targetStr) * MU);
+              var marketable = limitMarketable(o);
+              var chip = px === null
+                ? '<span style="font-size:9.5px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--dxt3)">' + T("אין מחיר-ספר","no book price") + "</span>"
+                : (marketable
+                  ? '<span style="font-size:9.5px;padding:2px 8px;border-radius:999px;background:var(--dxgreensoft);color:var(--dxgreen);font-weight:600">' + T("בר-ביצוע עכשיו","marketable now") + "</span>"
+                  : '<span style="font-size:9.5px;padding:2px 8px;border-radius:999px;background:rgba(255,191,23,.12);color:var(--dxamber)">' + T("ממתין למחיר","waiting for price") + "</span>");
+              var delta = (px !== null && target > 0) ? ((px - target) / target * 100) : null;
+              return '<div class="dx-raised" style="padding:10px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between">' +
+                '<div style="display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap">' + medHtml(o.asset, 22) +
+                '<span class="dx-num" style="font-size:11.5px;font-weight:600;color:' + (o.side === "buy" ? "var(--dxgreen)" : "var(--dxred)") + '">' + (o.side === "buy" ? T("קנייה","BUY") : T("מכירה","SELL")) + "</span>" +
+                '<span class="dx-num" style="font-size:11.5px">' + fmtMu(parseAmount(o.sizeStr)) + " " + esc(o.asset) + "</span>" +
+                '<span class="dx-num" style="font-size:11px;color:var(--dxt2)">' + T("ביעד ","@ ") + fmtPrice(target) + " USDS</span>" + chip + "</div>" +
+                '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">' +
+                (delta !== null ? '<span class="dx-num" style="font-size:10px;color:var(--dxt3)">' + T("חי ","live ") + fmtPrice(px) + " USDS · " + (delta >= 0 ? "+" : "") + delta.toFixed(1) + "%</span>" : "") +
+                (marketable ? '<button type="button" data-limdo="exec|' + o.id + '" class="dx-cta" style="height:30px;padding:0 12px;font-size:11px">' + T("בצע בהחלפה","Execute in swap") + "</button>" : "") +
+                '<button type="button" data-limdo="cancel|' + o.id + '" class="dx-ghost" style="height:30px;padding:0 12px;font-size:11px">' + T("בטל","Cancel") + "</button></div></div>";
+            }).join("");
+          }
+          function buildLimitForm(){
+            var sel = $("swLimAsset");
+            sel.innerHTML = DEX_ASSETS.map(function(a){ return '<option value="' + esc(a) + '">' + esc(a) + "</option>"; }).join("");
+          }
+          // ── R73: גשר ריבוי-שרשראות · dex/bridge.json + dex/deposits.json (ספרי-המנוע, אפס המצאה) ──
+          var bridge = null, deposits = null;
+          function loadBridge(){
+            var done = 0;
+            function fin(){ renderBridge(); }
+            function step(){ if (++done === 2) fin(); }
+            fetch("dex/bridge.json", { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){ bridge = (j && j.bridge) ? j.bridge : null; step(); }).catch(function(){ bridge = null; step(); });
+            fetch("dex/deposits.json", { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){ deposits = j; step(); }).catch(function(){ deposits = null; step(); });
+          }
+          function renderBridge(){
+            var card = $("swBridgeCard"); if (!card) return;
+            if (!bridge){ card.hidden = true; return; }
+            card.hidden = false;
+            var chains = Array.isArray(bridge.chains) ? bridge.chains : [];
+            $("swBridgeChains").innerHTML = chains.map(function(ch){
+              return '<span class="dx-chip dx-num" style="padding:3px 10px;font-size:10.5px">' + esc(ch) + "</span>";
+            }).join("");
+            var escN = bridge.escrow ? Object.keys(bridge.escrow).length : 0;
+            var intents = Array.isArray(bridge.intents) ? bridge.intents.length : 0;
+            var dep = deposits && Array.isArray(deposits.deposits) ? deposits.deposits.length : null;
+            var k = [];
+            k.push("<span>" + T("מסילות ","Rails ") + chains.length + "</span>");
+            k.push("<span>" + T("אסקרו פעיל ","Active escrow ") + escN + "</span>");
+            k.push("<span>" + T("כוונות-גשר ","Bridge intents ") + intents + "</span>");
+            k.push("<span>" + T("תקרת-תביעה ","Claim cap ") + fmtMu((bridge.caps && bridge.caps.claimMu) || 0) + " USDS</span>");
+            if (dep !== null) k.push("<span>" + T("הפקדות שנרשמו ","Deposits recorded ") + dep + "</span>");
+            if (bridge.farContract && bridge.farContract.address) k.push("<span>" + esc(bridge.farContract.chain) + " · " + esc(bridge.farContract.name) + " · " + esc(String(bridge.farContract.address).slice(0,10)) + "…</span>");
+            $("swBridgeKpis").innerHTML = k.join("");
+            var auto = bridge.auto || {};
+            $("swBridgeNote").textContent = T("תביעה מאמתת קישור מול השרשרת-החוץ (נמען + סכום + עומק≥3/finalized) · סליקה פנימית אפס-גז דרך הגרעין · אוטומט: " + (auto.started ? (auto.lastAction || "?") : "לא הופעל"), "Claims verify the link against the external chain (recipient + amount + depth≥3/finalized) · internal settlement is zero-gas via the core · auto: " + (auto.started ? (auto.lastAction || "?") : "not started"));
+            if (deposits && deposits.updatedAt){
+              var ageM = Math.round((Date.now() - Date.parse(deposits.updatedAt)) / 60000);
+              $("swBridgeFresh").textContent = T("צופה-ההפקדות חי · רענון לפני " + (ageM < 60 ? ageM + " דק'" : Math.round(ageM/60) + " ש'"), "Deposit watcher live · refreshed " + (ageM < 60 ? ageM + "m ago" : Math.round(ageM/60) + "h ago"));
+            } else $("swBridgeFresh").textContent = "";
+          }
           // ── overlays ──
           var overlay = $("swOverlay"), modal = $("swModal"), pickDir = null, pickSearch = "";
           function openOverlay(html){ modal.innerHTML = html; overlay.hidden = false; }
@@ -1292,6 +1516,15 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             assetIn = parts[0]; assetOut = parts[1]; amountStr = "";
             $("swAmtIn").value = ""; refreshQuote();
           });
+          // ── R73 wiring: intent orders ──
+          $("swLimAdd").addEventListener("click", limitAdd);
+          $("swLimList").addEventListener("click", function(e){
+            var b = e.target.closest ? e.target.closest("[data-limdo]") : null;
+            if (!b) return;
+            var parts = b.getAttribute("data-limdo").split("|");
+            if (parts[0] === "exec") limitExecute(Number(parts[1]));
+            else if (parts[0] === "cancel") limitCancel(Number(parts[1]));
+          });
           // ── the book · official engine mirror (dex-beat) ──
           function loadWorld(){
             fetch("dex/world.json", { cache: "no-store" }).then(function(r){
@@ -1301,6 +1534,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               if (!j || !j.ok) throw new Error("bad book");
               var changed = !world || j.version !== world.version;
               world = j; online = true; everOk = true;
+              recordSessionCandle(j);
               render();
               if (changed && parseAmount(amountStr)) refreshQuote();
             }).catch(function(){
@@ -1313,6 +1547,9 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           });
           loadWorld();
           setInterval(loadWorld, 20000);
+          loadBridge();
+          setInterval(loadBridge, 300000);
+          buildLimitForm();
           render();
         })();
         </script>
@@ -1618,7 +1855,7 @@ var I18N = {
     "ex.arenanote":"הזירה: סוכני-הגריד של הרשת מקוננים על הספר החי זה-מול-זה · PnL נמדד מהספר · יחידות-מילי (µ)",
     "ex.poolsnote":"בריכות בשלב-ההנעה: הנזילות קטנה ומתפרסמת כמו-שהיא · נקודות (· · ·) = אין צד-USDS עדיין",
     "inv.band":"בוחנים אותנו? הכל פתוח:","inv.deck":"מצגת למשקיעים","inv.versus":"ההשוואה הכנה","inv.truth":"שער האמת","inv.receipts":"קיר הקבלות",
-    "sw.h":"חלון ההחלפה","sw.sub":"הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json","sw.title":"החלפה","sw.pay":"משלמים","sw.recv":"מקבלים (משוער)","sw.bal":"יתרה:","sw.price":"מחיר","sw.impact":"הפרש מחיר (עלות-השפעה)","sw.slipMax":"סטייה מרבית מותרת","sw.minOut":"מקבלים לפחות","sw.fees":"עמלות-בריכות במסלול","sw.route":"מסלול","sw.eta":"זמן משוער","sw.etaV":"≤ 3 שניות (בלוק הבא)","sw.queued":"ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע","sw.offline":"המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן","sw.stale":"נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה","sw.settingsaria":"הגדרות החלפה","sw.amtaria":"סכום להחלפה","sw.fliparia":"היפוך כיוון","sw.deptharia":"תרשים עומק הזמנות חי","sw.sparkaria":"סרט מחיר חי",
+    "sw.h":"חלון ההחלפה","sw.sub":"הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json","sw.title":"החלפה","sw.pay":"משלמים","sw.recv":"מקבלים (משוער)","sw.bal":"יתרה:","sw.price":"מחיר","sw.impact":"הפרש מחיר (עלות-השפעה)","sw.slipMax":"סטייה מרבית מותרת","sw.minOut":"מקבלים לפחות","sw.fees":"עמלות-בריכות במסלול","sw.route":"מסלול","sw.eta":"זמן משוער","sw.etaV":"≤ 3 שניות (בלוק הבא)","sw.queued":"ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע","sw.offline":"המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן","sw.stale":"נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה","sw.settingsaria":"הגדרות החלפה","sw.amtaria":"סכום להחלפה","sw.fliparia":"היפוך כיוון","sw.deptharia":"תרשים עומק הזמנות חי","sw.sparkaria":"סרט מחיר חי","sw.candleh":"נרות שוק · יומי מהספר + סשן מהמכשיר שלך","sw.candlearia":"תרשים נרות שוק חי","sw.candlenote":"הנר היומי נגזר מ-stats24 של הספר הרשמי · נרות-הסשן נמדדים במכשירך מרענוני הספר ונשמרים מקומית · המנוע סופר 290 נרות-דקה וטרם מפרסם אותם · ברגע שיפורסמו תיכנס ההיסטוריה המלאה","sw.limith":"פקודות-כוונה · מקומי","sw.limside":"כיוון","sw.limbuy":"קנייה","sw.limsell":"מכירה","sw.limasset":"מטבע","sw.limsize":"כמות","sw.limtarget":"מחיר-יעד (USDS)","sw.limadd":"הצב פקודה","sw.limnote":"פקודות-כוונה נשמרות במכשירך בלבד · נבדקות מול הספר החי בכל רענון · ביצוע ידני בחלון ההחלפה · אינן מונחות על השרשרת עדיין","sw.bridgeh":"גשר ריבוי-שרשראות · המסילות החיות","inv.dev":"תיעוד למפתחים",
     "ex.ledgerh":"הפנקס החי של המטבע","ex.ledgersub":"saos.live.v1: קיפול דטרמיניסטי של פעולות ציבוריות",
     "ex.supplyh":"אספקה ותקרה","ex.max":"תקרה מקסימלית","ex.supplynote":"ההנפקה ההתחלתית משקפת 1:1 את האספקה המאומתת של SAOS-NET v0. הפרוטוקול קובע: אספקה שווה לנעול, תמיד.",
     "ex.replayh":"אימות מימוש-מחדש","ex.replayed":"פעולות ששוחזרו","ex.valid":"פעולות תקינות","ex.replaynote":"פעולות לא תקינות נשמרות ומוצגות כפי שהן: פנקס שמראה רק הצלחות הוא לא פנקס אמת.","ex.walletopen":"לארנק הריבוני",
@@ -1728,7 +1965,7 @@ var I18N = {
     "ex.arenanote":"Arena: the network's own grid agents market-make against each other on the live book · PnL measured from the book · milli-units (µ)",
     "ex.poolsnote":"Bootstrap pools: liquidity is small and published as-is · dots (· · ·) = no USDS side yet",
     "inv.band":"Auditing us? Everything is open:","inv.deck":"Partner deck","inv.versus":"The honest versus","inv.truth":"The truth gate","inv.receipts":"Receipt wall",
-    "sw.h":"The swap window","sw.sub":"Our DEX · full Uniswap anatomy on the sovereign engine · live quote from the official dex/world.json book","sw.title":"Swap","sw.pay":"You pay","sw.recv":"You receive (estimated)","sw.bal":"Balance:","sw.price":"Price","sw.impact":"Price impact","sw.slipMax":"Max slippage","sw.minOut":"You receive at least","sw.fees":"Pool fees in route","sw.route":"Route","sw.eta":"Est. time","sw.etaV":"≤ 3 seconds (next block)","sw.queued":"The swap entered the consensus queue · the result will appear on the tape and in your balance shortly","sw.offline":"The engine is not responding · the last quote may be stale","sw.stale":"Stale data · refresh failed, showing the last measurement","sw.settingsaria":"Swap settings","sw.amtaria":"Amount to swap","sw.fliparia":"Flip direction","sw.deptharia":"Live order book depth chart","sw.sparkaria":"Live price ribbon",
+    "sw.h":"The swap window","sw.sub":"Our DEX · full Uniswap anatomy on the sovereign engine · live quote from the official dex/world.json book","sw.title":"Swap","sw.pay":"You pay","sw.recv":"You receive (estimated)","sw.bal":"Balance:","sw.price":"Price","sw.impact":"Price impact","sw.slipMax":"Max slippage","sw.minOut":"You receive at least","sw.fees":"Pool fees in route","sw.route":"Route","sw.eta":"Est. time","sw.etaV":"≤ 3 seconds (next block)","sw.queued":"The swap entered the consensus queue · the result will appear on the tape and in your balance shortly","sw.offline":"The engine is not responding · the last quote may be stale","sw.stale":"Stale data · refresh failed, showing the last measurement","sw.settingsaria":"Swap settings","sw.amtaria":"Amount to swap","sw.fliparia":"Flip direction","sw.deptharia":"Live order book depth chart","sw.sparkaria":"Live price ribbon","sw.candleh":"Market candles · daily from the book + session from your device","sw.candlearia":"Live market candlestick chart","sw.candlenote":"The daily candle derives from the official book's stats24 · session candles are measured on your device from book refreshes and stored locally · the engine counts 290 one-minute candles and has not published them yet · full history lands here the moment it does","sw.limith":"Intent orders · local","sw.limside":"Side","sw.limbuy":"Buy","sw.limsell":"Sell","sw.limasset":"Asset","sw.limsize":"Size","sw.limtarget":"Target price (USDS)","sw.limadd":"Place order","sw.limnote":"Intent orders are stored on your device only · checked against the live book on every refresh · executed manually in the swap window · not placed on-chain yet","sw.bridgeh":"Multi-chain bridge · live rails","inv.dev":"Developer docs",
     "ex.ledgerh":"The live currency ledger","ex.ledgersub":"saos.live.v1: a deterministic fold of public operations",
     "ex.supplyh":"Supply and cap","ex.max":"Max supply","ex.supplynote":"The initial mint mirrors the verified supply of SAOS-NET v0 1:1. The protocol enforces: supply equals locked, always.",
     "ex.replayh":"Replay verification","ex.replayed":"Ops replayed","ex.valid":"Valid ops","ex.replaynote":"Invalid operations are kept and shown as they are: a book that shows only successes is not a truth book.","ex.walletopen":"Open the sovereign wallet",
