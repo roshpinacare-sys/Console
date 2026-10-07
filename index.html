@@ -736,13 +736,13 @@ html[dir="ltr"] .hero h1{max-width:24ch}
         <div class="kpi rv"><div class="lb" data-i18n="ex.ops">סך פעולות</div><div class="vl" id="exOps">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
       </div>
 
-      <!-- ═══ החלון: הסוואפ שלנו — פורט נאמן של saos-control-center SwapView ═══
+      <!-- ═══ החלון: הסוואפ שלנו · פורט נאמן של saos-control-center SwapView ═══
            אפס מפתחות: החלון קורא את הספר הרשמי dex/world.json (מראת המנוע
-           שמפרסם dex-beat) ומחשב מסלול בצד-הלקוח מהבריכות החיות — אותו
+           שמפרסם dex-beat) ומחשב מסלול בצד-הלקוח מהבריכות החיות · אותו
            מצב-מנוע שהחלון המקורי מציג. ההגשה עוברת גשר /api/dx מאובטח כשהוא
            קיים; באתר הציבורי ה-CTA כנה על זה שהוא קריא-בלבד. -->
       <div class="sect" id="sub-exchange-swap">
-        <div class="sect-h"><h2>חלון ההחלפה</h2><span class="sub">הדקס שלנו — אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json</span></div>
+        <div class="sect-h"><h2>חלון ההחלפה</h2><span class="sub">הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json</span></div>
         <style>
           #sub-exchange-swap{--dxc:#1f1f1f;--dxr:#1a1a1a;--dxwell:#272727;--dxline:rgba(255,255,255,.1);--dxline2:rgba(255,255,255,.16);--dxt1:#fcfcfc;--dxt2:rgba(255,255,255,.67);--dxt3:rgba(255,255,255,.42);--dxpink:#ff37c7;--dxpink2:#e500a5;--dxpinksoft:rgba(255,55,199,.1);--dxgreen:#21c95e;--dxgreensoft:rgba(33,201,94,.12);--dxamber:#ffbf17;--dxred:#ff593c}
           #sub-exchange-swap .sw-stage{display:flex;flex-direction:column;align-items:center;padding-top:8px}
@@ -826,10 +826,10 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)">זמן משוער</span><span>≤ 3 שניות (בלוק הבא)</span></div>
             </div>
             <button id="swCta" class="dx-cta" style="width:100%;height:52px;margin-top:16px;font-size:16px" data-testid="swap-cta">הזן סכום</button>
-            <p id="swQueuedNote" style="font-size:11px;text-align:center;color:var(--dxt2);margin-top:8px" hidden>ההחלפה נכנסה לתור הקונצנזוס — תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע</p>
-            <p id="swOffline" style="font-size:11px;text-align:center;color:var(--dxamber);margin-top:8px" hidden>המנוע לא מגיב — הציטוט האחרון עשוי להיות מיושן</p>
+            <p id="swQueuedNote" style="font-size:11px;text-align:center;color:var(--dxt2);margin-top:8px" hidden>ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע</p>
+            <p id="swOffline" style="font-size:11px;text-align:center;color:var(--dxamber);margin-top:8px" hidden>המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן</p>
           </div>
-          <div id="swStale" class="sw-stale" role="status" hidden><span style="width:6px;height:6px;border-radius:50%;background:var(--dxamber);display:inline-block"></span>נתונים-ישנים — הרענון נכשל, מוצגת-המדידה-האחרונה</div>
+          <div id="swStale" class="sw-stale" role="status" hidden><span style="width:6px;height:6px;border-radius:50%;background:var(--dxamber);display:inline-block"></span>נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה</div>
           <div id="swStrip" class="sw-strip" data-testid="market-strip"></div>
         </div>
         <div id="swOverlay" class="sw-ovl" hidden><div class="dx-card sw-modal" id="swModal" dir="rtl"></div></div>
@@ -876,7 +876,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             return 0;
           }
           function parseAmount(s){ var n = parseFloat(String(s).replace(/,/g,"")); return (isFinite(n) && n > 0) ? Math.floor(n * MU) : 0; }
-          // ── ראוטר-צד-הלקוח על הספר הרשמי — אותה משפחת-מתמטיקה של המנוע:
+          // ── ראוטר-צד-הלקוח על הספר הרשמי · אותה משפחת-מתמטיקה של המנוע:
           //    בריכות constant-product עם עמלת-בריכה-אמת + רגלי-עטיפה 1:1.
           //    בלי נתון-עמלה הבריכה נפסלת מהמסלול (כנות: לא ממציאים עמלה). ──
           function computeQuote(inA, outA, amountMu){
@@ -948,8 +948,8 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           function minOutMu(){ return quote ? Math.floor((quote.amountOutMu * (100 - slipPct)) / 100) : 0; }
           // ── CTA state machine (mirror) ──
           function ctaLabel(){
-            if (cta === "error") return errNote || "נכשל — נסה שוב";
-            return { empty:"הזן סכום", "no-route":"אין נזילות לזוג הזה", quoting:"מחשב מסלול…", review:"סקירת החלפה", submitting:"שולח…", queued:"הוגש — ייכלל בבלוק הבא" }[cta] || "הזן סכום";
+            if (cta === "error") return errNote || "נכשל · נסה שוב";
+            return { empty:"הזן סכום", "no-route":"אין נזילות לזוג הזה", quoting:"מחשב מסלול…", review:"סקירת החלפה", submitting:"שולח…", queued:"הוגש · ייכלל בבלוק הבא" }[cta] || "הזן סכום";
           }
           function refreshQuote(){
             var amountMu = parseAmount(amountStr);
@@ -967,7 +967,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             if (quoteTimer) clearTimeout(quoteTimer);
             quoteTimer = setTimeout(refreshQuote, 200);
           }
-          // ── submission — through the secured bridge when it exists ──
+          // ── submission · through the secured bridge when it exists ──
           function dxPost(action, payload){
             try {
               return fetch("/api/dx", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ action:action, payload:payload }) })
@@ -993,8 +993,8 @@ html[dir="ltr"] .hero h1{max-width:24ch}
                 errNote = (e.indexOf("unauthorized") >= 0 || e.indexOf("auth") >= 0)
                   ? "נדרשת התחברות-בעלים כדי לסחור"
                   : (e.indexOf("network") >= 0
-                    ? "גשר-הביצוע לא זמין מכאן — הביצוע החי מתבצע במרכז-השליטה המאובטח"
-                    : String((j && (j.note || j.error)) || "גשר-הביצוע לא זמין מכאן — הביצוע החי מתבצע במרכז-השליטה המאובטח"));
+                    ? "גשר-הביצוע לא זמין מכאן · הביצוע החי מתבצע במרכז-השליטה המאובטח"
+                    : String((j && (j.note || j.error)) || "גשר-הביצוע לא זמין מכאן · הביצוע החי מתבצע במרכז-השליטה המאובטח"));
                 render();
               }
             });
@@ -1016,11 +1016,11 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               var outPerIn = parseAmount(amountStr) ? quote.amountOutMu / parseAmount(amountStr) : 0;
               $("swPrice").textContent = "1 " + assetIn + " = " + fmtPrice(quote.effPriceMu) + " " + assetOut;
               var imp = $("swImpact");
-              imp.textContent = quote.impactPct !== null ? quote.impactPct.toFixed(2) + "%" : "—";
+              imp.textContent = quote.impactPct !== null ? quote.impactPct.toFixed(2) + "%" : "-";
               imp.style.color = (quote.impactPct !== null && quote.impactPct > 2) ? "var(--dxamber)" : "var(--dxt1)";
               $("swSlip").textContent = (slipAuto ? "אוטומטי " : "") + slipPct + "%";
               $("swMinOut").textContent = fmtMu(minOutMu()) + " " + assetOut;
-              $("swFees").innerHTML = quote.feeText ? esc(quote.feeText) + ' <span style="color:var(--dxt3)">(70% LP · 30% אוצר)</span>' : "—";
+              $("swFees").innerHTML = quote.feeText ? esc(quote.feeText) + ' <span style="color:var(--dxt3)">(70% LP · 30% אוצר)</span>' : "-";
               $("swRoute").innerHTML = quote.legs.map(function(l){
                 return '<span class="dx-chip dx-num" style="padding:2px 8px;font-size:10px">' + esc(l.kind === "pool" ? l.venue.slice(5) : "wrap→" + l.to) + "</span>";
               }).join("");
@@ -1055,7 +1055,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               var ageMin = Math.round((Date.now() - Date.parse(world.publishedAt)) / 60000);
               el.textContent = "v" + (world.version || "?") + " · " + (ageMin < 1 ? "עכשיו" : ageMin < 60 ? "לפני " + ageMin + " דק'" : "לפני " + Math.round(ageMin/60) + "ש'");
               st.hidden = online || !(everOk);
-              st.hidden = !(ageMin > 180 && everOk); // קצב-פרסום נמדד: dex-beat כל 2ש' — 3ש' = המנוע הפסיק
+              st.hidden = !(ageMin > 180 && everOk); // קצב-פרסום נמדד: dex-beat כל 2ש' · 3ש' = המנוע הפסיק
               if (!online) st.hidden = false;
             } else if (!online && everOk){ el.textContent = ""; st.hidden = false; }
             else { el.textContent = online ? "" : ""; st.hidden = true; }
@@ -1081,12 +1081,12 @@ html[dir="ltr"] .hero h1{max-width:24ch}
                 return '<button type="button" data-swslip="' + p.v + "|" + (p.label === "אוטומטי" ? 1 : 0) + '" class="' + (on ? "dx-chip-active" : "dx-chip") + '" style="padding:6px 12px;font-size:12px;cursor:pointer;color:' + (on ? "" : "var(--dxt1)") + '">' + p.label + "</button>";
               }).join("") +
               '<input id="swSlipCustom" dir="ltr" placeholder="מותאם %" inputmode="decimal" class="dx-chip dx-num" style="width:80px;padding:6px 10px;font-size:12px;background:transparent;outline:none;color:var(--dxt1)"></div>' +
-              (slipPct < 0.1 ? '<p style="font-size:11px;color:var(--dxamber);margin-top:8px">סטייה נמוכה — העסקה עלולה לא לבצע</p>' : "") +
-              (slipPct > 5 ? '<p style="font-size:11px;color:var(--dxred);margin-top:8px">סטייה גבוהה מאוד — חשוף למחיר גרוע</p>' : "") + "</div>" +
+              (slipPct < 0.1 ? '<p style="font-size:11px;color:var(--dxamber);margin-top:8px">סטייה נמוכה · העסקה עלולה לא לבצע</p>' : "") +
+              (slipPct > 5 ? '<p style="font-size:11px;color:var(--dxred);margin-top:8px">סטייה גבוהה מאוד · חשוף למחיר גרוע</p>' : "") + "</div>" +
               '<div class="dx-detail" style="margin-top:16px;padding-top:14px"><div style="font-size:12px;font-weight:500;margin-bottom:8px">מקור ביצוע</div><div style="display:flex;gap:8px">' +
               '<button type="button" data-swroute="1" class="' + (smartRoute ? "dx-chip-active" : "dx-chip") + '" style="padding:6px 12px;font-size:12px;cursor:pointer;color:' + (smartRoute ? "" : "var(--dxt1)") + '">מסלול-חכם (batch אטומי)</button>' +
               '<button type="button" data-swroute="0" class="' + (!smartRoute ? "dx-chip-active" : "dx-chip") + '" style="padding:6px 12px;font-size:12px;cursor:pointer;color:' + (!smartRoute ? "" : "var(--dxt1)") + '">בריכה ישירה</button></div>' +
-              '<p style="font-size:11px;color:var(--dxt2);margin-top:8px;line-height:1.6">מסלול-חכם: הראוטר מפרק לרגליים ומבצע הכל-או-כלום עם minOut לכל-רגל. בריכה ישירה: סוואג׳ יחיד בבריכה — העמלה-הדינמית-חי מוצגת-בכרטיס-ההחלפה.</p></div>';
+              '<p style="font-size:11px;color:var(--dxt2);margin-top:8px;line-height:1.6">מסלול-חכם: הראוטר מפרק לרגליים ומבצע הכל-או-כלום עם minOut לכל-רגל. בריכה ישירה: סוואג׳ יחיד בבריכה · העמלה-הדינמית-חי מוצגת-בכרטיס-ההחלפה.</p></div>';
             openOverlay(html);
             modal.querySelectorAll("[data-swslip]").forEach(function(b){
               b.addEventListener("click", function(){
@@ -1142,7 +1142,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">שער</span><span class="dx-num">1 ' + esc(assetIn) + " = " + fmtPrice(quote.effPriceMu) + " " + esc(assetOut) + "</span></div>" +
               '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">מקבלים לפחות</span><span class="dx-num" style="color:var(--dxgreen)">' + fmtMu(minOutMu()) + " " + esc(assetOut) + "</span></div>" +
               '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">מסלול</span><span class="dx-num">' + quote.legs.length + ' רגליים · ' + (smartRoute ? "ראוטר אטומי" : "בריכה ישירה") + "</span></div>" +
-              '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">אחריות</span><span>minOut fail-closed — נדחה אם המחיר זז</span></div></div>' +
+              '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">אחריות</span><span>minOut fail-closed · נדחה אם המחיר זז</span></div></div>' +
               '<button type="button" id="swConfirm" class="dx-cta" style="width:100%;height:48px;margin-top:14px;font-size:15px"' + ((quote && !quoting) ? "" : " disabled style=\"width:100%;height:48px;margin-top:14px;font-size:15px;opacity:.5\"") + ' data-testid="swap-confirm">אישור החלפה</button>';
             openOverlay(html);
             $("swConfirm").addEventListener("click", doConfirm);
@@ -1172,7 +1172,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             assetIn = parts[0]; assetOut = parts[1]; amountStr = "";
             $("swAmtIn").value = ""; refreshQuote();
           });
-          // ── the book — official engine mirror (dex-beat) ──
+          // ── the book · official engine mirror (dex-beat) ──
           function loadWorld(){
             fetch("dex/world.json", { cache: "no-store" }).then(function(r){
               if (!r.ok) throw new Error("HTTP " + r.status);

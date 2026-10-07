@@ -315,23 +315,23 @@
   {
    "id": "A36",
    "desc": {
-    "en": "The DEX engine is alive: dex/world.json published at most 6h ago (two-hour cadence plus tolerance)",
-    "he": "מנוע הדקס חי: dex/world.json פורסם לפני 6 שעות לכל היותר (קצב דו-שעתי בתוספת סובלנות)"
+    "en": "The DEX engine is alive: dex/world.json published at most 30h ago (R67-C daily dex-beat 19:53Z plus scheduler tolerance)",
+    "he": "מנוע הדקס חי: dex/world.json פורסם לפני 30 שעות לכל היותר (קצב יומי 19:53Z מאז R67-C בתוספת סובלנות-מתזמן)"
    },
    "kind": "json_age",
    "target": "dex/world.json",
    "field": "publishedAt",
-   "maxHours": 6
+   "maxHours": 30
   },
   {
    "id": "A37",
    "desc": {
-    "en": "R28 truth anchor: every active oracle price in world.json stays within 5% of the live CoinGecko market (the oracle proves it tracks reality)",
-    "he": "עוגן האמת R28: כל מחיר אורקל פעיל ב-world.json בטווח 5% מהשוק החי ב-CoinGecko (האורקל מוכיח שהוא עוקב אחרי המציאות)"
+    "en": "R28 truth anchor: every active oracle price in world.json stays within 8% of the live CoinGecko market (the oracle proves it tracks reality; 8% because the R67-C daily beat lets intraday market drift accumulate)",
+    "he": "עוגן האמת R28: כל מחיר אורקל פעיל ב-world.json בטווח 8% מהשוק החי ב-CoinGecko (האורקל מוכיח שהוא עוקב אחרי המציאות; 8% כי פעימה יומית מאז R67-C מצבירה סטיית-שוק תוך-יומית)"
    },
    "kind": "oracle_drift",
    "target": "dex/world.json",
-   "maxDriftPct": 5,
+   "maxDriftPct": 8,
    "assets": {
     "WSTEEM": "steem",
     "PHIVE": "hive",

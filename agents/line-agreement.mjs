@@ -22,7 +22,7 @@ import { readFileSync, existsSync } from "node:fs";
 
 const LEDGER_AGE_MAX_H = 48;  // אותה דוקטרינת-חיים כמו שיקוף הספרים
 const CENSUS_AGE_MAX_H = 3;   // המפקד רץ כל שעתיים — 3ש' הוא פיגור
-const CHAIN_AHEAD_LAG = 20;   // השרשרת רשאית להתקדם מעבר לספר (עד ~10ש' עוגנים)
+const CHAIN_AHEAD_LAG = 60;   // R67-C: weave-mirror יומי (18:57Z) — השרשרת מתקדמת ~1.8cp/ש' ⇒ 24ש' ≈ 43cp + סובלנות. החלון-מקומי: 60 עוגנים ≈ 43ש' מכסה את גיל-הספר המרבי (48ש' LEDGER_AGE_MAX_H נשפט לפני זה)
 const log = (m) => console.log(`[line-agreement] ${m}`);
 
 const r1 = (v) => Math.round(v * 10) / 10;
