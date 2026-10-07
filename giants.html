@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAOS · ליגת-החזית · שולחן-הענקים החי ומפת-הפריצות</title>
+<!-- R75 THE FRONTIER LEAGUE · the league is measured keyless from DefiLlama (dex/giants.json, giants-beat daily),
+     the breakthrough map states only what is measured or built, and the sovereignty strip is rendered from the live books.
+     Authoritative copy lives on Domain (versus.html pattern); this Console copy is the same file, cross-fetched books. -->
+<link rel="canonical" href="https://roshpinacare-sys.github.io/Domain/giants.html">
+<meta name="description" content="ליגת-החזית: עמלות ונפחים חיים של 25 משפחות-ענקים מכל סוגי-ההון ב-DeFi, נמדדות keyless מ-DefiLlama, מול השורה שלנו מהספר החי · ומפת-הפריצות: מה כל ענק עושה להונו, מה אנחנו לוקחים ממנו, ואיפה אנחנו באמת עומדים.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SAOS Network">
+<meta property="og:title" content="SAOS · ליגת-החזית · שולחן-הענקים החי">
+<meta property="og:locale" content="he_IL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:description" content="25 משפחות-ענקים נמדדות חי · מפת-הפריצות: המנגנון שמייצר להם הון, מה אנחנו לוקחים, הסטטוס הכנה · ראיית-הריבונות מהספרים החיים.">
+<meta property="og:url" content="https://roshpinacare-sys.github.io/Domain/giants.html">
+<meta property="og:image" content="https://roshpinacare-sys.github.io/Console/assets/og-cover.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="SAOS Network seal">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SAOS · ליגת-החזית · שולחן-הענקים החי">
+<meta name="twitter:description" content="25 משפחות-ענקים נמדדות חי · מפת-הפריצות · ראיית-הריבונות.">
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5 20.5 7v10L12 21.5 3.5 17V7z' fill='none' stroke='%23d4af37' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23d4af37'/%3E%3C/svg%3E">
+<style>
+/* ═══ SAOS Console design system · midnight command center (giants.html copy) ═══ */
+:root{
+  --bg:#09090b; --bg2:#0c0c0e; --bg3:#101013;
+  --panel:rgba(255,255,255,.03); --panel2:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --gold:#d4af37; --gold-bright:#e9c767; --gold-dim:rgba(212,175,55,.12); --gold-line:rgba(212,175,55,.42);
+  --green:#22c55e; --amber:#eab308; --red:#ef4444; --purple:#a78bfa;
+  --text:#fafafa; --dim:#a1a1aa; --faint:#71717a;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',Menlo,Consolas,monospace;
+  --sans:'Heebo',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans Hebrew',sans-serif;
+  --r:16px; --r-sm:12px; --r-lg:20px;
+  --key:inset 0 1px 0 rgba(255,255,255,.055);
+  --key-hover:inset 0 1px 0 rgba(255,255,255,.09),0 12px 34px rgba(0,0,0,.38);
+  --tx:var(--text); --mut:var(--dim); --yellow:var(--amber);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{
+  color:var(--text); font-family:var(--sans);
+  min-height:100vh; min-height:100svh; display:flex; flex-direction:column; overflow-x:hidden;
+  font-size:15px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(1100px 560px at 50% -180px, rgba(212,175,55,.075), transparent 62%),
+    radial-gradient(760px 420px at 88% 4%, rgba(212,175,55,.035), transparent 60%),
+    var(--bg);
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1.4px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 52%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.5), transparent 52%);
+}
+::selection{background:rgba(212,175,55,.28)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{text-wrap:balance}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+.num{font-family:var(--mono);direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* sticky glass header */
+header.nhead{
+  position:sticky;top:0;z-index:900;
+  background:rgba(9,9,11,.72);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid var(--line);
+}
+.nhead .wrap{display:flex;align-items:center;gap:14px;min-height:62px}
+.brand{display:flex;align-items:center;gap:10px;flex:none;color:var(--text)}
+.brand svg{width:30px;height:30px;flex:none;filter:drop-shadow(0 0 14px rgba(212,175,55,.35))}
+.brand b{font-size:15.5px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.brand b i{color:var(--gold);font-style:normal}
+.links{
+  display:flex;gap:2px;background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:4px;margin-inline-start:auto;box-shadow:var(--key);
+}
+.links a{
+  padding:8px 16px;min-height:20px;border-radius:999px;font-size:13.5px;color:var(--dim);
+  display:inline-flex;align-items:center;transition:color .15s,background .15s;white-space:nowrap;
+}
+.links a:hover{color:var(--text);background:var(--panel2)}
+.langbtn{
+  background:var(--gold-dim);border:1px solid var(--gold-line);color:var(--gold-bright);
+  border-radius:999px;padding:8px 16px;font-size:13px;font-weight:650;letter-spacing:.4px;
+  box-shadow:var(--key);transition:background .15s,border-color .15s;flex:none;
+}
+.langbtn:hover{background:rgba(212,175,55,.2);border-color:var(--gold-bright)}
+.mburger{
+  display:none;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);
+  border-radius:999px;width:44px;height:44px;min-width:44px;min-height:44px;cursor:pointer;
+  align-items:center;justify-content:center;margin-inline-start:auto;flex:none;box-shadow:var(--key);
+}
+.mburger:hover{border-color:var(--line2);background:rgba(255,255,255,.07)}
+
+/* hero */
+main{flex:1;padding:34px 0 64px}
+.hero{padding:6px 0 2px}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:1.9px;text-transform:uppercase;
+  color:var(--gold-bright);font-weight:600;margin-bottom:16px;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:20px;height:1px;background:var(--gold-line);flex:none}
+.hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);font-weight:700;line-height:1.12;letter-spacing:-.5px;max-width:24ch}
+.herosub{margin-top:12px;font-size:clamp(1rem,1.6vw,1.14rem);color:var(--dim)}
+.lede{margin-top:18px;font-size:15px;color:var(--dim);line-height:1.75;max-width:76ch}
+.lede b{color:var(--text);font-weight:600}
+.freshline{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--faint)}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--panel);font-size:11.5px;color:var(--dim);
+}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:none}
+.chip.fresh{border-color:rgba(34,197,94,.35)} .chip.fresh .dot{background:var(--green)}
+.chip.old{border-color:rgba(234,179,8,.35)} .chip.old .dot{background:var(--amber)}
+.chip.dead{border-color:rgba(239,68,68,.4)} .chip.dead .dot{background:var(--red)}
+
+/* sections */
+section{margin-top:54px}
+.shead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.shead h2{font-size:clamp(1.4rem,2.4vw,1.8rem);font-weight:700}
+.shead .sub{font-size:13.5px;color:var(--dim)}
+.snote{font-size:13px;color:var(--dim);line-height:1.7;max-width:80ch;margin-top:6px}
+.snote b{color:var(--text)}
+
+/* league table */
+.lg{margin-top:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--key);overflow-x:auto}
+.lg table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+.lg th{
+  text-align:start;padding:12px 14px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--faint);font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+.lg td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap}
+.lg tbody tr:last-child td{border-bottom:none}
+.lg tbody tr:hover td{background:rgba(255,255,255,.03)}
+.lg .fam{font-weight:650;color:var(--text)}
+.lg .tierchip{
+  display:inline-flex;padding:2px 9px;border-radius:999px;font-size:10.5px;letter-spacing:.5px;
+  border:1px solid var(--line);color:var(--dim);background:var(--panel2);white-space:nowrap;
+}
+.lg .tierchip.dex{border-color:rgba(212,175,55,.3);color:var(--gold-bright)}
+.lg .tierchip.aggregator{border-color:rgba(34,197,94,.3);color:#86efac}
+.lg .tierchip.perps{border-color:rgba(239,68,68,.3);color:#fca5a5}
+.lg .tierchip.yield{border-color:rgba(167,139,250,.35);color:var(--purple)}
+.lg .tierchip.lending{border-color:rgba(234,179,8,.3);color:#fde047}
+.lg .tierchip.staking{border-color:rgba(34,197,94,.3);color:#86efac}
+.lg .tierchip.wallet{border-color:rgba(255,255,255,.2);color:var(--dim)}
+.lg .tierchip.ours{border-color:rgba(167,139,250,.5);color:var(--purple);font-weight:700}
+.lg tr.usrow td{background:rgba(167,139,250,.055);border-top:1px solid rgba(167,139,250,.3)}
+.lg tr.usrow .fam{color:var(--purple)}
+.lg .neg{color:var(--dim)}
+
+/* breakthrough map */
+.mapgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-top:16px}
+.mcard{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;
+  box-shadow:var(--key);transition:border-color .18s,transform .18s,box-shadow .18s;
+  display:flex;flex-direction:column;gap:10px;
+}
+.mcard:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:var(--key-hover)}
+.mcard .mhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mcard .mhead h3{font-size:16.5px;font-weight:700}
+.mcard .giants{display:flex;gap:6px;flex-wrap:wrap}
+.gchip{font-family:var(--mono);direction:ltr;unicode-bidi:isolate;font-size:10.5px;padding:3px 8px;border-radius:8px;border:1px solid var(--line);color:var(--dim);background:var(--panel2);white-space:nowrap}
+.mcard .blk{font-size:13px;color:var(--dim);line-height:1.72}
+.mcard .blk b{color:var(--text);font-weight:650}
+.mcard .blk .lab{display:block;font-family:var(--mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:4px;font-weight:650}
+.mcard .strow{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);flex-wrap:wrap}
+.stchip{font-size:11px;padding:3px 10px;border-radius:999px;border:1px solid rgba(34,197,94,.35);color:#86efac;background:rgba(34,197,94,.07)}
+.stchip.warn{border-color:rgba(234,179,8,.35);color:#fde047;background:rgba(234,179,8,.06)}
+.stchip.none{border-color:rgba(239,68,68,.4);color:#fca5a5;background:rgba(239,68,68,.05)}
+.mcard .strow a{font-size:12.5px;color:var(--gold-bright);margin-inline-start:auto}
+.mcard .strow a:hover{text-decoration:underline}
+
+/* sovereignty strip */
+.sov{margin-top:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--key);overflow:hidden}
+.sovrow{
+  display:grid;grid-template-columns:minmax(150px,240px) 1fr auto;gap:14px;align-items:center;
+  padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.05);
+}
+.sovrow:last-child{border-bottom:none}
+.sovrow .k{font-size:13px;color:var(--dim);font-weight:600}
+.sovrow .v{font-size:13.5px;color:var(--text);line-height:1.65;min-width:0}
+.sovrow .v .num{font-size:13px}
+.sovrow .s{justify-self:end}
+.sovrow .good{color:var(--green)} .sovrow .bad{color:var(--red)} .sovrow .mid{color:var(--amber)}
+.errline{margin-top:10px;font-size:12px;color:var(--red)}
+
+/* footer */
+footer{border-top:1px solid var(--line);background:rgba(12,12,14,.9);margin-top:auto;position:relative;padding:18px 0}
+footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.35),transparent)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--faint)}
+footer a{color:var(--dim)} footer a:hover{color:var(--gold-bright)}
+footer .fr{display:flex;gap:14px;flex-wrap:wrap}
+
+@media(max-width:900px){
+  .mburger{display:inline-flex}
+  .nhead nav.links{
+    display:none;position:absolute;top:100%;inset-inline:0;margin:0;
+    flex-direction:column;gap:2px;padding:12px 16px 16px;border-radius:0;
+    background:rgba(9,9,11,.96);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
+    border-bottom:1px solid var(--line);box-shadow:0 28px 48px -28px rgba(0,0,0,.92);
+  }
+  header.nav-open nav.links{display:flex}
+  .nhead nav.links a{display:flex;align-items:center;min-height:46px;padding:11px 14px;border-radius:var(--r-sm);font-size:15px;color:var(--text)}
+  .sovrow{grid-template-columns:1fr;gap:6px}
+  .sovrow .s{justify-self:start}
+}
+@media(max-width:640px){
+  .wrap{padding:0 16px}
+  main{padding:26px 0 52px}
+  .lg table{font-size:12px}
+  .lg th,.lg td{padding:9px 10px}
+  .mapgrid{grid-template-columns:1fr}
+  .brand b{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  body::before,body::after{display:none}
+  header.nhead{position:static}
+  .mcard,.lg,.sov{box-shadow:none}
+}
+</style>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://roshpinacare-sys.github.io/Domain/giants.html#webpage", "url": "https://roshpinacare-sys.github.io/Domain/giants.html", "name": "SAOS · ליגת-החזית · שולחן-הענקים החי ומפת-הפריצות", "description": "עמלות ונפחים חיים של משפחות-ענקים מכל סוגי-ההון ב-DeFi נמדדות keyless, מול השורה שלנו מהספר החי · ומפת-הפריצות הכנה.", "inLanguage": "\"he\",\"en\"", "isPartOf": {"@id": "https://roshpinacare-sys.github.io/Console/#website"}, "about": {"@id": "https://roshpinacare-sys.github.io/Console/#org"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "בית", "item": "https://roshpinacare-sys.github.io/Console/"}, {"@type": "ListItem", "position": 2, "name": "ליגת-החזית", "item": "https://roshpinacare-sys.github.io/Domain/giants.html"}]}, {"@type": "Organization", "@id": "https://roshpinacare-sys.github.io/Console/#org", "name": "SAOS Network", "url": "https://roshpinacare-sys.github.io/Console/", "logo": "https://roshpinacare-sys.github.io/Console/assets/og-cover.png"}]}
+</script>
+<link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<header class="nhead" id="nhead">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="הקונסולה">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z" fill="none" stroke="#d4af37" stroke-width="1.6"/><circle cx="12" cy="12" r="2.4" fill="#d4af37"/><circle cx="7.5" cy="15.5" r="1.5" fill="#a78bfa"/><circle cx="16.5" cy="15.5" r="1.5" fill="#a78bfa"/></svg>
+      <span><b>SAOS <i>&middot;</i> THE WEAVE</b></span>
+    </a>
+    <nav class="links" aria-label="דפי הקונסולה">
+      <a href="index.html" data-t="nav.console">הקונסולה</a>
+      <a href="truth.html" data-t="nav.truth">שער האמת</a>
+      <a href="versus.html" data-t="nav.versus">ההשוואה הכנה</a>
+      <a href="dev.html" data-t="nav.dev">למפתחים</a>
+    </nav>
+    <button class="langbtn" id="langbtn" type="button" aria-label="Switch language">EN</button>
+    <button class="mburger" id="mburger" aria-label="תפריט" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+
+    <section class="hero" style="margin-top:0">
+      <p class="eyebrow" data-t="hero.eyebrow">Frontier League · מודיעין חי</p>
+      <h1 data-t="hero.h1">ליגת-החזית: אנחנו מול כל מי שמייצר הון ב-DeFi</h1>
+      <p class="herosub" data-t="hero.sub">לא סיפורים על ענקים · מדידה שלהם · ומפת-הפריצות: מה לוקחים, מה חי, מה עוד לא</p>
+      <p class="lede" data-t="hero.lede">
+        הטבלה החיה <b>נמדדת keyless</b> מהפידים הציבוריים של DefiLlama (עמלות-פרוטוקול ונפחי-DEX, כל משפחה שלמה עם הרכיבים שלה) מול <b>השורה שלנו</b> שנמדדת מספר-המנוע החי. בלי מפתחות, בלי המצאה, fail-closed. מפת-הפריצות מציגה לכל סוג-הון: <b>המנגנון שמייצר לענקים את הכסף</b>, מה אנחנו כבר <b>לקחנו והרצנו ריבונית</b>, והפער שנשאר · באמת.
+      </p>
+      <div class="freshline" id="freshline">
+        <span class="chip" id="freshchip"><span class="dot"></span><span data-t="fresh.loading">טוען את הליגה...</span></span>
+        <span class="chip" data-t="fresh.src">מקור: api.llama.fi · keyless · ריצה יומית</span>
+      </div>
+    </section>
+
+    <section id="league">
+      <div class="shead">
+        <h2 data-t="lg.h">שולחן-הענקים · עמלות חיות</h2>
+        <span class="sub" data-t="lg.sub">ממוין לפי עמלות-30-יום · השורה שלנו נצמדת למטה בכנות</span>
+      </div>
+      <p class="snote" data-t="lg.note">
+        <b>קריאה כנה:</b> עמלות-פרוטוקול הן הדלק של הענקים · הכסף שנשאר אצלם מכל החלפה. השורה שלנו מראה את האמת המלאה: צבירת-העמלות שלנו היא <b>יחידות-פנימיות בספר-סגור</b> ואין לה ערך-חוץ. שורה של משפחה שלא נמצאה בפיד פשוט לא מופיעה · שום-דבר לא מומצא.
+      </p>
+      <div class="lg" id="lgtable" aria-live="polite"></div>
+      <p class="errline" id="lgerr" hidden></p>
+    </section>
+
+    <section id="map">
+      <div class="shead">
+        <h2 data-t="map.h">מפת-הפריצות · מה לוקחים מכל ענק</h2>
+        <span class="sub" data-t="map.sub">שבעה סוגי-הון · המנגנון · ההתאמה-הריבונית שלנו · הפער</span>
+      </div>
+      <p class="snote" data-t="map.note">
+        כל כרטיס: <b>מנגנון-ההון</b> של הענקים בסוג הזה (נמדד חי למעלה), <b>מה אנחנו לקחנו</b> והרצנו כבר ריבונית-מלאה, ו<b>הפער</b> שנשאר. סטטוס ירוק = חי ומוכח בקישור · אזהרה = חלקי · אדום = כנות-מלאה שאין.
+      </p>
+      <div class="mapgrid" id="mapgrid"></div>
+    </section>
+
+    <section id="sov">
+      <div class="shead">
+        <h2 data-t="sov.h">ראיית-הריבונות · מה כבר עובד באמת</h2>
+        <span class="sub" data-t="sov.sub">נמדד מהספרים החיים בזמן-טעינת-העמוד</span>
+      </div>
+      <div class="sov" id="sovrows"></div>
+      <p class="errline" id="soverr" hidden></p>
+    </section>
+
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>SAOS <bdi>·</bdi> THE WEAVE <bdi>·</bdi> <span data-t="foot.tag">ליגת-החזית · נמדד keyless · fail-closed</span></span>
+    <span class="fr">
+      <a href="index.html" data-t="foot.console">הקונסולה</a>
+      <a href="truth.html" data-t="foot.truth">שער-האמת</a>
+      <a href="versus.html" data-t="foot.versus">ההשוואה הכנה</a>
+      <a href="dev.html" data-t="foot.dev">למפתחים</a>
+      <a href="https://github.com/roshpinacare-sys/Console" rel="noopener" target="_blank">GitHub</a>
+    </span>
+  </div>
+</footer>
+<script>
+'use strict';
+/* R75 THE FRONTIER LEAGUE · giants.html
+ * הליגה וראיית-הריבונות נמדדות מהספרים הפומביים (giants.json · world.json · honest-econ.json),
+ * מפת-הפריצות היא טקסט-מדויק עם קישורי-הוכחה. אין מספרים מומצאים · fail-closed עם עדות-כישלון. */
+(function(){
+  var LANG = "he";
+  var DICT = {
+    en: {
+      "nav.console":"Console","nav.truth":"Truth gate","nav.versus":"The honest versus","nav.dev":"Developers",
+      "hero.eyebrow":"Frontier League · live intelligence",
+      "hero.h1":"The frontier league: us against everyone who makes money in DeFi",
+      "hero.sub":"No stories about giants · a measurement of them · and the breakthrough map: what we take, what is live, what is not",
+      "hero.lede":"The live table is measured keyless from the public DefiLlama feeds (protocol fees and DEX volume, every family kept whole with its components) against our own row measured from the live engine book. No keys, no invention, fail-closed. The breakthrough map shows, per wealth class, the mechanism that makes the giants rich, what we already took and run sovereignly, and the gap that remains · honestly.",
+      "fresh.loading":"Loading the league...","fresh.src":"source: api.llama.fi · keyless · daily beat","fresh.at":"league measured","fresh.ago":"ago","fresh.stale":"book is stale","fresh.fail":"league book unreachable (fail-closed)",
+      "lg.h":"The giants' table · live fees","lg.sub":"sorted by 30d fees · our row sits at the bottom, honestly",
+      "lg.note":"Read honestly: protocol fees are the giants' fuel · the money that stays with them from every swap. Our row shows the full truth: our fee accrual is internal units on a closed book with no external value. A family missing from the feed simply does not appear · nothing is invented.",
+      "lg.fam":"family","lg.tier":"class","lg.f24":"fees 24h","lg.f30":"fees 30d","lg.v24":"volume 24h","lg.all":"all-time","lg.oursnote":"internal book price · no external bid · fees accrued are internal units",
+      "tier.dex":"DEX","tier.aggregator":"aggregator","tier.perps":"perps","tier.yield":"yield","tier.lending":"lending","tier.staking":"staking","tier.wallet":"wallet","tier.ours":"us",
+      "map.h":"The breakthrough map · what we take from each giant","map.sub":"seven wealth classes · the mechanism · our sovereign adaptation · the gap",
+      "map.note":"Each card: the giants' wealth mechanism in that class (measured live above), what we already took and run with full sovereignty, and the remaining gap. Green status = live and proven at the link · amber = partial · red = the full honest statement that we don't have it.",
+      "sov.h":"Proof of sovereignty · what already really works","sov.sub":"measured from the live books at page load",
+      "foot.tag":"the frontier league · measured keyless · fail-closed","foot.console":"Console","foot.truth":"Truth gate","foot.versus":"Honest versus","foot.dev":"Developers",
+      "unmeasured":"unmeasured","engine.book":"The books engine","sov.real":"Real on-chain money","sov.loss":"Realized real PnL","sov.sim":"The SIM book","sov.gap":"Giants vs our real fees","sov.laws":"Trading laws","sov.bridge":"Measured bridge",
+      "sov.lawsv":"BUY-PREMIUM (no buy above sell-vwap) + SELL-FLOOR (no sell below cost x1.003) · live in market-exec · the measured loss leak is structurally closed",
+      "sov.bridgev":"8 rails measured (eth/bsc/tron/sol/steem/hive/blurt/saosnet) · claim cap 2,000 USDS · farContract ETH: SAOSRelay",
+      "loss.fix":"fix: R74 sell-floor law closes the leak structurally",
+      "live":"LIVE","partial":"PARTIAL","none":"NOT YET · HONEST","armed":"ARMED",
+      "open":"open","book":"book"
+    }
+  };
+  DICT.he = {
+    "nav.console":"הקונסולה","nav.truth":"שער האמת","nav.versus":"ההשוואה הכנה","nav.dev":"למפתחים",
+    "hero.eyebrow":"Frontier League · מודיעין חי",
+    "hero.h1":"ליגת-החזית: אנחנו מול כל מי שמייצר הון ב-DeFi",
+    "hero.sub":"לא סיפורים על ענקים · מדידה שלהם · ומפת-הפריצות: מה לוקחים, מה חי, מה עוד לא",
+    "hero.lede":"הטבלה החיה נמדדת keyless מהפידים הציבוריים של DefiLlama (עמלות-פרוטוקול ונפחי-DEX, כל משפחה שלמה עם הרכיבים שלה) מול השורה שלנו שנמדדת מספר-המנוע החי. בלי מפתחות, בלי המצאה, fail-closed. מפת-הפריצות מציגה לכל סוג-הון: המנגנון שמייצר לענקים את הכסף, מה אנחנו כבר לקחנו והרצנו ריבונית, והפער שנשאר · באמת.",
+    "fresh.loading":"טוען את הליגה...","fresh.src":"מקור: api.llama.fi · keyless · ריצה יומית","fresh.at":"הליגה נמדדה","fresh.ago":"לפני","fresh.stale":"הספר ישן","fresh.fail":"ספר-הליגה לא נגיש (fail-closed)",
+    "lg.h":"שולחן-הענקים · עמלות חיות","lg.sub":"ממוין לפי עמלות-30-יום · השורה שלנו נצמדת למטה בכנות",
+    "lg.note":"קריאה כנה: עמלות-פרוטוקול הן הדלק של הענקים · הכסף שנשאר אצלם מכל החלפה. השורה שלנו מראה את האמת המלאה: צבירת-העמלות שלנו היא יחידות-פנימיות בספר-סגור ואין לה ערך-חוץ. שורה של משפחה שלא נמצאה בפיד פשוט לא מופיעה · שום-דבר לא מומצא.",
+    "lg.fam":"משפחה","lg.tier":"סוג","lg.f24":"עמלות 24h","lg.f30":"עמלות 30d","lg.v24":"נפח 24h","lg.all":"מצטבר","lg.oursnote":"מחיר-ספר פנימי · אין ביד-חוץ · העמלות שנצברו הן יחידות-פנימיות",
+    "tier.dex":"DEX","tier.aggregator":"אגרגטור","tier.perps":"פרפטואלים","tier.yield":"תשואה","tier.lending":"הלוואות","tier.staking":"סטייקינג","tier.wallet":"ארנק","tier.ours":"אנחנו",
+    "map.h":"מפת-הפריצות · מה לוקחים מכל ענק","map.sub":"שבעה סוגי-הון · המנגנון · ההתאמה-הריבונית שלנו · הפער",
+    "map.note":"כל כרטיס: מנגנון-ההון של הענקים בסוג הזה (נמדד חי למעלה), מה אנחנו לקחנו והרצנו כבר ריבונית-מלאה, והפער שנשאר. סטטוס ירוק = חי ומוכח בקישור · אזהרה = חלקי · אדום = כנות-מלאה שאין.",
+    "sov.h":"ראיית-הריבונות · מה כבר עובד באמת","sov.sub":"נמדד מהספרים החיים בזמן-טעינת-העמוד",
+    "foot.tag":"ליגת-החזית · נמדד keyless · fail-closed","foot.console":"הקונסולה","foot.truth":"שער-האמת","foot.versus":"ההשוואה הכנה","foot.dev":"למפתחים",
+    "unmeasured":"לא נמדד","engine.book":"מנוע-הספרים","sov.real":"כסף-אמיתי על-שרשרת","sov.loss":"הפסד-אמיתי ממומש","sov.sim":"ספר-ה-SIM","sov.gap":"עמלות-הענקים מול האמיתיות שלנו","sov.laws":"חוקי-המסחר","sov.bridge":"הגשר הנמדד",
+    "sov.lawsv":"BUY-PREMIUM (אסור קנייה מעל מחיר-מכירה-ממוצע) + SELL-FLOOR (אסור מכירה מתחת לעלות x1.003) · חיים ב-market-exec · דליפת-ההפסד שנמדדה נסגרה מבנית",
+    "sov.bridgev":"8 מסילות נמדדו (eth/bsc/tron/sol/steem/hive/blurt/saosnet) · תקרת-פדיון 2,000 USDS · farContract ETH: SAOSRelay",
+    "loss.fix":"התיקון: חוק-רצפת-המכירה R74 סוגר את הדליפה מבנית",
+    "live":"חי","partial":"חלקי","none":"אין · כנות-מלאה","armed":"חמוש",
+    "open":"פתח","book":"ספר"
+  };
+
+  function t(k){ var v = DICT[LANG][k]; if (v !== undefined) return v; return DICT.he[k] !== undefined ? DICT.he[k] : k; }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function money(n){
+    if (typeof n !== "number" || !isFinite(n)) return "-";
+    var abs = Math.abs(n), sign = n < 0 ? "-" : "";
+    function s(v){ return v >= 1000 ? v.toLocaleString("en-US", {maximumFractionDigits:0}) : (Math.round(v*100)/100).toLocaleString("en-US"); }
+    if (abs >= 1e9) return sign + "$" + (abs/1e9).toFixed(2) + "B";
+    if (abs >= 1e6) return sign + "$" + (abs/1e6).toFixed(2) + "M";
+    if (abs >= 1e3) return sign + "$" + (abs/1e3).toFixed(1) + "K";
+    return sign + "$" + s(abs);
+  }
+  function ageH(iso){ try { return (Date.now() - new Date(iso).getTime()) / 3600000; } catch(e){ return null; } }
+  function ageTxt(h){
+    if (h === null || !isFinite(h)) return "?";
+    if (h < 1) return Math.max(1, Math.round(h * 60)) + "m";
+    if (h < 48) return (Math.round(h * 10) / 10) + "h";
+    return Math.round(h / 24) + "d";
+  }
+
+  var BASES = [
+    { name:"Console (Pages)", url:"https://roshpinacare-sys.github.io/Console/" },
+    { name:"Domain (Pages)",  url:"https://roshpinacare-sys.github.io/Domain/" }
+  ];
+  function fetchBook(path){
+    var tries = ["", BASES[0].url, BASES[1].url].filter(function(u, i){ return i === 0 ? location.protocol.indexOf("http") === 0 : true; });
+    var i = 0;
+    function tryOne(){
+      return fetch(tries[i] + path, { cache:"no-store" }).then(function(r){
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      }).catch(function(err){
+        i++;
+        if (i < tries.length) return tryOne();
+        throw err;
+      });
+    }
+    return tryOne();
+  }
+
+  /* ── breakthrough map · the seven wealth classes ── */
+  var MAP = [
+    { tier:"dex", title:{he:"DEX · עמלות-החלפה על נזילות", en:"DEX · swap fees on liquidity"},
+      st:"live", link:"index.html",
+      mech:{he:"נזילות נכנסת לבריכות · עמלת-החלפה מתחלקת בין ספקי-הנזילות והפרוטוקול · Uniswap V4 הפעילה מתג-עמלות והיא כבר הראשונה בליגה · Meteora DLMM: בינים-מחיר ריכוזיים עם עמלות-דינמיות שגדלות עם התנודתיות", en:"Liquidity sits in pools · the swap fee splits between LPs and the protocol · Uniswap V4 turned on the fee switch and already leads the league · Meteora DLMM: concentrated price bins with dynamic fees that rise with volatility"},
+      take:{he:"המנוע שלנו כבר מדבר את שתי המתמטיקות: constant-product x·y ≥ k (Uniswap V2) וגם stableswap של Curve עם A=10 · הכל µ-BigInt, יישוב אטומי, עמלה-על-קלט עם ריצוף-אבק לבריכה · רצועת-עמלות 70/30 לאוצר חיה בספר", en:"Our engine already speaks both math families: constant-product x·y ≥ k (Uniswap V2) and Curve stableswap at A=10 · all µ-BigInt, atomic settlement, fee-on-input with dust floored to the pool · the 70/30 treasury fee strip is live in the book"},
+      gap:{he:"אין נזילות-חוץ: העמלות שלנו צוברות יחידות-פנימיות בספר-סגור · ההמרה לכסף-אמיתי דורשת ביד-חוץ · הנתיב הכנה מפורסם", en:"No external liquidity: our fees accrue internal units on a closed book · converting them to real money needs an external bid · the honest path is published"} },
+    { tier:"aggregator", title:{he:"אגרגטורים · אינטנטים · חוצי-שרשרות", en:"Aggregators · intents · cross-chain"},
+      st:"live", link:"index.html", extra:"dev.html",
+      mech:{he:"Jupiter: ריאוטינג על כל הבריכות של סולנה · CoW Protocol: מכירה-פומבית באצווה של 30 שניות, מחיר-ניקוי אחיד לכל ההזמנות, הסולברים סופגים MEV במקום המשתמש · 1inch Fusion: מכירה הולנדית · שער-המילוי יורד עד שרזולבר מתחרה לוקח · THORChain: החלפות נייטיב חוצות-שרשרות", en:"Jupiter: routing across all Solana pools · CoW Protocol: a 30-second batch auction with a uniform clearing price, solvers absorb MEV instead of the user · 1inch Fusion: a Dutch auction where the fill rate decays until a competing resolver takes it · THORChain: native cross-chain swaps"},
+      take:{he:"ראוטר-רב-רגלי חי בדפדפן: סריקת מסלול עד 5 רגליים על 3 בריכות עם מתמטיקת-המנוע המדויקת · המשתמש מאמת את הצעת-המחיר בעצמו מהספרים הפומביים · פקודות-אינטנט עם מצבי marketable/waiting נגד הספר החי · ספר-ה-batch של המנוע (dex-intents) חמוש · גשר: 8 מסילות נמדדו + farContract ETH (SAOSRelay)", en:"A live multi-leg router in the browser: route scan up to 5 legs over 3 pools with the engine's exact math · the user verifies the quote himself from the public books · intent orders with marketable/waiting states against the live book · the engine's batch book (dex-intents) is armed · bridge: 8 rails measured + farContract ETH (SAOSRelay)"},
+      gap:{he:"ניקוי-אחיד באצווה (ה-CoW-take המלא) עוד לא מופעל · האינטנטים מבוצעים ידנית דרך חלון-ההחלפה · אין סולברים אוטונומיים על-שרשרת", en:"Uniform batch clearing (the full CoW take) is not fired yet · intents execute manually through the swap window · no on-chain autonomous solvers"} },
+    { tier:"perps", title:{he:"פרפטואלים · ספר-סימון ניתן-לאימות", en:"Perps · the verifiable book"},
+      st:"partial", link:"truth.html",
+      mech:{he:"עמלות-פוזיציות + תשלומי-מימון בין לונג לשורט · Hyperliquid: ספר-סימון offchain מהיר עם שורש-מצב על-שרשרת, ו-HLP · כספת-מימון-השוק של הפרוטוקול עצמו שמרוויחה מהביד-אסק · GMX: נזילות-GLP כנגד-צד-הבית", en:"Position fees + funding payments between longs and shorts · Hyperliquid: a fast offchain order book with an on-chain state root, plus HLP · the protocol's own market-making vault earning the bid-ask · GMX: GLP liquidity as house counterparty"},
+      take:{he:"רעיון הספר-הניתן-לאימות: שרשרת-האמת שלנו (מקומי==origin==Pages==קונסולה) עם שער-אמת אוטומטי על כל דחיפה · חיילי-הגריד שלנו הם בעצם כספת-מימון-שוק ריבונית · וה-PnL שלהם מפורסם בשקיפות-מלאה: שלילי, כ-15% עד 23% על הון-המנוע · ההפך המדויק משיווק-עצמי", en:"The verifiable-book idea: our chain of truth (local==origin==Pages==console) with an automatic truth gate on every push · our grid soldiers are effectively a sovereign market-making vault · and their PnL is published with full transparency: negative, about 15% to 23% on engine equity · the exact opposite of self-marketing"},
+      gap:{he:"אין פרפטואלים, אין תשלומי-מימון, אין מנוף · אמת חד-משמעית", en:"No perps, no funding, no leverage · the full honest statement"} },
+    { tier:"yield", title:{he:"תשואה · פיצול ערך-זמן", en:"Yield · time-value splitting"},
+      st:"none", link:"money.html",
+      mech:{he:"Pendle מפצלת נכס-נושא-תשואה לשני אסימונים: PT (הקרן, מקובעת) ו-YT (התשואה-העתידית) · מסחר בערך-הזמן של כסף · עשרות-מיליוני דולרים בעמלות מהרעיון הזה", en:"Pendle splits a yield-bearing asset into two tokens: PT (fixed principal) and YT (future yield) · trading the time value of money · tens of millions in fees from this idea"},
+      take:{he:"העיקרון מוטמע בארכיטקטורה: ספר-העמלות שלנו נמדד בנפרד מהקרן (feeAccruedTreasury) · כשהעמלות יהיו זרימה אמיתית, הן ניתנות להפרדה ולמכירה נפרדת", en:"The principle is embedded in the architecture: our fee book is measured separately from principal (feeAccruedTreasury) · when fees become a real stream they can be split and sold separately"},
+      gap:{he:"אין תשואה אמיתית לפצל · העמלות הן עדיין פנימיות", en:"No real yield to split · the fees are still internal"} },
+    { tier:"lending", title:{he:"הלוואות · ריבית על בטוחנות", en:"Lending · interest on collateral"},
+      st:"none", link:"money.html",
+      mech:{he:"מלווים מפקידים, לווים לוקחים מול בטוחנות-עודפות, הפרוטוקול גוזר את ריבית-ההפרש · Aave V3/V4: ריבית דינמית לפי ניצולת · Morpho: שכבת-התאמה עד רשתות-הלוואה נקיות · Kamino: הלוואות מרוכזות על סולנה", en:"Lenders deposit, borrowers post over-collateral, the protocol takes the interest spread · Aave V3/V4: dynamic rates by utilization · Morpho: a matching layer down to clean lending networks · Kamino: concentrated lending on Solana"},
+      take:{he:"חוק-הכספת שלנו הוא תשתית-האשראי: קטגוריית MEASURED-KEYED בלבד · מה שהמפתחות החיות יכולות להזיז ונמדד מהשרשרת · קווי-אשראי על בטוחנות-כספת אמיתית נשארים במסלול כשהכספת תגדל", en:"Our vault law is the credit infrastructure: the MEASURED-KEYED class only · what live keys can move, measured from chain · credit lines on real vault collateral stay on the roadmap as the vault grows"},
+      gap:{he:"אין הון-הלוואה ואין נושים · אמת", en:"No lending capital and no lenders · the honest statement"} },
+    { tier:"staking", title:{he:"סטייקינג · סטבלים · נכסי-תשואה", en:"Staking · stables · yield assets"},
+      st:"partial", link:"deposits.html",
+      mech:{he:"Lido: סטייקינג נזיל · stETH נזיל מול ETH נעול, עמלה מהתגמולים · Sky (MakerDAO): יציב עם תשואה מעתירות-בטוחנות · Ethena: ערב-בסיס · לונג-נכס מול שורט-פרפ אוסף תשלומי-מימון", en:"Lido: liquid staking · tradable stETH against staked ETH, a fee on rewards · Sky (MakerDAO): a stable with yield from over-collateralized vaults · Ethena: basis trade · long spot against short perps collecting funding"},
+      take:{he:"המעטפת-הגיבוית שלנו (wrapper 1:1 על כספת-נמדדת) היא הגרסה הכנה שלנו לסטייקינג-נזיל: WSTEEM ו-WSBD נסחרים בבריכות ונפדים 1:1 מהכספת · חוק-הפדיון: שריפה לפני תשלום, תור-פגי-אאוט עם מסדרון-פר-שרשרת", en:"Our wrapped layer (1:1 wrapper on a measured vault) is our honest version of liquid staking: WSTEEM and WSBD trade in pools and redeem 1:1 from the vault · the redemption law: burn before payout, a peg-out queue with a per-chain corridor"},
+      gap:{he:"אין נכס-תשואה אמיתי מאחורי המטבע · אין סטייקינג, אין בסיס-פנדינג", en:"No real yield asset behind the token · no staking, no basis trade"} },
+    { tier:"wallet", title:{he:"ארנקים · חלוקת-הכנסות החלפות", en:"Wallets · swap revenue share"},
+      st:"live", link:"wallet.html",
+      mech:{he:"העשר של הארנקים: חלוקת-הכנסות מהחלפות בתוך-הארנק · הרכיבים בטבלה מעידים (MetaMask Perps, Phantom Perps, Trust Wallet Perps, OKX Swap) · וגם מטבעות-עצמיים (MetaMask USD)", en:"Wallet wealth: a share of in-wallet swap revenue · the table components prove it (MetaMask Perps, Phantom Perps, Trust Wallet Perps, OKX Swap) · plus native currencies (MetaMask USD)"},
+      take:{he:"ארנק-ריבוני חי: QR עם סריקת-jsQR, מסך-סקירה, פיד-פעילות חי · סימולציה-לפני-ביצוע בסגנון Rabby: מסך-ביקורת עם minOut, מקור-ביצוע ושבב-כנות-מחיר לפני אישור · המפתחות אף-פעם לא נוגעות בגיט (שער-הסודות אוסר)", en:"A live sovereign wallet: QR with jsQR scanning, review screen, live activity feed · Rabby-style pre-trade simulation: a review screen with minOut, execution source and the honest price chip before confirm · keys never touch git (the secrets gate bans them)"},
+      gap:{he:"אין לנו חלק-הכנסות מהחלפות-חוץ · המסחר שלנו ספר-פנימי", en:"We take no share of external swap revenue · our trading is an internal book"} }
+  ];
+
+  var GIANTS = null, WORLD = null, ECON = null;
+  var ERRS = [];
+
+  function applyStatic(){
+    document.documentElement.lang = LANG;
+    document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
+    document.querySelectorAll("[data-t]").forEach(function(el){
+      var v = t(el.getAttribute("data-t"));
+      if (v) el.textContent = v;
+    });
+    document.title = LANG === "en" ? "SAOS · Frontier League · the giants' live table and the breakthrough map" : "SAOS · ליגת-החזית · שולחן-הענקים החי ומפת-הפריצות";
+    document.getElementById("langbtn").textContent = LANG === "he" ? "EN" : "עב";
+    renderLeague(); renderMap(); renderSov();
+  }
+
+  function renderLeague(){
+    var box = document.getElementById("lgtable");
+    if (!GIANTS || !Array.isArray(GIANTS.families)) { box.innerHTML = "<div style='padding:18px;font-size:13px;color:var(--dim)'>" + esc(t("fresh.fail")) + "</div>"; return; }
+    var fams = GIANTS.families.slice().sort(function(a,b){ return (b.fees30d||0) - (a.fees30d||0); });
+    var h = "<table><thead><tr>" +
+      "<th>" + esc(t("lg.fam")) + "</th><th>" + esc(t("lg.tier")) + "</th>" +
+      "<th>" + esc(t("lg.f24")) + "</th><th>" + esc(t("lg.f30")) + "</th>" +
+      "<th>" + esc(t("lg.v24")) + "</th><th>" + esc(t("lg.all")) + "</th></tr></thead><tbody>";
+    fams.forEach(function(f){
+      h += "<tr><td class='fam'>" + esc(f.name) + "</td>" +
+        "<td><span class='tierchip " + esc(f.tier||"dex") + "'>" + esc(t("tier." + (f.tier||"dex"))) + "</span></td>" +
+        "<td class='num'>" + money(f.fees24h) + "</td><td class='num'>" + money(f.fees30d) + "</td>" +
+        "<td class='num'>" + (f.vol24h ? money(f.vol24h) : "<span class='neg'>-</span>") + "</td>" +
+        "<td class='num'>" + money(f.feesAllTime) + "</td></tr>";
+    });
+    var o = GIANTS.ours || {};
+    h += "<tr class='usrow'><td class='fam'>SAOS DEX</td>" +
+      "<td><span class='tierchip ours'>" + esc(t("tier.ours")) + "</span></td>" +
+      "<td class='num'>$0.00</td><td class='num'>$0.00</td>" +
+      "<td class='num' title='" + esc(t("lg.oursnote")) + "'>" + (o.lastPriceUsds ? "@" + o.lastPriceUsds : "-") + "</td>" +
+      "<td class='num' title='" + esc(t("lg.oursnote")) + "'>" + (o.feesAccruedMu !== undefined ? (o.feesAccruedMu.toLocaleString("en-US")) + " µ" : "-") + "</td></tr>";
+    h += "</tbody></table>";
+    box.innerHTML = h;
+    var chip = document.getElementById("freshchip");
+    var age = ageH(GIANTS.publishedAt);
+    var cls = age !== null && age <= 30 ? "fresh" : (age !== null && age <= 54 ? "old" : "dead");
+    chip.className = "chip " + cls;
+    var statusWord = cls === "fresh" ? "" : (cls === "old" ? " · " + t("fresh.stale") : "");
+    chip.innerHTML = "<span class='dot'></span><span>" + esc(t("fresh.at")) + " " + esc(ageTxt(age)) + " " + esc(t("fresh.ago")) + esc(statusWord) + " · " + fams.length + " " + esc(t("lg.fam") === "family" ? "families" : "משפחות") + "</span>";
+  }
+
+  function topChips(tier, n){
+    if (!GIANTS || !Array.isArray(GIANTS.families)) return "";
+    var fs = GIANTS.families.filter(function(f){ return (f.tier||"dex") === tier; })
+      .sort(function(a,b){ return (b.fees30d||0) - (a.fees30d||0); }).slice(0, n || 4);
+    return fs.map(function(f){ return "<span class='gchip'>" + esc(f.name) + " " + money(f.fees24h) + "/d</span>"; }).join("");
+  }
+
+  function renderMap(){
+    var box = document.getElementById("mapgrid");
+    box.innerHTML = MAP.map(function(m){
+      var c = m.st === "live" ? "" : (m.st === "partial" ? " warn" : " none");
+      var stw = m.st === "live" ? t("live") : (m.st === "partial" ? t("partial") : t("none"));
+      return "<article class='mcard'>" +
+        "<div class='mhead'><h3>" + esc(m.title[LANG] || m.title.he) + "</h3></div>" +
+        "<div class='giants'>" + topChips(m.tier, 4) + "</div>" +
+        "<div class='blk'><span class='lab'>" + (LANG === "en" ? "the giants' mechanism" : "המנגנון של הענקים") + "</span>" + esc(m.mech[LANG] || m.mech.he) + "</div>" +
+        "<div class='blk'><span class='lab'>" + (LANG === "en" ? "what we took · sovereign" : "מה לקחנו · ריבוני") + "</span>" + esc(m.take[LANG] || m.take.he) + "</div>" +
+        "<div class='blk'><span class='lab'>" + (LANG === "en" ? "the honest gap" : "הפער הכנה") + "</span>" + esc(m.gap[LANG] || m.gap.he) + "</div>" +
+        "<div class='strow'><span class='stchip" + c + "'>" + esc(stw) + "</span>" +
+        "<a href='" + m.link + "'>" + esc(t("open")) + "</a>" +
+        (m.extra ? "<a href='" + m.extra + "'>API</a>" : "") +
+        "</div></article>";
+    }).join("");
+  }
+
+  function sovRow(k, v, s, cls){
+    return "<div class='sovrow'><div class='k'>" + esc(k) + "</div><div class='v'>" + v + "</div>" +
+      "<div class='s " + (cls||"") + "'>" + (s || "") + "</div></div>";
+  }
+  function renderSov(){
+    var box = document.getElementById("sovrows");
+    var rows = "";
+    if (WORLD && WORLD.publishedAt){
+      var age = ageH(WORLD.publishedAt);
+      rows += sovRow(t("engine.book"),
+        "<span class='num'>world.json</span> · publishedAt " + esc(ageTxt(age)) + " " + esc(t("fresh.ago")) + " · " + ((WORLD.pools||[]).length) + " pools · " + ((WORLD.markets||[]).length) + " markets",
+        "<span class='chip " + (age <= 2 ? "fresh" : (age <= 30 ? "old" : "dead")) + "'><span class='dot'></span>" + (age <= 30 ? t("live") : t("fresh.stale")) + "</span>");
+    } else {
+      rows += sovRow(t("engine.book"), "<span class='num'>world.json</span> · " + esc(t("unmeasured")), "", "mid");
+    }
+    if (ECON){
+      var real = ECON.realChain && typeof ECON.realChain.markedUsd === "number" ? ECON.realChain.markedUsd : null;
+      rows += sovRow(t("sov.real"),
+        real !== null ? "<span class='num'>$" + real.toFixed(4) + "</span> · " + ((ECON.realChain.lines||[]).length) + " lines @ real marks" : esc(t("unmeasured")),
+        "<span class='chip fresh'><span class='dot'></span>" + (LANG === "en" ? "measured" : "נמדד") + "</span>");
+      var p = ECON.realPnl || {};
+      rows += sovRow(t("sov.loss"),
+        p.realizedSbd !== undefined ? "<span class='num'>" + p.realizedSbd + " SBD</span> · edge <span class='num'>" + p.edgePct + "%</span> · " + (LANG === "en" ? "verdict" : "פסק-דין") + ": <b>LOSS</b> · " + esc(t("loss.fix")) : esc(t("unmeasured")),
+        "<span class='chip dead'><span class='dot'></span>" + (LANG === "en" ? "the truth" : "האמת") + "</span>", "bad");
+      var sim = ECON.simBook || {};
+      rows += sovRow(t("sov.sim"),
+        sim.totalUsds !== undefined ? "<span class='num'>" + sim.totalUsds.toLocaleString("en-US") + " USDS</span> · " + (LANG === "en" ? "NOT REAL MONEY · zero external value claim" : "לא-כסף-אמיתי · אפס תביעת-ערך-חוץ") : esc(t("unmeasured")),
+        "", "mid");
+      var g = ECON.giantsGap || {};
+      if (g.top && g.top.length){
+        rows += sovRow(t("sov.gap"),
+          g.top.map(function(x){ return "<span class='num'>" + esc(x.name) + " $" + Math.round(x.fees24hUsd).toLocaleString("en-US") + "/d</span>"; }).join(" · ") +
+          " · " + (LANG === "en" ? "ours real: " : "שלנו אמיתי: ") + "<span class='num'>$" + (g.oursRealFeesUsd || 0) + "</span>",
+          "", "bad");
+      }
+    }
+    rows += sovRow(t("sov.laws"), esc(t("sov.lawsv")), "<span class='chip fresh'><span class='dot'></span>" + t("live") + "</span>");
+    rows += sovRow(t("sov.bridge"), esc(t("sov.bridgev")), "<span class='chip old'><span class='dot'></span>" + (LANG === "en" ? "measured" : "נמדד") + "</span>");
+    box.innerHTML = rows;
+    var e = document.getElementById("soverr");
+    if (ERRS.length){ e.hidden = false; e.textContent = (LANG === "en" ? "fail-closed evidence: " : "עדות-כישלון: ") + ERRS.join(" | "); }
+  }
+
+  function boot(){
+    var lb = document.getElementById("langbtn");
+    lb.addEventListener("click", function(){ LANG = LANG === "he" ? "en" : "he"; applyStatic(); });
+    var mb = document.getElementById("mburger"), hd = document.getElementById("nhead");
+    if (mb && hd) mb.addEventListener("click", function(){ hd.classList.toggle("nav-open"); });
+    fetchBook("dex/giants.json").then(function(j){ GIANTS = j; }).catch(function(e){ ERRS.push("giants: " + e.message); })
+      .finally(function(){ renderLeague(); renderMap(); });
+    fetchBook("dex/world.json").then(function(j){ WORLD = j; }).catch(function(e){ ERRS.push("world: " + e.message); });
+    fetchBook("dex/honest-econ.json").then(function(j){ ECON = j; }).catch(function(e){ ERRS.push("honest-econ: " + e.message); })
+      .finally(function(){ renderSov(); });
+    applyStatic();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+</body>
+</html>

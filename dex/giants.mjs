@@ -22,17 +22,46 @@ const UA = 'saos-giants-beat/1.0 (keyless public measurement; repo roshpinacare-
 const FEES_URL = 'https://api.llama.fi/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
 const DEXS_URL = 'https://api.llama.fi/overview/dexs?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
 
-/* משפחות-הענקים: התאמה לפי-תחילית שם בלבד · כל רכיב נשמר במלואו (אין הסתרה) */
+/* משפחות-הענקים: התאמה לפי-תחילית שם בלבד · כל רכיב נשמר במלואו (אין הסתרה)
+ * R75 THE FRONTIER LEAGUE: הליגה נפתחת מ-9 ל-28 משפחות — כל סוגי-ההון ב-DeFi:
+ * DEX · אגרגטורים/אינטנטים/חוצי-שרשרות · פרפטואלים · תשואה · הלוואות · סטייקינג/סטבלים · ארנקים.
+ * משפחה שלא נמצאה בפיד נופלת מעצמה (בלי-המצאה); רכיב שנמצא נשמר שלם עם הקטגוריה שלו. */
 const FAMILIES = [
-  { id: 'uniswap',     name: 'Uniswap',     match: (n) => n.startsWith('Uniswap') },
-  { id: 'jupiter',     name: 'Jupiter',     match: (n) => n.startsWith('Jupiter') },
-  { id: 'hyperliquid', name: 'Hyperliquid', match: (n) => n.startsWith('Hyperliquid') },
-  { id: 'pancakeswap', name: 'PancakeSwap', match: (n) => n.startsWith('PancakeSwap') },
-  { id: 'raydium',     name: 'Raydium',     match: (n) => n.startsWith('Raydium') },
-  { id: 'curve',       name: 'Curve',       match: (n) => n.startsWith('Curve') },
-  { id: 'meteora',     name: 'Meteora',     match: (n) => n.startsWith('Meteora') },
-  { id: 'orca',        name: 'Orca',        match: (n) => n.startsWith('Orca') },
-  { id: 'metamask',    name: 'MetaMask',    match: (n) => n.startsWith('MetaMask') }
+  /* DEXs */
+  { id: 'uniswap',     name: 'Uniswap',         tier: 'dex',        match: (n) => n.startsWith('Uniswap') },
+  { id: 'pancakeswap', name: 'PancakeSwap',     tier: 'dex',        match: (n) => n.startsWith('PancakeSwap') },
+  { id: 'raydium',     name: 'Raydium',         tier: 'dex',        match: (n) => n.startsWith('Raydium') },
+  { id: 'curve',       name: 'Curve',           tier: 'dex',        match: (n) => n.startsWith('Curve') },
+  { id: 'meteora',     name: 'Meteora',         tier: 'dex',        match: (n) => n.startsWith('Meteora') },
+  { id: 'orca',        name: 'Orca',            tier: 'dex',        match: (n) => n.startsWith('Orca') },
+  { id: 'aerodrome',   name: 'Aerodrome',       tier: 'dex',        match: (n) => n.startsWith('Aerodrome') },
+  /* אגרגטורים · אינטנטים · חוצי-שרשרות */
+  { id: 'jupiter',     name: 'Jupiter',         tier: 'aggregator', match: (n) => n.startsWith('Jupiter') },
+  { id: '1inch',       name: '1inch',           tier: 'aggregator', match: (n) => n.startsWith('1inch') },
+  { id: '0x',          name: '0x Protocol',     tier: 'aggregator', match: (n) => n.startsWith('0x ') || n === '0x' || n.startsWith('0x Protocol') },
+  { id: 'cow',         name: 'CoW Protocol',    tier: 'aggregator', match: (n) => n.startsWith('CoW ') || n.startsWith('CoWSwap') || n.startsWith('CoW Protocol') },
+  { id: 'lifi',        name: 'Li.Fi',           tier: 'aggregator', match: (n) => n.startsWith('Li.Fi') || n.startsWith('LiFi') },
+  { id: 'thorchain',   name: 'THORChain',       tier: 'aggregator', match: (n) => n.startsWith('THORChain') },
+  /* פרפטואלים */
+  { id: 'hyperliquid', name: 'Hyperliquid',     tier: 'perps',      match: (n) => n.startsWith('Hyperliquid') },
+  { id: 'dydx',        name: 'dYdX',            tier: 'perps',      match: (n) => n.startsWith('dYdX') },
+  { id: 'gmx',         name: 'GMX',             tier: 'perps',      match: (n) => n.startsWith('GMX') },
+  /* תשואה */
+  { id: 'pendle',      name: 'Pendle',          tier: 'yield',      match: (n) => n.startsWith('Pendle') },
+  /* הלוואות */
+  { id: 'aave',        name: 'Aave',            tier: 'lending',    match: (n) => n.startsWith('Aave ') || n === 'Aave' },
+  { id: 'morpho',      name: 'Morpho',          tier: 'lending',    match: (n) => n.startsWith('Morpho') },
+  { id: 'kamino',      name: 'Kamino',          tier: 'lending',    match: (n) => n.startsWith('Kamino') },
+  /* סטייקינג · סטבלים */
+  { id: 'lido',        name: 'Lido',            tier: 'staking',    match: (n) => n.startsWith('Lido') },
+  { id: 'ethena',      name: 'Ethena',          tier: 'staking',    match: (n) => n.startsWith('Ethena') },
+  { id: 'sky',         name: 'Sky',             tier: 'staking',    match: (n) => n === 'Sky' || n.startsWith('Sky ') },
+  /* ארנקים */
+  { id: 'metamask',    name: 'MetaMask',        tier: 'wallet',     match: (n) => n.startsWith('MetaMask') },
+  { id: 'trust',       name: 'Trust Wallet',    tier: 'wallet',     match: (n) => n.startsWith('Trust Wallet') || n === 'Trust Wallet' },
+  { id: 'phantom',     name: 'Phantom',         tier: 'wallet',     match: (n) => n.startsWith('Phantom') },
+  { id: 'coinbase',    name: 'Coinbase Wallet', tier: 'wallet',     match: (n) => n.startsWith('Coinbase Wallet') },
+  { id: 'okx',         name: 'OKX',             tier: 'wallet',     match: (n) => n.startsWith('OKX') }
 ];
 
 const r2 = (v) => (typeof v === 'number' && isFinite(v) ? Math.round(v * 100) / 100 : 0);
@@ -101,6 +130,7 @@ function aggregate(feesProtos, dexProtos) {
     out.push({
       id: f.id,
       name: f.name,
+      tier: f.tier || 'dex',
       category: cats.join(' + ') || null,
       fees24h: sum('fees24h'),
       fees30d: sum('fees30d'),
@@ -143,14 +173,14 @@ async function main() {
     book: 'saos-giants/1.0',
     publishedAt: new Date().toISOString(),
     beat: {
-      engine: 'saos-giants/1.0 giants-beat · R74 keyless wealth league',
+      engine: 'saos-giants/1.1 giants-beat · R75 frontier league (28 families across every wealth class)',
       runAt,
       cadenceMin: 1440,
       sources,
       method: 'public GET measurement · no keys · no invention · families matched by name prefix, components kept whole · ours measured from the live engine book'
     },
     families,
-    ours,
+    ours: Object.assign({ tier: 'ours' }, ours),
     errors
   };
   writeFileSync(OUT, JSON.stringify(book, null, 2) + '\n');
