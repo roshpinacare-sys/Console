@@ -19,7 +19,16 @@ const RELAYS = {
   OPTIMISM: { rpc: "https://optimism-rpc.publicnode.com", relay: "0x56c9D54ea866e25916757903E51392BBEdeE2ECe", chainId: 10 },
   BASE: { rpc: "https://base-rpc.publicnode.com", relay: "0x279818b4c9Eddc02fB3DD036a5E77D8F7Dc1CF87", chainId: 8453 },
 };
-const BLURT_NODES = ["https://api.blurt.blog", "https://rpc.blurt.world"];
+// תיקון מדידה r68-b (2026-10-07): הנודים ההיסטוריים מתים בפועל -
+// api.blurt.blog מגיש רק {"status":"OK"} בשורש (405 ל-POST),
+// rpc.blurt.world NXDOMAIN. התשתית עברה ל-rpc.blurt.blog ול-beblurt.
+// כולם אומתו חי מרצה ציבורי: head_block_number מגיע תקין.
+const BLURT_NODES = [
+  "https://rpc.blurt.blog",
+  "https://rpc.beblurt.com",
+  "https://api.beblurt.com",
+  "https://blurt-rpc.beblurt.com",
+];
 const BTC_NODES = ["https://mempool.space/api/blocks/tip/height", "https://blockstream.info/api/blocks/tip/height"];
 const log = (m) => console.log(`[chain-vitals] ${m}`);
 
