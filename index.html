@@ -1055,7 +1055,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               var ageMin = Math.round((Date.now() - Date.parse(world.publishedAt)) / 60000);
               el.textContent = "v" + (world.version || "?") + " · " + (ageMin < 1 ? "עכשיו" : ageMin < 60 ? "לפני " + ageMin + " דק'" : "לפני " + Math.round(ageMin/60) + "ש'");
               st.hidden = online || !(everOk);
-              st.hidden = !(ageMin > 180 && everOk); // קצב-פרסום נמדד: dex-beat כל 2ש' · 3ש' = המנוע הפסיק
+              st.hidden = !(ageMin > 1800 && everOk); // קצב-פרסום נמדד: dex-beat יומי מאז R67-C (19:53Z) · 30ש' = המנוע הפסיק
               if (!online) st.hidden = false;
             } else if (!online && everOk){ el.textContent = ""; st.hidden = false; }
             else { el.textContent = online ? "" : ""; st.hidden = true; }
