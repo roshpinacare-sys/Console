@@ -1,0 +1,61 @@
+# REA-DESK (R74) · שולחן-ההנדסה-לאחור הריבוני
+#
+# הרצה שבועית ציבורית: מפעיל את כלי-ההנדסה-לאחור rea-agents (morluto/rea · MIT)
+# על ה-runner הציבורי (Ubuntu 24.04 · המארח הנתמך הרשמי של rea) ומבצע לכידות
+# סטטיות פסיביות של המשטחים-הפומביים של הענקים (דפדפן-קדמיות בלבד · אפס-אימות ·
+# אפס-סודות · אפס-גירוד-נתונים-פרטיים). העדויות מתפרסמות ל-dex/rea.json והדף
+# giants.html מציג אותן. השיטה: evidence-first · מה שרואים זה מה שכתוב.
+#
+# R28 Pages-quota: commit רק כשהעדויות באמת זזו (או פעימת-לב ישנה מ-7d).
+
+name: rea-desk
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 4 * * 2'
+permissions:
+  contents: write
+
+concurrency:
+  group: rea-desk
+  cancel-in-progress: false
+
+jobs:
+  desk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout the public console
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run the sovereign reverse-engineering desk
+        run: node dex/rea-desk.mjs
+
+      - name: Publish the rea evidence book
+        run: |
+          git config user.name "rea-desk[bot]"
+          git config user.email "rea-desk[bot]@users.noreply.github.com"
+          git add dex/rea.json
+          if git diff --cached --quiet; then
+            echo "the rea book is unchanged"
+            exit 0
+          fi
+          SEM_NOW="$(jq -Sc '{r: .rea, t: [.targets[] | {id, status, pageBytes, pageTitle}], l: .limitations}' dex/rea.json)"
+          git show HEAD:dex/rea.json > /tmp/prev-rea.json 2>/dev/null \
+            && SEM_PREV="$(jq -Sc '{r: .rea, t: [.targets[] | {id, status, pageBytes, pageTitle}], l: .limitations}' /tmp/prev-rea.json)" \
+            || SEM_PREV=""
+          LAST_TS="$(git log -1 --format=%cI -- dex/rea.json)"
+          LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
+          AGE_D=$(( ($(date -u +%s) - LAST_S) / 86400 ))
+          if [ "$SEM_NOW" = "$SEM_PREV" ] && [ "$AGE_D" -lt 7 ]; then
+            echo "rea evidence unchanged and heartbeat fresh (${AGE_D}d < 7d) - no commit, Pages quota spared"
+            exit 0
+          fi
+          git commit -m "rea-desk: $(date -u +%FT%TZ) · rea $(jq -r '.rea.version // "?"' dex/rea.json) · $(jq -r '[.targets[] | select(.status == 200)] | length' dex/rea.json)/$(jq -r '.targets | length' dex/rea.json) surfaces · $(jq -r '[.targets[].scripts[]?.endpoints[]?] | length' dex/rea.json) public endpoints"
+          for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done

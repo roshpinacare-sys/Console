@@ -841,6 +841,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.fees">עמלות-בריכות במסלול</span><span class="dx-num" id="swFees" style="text-align:left"></span></div>
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.route">מסלול</span><span id="swRoute" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:flex-end" data-testid="swap-route"></span></div>
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)" data-i18n="sw.eta">זמן משוער</span><span data-i18n="sw.etaV">≤ 3 שניות (בלוק הבא)</span></div>
+              <div class="dx-detail" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:6px;padding-top:8px;border-top:1px dashed var(--line)"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.honestL">סוג-מחיר</span><span id="swHonest" style="text-align:left;color:var(--dxamber);font-size:11px;line-height:1.5" data-i18n="sw.honestV">מחיר-ספר פנימי · ל-SAOS אין ביד-חוץ · ההמרה אינה רווח-אמיתי</span></div>
             </div>
             <button id="swCta" class="dx-cta" style="width:100%;height:52px;margin-top:16px;font-size:16px" data-testid="swap-cta">הזן סכום</button>
             <p id="swQueuedNote" style="font-size:11px;text-align:center;color:var(--dxt2);margin-top:8px" hidden data-i18n="sw.queued">ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע</p>
@@ -875,6 +876,10 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             <div id="swBridgeChains" style="display:flex;gap:6px;flex-wrap:wrap"></div>
             <div id="swBridgeKpis" class="dx-num" style="font-size:10.5px;color:var(--dxt2);margin-top:10px;display:flex;gap:10px;flex-wrap:wrap"></div>
             <p id="swBridgeNote" style="font-size:10px;color:var(--dxt3);margin-top:8px;line-height:1.5"></p>
+          </div>
+          <div class="dx-card sw-card" id="swEconCard" data-testid="econ-card" style="margin-top:16px" hidden>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><h3 style="font-size:13px;font-weight:600;margin:0" data-i18n="sw.econh">הכלכלה-הכנה · מה-אמיתי ומה-ספר-פנימי</h3><span class="dx-num" id="swEconFresh" style="font-size:10px;color:var(--dxt3)"></span></div>
+            <div id="swEconBody" style="display:flex;flex-direction:column;gap:8px;font-size:11.5px;line-height:1.6"></div>
           </div>
           <div style="width:100%;max-width:480px;margin-top:14px;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between">
             <span style="font-size:12px;color:var(--dim)" data-i18n="inv.band">בוחנים אותנו? הכל פתוח:</span>
@@ -1096,6 +1101,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             renderDepth();
             renderPools();
             renderLimits();
+            renderEcon();
           }
           function renderStrip(){
             var strip = $("swStrip");
@@ -1487,10 +1493,42 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">' + T("מקבלים לפחות","You receive at least") + '</span><span class="dx-num" style="color:var(--dxgreen)">' + fmtMu(minOutMu()) + " " + esc(assetOut) + "</span></div>" +
               '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">' + T("מסלול","Route") + '</span><span class="dx-num">' + quote.legs.length + (quote.legs.length === 1 ? T(" רגליים · "," leg · ") : T(" רגליים · "," legs · ")) + (smartRoute ? T("ראוטר אטומי","atomic router") : T("בריכה ישירה","direct pool")) + "</span></div>" +
               '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">' + T("אחריות","Protection") + '</span><span>' + T("minOut fail-closed · נדחה אם המחיר זז","minOut fail-closed · rejected if the price moved") + "</span></div></div>" +
+              '<div style="margin-top:10px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--dxwell);font-size:11px;color:var(--dxamber);line-height:1.5">' + T("מחיר-ספר פנימי · ל-SAOS אין ביד-חוץ · ההמרה אינה רווח-אמיתי · ספר-הכלכלה-הכנה: dex/honest-econ.json","Internal book price · SAOS has no external market · this is not real profit · honest econ book: dex/honest-econ.json") + '</div>' +
               '<button type="button" id="swConfirm" class="dx-cta" style="width:100%;height:48px;margin-top:14px;font-size:15px"' + ((quote && !quoting) ? "" : " disabled style=\"width:100%;height:48px;margin-top:14px;font-size:15px;opacity:.5\"") + ' data-testid="swap-confirm">' + T("אישור החלפה","Confirm swap") + "</button>";
             openOverlay(html);
             $("swConfirm").addEventListener("click", doConfirm);
           }
+          // ── R74: הכלכלה-הכנה · כסף-אמיתי מול ספר-פנימי · הכל מ-dex/honest-econ.json ──
+          var ECON = null;
+          function econAge(iso){
+            if (!iso) return "";
+            var m = Math.round((Date.now() - Date.parse(iso)) / 60000);
+            if (!isFinite(m)) return "";
+            return m < 1 ? T("עכשיו","now") : m < 60 ? T("לפני " + m + " דק'", m + "m ago") : T("לפני " + Math.round(m/60) + "ש'", Math.round(m/60) + "h ago");
+          }
+          function econUsd(v){ return v == null ? "-" : "$" + v; }
+          function econRow(head, headColor, num, note){
+            return '<div style="padding:8px 10px;border:1px solid var(--line);border-radius:8px"><b style="color:' + headColor + '">' + head + '</b><div class="dx-num" dir="ltr" style="font-size:13px;margin-top:2px">' + num + '</div><div style="color:var(--dxt2);margin-top:2px">' + note + '</div></div>';
+          }
+          function renderEcon(){
+            var card = $("swEconCard");
+            if (!card) return;
+            if (!ECON || ECON.ok !== true){ card.hidden = true; return; }
+            card.hidden = false;
+            var rc = ECON.realChain || {}, rp = ECON.realPnl || {}, sb = ECON.simBook || {}, ifs = ECON.internalFees || {}, gg = ECON.giantsGap || {};
+            var pnlNum = rp.realizedSbd == null ? "-" : rp.realizedSbd.toFixed(6) + " SBD" + (rp.edgePct == null ? "" : " · edge " + rp.edgePct.toFixed(2) + "%");
+            var simNum = sb.totalUsds == null ? "-" : sb.totalUsds.toLocaleString("en-US") + " USDS";
+            var tops = (gg.top || []).map(function(f){ return f.name + " $" + (f.fees24hUsd >= 1e6 ? (f.fees24hUsd/1e6).toFixed(2) + "M" : (f.fees24hUsd/1e3).toFixed(0) + "K"); }).join(" · ");
+            var feesInternal = ifs.feeAccruedTreasuryMu == null ? "-" : (ifs.feeAccruedTreasuryMu/1000).toFixed(2) + " USDS";
+            $("swEconBody").innerHTML =
+              econRow(T("כסף-אמיתי על-שרשרת","Real on-chain money"), "var(--dxgreen)", econUsd(rc.markedUsd), T("מדידות-RPC ציבורי · TRX-משמרת + נזיל-Steem/SBD · זה הכל","public RPC measurements · TRX custody + Steem/SBD liquid · that is all")) +
+              econRow(T("PnL אמיתי ממומש","Realized real PnL"), "var(--dxpink)", pnlNum, T("הפסד-אמיתי מהספר-הממומש · תוקן: חוק-רצפת-מכירה (R74) אוסר מכירה-מתחת-לעלות","real loss from the realized book · fixed: the sell-floor law (R74) bans selling below cost")) +
+              econRow(T("הספר-הפנימי (SIM)","The internal book (SIM)"), "var(--dxt2)", simNum, T("יחידות-פנימיות בספר-סגור · אינו כסף-אמיתי · ל-SAOS אין ביד-חוץ","internal units on a closed book · not real money · SAOS has no external bid")) +
+              econRow(T("עמלות-אמת 24h · הפער-במספרים","Real 24h fees · the gap in numbers"), "var(--dxt2)", esc(tops) + " · " + T("אנחנו $0.00 אמיתי","ours $0.00 real"), T("מדידת-DefiLlama ציבורית · העמלות-הפנימיות שלנו (" + feesInternal + " פנימי) אינן כסף-אמיתי","public DefiLlama measurement · our internal fees (" + feesInternal + " internal) are not real money"));
+            var f = $("swEconFresh");
+            if (f) f.textContent = econAge(ECON.publishedAt);
+          }
+          fetch("dex/honest-econ.json", { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){ ECON = (j && j.ok) ? j : null; renderEcon(); }).catch(function(){ ECON = null; renderEcon(); });
           // ── wire ──
           $("swAmtIn").addEventListener("input", function(){
             var cleaned = this.value.replace(/[^0-9.]/g, "");
@@ -1855,7 +1893,7 @@ var I18N = {
     "ex.arenanote":"הזירה: סוכני-הגריד של הרשת מקוננים על הספר החי זה-מול-זה · PnL נמדד מהספר · יחידות-מילי (µ)",
     "ex.poolsnote":"בריכות בשלב-ההנעה: הנזילות קטנה ומתפרסמת כמו-שהיא · נקודות (· · ·) = אין צד-USDS עדיין",
     "inv.band":"בוחנים אותנו? הכל פתוח:","inv.deck":"מצגת למשקיעים","inv.versus":"ההשוואה הכנה","inv.truth":"שער האמת","inv.receipts":"קיר הקבלות",
-    "sw.h":"חלון ההחלפה","sw.sub":"הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json","sw.title":"החלפה","sw.pay":"משלמים","sw.recv":"מקבלים (משוער)","sw.bal":"יתרה:","sw.price":"מחיר","sw.impact":"הפרש מחיר (עלות-השפעה)","sw.slipMax":"סטייה מרבית מותרת","sw.minOut":"מקבלים לפחות","sw.fees":"עמלות-בריכות במסלול","sw.route":"מסלול","sw.eta":"זמן משוער","sw.etaV":"≤ 3 שניות (בלוק הבא)","sw.queued":"ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע","sw.offline":"המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן","sw.stale":"נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה","sw.settingsaria":"הגדרות החלפה","sw.amtaria":"סכום להחלפה","sw.fliparia":"היפוך כיוון","sw.deptharia":"תרשים עומק הזמנות חי","sw.sparkaria":"סרט מחיר חי","sw.candleh":"נרות שוק · יומי מהספר + סשן מהמכשיר שלך","sw.candlearia":"תרשים נרות שוק חי","sw.candlenote":"הנר היומי נגזר מ-stats24 של הספר הרשמי · נרות-הסשן נמדדים במכשירך מרענוני הספר ונשמרים מקומית · המנוע סופר 290 נרות-דקה וטרם מפרסם אותם · ברגע שיפורסמו תיכנס ההיסטוריה המלאה","sw.limith":"פקודות-כוונה · מקומי","sw.limside":"כיוון","sw.limbuy":"קנייה","sw.limsell":"מכירה","sw.limasset":"מטבע","sw.limsize":"כמות","sw.limtarget":"מחיר-יעד (USDS)","sw.limadd":"הצב פקודה","sw.limnote":"פקודות-כוונה נשמרות במכשירך בלבד · נבדקות מול הספר החי בכל רענון · ביצוע ידני בחלון ההחלפה · אינן מונחות על השרשרת עדיין","sw.bridgeh":"גשר ריבוי-שרשראות · המסילות החיות","inv.dev":"תיעוד למפתחים",
+    "sw.h":"חלון ההחלפה","sw.sub":"הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json","sw.title":"החלפה","sw.pay":"משלמים","sw.recv":"מקבלים (משוער)","sw.bal":"יתרה:","sw.price":"מחיר","sw.impact":"הפרש מחיר (עלות-השפעה)","sw.slipMax":"סטייה מרבית מותרת","sw.minOut":"מקבלים לפחות","sw.fees":"עמלות-בריכות במסלול","sw.route":"מסלול","sw.eta":"זמן משוער","sw.etaV":"≤ 3 שניות (בלוק הבא)","sw.queued":"ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע","sw.offline":"המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן","sw.stale":"נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה","sw.settingsaria":"הגדרות החלפה","sw.amtaria":"סכום להחלפה","sw.fliparia":"היפוך כיוון","sw.deptharia":"תרשים עומק הזמנות חי","sw.sparkaria":"סרט מחיר חי","sw.candleh":"נרות שוק · יומי מהספר + סשן מהמכשיר שלך","sw.candlearia":"תרשים נרות שוק חי","sw.candlenote":"הנר היומי נגזר מ-stats24 של הספר הרשמי · נרות-הסשן נמדדים במכשירך מרענוני הספר ונשמרים מקומית · המנוע סופר 290 נרות-דקה וטרם מפרסם אותם · ברגע שיפורסמו תיכנס ההיסטוריה המלאה","sw.limith":"פקודות-כוונה · מקומי","sw.limside":"כיוון","sw.limbuy":"קנייה","sw.limsell":"מכירה","sw.limasset":"מטבע","sw.limsize":"כמות","sw.limtarget":"מחיר-יעד (USDS)","sw.limadd":"הצב פקודה","sw.limnote":"פקודות-כוונה נשמרות במכשירך בלבד · נבדקות מול הספר החי בכל רענון · ביצוע ידני בחלון ההחלפה · אינן מונחות על השרשרת עדיין","sw.bridgeh":"גשר ריבוי-שרשראות · המסילות החיות","sw.honestL":"סוג-מחיר","sw.honestV":"מחיר-ספר פנימי · ל-SAOS אין ביד-חוץ · ההמרה אינה רווח-אמיתי","sw.econh":"הכלכלה-הכנה · מה-אמיתי ומה-ספר-פנימי","inv.dev":"תיעוד למפתחים",
     "ex.ledgerh":"הפנקס החי של המטבע","ex.ledgersub":"saos.live.v1: קיפול דטרמיניסטי של פעולות ציבוריות",
     "ex.supplyh":"אספקה ותקרה","ex.max":"תקרה מקסימלית","ex.supplynote":"ההנפקה ההתחלתית משקפת 1:1 את האספקה המאומתת של SAOS-NET v0. הפרוטוקול קובע: אספקה שווה לנעול, תמיד.",
     "ex.replayh":"אימות מימוש-מחדש","ex.replayed":"פעולות ששוחזרו","ex.valid":"פעולות תקינות","ex.replaynote":"פעולות לא תקינות נשמרות ומוצגות כפי שהן: פנקס שמראה רק הצלחות הוא לא פנקס אמת.","ex.walletopen":"לארנק הריבוני",
@@ -1965,7 +2003,7 @@ var I18N = {
     "ex.arenanote":"Arena: the network's own grid agents market-make against each other on the live book · PnL measured from the book · milli-units (µ)",
     "ex.poolsnote":"Bootstrap pools: liquidity is small and published as-is · dots (· · ·) = no USDS side yet",
     "inv.band":"Auditing us? Everything is open:","inv.deck":"Partner deck","inv.versus":"The honest versus","inv.truth":"The truth gate","inv.receipts":"Receipt wall",
-    "sw.h":"The swap window","sw.sub":"Our DEX · full Uniswap anatomy on the sovereign engine · live quote from the official dex/world.json book","sw.title":"Swap","sw.pay":"You pay","sw.recv":"You receive (estimated)","sw.bal":"Balance:","sw.price":"Price","sw.impact":"Price impact","sw.slipMax":"Max slippage","sw.minOut":"You receive at least","sw.fees":"Pool fees in route","sw.route":"Route","sw.eta":"Est. time","sw.etaV":"≤ 3 seconds (next block)","sw.queued":"The swap entered the consensus queue · the result will appear on the tape and in your balance shortly","sw.offline":"The engine is not responding · the last quote may be stale","sw.stale":"Stale data · refresh failed, showing the last measurement","sw.settingsaria":"Swap settings","sw.amtaria":"Amount to swap","sw.fliparia":"Flip direction","sw.deptharia":"Live order book depth chart","sw.sparkaria":"Live price ribbon","sw.candleh":"Market candles · daily from the book + session from your device","sw.candlearia":"Live market candlestick chart","sw.candlenote":"The daily candle derives from the official book's stats24 · session candles are measured on your device from book refreshes and stored locally · the engine counts 290 one-minute candles and has not published them yet · full history lands here the moment it does","sw.limith":"Intent orders · local","sw.limside":"Side","sw.limbuy":"Buy","sw.limsell":"Sell","sw.limasset":"Asset","sw.limsize":"Size","sw.limtarget":"Target price (USDS)","sw.limadd":"Place order","sw.limnote":"Intent orders are stored on your device only · checked against the live book on every refresh · executed manually in the swap window · not placed on-chain yet","sw.bridgeh":"Multi-chain bridge · live rails","inv.dev":"Developer docs",
+    "sw.h":"The swap window","sw.sub":"Our DEX · full Uniswap anatomy on the sovereign engine · live quote from the official dex/world.json book","sw.title":"Swap","sw.pay":"You pay","sw.recv":"You receive (estimated)","sw.bal":"Balance:","sw.price":"Price","sw.impact":"Price impact","sw.slipMax":"Max slippage","sw.minOut":"You receive at least","sw.fees":"Pool fees in route","sw.route":"Route","sw.eta":"Est. time","sw.etaV":"≤ 3 seconds (next block)","sw.queued":"The swap entered the consensus queue · the result will appear on the tape and in your balance shortly","sw.offline":"The engine is not responding · the last quote may be stale","sw.stale":"Stale data · refresh failed, showing the last measurement","sw.settingsaria":"Swap settings","sw.amtaria":"Amount to swap","sw.fliparia":"Flip direction","sw.deptharia":"Live order book depth chart","sw.sparkaria":"Live price ribbon","sw.candleh":"Market candles · daily from the book + session from your device","sw.candlearia":"Live market candlestick chart","sw.candlenote":"The daily candle derives from the official book's stats24 · session candles are measured on your device from book refreshes and stored locally · the engine counts 290 one-minute candles and has not published them yet · full history lands here the moment it does","sw.limith":"Intent orders · local","sw.limside":"Side","sw.limbuy":"Buy","sw.limsell":"Sell","sw.limasset":"Asset","sw.limsize":"Size","sw.limtarget":"Target price (USDS)","sw.limadd":"Place order","sw.limnote":"Intent orders are stored on your device only · checked against the live book on every refresh · executed manually in the swap window · not placed on-chain yet","sw.bridgeh":"Multi-chain bridge · live rails","sw.honestL":"Price basis","sw.honestV":"Internal book price · SAOS has no external market · this is not real profit","sw.econh":"The honest economy · real vs internal book","inv.dev":"Developer docs",
     "ex.ledgerh":"The live currency ledger","ex.ledgersub":"saos.live.v1: a deterministic fold of public operations",
     "ex.supplyh":"Supply and cap","ex.max":"Max supply","ex.supplynote":"The initial mint mirrors the verified supply of SAOS-NET v0 1:1. The protocol enforces: supply equals locked, always.",
     "ex.replayh":"Replay verification","ex.replayed":"Ops replayed","ex.valid":"Valid ops","ex.replaynote":"Invalid operations are kept and shown as they are: a book that shows only successes is not a truth book.","ex.walletopen":"Open the sovereign wallet",

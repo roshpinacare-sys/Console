@@ -1,0 +1,2948 @@
+{
+  "ok": true,
+  "book": "saos-rea/1.0",
+  "publishedAt": "2026-10-07T17:38:07.617Z",
+  "beat": {
+    "engine": "saos-rea/1.0 rea-desk · R74 sovereign reverse-engineering desk",
+    "runAt": "2026-10-07T17:38:01.923Z",
+    "cadenceMin": 10080,
+    "tool": {
+      "package": "rea-agents",
+      "version": "5.0.0",
+      "upstream": "https://github.com/morluto/rea",
+      "license": "MIT",
+      "pinnedSha": "96a46ada0a36f0349f2b0fc20b4c932401b4ad84"
+    },
+    "method": "passive public-surface capture · zero auth · zero secrets · evidence-first · fail-closed"
+  },
+  "rea": {
+    "version": "5.0.0",
+    "doctor": {
+      "healthy": false,
+      "environment_healthy": false,
+      "scope": {
+        "mode": "audit-wide",
+        "clients": [],
+        "providers": [],
+        "skill": false,
+        "target": null
+      },
+      "scope_checks": [
+        {
+          "name": "node",
+          "ok": true,
+          "classification": "healthy",
+          "detail": "24.21.0"
+        },
+        {
+          "name": "host",
+          "ok": false,
+          "classification": "unsupported_host",
+          "detail": "debian 13",
+          "remediation": "REA supports macOS 12+, Ubuntu 24.04+, Fedora 41+, 64-bit Arch Linux, CachyOS, and the experimental Windows x64 Ghidra P0 boundary."
+        },
+        {
+          "name": "hopper",
+          "ok": false,
+          "classification": "missing_analysis_engine",
+          "remediation": "Run rea setup to install Hopper, or set HOPPER_LAUNCHER_PATH."
+        },
+        {
+          "name": "ghidra",
+          "ok": false,
+          "classification": "missing_analysis_engine",
+          "detail": "GHIDRA_INSTALL_DIR is not set",
+          "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory."
+        },
+        {
+          "name": "ida-registration",
+          "ok": false,
+          "classification": "missing_analysis_engine",
+          "detail": "IDA MCP registration is not configured.",
+          "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md."
+        },
+        {
+          "name": "skill:identity",
+          "ok": false,
+          "classification": "config_drift",
+          "detail": "Installed REA skill identity is missing.",
+          "remediation": "Run rea setup to update the installed REA skill."
+        }
+      ],
+      "informational_checks": [],
+      "providerInspections": [
+        {
+          "id": "ghidra",
+          "configured": false,
+          "available": false,
+          "providerVersion": null,
+          "registrationEnvironment": {},
+          "checks": [
+            {
+              "name": "configuration",
+              "ok": false,
+              "code": "not_configured",
+              "detail": "GHIDRA_INSTALL_DIR is not set",
+              "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory.",
+              "classification": "missing_analysis_engine"
+            }
+          ]
+        },
+        {
+          "id": "ida",
+          "configured": false,
+          "available": false,
+          "providerVersion": null,
+          "registrationEnvironment": {},
+          "checks": [
+            {
+              "name": "registration",
+              "ok": false,
+              "code": "not_configured",
+              "detail": "IDA MCP registration is not configured.",
+              "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md.",
+              "classification": "missing_analysis_engine"
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "name": "node",
+          "ok": true,
+          "classification": "healthy",
+          "detail": "24.21.0"
+        },
+        {
+          "name": "host",
+          "ok": false,
+          "classification": "unsupported_host",
+          "detail": "debian 13",
+          "remediation": "REA supports macOS 12+, Ubuntu 24.04+, Fedora 41+, 64-bit Arch Linux, CachyOS, and the experimental Windows x64 Ghidra P0 boundary."
+        },
+        {
+          "name": "hopper",
+          "ok": false,
+          "classification": "missing_analysis_engine",
+          "remediation": "Run rea setup to install Hopper, or set HOPPER_LAUNCHER_PATH."
+        },
+        {
+          "name": "ghidra",
+          "ok": false,
+          "classification": "missing_analysis_engine",
+          "detail": "GHIDRA_INSTALL_DIR is not set",
+          "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory."
+        },
+        {
+          "name": "ida-registration",
+          "ok": false,
+          "classification": "missing_analysis_engine",
+          "detail": "IDA MCP registration is not configured.",
+          "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md."
+        },
+        {
+          "name": "skill:identity",
+          "ok": false,
+          "classification": "config_drift",
+          "detail": "Installed REA skill identity is missing.",
+          "remediation": "Run rea setup to update the installed REA skill."
+        }
+      ],
+      "identity": {
+        "cli_package_version": "5.0.0",
+        "expected_skill_version": "27",
+        "sdk": {
+          "server": "2.3.1",
+          "client_test": "2.3.1",
+          "core": "2.3.1"
+        },
+        "catalog": {
+          "counts": {
+            "cli_commands": 88,
+            "mcp_tools": 133,
+            "mcp_prompts": 6
+          },
+          "digests": {
+            "tools_sha256": "af7fe81ec689c2a77f04579b6f4beb4abe86aa71d49c4844d8e0f4d7ed7a3a1e",
+            "prompts_sha256": "ef2de8814390b340623c32001610aa2709d90bed51537b6e562ab3abf144ab4d",
+            "combined_sha256": "83b4c3445ed0ec003c0aeefa3188f123d9ae319484f8b1e2b611d2fe278c9c72"
+          },
+          "tools": [
+            {
+              "name": "address_name",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "address_to_file_offset",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "analyze_function",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "analyze_javascript_application",
+              "surface": "electron-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "analyze_swift_types",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "analyze_web_bundle",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "annotate_native_function",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "batch_decompile",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "binary_overview",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "binary_session",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": false,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": true,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "build_call_path",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "build_reconstruction_obligation_ledger",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "capture_browser_scenario",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": true,
+                "mayDiscardData": true,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "capture_electron_scenario",
+              "surface": "electron-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": true,
+                "mayDiscardData": true,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "capture_native_ui_scenario",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": true,
+                "mayDiscardData": true,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "capture_process_scenario",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "capture_web_screenshot",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "close_binary",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": true,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "comment",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_application_versions",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_artifacts",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_bundles",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_functions",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_javascript_export_shapes",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_managed_members",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_process_captures",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_source_to_bundle",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_web_captures",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "compare_web_screenshots",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "correlate_static_and_runtime",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "current_address",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "current_document",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "current_procedure",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "decode_interface_builder",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "demangle_swift",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "discover_webmcp_tools",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "evaluate_reconstruction_coverage",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": false,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": true,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "export_evidence_bundle",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": false,
+                "writesFilesystem": true,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": true,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "export_web_scripts",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "extract_artifact",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "extract_firmware",
+              "surface": "firmware-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "find_changed_behavior",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "find_xrefs_to_name",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "get_call_graph",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "get_evidence_bundle",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": false,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": true,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "get_navigation_context",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "get_objc_classes",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "get_objc_protocols",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "goto_address",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": true,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "import_evidence_bundle",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "import_managed_reconstruction",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inline_comment",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_address_context",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_android_class",
+              "surface": "android-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_android_method",
+              "surface": "android-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_android_package",
+              "surface": "android-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_artifact",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_asset_catalog",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_electron_page",
+              "surface": "electron-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_firmware_regions",
+              "surface": "firmware-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_keyed_archive",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_macho",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_managed_artifact",
+              "surface": "managed-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_managed_members",
+              "surface": "managed-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_managed_native_boundaries",
+              "surface": "managed-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_native_api",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_native_data_type",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_native_dispatch_metadata",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_native_instruction",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_native_load_image",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_plist",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_signature",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_web_event_listeners",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_web_page",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_architectures",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_bookmarks",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "list_browser_targets",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_documents",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "list_electron_targets",
+              "surface": "electron-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_javascript_runtime_targets",
+              "surface": "runtime-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_names",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "list_procedures",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "list_segments",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "list_strings",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "list_unknowns",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": false,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": true,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "next_address",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "observe_javascript_runtime",
+              "surface": "runtime-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "observe_native_ui",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "observe_web_execution",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": true,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "observe_web_session",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "open_binary",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "prev_address",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_address",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_assembly",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_callees",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_callers",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_info",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_pseudo_code",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "procedure_references",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "project_android_application_graph",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "project_apple_application_graph",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "project_managed_application_graph",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "read_bytes",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "read_function_instructions",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "reconcile_javascript_runtime",
+              "surface": "electron-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "record_unknown",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "recover_javascript_sources",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "resolve_containing_procedure",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "resolve_native_call_targets",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "search_android_classes",
+              "surface": "android-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "search_procedures",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "search_strings",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "set_address_name",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "set_addresses_names",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "set_bookmark",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "set_comment",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "set_current_document",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": true,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "set_inline_comment",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_android_references",
+              "surface": "android-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "trace_application_feature",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_call_path",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_feature",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_javascript_semantics",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_native_ui_action",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_native_values",
+              "surface": "enhanced",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_web_module_imports",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "trace_web_source_location",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "unset_bookmark",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": true,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": true,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "update_unknown",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "verify_managed_native_boundaries",
+              "surface": "application",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "verify_reconstruction",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "verify_unknown_resolution",
+              "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": false,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": true,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "xrefs",
+              "surface": "official-proxy",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            }
+          ]
+        },
+        "live_server": {
+          "state": "unknown",
+          "remediation": "Call binary_session in the active client to inspect the running server identity."
+        },
+        "installations": {
+          "paths": [
+            "/home/z/.npm/_npx/9b9809298fe40d2c/node_modules/.bin/rea"
+          ],
+          "state": "single"
+        },
+        "skill": {
+          "installed_version": null,
+          "installed_tool_count": null,
+          "installed_catalog_digest": null,
+          "state": "missing",
+          "remediation": "Run rea setup to update the installed REA skill."
+        },
+        "registrations": []
+      }
+    }
+  },
+  "targets": [
+    {
+      "id": "uniswap",
+      "url": "https://app.uniswap.org/",
+      "label": "Uniswap app · the v4 front end",
+      "status": 200,
+      "ms": 129,
+      "pageBytes": 86921,
+      "pageTitle": "Uniswap Interface",
+      "scripts": []
+    },
+    {
+      "id": "jupiter",
+      "url": "https://jup.ag/",
+      "label": "Jupiter · the Solana aggregator",
+      "status": 200,
+      "ms": 174,
+      "pageBytes": 127974,
+      "pageTitle": "Jupiter: The Home of Onchain Finance",
+      "scripts": [
+        {
+          "url": "https://jup.ag/assets/index-Df7gD8LW.js",
+          "bytes": 797,
+          "sha256": "aaa1dbf2de7b5e25",
+          "endpoints": []
+        }
+      ]
+    },
+    {
+      "id": "hyperliquid",
+      "url": "https://app.hyperliquid.xyz/",
+      "label": "Hyperliquid · the perp app",
+      "status": 200,
+      "ms": 26,
+      "pageBytes": 6831,
+      "pageTitle": "Hyperliquid",
+      "scripts": [
+        {
+          "url": "https://app.hyperliquid.xyz/charting_library_v28.5/charting_library/charting_library.js?bust=v8",
+          "bytes": 52851,
+          "sha256": "70e4ea3ee98f81ff",
+          "endpoints": []
+        },
+        {
+          "url": "https://app.hyperliquid.xyz/assets/index-BQnwZrhY.js",
+          "bytes": 1328691,
+          "sha256": "9a275b716a7605b8",
+          "endpoints": [
+            "https://api.etherscan.io/api"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "metamask",
+      "url": "https://metamask.io/",
+      "label": "MetaMask · distribution giant",
+      "status": 200,
+      "ms": 326,
+      "pageBytes": 472954,
+      "pageTitle": "MetaMask Crypto Wallet. Buy and Sell Bitcoin, Ethereum, Solana",
+      "scripts": [
+        {
+          "url": "https://metamask.io/_next/static/chunks/918ec194-9564de8847db9826.js",
+          "bytes": 201060,
+          "sha256": "446fff68a2f8488c",
+          "endpoints": []
+        },
+        {
+          "url": "https://metamask.io/_next/static/chunks/6566-e77cb0b170da0045.js",
+          "bytes": 240980,
+          "sha256": "45cbe4325925f399",
+          "endpoints": []
+        },
+        {
+          "url": "https://metamask.io/_next/static/chunks/main-app-ee872e7438485505.js",
+          "bytes": 945,
+          "sha256": "4479b5f9f5458c6b",
+          "endpoints": []
+        },
+        {
+          "url": "https://metamask.io/_next/static/chunks/app/layout-04e63edbb5f95c2b.js",
+          "bytes": 13673,
+          "sha256": "35bfd8b01a4f0c7b",
+          "endpoints": []
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "rea doctor reports unhealthy on this host: native/browser lanes require the supported-runner lane (Ubuntu 24.04 on the public runner) · recorded as-is, evidence-first",
+    "v1 desk lane = static passive capture only · CDP browser captures (rea analyze-web-bundle / capture-web-screenshot) are the scheduled R-lane on the public runner with Chrome",
+    "bundle reads are capped at 358400 bytes · endpoints are public-URL heuristics from the bundles, never private data"
+  ]
+}

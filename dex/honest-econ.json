@@ -1,0 +1,105 @@
+{
+ "ok": true,
+ "book": "saos-honest-econ/1.0",
+ "publishedAt": "2026-10-07T17:52:44.777Z",
+ "engine": "saos-honest-econ/1.0 · R74 the real-money reset (owner: \"הרווח הזה לא אמיתי · אנחנו בהפסד · המטבע לא נזיל\")",
+ "doctrine": {
+  "he": "שתי-קופות, אפס-ערבוב: כסף-אמיתי = יתרות-שרשרת שנמדדו מ-RPC ציבורי ומסומנות במחירי-שוק חוץ · הכל-עוד = ספר-פנימי (SIM) ללא תביעת-ערך-חוץ · ל-SAOS אין ביד-חוץ ואין נזילות-חוץ · כל \"רווח\" שנמדד בתוך-הספר אינו רווח-אמיתי",
+  "en": "Two ledgers, zero mixing: real money = chain balances measured from public RPCs, marked at real external prices · everything else = the internal book (SIM) with no external value claim · SAOS has no external bid and no external liquidity · any \"profit\" measured inside the book is not real profit"
+ },
+ "saosExternalBid": {
+  "exists": false,
+  "internalPriceUsdsMu": 1324,
+  "noteHe": "ל-SAOS אין שוק-חוץ, אין רישום, אין ביד-קונה-חוץ · המחיר 1.32 הוא מחיר-ספר-פנימי בלבד · סימון-שוק לצרכי-רווח-והפסד: אין",
+  "noteEn": "SAOS has no external market, no listing, no external bid · the 1.32 price is an internal book price only · mark-to-market basis: none"
+ },
+ "realChain": {
+  "sources": {
+   "money": "dex/money.json (R39 money-watch · public RPCs + CoinGecko marks)",
+   "marksAt": "2026-10-07T14:41:43.867Z"
+  },
+  "lines": [
+   {
+    "asset": "TRX · custody-meshmarat",
+    "amount": 2.000002,
+    "markUsd": 0.334323,
+    "usd": 0.6686,
+    "source": "money.json redemption.custody (trongrid)"
+   },
+   {
+    "asset": "STEEM · headcorner-liquid",
+    "amount": 0.471,
+    "markUsd": 0.058422,
+    "usd": 0.0275,
+    "source": "money.json fuel (steemit RPC)"
+   },
+   {
+    "asset": "SBD · headcorner-liquid",
+    "amount": 0.024,
+    "markUsd": 0.590609,
+    "usd": 0.0142,
+    "source": "money.json fuel (steemit RPC)"
+   }
+  ],
+  "markedUsd": 0.7103,
+  "unmarkedCount": 0,
+  "noteHe": "זה הכסף-האמיתי · סכום-השורות-המסומנות בלבד · מה שאין-לו מחיר-שוק חוץ נרשם ללא-סימון",
+  "noteEn": "this is the real money · sum of marked lines only · anything without an external market price is listed unmarked"
+ },
+ "realPnl": {
+  "source": "Domain/agents/pnl-book.json (chain-measured, headcorner)",
+  "measuredAt": "2026-10-04T16:16:46.743Z",
+  "realizedSbd": -0.388666,
+  "realizedUsd": -0.2295,
+  "edgePct": -2.2989,
+  "sellVwapSbd": 0.100228,
+  "buyVwapSbd": 0.102532,
+  "inventorySteem": 55.848,
+  "inventoryAvgCostSbd": 0.103143,
+  "verdict": "LOSS"
+ },
+ "simBook": {
+  "totalUsdsMu": 68370316,
+  "totalUsds": 68370.32,
+  "label": "SIM",
+  "source": "dex/portfolio.json (closed simulation book)",
+  "noteHe": "יחידות-חשבון פנימיות בספר-סימולציה-סגור · אפס-תביעת-ערך-חוץ · אין להמיר לדולר",
+  "noteEn": "internal accounting units on a closed simulation book · zero external value claim · not convertible to dollars"
+ },
+ "internalFees": {
+  "feeAccruedTreasuryMu": 265343,
+  "label": "internal-only",
+  "pools": 4,
+  "noteHe": "עמלות-צבירה פנימיות · נמדדות מהספר-החי · אינן כסף-אמיתי",
+  "noteEn": "internal fee accrual · measured from the live book · not real money"
+ },
+ "giantsGap": {
+  "source": "dex/giants.json (DefiLlama public GET)",
+  "measuredAt": "2026-10-07T17:38:01.866Z",
+  "top": [
+   {
+    "name": "Uniswap",
+    "fees24hUsd": 3455192
+   },
+   {
+    "name": "Hyperliquid",
+    "fees24hUsd": 2675357
+   },
+   {
+    "name": "Meteora",
+    "fees24hUsd": 1268332
+   }
+  ],
+  "oursRealFeesUsd": 0,
+  "oursInternalFeesMu": 265343,
+  "oursInternalFeesNote": "העמלות-הצבורות שלנו הן יחידות-פנימיות בספר-סגור · אינן ניתנות להמרה לכסף-אמיתי"
+ },
+ "verdict": {
+  "real": "LOSS",
+  "simBook": "NOT-REAL-MONEY",
+  "fix": "R74 SELL-FLOOR LAW shipped in Domain/agents/market-exec.cjs · no sell may price below inventory avg cost x (1+0.3%) · the measured leak (sells 0.1002 vs cost 0.1031 = -2.85% per cycle) is structurally closed",
+  "pathHe": "הדרך-לרווח-אמיתי: (1) להפסיק לאבד על-השרשרת (חוק-רצפת-המכירה · נשלח) (2) להצמיח ביד-חוץ אמיתית ל-SAOS או הכנסה-חוץ (שירותים/עמלות-על-נפח-אמיתי) (3) עד-אז: לדווח רק-אמת",
+  "pathEn": "the path to real profit: (1) stop losing on-chain (the sell-floor law · shipped) (2) grow a real external bid for SAOS or external revenue (services/fees on real volume) (3) until then: report only the truth"
+ },
+ "honesty": "כל-המספרים בספר-זה נמדדו מקבצי-הספרים המפורסמים בלבד · אפס-המצאה · מקור-שנופל נרשם כמו-שהוא · הספר קיים כדי-שהבעלים וכל-משקיע יראו את-אותם-המספרים בדיוק"
+}
