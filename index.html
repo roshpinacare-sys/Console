@@ -356,10 +356,11 @@ td.num,th.num{text-align:start}
 .subnav a.on{background:var(--panel2);color:var(--gold-bright)}
 
 /* ── split layouts ────────────────────── */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}.split>*{min-width:0}.ob>*{min-width:0}
 .ob{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ob .side h4{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);margin-bottom:9px;font-weight:600}
 .obrow{display:flex;justify-content:space-between;gap:10px;padding:7px 11px;border-radius:8px;font-family:var(--mono);font-size:12.5px;direction:ltr;unicode-bidi:isolate}
+.obrow span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .obrow span:first-child{color:var(--text)}
 .obrow span:last-child{color:var(--faint)}
 .obrow.bid{background:rgba(34,197,94,.07)}
@@ -719,19 +720,482 @@ html[dir="ltr"] .hero h1{max-width:24ch}
       <div class="eyebrow" data-i18n="ex.eyebrow">שכבת הכסף</div>
       <h2 id="h-ex" style="font-size:clamp(1.7rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.4px" data-i18n="ex.h1">הבורסה שמודדת את עצמה</h2>
       <div class="subnav" data-submenu role="navigation" aria-label="Exchange sections" style="margin-top:20px">
-        <a href="#/exchange" data-subroute="exchange" data-i18n="ex.tabBook">ספר הפקודות</a>
+        <a href="#/exchange/swap" data-subroute="swap" data-i18n="ex.tabSwap">החלפה</a>
+        <a href="#/exchange/book" data-subroute="book" data-i18n="ex.tabBook">ספר הפקודות</a>
         <a href="#/exchange/terminal" data-subroute="terminal" data-i18n="ex.tabTerminal">טרמינל</a>
         <a href="#/exchange/rails" data-subroute="rails" data-i18n="ex.tabRails">מסילות הפקדה</a>
         <a href="#/exchange/ledger" data-subroute="ledger" data-i18n="ex.tabLedger">הפנקס החי</a>
       </div>
 
-      <div class="kpis" style="grid-template-columns:repeat(6,1fr)" id="sub-exchange-body">
+      <div class="kpis" id="sub-exchange-body">
         <div class="kpi rv"><div class="lb" data-i18n="ex.fair">מחיר הוגן SAOS/USDS</div><div class="vl" id="exFair">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
         <div class="kpi rv"><div class="lb" data-i18n="ex.spread">ספריד</div><div class="vl" id="exSpread">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
         <div class="kpi rv"><div class="lb" data-i18n="kpi.height">גובה מנוע</div><div class="vl gold" id="exHeight">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
         <div class="kpi rv"><div class="lb" data-i18n="ex.fills">ביצועים</div><div class="vl" id="exFills">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
         <div class="kpi rv"><div class="lb" data-i18n="ex.swaps">סוואפים</div><div class="vl" id="exSwaps">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
         <div class="kpi rv"><div class="lb" data-i18n="ex.ops">סך פעולות</div><div class="vl" id="exOps">&middot;&middot;&middot;</div><div class="src">dex/world.json</div></div>
+      </div>
+
+      <!-- ═══ החלון: הסוואפ שלנו — פורט נאמן של saos-control-center SwapView ═══
+           אפס מפתחות: החלון קורא את הספר הרשמי dex/world.json (מראת המנוע
+           שמפרסם dex-beat) ומחשב מסלול בצד-הלקוח מהבריכות החיות — אותו
+           מצב-מנוע שהחלון המקורי מציג. ההגשה עוברת גשר /api/dx מאובטח כשהוא
+           קיים; באתר הציבורי ה-CTA כנה על זה שהוא קריא-בלבד. -->
+      <div class="sect" id="sub-exchange-swap">
+        <div class="sect-h"><h2>חלון ההחלפה</h2><span class="sub">הדקס שלנו — אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json</span></div>
+        <style>
+          #sub-exchange-swap{--dxc:#1f1f1f;--dxr:#1a1a1a;--dxwell:#272727;--dxline:rgba(255,255,255,.1);--dxline2:rgba(255,255,255,.16);--dxt1:#fcfcfc;--dxt2:rgba(255,255,255,.67);--dxt3:rgba(255,255,255,.42);--dxpink:#ff37c7;--dxpink2:#e500a5;--dxpinksoft:rgba(255,55,199,.1);--dxgreen:#21c95e;--dxgreensoft:rgba(33,201,94,.12);--dxamber:#ffbf17;--dxred:#ff593c}
+          #sub-exchange-swap .sw-stage{display:flex;flex-direction:column;align-items:center;padding-top:8px}
+          #sub-exchange-swap .dx-card{background:var(--dxc);border:1px solid var(--dxline);border-radius:20px}
+          #sub-exchange-swap .dx-raised{background:var(--dxr);border:1px solid var(--dxline);border-radius:16px}
+          #sub-exchange-swap .sw-card{width:100%;max-width:480px;padding:18px;color:var(--dxt1)}
+          #sub-exchange-swap .dx-input{background:var(--dxr);border:1px solid var(--dxline);border-radius:16px;transition:border-color .15s ease,background-color .15s ease}
+          #sub-exchange-swap .dx-input:hover{background:#212121}
+          #sub-exchange-swap .dx-input:focus-within{border-color:rgba(255,255,255,.28)}
+          #sub-exchange-swap .dx-cta{background:var(--dxpink);color:#fff;border-radius:999px;font-weight:600;border:0;cursor:pointer;transition:background-color .15s ease,transform .06s ease,opacity .15s ease}
+          #sub-exchange-swap .dx-cta:hover:not(:disabled){background:var(--dxpink2)}
+          #sub-exchange-swap .dx-cta:active:not(:disabled){transform:scale(.985)}
+          #sub-exchange-swap .dx-cta:disabled{opacity:.4;cursor:not-allowed}
+          #sub-exchange-swap .dx-cta.sw-ok{background:var(--dxgreen)}
+          #sub-exchange-swap .dx-cta.sw-err{background:var(--dxred)}
+          #sub-exchange-swap .dx-ghost{background:rgba(255,255,255,.08);color:var(--dxt1);border-radius:999px;border:0;cursor:pointer;transition:background-color .15s ease}
+          #sub-exchange-swap .dx-ghost:hover{background:rgba(255,255,255,.14)}
+          #sub-exchange-swap .dx-chip{background:rgba(255,255,255,.07);border:1px solid var(--dxline);border-radius:999px}
+          #sub-exchange-swap .dx-chip-active{background:var(--dxpinksoft);border:1px solid rgba(255,55,199,.4);border-radius:999px;color:#ff8ad9}
+          #sub-exchange-swap .dx-token{border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+          #sub-exchange-swap .dx-detail{border-top:1px solid var(--dxline);padding-top:10px;margin-top:10px}
+          #sub-exchange-swap .dx-num{font-family:ui-monospace,"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;unicode-bidi:isolate;direction:ltr}
+          #sub-exchange-swap .sw-amt{flex:1;min-width:0;background:transparent;border:0;outline:0;text-align:right;font-size:26px;font-weight:500;color:var(--dxt1);font-family:ui-monospace,"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;direction:ltr}
+          #sub-exchange-swap .sw-amt::placeholder{color:var(--dxt3)}
+          #sub-exchange-swap .sw-ovl{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.62);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px}
+          #sub-exchange-swap .sw-ovl[hidden],#sub-exchange-swap .sw-spin[hidden]{display:none!important}
+          #sub-exchange-swap .sw-modal{width:100%;max-width:380px;padding:18px;color:var(--dxt1);max-height:86vh;overflow-y:auto}
+          #sub-exchange-swap .sw-spin{display:inline-block;width:18px;height:18px;border:2px solid var(--dxt3);border-top-color:var(--dxt1);border-radius:50%;animation:swspin 1.1s linear infinite}
+          @keyframes swspin{to{transform:rotate(360deg)}}
+          #sub-exchange-swap .sw-strip{width:100%;max-width:480px;margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px}#sub-exchange-swap .sw-strip>*{min-width:0}
+          #sub-exchange-swap .sw-mkt{text-align:right;padding:12px;cursor:pointer;color:var(--dxt1)}
+          #sub-exchange-swap .sw-mkt:hover{border-color:rgba(255,255,255,.28)}
+          #sub-exchange-swap .sw-stale{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,191,23,.4);background:rgba(255,191,23,.12);border-radius:999px;padding:4px 12px;font-size:10.5px;font-weight:600;color:var(--dxamber);margin-top:12px}
+          @media (max-width:520px){#sub-exchange-swap .sw-strip{grid-template-columns:1fr 1fr}}
+        </style>
+        <div class="sw-stage">
+          <div class="dx-card sw-card" data-testid="swap-view">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <h1 style="font-size:18px;font-weight:600;margin:0">החלפה</h1>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="dx-num" id="swFresh" style="font-size:10.5px;color:var(--dxt3)"></span>
+                <button id="swSettings" aria-label="הגדרות החלפה" class="dx-ghost" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+              </div>
+            </div>
+            <div class="dx-input" style="padding:14px" data-testid="swap-pay">
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--dxt2);margin-bottom:8px">
+                <span>משלמים</span>
+                <span style="display:flex;align-items:center;gap:4px">יתרה: <span class="dx-num" id="swBalIn">0</span></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <button id="swPickIn" class="dx-ghost" data-testid="token-select-in" style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:15px;font-weight:600"><span id="swMedIn"></span><span id="swSymIn">SAOS</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.6"><path d="m6 9 6 6 6-6"/></svg></button>
+                <input id="swAmtIn" class="sw-amt" inputmode="decimal" dir="ltr" placeholder="0.0" data-testid="amount-in" aria-label="סכום להחלפה" autocomplete="off">
+              </div>
+              <div style="display:flex;justify-content:flex-start;margin-top:6px">
+                <button id="swMax" class="dx-chip dx-num" data-testid="amount-max" style="display:none;font-size:11px;padding:2px 10px;color:var(--dxpink);cursor:pointer">MAX</button>
+              </div>
+            </div>
+            <div style="position:relative;height:0;display:flex;justify-content:center;margin:0;z-index:5">
+              <button id="swFlip" aria-label="היפוך כיוון" class="dx-ghost" style="width:36px;height:36px;background:var(--dxwell);border:4px solid var(--dxc);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></button>
+            </div>
+            <div class="dx-input" style="padding:14px;margin-top:4px" data-testid="swap-receive">
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--dxt2);margin-bottom:8px">
+                <span>מקבלים (משוער)</span>
+                <span style="display:flex;align-items:center;gap:4px">יתרה: <span class="dx-num" id="swBalOut">0</span></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <button id="swPickOut" class="dx-ghost" data-testid="token-select-out" style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:15px;font-weight:600"><span id="swMedOut"></span><span id="swSymOut">USDS</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.6"><path d="m6 9 6 6 6-6"/></svg></button>
+                <div style="flex:1;min-width:0;text-align:left" data-testid="amount-out">
+                  <span id="swAmtOut" class="dx-num" style="font-size:26px;font-weight:500">0.0</span>
+                  <span id="swSpin" class="sw-spin" hidden></span>
+                </div>
+              </div>
+            </div>
+            <div id="swDetails" style="padding:0 4px;margin-top:12px;font-size:12px" hidden data-testid="swap-details">
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)">מחיר</span><span class="dx-num" id="swPrice"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)">הפרש מחיר (עלות-השפעה)</span><span class="dx-num" id="swImpact"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)">סטייה מרבית מותרת</span><span class="dx-num" id="swSlip"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)">מקבלים לפחות</span><span class="dx-num" id="swMinOut" style="color:var(--dxgreen)"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap">עמלות-בריכות במסלול</span><span class="dx-num" id="swFees" style="text-align:left"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap">מסלול</span><span id="swRoute" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:flex-end" data-testid="swap-route"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)">זמן משוער</span><span>≤ 3 שניות (בלוק הבא)</span></div>
+            </div>
+            <button id="swCta" class="dx-cta" style="width:100%;height:52px;margin-top:16px;font-size:16px" data-testid="swap-cta">הזן סכום</button>
+            <p id="swQueuedNote" style="font-size:11px;text-align:center;color:var(--dxt2);margin-top:8px" hidden>ההחלפה נכנסה לתור הקונצנזוס — תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע</p>
+            <p id="swOffline" style="font-size:11px;text-align:center;color:var(--dxamber);margin-top:8px" hidden>המנוע לא מגיב — הציטוט האחרון עשוי להיות מיושן</p>
+          </div>
+          <div id="swStale" class="sw-stale" role="status" hidden><span style="width:6px;height:6px;border-radius:50%;background:var(--dxamber);display:inline-block"></span>נתונים-ישנים — הרענון נכשל, מוצגת-המדידה-האחרונה</div>
+          <div id="swStrip" class="sw-strip" data-testid="market-strip"></div>
+        </div>
+        <div id="swOverlay" class="sw-ovl" hidden><div class="dx-card sw-modal" id="swModal" dir="rtl"></div></div>
+        <script>
+        (function(){
+          "use strict";
+          var $ = function(id){ return document.getElementById(id); };
+          var root = $("sub-exchange-swap");
+          if (!root || root.dataset.swBoot) return;
+          root.dataset.swBoot = "1";
+          var MU = 1000;
+          var DEX_ASSETS = ["SAOS","USDS","WSTEEM","ENERGY","WSBD","PHIVE","STEEM","WBLURT","LB|LA","WTRX","WSOL"];
+          var TOKEN_META = {
+            SAOS:{name:"SAOS",hue:316}, USDS:{name:"USDS",hue:45}, WSTEEM:{name:"Wrapped STEEM",hue:22},
+            STEEM:{name:"STEEM",hue:22}, WSBD:{name:"Wrapped SBD",hue:0}, ENERGY:{name:"ENERGY",hue:155},
+            PHIVE:{name:"pHIVE",hue:40}, WBLURT:{name:"Wrapped BLURT",hue:210}, "LB|LA":{name:"Launch A",hue:265},
+            WTRX:{name:"Wrapped TRX",hue:12}, WSOL:{name:"Wrapped SOL",hue:160}
+          };
+          var WRAPS = { STEEM:"WSTEEM", WSTEEM:"STEEM", BLURT:"WBLURT", WBLURT:"BLURT" };
+          var SLIP_PRESETS = [ {label:"אוטומטי",v:0.5}, {label:"0.1%",v:0.1}, {label:"0.5%",v:0.5}, {label:"1%",v:1} ];
+          function tokenColor(sym){ var h = (TOKEN_META[sym] && TOKEN_META[sym].hue) || ((sym.charCodeAt(0)*7)%360); return "hsl("+h+" 62% 52%)"; }
+          function medStyle(sym, size){
+            var c = tokenColor(sym);
+            return "width:"+size+"px;height:"+size+"px;font-size:"+Math.round(size*0.34)+"px;background:linear-gradient(135deg,"+c+"26,"+c+"55);border:1px solid "+c+"66;color:"+c;
+          }
+          function medHtml(sym, size){ return '<span class="dx-token" style="'+medStyle(sym,size||28)+'" aria-hidden="true">'+esc(((TOKEN_META[sym]&&TOKEN_META[sym].name)||sym).slice(0,1))+"</span>"; }
+          function fmtMu(mu, digits){ if (digits === undefined) digits = 2; var v = mu/MU; return v.toLocaleString("en-US",{maximumFractionDigits:digits,minimumFractionDigits:0}); }
+          function fmtPrice(mu){ return (mu/MU).toLocaleString("en-US",{maximumFractionDigits:3}); }
+          function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+          // ── state (mirror of SwapView) ──
+          var world = null, online = false, everOk = false;
+          var assetIn = "SAOS", assetOut = "USDS", amountStr = "";
+          var slipPct = 0.5, slipAuto = true, smartRoute = true;
+          var quote = null, quoting = false, cta = "empty", errNote = "";
+          var quoteTimer = null, lastQueuedAt = 0;
+          function walletBal(asset){
+            if (!world || !world.wallets) return 0;
+            for (var i = 0; i < world.wallets.length; i++){
+              if (world.wallets[i].name === "operator"){
+                var b = world.wallets[i].balances || {};
+                return typeof b[asset] === "number" ? b[asset] : 0;
+              }
+            }
+            return 0;
+          }
+          function parseAmount(s){ var n = parseFloat(String(s).replace(/,/g,"")); return (isFinite(n) && n > 0) ? Math.floor(n * MU) : 0; }
+          // ── ראוטר-צד-הלקוח על הספר הרשמי — אותה משפחת-מתמטיקה של המנוע:
+          //    בריכות constant-product עם עמלת-בריכה-אמת + רגלי-עטיפה 1:1.
+          //    בלי נתון-עמלה הבריכה נפסלת מהמסלול (כנות: לא ממציאים עמלה). ──
+          function computeQuote(inA, outA, amountMu){
+            if (!world || !Array.isArray(world.pools) || !amountMu || inA === outA) return null;
+            var pools = world.pools, adj = {};
+            function addEdge(from, leg){ (adj[from] = adj[from] || []).push(leg); }
+            pools.forEach(function(p){
+              if (typeof p.feeBps !== "number") return;
+              addEdge(p.a, {kind:"pool", venue:"pool:"+p.key, from:p.a, to:p.b, pool:p});
+              addEdge(p.b, {kind:"pool", venue:"pool:"+p.key, from:p.b, to:p.a, pool:p});
+            });
+            Object.keys(WRAPS).forEach(function(w){
+              var u = WRAPS[w];
+              addEdge(w, {kind:"wrap", venue:"wrap:"+u, from:w, to:u});
+              addEdge(u, {kind:"wrap", venue:"wrap:"+w, from:u, to:w});
+            });
+            function legOut(leg, amt){
+              if (leg.kind === "wrap") return amt;
+              var p = leg.pool;
+              var feeAmt = Math.floor((amt * p.feeBps) / 10000);
+              var inAfter = amt - feeAmt;
+              var ra = leg.from === p.a ? p.ra : p.rb;
+              var rb = leg.from === p.a ? p.rb : p.ra;
+              if (!ra || !rb || ra + inAfter <= 0) return 0;
+              return Math.floor((rb * inAfter) / (ra + inAfter));
+            }
+            var best = { out: 0, legs: null };
+            var visited = {}; visited[inA] = true;
+            function walk(node, amt, legs, poolCount){
+              if (node === outA && legs.length && amt > best.out){ best.out = amt; best.legs = legs.slice(); }
+              if (legs.length >= 5 || poolCount >= 3) return;
+              var edges = adj[node] || [];
+              for (var i = 0; i < edges.length; i++){
+                var leg = edges[i];
+                if (visited[leg.to]) continue;
+                var out = legOut(leg, amt);
+                if (out <= 0) continue;
+                visited[leg.to] = true;
+                legs.push({kind:leg.kind, venue:leg.venue, from:leg.from, to:leg.to, inMu:amt, outMu:out, pool:leg.pool});
+                walk(leg.to, out, legs, poolCount + (leg.kind === "pool" ? 1 : 0));
+                legs.pop();
+                visited[leg.to] = false;
+              }
+            }
+            walk(inA, amountMu, [], 0);
+            if (!best.legs) return null;
+            var outPerIn = best.out / amountMu;
+            var impact = null, feeParts = [];
+            for (var i = best.legs.length - 1; i >= 0; i--){
+              var l = best.legs[i];
+              if (l.kind !== "pool") continue;
+              var pool = l.pool;
+              if (pool && pool.mid){
+                var inIsA = l.from === pool.a;
+                var midRatio = inIsA ? pool.mid / MU : (pool.mid ? MU / pool.mid : 0);
+                if (midRatio) impact = (1 - outPerIn / midRatio) * 100;
+              }
+              break;
+            }
+            var legs = best.legs.map(function(l){
+              return { kind:l.kind, venue:l.venue, from:l.from, to:l.to, inMu:l.inMu, outMu:l.outMu, feeBps: l.pool ? l.pool.feeBps : undefined };
+            });
+            legs.forEach(function(l){
+              if (l.kind !== "pool" || typeof l.feeBps !== "number") return;
+              feeParts.push("≈" + fmtMu(Math.floor((l.inMu * l.feeBps) / 10000)) + " " + l.from + " (" + (l.feeBps/100).toFixed(2) + "%)");
+            });
+            return { amountOutMu: best.out, effPriceMu: Math.floor(outPerIn * MU), legs: legs, impactPct: impact, feeText: feeParts.length ? feeParts.join(" + ") : null };
+          }
+          function minOutMu(){ return quote ? Math.floor((quote.amountOutMu * (100 - slipPct)) / 100) : 0; }
+          // ── CTA state machine (mirror) ──
+          function ctaLabel(){
+            if (cta === "error") return errNote || "נכשל — נסה שוב";
+            return { empty:"הזן סכום", "no-route":"אין נזילות לזוג הזה", quoting:"מחשב מסלול…", review:"סקירת החלפה", submitting:"שולח…", queued:"הוגש — ייכלל בבלוק הבא" }[cta] || "הזן סכום";
+          }
+          function refreshQuote(){
+            var amountMu = parseAmount(amountStr);
+            if (!amountMu || assetIn === assetOut){ quote = null; quoting = false; cta = "empty"; render(); return; }
+            quote = null; quoting = true; cta = "quoting"; render();
+            setTimeout(function(){
+              var q = computeQuote(assetIn, assetOut, amountMu);
+              quoting = false;
+              if (q && q.amountOutMu > 0){ quote = q; errNote = ""; cta = "review"; }
+              else { quote = null; cta = "no-route"; }
+              render();
+            }, 60);
+          }
+          function scheduleQuote(){
+            if (quoteTimer) clearTimeout(quoteTimer);
+            quoteTimer = setTimeout(refreshQuote, 200);
+          }
+          // ── submission — through the secured bridge when it exists ──
+          function dxPost(action, payload){
+            try {
+              return fetch("/api/dx", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ action:action, payload:payload }) })
+                .then(function(r){ return r.json(); })
+                .catch(function(){ return { ok:false, error:"network-error" }; });
+            } catch(e){ return Promise.resolve({ ok:false, error:"network-error" }); }
+          }
+          function doConfirm(){
+            if (!quote || quoting) return;
+            closeOverlay();
+            cta = "submitting"; errNote = ""; render();
+            var amountMu = parseAmount(amountStr);
+            var p = smartRoute
+              ? { action:"route", payload:{ assetIn:assetIn, assetOut:assetOut, amount:amountMu, minOut:minOutMu(), issuer:"operator" } }
+              : { action:"swap", payload:{ pair:assetIn+"/"+assetOut, assetIn:assetIn, amount:amountMu, minOut:minOutMu() } };
+            dxPost(p.action, p.payload).then(function(j){
+              if (j && j.ok){
+                cta = "queued"; lastQueuedAt = Date.now(); render();
+                setTimeout(function(){ if (cta === "queued"){ cta = "review"; render(); } }, 6000);
+              } else {
+                cta = "error";
+                var e = String((j && j.error) || "");
+                errNote = (e.indexOf("unauthorized") >= 0 || e.indexOf("auth") >= 0)
+                  ? "נדרשת התחברות-בעלים כדי לסחור"
+                  : (e.indexOf("network") >= 0
+                    ? "גשר-הביצוע לא זמין מכאן — הביצוע החי מתבצע במרכז-השליטה המאובטח"
+                    : String((j && (j.note || j.error)) || "גשר-הביצוע לא זמין מכאן — הביצוע החי מתבצע במרכז-השליטה המאובטח"));
+                render();
+              }
+            });
+          }
+          // ── render ──
+          function render(){
+            $("swMedIn").innerHTML = ""; $("swMedIn").appendChild(medEl(assetIn, 28));
+            $("swMedOut").innerHTML = ""; $("swMedOut").appendChild(medEl(assetOut, 28));
+            $("swSymIn").textContent = assetIn; $("swSymOut").textContent = assetOut;
+            var balIn = walletBal(assetIn), balOut = walletBal(assetOut);
+            $("swBalIn").textContent = fmtMu(balIn); $("swBalOut").textContent = fmtMu(balOut);
+            $("swMax").style.display = balIn > 0 ? "inline-block" : "none";
+            $("swSpin").hidden = !quoting;
+            $("swAmtOut").style.display = quoting ? "none" : "inline";
+            $("swAmtOut").textContent = quote ? fmtMu(quote.amountOutMu) : "0.0";
+            var det = $("swDetails");
+            if (quote){
+              det.hidden = false;
+              var outPerIn = parseAmount(amountStr) ? quote.amountOutMu / parseAmount(amountStr) : 0;
+              $("swPrice").textContent = "1 " + assetIn + " = " + fmtPrice(quote.effPriceMu) + " " + assetOut;
+              var imp = $("swImpact");
+              imp.textContent = quote.impactPct !== null ? quote.impactPct.toFixed(2) + "%" : "—";
+              imp.style.color = (quote.impactPct !== null && quote.impactPct > 2) ? "var(--dxamber)" : "var(--dxt1)";
+              $("swSlip").textContent = (slipAuto ? "אוטומטי " : "") + slipPct + "%";
+              $("swMinOut").textContent = fmtMu(minOutMu()) + " " + assetOut;
+              $("swFees").innerHTML = quote.feeText ? esc(quote.feeText) + ' <span style="color:var(--dxt3)">(70% LP · 30% אוצר)</span>' : "—";
+              $("swRoute").innerHTML = quote.legs.map(function(l){
+                return '<span class="dx-chip dx-num" style="padding:2px 8px;font-size:10px">' + esc(l.kind === "pool" ? l.venue.slice(5) : "wrap→" + l.to) + "</span>";
+              }).join("");
+            } else det.hidden = true;
+            var ctaEl = $("swCta");
+            ctaEl.textContent = ctaLabel();
+            ctaEl.className = "dx-cta" + (cta === "queued" ? " sw-ok" : "") + (cta === "error" ? " sw-err" : "");
+            var ctaDisabled = !(cta === "review" && quote) || cta === "submitting" || cta === "queued";
+            ctaEl.disabled = ctaDisabled;
+            $("swQueuedNote").hidden = cta !== "queued";
+            $("swOffline").hidden = online;
+            renderStrip();
+            renderFresh();
+          }
+          function renderStrip(){
+            var strip = $("swStrip");
+            var ms = (world && world.markets) || [];
+            if (!ms.length){ strip.innerHTML = ""; return; }
+            strip.innerHTML = '<div class="sw-label" style="grid-column:1/-1;padding:0 4px">שווקים חיים</div>' + ms.map(function(m){
+              var up = m.fair >= m.refPrice;
+              return '<button type="button" class="dx-raised sw-mkt" data-swpick="' + esc(m.base) + "|" + esc(m.quote) + '">' +
+                '<div style="display:flex;align-items:center;gap:8px">' + medHtml(m.base, 20) +
+                '<span class="dx-num" style="font-size:12px;font-weight:600">' + esc(m.base) + "/" + esc(m.quote) + "</span>" +
+                '<span class="dx-num" style="font-size:10px;color:var(--dx' + (up ? "green" : "red") + ')">' + (m.spreadBps/100).toFixed(2) + "%</span></div>" +
+                '<div class="dx-num" style="font-size:14px;margin-top:6px">' + fmtPrice(m.fair) + "</div>" +
+                '<div class="dx-num" style="font-size:10px;color:var(--dxt3);margin-top:2px">ספר ' + m.bestBid + "/" + m.bestAsk + " · בריכה " + fmtPrice(m.poolMid) + "</div></button>";
+            }).join("");
+          }
+          function renderFresh(){
+            var el = $("swFresh"), st = $("swStale");
+            if (world && world.publishedAt){
+              var ageMin = Math.round((Date.now() - Date.parse(world.publishedAt)) / 60000);
+              el.textContent = "v" + (world.version || "?") + " · " + (ageMin < 1 ? "עכשיו" : ageMin < 60 ? "לפני " + ageMin + " דק'" : "לפני " + Math.round(ageMin/60) + "ש'");
+              st.hidden = online || !(everOk);
+              st.hidden = !(ageMin > 180 && everOk); // קצב-פרסום נמדד: dex-beat כל 2ש' — 3ש' = המנוע הפסיק
+              if (!online) st.hidden = false;
+            } else if (!online && everOk){ el.textContent = ""; st.hidden = false; }
+            else { el.textContent = online ? "" : ""; st.hidden = true; }
+          }
+          function medEl(sym, size){
+            var s = document.createElement("span");
+            s.className = "dx-token"; s.setAttribute("aria-hidden","true");
+            s.style.cssText = medStyle(sym, size);
+            s.textContent = ((TOKEN_META[sym] && TOKEN_META[sym].name) || sym).slice(0,1);
+            return s;
+          }
+          // ── overlays ──
+          var overlay = $("swOverlay"), modal = $("swModal"), pickDir = null, pickSearch = "";
+          function openOverlay(html){ modal.innerHTML = html; overlay.hidden = false; }
+          function closeOverlay(){ overlay.hidden = true; modal.innerHTML = ""; pickDir = null; pickSearch = ""; }
+          overlay.addEventListener("click", function(e){ if (e.target === overlay) closeOverlay(); });
+          document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !overlay.hidden) closeOverlay(); });
+          function openSettings(){
+            var html = '<h3 style="font-size:15px;font-weight:600;margin:0 0 14px">הגדרות החלפה</h3>' +
+              '<div><div style="font-size:12px;font-weight:500;margin-bottom:8px">סטייה מרבית (Slippage)</div><div style="display:flex;gap:8px;flex-wrap:wrap">' +
+              SLIP_PRESETS.map(function(p){
+                var on = slipPct === p.v && slipAuto === (p.label === "אוטומטי");
+                return '<button type="button" data-swslip="' + p.v + "|" + (p.label === "אוטומטי" ? 1 : 0) + '" class="' + (on ? "dx-chip-active" : "dx-chip") + '" style="padding:6px 12px;font-size:12px;cursor:pointer;color:' + (on ? "" : "var(--dxt1)") + '">' + p.label + "</button>";
+              }).join("") +
+              '<input id="swSlipCustom" dir="ltr" placeholder="מותאם %" inputmode="decimal" class="dx-chip dx-num" style="width:80px;padding:6px 10px;font-size:12px;background:transparent;outline:none;color:var(--dxt1)"></div>' +
+              (slipPct < 0.1 ? '<p style="font-size:11px;color:var(--dxamber);margin-top:8px">סטייה נמוכה — העסקה עלולה לא לבצע</p>' : "") +
+              (slipPct > 5 ? '<p style="font-size:11px;color:var(--dxred);margin-top:8px">סטייה גבוהה מאוד — חשוף למחיר גרוע</p>' : "") + "</div>" +
+              '<div class="dx-detail" style="margin-top:16px;padding-top:14px"><div style="font-size:12px;font-weight:500;margin-bottom:8px">מקור ביצוע</div><div style="display:flex;gap:8px">' +
+              '<button type="button" data-swroute="1" class="' + (smartRoute ? "dx-chip-active" : "dx-chip") + '" style="padding:6px 12px;font-size:12px;cursor:pointer;color:' + (smartRoute ? "" : "var(--dxt1)") + '">מסלול-חכם (batch אטומי)</button>' +
+              '<button type="button" data-swroute="0" class="' + (!smartRoute ? "dx-chip-active" : "dx-chip") + '" style="padding:6px 12px;font-size:12px;cursor:pointer;color:' + (!smartRoute ? "" : "var(--dxt1)") + '">בריכה ישירה</button></div>' +
+              '<p style="font-size:11px;color:var(--dxt2);margin-top:8px;line-height:1.6">מסלול-חכם: הראוטר מפרק לרגליים ומבצע הכל-או-כלום עם minOut לכל-רגל. בריכה ישירה: סוואג׳ יחיד בבריכה — העמלה-הדינמית-חי מוצגת-בכרטיס-ההחלפה.</p></div>';
+            openOverlay(html);
+            modal.querySelectorAll("[data-swslip]").forEach(function(b){
+              b.addEventListener("click", function(){
+                var parts = b.getAttribute("data-swslip").split("|");
+                slipPct = parseFloat(parts[0]); slipAuto = parts[1] === "1"; openSettings(); render();
+              });
+            });
+            var custom = $("swSlipCustom");
+            if (custom) custom.addEventListener("input", function(){
+              var v = parseFloat(custom.value);
+              if (v > 0 && v <= 50){ slipPct = v; slipAuto = false; renderDetailsOnly(); }
+            });
+            modal.querySelectorAll("[data-swroute]").forEach(function(b){
+              b.addEventListener("click", function(){ smartRoute = b.getAttribute("data-swroute") === "1"; openSettings(); refreshQuote(); });
+            });
+          }
+          function renderDetailsOnly(){ if (quote) render(); }
+          function openPicker(dir){
+            pickDir = dir; pickSearch = "";
+            var html = '<h3 style="font-size:15px;font-weight:600;margin:0 0 12px">בחירת מטבע</h3>' +
+              '<div style="position:relative;margin-bottom:10px"><input id="swPickSearch" placeholder="חיפוש לפי שם או סימול" style="width:100%;box-sizing:border-box;background:var(--dxr);border:1px solid var(--dxline);border-radius:12px;padding:10px 12px;color:var(--dxt1);outline:none;font-size:13px"></div>' +
+              '<div id="swPickList" style="max-height:280px;overflow-y:auto"></div>';
+            openOverlay(html);
+            renderPickList();
+            var si = $("swPickSearch");
+            si.addEventListener("input", function(){ pickSearch = si.value; renderPickList(); });
+            si.focus();
+          }
+          function renderPickList(){
+            var list = DEX_ASSETS.filter(function(a){
+              return !pickSearch || a.toLowerCase().indexOf(pickSearch.toLowerCase()) >= 0 || ((TOKEN_META[a] && TOKEN_META[a].name) || "").toLowerCase().indexOf(pickSearch.toLowerCase()) >= 0;
+            });
+            $("swPickList").innerHTML = list.length ? list.map(function(a){
+              return '<button type="button" data-swpicktok="' + esc(a) + '" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px;border:0;border-radius:16px;background:transparent;color:var(--dxt1);cursor:pointer">' +
+                '<span style="display:flex;align-items:center;gap:12px">' + medHtml(a, 32) +
+                '<span style="text-align:right"><span style="display:block;font-size:13px;font-weight:600">' + esc(a) + '</span><span style="display:block;font-size:11px;color:var(--dxt2)">' + esc((TOKEN_META[a] && TOKEN_META[a].name) || a) + "</span></span></span>" +
+                '<span class="dx-num" style="font-size:13px;color:var(--dxt2)">' + fmtMu(walletBal(a)) + "</span></button>";
+            }).join("") : '<p style="text-align:center;font-size:13px;color:var(--dxt2);padding:24px 0">לא נמצאו תוצאות</p>';
+            modal.querySelectorAll("[data-swpicktok]").forEach(function(b){
+              b.addEventListener("click", function(){ pickAsset(pickDir, b.getAttribute("data-swpicktok")); });
+            });
+          }
+          function pickAsset(dir, sym){
+            if (dir === "in"){ if (sym === assetOut) assetOut = assetIn; assetIn = sym; }
+            else { if (sym === assetIn) assetIn = assetOut; assetOut = sym; }
+            closeOverlay(); refreshQuote();
+          }
+          function openReview(){
+            if (!quote) return;
+            var html = '<h3 style="font-size:15px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--dxpink)" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>סקירת החלפה</h3>' +
+              '<div style="text-align:center;padding:12px 0"><div class="dx-num" style="font-size:28px;font-weight:600">' + fmtMu(quote.amountOutMu) + " " + esc(assetOut) + '</div><div class="dx-num" style="font-size:12px;color:var(--dxt2);margin-top:4px">תמורת ' + esc(amountStr) + " " + esc(assetIn) + "</div></div>" +
+              '<div style="font-size:12px">' +
+              '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">שער</span><span class="dx-num">1 ' + esc(assetIn) + " = " + fmtPrice(quote.effPriceMu) + " " + esc(assetOut) + "</span></div>" +
+              '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">מקבלים לפחות</span><span class="dx-num" style="color:var(--dxgreen)">' + fmtMu(minOutMu()) + " " + esc(assetOut) + "</span></div>" +
+              '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">מסלול</span><span class="dx-num">' + quote.legs.length + ' רגליים · ' + (smartRoute ? "ראוטר אטומי" : "בריכה ישירה") + "</span></div>" +
+              '<div class="dx-detail" style="display:flex;justify-content:space-between"><span style="color:var(--dxt2)">אחריות</span><span>minOut fail-closed — נדחה אם המחיר זז</span></div></div>' +
+              '<button type="button" id="swConfirm" class="dx-cta" style="width:100%;height:48px;margin-top:14px;font-size:15px"' + ((quote && !quoting) ? "" : " disabled style=\"width:100%;height:48px;margin-top:14px;font-size:15px;opacity:.5\"") + ' data-testid="swap-confirm">אישור החלפה</button>';
+            openOverlay(html);
+            $("swConfirm").addEventListener("click", doConfirm);
+          }
+          // ── wire ──
+          $("swAmtIn").addEventListener("input", function(){
+            var cleaned = this.value.replace(/[^0-9.]/g, "");
+            if (cleaned !== this.value) this.value = cleaned;
+            amountStr = cleaned; scheduleQuote();
+          });
+          $("swMax").addEventListener("click", function(){
+            var v = String(walletBal(assetIn) / MU);
+            amountStr = v; $("swAmtIn").value = v; refreshQuote();
+          });
+          $("swFlip").addEventListener("click", function(){
+            var t = assetIn; assetIn = assetOut; assetOut = t; amountStr = "";
+            $("swAmtIn").value = ""; refreshQuote();
+          });
+          $("swPickIn").addEventListener("click", function(){ openPicker("in"); });
+          $("swPickOut").addEventListener("click", function(){ openPicker("out"); });
+          $("swSettings").addEventListener("click", openSettings);
+          $("swCta").addEventListener("click", function(){ if (cta === "review" && quote) openReview(); });
+          $("swStrip").addEventListener("click", function(e){
+            var b = e.target.closest ? e.target.closest("[data-swpick]") : null;
+            if (!b) return;
+            var parts = b.getAttribute("data-swpick").split("|");
+            assetIn = parts[0]; assetOut = parts[1]; amountStr = "";
+            $("swAmtIn").value = ""; refreshQuote();
+          });
+          // ── the book — official engine mirror (dex-beat) ──
+          function loadWorld(){
+            fetch("dex/world.json", { cache: "no-store" }).then(function(r){
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.json();
+            }).then(function(j){
+              if (!j || !j.ok) throw new Error("bad book");
+              var changed = !world || j.version !== world.version;
+              world = j; online = true; everOk = true;
+              render();
+              if (changed && parseAmount(amountStr)) refreshQuote();
+            }).catch(function(){
+              online = false;
+              render();
+            });
+          }
+          document.addEventListener("visibilitychange", function(){
+            if (document.visibilityState === "visible") loadWorld();
+          });
+          loadWorld();
+          setInterval(loadWorld, 20000);
+          render();
+        })();
+        </script>
       </div>
 
       <div class="sect" id="sub-exchange-book">
@@ -1020,7 +1484,7 @@ var I18N = {
     "ag.name":"שם","ag.layer":"שכבה","ag.role":"תפקיד","ag.schedule":"תדר",
     "ag.lawa":"הבהירות:","ag.lawb":"סוכן שלא חתם לאחרונה מסומן ככזה. היכולת לחתום נבדקת מול הרשת, לא מול הצהרה שלנו.",
     "ex.eyebrow":"שכבת הכסף","ex.h1":"הבורסה שמודדת את עצמה",
-    "ex.tabBook":"ספר הפקודות","ex.tabTerminal":"טרמינל","ex.tabRails":"מסילות הפקדה","ex.tabLedger":"הפנקס החי",
+    "ex.tabSwap":"החלפה","ex.tabBook":"ספר הפקודות","ex.tabTerminal":"טרמינל","ex.tabRails":"מסילות הפקדה","ex.tabLedger":"הפנקס החי",
     "ex.fair":"מחיר הוגן SAOS/USDS","ex.spread":"ספריד","ex.fills":"ביצועים","ex.swaps":"סוואפים","ex.ops":"סך פעולות",
     "ex.book":"ספר פקודות SAOS/USDS","ex.bids":"קנייה","ex.asks":"מכירה",
     "ex.pools":"בריכות נזילות","ex.pool":"בריכה","ex.lp":"תשואת LP",
@@ -1125,7 +1589,7 @@ var I18N = {
     "ag.name":"Name","ag.layer":"Layer","ag.role":"Role","ag.schedule":"Cadence",
     "ag.lawa":"Clarity:","ag.lawb":"An agent that has not signed recently is marked as such. Signing capability is checked against the chain, not against our own statement.",
     "ex.eyebrow":"THE MONEY LAYER","ex.h1":"The exchange that measures itself",
-    "ex.tabBook":"Order book","ex.tabTerminal":"Terminal","ex.tabRails":"Deposit rails","ex.tabLedger":"The live ledger",
+    "ex.tabSwap":"Swap","ex.tabBook":"Order book","ex.tabTerminal":"Terminal","ex.tabRails":"Deposit rails","ex.tabLedger":"The live ledger",
     "ex.fair":"SAOS/USDS fair price","ex.spread":"Spread","ex.fills":"Fills","ex.swaps":"Swaps","ex.ops":"Total ops",
     "ex.book":"SAOS/USDS order book","ex.bids":"Bids","ex.asks":"Asks",
     "ex.pools":"Liquidity pools","ex.pool":"Pool","ex.lp":"LP yield",
@@ -1244,7 +1708,7 @@ function applyLang(){
 function route(){
   var h = location.hash || "#/home";
   var sub = null;
-  if (h.indexOf("#/exchange/") === 0){ sub = h.slice(11) || "book"; h = "#/exchange"; }
+  if (h.indexOf("#/exchange/") === 0){ sub = h.slice(11) || "swap"; h = "#/exchange"; }
   var name = h.replace("#/","") || "home";
   if (["home","network","agents","exchange","knowledge","admin"].indexOf(name) < 0) name = "home";
   document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("on"); });
@@ -1253,11 +1717,11 @@ function route(){
     a.classList.toggle("on", a.getAttribute("data-route") === name);
   });
   if (name === "exchange"){
-    var sr = sub || "book";
+    var sr = sub || "swap";
     document.querySelectorAll("[data-subroute]").forEach(function(a){
       a.classList.toggle("on", a.getAttribute("data-subroute") === sr);
     });
-    var target = $("sub-exchange-" + (sub && sub !== "book" ? sub : "body"));
+    var target = $("sub-exchange-" + sr);
     if (target) target.scrollIntoView({behavior:"smooth", block:"start"});
   }
   window.scrollTo({top:0, behavior:"instant"});

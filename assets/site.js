@@ -267,6 +267,13 @@
         var el = node.nodeType === 3 ? node.parentElement : node;
         if (!el || el.nodeType !== 1) continue;
         if (el.classList.contains("sw-pend")) el.classList.remove("sw-pend");
+        /* R66 fix (browser-proven 2026-10-07): a count-up may only target a
+           TEXT LEAF. obBids' concatenated row text ("1,322319,891…") parsed
+           as one giant number, so the animation rewrote textContent over the
+           order-book rows - destroying the book AND causing the mobile
+           horizontal overflow (one unbreakable number-string). Containers
+           with element children are structure, never a numeral. */
+        if (el.children.length > 0) continue;
         var t = (el.textContent || "").trim();
         var d = el.dataset;
         if (d && (d.swCounting || d.swCounted === t)) continue;
