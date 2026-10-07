@@ -776,9 +776,16 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           #sub-exchange-swap .sw-mkt{text-align:right;padding:12px;cursor:pointer;color:var(--dxt1)}
           #sub-exchange-swap .sw-mkt:hover{border-color:rgba(255,255,255,.28)}
           #sub-exchange-swap .sw-stale{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,191,23,.4);background:rgba(255,191,23,.12);border-radius:999px;padding:4px 12px;font-size:10.5px;font-weight:600;color:var(--dxamber);margin-top:12px}
+          #sub-exchange-swap .sw-mkthead{width:100%;max-width:480px;background:var(--dxc);border:1px solid var(--dxline);border-radius:20px;padding:14px 16px;color:var(--dxt1)}
+          #sub-exchange-swap .sw-mkthead[hidden],#sub-exchange-swap .sw-depthwrap[hidden]{display:none!important}
+          #sub-exchange-swap .sw-spark{display:block;width:100%;height:44px;margin-top:10px}
+          #sub-exchange-swap .sw-depthwrap{width:100%;max-width:480px;background:var(--dxc);border:1px solid var(--dxline);border-radius:20px;padding:14px 16px;color:var(--dxt1);margin-top:12px}
+          #sub-exchange-swap .sw-depth{display:block;width:100%;height:120px}
+          #sub-exchange-swap .sw-pools{width:100%;max-width:480px;margin-top:16px;display:grid;grid-template-columns:1fr;gap:8px}
           @media (max-width:520px){#sub-exchange-swap .sw-strip{grid-template-columns:1fr 1fr}}
         </style>
         <div class="sw-stage">
+          <div class="sw-mkthead" id="swMktHead" data-testid="market-header" hidden></div>
           <div class="dx-card sw-card" data-testid="swap-view">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
               <h1 style="font-size:18px;font-weight:600;margin:0">החלפה</h1>
@@ -831,6 +838,12 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           </div>
           <div id="swStale" class="sw-stale" role="status" hidden><span style="width:6px;height:6px;border-radius:50%;background:var(--dxamber);display:inline-block"></span>נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה</div>
           <div id="swStrip" class="sw-strip" data-testid="market-strip"></div>
+          <div class="sw-depthwrap" id="swDepthCard" data-testid="depth-card" hidden>
+            <div style="display:flex;align-items:center;justify-content:space-between"><h3 style="font-size:13px;font-weight:600;margin:0" data-i18n="ex.depthh">עומק-השוק · מהסולם החי</h3><span class="dx-num" id="swDepthMeta" style="font-size:10px;color:var(--dxt3)"></span></div>
+            <canvas id="swDepth" class="sw-depth" height="120" aria-label="תרשים עומק הזמנות חי"></canvas>
+            <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:6px"><span style="color:var(--dxgreen)" data-i18n="ex.bids2">קונים</span><span id="swDepthSpread" class="dx-num" style="color:var(--dxt3)"></span><span style="color:var(--dxred)" data-i18n="ex.asks2">מוכרים</span></div>
+          </div>
+          <div class="sw-pools" id="swPools" data-testid="pools-strip"></div>
         </div>
         <div id="swOverlay" class="sw-ovl" hidden><div class="dx-card sw-modal" id="swModal" dir="rtl"></div></div>
         <script>
@@ -1034,6 +1047,9 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             $("swOffline").hidden = online;
             renderStrip();
             renderFresh();
+            renderMktHead();
+            renderDepth();
+            renderPools();
           }
           function renderStrip(){
             var strip = $("swStrip");
@@ -1059,6 +1075,98 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               if (!online) st.hidden = false;
             } else if (!online && everOk){ el.textContent = ""; st.hidden = false; }
             else { el.textContent = online ? "" : ""; st.hidden = true; }
+          }
+          // ── R71: כותרת-שוק · סרט-מחיר · עומק · בריכות (הכל מהספר הרשמי, אפס המצאה) ──
+          function renderMktHead(){
+            var el = $("swMktHead");
+            var m = world && world.markets && world.markets[0];
+            var s = m && m.stats24;
+            if (!m || !s){ el.hidden = true; return; }
+            var chg = s.chg24Bps || 0, up = chg >= 0;
+            el.hidden = false;
+            el.innerHTML =
+              '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">' +
+                '<div style="display:flex;align-items:center;gap:8px">' + medHtml(m.base, 22) +
+                '<span class="dx-num" style="font-size:12px;font-weight:600;color:var(--dxt2)">' + esc(m.base) + "/" + esc(m.quote) + "</span></div>" +
+                '<div style="display:flex;align-items:baseline;gap:10px"><span class="dx-num" style="font-size:24px;font-weight:600">' + fmtPrice(s.last) + "</span>" +
+                '<span class="dx-num" style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:' + (up ? "var(--dxgreensoft)" : "rgba(255,89,60,.12)") + ";color:var(--dx" + (up ? "green" : "red") + ')">' + (up ? "+" : "") + (chg/100).toFixed(2) + "%</span></div></div>" +
+              '<div class="dx-num" style="font-size:10.5px;color:var(--dxt3);margin-top:8px;display:flex;gap:10px;flex-wrap:wrap">' +
+                "<span>היי 24ש' " + fmtPrice(s.high24) + "</span><span>לוו 24ש' " + fmtPrice(s.low24) + "</span>" +
+                "<span>נפח " + fmtPrice(s.vol24QuoteMu) + " " + esc(m.quote) + "</span><span>" + s.trades24 + " עסקאות</span>" +
+                "<span>ספריד " + (m.spreadBps/100).toFixed(2) + "%</span><span>TWAP " + fmtPrice(m.twap) + "</span></div>" +
+              '<canvas id="swSpark" class="sw-spark" height="44" aria-label="סרט מחיר חי"></canvas>' +
+              '<div style="font-size:9.5px;color:var(--dxt3);margin-top:4px" data-i18n="ex.srcribbon">סרט המחיר: הדגימות הרשומות בספר הרשמי בלבד · אפס המצאה</div>';
+            drawSpark();
+          }
+          function drawSpark(){
+            var cv = document.getElementById("swSpark"); if (!cv) return;
+            var m = world && world.markets && world.markets[0];
+            var pts = ((m && m.chart) || []).filter(function(p){ return p && typeof p.p === "number"; });
+            var c = cv.getContext("2d");
+            var w = cv.parentElement.clientWidth - 32 || 400, h = 44;
+            cv.width = w*2; cv.height = h*2; c.setTransform(2,0,0,2,0,0);
+            c.clearRect(0,0,w,h);
+            if (pts.length < 2) return;
+            var ps = pts.map(function(p){ return p.p; });
+            var mn = Math.min.apply(null, ps), mx = Math.max.apply(null, ps), sp = (mx - mn) || 1;
+            var up = ps[ps.length-1] >= ps[0];
+            var col = up ? "#21c95e" : "#ff593c";
+            c.beginPath();
+            ps.forEach(function(p, i){ var x = 2 + i/(ps.length-1)*(w-8), y = h-6-((p-mn)/sp)*(h-16); i ? c.lineTo(x,y) : c.moveTo(x,y); });
+            c.strokeStyle = col; c.lineWidth = 1.6; c.stroke();
+            c.lineTo(w-6, h); c.lineTo(2, h); c.closePath();
+            c.fillStyle = up ? "rgba(33,201,94,.10)" : "rgba(255,89,60,.10)"; c.fill();
+            c.beginPath(); c.arc(w-6, h-6-((ps[ps.length-1]-mn)/sp)*(h-16), 2.2, 0, 7); c.fillStyle = col; c.fill();
+          }
+          function renderDepth(){
+            var card = $("swDepthCard");
+            var m = world && world.markets && world.markets[0];
+            var bids = (m && m.bids) || [], asks = (m && m.asks) || [];
+            if (!bids.length && !asks.length){ card.hidden = true; return; }
+            card.hidden = false;
+            var cv = $("swDepth"), c = cv.getContext("2d");
+            var w = cv.parentElement.clientWidth - 32 || 440, h = 120;
+            cv.width = w*2; cv.height = h*2; c.setTransform(2,0,0,2,0,0); c.clearRect(0,0,w,h);
+            var acc = 0, bidsC = bids.map(function(b){ acc += (b.total||0); return {p:b.price, q:acc}; });
+            var acc2 = 0, asksC = asks.map(function(a){ acc2 += (a.total||0); return {p:a.price, q:acc2}; });
+            var allP = bidsC.concat(asksC).map(function(r){ return r.p; });
+            var pmin = Math.min.apply(null, allP), pmax = Math.max.apply(null, allP);
+            var qmax = Math.max(acc, acc2) || 1, span = (pmax - pmin) || 1;
+            pmin -= span*0.08; pmax += span*0.08;
+            var X = function(p){ return 4 + (p - pmin)/(pmax - pmin)*(w-8); };
+            var Y = function(q){ return h-8-(q/qmax)*(h-22); };
+            c.beginPath(); c.moveTo(X(bidsC[0].p), Y(bidsC[0].q));
+            bidsC.forEach(function(r){ c.lineTo(X(r.p), Y(r.q)); });
+            c.lineTo(X(bidsC[bidsC.length-1].p), h-8); c.lineTo(X(bidsC[0].p), h-8); c.closePath();
+            c.fillStyle = "rgba(33,201,94,.16)"; c.fill();
+            c.beginPath(); bidsC.forEach(function(r,i){ i ? c.lineTo(X(r.p),Y(r.q)) : c.moveTo(X(r.p),Y(r.q)); });
+            c.strokeStyle = "#21c95e"; c.lineWidth = 1.4; c.stroke();
+            c.beginPath(); c.moveTo(X(asksC[0].p), Y(asksC[0].q));
+            asksC.forEach(function(r){ c.lineTo(X(r.p), Y(r.q)); });
+            c.lineTo(X(asksC[asksC.length-1].p), h-8); c.lineTo(X(asksC[0].p), h-8); c.closePath();
+            c.fillStyle = "rgba(255,89,60,.14)"; c.fill();
+            c.beginPath(); asksC.forEach(function(r,i){ i ? c.lineTo(X(r.p),Y(r.q)) : c.moveTo(X(r.p),Y(r.q)); });
+            c.strokeStyle = "#ff593c"; c.lineWidth = 1.4; c.stroke();
+            var mid = (m.bestBid + m.bestAsk)/2;
+            c.beginPath(); c.setLineDash([3,3]); c.moveTo(X(mid), 6); c.lineTo(X(mid), h-8);
+            c.strokeStyle = "rgba(255,255,255,.4)"; c.lineWidth = 1; c.stroke(); c.setLineDash([]);
+            $("swDepthSpread").textContent = "ספריד " + (m.spreadBps/100).toFixed(2) + "% · " + (bids.length + asks.length) + " מדרגות";
+            $("swDepthMeta").textContent = "עומק מצטבר " + fmtPrice(Math.max(acc,acc2)) + " " + m.base;
+          }
+          function renderPools(){
+            var el = $("swPools");
+            var ps = (world && world.pools) || [];
+            if (!ps.length){ el.innerHTML = ""; return; }
+            el.innerHTML = '<div class="sw-label" style="grid-column:1/-1;padding:0 4px">הבריכות החיות · עוגן-הנזילות של הציטוט</div>' + ps.map(function(p){
+              var usdsSide = p.a === "USDS" ? p.ra : (p.b === "USDS" ? p.rb : null);
+              var tvl = usdsSide !== null ? "≈ " + (2*usdsSide/MU).toLocaleString("en-US",{maximumFractionDigits:0}) + " USDS" : "· · ·";
+              return '<div class="dx-raised sw-pool">' +
+                '<div style="display:flex;align-items:center;gap:8px">' + medHtml(p.a, 20) + medHtml(p.b, 20) +
+                '<span class="dx-num" style="font-size:12px;font-weight:600">' + esc(p.key) + "</span></div>" +
+                '<div class="dx-num" style="font-size:10.5px;color:var(--dxt2);display:flex;gap:10px;flex-wrap:wrap">' +
+                "<span>TVL " + tvl + "</span><span>עמלה חי " + ((p.feeBps||0)/100).toFixed(2) + "%</span>" +
+                "<span>תשואה-LP " + ((p.lpYieldBps||0)/100).toFixed(2) + "%</span><span>" + (p.swaps||0) + " סוואפים</span></div></div>";
+            }).join("");
           }
           function medEl(sym, size){
             var s = document.createElement("span");
@@ -1492,6 +1600,7 @@ var I18N = {
     "ex.tape":"קלטת עסקאות","ex.price":"מחיר","ex.amount":"כמות","ex.h":"גובה",
     "ex.arena":"זירת הסוכנים","ex.soldier":"חייל","ex.pnl":"PnL","ex.termopen":"פתחו את הטרמינל המלא",
     "ex.railsh":"מסילות הפקדה","ex.railssh":"ארבע רשתות, ניטור ציבורי ללא מפתחות, כל 20 דקות","ex.railsnote":"הניטור קורא RPC ציבורי ומפרסם את ספר ההפקדות הפתוח. מספר ההפקדות עד היום מוצג כפי שהוא, כי כך זה.",
+    "ex.depthh":"עומק-השוק · מהסולם החי","ex.bids2":"קונים","ex.asks2":"מוכרים","ex.srcribbon":"סרט המחיר: הדגימות הרשומות בספר הרשמי בלבד · אפס המצאה",
     "ex.ledgerh":"הפנקס החי של המטבע","ex.ledgersub":"saos.live.v1: קיפול דטרמיניסטי של פעולות ציבוריות",
     "ex.supplyh":"אספקה ותקרה","ex.max":"תקרה מקסימלית","ex.supplynote":"ההנפקה ההתחלתית משקפת 1:1 את האספקה המאומתת של SAOS-NET v0. הפרוטוקול קובע: אספקה שווה לנעול, תמיד.",
     "ex.replayh":"אימות מימוש-מחדש","ex.replayed":"פעולות ששוחזרו","ex.valid":"פעולות תקינות","ex.replaynote":"פעולות לא תקינות נשמרות ומוצגות כפי שהן: פנקס שמראה רק הצלחות הוא לא פנקס אמת.","ex.walletopen":"לארנק הריבוני",
@@ -1597,6 +1706,7 @@ var I18N = {
     "ex.tape":"Trade tape","ex.price":"Price","ex.amount":"Amount","ex.h":"Height",
     "ex.arena":"The agent arena","ex.soldier":"Soldier","ex.pnl":"PnL","ex.termopen":"Open the full terminal",
     "ex.railsh":"Deposit rails","ex.railssh":"Four chains, keyless public watching, every 20 minutes","ex.railsnote":"The watcher reads public RPCs and publishes the open deposit book. The total number of deposits to date is shown as it is, because that is the truth.",
+    "ex.depthh":"Market depth · live ladder","ex.bids2":"Bids","ex.asks2":"Asks","ex.srcribbon":"Price ribbon: only the samples recorded in the official book · zero invention",
     "ex.ledgerh":"The live currency ledger","ex.ledgersub":"saos.live.v1: a deterministic fold of public operations",
     "ex.supplyh":"Supply and cap","ex.max":"Max supply","ex.supplynote":"The initial mint mirrors the verified supply of SAOS-NET v0 1:1. The protocol enforces: supply equals locked, always.",
     "ex.replayh":"Replay verification","ex.replayed":"Ops replayed","ex.valid":"Valid ops","ex.replaynote":"Invalid operations are kept and shown as they are: a book that shows only successes is not a truth book.","ex.walletopen":"Open the sovereign wallet",

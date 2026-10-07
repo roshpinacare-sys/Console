@@ -536,7 +536,28 @@ footer.site a:hover{color:var(--gold-bright);text-decoration:none}
           <div class="field" style="flex:2"><label class="f" data-i="wSendTo">Recipient address (saos1...)</label><input class="mono" id="send-to" placeholder="saos1..."></div>
           <div class="field"><label class="f" data-i="wSendAmt">Amount</label><div style="display:flex;gap:8px;align-items:center"><input class="mono" id="send-amount" placeholder="0.000" style="flex:1;min-width:0"><button type="button" class="btn ghost sm" id="btn-send-max" style="flex:none">MAX</button></div></div>
         </div>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center">
+          <input id="ab-label" style="max-width:170px">
+          <button type="button" class="btn ghost sm" id="btn-ab-save" data-i="wAbSave">Save recipient</button>
+          <span class="hint" data-i="wAbHint">Saved locally on this device</span>
+        </div>
+        <div id="ab-chips" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
         <button class="btn gold" id="btn-send" data-i="wSendBtn">Sign transfer</button>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2 data-i="wAlertT">Price alerts</h2>
+        <p class="sub" data-i="wAlertP">Checked against the official book prices whenever the wallet opens or you press Check now. Everything stays on this device — keyless, no server.</p>
+        <div class="frow">
+          <div class="field"><label class="f" data-i="wAlertAsset">Asset</label><select id="alert-symbol"></select></div>
+          <div class="field"><label class="f" data-i="wAlertDir">Condition</label><select id="alert-dir"><option value="ge" data-i="wAlertGe"></option><option value="le" data-i="wAlertLe"></option></select></div>
+          <div class="field"><label class="f" data-i="wAlertTarget">Target (USDS)</label><input class="mono" id="alert-target" placeholder="0.00" inputmode="decimal"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost sm" id="btn-alert-add" data-i="wAlertAdd">Add alert</button>
+          <button class="btn ghost sm" id="btn-alert-check" data-i="wAlertCheck">Check now</button>
+        </div>
+        <div class="feed" id="alert-list" style="margin-top:12px"></div>
       </div>
 
       <div class="card" style="margin-top:16px">
@@ -904,6 +925,8 @@ en: {
   wRelayAcc:"Steem account", wRelayWif:"Posting key (WIF)", wRelayBtn:"Broadcast queue",
   wQrT:"Address QR", wQrP:"Scan with a camera to share this address. The code holds the address only — never keys.",
   wPvT:"Estimated value", wPvNote:"Mid prices of the public DEX pools — an estimate, never a promise.", wPvNone:"No public pool prices for this token yet.",
+  wAlertT:"Price alerts", wAlertP:"Checked against the official book prices whenever the wallet opens or you press Check now. Everything stays on this device — keyless, no server.", wAlertAsset:"Asset", wAlertDir:"Condition", wAlertGe:"rises to or above", wAlertLe:"falls to or below", wAlertTarget:"Target (USDS)", wAlertAdd:"Add alert", wAlertCheck:"Check now", wAlertArmed:"armed", wAlertDone:"hit", wAlertNone:"No alerts yet — add one above.", wAlertHit:"Alert: {s} reached {p} USDS", wAlertCalm:"No alert crossed right now.", wAlertBad:"Choose an asset and a positive target.", wAlertSet:"Alert saved on this device.",
+  wAbSave:"Save recipient", wAbHint:"Saved locally on this device", wAbEmpty:"No saved recipients yet — fill the address above and save it.", wAbSaved:"Recipient saved.", wAbBad:"Fill a valid recipient address first.", wAbPicked:"Recipient filled in.",
   wActT:"My activity", wActP:"Everything the chain folded for your address, newest first — plus what you signed and is waiting.",
   vitT:"Network lines", vitUp:n=>n+" of "+n+" measured up", vitDown:(u,n)=>u+" of "+n+" lines up", vitNone:"network lines: not readable from here — try a refresh",
   pwLabel:"Password", pwShow:"Show", pwHide:"Hide", pwCancel:"Cancel", pwOk:"Confirm", pwShort:"At least 8 characters",
@@ -1044,6 +1067,8 @@ he: {
   wRelayAcc:"חשבון Steem", wRelayWif:"מפתח posting (WIF)", wRelayBtn:"שידור התור",
   wQrT:"QR של הכתובת", wQrP:"סרקו עם מצלמה כדי לשתף את הכתובת. הקוד מכיל את הכתובת בלבד — לעולם לא מפתחות.",
   wPvT:"שווי מוערך", wPvNote:"מחירי ביניים של בריכות ה-DEX הציבוריות — הערכה בלבד, לעולם לא הבטחה.", wPvNone:"אין עדיין מחיר בריכה ציבורי לטוקן הזה.",
+  wAlertT:"התראות מחיר", wAlertP:"נבדק מול מחירי הספר הרשמי בכל פתיחת ארנק או לחיצה על בדיקה עכשיו. הכל נשאר במכשיר הזה — בלי מפתחות, בלי שרת.", wAlertAsset:"מטבע", wAlertDir:"תנאי", wAlertGe:"עולה ל\u200f או מעל", wAlertLe:"יורד ל\u200f או מתחת", wAlertTarget:"יעד (USDS)", wAlertAdd:"הוספת התראה", wAlertCheck:"בדיקה עכשיו", wAlertArmed:"דרוך", wAlertDone:"נחצה", wAlertNone:"אין עדיין התראות — הוסיפו אחת למעלה.", wAlertHit:"התראה: {s} הגיע ל\u200f {p} USDS", wAlertCalm:"אף התראה לא נחצה כרגע.", wAlertBad:"בחרו מטבע ויעד חיובי.", wAlertSet:"ההתראה נשמרה במכשיר הזה.",
+  wAbSave:"שמירת נמען", wAbHint:"נשמר מקומית במכשיר הזה", wAbEmpty:"אין עדיין נמענים שמורים — מלאו את הכתובת למעלה ושמרו.", wAbSaved:"הנמען נשמר.", wAbBad:"מלאו קודם כתובת נמען תקינה.", wAbPicked:"הכתובת הודבקה.",
   wActT:"הפעולות שלי", wActP:"כל מה שהשרשרת קיפלה לכתובת שלך, החדש קודם — וגם מה שחתמת ועוד ממתין.",
   vitT:"קווי הרשת", vitUp:n=>n+" מתוך "+n+" נמדדו למעלה", vitDown:(u,n)=>u+" מתוך "+n+" קווים למעלה", vitNone:"קווי הרשת: לא נקראים מכאן — נסו רענון",
   pwLabel:"סיסמה", pwShow:"הצג", pwHide:"הסתר", pwCancel:"ביטול", pwOk:"אישור", pwShort:"לפחות 8 תווים",
@@ -1347,7 +1372,7 @@ async function probeChain() {
 setInterval(probeChain, 90 * 1000);
 
 /* ═══════════ rendering ═══════════ */
-function renderAll() { renderMirror(); renderLive(); }
+function renderAll() { renderMirror(); renderLive(); renderAbook(); refreshAlertSymbols(); renderAlerts(); }
 
 function renderMirror() {
   const m = MIRROR;
@@ -1621,7 +1646,7 @@ function renderDexBalance() {
   }
 }
 async function pullDexWorld() {
-  try { DEXW = await jget("dex/world.json"); renderDexBalance(); } catch { /* the mirror keeps the last frame — next round retries */ }
+  try { DEXW = await jget("dex/world.json"); renderDexBalance(); refreshAlertSymbols(); checkAlerts(false); } catch { /* the mirror keeps the last frame — next round retries */ }
 }
 function refreshSendSymbols() {
   const syms = Object.keys(LIVE?.state?.tokens || {});
@@ -1637,6 +1662,82 @@ function refreshSendSymbols() {
     if (mine.includes(mcur)) msel.value = mcur;
   }
 }
+
+/* ═══ R71 · price alerts + address book — device-local, keyless, honest ═══ */
+const AB_KEY = "saos.abook.v1", ALERT_KEY = "saos.alerts.v1";
+const lsGet = (k, fb) => { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch { return fb; } };
+const abList = () => lsGet(AB_KEY, []);
+const alList = () => lsGet(ALERT_KEY, []);
+function renderAbook() {
+  const box = $("ab-chips"); if (!box) return;
+  const inp = $("ab-label");
+  if (inp) inp.placeholder = LANG === "he" ? "תגית (למשל: אמא)" : "label (e.g. mom)";
+  const rows = abList();
+  box.innerHTML = rows.length ? rows.map((r, i) =>
+    `<span class="tag" style="display:inline-flex;align-items:center;gap:6px;max-width:100%"><button type="button" data-ab-pick="${i}" style="all:unset;cursor:pointer">${esc(r.label)} <span class="mono" style="color:var(--faint)">${esc(String(r.addr).slice(0, 10))}…</span></button><button type="button" data-ab-del="${i}" aria-label="remove" style="all:unset;cursor:pointer;color:var(--faint)">×</button></span>`).join("")
+    : `<span class="hint">${esc(t("wAbEmpty"))}</span>`;
+}
+function alertSymbols() {
+  const s = new Set(["SAOS", "USDS"]);
+  (DEXW?.pools || []).forEach((p) => { s.add(p.a); s.add(p.b); });
+  Object.keys(LIVE?.state?.tokens || {}).forEach((k) => s.add(k));
+  return [...s].sort();
+}
+function refreshAlertSymbols() {
+  const sel = $("alert-symbol"); if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = alertSymbols().map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
+  if ([...sel.options].some((o) => o.value === cur)) sel.value = cur;
+}
+function renderAlerts() {
+  const box = $("alert-list"); if (!box) return;
+  const rows = alList();
+  box.innerHTML = rows.length ? rows.map((a, i) =>
+    `<div class="op-row"><span class="k mono">${esc(a.sym)}</span><span style="flex:1;min-width:0;color:var(--dim)">${esc(a.dir === "ge" ? t("wAlertGe") : t("wAlertLe"))} <b class="mono" style="color:var(--text)">${esc(nice(a.target))}</b> USDS ${a.done ? `<span class="tag gold">${esc(t("wAlertDone"))} @ ${esc(nice(a.hitPrice))}</span>` : `<span class="tag">${esc(t("wAlertArmed"))}</span>`}</span><span class="when"><button type="button" data-al-del="${i}" aria-label="remove" style="all:unset;cursor:pointer;color:var(--faint)">×</button></span></div>`).join("")
+    : `<span class="hint">${esc(t("wAlertNone"))}</span>`;
+}
+function checkAlerts(manual) {
+  const rows = alList(); let fired = 0;
+  rows.forEach((a) => {
+    if (a.done) return;
+    const p = tokenPriceUsds(a.sym);
+    if (p === null) return;
+    const hit = a.dir === "ge" ? p >= a.target : p <= a.target;
+    if (hit) { a.done = true; a.hitAt = new Date().toISOString(); a.hitPrice = p; fired++; toast(t("wAlertHit").replace("{s}", a.sym).replace("{p}", nice(p)), true); }
+  });
+  if (fired) localStorage.setItem(ALERT_KEY, JSON.stringify(rows));
+  renderAlerts();
+  if (manual && !fired) toast(t("wAlertCalm"), true);
+}
+$("btn-alert-add")?.addEventListener("click", () => {
+  const sym = $("alert-symbol").value, dir = $("alert-dir").value;
+  const target = parseFloat($("alert-target").value.replace(",", "."));
+  if (!sym || !Number.isFinite(target) || target <= 0) { toast(t("wAlertBad"), false); return; }
+  const rows = alList();
+  rows.unshift({ sym, dir, target, at: new Date().toISOString(), done: false });
+  localStorage.setItem(ALERT_KEY, JSON.stringify(rows.slice(0, 24)));
+  $("alert-target").value = "";
+  renderAlerts(); toast(t("wAlertSet"), true);
+});
+$("btn-alert-check")?.addEventListener("click", () => checkAlerts(true));
+$("btn-ab-save")?.addEventListener("click", () => {
+  const addr = $("send-to").value.trim();
+  if (addr.length < 10) { toast(t("wAbBad"), false); return; }
+  const label = ($("ab-label").value || "").trim() || addr.slice(0, 10) + "…";
+  const rows = abList().filter((r) => r.addr !== addr);
+  rows.unshift({ label, addr, at: Date.now() });
+  localStorage.setItem(AB_KEY, JSON.stringify(rows.slice(0, 24)));
+  $("ab-label").value = "";
+  renderAbook(); toast(t("wAbSaved"), true);
+});
+document.addEventListener("click", (e) => {
+  const pick = e.target.closest?.("[data-ab-pick]");
+  if (pick) { const r = abList()[Number(pick.dataset.abPick)]; if (r) { $("send-to").value = r.addr; toast(t("wAbPicked"), true); } }
+  const del = e.target.closest?.("[data-ab-del]");
+  if (del) { const rows = abList(); rows.splice(Number(del.dataset.abDel), 1); localStorage.setItem(AB_KEY, JSON.stringify(rows)); renderAbook(); }
+  const ald = e.target.closest?.("[data-al-del]");
+  if (ald) { const rows = alList(); rows.splice(Number(ald.dataset.alDel), 1); localStorage.setItem(ALERT_KEY, JSON.stringify(rows)); renderAlerts(); }
+});
 
 $("btn-new-wallet").addEventListener("click", async () => {
   try {
