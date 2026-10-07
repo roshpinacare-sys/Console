@@ -839,6 +839,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)" data-i18n="sw.slipMax">סטייה מרבית מותרת</span><span class="dx-num" id="swSlip"></span></div>
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)" data-i18n="sw.minOut">מקבלים לפחות</span><span class="dx-num" id="swMinOut" style="color:var(--dxgreen)"></span></div>
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.fees">עמלות-בריכות במסלול</span><span class="dx-num" id="swFees" style="text-align:left"></span></div>
+              <div class="dx-detail" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.feelawL">חוק-העמלה</span><span id="swFeeLaw" style="text-align:left;color:var(--dxt2);font-size:11px;line-height:1.5"></span></div>
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.route">מסלול</span><span id="swRoute" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:flex-end" data-testid="swap-route"></span></div>
               <div class="dx-detail" style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--dxt2)" data-i18n="sw.eta">זמן משוער</span><span data-i18n="sw.etaV">≤ 3 שניות (בלוק הבא)</span></div>
               <div class="dx-detail" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:6px;padding-top:8px;border-top:1px dashed var(--line)"><span style="color:var(--dxt2);white-space:nowrap" data-i18n="sw.honestL">סוג-מחיר</span><span id="swHonest" style="text-align:left;color:var(--dxamber);font-size:11px;line-height:1.5" data-i18n="sw.honestV">מחיר-ספר פנימי · ל-SAOS אין ביד-חוץ · ההמרה אינה רווח-אמיתי</span></div>
@@ -924,6 +925,21 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
           // ── state (mirror of SwapView) ──
           var world = null, online = false, everOk = false;
+          // ── R76: חוק-העמלה הדינמית · fail-closed: ספר חסר/ישן = עמלת-בסיס סטטית ──
+          var FEE_LAW = null;
+          function lawFeeBps(p){
+            if (!FEE_LAW || !FEE_LAW.ok || typeof (p && p.feeBps) !== "number") return null;
+            var row = null;
+            var arr = FEE_LAW.pools || [];
+            for (var i = 0; i < arr.length; i++) if (arr[i].key === p.key) { row = arr[i]; break; }
+            return (row && row.deltaBps > 0 && row.feeBps > p.feeBps) ? row : null; /* החוק רק מעלה מעל בסיס-הספר · לעולם לא מוריד */
+          }
+          function loadFeeLaw(){
+            fetch("dex/fee-law.json", { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
+              FEE_LAW = (j && j.ok) ? j : null;
+              if (parseAmount(amountStr)) refreshQuote(); else render();
+            }).catch(function(){ FEE_LAW = null; render(); });
+          }
           var assetIn = "SAOS", assetOut = "USDS", amountStr = "";
           var slipPct = 0.5, slipAuto = true, smartRoute = true;
           var quote = null, quoting = false, cta = "empty", errNote = "";
@@ -959,7 +975,9 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             function legOut(leg, amt){
               if (leg.kind === "wrap") return amt;
               var p = leg.pool;
-              var feeAmt = Math.floor((amt * p.feeBps) / 10000);
+              var lr = lawFeeBps(p);
+              var feeBps = lr ? lr.feeBps : p.feeBps;
+              var feeAmt = Math.floor((amt * feeBps) / 10000);
               var inAfter = amt - feeAmt;
               var ra = leg.from === p.a ? p.ra : p.rb;
               var rb = leg.from === p.a ? p.rb : p.ra;
@@ -1000,7 +1018,13 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               break;
             }
             var legs = best.legs.map(function(l){
-              return { kind:l.kind, venue:l.venue, from:l.from, to:l.to, inMu:l.inMu, outMu:l.outMu, feeBps: l.pool ? l.pool.feeBps : undefined };
+              var eff = null, raised = false;
+              if (l.pool && typeof l.pool.feeBps === "number"){
+                var lr = lawFeeBps(l.pool);
+                eff = lr ? lr.feeBps : l.pool.feeBps;
+                raised = !!(lr && eff > l.pool.feeBps);
+              }
+              return { kind:l.kind, venue:l.venue, from:l.from, to:l.to, inMu:l.inMu, outMu:l.outMu, feeBps: eff == null ? undefined : eff, lawRaised: raised };
             });
             legs.forEach(function(l){
               if (l.kind !== "pool" || typeof l.feeBps !== "number") return;
@@ -1084,6 +1108,15 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               $("swSlip").textContent = (slipAuto ? T("אוטומטי ","Auto ") : "") + slipPct + "%";
               $("swMinOut").textContent = fmtMu(minOutMu()) + " " + assetOut;
               $("swFees").innerHTML = quote.feeText ? esc(quote.feeText) + ' <span style="color:var(--dxt3)">' + T("(70% LP · 30% אוצר)","(70% LP · 30% treasury)") + "</span>" : "-";
+              var flEl = $("swFeeLaw");
+              if (flEl){
+                var raised = quote.legs.filter(function(l){ return l.lawRaised; });
+                if (raised.length){
+                  flEl.innerHTML = '<span style="color:var(--dxgreen)">' + T("חוק-עמלה דינמית פעיל","Dynamic fee law active") + "</span> · " + raised.map(function(l){ return (l.feeBps/100).toFixed(2) + "% " + l.from; }).join(" · ") + ' <span style="color:var(--dxt3)">(' + T("העמלה עולה עם התנודתיות המדודה של הספר · Meteora-take · dex/fee-law.json","the fee rises with the book's measured volatility · Meteora take · dex/fee-law.json") + ")</span>";
+                } else {
+                  flEl.innerHTML = '<span style="color:var(--dxt3)">' + (FEE_LAW ? T("עמלת-בסיס · התנודתיות המדודה לא חורגת מהבסיס כרגע","base fee · measured volatility does not exceed the base right now") : T("ספר-החוק חסר או ישן · עמלת-בסיס סטטית (fail-closed)","law book missing or stale · static base fee (fail-closed)")) + "</span>";
+                }
+              }
               $("swRoute").innerHTML = quote.legs.map(function(l){
                 return '<span class="dx-chip dx-num" style="padding:2px 8px;font-size:10px">' + esc(l.kind === "pool" ? l.venue.slice(5) : "wrap>" + l.to) + "</span>";
               }).join("");
@@ -1586,6 +1619,8 @@ html[dir="ltr"] .hero h1{max-width:24ch}
           });
           loadWorld();
           setInterval(loadWorld, 20000);
+          loadFeeLaw();
+          setInterval(loadFeeLaw, 300000);
           loadBridge();
           setInterval(loadBridge, 300000);
           buildLimitForm();
@@ -1894,7 +1929,7 @@ var I18N = {
     "ex.arenanote":"הזירה: סוכני-הגריד של הרשת מקוננים על הספר החי זה-מול-זה · PnL נמדד מהספר · יחידות-מילי (µ)",
     "ex.poolsnote":"בריכות בשלב-ההנעה: הנזילות קטנה ומתפרסמת כמו-שהיא · נקודות (· · ·) = אין צד-USDS עדיין",
     "inv.band":"בוחנים אותנו? הכל פתוח:","inv.deck":"מצגת למשקיעים","inv.versus":"ההשוואה הכנה","inv.truth":"שער האמת","inv.receipts":"קיר הקבלות",
-    "sw.h":"חלון ההחלפה","sw.sub":"הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json","sw.title":"החלפה","sw.pay":"משלמים","sw.recv":"מקבלים (משוער)","sw.bal":"יתרה:","sw.price":"מחיר","sw.impact":"הפרש מחיר (עלות-השפעה)","sw.slipMax":"סטייה מרבית מותרת","sw.minOut":"מקבלים לפחות","sw.fees":"עמלות-בריכות במסלול","sw.route":"מסלול","sw.eta":"זמן משוער","sw.etaV":"≤ 3 שניות (בלוק הבא)","sw.queued":"ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע","sw.offline":"המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן","sw.stale":"נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה","sw.settingsaria":"הגדרות החלפה","sw.amtaria":"סכום להחלפה","sw.fliparia":"היפוך כיוון","sw.deptharia":"תרשים עומק הזמנות חי","sw.sparkaria":"סרט מחיר חי","sw.candleh":"נרות שוק · יומי מהספר + סשן מהמכשיר שלך","sw.candlearia":"תרשים נרות שוק חי","sw.candlenote":"הנר היומי נגזר מ-stats24 של הספר הרשמי · נרות-הסשן נמדדים במכשירך מרענוני הספר ונשמרים מקומית · המנוע סופר 290 נרות-דקה וטרם מפרסם אותם · ברגע שיפורסמו תיכנס ההיסטוריה המלאה","sw.limith":"פקודות-כוונה · מקומי","sw.limside":"כיוון","sw.limbuy":"קנייה","sw.limsell":"מכירה","sw.limasset":"מטבע","sw.limsize":"כמות","sw.limtarget":"מחיר-יעד (USDS)","sw.limadd":"הצב פקודה","sw.limnote":"פקודות-כוונה נשמרות במכשירך בלבד · נבדקות מול הספר החי בכל רענון · ביצוע ידני בחלון ההחלפה · אינן מונחות על השרשרת עדיין","sw.bridgeh":"גשר ריבוי-שרשראות · המסילות החיות","sw.honestL":"סוג-מחיר","sw.honestV":"מחיר-ספר פנימי · ל-SAOS אין ביד-חוץ · ההמרה אינה רווח-אמיתי","sw.econh":"הכלכלה-הכנה · מה-אמיתי ומה-ספר-פנימי","inv.dev":"תיעוד למפתחים","inv.giants":"ליגת-הענקים",
+    "sw.h":"חלון ההחלפה","sw.sub":"הדקס שלנו · אנטומיה Uniswap מלאה על המנוע הריבוני · ציטוט חי מהספר הרשמי dex/world.json","sw.title":"החלפה","sw.pay":"משלמים","sw.recv":"מקבלים (משוער)","sw.bal":"יתרה:","sw.price":"מחיר","sw.impact":"הפרש מחיר (עלות-השפעה)","sw.slipMax":"סטייה מרבית מותרת","sw.minOut":"מקבלים לפחות","sw.fees":"עמלות-בריכות במסלול","sw.feelawL":"חוק-העמלה","sw.route":"מסלול","sw.eta":"זמן משוער","sw.etaV":"≤ 3 שניות (בלוק הבא)","sw.queued":"ההחלפה נכנסה לתור הקונצנזוס · תוצאה תופיע בסרט העסקאות וביתרה בעוד רגע","sw.offline":"המנוע לא מגיב · הציטוט האחרון עשוי להיות מיושן","sw.stale":"נתונים-ישנים · הרענון נכשל, מוצגת-המדידה-האחרונה","sw.settingsaria":"הגדרות החלפה","sw.amtaria":"סכום להחלפה","sw.fliparia":"היפוך כיוון","sw.deptharia":"תרשים עומק הזמנות חי","sw.sparkaria":"סרט מחיר חי","sw.candleh":"נרות שוק · יומי מהספר + סשן מהמכשיר שלך","sw.candlearia":"תרשים נרות שוק חי","sw.candlenote":"הנר היומי נגזר מ-stats24 של הספר הרשמי · נרות-הסשן נמדדים במכשירך מרענוני הספר ונשמרים מקומית · המנוע סופר 290 נרות-דקה וטרם מפרסם אותם · ברגע שיפורסמו תיכנס ההיסטוריה המלאה","sw.limith":"פקודות-כוונה · מקומי","sw.limside":"כיוון","sw.limbuy":"קנייה","sw.limsell":"מכירה","sw.limasset":"מטבע","sw.limsize":"כמות","sw.limtarget":"מחיר-יעד (USDS)","sw.limadd":"הצב פקודה","sw.limnote":"פקודות-כוונה נשמרות במכשירך בלבד · נבדקות מול הספר החי בכל רענון · ביצוע ידני בחלון ההחלפה · אינן מונחות על השרשרת עדיין","sw.bridgeh":"גשר ריבוי-שרשראות · המסילות החיות","sw.honestL":"סוג-מחיר","sw.honestV":"מחיר-ספר פנימי · ל-SAOS אין ביד-חוץ · ההמרה אינה רווח-אמיתי","sw.econh":"הכלכלה-הכנה · מה-אמיתי ומה-ספר-פנימי","inv.dev":"תיעוד למפתחים","inv.giants":"ליגת-הענקים",
     "ex.ledgerh":"הפנקס החי של המטבע","ex.ledgersub":"saos.live.v1: קיפול דטרמיניסטי של פעולות ציבוריות",
     "ex.supplyh":"אספקה ותקרה","ex.max":"תקרה מקסימלית","ex.supplynote":"ההנפקה ההתחלתית משקפת 1:1 את האספקה המאומתת של SAOS-NET v0. הפרוטוקול קובע: אספקה שווה לנעול, תמיד.",
     "ex.replayh":"אימות מימוש-מחדש","ex.replayed":"פעולות ששוחזרו","ex.valid":"פעולות תקינות","ex.replaynote":"פעולות לא תקינות נשמרות ומוצגות כפי שהן: פנקס שמראה רק הצלחות הוא לא פנקס אמת.","ex.walletopen":"לארנק הריבוני",
@@ -2004,7 +2039,7 @@ var I18N = {
     "ex.arenanote":"Arena: the network's own grid agents market-make against each other on the live book · PnL measured from the book · milli-units (µ)",
     "ex.poolsnote":"Bootstrap pools: liquidity is small and published as-is · dots (· · ·) = no USDS side yet",
     "inv.band":"Auditing us? Everything is open:","inv.deck":"Partner deck","inv.versus":"The honest versus","inv.truth":"The truth gate","inv.receipts":"Receipt wall",
-    "sw.h":"The swap window","sw.sub":"Our DEX · full Uniswap anatomy on the sovereign engine · live quote from the official dex/world.json book","sw.title":"Swap","sw.pay":"You pay","sw.recv":"You receive (estimated)","sw.bal":"Balance:","sw.price":"Price","sw.impact":"Price impact","sw.slipMax":"Max slippage","sw.minOut":"You receive at least","sw.fees":"Pool fees in route","sw.route":"Route","sw.eta":"Est. time","sw.etaV":"≤ 3 seconds (next block)","sw.queued":"The swap entered the consensus queue · the result will appear on the tape and in your balance shortly","sw.offline":"The engine is not responding · the last quote may be stale","sw.stale":"Stale data · refresh failed, showing the last measurement","sw.settingsaria":"Swap settings","sw.amtaria":"Amount to swap","sw.fliparia":"Flip direction","sw.deptharia":"Live order book depth chart","sw.sparkaria":"Live price ribbon","sw.candleh":"Market candles · daily from the book + session from your device","sw.candlearia":"Live market candlestick chart","sw.candlenote":"The daily candle derives from the official book's stats24 · session candles are measured on your device from book refreshes and stored locally · the engine counts 290 one-minute candles and has not published them yet · full history lands here the moment it does","sw.limith":"Intent orders · local","sw.limside":"Side","sw.limbuy":"Buy","sw.limsell":"Sell","sw.limasset":"Asset","sw.limsize":"Size","sw.limtarget":"Target price (USDS)","sw.limadd":"Place order","sw.limnote":"Intent orders are stored on your device only · checked against the live book on every refresh · executed manually in the swap window · not placed on-chain yet","sw.bridgeh":"Multi-chain bridge · live rails","sw.honestL":"Price basis","sw.honestV":"Internal book price · SAOS has no external market · this is not real profit","sw.econh":"The honest economy · real vs internal book","inv.dev":"Developer docs","inv.giants":"The giants league",
+    "sw.h":"The swap window","sw.sub":"Our DEX · full Uniswap anatomy on the sovereign engine · live quote from the official dex/world.json book","sw.title":"Swap","sw.pay":"You pay","sw.recv":"You receive (estimated)","sw.bal":"Balance:","sw.price":"Price","sw.impact":"Price impact","sw.slipMax":"Max slippage","sw.minOut":"You receive at least","sw.fees":"Pool fees in route","sw.feelawL":"Fee law","sw.route":"Route","sw.eta":"Est. time","sw.etaV":"≤ 3 seconds (next block)","sw.queued":"The swap entered the consensus queue · the result will appear on the tape and in your balance shortly","sw.offline":"The engine is not responding · the last quote may be stale","sw.stale":"Stale data · refresh failed, showing the last measurement","sw.settingsaria":"Swap settings","sw.amtaria":"Amount to swap","sw.fliparia":"Flip direction","sw.deptharia":"Live order book depth chart","sw.sparkaria":"Live price ribbon","sw.candleh":"Market candles · daily from the book + session from your device","sw.candlearia":"Live market candlestick chart","sw.candlenote":"The daily candle derives from the official book's stats24 · session candles are measured on your device from book refreshes and stored locally · the engine counts 290 one-minute candles and has not published them yet · full history lands here the moment it does","sw.limith":"Intent orders · local","sw.limside":"Side","sw.limbuy":"Buy","sw.limsell":"Sell","sw.limasset":"Asset","sw.limsize":"Size","sw.limtarget":"Target price (USDS)","sw.limadd":"Place order","sw.limnote":"Intent orders are stored on your device only · checked against the live book on every refresh · executed manually in the swap window · not placed on-chain yet","sw.bridgeh":"Multi-chain bridge · live rails","sw.honestL":"Price basis","sw.honestV":"Internal book price · SAOS has no external market · this is not real profit","sw.econh":"The honest economy · real vs internal book","inv.dev":"Developer docs","inv.giants":"The giants league",
     "ex.ledgerh":"The live currency ledger","ex.ledgersub":"saos.live.v1: a deterministic fold of public operations",
     "ex.supplyh":"Supply and cap","ex.max":"Max supply","ex.supplynote":"The initial mint mirrors the verified supply of SAOS-NET v0 1:1. The protocol enforces: supply equals locked, always.",
     "ex.replayh":"Replay verification","ex.replayed":"Ops replayed","ex.valid":"Valid ops","ex.replaynote":"Invalid operations are kept and shown as they are: a book that shows only successes is not a truth book.","ex.walletopen":"Open the sovereign wallet",

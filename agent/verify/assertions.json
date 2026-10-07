@@ -264,7 +264,11 @@
     "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה הטרי ביותר על קו העדות של הצי רעב, שום פעולה אחרת של החשבון שנושא אותו לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח). ריפוי T-A 2026-10-05, נמדד ולא נחלש: הקו רב-חותמים לפי דוקטרינת R75 (render.mjs: המפתח מכריז מי חותם). היסטוריית השרשרת: עוגן ה-saos.weave.core.v1 האחרון של cashmachine = 2026-09-20T09:08:45Z; הקו שחזר חותם בשם @headcorner (סוד ה-WIF מזהה את העד; פעולה ראשונה 2026-10-04, coord-bus של Domain מכנה את headcorner ראש הצי). המיפוי החד-חשבוני הישן המשיך להיכשל על קו חי; המגלה קורא עכשיו כל חשבון בקו העדות ושופט את עוגן הליבה הטרי ביותר, כל ענפי הכישלון של R27 נשמרו."
    },
    "kind": "steem_priority",
-   "accounts": ["cashmachine", "headcorner", "lsa"],
+   "accounts": [
+    "cashmachine",
+    "headcorner",
+    "lsa"
+   ],
    "coreOp": "saos.weave.core.v1",
    "staleHours": 26
   },
@@ -648,6 +652,26 @@
    "kind": "ledger_integrity",
    "bridgehead": "agent/state.json",
    "book": "agent/requests.json"
+  },
+  {
+   "id": "A66",
+   "desc": {
+    "en": "R76: the dynamic fee law book is served and whole (dex/fee-law.json) - the Meteora take measured from the official book only",
+    "he": "R76: ספר חוק-העמלה הדינמית מוגש ושלם (dex/fee-law.json) - ה-Meteora-take הנמדד מהספר הרשמי בלבד"
+   },
+   "kind": "http_ok",
+   "target": "dex/fee-law.json"
+  },
+  {
+   "id": "A67",
+   "desc": {
+    "en": "R76: the fee law never lowers a fee below the book's base (every pool feeBps >= baseBps in dex/fee-law.json)",
+    "he": "R76: חוק-העמלה לעולם לא מוריד עמלה מתחת לבסיס-הספר (כל feeBps >= baseBps ב-dex/fee-law.json)"
+   },
+   "kind": "json_field",
+   "target": "dex/fee-law.json",
+   "field": "checks.allFeesAtOrAboveBase",
+   "value": true
   }
  ]
 }

@@ -1,0 +1,63 @@
+# FEE-LAW (R76) · חוק-העמלה הדינמית מודעת-התנודתיות · ה-Meteora-take הריבוני
+#
+# הרצה ציבורית (דקות-Actions בלתי-מוגבלות, אפס-סודות, אפס-מפתחות): מודד את הפיזור
+# מהספר הרשמי dex/world.json בלבד ומפרסם את חוק-העמלה dex/fee-law.json:
+#   fee_bps = clamp(base + K_VOL × σ, base, min(2 × base, 200))
+#   σ = max(twapDevBps, fairGapBps, range24Bps) · שלוש מדידות-הפיזור של הספר עצמו
+# חלון-ההחלפה מצטט ומציג את עמלת-החוק (fail-closed לבסיס) · ההצמדה לבריכות-המנוע
+# עצמן היא שער-הבעלים (חוק STASIS · כותב-יחיד).
+#
+# R28 Pages-quota: commit רק כשהעמלות באמת זזו (או פעימת-לב ישנה מ-20h).
+
+name: fee-law
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * *'
+permissions:
+  contents: write
+
+concurrency:
+  group: fee-law
+  cancel-in-progress: false
+
+jobs:
+  fee-law:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout the public console
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Measure the fee law (keyless, local book only)
+        run: node dex/fee-law.mjs
+
+      - name: Publish the fee-law book
+        run: |
+          git config user.name "fee-law[bot]"
+          git config user.email "fee-law[bot]@users.noreply.github.com"
+          git add dex/fee-law.json
+          if git diff --cached --quiet; then
+            echo "the fee-law book is unchanged"
+            exit 0
+          fi
+          # R28 gate: commit רק כשהעמלות/הפסק-הדין באמת זזו · publishedAt זז כל ריצה ואינו סיבה ל-commit
+          SIG_NOW="$(jq -Sc '{v: .verdict, p: [.pools[] | {key, feeBps, sigmaBps}]}' dex/fee-law.json)"
+          git show HEAD:dex/fee-law.json > /tmp/prev-fee-law.json 2>/dev/null \
+            && SIG_PREV="$(jq -Sc '{v: .verdict, p: [.pools[] | {key, feeBps, sigmaBps}]}' /tmp/prev-fee-law.json)" \
+            || SIG_PREV=""
+          LAST_TS="$(git log -1 --format=%cI -- dex/fee-law.json)"
+          LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
+          AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
+          if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_H" -lt 20 ]; then
+            echo "fee-law state unchanged and heartbeat fresh (${AGE_H}h < 20h) - no commit, Pages quota spared"
+            exit 0
+          fi
+          git commit -m "fee-law: $(date -u +%FT%TZ) · verdict: $(jq -r '.verdict' dex/fee-law.json) · $(jq -r '[.pools[] | select(.deltaBps > 0) | .key + " " + (.baseBps|tostring) + "->" + (.feeBps|tostring) + "bps"] | join(", ") | if . == "" then "all pools at base" else . end' dex/fee-law.json)"
+          for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done

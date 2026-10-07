@@ -1,0 +1,83 @@
+{
+ "ok": true,
+ "book": "saos-fee-law/1.0",
+ "publishedAt": "2026-10-07T19:15:56.903Z",
+ "engine": "saos-fee-law/1.0 fee-law · R76 the vol-aware dynamic fee law (the Meteora take)",
+ "verdict": "LIVE (the measured volatility raised 1 pool fee(s) above base)",
+ "law": {
+  "formula": "fee_bps = clamp(base + K_VOL × σ, base, min(2 × base, 200))",
+  "formulaHe": "עמלה = clamp(בסיס + K_VOL × σ, בסיס, מינימום(2 × בסיס, 200))",
+  "K_VOL": 1,
+  "CAP_ABS_BPS": 200,
+  "CAP_FACTOR": 2,
+  "maxAgeH": 30,
+  "mechanism": "the Meteora take: fees rise with MEASURED volatility so LPs are compensated exactly when their risk rises · our σ is measured from our own official book only"
+ },
+ "inputs": {
+  "worldAt": "2026-10-07T02:02:16.601Z",
+  "ageHours": 17.23,
+  "maxAgeH": 30,
+  "fresh": true,
+  "market": "SAOS/USDS",
+  "twapDevBps": 15,
+  "fairGapBps": 7.55,
+  "range24Bps": 0,
+  "sigmaBps": 15,
+  "stats24": {
+   "high24": 1322,
+   "low24": 1322,
+   "last": 1322
+  }
+ },
+ "pools": [
+  {
+   "key": "SAOS/USDS",
+   "baseBps": 30,
+   "sigmaBps": 15,
+   "feeBps": 45,
+   "deltaBps": 15,
+   "basis": "measured (twapDev 15bps · fairGap 7.55bps · range24 0.00bps)"
+  },
+  {
+   "key": "USDS/WSTEEM",
+   "baseBps": 72,
+   "sigmaBps": null,
+   "feeBps": 72,
+   "deltaBps": 0,
+   "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
+  },
+  {
+   "key": "ENERGY/SAOS",
+   "baseBps": 357,
+   "sigmaBps": null,
+   "feeBps": 357,
+   "deltaBps": 0,
+   "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
+  },
+  {
+   "key": "USDS/WTRX",
+   "baseBps": 46,
+   "sigmaBps": null,
+   "feeBps": 46,
+   "deltaBps": 0,
+   "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
+  }
+ ],
+ "checks": {
+  "allFeesAtOrAboveBase": true,
+  "note": "self-audit law: the dynamic fee can only RAISE a fee above the book base, never lower it"
+ },
+ "application": {
+  "swapWindow": "LIVE · the Console swap window quotes and displays the law fee (fail-closed to the static base when this book is missing or older than 30h)",
+  "enginePools": "ARMED-PENDING · the engine book keeps its base fees until the owner gate adopts the law (STASIS law · single-writer: the engine owns its pools)"
+ },
+ "laws": [
+  "כל הקלטות מהספר הרשמי בלבד (dex/world.json) · אפס קלט-חוץ · אפס המצאה",
+  "fee_bps = clamp(base + K_VOL × σ, base, min(2 × base, 200)) · קבועי-החוק גלויים בספר",
+  "σ = max(twapDevBps, fairGapBps, range24Bps) · שלוש מדידות-הפיזור של הספר עצמו",
+  "בריכה בלי σ מדודה: העמלה נשארת הבסיס · החוק לא ממציא פיזור",
+  "ספר ישן מ-30h: החוק DRY · fail-closed",
+  "היישום בחלון-ההחלפה: חי · ההצמדה לבריכות-המנוע: ARMED-PENDING (שער-הבעלים, חוק STASIS)"
+ ],
+ "errors": []
+}
