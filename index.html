@@ -1022,7 +1022,7 @@ html[dir="ltr"] .hero h1{max-width:24ch}
               $("swMinOut").textContent = fmtMu(minOutMu()) + " " + assetOut;
               $("swFees").innerHTML = quote.feeText ? esc(quote.feeText) + ' <span style="color:var(--dxt3)">(70% LP · 30% אוצר)</span>' : "-";
               $("swRoute").innerHTML = quote.legs.map(function(l){
-                return '<span class="dx-chip dx-num" style="padding:2px 8px;font-size:10px">' + esc(l.kind === "pool" ? l.venue.slice(5) : "wrap→" + l.to) + "</span>";
+                return '<span class="dx-chip dx-num" style="padding:2px 8px;font-size:10px">' + esc(l.kind === "pool" ? l.venue.slice(5) : "wrap>" + l.to) + "</span>";
               }).join("");
             } else det.hidden = true;
             var ctaEl = $("swCta");
