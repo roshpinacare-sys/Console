@@ -1,7 +1,7 @@
 {
  "ok": true,
  "book": "saos-fee-law/1.0",
- "publishedAt": "2026-10-08T13:27:37.291Z",
+ "publishedAt": "2026-10-09T13:15:24.133Z",
  "engine": "saos-fee-law/1.0 fee-law · R76 the vol-aware dynamic fee law (the Meteora take)",
  "verdict": "LIVE (the measured volatility raised 1 pool fee(s) above base)",
  "law": {
@@ -14,51 +14,51 @@
   "mechanism": "the Meteora take: fees rise with MEASURED volatility so LPs are compensated exactly when their risk rises · our σ is measured from our own official book only"
  },
  "inputs": {
-  "worldAt": "2026-10-07T20:00:47.308Z",
-  "ageHours": 17.45,
+  "worldAt": "2026-10-09T00:00:00.181Z",
+  "ageHours": 13.26,
   "maxAgeH": 30,
   "fresh": true,
   "market": "SAOS/USDS",
-  "twapDevBps": 15,
-  "fairGapBps": 15.16,
-  "range24Bps": 5535.2,
-  "sigmaBps": 5535.2,
+  "twapDevBps": 0,
+  "fairGapBps": 0,
+  "range24Bps": 5405.41,
+  "sigmaBps": 5405.41,
   "stats24": {
-   "high24": 1324,
-   "low24": 750,
-   "last": 1316
+   "high24": 1316,
+   "low24": 756,
+   "last": 1304
   }
  },
  "pools": [
   {
    "key": "SAOS/USDS",
    "baseBps": 30,
-   "sigmaBps": 5535.2,
+   "sigmaBps": 5405.41,
    "feeBps": 60,
    "deltaBps": 30,
-   "basis": "measured (twapDev 15bps · fairGap 15.16bps · range24 5535.20bps)"
+   "basis": "measured (twapDev 0bps · fairGap 0.00bps · range24 5405.41bps)"
   },
   {
    "key": "USDS/WSTEEM",
-   "baseBps": 72,
+   "baseBps": 616,
    "sigmaBps": null,
-   "feeBps": 72,
+   "feeBps": 616,
    "deltaBps": 0,
    "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
   },
   {
    "key": "ENERGY/SAOS",
-   "baseBps": 357,
+   "baseBps": 743,
    "sigmaBps": null,
-   "feeBps": 357,
+   "feeBps": 743,
    "deltaBps": 0,
    "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
   },
   {
    "key": "USDS/WTRX",
-   "baseBps": 46,
+   "baseBps": 294,
    "sigmaBps": null,
-   "feeBps": 46,
+   "feeBps": 294,
    "deltaBps": 0,
    "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
   }
