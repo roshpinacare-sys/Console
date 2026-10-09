@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-10-09T05:56:48.514Z",
+  "generatedAt": "2026-10-09T13:07:09.094Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -16,17 +16,17 @@
     ],
     "opId": "saos.weave.core.v1",
     "maxPagesPerAccount": 250,
-    "opsScanned": 52525,
+    "opsScanned": 52648,
     "perAccount": [
       {
         "account": "cashmachine",
         "pages": 250,
-        "anchorOps": 32,
+        "anchorOps": 33,
         "stoppedBy": "budget"
       },
       {
         "account": "headcorner",
-        "pages": 224,
+        "pages": 225,
         "anchorOps": 465,
         "stoppedBy": "target"
       },
@@ -41,38 +41,39 @@
   "window": {
     "days": 45,
     "fromCp": 7,
-    "toCp": 1551,
+    "toCp": 1553,
     "fromAt": "2026-09-14T16:57:09.920Z",
-    "toAt": "2026-10-09T00:33:10.232Z",
-    "spanDays": 24.32
+    "toAt": "2026-10-09T06:36:10.138Z",
+    "spanDays": 24.57
   },
   "verdict": "IRREGULAR",
   "recent": {
     "windowHours": 26,
-    "anchorsInWindow": 8,
-    "maxGapMinutes": 352,
-    "openGapMinutes": 324,
-    "verdict": "LIVE"
+    "anchorsInWindow": 9,
+    "maxGapMinutes": 363,
+    "openGapMinutes": 391,
+    "verdict": "IRREGULAR"
   },
   "freshness": {
-    "latestAgeHours": 5.4,
+    "latestAgeHours": 6.5,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 488,
-    "anchorOpsSeen": 497,
+    "uniqueCheckpoints": 489,
+    "anchorOpsSeen": 498,
     "retriesDeduped": 9,
     "witnesses": {
-      "cashmachine": 28,
+      "cashmachine": 29,
       "headcorner": 460,
       "lsa": 0
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 1057,
+      "total": 1058,
       "sample": [
+        1552,
         1550,
         1548,
         1543,
@@ -121,18 +122,17 @@
         1470,
         1468,
         1466,
-        1464,
-        1462
+        1464
       ],
       "truncated": true
     }
   },
   "attestations": {
-    "ranges": 488,
-    "covered": 537,
-    "observedSpan": 1597,
+    "ranges": 489,
+    "covered": 538,
+    "observedSpan": 1599,
     "coverageRatio": 0.336,
-    "holesTotal": 477,
+    "holesTotal": 478,
     "holes": [
       {
         "from": 16,
@@ -276,23 +276,36 @@
       }
     ],
     "wideUncovered": 396,
-    "sliversTotal": 474,
-    "sliverUncovered": 664,
+    "sliversTotal": 475,
+    "sliverUncovered": 665,
     "state": "HOLED"
   },
   "cadence": {
-    "medianMinutes": 40.82785,
+    "medianMinutes": 41,
     "maxMinutes": 6915
   },
   "latest": {
-    "checkpoint": 1551,
-    "root": "0xfd837b9ad768e5a391fee8840770e8c91378e60d14f986028a6295894fe0d74c",
-    "headHash": "0xfd837b9ad768e5a391fee8840770e8c91378e60d14f986028a6295894fe0d74c",
-    "at": "2026-10-09T00:33:10.232Z",
+    "checkpoint": 1553,
+    "root": "0x543aa80e08537bd39a1aac92fcc09f2c3fa12c209a2bcc77de829f5b78fde7e4",
+    "headHash": "0x543aa80e08537bd39a1aac92fcc09f2c3fa12c209a2bcc77de829f5b78fde7e4",
+    "at": "2026-10-09T06:36:10.138Z",
     "witness": "cashmachine",
-    "txid": "0a8f3a53323844373893b5e44dc903438d09e42a"
+    "txid": "d4e99c6aa14710f9d27d88de057655a62786ab36"
   },
   "rows": [
+    {
+      "checkpoint": 1553,
+      "root": "0x543aa80e08537bd39a1aac92fcc09f2c3fa12c209a2bcc77de829f5b78fde7e4",
+      "attFrom": 1611,
+      "attTo": 1611,
+      "attestations": 1611,
+      "headHash": "0x543aa80e08537bd39a1aac92fcc09f2c3fa12c209a2bcc77de829f5b78fde7e4",
+      "commit": "2e63cd4",
+      "at": "2026-10-09T06:36:10.138Z",
+      "txid": "d4e99c6aa14710f9d27d88de057655a62786ab36",
+      "block": 110282297,
+      "witness": "cashmachine"
+    },
     {
       "checkpoint": 1551,
       "root": "0xfd837b9ad768e5a391fee8840770e8c91378e60d14f986028a6295894fe0d74c",
@@ -1058,19 +1071,6 @@
       "at": "2026-10-06T02:24:56.491Z",
       "txid": "0f64272b09875e3c7b8dc7a0b4e5e5b92d25b204",
       "block": 110191231,
-      "witness": "headcorner"
-    },
-    {
-      "checkpoint": 1420,
-      "root": "0x6681325ab4b8f5abb507c5a85446c41d5f0ab391fd753968cc0125572d1541ad",
-      "attFrom": 1478,
-      "attTo": 1478,
-      "attestations": 1478,
-      "headHash": "0x6681325ab4b8f5abb507c5a85446c41d5f0ab391fd753968cc0125572d1541ad",
-      "commit": "9ec71cc",
-      "at": "2026-10-06T01:26:09.797Z",
-      "txid": "698b2d0aa59edb5bdf47f616ae163282e11f57b5",
-      "block": 110190063,
       "witness": "headcorner"
     }
   ]
