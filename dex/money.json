@@ -1,13 +1,13 @@
 {
  "ok": true,
  "format": "money-watch-v1",
- "publishedAt": "2026-10-10T12:48:46.918Z",
+ "publishedAt": "2026-10-10T18:44:43.802Z",
  "engine": "Console/agents/money-watch · R39 money path sentinel",
  "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
  "fuel": {
   "ok": true,
   "account": "headcorner",
-  "steem": 4.03,
+  "steem": 4.53,
   "sbd": 0.824,
   "powerdown": {
    "active": false,
@@ -24,57 +24,14 @@
   "note": "no landing detected"
  },
  "redemption": {
-  "ok": true,
-  "outboxTrx": 0.1,
-  "outboxMu": 100,
-  "custody": {
-   "address": "TYVwwuvdDmfy3shxT3cb3RKLrRCshaZxTy",
-   "balanceTrx": 0.000002,
-   "coversBacking": false
-  },
-  "broadcastCostTrx": 0.35,
-  "sendThresholdTrx": 1.05,
-  "verdict": "WAIT",
-  "action": "waiting: 0.1 TRX accumulated of 1.05 TRX threshold (missing 0.95 TRX)",
-  "usd": 0.03
+  "ok": false,
+  "error": "peg-outbox wallet not found in world.json"
  },
- "invariant": {
-  "operatorMu": 297,
-  "outboxMu": 100,
-  "poolMu": 1,
-  "walletSumMu": 1999,
-  "poolSumMu": 1,
-  "holders": [
-   {
-    "who": "operator",
-    "mu": 297
-   },
-   {
-    "who": "arena",
-    "mu": 1170
-   },
-   {
-    "who": "peg-outbox",
-    "mu": 100
-   },
-   {
-    "who": "reserve-vault",
-    "mu": 432
-   },
-   {
-    "key": "USDS/WTRX",
-    "mu": 1
-   }
-  ],
-  "sumMu": 2000,
-  "backingMu": 2000,
-  "holds": true,
-  "scope": "all wallets + all pools (full conservation)"
- },
+ "invariant": null,
  "marks": {
-  "steemUsd": 0.060868,
-  "sbdUsd": 0.605122,
-  "trxUsd": 0.330917
+  "steemUsd": 0.061272,
+  "sbdUsd": 0.60548,
+  "trxUsd": 0.330659
  },
  "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
