@@ -1,6 +1,6 @@
 {
  "ok": true,
- "publishedAt": "2026-10-10T19:13:01.856Z",
+ "publishedAt": "2026-10-11T09:53:06.964Z",
  "engine": "Console/agents/grid-pulse · R83 sovereign grid mirror — keyless measurement, signs nothing",
  "account": "headcorner",
  "chain": "STEEM-internal-market",
@@ -19,9 +19,9 @@
   "directiveR24": "powerdown is read-only here: never opened, never replaced, fleet RC is sacred"
  },
  "marks": {
-  "steemUsd": 0.061208,
-  "sbdUsd": 0.604074,
-  "paritySbdPerSteem": 0.10132533431334571,
+  "steemUsd": 0.060733,
+  "sbdUsd": 0.60585,
+  "paritySbdPerSteem": 0.10024428488899893,
   "sources": {
    "steem": "coingecko:steem",
    "sbd": "coingecko:steem-dollars"
@@ -29,7 +29,7 @@
  },
  "triggers": {
   "source": "triggers/current.json",
-  "bookPublishedAt": "2026-10-10T17:22:57.783Z",
+  "bookPublishedAt": "2026-10-11T05:58:55.622Z",
   "consumed": [],
   "note": "no grid-relevant triggers fired"
  },
@@ -40,46 +40,32 @@
   "remainingSp": 0,
   "remainingWeeks": 0,
   "nextPayout": null,
-  "rcFuelSp": 150.282964601312
+  "rcFuelSp": 150.28918320374245
  },
  "inventory": {
-  "steem": 4.53,
-  "sbd": 0.824
+  "steem": 137.219,
+  "sbd": 1.028
  },
  "book": {
-  "bestBid": 0.10051461732180006,
-  "bestAsk": 0.102,
-  "mid": 0.10125730866090002,
-  "spreadBps": 147
+  "bestBid": 0.10005678591709256,
+  "bestAsk": 0.10148280576296141,
+  "mid": 0.10076979584002699,
+  "spreadBps": 142
  },
- "openOrdersNow": 14,
+ "openOrdersNow": 5,
  "run": {
   "placed": 0,
   "cancelled": 0,
-  "observedPlacements": 14,
-  "observedCancellations": 0,
-  "observedFills": 0,
+  "observedPlacements": 0,
+  "observedCancellations": 8,
+  "observedFills": 1,
   "placedTotal": 117,
-  "cancelledTotal": 177,
-  "filledTotal": 71,
+  "cancelledTotal": 185,
+  "filledTotal": 72,
   "note": "keyless measurement cycle: on-chain placements/cancellations are the R81 mover's (via /api/money, key derived in-run only); this agent observes and counts, signs nothing"
  },
- "externalFlowUsd": 0.291862,
+ "externalFlowUsd": 0.29133,
  "fills": [
-  {
-   "key": "2026-10-04T07:26:18|0.293 SBD|2.807 STEEM",
-   "at": "2026-10-04T07:26:18",
-   "side": "taker",
-   "direction": "bought-steem",
-   "paid": "0.293 SBD",
-   "received": "2.807 STEEM",
-   "steemUsd": 0.06333077909515253,
-   "sbdUsd": 0.570975,
-   "paidUsd": 0.167295675,
-   "recvUsd": 0.17776949692009314,
-   "edgeBps": 626,
-   "chain": "steem"
-  },
   {
    "key": "2026-10-04T07:32:30|0.143 SBD|1.370 STEEM",
    "at": "2026-10-04T07:32:30",
@@ -233,6 +219,19 @@
    "recvUsd": 0.030026932,
    "edgeBps": 182,
    "chain": "steem"
+  },
+  {
+   "key": "2026-10-10T20:14:21|0.051 SBD|0.500 STEEM",
+   "at": "2026-10-10T20:14:21",
+   "side": "maker",
+   "direction": "bought-steem",
+   "paid": "0.051 SBD",
+   "received": "0.500 STEEM",
+   "steemUsd": 0.060733,
+   "sbdUsd": 0.60585,
+   "paidUsd": 0.030898349999999998,
+   "recvUsd": 0.0303665,
+   "edgeBps": -173
   }
  ],
  "orders": [
@@ -364,8 +363,8 @@
    "sell": "0.547 STEEM",
    "receive": "0.057 SBD",
    "priceSbdPerSteem": 0.104205,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -376,8 +375,8 @@
    "sell": "0.547 STEEM",
    "receive": "0.057 SBD",
    "priceSbdPerSteem": 0.104205,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -388,8 +387,8 @@
    "sell": "0.547 STEEM",
    "receive": "0.057 SBD",
    "priceSbdPerSteem": 0.104205,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -400,8 +399,8 @@
    "sell": "0.547 STEEM",
    "receive": "0.057 SBD",
    "priceSbdPerSteem": 0.104205,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -412,8 +411,8 @@
    "sell": "0.547 STEEM",
    "receive": "0.057 SBD",
    "priceSbdPerSteem": 0.104205,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -424,8 +423,8 @@
    "sell": "0.500 STEEM",
    "receive": "0.051 SBD",
    "priceSbdPerSteem": 0.102,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "filled",
+   "lastSeenAt": "2026-10-11T09:53:06.963Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -436,8 +435,8 @@
    "sell": "0.500 STEEM",
    "receive": "0.051 SBD",
    "priceSbdPerSteem": 0.102,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -448,8 +447,8 @@
    "sell": "0.500 STEEM",
    "receive": "0.051 SBD",
    "priceSbdPerSteem": 0.102,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -460,8 +459,8 @@
    "sell": "0.500 STEEM",
    "receive": "0.051 SBD",
    "priceSbdPerSteem": 0.102,
-   "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "status": "cancelled",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -473,7 +472,7 @@
    "receive": "185.171 STEEM",
    "priceSbdPerSteem": 10.152475,
    "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -485,7 +484,7 @@
    "receive": "185.544 STEEM",
    "priceSbdPerSteem": 10.172926,
    "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -497,7 +496,7 @@
    "receive": "186.292 STEEM",
    "priceSbdPerSteem": 10.213937,
    "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -509,7 +508,7 @@
    "receive": "187.806 STEEM",
    "priceSbdPerSteem": 10.296946,
    "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   },
   {
@@ -521,7 +520,7 @@
    "receive": "190.910 STEEM",
    "priceSbdPerSteem": 10.467131,
    "status": "open",
-   "lastSeenAt": "2026-10-10T19:13:01.856Z",
+   "lastSeenAt": "2026-10-11T09:53:06.964Z",
    "placedBy": "observed-on-chain (R81 mover) — the chain is the witness; txid unknown to this keyless agent"
   }
  ],
