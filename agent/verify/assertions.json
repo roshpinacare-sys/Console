@@ -359,14 +359,16 @@
   },
   {
    "id": "A39",
-   "desc": {
-    "en": "R28 rail ratchet: microrail equity never drops below the floor measured on 2026-09-17 (17975080 mu). Same regression guard for the value rail",
-    "he": "ראצ'ט הרכבת R28: הון המיקרו-רכבת לעולם לא יורד מתחת לרצפה שנמדדה ב-2026-09-17 (17975080 מיקרו). אותו מגן רגרסיה לרכבת הערך"
-   },
+   "desc": [
+    {
+     "en": "R28 rail ratchet (CR-0077 re-anchor): the rail's lifetime WSTEEM inflow never drops. The rail's equity is working fuel consumed by design (peg-keeping through its sealed SETTLE-16/18 floors and caps), so — exactly like A38/R46-b — the ratchet lives on the monotonic counter: lifetime WSTEEM units ever funded into the rail, git-backed (db/rail-lifetime.json, max-loaded, committed only on block-confirmed inflows per Roast-67), price-independent. The old equity floor (17975080mu, measured 2026-09-17) was pinned to the PRE-regenesis chain — git-proven dead (Console world.json h186399@2ba457186 10-10T06:28Z -> h8641@423800931 10-10T14:49Z) and unreachable post-regenesis without minting (forgery, R1). The engine also publishes state.rail.fundedEverMu (lifetime inflow priced at the live anchor) for value-at-anchor reading. Floor only ever moves upward (future CRs raise it as funding accrues).",
+     "he": "ראצ'ט הרכבת R28 (עיגון-מחדש CR-0077): הזרימה-לכל-החיים של WSTEEM אל-המסילה לעולם לא יורדת. ההון-העובד של המסילה נצרך-מעצב (שמירת-עוגן דרך רצפות-ותקרות SETTLE-16/18 החתומות), ולכן — בדיוק כמו A38/R46-b — הראצ'ט חי על המונה-המונוטוני: יחידות-WSTEEM-שמומנו-אי-פעם, גיט-מגובה (db/rail-lifetime.json, max-load, קומיט רק על אישור-בלוק Roast-67), בלתי-תלוי-מחיר. רצפת-ההון הישנה (17975080 מיקרו, נמדדה 2026-09-17) נעוצה-בשרשרת-שלפני-הרג'נזיס — מתה-גיט-מוכח (Console world.json h186399@2ba457186 → h8641@423800931, 10-10-2026) ובלתי-ניתנת-להשגה אחרי-הרג'נזיס בלי-הטבעה (= זיוף, R1). המנוע מפרסם גם state.rail.fundedEverMu (הזרימה-מסומנת-לעוגן-החי). הרצפה רק עולה (CRs עתידיים מגביהים אותה ככל-שהמימון נצבר)."
+    }
+   ],
    "kind": "json_min",
    "target": "dex/world.json",
-   "field": "state.rail.equityMu",
-   "min": 17975080
+   "field": "state.rail.lifetime.wsteem",
+   "min": 300000
   },
   {
    "id": "A40",
