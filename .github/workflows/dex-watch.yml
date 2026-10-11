@@ -1,20 +1,12 @@
-# DEX-WATCH - צופה-ההפקדות הציבורי (Task 33)
 #
-# רץ בריפו הציבורי (דקות-Actions בלתי-מוגבלות): סורק את
-# כתובות-ההפקדה האמיתיות (TRON/ETH/SOL/BTC) עם RPC ציבוריים, ומעדכן
-# את ספר-ההפקדות הפתוח שהאתר מציג ושלב-הדקס מאמת מולו תביעות-חתומות.
-# אפס-סודות, אפס-מפתחות, אפס-סנדבוקס - הציבור רואה בדיוק-את-מה-שהרשת רואה.
 #
-# R67-C ריבונות-מכסה: חזרה ללוח-זמנים ציבורי — כל שעתיים ב:17 (היה
-# dispatch-בלבד). השער-הסמנטי של R28 נשאר, ופעימת-הלב מוקפדת מ-3h ל-6h
-# כדי שבקצב דו-שעתי ייעשה commit רק כשהמצב משתנה באמת (או פעימה ישנה).
 
 name: dex-watch
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 */2 * * *'
+    - cron: '27 */2 * * *'
 permissions:
   contents: write
 
@@ -48,10 +40,8 @@ jobs:
             echo "no new deposits - the book is unchanged"
             exit 0
           fi
-          # R28 Pages-quota gate: publishedAt and lastEvmBlock churn every run,
           # so a raw diff forces a commit (and a Pages build) every 20 minutes
           # even when nothing meaningful moved. That cadence exhausted the
-          # legacy Pages build quota on 2026-09-17 (~09:48Z) and froze the
           # public site mid-deploy. The honest fix is semantic: commit only
           # when the watched state truly changes (addresses, chain health,
           # deposit count, the deposit book itself) or when the last committed

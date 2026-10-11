@@ -1,19 +1,12 @@
-# CHAIN-VITALS — דופק כל קווי השרשראות של הרשת, keyless (R68)
 #
-# המנוע השני בשכבת "מנועי-הרשת על השרשרת": הרשת רצה על Steem/Hive/
-# Blurt (קווי-עוגן), על ה-Relay הריבוני ב-Ethereum/Optimism/Base,
-# ועל שרשראות-הפקדות TRON/Bitcoin/Solana. המנוע מודד את כולן
-# במקביל עם נקודות-קצה ציבוריות בלבד וכותב ספר-דופק אחד.
 #
-# קו שנופל הוא שורה אדומה בספר — לא קריסת-ריצה. הכנות היא המשטר.
-# ריבונות-מכסה (R67-C): כל שעתיים ב:50, שעות זוגיות, אפס סודות.
 
 name: chain-vitals
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '50 */2 * * *'
+    - cron: '56 */2 * * *'
 permissions:
   contents: write
 
@@ -47,7 +40,6 @@ jobs:
             VERDICT="$(node -e 'try{const d=require("./weave/vitals.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             UP="$(node -e 'try{const d=require("./weave/vitals.json");process.stdout.write(d.summary.up+"/"+d.summary.lines)}catch{process.stdout.write("?")}')"
             git commit -m "chain-vitals: ${VERDICT} · ${UP} lines up · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            # משמעות-דחיפה של הבית: rebase וניסיון-חוזר מול התנגשויות
             for i in 1 2 3; do
               if git pull --rebase origin main && git push; then break; fi
               echo "push race, retry ${i}"; sleep 8

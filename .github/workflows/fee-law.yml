@@ -1,20 +1,13 @@
-# FEE-LAW (R76) · חוק-העמלה הדינמית מודעת-התנודתיות · ה-Meteora-take הריבוני
 #
-# הרצה ציבורית (דקות-Actions בלתי-מוגבלות, אפס-סודות, אפס-מפתחות): מודד את הפיזור
-# מהספר הרשמי dex/world.json בלבד ומפרסם את חוק-העמלה dex/fee-law.json:
 #   fee_bps = clamp(base + K_VOL × σ, base, min(2 × base, 200))
-#   σ = max(twapDevBps, fairGapBps, range24Bps) · שלוש מדידות-הפיזור של הספר עצמו
-# חלון-ההחלפה מצטט ומציג את עמלת-החוק (fail-closed לבסיס) · ההצמדה לבריכות-המנוע
-# עצמן היא שער-הבעלים (חוק STASIS · כותב-יחיד).
 #
-# R28 Pages-quota: commit רק כשהעמלות באמת זזו (או פעימת-לב ישנה מ-20h).
 
 name: fee-law
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 6 * * *'
+    - cron: '43 6 * * *'
 permissions:
   contents: write
 
@@ -48,7 +41,6 @@ jobs:
             echo "the fee-law book is unchanged"
             exit 0
           fi
-          # R28 gate: commit רק כשהעמלות/הפסק-הדין באמת זזו · publishedAt זז כל ריצה ואינו סיבה ל-commit
           SIG_NOW="$(jq -Sc '{v: .verdict, p: [.pools[] | {key, feeBps, sigmaBps}]}' dex/fee-law.json)"
           git show HEAD:dex/fee-law.json > /tmp/prev-fee-law.json 2>/dev/null \
             && SIG_PREV="$(jq -Sc '{v: .verdict, p: [.pools[] | {key, feeBps, sigmaBps}]}' /tmp/prev-fee-law.json)" \

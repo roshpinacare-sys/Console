@@ -1,19 +1,12 @@
-# GIANTS-BEAT (R74) · טבלת-העושר החיה של הענקים
 #
-# הרצה ציבורית (דקות-Actions בלתי-מוגבלות): מודד את עמלות-הפרוטוקול והנפחים של
-# ענקי-ה-DeFi מ-API ציבוריים של DefiLlama (GET בלבד, אפס-מפתחות) ומצרף את שורת
-# הרשת שלנו מהספר החי dex/world.json. הספר הוא המקור של "שולחן-הענקים"
-# (giants.html) ושל סולם-העקיפה: אנחנו לא מספרים סיפורים על הענקים · אנחנו מודדים אותם.
 #
-# אפס-סודות, אפס-מפתחות, אפס-סנדבוקס · fail-closed: גם כישלון-מקור מתפרסם כעדות.
-# R28 Pages-quota: commit רק כשהנתונים באמת זזו (או פעימת-לב ישנה מ-20h).
 
 name: giants-beat
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '41 5 * * *'
+    - cron: '9 5 * * *'
 permissions:
   contents: write
 
@@ -47,8 +40,6 @@ jobs:
             echo "the giants book is unchanged"
             exit 0
           fi
-          # R28 gate: commit רק כשהמספרים באמת זזו (עמלות/נפחים/שורת-הרשת)
-          # או כשפעימת-הלב ישנה מ-20h. publishedAt זז כל ריצה · הוא לא סיבה ל-commit.
           SEM_NOW="$(jq -Sc '{f: [.families[] | {id, fees24h, fees30d, feesAllTime, vol24h, vol30d}], o: .ours, e: .errors}' dex/giants.json)"
           git show HEAD:dex/giants.json > /tmp/prev-giants.json 2>/dev/null \
             && SEM_PREV="$(jq -Sc '{f: [.families[] | {id, fees24h, fees30d, feesAllTime, vol24h, vol30d}], o: .ours, e: .errors}' /tmp/prev-giants.json)" \

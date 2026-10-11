@@ -1,21 +1,12 @@
-# LINE-AGREEMENT — ספר-הרשת מול השרשרת עצמה (R68)
 #
-# המנוע השלישי בשכבת "מנועי-הרשת על השרשרת", והשער הכי כבד שבה:
-# הספר הנגזר (mirror.json) מוצב מול המפקד העצמאי (weave/census.json):
-#   · headHash שהספר מכריז חייב עדות עוגן על השרשרת
-#   · checkpoints/attestations: השרשרת בגובה הספר או מעט מעליו
 #
-# דוקטרינת truth-gate: פסק-דין אדום נקומע קודם ואז מאדים את הריצה
-# בפומבי — סטייה בין הספר לשרשרת נרשמת בספר שלה (DIVERGE) ורק אז
-# הריצה נכשלת. ריבונות-מכסה (R67-C): כל שעתיים ב:14, אפס סודות,
-# רץ אחרי המפקד (:08) כדי שהמפקד יהיה טרי.
 
 name: line-agreement
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '14 */2 * * *'
+    - cron: '19 */2 * * *'
 permissions:
   contents: write
 
@@ -49,7 +40,6 @@ jobs:
             VERDICT="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             MIS="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(String(d.mismatches))}catch{process.stdout.write("?")}')"
             git commit -m "line-agreement: ${VERDICT} · ${MIS} mismatches · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            # משמעות-דחיפה של הבית: rebase וניסיון-חוזר מול התנגשויות
             for i in 1 2 3; do
               if git pull --rebase origin main && git push; then break; fi
               echo "push race, retry ${i}"; sleep 8
