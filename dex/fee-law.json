@@ -1,9 +1,9 @@
 {
  "ok": true,
  "book": "saos-fee-law/1.0",
- "publishedAt": "2026-10-10T12:30:24.433Z",
+ "publishedAt": "2026-10-11T12:47:59.224Z",
  "engine": "saos-fee-law/1.0 fee-law · R76 the vol-aware dynamic fee law (the Meteora take)",
- "verdict": "LIVE-AT-BASE (measured volatility does not exceed the base fee right now)",
+ "verdict": "LIVE (the measured volatility raised 1 pool fee(s) above base)",
  "law": {
   "formula": "fee_bps = clamp(base + K_VOL × σ, base, min(2 × base, 200))",
   "formulaHe": "עמלה = clamp(בסיס + K_VOL × σ, בסיס, מינימום(2 × בסיס, 200))",
@@ -14,51 +14,43 @@
   "mechanism": "the Meteora take: fees rise with MEASURED volatility so LPs are compensated exactly when their risk rises · our σ is measured from our own official book only"
  },
  "inputs": {
-  "worldAt": "2026-10-10T06:28:19.834Z",
-  "ageHours": 6.03,
+  "worldAt": "2026-10-11T06:33:21.509Z",
+  "ageHours": 6.24,
   "maxAgeH": 30,
   "fresh": true,
   "market": "SAOS/USDS",
-  "twapDevBps": 0,
-  "fairGapBps": 0,
-  "range24Bps": 0,
-  "sigmaBps": 0,
+  "twapDevBps": -4780,
+  "fairGapBps": 9.39,
+  "range24Bps": 14508.45,
+  "sigmaBps": 14508.45,
   "stats24": {
-   "high24": 0,
-   "low24": 0,
-   "last": 0
+   "high24": 2501,
+   "low24": 398,
+   "last": 2127
   }
  },
  "pools": [
   {
    "key": "SAOS/USDS",
-   "baseBps": 30,
-   "sigmaBps": 0,
-   "feeBps": 30,
-   "deltaBps": 0,
-   "basis": "measured (twapDev 0bps · fairGap 0.00bps · range24 0.00bps)"
+   "baseBps": 32,
+   "sigmaBps": 14508.45,
+   "feeBps": 64,
+   "deltaBps": 32,
+   "basis": "measured (twapDev -4780bps · fairGap 9.39bps · range24 14508.45bps)"
   },
   {
    "key": "USDS/WSTEEM",
-   "baseBps": 616,
+   "baseBps": 86,
    "sigmaBps": null,
-   "feeBps": 616,
+   "feeBps": 86,
    "deltaBps": 0,
    "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
   },
   {
    "key": "ENERGY/SAOS",
-   "baseBps": 743,
+   "baseBps": 865,
    "sigmaBps": null,
-   "feeBps": 743,
-   "deltaBps": 0,
-   "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
-  },
-  {
-   "key": "USDS/WTRX",
-   "baseBps": 294,
-   "sigmaBps": null,
-   "feeBps": 294,
+   "feeBps": 865,
    "deltaBps": 0,
    "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
   }
