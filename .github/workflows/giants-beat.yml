@@ -41,6 +41,7 @@ jobs:
         run: |
           git config user.name "giants-beat[bot]"
           git config user.email "giants-beat[bot]@users.noreply.github.com"
+          node agents/redact-telemetry.mjs dex/giants.json
           git add dex/giants.json
           if git diff --cached --quiet; then
             echo "the giants book is unchanged"

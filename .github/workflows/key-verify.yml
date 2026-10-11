@@ -47,6 +47,7 @@ jobs:
       - name: Publish the receipt (verdict, never the value)
         if: always()
         run: |
+          node agents/redact-telemetry.mjs receipts/key-check.json receipts/key-check-log.jsonl
           git add receipts/key-check.json receipts/key-check-log.jsonl
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{process.stdout.write(require("./receipts/key-check.json").verdict)}catch{process.stdout.write("none")}')"

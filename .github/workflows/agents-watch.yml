@@ -67,6 +67,7 @@ jobs:
             fi
             git config user.name "agents-watch"
             git config user.email "actions@users.noreply.github.com"
+            node agents/redact-telemetry.mjs agents/registry.json agents/gh-snapshot.json
             git add agents/registry.json agents/gh-snapshot.json
             git commit -m "agents-watch: $(date -u +%Y-%m-%dT%H:%M:%SZ) · $(node -e 'const r=require("./agents/registry.json");console.log(r.agents.length+" agents · "+r.reposWithAgents.length+" agent-repos (live count)")') · snapshot $(node -e 'const s=require("./agents/gh-snapshot.json");console.log((s.repos||[]).length+" repos")' 2>/dev/null || echo kept)"
             # r141 · מירוץ-כותבים: rebase על הרחוק וניסיון-חוזה — 3 ניסיונות

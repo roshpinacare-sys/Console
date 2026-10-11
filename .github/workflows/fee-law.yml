@@ -42,6 +42,7 @@ jobs:
         run: |
           git config user.name "fee-law[bot]"
           git config user.email "fee-law[bot]@users.noreply.github.com"
+          node agents/redact-telemetry.mjs dex/fee-law.json
           git add dex/fee-law.json
           if git diff --cached --quiet; then
             echo "the fee-law book is unchanged"
