@@ -1,21 +1,13 @@
-# PNL-DESK — ספר-ה-edge השבועי (T2, תוכנית-האב 2026-10-11)
 #
-# החוק: "אדג' חיובי או כבוי". הסוכן מודד מהמקורות החיים (ספר-ה-PnL החתום של
-# Domain + ספר-המילויים מהשרשרת), מחשב edge שבועי-נודד, ופוסק:
 #   EDGE-POSITIVE-GRID-MAY-RUN  — edge ≥ +1%
-#   EDGE-NEGATIVE-GRID-HOLD     — מתחת לזה: המראה מביאה ל-Domain, ו-market-exec מציית
-#   EDGE-UNMEASURED-NO-FILLS    — אין מילויים בחלון (ברירת-מחדל: החזק)
 #
-# אפס-מפתחות: raw ציבורי של Domain בלבד. keyless — דקות-Actions ציבוריות.
-# תדירות: יומי ב-05:23 UTC + הזנקה ידנית בכל רגע. המראה השעתית של Domain
-# (mirror-from-console) קוטפת את dex/pnl-desk.json בתוך שעה.
 
 name: pnl-desk
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '23 5 * * *'
+    - cron: '36 5 * * *'
 permissions:
   contents: write
 

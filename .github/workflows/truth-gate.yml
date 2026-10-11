@@ -1,14 +1,12 @@
 # TRUTH-GATE - the system proves itself (BENCHMARK.md stage 3)
 #
 # Runs inside the PUBLIC Console repository, its own GITHUB_TOKEN, zero
-# secrets. Every hour the machine (truth/truth-gate-ci.cjs) measures the
 # LIVE deployed site - not the repo - and commits the verdict:
 #   truth/latest.json  - the full report of the run
 #   truth/history.json - one line per run (public, capped history)
 # A red verdict commits FIRST (the truth is always recorded), then fails
 # the workflow run itself - a red X in the public Actions history.
 #
-# Cadence (R67-A minute/Pages-quota diet): every 3h at :07. console-publish
 # commits the beacon at :45; Pages deploys it; this gate grades what the world
 # actually sees. The commit itself is semantically gated - latest.json carries
 # run timestamps, so a raw diff would commit (and rebuild Pages) on every run.
@@ -19,7 +17,7 @@ name: truth-gate
 
 on:
   schedule:
-    - cron: '7 */3 * * *'
+    - cron: '11 */3 * * *'
   workflow_dispatch:
 
 permissions:
@@ -53,12 +51,10 @@ jobs:
           set +e
           git config user.name "truth-gate[bot]"
           git config user.email "truth-gate[bot]@users.noreply.github.com"
-          # R67-A semantic gate: verdict+counts+gate statuses (never the timestamps)
           SIG_NOW="$(node -e 'const d=require("./truth/latest.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo x)"
           git show HEAD:truth/latest.json > /tmp/prev-truth.json 2>/dev/null \
             && SIG_PREV="$(node -e 'const d=require("/tmp/prev-truth.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo y)" \
             || SIG_PREV=""
-          # R67-B: heartbeat age measured from the verdict's OWN `at` field (prev committed
           # verdict), NOT from git log — shallow clones make `git log -1 -- <path>`
           # resolve the grafted tip, so the >6h freshness beacon could never fire.
           LAST_TS="$(node -e 'try{console.log(require("/tmp/prev-truth.json").at||"")}catch(e){console.log("")}' 2>/dev/null)"
