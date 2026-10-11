@@ -1,79 +1,79 @@
 {
   "format": "truth-gate-v1",
   "runner": "github-actions",
-  "at": "2026-10-07T03:24:20.402Z",
+  "at": "2026-10-11T21:55:15.757Z",
   "target": "https://roshpinacare-sys.github.io/Console",
-  "verdict": "ALL-GREEN",
+  "verdict": "1 RED",
   "counts": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 6,
+    "fail": 1,
     "skip": 2
   },
-  "durationMs": 9154,
-  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/37566562417",
+  "durationMs": 10128,
+  "runUrl": "https://github.com/roshpinacare-sys/Console/actions/runs/38178302247",
   "results": [
     {
       "gate": "G1-site-up",
       "status": "PASS",
-      "measured": "HTTP 200 · 133558 bytes",
+      "measured": "HTTP 200 · 221889 bytes",
       "note": "",
-      "at": "2026-10-07T03:24:11.460Z"
+      "at": "2026-10-11T21:55:05.831Z"
     },
     {
       "gate": "G2-zero-broken-links",
-      "status": "PASS",
-      "measured": "14 pages · 87 links · 0 broken · 7 undetermined",
-      "note": "",
-      "at": "2026-10-07T03:24:19.950Z"
+      "status": "FAIL",
+      "measured": "14 pages · 90 links · 1 broken · 7 undetermined",
+      "note": "receipts/: key-check.json → HTTP 404",
+      "at": "2026-10-11T21:55:15.275Z"
     },
     {
       "gate": "G3-witness-freshness",
       "status": "PASS",
-      "measured": "cp#1497 · att 1555 · age 0.4h (threshold 26h)",
+      "measured": "cp#1587 · att 1645 · age 1.4h (threshold 26h)",
       "note": "",
-      "at": "2026-10-07T03:24:19.969Z"
+      "at": "2026-10-11T21:55:15.293Z"
     },
     {
       "gate": "G5-live-format-consistency",
       "status": "PASS",
       "measured": "public book format=\"saos-live-v1\"",
       "note": "",
-      "at": "2026-10-07T03:24:20.026Z"
+      "at": "2026-10-11T21:55:15.364Z"
     },
     {
       "gate": "G6-bridgehead-sane",
       "status": "PASS",
       "measured": "format=\"agent-bridgehead-state-v1\" · phase task present",
       "note": "",
-      "at": "2026-10-07T03:24:20.044Z"
+      "at": "2026-10-11T21:55:15.381Z"
     },
     {
       "gate": "G8-complete-map",
       "status": "PASS",
       "measured": "9 system pages (min 10000B) · index links 9/9 · sitemap 9/9 · roast stub ok · hub/docs/reports 404 (banned, as required)",
       "note": "",
-      "at": "2026-10-07T03:24:20.400Z"
+      "at": "2026-10-11T21:55:15.754Z"
     },
     {
       "gate": "G4-no-forged-twins",
       "status": "SKIP",
       "measured": "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)",
       "note": "",
-      "at": "2026-10-07T03:24:20.400Z"
+      "at": "2026-10-11T21:55:15.754Z"
     },
     {
       "gate": "G7-dev-server",
       "status": "SKIP",
       "measured": "sandbox-only (the work server is not public infrastructure)",
       "note": "",
-      "at": "2026-10-07T03:24:20.400Z"
+      "at": "2026-10-11T21:55:15.754Z"
     },
     {
       "gate": "G9-slo-published",
       "status": "PASS",
-      "measured": "4 SLOs · window 30d · 19 day buckets · fill 58.9% · since 2026-09-19",
+      "measured": "4 SLOs · window 30d · 20 day buckets · fill 74.8% · since 2026-09-19",
       "note": "",
-      "at": "2026-10-07T03:24:20.402Z"
+      "at": "2026-10-11T21:55:15.757Z"
     }
   ]
 }
