@@ -1,0 +1,55 @@
+# PNL-DESK — ספר-ה-edge השבועי (T2, תוכנית-האב 2026-10-11)
+#
+# החוק: "אדג' חיובי או כבוי". הסוכן מודד מהמקורות החיים (ספר-ה-PnL החתום של
+# Domain + ספר-המילויים מהשרשרת), מחשב edge שבועי-נודד, ופוסק:
+#   EDGE-POSITIVE-GRID-MAY-RUN  — edge ≥ +1%
+#   EDGE-NEGATIVE-GRID-HOLD     — מתחת לזה: המראה מביאה ל-Domain, ו-market-exec מציית
+#   EDGE-UNMEASURED-NO-FILLS    — אין מילויים בחלון (ברירת-מחדל: החזק)
+#
+# אפס-מפתחות: raw ציבורי של Domain בלבד. keyless — דקות-Actions ציבוריות.
+# תדירות: יומי ב-05:23 UTC + הזנקה ידנית בכל רגע. המראה השעתית של Domain
+# (mirror-from-console) קוטפת את dex/pnl-desk.json בתוך שעה.
+
+name: pnl-desk
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 5 * * *'
+permissions:
+  contents: write
+
+concurrency:
+  group: pnl-desk
+  cancel-in-progress: false
+
+jobs:
+  desk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Weekly edge book (keyless, chain truth)
+        run: node agents/pnl-desk.mjs
+
+      - name: Publish the edge verdict
+        if: always()
+        run: |
+          git add dex/pnl-desk.json
+          if ! git diff --cached --quiet; then
+            VERDICT="$(node -e 'try{const d=require("./dex/pnl-desk.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
+            EDGE="$(node -e 'try{const d=require("./dex/pnl-desk.json");process.stdout.write(String(d.trailing7d&&d.trailing7d.edgePct))}catch{process.stdout.write("?")}')"
+            git config user.name "pnl-desk"
+            git config user.email "pnl-desk@users.noreply.github.com"
+            git commit -m "pnl-desk: ${VERDICT} · trailing-7d edge ${EDGE}% · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "no pnl-desk change to publish"
+          fi
