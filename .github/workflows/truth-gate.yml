@@ -58,7 +58,10 @@ jobs:
           git show HEAD:truth/latest.json > /tmp/prev-truth.json 2>/dev/null \
             && SIG_PREV="$(node -e 'const d=require("/tmp/prev-truth.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo y)" \
             || SIG_PREV=""
-          LAST_TS="$(git log -1 --format=%cI -- truth/latest.json)"
+          # R67-B: heartbeat age measured from the verdict's OWN `at` field (prev committed
+          # verdict), NOT from git log — shallow clones make `git log -1 -- <path>`
+          # resolve the grafted tip, so the >6h freshness beacon could never fire.
+          LAST_TS="$(node -e 'try{console.log(require("/tmp/prev-truth.json").at||"")}catch(e){console.log("")}' 2>/dev/null)"
           LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
           AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
           if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_H" -lt 6 ]; then
