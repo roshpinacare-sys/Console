@@ -264,68 +264,6 @@ footer a:hover{color:var(--gold-bright)}
         </div>
       </div>
 
-      <!-- ═══════════ פאנל המטבע: הוראות האוצר ═══════════ -->
-      <div class="card">
-        <h2>פאנל המטבע <span class="en">· treasury operations, signed by the cloud treasury key</span></h2>
-        <p style="font-size:13px;color:var(--mut);margin-bottom:16px">
-          הפקודות שלהלן נחתמות כאן במפתח ה-posting שלך ומשודרות לערוץ הפקודות.
-          הלב בונה מהן פעולת SAOS חתומה במפתח האוצר (שבענן בלבד) ומשדר לשרשרת. משם כל צומת מקפל ומאמת.
-          הפקודות יתבצעו רק אחרי שהג'נזיס של הספר החי הושלם (אחרת הן ממתינות בכנות וחוזרות בפעימה הבאה).
-        </p>
-
-        <h2 style="font-size:14px;color:var(--tx)">פרסום כתובת הפקדה <span class="en" style="font-size:11px">saos.addr</span></h2>
-        <div class="grid2">
-          <div class="field"><label for="ad-cur">מטבע (2-10 אותיות גדולות)</label><input type="text" id="ad-cur" placeholder="USD" maxlength="10"></div>
-          <div class="field"><label for="ad-addr">כתובת הפקדה</label><input type="text" id="ad-addr" placeholder="כתובת לקבלת המטבע"></div>
-        </div>
-        <div class="field"><label for="ad-memo">מזהה נוסף / memo (רשות)</label><input type="text" id="ad-memo" maxlength="80"></div>
-        <button class="btn-main" data-saos="addr" style="margin-bottom:26px">שדר פרסום כתובת</button>
-
-        <h2 style="font-size:14px;color:var(--tx)">קביעת שער <span class="en" style="font-size:11px">saos.rate</span></h2>
-        <div class="grid2">
-          <div class="field"><label for="rt-pair">זוג (למשל SAOS/USD)</label><input type="text" id="rt-pair" placeholder="SAOS/USD"></div>
-          <div class="field"><label for="rt-price">מחיר (במטבע השני על 1 SAOS)</label><input type="text" id="rt-price" placeholder="0.001"></div>
-        </div>
-        <button class="btn-main" data-saos="rate" style="margin-bottom:26px">שדר קביעת שער</button>
-
-        <h2 style="font-size:14px;color:var(--tx)">זיכוי הפקדה <span class="en" style="font-size:11px">saos.credit</span></h2>
-        <div class="grid2">
-          <div class="field"><label for="cr-to">כתובת המפקיד (saos1…)</label><input type="text" id="cr-to" placeholder="saos1…"></div>
-          <div class="field"><label for="cr-saos">זיכוי ב-SAOS (שלמים, 1000 = 1 SAOS)</label><input type="text" id="cr-saos" placeholder="25000"></div>
-        </div>
-        <div class="grid2">
-          <div class="field"><label for="cr-cur">מטבע שהופקד</label><input type="text" id="cr-cur" placeholder="USD" maxlength="10"></div>
-          <div class="field"><label for="cr-amt">סכום שהופקד</label><input type="text" id="cr-amt" placeholder="25"></div>
-        </div>
-        <div class="grid2">
-          <div class="field"><label for="cr-ref">אסמכתת ההפקדה (txid)</label><input type="text" id="cr-ref" maxlength="90"></div>
-          <div class="field"><label for="cr-claim">מזהה תביעה (רשות, מחבר לתביעת המפקיד)</label><input type="text" id="cr-claim" maxlength="40"></div>
-        </div>
-        <button class="btn-main" data-saos="credit" style="margin-bottom:26px">שדר זיכוי</button>
-
-        <h2 style="font-size:14px;color:var(--tx)">מילוי הצעת מכירה <span class="en" style="font-size:11px">saos.fill</span></h2>
-        <div class="grid2">
-          <div class="field"><label for="fl-id">מזהה ההצעה</label><input type="text" id="fl-id" maxlength="40"></div>
-          <div class="field"><label for="fl-to">כתובת הקונה (saos1…)</label><input type="text" id="fl-to" placeholder="saos1…"></div>
-        </div>
-        <div class="grid2">
-          <div class="field"><label for="fl-units">כמות SAOS לשחרור (שלמים)</label><input type="text" id="fl-units" placeholder="4000"></div>
-          <div class="field"><label for="fl-paid">סכום ששולם (רשות)</label><input type="text" id="fl-paid" placeholder="4.8"></div>
-        </div>
-        <div class="field"><label for="fl-ref">אסמכתת התשלום</label><input type="text" id="fl-ref" maxlength="90"></div>
-        <button class="btn-main" data-saos="fill" style="margin-bottom:26px">שדר מילוי</button>
-
-        <h2 style="font-size:14px;color:var(--tx)">תשלום תגמול <span class="en" style="font-size:11px">saos.reward</span></h2>
-        <div class="grid2">
-          <div class="field"><label for="rw-to">כתובת המקבל (saos1…)</label><input type="text" id="rw-to" placeholder="saos1…"></div>
-          <div class="field"><label for="rw-amt">כמות SAOS (שלמים, 1000 = 1 SAOS)</label><input type="text" id="rw-amt" placeholder="500"></div>
-        </div>
-        <div class="field"><label for="rw-note">הערה ציבורית (רשות)</label><input type="text" id="rw-note" maxlength="120"></div>
-        <button class="btn-main" data-saos="reward">שדר תגמול</button>
-
-        <div class="result" id="saosResult"></div>
-      </div>
-
       <!-- ═══════════ ממסר פעולות חתומות של משתמשים ═══════════ -->
       <div class="card">
         <h2>ממסר פעולות חתומות <span class="en">· relay signed user operations</span></h2>
@@ -534,109 +472,6 @@ async function sendCmd(cmd) {
   }
 }
 
-/* ── SAOS treasury commands ── */
-const SAOS_FORMS = {
-  addr: () => {
-    const cur = $("ad-cur").value.trim().toUpperCase();
-    const addr = $("ad-addr").value.trim();
-    const memo = $("ad-memo").value.trim();
-    if (!/^[A-Z]{2,10}$/.test(cur)) throw new Error("מטבע לא תקין");
-    if (addr.length < 8 || addr.length > 120) throw new Error("כתובת לא תקינה");
-    const saos = { cur, addr };
-    if (memo) saos.memo = memo;
-    return { cmd: "saos.addr", saos, label: "פרסום כתובת הפקדה ל" + cur };
-  },
-  rate: () => {
-    const pair = $("rt-pair").value.trim().toUpperCase();
-    const price = $("rt-price").value.trim();
-    if (!/^[A-Z]{2,10}\/[A-Z]{2,10}$/.test(pair)) throw new Error("זוג לא תקין (למשל SAOS/USD)");
-    if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(price) || /^0+(\.0+)?$/.test(price)) throw new Error("מחיר לא תקין");
-    return { cmd: "saos.rate", saos: { pair, price }, label: "קביעת שער " + pair + " = " + price };
-  },
-  credit: () => {
-    const to = $("cr-to").value.trim();
-    const saosAmt = $("cr-saos").value.trim();
-    const cur = $("cr-cur").value.trim().toUpperCase();
-    const amt = $("cr-amt").value.trim();
-    const ref = $("cr-ref").value.trim();
-    const claimId = $("cr-claim").value.trim();
-    if (!/^saos1[1-9A-HJ-NP-Za-km-z]{33,35}$/.test(to)) throw new Error("כתובת מפקיד לא תקינה");
-    if (!/^\d{1,18}$/.test(saosAmt) || /^0+$/.test(saosAmt)) throw new Error("כמות SAOS לא תקינה");
-    if (!/^[A-Z]{2,10}$/.test(cur)) throw new Error("מטבע לא תקין");
-    if (!/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(amt) || /^0+(\.0+)?$/.test(amt)) throw new Error("סכום לא תקין");
-    if (ref && !/^[\w :.\-\/+=]{6,90}$/.test(ref)) throw new Error("אסמכתה לא תקינה");
-    const saos = { to, saos: saosAmt, cur, amt };
-    if (ref) saos.ref = ref;
-    if (claimId) saos.claimId = claimId;
-    return { cmd: "saos.credit", saos, label: "זיכוי " + (Number(saosAmt) / 1000) + " SAOS ל " + to.slice(0, 12) + "…" };
-  },
-  fill: () => {
-    const offerId = $("fl-id").value.trim();
-    const to = $("fl-to").value.trim();
-    const units = $("fl-units").value.trim();
-    const paid = $("fl-paid").value.trim();
-    const ref = $("fl-ref").value.trim();
-    if (!/^[0-9a-zA-Z._-]{6,40}$/.test(offerId)) throw new Error("מזהה הצעה לא תקין");
-    if (!/^saos1[1-9A-HJ-NP-Za-km-z]{33,35}$/.test(to)) throw new Error("כתובת קונה לא תקינה");
-    if (!/^\d{1,18}$/.test(units) || /^0+$/.test(units)) throw new Error("כמות לא תקינה");
-    if (paid && !/^(0|[1-9]\d{0,11})(\.\d{1,8})?$/.test(paid)) throw new Error("סכום ששולם לא תקין");
-    const saos = { offerId, to, units };
-    if (paid) saos.paid = paid;
-    if (ref) saos.ref = ref;
-    return { cmd: "saos.fill", saos, label: "מילוי הצעה " + offerId.slice(0, 14) + "…" };
-  },
-  reward: () => {
-    const to = $("rw-to").value.trim();
-    const amount = $("rw-amt").value.trim();
-    const note = $("rw-note").value.trim();
-    if (!/^saos1[1-9A-HJ-NP-Za-km-z]{33,35}$/.test(to)) throw new Error("כתובת מקבל לא תקינה");
-    if (!/^\d{1,18}$/.test(amount) || /^0+$/.test(amount)) throw new Error("כמות לא תקינה");
-    const saos = { to, amount };
-    if (note) saos.note = note;
-    return { cmd: "saos.reward", saos, label: "תגמול " + (Number(amount) / 1000) + " SAOS ל " + to.slice(0, 12) + "…" };
-  },
-};
-
-async function sendSaos(kind) {
-  if (!state.posting) return;
-  const res = $("saosResult");
-  res.className = "result show";
-  let form;
-  try {
-    form = SAOS_FORMS[kind]();
-  } catch (e) {
-    res.innerHTML = '<div style="color:var(--red)">' + esc(e.message) + "</div>";
-    return;
-  }
-  setCmdsDisabled(true);
-  try {
-    const payload = {
-      v: 1,
-      id: Array.from(crypto.getRandomValues(new Uint8Array(8)), (b) => b.toString(16).padStart(2, "0")).join(""),
-      cmd: form.cmd, at: new Date().toISOString(),
-      saos: form.saos,
-    };
-    const op = ["custom_json", {
-      required_auths: [],
-      required_posting_auths: [state.acc],
-      id: OP_ID,
-      json: JSON.stringify(payload),
-    }];
-    res.innerHTML = '<span class="spin"></span>חותם ומשדר את הוראת האוצר: ' + esc(form.label) + "…";
-    const signed = await buildAndBroadcast([op]);
-    res.innerHTML =
-      '<div style="color:var(--green)">ההוראה שודרה: ' + esc(form.label) + '</div>' +
-      '<div class="txid" style="margin-top:6px">sig ' + esc(signed.signatures[0].slice(0, 40)) + '…</div>' +
-      '<div class="links">הלב יחתום את הפעולה במפתח האוצר שבענן וישדר לספר החי. אם הג׳נזיס טרם הושלם, ההוראה תמתין בכנות ותתבצע אחריו.</div>';
-    toast("הוראת האוצר שודרה");
-    loadHistory();
-  } catch (e) {
-    res.innerHTML = '<div style="color:var(--red)">השידור נכשל: ' + esc(e.message || String(e)) + "</div>";
-  } finally {
-    setCmdsDisabled(false);
-  }
-}
-
 /* ── relay signed user operations (transport only) ── */
 async function relayUserOps() {
   if (!state.posting) return;
@@ -735,7 +570,7 @@ async function loadSaosFeed() {
 }
 
 function setCmdsDisabled(dis) {
-  document.querySelectorAll(".cmd, [data-saos], #relayJsonBtn").forEach((b) => (b.disabled = dis));
+  document.querySelectorAll(".cmd, #relayJsonBtn").forEach((b) => (b.disabled = dis));
 }
 
 /* ── wiring ── */
@@ -743,7 +578,6 @@ $("connectBtn").addEventListener("click", connect);
 $("sec").addEventListener("keydown", (e) => { if (e.key === "Enter") connect(); });
 $("lockBtn").addEventListener("click", lock);
 document.querySelectorAll(".cmd").forEach((b) => b.addEventListener("click", () => sendCmd(b.dataset.cmd)));
-document.querySelectorAll("[data-saos]").forEach((b) => b.addEventListener("click", () => sendSaos(b.dataset.saos)));
 $("relayJsonBtn").addEventListener("click", relayUserOps);
 </script>
 </body>
