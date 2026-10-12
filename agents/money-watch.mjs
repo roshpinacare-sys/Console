@@ -80,6 +80,14 @@ async function coingecko() {
 const num = (s) => parseFloat(String(s).replace(/[A-Za-z ]+/g, "")) || 0;
 const r2 = (v) => Math.round(v * 100) / 100;
 
+// 25-a fix (next=1969 bug): the chain answers "no payout scheduled" with the
+// zero-date sentinel (1969-12-31T23:59:59 / 1970-01-01T00:00:00). Publishing
+// that raw made money.json carry a 1969 epoch as if a payout were imminent.
+// Anything before 1971 is not a real payout date — normalize to null (honest
+// "none"), never a fabricated future date.
+const ZERO_DATE_FLOOR_MS = Date.parse("1971-01-01T00:00:00Z");
+const saneDate = (s) => (s && Date.parse(s) > ZERO_DATE_FLOOR_MS ? s : null);
+
 /* ═══ מצב קודם ═══ */
 if (!STEEM_ACCOUNT) {
   console.log("[refs] roster-unresolved: acct-00 not resolvable from FLEET_ROSTER_MAP/.roster-map.local.json — money-watch fuel path skipped (fail-honest, exit 0, nothing fabricated)");
@@ -107,11 +115,13 @@ try {
       active: !!(a.to_withdraw && num(a.to_withdraw) > 0),
       rateVests,
       rateSp: rateSp ? r2(rateSp) : null,
-      nextPayout,
+      nextPayout: saneDate(nextPayout), // 25-a: zero-date sentinel → null (was published raw as 1969)
       remainingVests: Math.max(0, num(a.to_withdraw) - num(a.withdrawn)),
     },
   };
-  const prevNext = prev?.fuel?.powerdown?.nextPayout ?? null;
+  // 25-a: saneDate on BOTH sides — a stored 1969 sentinel from an old money.json
+  // must never count as "the previous payout just advanced".
+  const prevNext = saneDate(prev?.fuel?.powerdown?.nextPayout ?? null);
   const prevSteem = typeof prev?.fuel?.steem === "number" ? prev.fuel.steem : null;
 
   // זיהוי נחיתה: התשלום הבא התקדם (הישן כבר בעבר) + קפיצת מלאי
@@ -206,7 +216,18 @@ try {
       usd: oracleWtrxMu ? r2((outboxTrx * oracleWtrxMu) / 1e6) : null, // µ-אורקל בסולם מיקרו-דולר
     };
   } else {
-    redemption = { ok: false, error: "peg-outbox wallet not found in world.json" };
+    // 25-a fix (peg-outbox bug): the CURRENT published world.json generation
+    // carries no peg-outbox wallet (measured 2026-10-12: wallets = treasury,
+    // operator, arena, soldier-1..4, bot-a/b/c/e, save-pot, ve-vault,
+    // lend-pot, rail — backing is WSTEEM/WSBD, no WTRX). That is a dormant
+    // chokepoint, not a broken beat: the watch executed fine, there is simply
+    // nothing to watch. ok:true + applicable:false (honest scoping), instead
+    // of ok:false that froze the money chain red every run.
+    redemption = {
+      ok: true,
+      applicable: false,
+      note: "no peg-outbox wallet in the published world.json (this world generation has no WTRX peg-out channel) — redemption watch dormant, nothing fabricated",
+    };
   }
 } catch (e) {
   redemption = { ok: false, error: String(e.message).slice(0, 120) };
@@ -229,7 +250,11 @@ if (marks.steemUsd === null && oracleWsteemMuGlobal !== null) { marks.steemUsd =
 if (marks.trxUsd === null && oracleWtrxMuGlobal !== null) { marks.trxUsd = oracleWtrxMuGlobal / 1e6; marks.oracleFallback = true; }
 
 /* ═══ 4) הזנקת הגריד בנחיתת דלק (פעם אחת לכל תשלום) ═══ */
-let dispatch = { attempted: false, ok: false, note: "no landing detected" };
+// 25-a: ok now means "the dispatch decision resolved cleanly" (same semantics
+// the already-dispatched branch always had): a run with no fuel landing has
+// nothing to dispatch — that is a resolved no-op, not a failure. A real
+// dispatch attempt still reports its true API result in ok (fail-honest).
+let dispatch = { attempted: false, ok: true, note: "no landing detected — nothing to dispatch" };
 const landingKey = landing ? String(landing.paymentDue) : null;
 const alreadyDispatched = prev?.dispatch?.forPayout ?? null;
 if (landing && landingKey && alreadyDispatched !== landingKey) {
@@ -278,10 +303,12 @@ const doc = {
 writeFileSync(OUT_PATH, scrub(JSON.stringify(doc, null, 1)) + "\n"); // 19-d: scrub-at-write
 
 const fuelLine = fuel?.ok
-  ? `steem=${fuel.steem} sbd=${fuel.sbd} next=${fuel.powerdown.nextPayout} rate≈${fuel.powerdown.rateSp}SP`
+  ? `steem=${fuel.steem} sbd=${fuel.sbd} next=${fuel.powerdown.nextPayout ?? "none"} rate≈${fuel.powerdown.rateSp ?? 0}SP`
   : `steem rpc down: ${fuel?.error}`;
 const redeemLine = redemption?.ok
-  ? `outbox=${redemption.outboxTrx}TRX / ${redemption.sendThresholdTrx} needed -> ${redemption.verdict}`
+  ? (redemption.applicable === false
+    ? `redemption: dormant (${redemption.note.slice(0, 60)}…)`
+    : `outbox=${redemption.outboxTrx}TRX / ${redemption.sendThresholdTrx} needed -> ${redemption.verdict}`)
   : `redemption: ${redemption?.error}`;
 console.log(`[money-watch] ${fuelLine}`);
 console.log(`[money-watch] ${redeemLine}`);
