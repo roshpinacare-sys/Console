@@ -31,7 +31,7 @@ jobs:
 
       - name: Verify the operator key against the live chain
         env:
-          HEADCORNER: ${{ secrets.HEADCORNER }}
+          MANAGER_KEY: ${{ secrets.MANAGER_KEY }} # שם-ניטרלי-בכוונה; הסוד-מוגדר-אצל-המפעיל
           AGENTS_WATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}
           SODIUM_DIR: /tmp/sodium
         run: node agents/key-verify.mjs
