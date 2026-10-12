@@ -385,7 +385,7 @@ async function connect() {
     state.matched = matched;
     $("whoAcc").textContent = "@" + acc;
     $("whoPub").textContent = roles.posting.pub;
-    $("whoRoles").textContent = matched.join(" · ");
+    $("whoRoles").textContent = matched.length + "/4 · " + matched.join(" · "); /* n/4 role counter — trace-1a1312f4 */
     document.body.className = "state-unlocked";
     setStatus("מחובר · המפתח הציבורי תואם לרשומות השרשרת", "ok");
     $("sec").value = "";
