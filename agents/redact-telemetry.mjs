@@ -124,6 +124,31 @@ let failed = 0;
 for (const f of process.argv.slice(2)) {
   try {
     const raw = fs.readFileSync(f, 'utf8');
+    if (f.endsWith('.jsonl')) {
+      // Receipt-log law (2-d): the log may hold compact JSONL lines, a pretty-printed
+      // object, or a mix (historic append-after-pretty writes) — whole-file JSON.parse
+      // dies on every appended log, which silently killed the key-verify publish step.
+      // Split into complete JSON documents (error-position guided), redact each,
+      // re-emit as compact JSONL. Fail-closed on any true garbage.
+      const docs = [];
+      let rest = raw;
+      while (rest.trim()) {
+        try {
+          docs.push(JSON.parse(rest));
+          rest = '';
+        } catch (e) {
+          const m = /after JSON at position (\d+)/.exec(String(e.message));
+          if (!m) throw e;
+          const pos = Number(m[1]);
+          docs.push(JSON.parse(rest.slice(0, pos)));
+          rest = rest.slice(pos);
+        }
+      }
+      const out = docs.map((d) => JSON.stringify(walk(d, '', false))).join('\n') + (docs.length ? '\n' : '');
+      fs.writeFileSync(f, out);
+      console.log(`[redact] ${f} ok (jsonl, ${docs.length} docs)`);
+      continue;
+    }
     const obj = JSON.parse(raw);
     fs.writeFileSync(f, JSON.stringify(walk(obj, '', false), null, 2) + '\n');
     console.log(`[redact] ${f} ok`);
