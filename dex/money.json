@@ -1,37 +1,38 @@
 {
+ "ok": true,
+ "format": "money-watch-v1",
+ "publishedAt": "2026-10-12T21:16:42.093Z",
+ "engine": "Console/agents/money-watch · R39 money path sentinel",
+ "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
+ "fuel": {
   "ok": true,
-  "format": "money-watch-v1",
-  "publishedAt": "2026-10-12T23:08:50.718Z",
-  "engine": "Console/agents/money-watch · R39 money path sentinel",
-  "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
-  "fuel": {
-    "ok": true,
-    "account": "acct-00",
-    "steem": 12.441,
-    "sbd": 9.156,
-    "powerdown": {
-      "active": false,
-      "rateVests": 0,
-      "rateSp": null,
-      "nextPayout": "1969-12-31T23:59:59",
-      "remainingVests": 0
-    }
-  },
-  "landing": null,
-  "dispatch": {
-    "attempted": false,
-    "ok": false,
-    "note": "no landing detected"
-  },
-  "redemption": {
-    "ok": false,
-    "error": "peg-outbox wallet not found in world.json"
-  },
-  "invariant": null,
-  "marks": {
-    "steemUsd": 0.056603,
-    "sbdUsd": 0.568782,
-    "trxUsd": 0.329325
-  },
-  "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
+  "account": "acct-00",
+  "steem": 10.069,
+  "sbd": 15.165,
+  "powerdown": {
+   "active": false,
+   "rateVests": 0,
+   "rateSp": null,
+   "nextPayout": null,
+   "remainingVests": 0
+  }
+ },
+ "landing": null,
+ "dispatch": {
+  "attempted": false,
+  "ok": true,
+  "note": "no landing detected — nothing to dispatch"
+ },
+ "redemption": {
+  "ok": true,
+  "applicable": false,
+  "note": "no peg-outbox wallet in the published world.json (this world generation has no WTRX peg-out channel) — redemption watch dormant, nothing fabricated"
+ },
+ "invariant": null,
+ "marks": {
+  "steemUsd": 0.058094,
+  "sbdUsd": 0.570508,
+  "trxUsd": 0.329785
+ },
+ "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
