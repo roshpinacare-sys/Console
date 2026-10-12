@@ -1,61 +1,13 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-10-12T09:23:26.429Z",
-  "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
-  "verdict": "DIVERGE",
+  "generatedAt": "2026-10-12T19:52:22.773Z",
+  "verdict": "CENSUS-STALE",
+  "note": "census book is 10.8h old (> 3h) — agreement refuses to judge on a dead measurement",
   "ledger": {
-    "book": "mirror.json",
-    "generatedAt": "2026-10-11T20:24:25.699Z",
-    "ageHours": 13,
-    "claims": {
-      "headHash": "0xa0e1b693354b5df12ccab4ff7c899bf22d34527ac2e03e58f995f7365d95218b",
-      "checkpoints": 1591,
-      "attestations": 1649
-    }
+    "ageHours": 23.5
   },
-  "chain": {
-    "book": "weave/census.json",
-    "generatedAt": "2026-10-12T09:05:06.499Z",
-    "ageHours": 0.3,
-    "censusVerdict": "IRREGULAR",
-    "tilingState": "HOLED",
-    "latest": {
-      "checkpoint": 1598,
-      "root": "0x1bd530fef00cd1418d81e430783537b9f5728d6d132b96fccfd8a2598f1ac865",
-      "headHash": "0x1bd530fef00cd1418d81e430783537b9f5728d6d132b96fccfd8a2598f1ac865",
-      "at": "2026-10-12T07:27:24.759Z",
-      "witness": "acct-01",
-      "txid": "6f69b95ce7a296a7ca40260a0b58845b8e91537f"
-    },
-    "claims": {
-      "headHash": "0x1bd530fef00cd1418d81e430783537b9f5728d6d132b96fccfd8a2598f1ac865",
-      "checkpoints": 1598,
-      "attestations": 1656
-    }
+  "census": {
+    "ageHours": 10.8
   },
-  "checks": [
-    {
-      "name": "headHash-witnessed-on-chain",
-      "ledger": "0xa0e1b693354b5df12ccab4ff7c899bf22d34527ac2e03e58f995f7365d95218b",
-      "chain": "not found in census rows",
-      "match": false
-    },
-    {
-      "name": "checkpoints-monotonic",
-      "ledger": 1591,
-      "chain": 1598,
-      "delta": 7,
-      "tolerance": "chain ahead up to +60",
-      "match": true
-    },
-    {
-      "name": "attestations-monotonic",
-      "ledger": 1649,
-      "chain": 1656,
-      "delta": 7,
-      "tolerance": "chain ahead up to +60",
-      "match": true
-    }
-  ],
-  "mismatches": 1
+  "checks": []
 }
