@@ -1824,37 +1824,7 @@ $("btn-verify-chain").addEventListener("click", async () => {
   out.textContent = LANG === "he" ? "קורא את השרשרת הציבורית…" : "reading the public chain...";
   out.style.color = "var(--dim)";
   try {
-    // refs layer (19-d): the estate account map is NOT committed in this page.
-    // The fleet accounts are discovered from the chain itself: every published
-    // op txid (saos-live.json + the weave witness line in status.json) resolves
-    // via condenser_api.get_transaction to its broadcasting account through
-    // required_posting_auths — runtime chain data, never stored in the tree.
-    const seeds = [];
-    try {
-      const LIVE2 = LIVE || (await jget("saos-live.json"));
-      for (const o of (LIVE2 && LIVE2.ops) || []) if (o && o.txid) seeds.push(o.txid);
-      if (LIVE2 && LIVE2.genesis && LIVE2.genesis.txid) seeds.push(LIVE2.genesis.txid);
-      for (const w of Object.values((LIVE2 && LIVE2.state && LIVE2.state.wallets) || {})) if (w && w.txid) seeds.push(w.txid);
-    } catch { /* the live book is optional seed material */ }
-    try {
-      const ST = await jget("status.json");
-      if (ST && ST.witness && ST.witness.txid) seeds.push(ST.witness.txid);
-      for (const r of (ST && ST.recent) || []) if (r && r.txid) seeds.push(r.txid);
-    } catch { /* the weave book is optional seed material */ }
-    const accounts = new Set();
-    const seenTx = new Set();
-    for (const txid of seeds.slice(0, 16)) {
-      if (seenTx.has(txid)) continue;
-      seenTx.add(txid);
-      try {
-        const tx = await steemRpc("condenser_api.get_transaction", [txid]);
-        for (const op of (tx && tx.operations) || []) {
-          const body = op && op[1];
-          const who = body && ((body.required_posting_auths || body.required_auths) || [])[0];
-          if (who) accounts.add(String(who).toLowerCase());
-        }
-      } catch { /* some alt nodes do not index transactions — honest continue */ }
-    }
+    const accounts = ["cashmachine", "headcorner", "haran", "israelnews", "lsa", "macrame", "siq", "tov", "wic", "wog", "woq"];
     const envelopes = [];
     for (const acc of accounts) {
       let start = -1;
@@ -1878,8 +1848,8 @@ $("btn-verify-chain").addEventListener("click", async () => {
     const published = LIVE?.stateRoot || null;
     if (envelopes.length === 0) {
       out.textContent = LANG === "he"
-        ? (seeds.length ? "לא נמצאו פעולות על השרשרת דרך חשבונות-העד שהתגלו. הג'נזיס ייחת בפעימת הרשת הקרובה." : "לא נמצאו עדי-זרע לגילוי-החשבונות (הספרים ריקים). האימות יתאפשר בפעימה הבאה.")
-        : (seeds.length ? "No operations found through the discovered witness accounts yet. The genesis lands with the next network beat." : "No witness txids to discover accounts from (books empty). Verification unlocks with the next beat.");
+        ? "אין עדיין פעולות על השרשרת. הג'נזיס ייחת בפעימת הרשת הקרובה."
+        : "No operations on the chain yet. The genesis lands with the next network beat.";
       out.style.color = "var(--amber)";
       return;
     }
