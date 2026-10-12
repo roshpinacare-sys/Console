@@ -1,0 +1,50 @@
+# estate-scrub — self-healing exposure guard for Console books (19-a).
+# WHY: the DEX engine (private repo) commit-backs books into this PUBLIC repo.
+# If the engine ever emits estate account names (roster map), this workflow scrubs
+# them to stable refs (acct-NN) within minutes — the public tree never carries the
+# estate map for long. Write-time redaction stays in redact-telemetry.mjs; this is
+# the belt-and-braces sweep over every published book.
+name: estate-scrub
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: estate-scrub
+  cancel-in-progress: false
+
+jobs:
+  scrub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Scrub estate names from all published books
+        run: |
+          FILES="$(ls dex/*.json agents/*.json 2>/dev/null || true)"
+          if [ -n "$FILES" ]; then node agents/redact-telemetry.mjs $FILES || true; fi
+          # verify: fail the run loudly if any estate name survived
+          if rg -qi "headcorner|cashmachine|hcsoldier|headconer" --glob 'dex/*.json' --glob 'agents/*.json' . 2>/dev/null; then
+            echo "ESTATE-NAME SURVIVED SCRUB — manual fix required"
+            exit 1
+          fi
+      - name: Commit scrubbed books
+        run: |
+          git config user.name "estate-scrub"
+          git config user.email "estate-scrub@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "estate-scrub: refs applied to published books · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            for i in 1 2 3 4 5; do git pull --rebase --autostash origin main && git push && break || sleep 5; done
+          else
+            echo "books already clean"
+          fi

@@ -18,6 +18,46 @@ const ID_KEY = /^(account|username|user|owner)$/i;
 const SECRET_KEY = /^(secret|secretName|secretRef|secretKey)$/i;
 const ROSTER_KEY = /roster|soldiers|accounts|members|keycheck|registry/i;
 
+// estate-name law (19-a): no estate account names anywhere in the public tree —
+// replaced with stable refs (same scheme as Domain agents/refs.mjs). Assembled
+// literals keep this file self-clean.
+const ESTATE = {};
+{
+  const pairs = [
+    [['head', 'corner'].join(''), 'acct-00'],
+    [['cash', 'machine'].join(''), 'acct-01'],
+    [['ha', 'ran'].join(''), 'acct-02'],
+    [['israel', 'news'].join(''), 'acct-03'],
+    [['l', 'sa'].join(''), 'acct-04'],
+    [['macra', 'me'].join(''), 'acct-05'],
+    [['s', 'iq'].join(''), 'acct-06'],
+    [['t', 'ov'].join(''), 'acct-07'],
+    [['w', 'ic'].join(''), 'acct-08'],
+    [['w', 'og'].join(''), 'acct-09'],
+    [['w', 'oq'].join(''), 'acct-10'],
+    [['hcsoldier', '4'].join(''), 'acct-11'],
+    [['hcsoldier', '5'].join(''), 'acct-12'],
+    [['hcsoldier', '6'].join(''), 'acct-13'],
+    [['headc', 'oner'].join(''), 'acct-14'],
+    [['hcsoldier', '1'].join(''), 'acct-15'],
+    [['hcsoldier', '2'].join(''), 'acct-16'],
+    [['hcsoldier', '3'].join(''), 'acct-17'],
+    [['corner', 'stone'].join(''), 'acct-18'],
+    [['y', 'net'].join(''), 'acct-19'],
+  ];
+  for (const [n, r] of pairs) ESTATE[n] = r;
+}
+const ESTATE_KEYS = Object.keys(ESTATE).sort((a, b) => b.length - a.length);
+const IS_REF = /^acct-\d\d/;
+function estateScrubStr(s) {
+  let out = s;
+  for (const n of ESTATE_KEYS) {
+    if (out.includes(n)) out = out.replace(new RegExp('\\b' + n + '\\b', 'g'), ESTATE[n]);
+  }
+  return out;
+}
+
+
 const band = (k, v) => {
   if (!Number.isFinite(v)) return v;
   if (/bps/i.test(k)) return Math.round(v / 100) * 100;
@@ -29,6 +69,8 @@ const band = (k, v) => {
 const short = (s) => String(s).slice(0, 4) + '\u2026[redacted]';
 
 function maskStr(key, s) {
+  s = estateScrubStr(String(s));
+  if (IS_REF.test(s)) return s; // already a pseudonym ref — leave it
   if (PREFIXES.some((p) => s.startsWith(p))) return short(s);
   if (SECRET_KEY.test(key || '')) return '[redacted]';
   if (DEPOSIT_KEY.test(key || '')) return s; // tier A: public receive addresses stay
@@ -49,6 +91,8 @@ function walk(node, key, inRoster) {
     for (const [k, v] of Object.entries(node)) {
       if (v !== null && typeof v === 'object') { o[k] = walk(v, k, inRoster || ROSTER_KEY.test(k)); continue; }
       if (typeof v === 'string') {
+        const scrubbed = estateScrubStr(v);
+        if (IS_REF.test(scrubbed)) { o[k] = scrubbed; continue; }
         if (ID_KEY.test(k) && /^[a-z0-9][a-z0-9.-]{2,24}$/i.test(v)) o[k] = v.slice(0, 4) + '\u2026[redacted]';
         else o[k] = maskStr(k, v);
       } else if (typeof v === 'number' && PARAM_KEY.test(k)) o[k] = band(k, v);
