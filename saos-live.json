@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-11T20:24:30.698Z",
+  "generatedAt": "2026-10-12T23:05:25.135Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "9ac42df4e84ad0f55aba2408bdad61353d0598b7ece95ebd4e3ad1f195fdb0f5",
+  "stateRoot": "7023345ea9c65689a8a3f6249d031d9ec51dceecc2dfe39a971e7fa54e7485b5",
   "genesis": {
     "done": true,
     "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
@@ -10,35 +10,13 @@
     "symbol": "SAOS",
     "initialMint": "126682000",
     "maxSupply": "21000000000",
-    "note": "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, genesis 2026-09-05)"
+    "note": "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer headcorner, genesis 2026-09-05)"
   },
   "state": {
-    "wallets": {
-      "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
-        "pub": "STM6EML1FKrnTGHMkkudANMxvLejGfzi3qCkZZUrtfxggLafF6ZwW",
-        "nick": "network-treasury",
-        "at": null,
-        "txid": null
-      }
-    },
-    "tokens": {
-      "SAOS": {
-        "name": "SAOS",
-        "decimals": 3,
-        "maxSupply": "21000000000",
-        "issuer": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-        "at": null,
-        "txid": null
-      }
-    },
-    "balances": {
-      "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k": {
-        "SAOS": "126682000"
-      }
-    },
-    "supply": {
-      "SAOS": "126682000"
-    },
+    "wallets": {},
+    "tokens": {},
+    "balances": {},
+    "supply": {},
     "claims": {},
     "offers": {},
     "cfg": {
@@ -46,92 +24,18 @@
       "rates": {}
     },
     "rewardsPaid": "0",
-    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k"
+    "treasury": null
   },
-  "ops": [
-    {
-      "id": "genesis-saos-treasury",
-      "k": "wallet.create",
-      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-      "at": "2026-09-16T08:09:14.787Z",
-      "txid": "c049dd102b50bb7d0a670595d8cca5acf88065c8",
-      "block": 109623286,
-      "summary": "רישום ארנק \"network-treasury\" saos1CKtmFms…",
-      "d": null
-    },
-    {
-      "id": "genesis-saos-deploy",
-      "k": "token.deploy",
-      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-      "at": "2026-09-16T16:09:29.949Z",
-      "txid": "c72a953f55d388a8e7a4a62a6a72323ea1ec8d07",
-      "block": 109632837,
-      "summary": "פריסת חוזה SAOS (תקרה 21,000,000,000)",
-      "d": null
-    },
-    {
-      "id": "genesis-saos-mint",
-      "k": "token.mint",
-      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-      "at": "2026-09-17T01:04:56.766Z",
-      "txid": "0529cef05f075947b6f73acb2554a7b8bf03e411",
-      "block": 109643652,
-      "summary": "הטבעת 126,682,000 SAOS · saos1CKtmFms…",
-      "d": {
-        "symbol": "SAOS",
-        "to": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-        "amount": "126682000"
-      }
-    },
-    {
-      "id": "1790205755658-18530445c213",
-      "k": "token.transfer",
-      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-      "at": "2026-09-24T00:29:19.056Z",
-      "txid": "7eef6c5ed8027df6afed064a26704d8574c2d3bf",
-      "block": 109843557,
-      "summary": "2,000 SAOS · saos14wWGYvq…",
-      "d": {
-        "symbol": "SAOS",
-        "to": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
-        "amount": "2000"
-      }
-    },
-    {
-      "id": "1790206245548-3db7e8d64d65",
-      "k": "token.transfer",
-      "by": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-      "at": "2026-09-24T00:29:19.056Z",
-      "txid": "79ba17feca30d13c266eb523b2e8a6e2c44ec0f4",
-      "block": 109843720,
-      "summary": "2,000 SAOS · saos14wWGYvq…",
-      "d": {
-        "symbol": "SAOS",
-        "to": "saos14wWGYvqHdwuHj5ZU42SDYwZBqFxWRw3bP",
-        "amount": "2000"
-      }
-    }
-  ],
+  "ops": [],
   "relay": {
     "url": null,
     "queued": 0,
     "lastFlush": "תור-הריליי פנוי"
   },
-  "invalid": [
-    {
-      "id": "1790205755658-18530445c213",
-      "k": "token.transfer",
-      "err": "no-recipient"
-    },
-    {
-      "id": "1790206245548-3db7e8d64d65",
-      "k": "token.transfer",
-      "err": "no-recipient"
-    }
-  ],
+  "invalid": [],
   "verify": {
-    "replayed": 5,
-    "valid": 3,
+    "replayed": 0,
+    "valid": 0,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
