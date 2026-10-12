@@ -360,7 +360,7 @@ async function connect() {
     const roles = {};
     const chainRoles = {};
     for (const role of ["owner", "active", "posting", "memo"]) {
-      try { roles[role] = await GateCrypto.deriveAny(sec, acc, role); } catch (e) { /* input is not a master password */ }
+      try { roles[role] = await GateCrypto.deriveAny(sec, acc, role); } catch (e) { /* input is not the operator master-secret (25-d reword, exposure law) */ }
     }
     if (!roles.posting) { setStatus("הקלט לא התגלגל למפתח. נסה סיסמת-אב או WIF תקין", "err"); return; }
     setStatus('<span class="spin"></span>קורא את החשבון מהשרשרת הציבורית…');

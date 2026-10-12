@@ -63,9 +63,12 @@ function loadEstateMap() {
   console.error('[refs] roster-unresolved: no FLEET_ROSTER_MAP env and no .roster-map.local.json — estate scrub is a NO-OP this run (pass the secret!)');
 }
 const IS_REF = /^acct-\d\d/;
+// 25-d host-path law: host filesystem paths never publish (exposure-rules FORBIDDEN_CONTENT
+// "host filesystem path"). Books used to republish sandbox paths on every beat.
+const RE_HOSTPATH = /\/home\/[A-Za-z0-9_.-]+\//g;
 function estateScrubStr(s) {
   loadEstateMap();
-  let out = s;
+  let out = s.replace(RE_HOSTPATH, '[host]/');
   for (const [n, r] of ESTATE) {
     // case-insensitive + 19-c boundary law (alphanumeric lookarounds, not \b):
     // catches underscore-adjacent uppercase pointer forms (CI_<NAME>_CRED class) too

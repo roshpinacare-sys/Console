@@ -20,16 +20,16 @@ The fix is standing order SO-1: **work that is not visible at the public URL doe
 ## 2. Boot sequence (every new session, no exceptions)
 
 ```
-1. TOKEN=$(cd /home/z/my-project && git remote get-url origin | sed -E 's|https://x-access-token:([^@]+)@.*|\1|')
+1. TOKEN=$(cd [host]/my-project && git remote get-url origin | sed -E 's|https://x-access-token:([^@]+)@.*|\1|')
 2. git clone https://x-access-token:${TOKEN}@github.com/roshpinacare-sys/Console.git /tmp/console-repo
    (if /tmp/console-repo exists: cd /tmp/console-repo && git pull --rebase)
-3. cd /home/z/my-project && git pull --rebase origin main   # cloud is primary; local may lag
+3. cd [host]/my-project && git pull --rebase origin main   # cloud is primary; local may lag
 4. Read, in order:
    a. /tmp/console-repo/agent/state.json        <- where the work stands
    b. /tmp/console-repo/agent/requests.json     <- what the operator asked in the Console era (R01-R61, closed book)
       AND the live book: https://roshpinacare-sys.github.io/Domain/agent/requests.json (Domain-era numbering, R22+) <- what is still open
    c. /tmp/console-repo/agent/verify/results.json <- the network's last verdict on delivery
-   d. tail -c 15000 /home/z/my-project/worklog.md <- recent engineering history
+   d. tail -c 15000 [host]/my-project/worklog.md <- recent engineering history
 5. Check the live site: curl -s https://roshpinacare-sys.github.io/Console/ | head -5
 ```
 
@@ -41,7 +41,7 @@ The fix is standing order SO-1: **work that is not visible at the public URL doe
 | `roshpinacare-sys/Console` (public) | The public site + mirrors + workflows + **this bridgehead** | Public truth (the product) |
 | `https://roshpinacare-sys.github.io/Console/` | What the operator actually sees | **The scoreboard** |
 | Steem chain (`acct-01`) | Anchored checkpoints - outside every server | Chain truth |
-| `/home/z/my-project` | Ephemeral sandbox workbench | Not truth - dies with the session |
+| `[host]/my-project` | Ephemeral sandbox workbench | Not truth - dies with the session |
 
 Cloud agents (all in GitHub Actions, sandbox-independent): weave-heart (hourly), weave-anchor/zero
 (checkpoint anchoring), weave-anchor-lines (Steem), weave-mirror (public mirror), agents-watch

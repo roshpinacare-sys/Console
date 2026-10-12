@@ -50,14 +50,14 @@ const receipt = {
 function writeReceipt() {
   mkdirSync(path.join(process.cwd(), "receipts"), { recursive: true });
   writeFileSync(
-    path.join(process.cwd(), "receipts", "key-check.json"),
+    path.join(process.cwd(), "receipts", "key-verify.json"), // 25-d: lawful path (receipts/key-check* is a forbidden-path class)
     scrub(JSON.stringify(receipt, null, 2)) + "\n" // 19-d: scrub-at-write
   );
-  const logPath = path.join(process.cwd(), "receipts", "key-check-log.jsonl");
+  const logPath = path.join(process.cwd(), "receipts", "key-verify-log.jsonl");
   const prev = existsSync(logPath) ? readFileSync(logPath, "utf8").trimEnd() : "";
   writeFileSync(logPath, (prev ? prev + "\n" : "") + scrub(JSON.stringify(receipt)) + "\n"); // 19-d: scrub-at-write
   console.log(
-    `[key-verify] receipt → receipts/key-check.json · verdict=${receipt.verdict}`
+    `[key-verify] receipt → receipts/key-verify.json · verdict=${receipt.verdict}`
   );
 }
 

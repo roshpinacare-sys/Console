@@ -12,14 +12,14 @@
     "summary": "The operator rejected the R58 fragment doctrine and demanded one complete, professional, proven site. Delivered: nine system fronts restored at full size and mapped from the home page, 40 session artifacts removed from the public hub, truth machine G8 rewritten to complete-map doctrine, verification contract updated and measured green twice after deployment (CI ALL-GREEN, agent-verify 48/48). Games direction: all games work cancelled by the operator; the app's games view removed. The professional-benchmark report (sovereign/reports/professional-benchmark.md) documents what professional systems publish vs us, including the gaps only the operator can close (root-domain repo, privacy/terms pages, VPS)."
   },
   "environment": {
-    "sandbox": "/home/z/my-project - ephemeral, resets on new sessions; NEVER the source of truth",
+    "sandbox": "[host]/my-project - ephemeral, resets on new sessions; NEVER the source of truth",
     "sovereignRepo": "roshpinacare-sys/Zip (private) - cloud truth, holds console/ sources and the ledger",
     "publicRepo": "roshpinacare-sys/Console (public) - GitHub Pages site + agent bridgehead + this state",
     "publicUrl": "https://roshpinacare-sys.github.io/Console/",
     "recovery": [
-      "TOKEN=$(cd /home/z/my-project && git remote get-url origin | sed -E 's|https://x-access-token:([^@]+)@.*|\\1|')",
+      "TOKEN=$(cd [host]/my-project && git remote get-url origin | sed -E 's|https://x-access-token:([^@]+)@.*|\\1|')",
       "git clone https://x-access-token:${TOKEN}@github.com/roshpinacare-sys/Console.git /tmp/console-repo",
-      "cd /home/z/my-project && git pull --rebase origin main  (local Zip may lag the cloud - the cloud is primary)",
+      "cd [host]/my-project && git pull --rebase origin main  (local Zip may lag the cloud - the cloud is primary)",
       "Read agent/handoff.md first, then agent/requests.json, then this state"
     ],
     "repos": {

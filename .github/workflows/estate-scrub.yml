@@ -64,6 +64,10 @@ jobs:
             exit 1
           fi
           if [ -n "$SURVIVORS" ]; then echo "$SURVIVORS"; fi
+      - name: Exposure gate (one-law-two-enforcers — the tree must PASS before any scrub-commit)
+        # 25-d: the same detector the producers run (scripts/exposure-rules.mjs) now judges
+        # the whole tree here. A poisoned publish goes RED and the scrub-commit never lands.
+        run: node scripts/exposure-scan.mjs
       - name: Commit scrubbed books
         run: |
           git config user.name "estate-scrub"

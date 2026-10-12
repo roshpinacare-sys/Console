@@ -27,7 +27,7 @@ const PORTFOLIO = new URL('./portfolio.json', import.meta.url).pathname;
 const GIANTS = new URL('./giants.json', import.meta.url).pathname;
 /* ספר-ה-PnL האמיתי חי בבית-Domain (הריבונות על השרשרת) · ברירת-מחדל: הנתיב המקומי,
  * ניתן לעקוף עם PNL_BOOK (ל-runner עתידי שיאסוף מ-raw/Pages) · נופל בכנות ל-null. */
-const PNL = process.env.PNL_BOOK || '/home/z/my-project/Domain/agents/pnl-book.json';
+const PNL = process.env.PNL_BOOK || '[host]/my-project/Domain/agents/pnl-book.json' /* host-neutralized (25-d exposure law): set PNL_BOOK env for a real path; missing file falls honestly to null */;
 
 const r2 = (v) => (typeof v === 'number' && isFinite(v) ? Math.round(v * 100) / 100 : 0);
 const r4 = (v) => (typeof v === 'number' && isFinite(v) ? Math.round(v * 10000) / 10000 : 0);
