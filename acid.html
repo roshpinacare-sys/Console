@@ -551,7 +551,7 @@ async function connect() {
       var role = ["owner", "active", "posting", "memo"][i];
       try { roles[role] = await GateCrypto.deriveAny(sec, acc, role); } catch (e) { /* לא סיסמת-אב */ }
     }
-    if (!roles.posting) { setStat($("lockStatus"), "הקלט לא התגלגל למפתח - נסה סיסמת-אב או WIF תקין", "err"); return; }
+    if (!roles.posting) { setStat($("lockStatus"), "הקלט לא התגלגל למפתח - נסה מפתח-מנהל תקין", "err"); return; }
     setStat($("lockStatus"), '<span class="spin"></span>קורא את החשבון מהשרשרת הציבורית…');
     var accounts = await rpc("condenser_api.get_accounts", [[acc]]);
     if (!accounts || !accounts.length) { setStat($("lockStatus"), "החשבון @" + esc(acc) + " לא נמצא בשרשרת", "err"); return; }
