@@ -274,13 +274,13 @@ main .card > div:not([class]){max-width:70ch}
 
       <div id="attLocked">
         <div class="field">
-          <label for="acc">חשבון Steem (המפעיל)</label>
-          <input type="text" id="acc" value="headcorner" autocomplete="off" spellcheck="false">
+          <label for="acc">חשבון (מנהל)</label>
+          <input type="text" id="acc" placeholder="מנהל" autocomplete="off" spellcheck="false">
         </div>
         <div class="field">
-          <label for="sec">סיסמת-האב או מפתח WIF <span style="color:var(--dim)">(posting)</span></label>
+          <label for="sec">מפתח-מנהל</label>
           <input type="password" id="sec" placeholder="P5… / 5…" autocomplete="off" spellcheck="false">
-          <div class="hint">המפתח נשאר בזיכרון הדפדפן בלבד - אותו שער כמו בכניסה לרשת. ההעדה נחתמת ברשות posting: השרשרת עצמה אוסרת על המפתח הזה להזיז כסף.</div>
+          <div class="hint">המפתח נשאר בזיכרון הדפדפן בלבד — אינו נשלח-ואינו נשמר-בשום-מקום. ההרשאה-בשימוש היא הרשאת-פרסום-בלבד: השרשרת עצמה אוסרת עליה להזיז כסף.</div>
         </div>
         <button class="btn-main" id="connectBtn">התחבר לחתימה</button>
         <div class="status" id="lockStatus" role="status" aria-live="polite"></div>
