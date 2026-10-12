@@ -60,8 +60,8 @@ const steemLiquid = typeof fuel.steem === 'number' ? fuel.steem : null;
 const sbdLiquid = typeof fuel.sbd === 'number' ? fuel.sbd : null;
 const realLines = [
   { asset: 'TRX · custody-meshmarat', amount: custodyTrx, markUsd: trxUsd, usd: custodyTrx != null && trxUsd != null ? r4(custodyTrx * trxUsd) : null, source: 'money.json redemption.custody (trongrid)' },
-  { asset: 'STEEM · headcorner-liquid', amount: steemLiquid, markUsd: steemUsd, usd: steemLiquid != null && steemUsd != null ? r4(steemLiquid * steemUsd) : null, source: 'money.json fuel (steemit RPC)' },
-  { asset: 'SBD · headcorner-liquid', amount: sbdLiquid, markUsd: sbdUsd, usd: sbdLiquid != null && sbdUsd != null ? r4(sbdLiquid * sbdUsd) : null, source: 'money.json fuel (steemit RPC)' },
+  { asset: 'STEEM · acct-00-liquid', amount: steemLiquid, markUsd: steemUsd, usd: steemLiquid != null && steemUsd != null ? r4(steemLiquid * steemUsd) : null, source: 'money.json fuel (steemit RPC)' },
+  { asset: 'SBD · acct-00-liquid', amount: sbdLiquid, markUsd: sbdUsd, usd: sbdLiquid != null && sbdUsd != null ? r4(sbdLiquid * sbdUsd) : null, source: 'money.json fuel (steemit RPC)' },
 ];
 const markedUsd = realLines.reduce((s, l) => s + (typeof l.usd === 'number' ? l.usd : 0), 0);
 const unmarkedCount = realLines.filter((l) => l.usd == null).length;
@@ -72,7 +72,7 @@ const life = (pnlLast && pnlLast.lifetime) || {};
 const realizedSbd = typeof life.realizedSbd === 'number' ? life.realizedSbd : null;
 const edgePct = typeof life.edgePct === 'number' ? life.edgePct : null;
 const realPnl = {
-  source: pnlLast ? 'Domain/agents/pnl-book.json (chain-measured, headcorner)' : 'unavailable (fail-closed: null, not zero)',
+  source: pnlLast ? 'Domain/agents/pnl-book.json (chain-measured, acct-00)' : 'unavailable (fail-closed: null, not zero)',
   measuredAt: pnlLast ? pnlLast.ts : null,
   realizedSbd,
   realizedUsd: realizedSbd != null && sbdUsd != null ? r4(realizedSbd * sbdUsd) : null,

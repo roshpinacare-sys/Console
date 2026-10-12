@@ -18,6 +18,8 @@ concurrency:
 jobs:
   fee-law:
     runs-on: ubuntu-latest
+    env:
+      FLEET_ROSTER_MAP: ${{ secrets.FLEET_ROSTER_MAP }} # refs layer (19-d): ref→name resolution for books + write-time scrub
     timeout-minutes: 8
     steps:
       - name: Checkout the public console

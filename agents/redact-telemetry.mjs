@@ -18,41 +18,58 @@ const ID_KEY = /^(account|username|user|owner)$/i;
 const SECRET_KEY = /^(secret|secretName|secretRef|secretKey)$/i;
 const ROSTER_KEY = /roster|soldiers|accounts|members|keycheck|registry/i;
 
-// estate-name law (19-a): no estate account names anywhere in the public tree —
-// replaced with stable refs (same scheme as Domain agents/refs.mjs). Assembled
-// literals keep this file self-clean.
-const ESTATE = {};
-{
-  const pairs = [
-    [['head', 'corner'].join(''), 'acct-00'],
-    [['cash', 'machine'].join(''), 'acct-01'],
-    [['ha', 'ran'].join(''), 'acct-02'],
-    [['israel', 'news'].join(''), 'acct-03'],
-    [['l', 'sa'].join(''), 'acct-04'],
-    [['macra', 'me'].join(''), 'acct-05'],
-    [['s', 'iq'].join(''), 'acct-06'],
-    [['t', 'ov'].join(''), 'acct-07'],
-    [['w', 'ic'].join(''), 'acct-08'],
-    [['w', 'og'].join(''), 'acct-09'],
-    [['w', 'oq'].join(''), 'acct-10'],
-    [['hcsoldier', '4'].join(''), 'acct-11'],
-    [['hcsoldier', '5'].join(''), 'acct-12'],
-    [['hcsoldier', '6'].join(''), 'acct-13'],
-    [['headc', 'oner'].join(''), 'acct-14'],
-    [['hcsoldier', '1'].join(''), 'acct-15'],
-    [['hcsoldier', '2'].join(''), 'acct-16'],
-    [['hcsoldier', '3'].join(''), 'acct-17'],
-    [['corner', 'stone'].join(''), 'acct-18'],
-    [['y', 'net'].join(''), 'acct-19'],
-  ];
-  for (const [n, r] of pairs) ESTATE[n] = r;
+// estate-name law (19-a, loader refactor 19-d): no estate account names anywhere in
+// the public tree — replaced with stable refs (same scheme as agents/refs.mjs).
+// The name→ref map is DATA, not code: it is loaded at runtime from
+//   1. env FLEET_ROSTER_MAP (the Actions secret — estate-scrub.yml passes it), or
+//   2. agents/.roster-map.local.json (untracked, gitignored),
+// and if NEITHER is present the estate scrub is an honest NO-OP with a loud log —
+// never fabricated, never committed here. Zero account names in this file.
+const ESTATE = new Map();
+let ESTATE_LOADED = false;
+function loadEstateMap() {
+  if (ESTATE_LOADED) return;
+  ESTATE_LOADED = true;
+  const ingest = (pairs) => {
+    let used = 0;
+    for (const [ref, name] of pairs) {
+      if (typeof ref !== 'string' || !/^acct-\d\d$/.test(ref) || typeof name !== 'string' || !name) continue;
+      ESTATE.set(name, ref); used++;
+    }
+    return used;
+  };
+  try {
+    const env = process.env.FLEET_ROSTER_MAP;
+    if (env && env.trim().startsWith('{')) {
+      const j = JSON.parse(env);
+      const src = (j && j.refs && typeof j.refs === 'object') ? j.refs
+        : (j && j.names && typeof j.names === 'object') ? Object.fromEntries(Object.entries(j.names).map(([n, r]) => [r, n]))
+        : j;
+      const used = ingest(Object.entries(src || {}));
+      if (used) { console.log(`[refs] roster loaded from env FLEET_ROSTER_MAP (${used} refs)`); return; }
+    }
+  } catch (e) { console.error(`[refs] env FLEET_ROSTER_MAP unreadable: ${e.message}`); }
+  try {
+    const local = new URL('./.roster-map.local.json', import.meta.url);
+    if (fs.existsSync(local)) {
+      const j = JSON.parse(fs.readFileSync(local, 'utf8'));
+      const src = (j && j.refs && typeof j.refs === 'object') ? j.refs
+        : (j && j.names && typeof j.names === 'object') ? Object.fromEntries(Object.entries(j.names).map(([n, r]) => [r, n]))
+        : j;
+      const used = ingest(Object.entries(src || {}));
+      if (used) { console.log(`[refs] roster loaded from local .roster-map.local.json (${used} refs)`); return; }
+    }
+  } catch (e) { console.error(`[refs] local roster map unreadable: ${e.message}`); }
+  console.error('[refs] roster-unresolved: no FLEET_ROSTER_MAP env and no .roster-map.local.json — estate scrub is a NO-OP this run (pass the secret!)');
 }
-const ESTATE_KEYS = Object.keys(ESTATE).sort((a, b) => b.length - a.length);
 const IS_REF = /^acct-\d\d/;
 function estateScrubStr(s) {
+  loadEstateMap();
   let out = s;
-  for (const n of ESTATE_KEYS) {
-    if (out.includes(n)) out = out.replace(new RegExp('\\b' + n + '\\b', 'g'), ESTATE[n]);
+  for (const [n, r] of ESTATE) {
+    // case-insensitive + 19-c boundary law (alphanumeric lookarounds, not \b):
+    // catches underscore-adjacent uppercase pointer forms (CI_<NAME>_CRED class) too
+    if (out.toLowerCase().includes(n.toLowerCase())) out = out.replace(new RegExp('(?<![A-Za-z0-9])' + n + '(?![A-Za-z0-9])', 'gi'), r);
   }
   return out;
 }

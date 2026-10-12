@@ -21,6 +21,8 @@ concurrency:
 jobs:
   scrub:
     runs-on: ubuntu-latest
+    env:
+      FLEET_ROSTER_MAP: ${{ secrets.FLEET_ROSTER_MAP }} # refs layer (19-d): ref→name resolution for books + write-time scrub
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,13 +32,38 @@ jobs:
           node-version: 20
       - name: Scrub estate names from all published books
         run: |
-          FILES="$(ls dex/*.json agents/*.json 2>/dev/null || true)"
+          FILES="$(ls dex/*.json agents/*.json weave/census.json weave/agreement.json status.json mirror.json agent/state.json agent/requests.json agent/verify/*.json 2>/dev/null || true)"
           if [ -n "$FILES" ]; then node agents/redact-telemetry.mjs $FILES || true; fi
-          # verify: fail the run loudly if any estate name survived
-          if rg -qi "headcorner|cashmachine|hcsoldier|headconer" --glob 'dex/*.json' --glob 'agents/*.json' . 2>/dev/null; then
-            echo "ESTATE-NAME SURVIVED SCRUB — manual fix required"
+          # verify: fail the run loudly if any estate name survived. The survivor
+          # pattern is built from the roster secret at RUNTIME — no account name
+          # is committed in this workflow file (exposure law 19-d).
+          SURVIVORS="$(FILES="$FILES" node -e '
+            const fs = require("fs");
+            let names = [];
+            try {
+              const m = JSON.parse(process.env.FLEET_ROSTER_MAP || "null");
+              const s = m && m.refs && typeof m.refs === "object" ? m.refs
+                : m && m.names && typeof m.names === "object" ? Object.keys(m.names)
+                : m;
+              names = [...new Set(Object.values(s || {}).concat(m && m.names ? Object.keys(m.names) : []))].filter((v) => typeof v === "string" && v);
+            } catch (e) { /* unresolved — report honestly below */ }
+            if (!names.length) { console.log("[refs] roster-unresolved: survivor check skipped (no secret)"); process.exit(0); }
+            const pat = names.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+            const re = new RegExp("(^|[^A-Za-z0-9])(" + pat + ")($|[^A-Za-z0-9])", "i");
+            const files = (process.env.FILES || "").split(/\s+/).filter(Boolean);
+            const hits = [];
+            for (const f of files) {
+              let t = "";
+              try { t = fs.readFileSync(f, "utf8"); } catch (e) { continue; }
+              if (re.test(t)) hits.push(f);
+            }
+            console.log(hits.join(" "));
+          ')"
+          if [ -n "$SURVIVORS" ] && [ "$SURVIVORS" != "[refs] roster-unresolved: survivor check skipped (no secret)" ]; then
+            echo "ESTATE-NAME SURVIVED SCRUB — manual fix required: $SURVIVORS"
             exit 1
           fi
+          if [ -n "$SURVIVORS" ]; then echo "$SURVIVORS"; fi
       - name: Commit scrubbed books
         run: |
           git config user.name "estate-scrub"

@@ -1,12 +1,12 @@
 // KEY-VERIFY — בדיקת מפתח-המפעיל שהוזן בגיטהאב (R38).
 //
-// רקע: המפעיל הוסיף בעצמו סוד בשם HEADCORNER לכספת של ריפו-הקונסולה
+// רקע: המפעיל הוסיף בעצמו סוד ניטרלי (MANAGER_KEY) לכספת של ריפו-הקונסולה
 // (GitHub → Settings → Secrets). רק Actions של הריפו הזה יכולים לקרוא
 // אותו — ולכן סוכן זה חי כאן. הוא עושה שלושה דברים, בכנות מלאה:
 //
 //   1. בודק מה באמת הוזן: מפתח-ציבורי בטעות? ה-posting במקום ה-active?
 //      WIF או סיסמת-אב — הכל נגזר עם הקריפטו הריבוני (gate-crypto.js).
-//   2. משווה ביט-מול-ביט מול הרשויות החיות של @headcorner בשרשרת Steem.
+//   2. משווה ביט-מול-ביט מול הרשויות החיות של @acct-00 בשרשרת Steem.
 //   3. אם ורק אם יש התאמה מלאה ל-active — מאטם את ה-WIF (libsodium
 //      sealed-box ממפתח-הציבורי של ריפו-המנוע) אל כספת saos-dex בתור
 //      STEEM_ACTIVE_WIF, ומזניק את הגריד החוץ (dex-grid).
@@ -19,16 +19,18 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import Gate from "../gate-crypto.js";
+import { R, refOf, scrub } from "./refs.mjs";
 
 const OWNER = "roshpinacare-sys";
-const ACCOUNT = "headcorner";
+const ACCOUNT_REF = "acct-00"; // שכבת-ה-refs — השם נפתר בזמן-ריצה מסוד-הרוסטר
+const ACCOUNT = R(ACCOUNT_REF);
 const DEX_REPO = "saos-dex";
 const SECRET_NAME = "STEEM_ACTIVE_WIF";
-const SOURCE_SECRET = "HEADCORNER";
+const SOURCE_SECRET = "MANAGER_KEY"; // שם-הסוד הניטרלי (תואם key-verify.yml) — לא שם-חשבון
 const GH_API = "https://api.github.com";
 const STEEM_RPC = "https://api.steemit.com";
 
-const value = (process.env.HEADCORNER || "").trim();
+const value = (process.env.MANAGER_KEY || "").trim();
 const relayToken = (process.env.AGENTS_WATCH_TOKEN || "").trim();
 const sodiumDir = process.env.SODIUM_DIR || "/tmp/sodium";
 const sodium = createRequire(path.join(sodiumDir, "probe.cjs"))("libsodium-wrappers");
@@ -40,7 +42,7 @@ const receipt = {
   generatedAt: new Date().toISOString(),
   source: { repo: "Console", secret: SOURCE_SECRET },
   target: { repo: DEX_REPO, secret: SECRET_NAME },
-  account: ACCOUNT,
+  account: ACCOUNT_REF,
   verdict: "unknown",
   detail: "",
 };
@@ -49,11 +51,11 @@ function writeReceipt() {
   mkdirSync(path.join(process.cwd(), "receipts"), { recursive: true });
   writeFileSync(
     path.join(process.cwd(), "receipts", "key-check.json"),
-    JSON.stringify(receipt, null, 2) + "\n"
+    scrub(JSON.stringify(receipt, null, 2)) + "\n" // 19-d: scrub-at-write
   );
   const logPath = path.join(process.cwd(), "receipts", "key-check-log.jsonl");
   const prev = existsSync(logPath) ? readFileSync(logPath, "utf8").trimEnd() : "";
-  writeFileSync(logPath, (prev ? prev + "\n" : "") + JSON.stringify(receipt) + "\n");
+  writeFileSync(logPath, (prev ? prev + "\n" : "") + scrub(JSON.stringify(receipt)) + "\n"); // 19-d: scrub-at-write
   console.log(
     `[key-verify] receipt → receipts/key-check.json · verdict=${receipt.verdict}`
   );
@@ -127,6 +129,7 @@ async function chainAuthorities() {
 
 async function main() {
   await sodium.ready;
+  if (!ACCOUNT) fail("roster-unresolved", "acct-00 not resolvable from FLEET_ROSTER_MAP/.roster-map.local.json — honest skip, nothing checked, nothing fabricated (19-d)");
   console.log(`[key-verify] boot · reading ${SOURCE_SECRET} from this repo's vault only`);
 
   if (!value) fail("no-secret", `הסוד ${SOURCE_SECRET} לא סופק לריצה — אין מה לבדוק`);
@@ -159,22 +162,22 @@ async function main() {
   if (chain.posting && pub === chain.posting) {
     fail(
       "posting-key",
-      `המפתח שהוזן הוא ה-posting של @${ACCOUNT} (משמש לעיגון/כניסה לאתר) — הגריד דורש את ה-active (WIF)`
+      `המפתח שהוזן הוא ה-posting של @${refOf(ACCOUNT)} (משמש לעיגון/כניסה לאתר) — הגריד דורש את ה-active (WIF)`
     );
   }
   if (chain.owner && pub === chain.owner) {
     fail(
       "owner-key",
-      `המפתח שהוזן הוא ה-owner של @${ACCOUNT} — מפתח-על שלא צריך לצאת מהכספת. הגריד דורש את ה-active`
+      `המפתח שהוזן הוא ה-owner של @${refOf(ACCOUNT)} — מפתח-על שלא צריך לצאת מהכספת. הגריד דורש את ה-active`
     );
   }
   if (chain.memo && pub === chain.memo) {
-    fail("memo-key", `המפתח שהוזן הוא ה-memo של @${ACCOUNT} — הגריד דורש את ה-active`);
+    fail("memo-key", `המפתח שהוזן הוא ה-memo של @${refOf(ACCOUNT)} — הגריד דורש את ה-active`);
   }
   if (pub !== chain.active) {
     fail(
       "authority-mismatch",
-      `המפתח שהוזן אינו ה-active החי של @${ACCOUNT}. הנגזר: ${pub.slice(0, 12)}… · בשרשרת: ${chain.active.slice(0, 12)}… · שום דבר לא נכתב`
+      `המפתח שהוזן אינו ה-active החי של @${refOf(ACCOUNT)}. הנגזר: ${pub.slice(0, 12)}… · בשרשרת: ${chain.active.slice(0, 12)}… · שום דבר לא נכתב`
     );
   }
 
@@ -223,7 +226,7 @@ async function main() {
   receipt.verdict = "armed";
   receipt.detail =
     "המפתח אומת ביט-מול-ביט מול ה-active החי של @" +
-    ACCOUNT +
+    refOf(ACCOUNT) +
     " בשרשרת, ונאטם בכספת ריפו-המנוע (sealed-box). " +
     (dispatched ? "הגריד החוץ הוזנק לריצה ראשונה." : "ההזנקה הידנית זמינה במרכז הפיקוד.");
   writeReceipt();

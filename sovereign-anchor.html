@@ -169,7 +169,7 @@ main section.card > div:not([class]){max-width:70ch}
   <section class="card" aria-labelledby="h-key">
     <h2 id="h-key">מפתח העד <span class="en">· the witness key — WIF or master password of any fleet account</span></h2>
     <div class="field">
-      <label for="sec">הדבק כאן WIF (מתחיל ב-5/K/L) או סיסמת-אב של חשבון-צי (@cashmachine / @lsa)</label>
+      <label for="sec">הדבק כאן WIF (מתחיל ב-5/K/L) או סיסמת-אב של חשבון-צי (@acct-01 / @acct-04)</label>
       <input type="password" id="sec" autocomplete="off" spellcheck="false" placeholder="5… / K… / L… / סיסמת-אב">
       <div class="hint">הערך מפורש בתוך הדף הזה בלבד, בזיכרון, ונמחק בנעילת הלשונית. לעולם לא נשמר, לא נרשם ולא משודר — רק המפתח הציבורי הנגזר נבדק מול השרשרת.</div>
     </div>
@@ -220,8 +220,14 @@ main section.card > div:not([class]){max-width:70ch}
  * itself forbids this key from moving funds.
  * ──────────────────────────────────────────────────────────────── */
 const OP_ID = "saos.weave.core.v1";
-const ACCOUNT = "cashmachine";
-const KNOWN = ["cashmachine", "headcorner", "lsa"];
+// refs layer (19-d): the estate account map is NOT committed in this page.
+// KNOWN (the witness-line accounts) is DISCOVERED from the chain at runtime:
+// the published anchor txids (status.json) resolve via get_transaction to their
+// broadcasting accounts through required_posting_auths — chain data, never
+// stored in the tree. Fail-honest: discovery failure disables the gate with an
+// honest message; nothing is fabricated.
+let KNOWN = [];
+const ACCOUNT = null; // identity always comes from the key match (state.signAs) or the discovered line
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26;
 const RC_FLOOR = 200e6;
@@ -252,6 +258,28 @@ async function rpc(method, params) {
 }
 
 /* ── 1 · the live line ── */
+async function discoverWitnesses() {
+  // 19-d: no estate names in the tree — the witness line is discovered from
+  // the chain via the anchor txids published in status.json (runtime data).
+  try {
+    const st = state.status || null;
+    const txids = [];
+    if (st && st.witness && st.witness.txid) txids.push(st.witness.txid);
+    for (const r of (st && st.recent) || []) if (r && r.txid) txids.push(r.txid);
+    const found = new Set();
+    for (const txid of txids.slice(0, 12)) {
+      try {
+        const tx = await rpc("condenser_api.get_transaction", [txid]);
+        for (const op of (tx && tx.operations) || []) {
+          const body = op && op[1];
+          const who = body && ((body.required_posting_auths || body.required_auths) || [])[0];
+          if (who) found.add(String(who).toLowerCase());
+        }
+      } catch (e) { /* alt nodes may not index transactions — honest continue */ }
+    }
+    if (found.size) KNOWN = [...found];
+  } catch (e) { /* fail-honest: KNOWN stays empty; verifyKey reports honestly */ }
+}
 async function loadLive() {
   $("lv-verdict").innerHTML = '<span class="spin"></span>';
   try {
@@ -260,6 +288,7 @@ async function loadLive() {
       fetch("mirror.json", { cache: "no-store" }).then((r) => r.json()),
     ]);
     state.status = st; state.mirror = mir;
+    await discoverWitnesses();
     const f = st.freshness || {};
     const fresh = f.verdict === "FRESH";
     $("lv-verdict").innerHTML =
@@ -300,7 +329,7 @@ function buildPayload() {
     attestations: att,
     headHash: String(ms.headHash || ""),
     commit: "browser",
-    witness: (state.signAs || ACCOUNT),
+    witness: (state.signAs || KNOWN[0] || null),
     rail: "sovereign-browser",
   };
 }
@@ -326,6 +355,7 @@ async function verifyKey() {
        סיסמת-אב נגזרה תחת חשבון אחד בלבד, וה-owner של המפעיל נדחה בטעות
        ("לא זוהה אף חשבון צי") — הבאג נסגר כאן. המפתח מכריז את החותם. */
     ks.innerHTML = '<span class="spin"></span>קורא רשויות מהשרשרת הציבורית…';
+    if (!KNOWN.length) throw new Error("קו-העדות לא זמין כרגע — גילוי-חשבונות-העד מהשרשרת נכשל (roster discovery); טענו מחדש ונסו שוב");
     const accs = await rpc("condenser_api.get_accounts", [KNOWN]);
     if (!accs || !accs.length) throw new Error("חשבונות הצי לא נקראו מהשרשרת");
     const ROLES = ["owner", "active", "posting", "memo"];
@@ -368,7 +398,7 @@ async function verifyKey() {
     const postingMatch = dedup.find((m) => m.role === "posting");
     const signAs = postingMatch ? postingMatch.name : null;
     /* chips: which of the matched account's roles did this input unlock */
-    const own = dedup.filter((m) => m.name === (signAs || ACCOUNT));
+    const own = dedup.filter((m) => m.name === (signAs || KNOWN[0]));
     for (const role of ["owner", "active", "posting", "memo"]) {
       const c = document.createElement("span");
       c.className = "role-chip" + (own.some((m) => m.role === role) ? " on" : "");
@@ -417,7 +447,7 @@ async function checkRc() {
   el.innerHTML = '<span class="spin"></span>';
   try {
     const [rc, dgp] = await Promise.all([
-      rpc("rc_api.find_rc_accounts", { accounts: [state.signAs || ACCOUNT] }),
+      rpc("rc_api.find_rc_accounts", { accounts: [state.signAs || KNOWN[0]] }),
       rpc("condenser_api.get_dynamic_global_properties", []),
     ]);
     const a = rc && rc.rc_accounts && rc.rc_accounts[0];
@@ -470,7 +500,7 @@ async function doAnchor() {
       "custom_json",
       {
         required_auths: [],
-        required_posting_auths: [state.signAs || ACCOUNT],
+        required_posting_auths: [state.signAs || KNOWN[0]],
         id: OP_ID,
         json: JSON.stringify(payload),
       },
@@ -490,7 +520,7 @@ async function doAnchor() {
       "<div class='txid'>" + esc(txid) + "</div>" +
       "<div class='links'>" +
       "<a href='https://steemscan.com/transaction/" + esc(txid) + "' target='_blank' rel='noopener'>steemscan</a>" +
-      "<a href='https://steemit.com/@" + esc(state.signAs || ACCOUNT) + "' target='_blank' rel='noopener'>היסטוריית העד בשרשרת</a>" +
+      "<a href='https://steemit.com/@" + esc(state.signAs || KNOWN[0]) + "' target='_blank' rel='noopener'>היסטוריית העד בשרשרת</a>" +
       "</div>" +
       "<div style='margin-top:10px;font-size:12px;color:var(--mut)'>מכונת הקונסולה תקרוא את העדות במחזור הבא (עד שעה) ו-status.json יתרענן. אפשר לוודא כבר עכשיו בהיסטוריית החשבון.</div>";
     /* wipe the key after use — one-shot discipline */

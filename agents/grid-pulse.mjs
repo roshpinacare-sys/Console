@@ -28,8 +28,10 @@
 // נימוס זה נימוס.
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { R, refOf, scrub } from "./refs.mjs";
 
-const ACCOUNT = "headcorner";
+const ACCOUNT_REF = "acct-00"; // the fleet head (refs layer 19-d — the name lives only in the roster secret)
+const ACCOUNT = R(ACCOUNT_REF);
 const OUT_PATH = process.env.GRID_PATH || "dex/grid.json";
 const RC_FUEL_VESTS = 242_330; // דלק-RC שמור לצי (הערך שנמדד במקור ב-grid-beat)
 const COMMIT_PCT = 0.9;
@@ -229,6 +231,10 @@ async function snapshot() {
 }
 
 /* ═══ main ═══ */
+if (!ACCOUNT) {
+  console.log("[refs] roster-unresolved: acct-00 not resolvable from FLEET_ROSTER_MAP/.roster-map.local.json — grid mirror skipped (fail-honest, exit 0, nothing fabricated)");
+  process.exit(0);
+}
 let prev = null;
 if (existsSync(OUT_PATH)) {
   try { prev = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { prev = null; }
@@ -342,7 +348,7 @@ const doc = {
   ok: true,
   publishedAt: new Date().toISOString(),
   engine: "Console/agents/grid-pulse · R83 sovereign grid mirror — keyless measurement, signs nothing",
-  account: ACCOUNT,
+  account: ACCOUNT_REF,
   chain: "STEEM-internal-market",
   real: true,
   armed: openNow > 0, // נמדד מהספר: יש פקודות חיות שלנו על הקו
@@ -380,7 +386,8 @@ const doc = {
   honesty: "מדוד מול ספר-STEEM הציבורי ופידי-USD חיים. מילויים מסומנים בזמן-הגילוי (marked-at-detection); המעקה מתעד את הציון שנמדד. ה-SBD הפנימי נסחר בפרימיום מול הציון החיצוני; קו-הזהות מוצג בגלוי כדי שכל אחד יוכל לאמת שאנחנו לא מוכרים מתחת לערך. סוכן זה חסר-מפתחות מהיסוד: אין לו יכולת שידור, ולכן שום נתון כאן אינו תלוי בסוד כלשהו.",
 };
 
-writeFileSync(OUT_PATH, JSON.stringify(doc, null, 1) + "\n");
+// 19-d: הספר נכתב דרך scrub — שם-חשבון שדלף מהשרשרת לא מגיע לעץ הציבורי
+writeFileSync(OUT_PATH, scrub(JSON.stringify(doc, null, 1)) + "\n");
 
 console.log(`[grid-pulse] published ${OUT_PATH} · verdict=${doc.verdict} · openOrdersNow=${openNow} · parity=${parity != null ? parity.toFixed(6) : "?"} · bestBid=${snap.book.bestBid ?? "?"}`);
 console.log(`[grid-pulse] cycle: observed placements=${observedPlacements} cancellations=${observedCancellations} fills=${observedFills} · totals: placed=${placedTotal} cancelled=${cancelledTotal} filled=${filledTotal}`);

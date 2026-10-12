@@ -1,7 +1,7 @@
 // MONEY-WATCH — צופה נתיב הכסף (R39)
 //
 // שני צווארי-הבקבוק של נתיב הכסף לא היו תחת מעקב חי:
-//   1. כניסת-הדלק: תשלומי ה-powerdown של @headcorner הם עורק-החיים היחיד
+//   1. כניסת-הדלק: תשלומי ה-powerdown של @acct-00 (שכבת-ה-refs, 19-d) הם עורק-החיים היחיד
 //      של ערך חוץ (≈470 SP ≈ $25 לשבוע, עוד 4 תשלומים). הגריד החוץ רץ
 //      יומית ב-03:17 UTC — כלומר הדלק שנוחת ב-02:01 ממתין 76 דקות לפני
 //      שנכנס לשוק. הסוכן הזה קולט את הנחיתה בתוך רבע-שעה ומזניק את
@@ -23,7 +23,10 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const OWNER = "roshpinacare-sys";
 const DEX_REPO = "saos-dex";
-const STEEM_ACCOUNT = "headcorner";
+import { R, refOf, scrub } from "./refs.mjs";
+
+const STEEM_ACCOUNT_REF = "acct-00"; // ראש-הצי — שכבת-ה-refs; השם חי רק בסוד-הרוסטר
+const STEEM_ACCOUNT = R(STEEM_ACCOUNT_REF);
 const CUSTODY_TRON = "TYVwwuvdDmfy3shxT3cb3RKLrRCshaZxTy";
 const OUT_PATH = process.env.MONEY_PATH || "dex/money.json";
 const BANDWIDTH_COST_TRX = 0.35; // נמדד חי: שידור TRX מחשבון בלי רוחב-פס מסוגר ≈ 0.345-0.35 TRX
@@ -78,12 +81,16 @@ const num = (s) => parseFloat(String(s).replace(/[A-Za-z ]+/g, "")) || 0;
 const r2 = (v) => Math.round(v * 100) / 100;
 
 /* ═══ מצב קודם ═══ */
+if (!STEEM_ACCOUNT) {
+  console.log("[refs] roster-unresolved: acct-00 not resolvable from FLEET_ROSTER_MAP/.roster-map.local.json — money-watch fuel path skipped (fail-honest, exit 0, nothing fabricated)");
+  process.exit(0);
+}
 let prev = null;
 if (existsSync(OUT_PATH)) {
   try { prev = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { prev = null; }
 }
 
-/* ═══ 1) דלק — הרשות החיה של headcorner ═══ */
+/* ═══ 1) דלק — הרשות החיה של acct-00 ═══ */
 let fuel = null;
 let landing = null;
 try {
@@ -93,7 +100,7 @@ try {
   const rateSp = rateVests > 0 ? rateVests / 1630.5 : null; // יחס VESTS→SP חי (נגזר מהחשבון)
   fuel = {
     ok: true,
-    account: STEEM_ACCOUNT,
+    account: STEEM_ACCOUNT_REF,
     steem: num(a.balance),
     sbd: num(a.sbd_balance),
     powerdown: {
@@ -268,7 +275,7 @@ const doc = {
   honesty: "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם.",
 };
 
-writeFileSync(OUT_PATH, JSON.stringify(doc, null, 1) + "\n");
+writeFileSync(OUT_PATH, scrub(JSON.stringify(doc, null, 1)) + "\n"); // 19-d: scrub-at-write
 
 const fuelLine = fuel?.ok
   ? `steem=${fuel.steem} sbd=${fuel.sbd} next=${fuel.powerdown.nextPayout} rate≈${fuel.powerdown.rateSp}SP`

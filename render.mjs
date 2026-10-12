@@ -9,17 +9,29 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (cashmachine / headcorner /
-// lsa — the fleet matrix). The reader scans every fleet account's history
-// and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. A headcorner-signed anchor now refreshes the line
-// exactly like a cashmachine one.
+// page sign as the account the key declares (refs acct-01 / acct-00 / acct-04 —
+// the fleet matrix, resolved at runtime from the roster secret; exposure law
+// 19-d). The reader scans every fleet account's history and merges the
+// anchors into one line, deduped by checkpoint; each row records its
+// witness. An acct-00-signed anchor now refreshes the line exactly like an
+// acct-01 one. Books are written REF-KEYED: no estate account name ever
+// lands in the public tree.
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
+import { R, refOf, scrub } from "./agents/refs.mjs";
+
+const FLEET_REFS = ["acct-01", "acct-00", "acct-04"]; // R75: the key declares who signs (refs layer, 19-d)
+const FLEET = FLEET_REFS
+  .map((r) => {
+    const name = R(r);
+    if (!name) console.log(`[refs] roster-unresolved: ${r} skipped this run (fail-honest, never fabricated)`);
+    return name;
+  })
+  .filter(Boolean)
+  .map((a) => a.toLowerCase());
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
@@ -48,6 +60,11 @@ async function rpc(node, method, params) {
 }
 
 async function readAnchorLine() {
+  if (FLEET.length === 0) {
+    // fail-honest: roster secret absent — no names, no chain reads, no fabricated book
+    console.log("[refs] roster-unresolved: no fleet account resolvable — status.json left untouched (exit 0)");
+    process.exit(0);
+  }
   let lastErr = null;
   for (const node of NODES) {
     try {
@@ -92,7 +109,7 @@ async function readAnchorLine() {
         }
       }
       if (anchors.length === 0) {
-        throw new Error(`no ${OP_ID} checkpoint anchors in fleet history (${FLEET.join(", ")}; ${MAX_PAGES} pages each)`);
+        throw new Error(`no ${OP_ID} checkpoint anchors in fleet history (${FLEET.map(refOf).join(", ")}; ${MAX_PAGES} pages each)`);
       }
       anchors.sort((a, b) => (a.at < b.at ? 1 : a.at > b.at ? -1 : 0));
       // התאמת-שכפול (Task 26): אותו checkpoint שעוגן מחדש (ניסיון חוזר,
@@ -115,7 +132,7 @@ async function readAnchorLine() {
 
 const { node, anchors } = await readAnchorLine();
 if (anchors.length === 0) {
-  throw new Error(`no ${OP_ID} anchors found in fleet history (${FLEET.join(", ")}): the chain is the source, an empty read is a red run`);
+  throw new Error(`no ${OP_ID} anchors found in fleet history (${FLEET.map(refOf).join(", ")}): the chain is the source, an empty read is a red run`);
 }
 const last = anchors[0];
 const ageHours = (Date.now() - new Date(last.at).getTime()) / 3600000;
@@ -126,7 +143,7 @@ const explorer = (txid) => `https://steemscan.com/transaction/${txid}`;
 const status = {
   format: "weave-console-chain-v1",
   generatedAt: new Date().toISOString(),
-  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET, account: last.witness, opId: OP_ID },
+  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET_REFS, account: refOf(last.witness), opId: OP_ID },
   freshness: {
     verdict,
     ageHours: Math.round(ageHours * 10) / 10,
@@ -134,7 +151,7 @@ const status = {
     cadence: "1h",
   },
   witness: {
-    account: last.witness,
+    account: refOf(last.witness),
     opId: OP_ID,
     txid: last.txid,
     block: last.block,
@@ -155,14 +172,16 @@ const status = {
     attTo: a.attTo,
     at: a.at,
     txid: a.txid,
-    witness: a.witness,
+    witness: refOf(a.witness),
     explorer: explorer(a.txid),
   })),
 };
 
 // שער הסודות של הקונסולה - שום מפתח/טוקן לא עולה לריפו הציבורי.
 // hash-ים ציבוריים (root/headHash: 0x+64hex בשדות קנוניים) אינם סוד.
-const text = JSON.stringify(status, null, 2);
+// 19-d: הספר נכתב דרך scrub — שם-חשבון שדלף מהשרשרת לשדה שפספס את
+// ה-ref-ification לא מגיע לעץ הציבורי.
+const text = scrub(JSON.stringify(status, null, 2));
 const PATTERNS = [
   ["steem/hive WIF", /\b5[1-9A-HJ-NP-Za-km-z]{50}\b/],
   ["blurt WIF", /\bB[1-9A-HJ-NP-Za-km-z]{50}\b/],
@@ -185,8 +204,8 @@ writeFileSync(new URL("./status.json", import.meta.url), text + "\n");
 
 console.log(
   `[render] ${OP_ID} · latest anchor cp#${last.checkpoint} · root ${last.root.slice(0, 18)}… · ` +
-    `txid ${last.txid.slice(0, 12)}… · witness @${last.witness} · age ${Math.round(ageHours * 10) / 10}h (${verdict}) · ` +
-    `${anchors.length} anchors read from ${new URL(node).hostname} (${FLEET.length} fleet accounts scanned)`
+    `txid ${last.txid.slice(0, 12)}… · witness @${refOf(last.witness)} · age ${Math.round(ageHours * 10) / 10}h (${verdict}) · ` +
+    `${anchors.length} anchors read from ${new URL(node).hostname} (${FLEET.length}/${FLEET_REFS.length} fleet accounts scanned)`
 );
 if (verdict === "STALE") {
   console.log(`[render] HONEST STALE: witness older than ${FRESH_THRESHOLD_H}h; the page will show the takeover window`);

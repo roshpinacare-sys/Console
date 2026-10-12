@@ -17,6 +17,8 @@ concurrency:
 jobs:
   watch:
     runs-on: ubuntu-latest
+    env:
+      FLEET_ROSTER_MAP: ${{ secrets.FLEET_ROSTER_MAP }} # refs layer (19-d): ref→name resolution for books + write-time scrub
     timeout-minutes: 9
     steps:
       - name: Checkout

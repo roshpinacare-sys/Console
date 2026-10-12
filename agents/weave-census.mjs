@@ -6,7 +6,8 @@
 // הנגזרים (mirror.json — תוצר הלב הענן), המנוע קורא את השרשרת עצמה
 // ישירות מ-RPC ציבורי ובונה מפקד עצמאי של פרוטוקול ה-weave:
 //
-//   · סריקת היסטוריית חשבונות הצי (cashmachine / headcorner / lsa)
+//   · סריקת היסטוריית חשבונות הצי (acct-01 / acct-00 / acct-04 — שכבת-ה-refs,
+//     נפתרות בזמן-ריצה מסוד-הרוסטר; חוק-החשיפה 19-d)
 //     עומק עד 15,000 ops לחשבון, איסוף כל עוגן checkpoint של
 //     custom_json id=saos.weave.core.v1.
 //   · רצף ה-checkpoints: פערים מספריים בתוך החלון (cp# שקפץ).
@@ -21,7 +22,17 @@
 // פלט: weave/census.json (סופר אחד: המנוע הזה בלבד, BLOC r144-h).
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase());
+import { R, refOf, scrub } from "./refs.mjs";
+
+const FLEET_REFS = ["acct-01", "acct-00", "acct-04"]; // אותם שלושה חשבונות, אותו סדר — שכבת-ה-refs
+const FLEET = FLEET_REFS
+  .map((r) => {
+    const name = R(r);
+    if (!name) log(`[refs] roster-unresolved: ${r} skipped this run (fail-honest, never fabricated)`);
+    return name;
+  })
+  .filter(Boolean)
+  .map((a) => a.toLowerCase());
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const PAGE = 100;           // תקרת condenser_api.get_account_history לקריאה (נמדד: 100)
@@ -79,7 +90,7 @@ async function harvest() {
       let hist = null;
       try {
         // שוליים-כנים: כשהעומק קטן מהתקרה, ה-limit חייב לרדת איתו (טענת
-        // ה-API args.start >= args.limit נמדדה על @lsa בעומק 42)
+        // ה-API args.start >= args.limit נמדדה על @acct-04 בעומק 42)
         const limit = typeof start === "number" && start >= 1 ? Math.min(PAGE, start) : PAGE;
         hist = await rpcAny("condenser_api.get_account_history", [account, start, limit]);
       } catch (e) {
@@ -129,8 +140,8 @@ async function harvest() {
     }
     if (stoppedBy === "depth-end" && own >= TARGET_UNIQUE) stoppedBy = "target";
     if (stoppedBy === "depth-end" && pages >= MAX_PAGES) stoppedBy = "budget";
-    scan.push({ account, pages, anchorOps: own, stoppedBy });
-    log(`harvest @${account}: ${pages} pages, ${own} anchor ops (stopped: ${stoppedBy})`);
+    scan.push({ account: refOf(account), pages, anchorOps: own, stoppedBy });
+    log(`harvest @${refOf(account)}: ${pages} pages, ${own} anchor ops (stopped: ${stoppedBy})`);
   }
   return { anchors, opsScanned, scan };
 }
@@ -248,6 +259,10 @@ try {
 if (!harvestRes) throw new Error("harvest failed on all failover paths");
 
 const { anchors, opsScanned } = harvestRes;
+if (FLEET.length === 0) {
+  log("[refs] roster-unresolved: no fleet account resolvable — census.json left untouched (exit 0)");
+  process.exit(0); // fail-honest: אין שמות, אין קריאת-שרשרת, אין ספר מדומה
+}
 if (anchors.length === 0) throw new Error(`no ${OP_ID} checkpoint anchors in fleet history — empty read is a red run`);
 
 // דה-כפילה: אותו checkpoint שעוגן מחדש הוא שורה אחת — העדות החדשה ביותר
@@ -262,10 +277,12 @@ const uniqueDesc = anchors.filter((a) => {
 const witnesses = {};
 for (const a of uniqueDesc) witnesses[a.witness] = (witnesses[a.witness] || 0) + 1;
 // חשבונות-צי שמעולם לא עגנו נכנסים לספר עם 0 מפורש (r68-f, החלטת-מפעיל):
-// lsa נסרק עד תחתית ההיסטוריה המלאה בכל ריצה (perAccount.stoppedBy =
+// acct-04 נסרק עד תחתית ההיסטוריה המלאה בכל ריצה (perAccount.stoppedBy =
 // depth-end) והאפס הוא מדידה, לא חוסר-קריאה. החשבון נשאר בניטור —
 // אם יעגן יום אחד, המפקד יראה מיד.
 for (const acc of FLEET) if (!(acc in witnesses)) witnesses[acc] = 0;
+// חוק-החשיפה: הספר מדבר refs — מפתחות-העד נכתבים כ-refs (השמות חיים רק בזמן-הריצה)
+const witnessesRefs = Object.fromEntries(Object.entries(witnesses).map(([k, v]) => [refOf(k), v]));
 
 const skips = sequenceSkips(uniqueDesc);
 const tiling = attestationTiling(uniqueDesc);
@@ -356,7 +373,7 @@ const book = {
     uniqueCheckpoints: uniqueDesc.length,
     anchorOpsSeen: anchors.length,
     retriesDeduped: anchors.length - uniqueDesc.length,
-    witnesses,
+    witnesses: witnessesRefs,
   },
   anchoring: {
     skippedCheckpoints: skips,
@@ -371,13 +388,14 @@ const book = {
     root: uniqueDesc[0].root,
     headHash: uniqueDesc[0].headHash,
     at: uniqueDesc[0].at,
-    witness: uniqueDesc[0].witness,
+    witness: refOf(uniqueDesc[0].witness),
     txid: uniqueDesc[0].txid,
   },
-  rows: uniqueDesc.slice(0, ROWS_PUBLISHED),
+  rows: uniqueDesc.slice(0, ROWS_PUBLISHED).map((a) => ({ ...a, witness: refOf(a.witness) })),
 };
 
-const text = JSON.stringify(book, null, 2) + "\n";
+// 19-d: הספר נכתב דרך scrub — שם שדלף מהשרשרת לשדה שפספס לא מגיע לעץ
+const text = scrub(JSON.stringify(book, null, 2)) + "\n";
 secretGate(text);
 const { mkdirSync, writeFileSync } = await import("node:fs");
 mkdirSync(new URL("../weave/", import.meta.url), { recursive: true });
@@ -388,7 +406,7 @@ log(
   `${uniqueDesc.length} unique anchors (cp#${minCp}..${maxCp}) · ` +
   `${skips.total} cps skipped by cadence · tiling ${tiling.state} (${tiling.holesTotal} holes, coverage ${tiling.coverageRatio}, wide≥${tiling.wideHoleMin}: ${tiling.wideHolesTotal} holes/${tiling.wideUncovered} ids, slivers: ${tiling.sliversTotal}/${tiling.sliverUncovered} ids) · ` +
   `cadence median ${Math.round(medMin)}m max ${Math.round(maxMin)}m · latest ${Math.round(latestAgeH * 10) / 10}h old · ` +
-  `witnesses ${JSON.stringify(witnesses)} · window ${Math.round(spanDays * 10) / 10}d · ${opsScanned} ops scanned`
+  `witnesses ${JSON.stringify(witnessesRefs)} · window ${Math.round(spanDays * 10) / 10}d · ${opsScanned} ops scanned`
 );
 if (verdict !== "LIVE") {
   log(`HONEST ${verdict}: the book records the measured state, the run stays honest`);

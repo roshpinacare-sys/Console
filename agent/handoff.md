@@ -40,7 +40,7 @@ The fix is standing order SO-1: **work that is not visible at the public URL doe
 | `roshpinacare-sys/Zip` (private) | Sovereign home: ledger, scripts, `console/` sources, worklog.md | Cloud truth (primary) |
 | `roshpinacare-sys/Console` (public) | The public site + mirrors + workflows + **this bridgehead** | Public truth (the product) |
 | `https://roshpinacare-sys.github.io/Console/` | What the operator actually sees | **The scoreboard** |
-| Steem chain (`cashmachine`) | Anchored checkpoints - outside every server | Chain truth |
+| Steem chain (`acct-01`) | Anchored checkpoints - outside every server | Chain truth |
 | `/home/z/my-project` | Ephemeral sandbox workbench | Not truth - dies with the session |
 
 Cloud agents (all in GitHub Actions, sandbox-independent): weave-heart (hourly), weave-anchor/zero
@@ -62,8 +62,8 @@ from chain), **agent-verify (measures the agent itself - every 6h at :55)**.
 - Funds enter the system within days of 2026-09-16. Routing plan (4 buckets: EVM seal 35%,
   publishing 35%, reserve 20%, liquidity 10%) lives in `state.json` -> `moneyPlan` and is rendered
   publicly at `#/admin/missions`. Data, not advice.
-- Publishing authorities: `cashmachine` (anchor witness, hourly, opId `saos.weave.core.v1`) and
-  `lsa` (public posts). Rate-limited, value-only posts. Secrets never appear in the public repo.
+- Publishing authorities: `acct-01` (anchor witness, hourly, opId `saos.weave.core.v1`) and
+  `acct-04` (public posts). Rate-limited, value-only posts. Secrets never appear in the public repo.
 - Deposits are watched hourly on tron/ethereum/solana/bitcoin by dex-watch. On first inflow:
   surface it to the operator at the admin area with the routing options - the operator decides.
 

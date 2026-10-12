@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { R, refOf, scrub } from "../../agents/refs.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ASSERTIONS_PATH = join(HERE, "assertions.json");
@@ -99,10 +100,11 @@ async function evaluate(a, baseUrl) {
   //
   // T-A 2026-10-05 — R75 multi-signer alignment (measured, not weakened):
   // the anchor line is multi-signer by doctrine (render.mjs R75: "the key
-  // declares who signs" — cashmachine / headcorner / lsa). The line moved
-  // accounts on-chain: last cashmachine-signed saos.weave.core.v1 =
-  // 2026-09-20T09:08:45Z; the resumed line signs as @headcorner (the WIF
-  // secret identifies the witness, first op 2026-10-04). Pointing the
+  // declares who signs" — refs acct-01 / acct-00 / acct-04, resolved at runtime
+  // from the roster secret; exposure law 19-d). The line moved accounts
+  // on-chain: the pre-rotation account last signed saos.weave.core.v1 on
+  // 2026-09-20T09:08:45Z; the resumed line signs as the acct-00 witness (the
+  // WIF secret identifies the witness, first op 2026-10-04). Pointing the
   // detector at one hard-coded name turned a live line into a false
   // alarm. The detector now reads the WHOLE witness line: the freshest
   // core op across all listed accounts is the anchor that must be fresh;
@@ -126,9 +128,21 @@ async function evaluate(a, baseUrl) {
   // single load-balanced node indexed the 01:52Z anchor minutes late
   // and hid it from a naive read. Every fail branch of R27 is intact.
   if (a.kind === "steem_priority") {
+    // refs layer (19-d): assertion accounts may be refs (acct-NN) or legacy plain
+    // names; refs resolve at runtime from the roster secret. An unresolvable ref
+    // is an honest skip for that witness — never fabricated.
+    const resolveOne = (x) => {
+      const s = String(x ?? "").trim().toLowerCase();
+      if (/^acct-\d\d/.test(s)) {
+        const name = R(s);
+        if (!name) { console.log(String.raw`[refs] roster-unresolved: ${s} skipped on the witness line (fail-honest)`); return null; }
+        return String(name).toLowerCase();
+      }
+      return s;
+    };
     const accounts = (Array.isArray(a.accounts) && a.accounts.length
-      ? a.accounts.map((x) => String(x).toLowerCase())
-      : [String(a.account ?? "cashmachine").toLowerCase()]);
+      ? a.accounts.map(resolveOne).filter(Boolean)
+      : [resolveOne(a.account ?? "acct-01")].filter(Boolean));
     const coreOp = String(a.coreOp ?? "saos.weave.core.v1");
     const staleHours = Number(a.staleHours ?? 26);
     if (!Number.isFinite(staleHours)) return { id, ok: false, details: "invalid assertion: staleHours is not a number" };
@@ -553,7 +567,8 @@ async function evaluate(a, baseUrl) {
 
 // ── Output ───────────────────────────────────────────────────────────────────
 function writeResults(payload) {
-  writeFileSync(RESULTS_PATH, JSON.stringify(payload, null, 2) + "\n", "utf8");
+  // 19-d: scrub-at-write — a chain-derived name leaking into details never lands in the tree
+  writeFileSync(RESULTS_PATH, scrub(JSON.stringify(payload, null, 2)) + "\n", "utf8");
 }
 
 function emptyResults(note, durationMs) {
@@ -575,7 +590,7 @@ function printTable(payload) {
   console.log(`${"ID".padEnd(idW)}  RESULT    MS     DETAILS`);
   for (const r of results) {
     const mark = r.ok ? "PASS" : "FAIL";
-    console.log(`${String(r.id).padEnd(idW)}  ${mark.padEnd(8)}  ${String(r.ms).padStart(5)}  ${r.details}`);
+    console.log(`${String(r.id).padEnd(idW)}  ${mark.padEnd(8)}  ${String(r.ms).padStart(5)}  ${scrub(r.details)}`); // 19-d stdout hygiene
   }
   if (payload.note) console.log(`note: ${payload.note}`);
   console.log("");

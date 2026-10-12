@@ -20,10 +20,10 @@ import { fileURLToPath } from "url";
 
 /* ── כתובות-ההפקדה: ארנקי-הצבא (רשומים-על-שרשרת-הרשת, בעלות-האוצר) ── */
 const ADDR = {
-  tron: "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e", // ynet · USDT/USDC-TRC20 + TRX
-  evm: "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4", // woq · USDT/USDC-ERC20
-  sol: "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk", // wog · USDT/USDC-SPL + SOL
-  btc: "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c", // wic · BTC
+  tron: "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e", // acct-19 · USDT/USDC-TRC20 + TRX
+  evm: "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4", // acct-10 · USDT/USDC-ERC20
+  sol: "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk", // acct-09 · USDT/USDC-SPL + SOL
+  btc: "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c", // acct-08 · BTC
 };
 
 const TRC20 = {
