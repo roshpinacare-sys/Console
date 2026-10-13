@@ -1,1 +1,221 @@
-{"ok":true,"at":1791861620220,"sovereignPair":{"base":"SAOS","quote":"USDS","mid":1919,"poolMid":1921,"bookDepthMu":772088,"liveOrders":18,"height":17877,"stateRoot":"b9aa10e2338ec7037ed83e0c465aceb448679c5c3bd6d5725d9f6f683a753a0e"},"A":[{"sizeMu":10000,"bookCostMu":19200,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":19289,"poolEffPx":1928,"poolSlipBps":46,"savingsMu":89,"savingsBps":46},{"sizeMu":50000,"bookCostMu":96000,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":96773,"poolEffPx":1935,"poolSlipBps":83,"savingsMu":773,"savingsBps":80},{"sizeMu":150000,"bookCostMu":288000,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":292804,"poolEffPx":1952,"poolSlipBps":171,"savingsMu":4804,"savingsBps":166},{"sizeMu":386044,"bookCostMu":741501,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":769107,"poolEffPx":1992,"poolSlipBps":380,"savingsMu":27606,"savingsBps":372}],"A2":[{"sizeMu":10000,"bookCostMu":19200,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":19272,"poolEffPx":1927,"poolSlipBps":41,"savingsMu":72,"savingsBps":37},{"sizeMu":50000,"bookCostMu":96000,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":96844,"poolEffPx":1936,"poolSlipBps":88,"savingsMu":844,"savingsBps":87},{"sizeMu":150000,"bookCostMu":288000,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":294233,"poolEffPx":1961,"poolSlipBps":218,"savingsMu":6233,"savingsBps":216},{"sizeMu":386044,"bookCostMu":741501,"bookAvgPx":1920,"bookSlipBps":5,"covered":true,"poolCostMu":780722,"poolEffPx":2022,"poolSlipBps":536,"savingsMu":39221,"savingsBps":528}],"B":{"replay":{"ops":840,"okCount":840,"roots":["67b3c908e79046cf455dd06db6cf5b0562d4319b2e6f37117978974a9db44103","67b3c908e79046cf455dd06db6cf5b0562d4319b2e6f37117978974a9db44103","67b3c908e79046cf455dd06db6cf5b0562d4319b2e6f37117978974a9db44103"],"identical":true,"matchRate":1},"poolSandwich":{"attackerPnlMu":1711,"victimOutClean":102871,"victimOutSandwiched":101535,"victimHarmMu":1336},"bookSandwich":{"attackerPnlMu":-1896,"victimExtraCostMu":400,"victimAvgClean":1920,"victimAvgSandwiched":1922,"topLevelMu":237088,"bestBidPx":1912,"note":"fills always at maker price — the attacker must eat the spread to exit"}},"C":{"fillsWindow":318,"gridVolumeMu":706820,"botVolumeMu":471048,"totalVolumeMu":1297868,"gridSharePct":54,"restingOrdersTotal":18,"restingOrdersGrid":6,"restingLiquidityMu":825013,"restingLiquidityGridMu":642339,"restingGridPct":77,"lifetimeFills":7786,"lifetimeSwaps":7448,"fillsPerMin":66737.1},"sovereignty":{"verified":0,"broadcasts":0,"mismatches":0,"breakerTrips":0,"rails":7,"perChain":{"steem":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"hive":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"blurt":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"tron":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"eth":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"sol":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"fleet":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null}},"bridgesRequired":0},"meta":{"gasFill":60,"gasPoolSwap":100,"feeBpsBook":0,"feeBpsPool":30,"notes":["A: book fills at exact maker price (book.ts matchBook) vs pool x*y=k + 30bps (amm.ts poolSwap)","B1: identical op stream on 3 fresh genesis states → identical stateRoot (kernel.ts applyOp determinism)","B2/B3: same sandwich strategy — pool yields positive extraction, book yields negative attacker PnL","C: share of live fill volume matched against grid-soldier quotes — zero external LPs"]}}
+{
+  "ok": true,
+  "at": 1791861620220,
+  "sovereignPair": {
+    "base": "SAOS",
+    "quote": "USDS",
+    "mid": 1919,
+    "poolMid": 1921,
+    "bookDepthMu": 772088,
+    "liveOrders": 18,
+    "height": 17877,
+    "stateRoot": "b9aa10e2338ec7037ed83e0c465aceb448679c5c3bd6d5725d9f6f683a753a0e"
+  },
+  "A": [
+    {
+      "sizeMu": 10000,
+      "bookCostMu": 19200,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 19289,
+      "poolEffPx": 1928,
+      "poolSlipBps": 46,
+      "savingsMu": 89,
+      "savingsBps": 46
+    },
+    {
+      "sizeMu": 50000,
+      "bookCostMu": 96000,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 96773,
+      "poolEffPx": 1935,
+      "poolSlipBps": 83,
+      "savingsMu": 773,
+      "savingsBps": 80
+    },
+    {
+      "sizeMu": 150000,
+      "bookCostMu": 288000,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 292804,
+      "poolEffPx": 1952,
+      "poolSlipBps": 171,
+      "savingsMu": 4804,
+      "savingsBps": 166
+    },
+    {
+      "sizeMu": 386044,
+      "bookCostMu": 741501,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 769107,
+      "poolEffPx": 1992,
+      "poolSlipBps": 380,
+      "savingsMu": 27606,
+      "savingsBps": 372
+    }
+  ],
+  "A2": [
+    {
+      "sizeMu": 10000,
+      "bookCostMu": 19200,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 19272,
+      "poolEffPx": 1927,
+      "poolSlipBps": 41,
+      "savingsMu": 72,
+      "savingsBps": 37
+    },
+    {
+      "sizeMu": 50000,
+      "bookCostMu": 96000,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 96844,
+      "poolEffPx": 1936,
+      "poolSlipBps": 88,
+      "savingsMu": 844,
+      "savingsBps": 87
+    },
+    {
+      "sizeMu": 150000,
+      "bookCostMu": 288000,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 294233,
+      "poolEffPx": 1961,
+      "poolSlipBps": 218,
+      "savingsMu": 6233,
+      "savingsBps": 216
+    },
+    {
+      "sizeMu": 386044,
+      "bookCostMu": 741501,
+      "bookAvgPx": 1920,
+      "bookSlipBps": 5,
+      "covered": true,
+      "poolCostMu": 780722,
+      "poolEffPx": 2022,
+      "poolSlipBps": 536,
+      "savingsMu": 39221,
+      "savingsBps": 528
+    }
+  ],
+  "B": {
+    "replay": {
+      "ops": 840,
+      "okCount": 840,
+      "roots": [
+        "67b3c908e79046cf455dd06db6cf5b0562d4319b2e6f37117978974a9db44103",
+        "67b3c908e79046cf455dd06db6cf5b0562d4319b2e6f37117978974a9db44103",
+        "67b3c908e79046cf455dd06db6cf5b0562d4319b2e6f37117978974a9db44103"
+      ],
+      "identical": true,
+      "matchRate": 1
+    },
+    "poolSandwich": {
+      "attackerPnlMu": 1711,
+      "victimOutClean": 102871,
+      "victimOutSandwiched": 101535,
+      "victimHarmMu": 1336
+    },
+    "bookSandwich": {
+      "attackerPnlMu": -1896,
+      "victimExtraCostMu": 400,
+      "victimAvgClean": 1920,
+      "victimAvgSandwiched": 1922,
+      "topLevelMu": 237088,
+      "bestBidPx": 1912,
+      "note": "fills always at maker price — the attacker must eat the spread to exit"
+    }
+  },
+  "C": {
+    "fillsWindow": 318,
+    "gridVolumeMu": 706820,
+    "botVolumeMu": 471048,
+    "totalVolumeMu": 1297868,
+    "gridSharePct": 54,
+    "restingOrdersTotal": 18,
+    "restingOrdersGrid": 6,
+    "restingLiquidityMu": 825013,
+    "restingLiquidityGridMu": 642339,
+    "restingGridPct": 77,
+    "lifetimeFills": 7786,
+    "lifetimeSwaps": 7448,
+    "fillsPerMin": 66737.1
+  },
+  "sovereignty": {
+    "verified": 0,
+    "broadcasts": 0,
+    "mismatches": 0,
+    "breakerTrips": 0,
+    "rails": 7,
+    "perChain": {
+      "steem": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "hive": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "blurt": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "tron": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "eth": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "sol": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "fleet": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      }
+    },
+    "bridgesRequired": 0
+  },
+  "meta": {
+    "gasFill": 60,
+    "gasPoolSwap": 100,
+    "feeBpsBook": 0,
+    "feeBpsPool": 30,
+    "notes": [
+      "A: book fills at exact maker price (book.ts matchBook) vs pool x*y=k + 30bps (amm.ts poolSwap)",
+      "B1: identical op stream on 3 fresh genesis states → identical stateRoot (kernel.ts applyOp determinism)",
+      "B2/B3: same sandwich strategy — pool yields positive extraction, book yields negative attacker PnL",
+      "C: share of live fill volume matched against grid-soldier quotes — zero external LPs"
+    ]
+  }
+}
