@@ -45,6 +45,9 @@ jobs:
           # (receipts/key-verify* per 25-d; key-check* is a forbidden-path
           # class) — this step still added the forbidden names, so `git add`
           # hit a pathspec error and every dispatch landed red. Aligned.
+          # Measured on run 38486151903: the lawful path + receipt landed,
+          # then the bare push raced the fleet (remote rejected, ref moved) —
+          # wrapped in the fleet T-78 law (race-safe publish, never force).
           node agents/redact-telemetry.mjs receipts/key-verify.json receipts/key-verify-log.jsonl
           git add receipts/key-verify.json receipts/key-verify-log.jsonl
           if ! git diff --cached --quiet; then
@@ -52,7 +55,14 @@ jobs:
             git config user.name "roshpinacare-sys"
             git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
             git commit -m "key-verify: ${VERDICT} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            OK=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs --autostash -q origin main && git push -q origin main; then OK=1; break; fi
+              sleep $((i * 4))
+            done
+            if [ "$OK" = "1" ]; then echo "receipt published (${VERDICT})"; else
+              echo "named terminal: key-verify-receipt-deferred — verdict ${VERDICT} is recorded in this run's log; next dispatch re-lands it (record, not alarm)"
+            fi
           else
             echo "no receipt change to publish"
           fi
