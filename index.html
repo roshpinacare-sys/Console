@@ -1055,12 +1055,10 @@ html[dir="ltr"] .hero h1{max-width:24ch}
             quoteTimer = setTimeout(refreshQuote, 200);
           }
           // ── submission · through the secured bridge when it exists ──
+          // 24-e: no bridge exists on this deploy target (static Pages hosting; the /api/dx POST target was measured 404 live on 2026-10-13).
+          // The primary CTA never fires a request that cannot answer — the window stays a read-only quote mirror and says so on submit.
           function dxPost(action, payload){
-            try {
-              return fetch("/api/dx", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ action:action, payload:payload }) })
-                .then(function(r){ return r.json(); })
-                .catch(function(){ return { ok:false, error:"network-error" }; });
-            } catch(e){ return Promise.resolve({ ok:false, error:"network-error" }); }
+            return Promise.resolve({ ok:false, error:"no-bridge" });
           }
           function doConfirm(){
             if (!quote || quoting) return;
