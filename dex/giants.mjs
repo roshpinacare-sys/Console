@@ -18,12 +18,16 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const OUT = new URL('./giants.json', import.meta.url).pathname;
 const WORLD = new URL('./world.json', import.meta.url).pathname;
+<<<<<<< Updated upstream
 /* CR-0077 (2026-10-13, trace 1a135897157a1d75): the our-row gains the DOMAIN core ledger —
  * the owner ordered the DEX alive; the core book (Domain/agents/dex-core.json) is where the
  * two-sided ladder flow settles, so the row now merges BOTH engine books, keyless GET, with
  * a freshness guard (≤30h) — stale books never masquerade as fresh ones. */
 const CORE_BOOK_URL = 'https://roshpinacare-sys.github.io/Domain/agents/dex-core.json';
 const ACT_BOOK_URL = 'https://roshpinacare-sys.github.io/Domain/agents/dex-activation.json';
+=======
+const HISTORY = new URL('./giants-history.json', import.meta.url).pathname;
+>>>>>>> Stashed changes
 const UA = 'saos-giants-beat/1.0 (keyless public measurement; repo roshpinacare-sys/Console)';
 const FEES_URL = 'https://api.llama.fi/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
 const DEXS_URL = 'https://api.llama.fi/overview/dexs?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
@@ -84,6 +88,7 @@ async function jget(url, ms = 25000) {
   }
 }
 
+<<<<<<< Updated upstream
 /* שורת-הרשת שלנו: נמדדת מספר-המנוע החי · מילי-יחידות (1000 µ = 1 אסימון) */
 async function fetchJsonKeyless(url, errors, tag) {
   const ac = new AbortController();
@@ -99,14 +104,37 @@ async function fetchJsonKeyless(url, errors, tag) {
 }
 
 function measureOurs(errors, coreBook, actBook) {
+=======
+/* שורת-הרשת שלנו: נמדדת מספר-המנוע החי · מילי-יחידות (1000 µ = 1 אסימון)
+ * R76 THE VOLUME METER: נפח-24h ועמלות-24h נמדדים — לא מומצאים ולא מקודדים-קבוע.
+ *   fills24h/swaps24h  — דלתא-מונים מול ההיסטוריה-העצמית (dex/giants-history.json, חלון 48h).
+ *   vol24hUsds         — דלתא-ה-fills × גודל-fill ממוצע שנמדד מה-tape החי (הספר לא מפרסם
+ *                        סכום-נפח ישיר; הצירוף מוצהר ב-method — אפס-המצאה).
+ *   fees24hUsds        — דלתא-מונה-העמלות (feeMeter, µ → יחידות).
+ *   volWindowH         — אורך-החלון בפועל בשעות (null כשאין עדיין בסיס-השוואה) —
+ *                        המספרים מתויגים בחלון-האמיתי שלהם, לעולם לא מתיימרים ל-24h שלא נמדד. */
+function readHistory() {
+  try { const h = JSON.parse(readFileSync(HISTORY, 'utf8')); return Array.isArray(h.rows) ? h : { rows: [] }; }
+  catch (_) { return { rows: [] };
+  }
+}
+function pushHistory(rows, at, w) {
+  const st = w && w.state ? w.state : {};
+  rows.push({ at, fills: st.fills || 0, swaps: st.swaps || 0, feeMeter: st.feeMeter || 0 });
+  const cutoff = Date.now() - 48 * 3600 * 1000;
+  return rows.filter((r) => Date.parse(r.at) >= cutoff);
+}
+function measureOurs(errors) {
+>>>>>>> Stashed changes
   try {
     const w = JSON.parse(readFileSync(WORLD, 'utf8'));
     const m = (w.markets || []).find((x) => x.key === 'SAOS/USDS');
     const p = (w.pools || []).find((x) => x.key === 'SAOS/USDS');
     const pools = w.pools || [];
     const feesAccruedMu = pools.reduce((s, x) => s + (x.feeAccruedTreasury || 0) + (x.lpFeesMu || 0), 0);
-    const poolTvlMu = p ? (p.ra || 0) + (p.rb || 0) : 0;
+    const poolTvlMu = pools.reduce((s, x) => s + (x.ra || 0) + (x.rb || 0), 0);
     const feeRateBps = p && typeof p.feeBps === 'number' ? p.feeBps : null;
+<<<<<<< Updated upstream
     // the CORE ledger merge (CR-0077): all-time fee meters from the live core pools + the
     // measured rolling-24h volume/fees/fills from the ignition book — freshness-guarded.
     let coreFeesAllTimeMu = 0, corePools = 0, coreSeq = null, coreAt = null, coreFresh = false;
@@ -122,12 +150,40 @@ function measureOurs(errors, coreBook, actBook) {
       const ageH = (Date.now() - Date.parse(actBook.at || '')) / 3600000;
       if (isFinite(ageH) && ageH <= 30) m24 = actBook.measure24h;
     }
+=======
+
+    /* ה-tape החי: גודל-fill ממוצע + נפח-חלון-ה-tape (מדידה ישירה) */
+    const tape = Array.isArray(w.tape) ? w.tape.filter((t) => t && t.kind === 'fill' && typeof t.amountMu === 'number' && typeof t.price === 'number') : [];
+    const dayAgo = Date.now() - 24 * 3600 * 1000;
+    const tapeFills = tape.filter((t) => typeof t.at === 'number' && t.at >= dayAgo);
+    const volTapeUsds = tapeFills.reduce((s, t) => s + (t.amountMu * t.price) / 1e6, 0);
+    const avgFillUsds = tapeFills.length ? volTapeUsds / tapeFills.length : null;
+
+    /* דלתא-מונים מול ההיסטוריה-העצמית */
+    const at = new Date().toISOString();
+    const hist = readHistory();
+    const base = hist.rows.length ? hist.rows[0] : null;
+    const st = w.state || {};
+    let fills24h = null, swaps24h = null, fees24hUsds = null, vol24hUsds = null, volWindowH = null;
+    if (base) {
+      const windowMs = Date.parse(at) - Date.parse(base.at);
+      volWindowH = Math.round((windowMs / 3600000) * 10) / 10;
+      fills24h = Math.max(0, (st.fills || 0) - (base.fills || 0));
+      swaps24h = Math.max(0, (st.swaps || 0) - (base.swaps || 0));
+      fees24hUsds = r2(Math.max(0, (st.feeMeter || 0) - (base.feeMeter || 0)) / 1000);
+      if (avgFillUsds != null && fills24h > 0) vol24hUsds = r2(fills24h * avgFillUsds);
+    }
+    hist.rows = pushHistory(hist.rows, at, w);
+    try { writeFileSync(HISTORY, JSON.stringify({ book: 'saos-giants-history/1', rows: hist.rows }, null, 1) + '\n'); } catch (e2) { errors.push('history: ' + (e2 && e2.message ? e2.message : String(e2))); }
+
+>>>>>>> Stashed changes
     return {
       name: 'SAOS DEX (ריבוני · keyless)',
       lastPriceUsds: m && m.poolMid ? r2(m.poolMid / 1000) : null,
       poolTvlUsds: poolTvlMu ? r2(poolTvlMu / 1000) : null,
       feesAccruedMu: feesAccruedMu + coreFeesAllTimeMu,
       feeRateBps,
+<<<<<<< Updated upstream
       pools: pools.length + corePools,
       coreLedger: { merged: corePools > 0, seq: coreSeq, at: coreAt, fresh: coreFresh, feesAllTimeMu: coreFeesAllTimeMu },
       vol24h: m24 ? r4((Number(m24.volumeInMu) || 0) / 1e6) : null,
@@ -135,6 +191,22 @@ function measureOurs(errors, coreBook, actBook) {
       fills24h: m24 ? m24.fills : null,
       source: 'dex/world.json (' + (w.publishedAt || '?') + ') + Domain/agents/dex-core.json (core ledger' + (coreFresh ? ', fresh seq ' + coreSeq : ', stale-or-absent') + ') + dex-activation.json (24h measure' + (m24 ? ', fresh' : ', stale-or-absent') + ')',
       note: 'מדידה מספרי-המנוע החיים (world + core + activation) · עמלות-צבירה במילי-יחידות-פנימיות (SIM) · נפח/עמלות-24ש׳ נמדדים מהפנקס-החי כשהוא טרי (≤30ש׳) · לא ממציאים כלום · אפס-תביעת-ערך-חוץ'
+=======
+      pools: pools.length,
+      fillsLifetime: st.fills || null,
+      swapsLifetime: st.swaps || null,
+      fills24h,
+      swaps24h,
+      fees24hUsds,
+      vol24hUsds,
+      volTapeUsds: r2(volTapeUsds),
+      volWindowH,
+      volMethod: vol24hUsds != null
+        ? 'fills-delta × measured avg tape fill (window ' + volWindowH + 'h, tape n=' + tapeFills.length + ')'
+        : 'awaiting history base (first runs measure from the live tape only)',
+      source: 'dex/world.json · publishedAt ' + (w.publishedAt || '?'),
+      note: 'מדידה מהספר החי · העמלות והנפח נמדדים מדלתא-מונים ומה-tape — אפס-המצאה · החלון הוא החלון-בפועל'
+>>>>>>> Stashed changes
     };
   } catch (e) {
     errors.push('ours: ' + (e && e.message ? e.message : String(e)));
@@ -218,9 +290,9 @@ async function main() {
     book: 'saos-giants/1.0',
     publishedAt: new Date().toISOString(),
     beat: {
-      engine: 'saos-giants/1.1 giants-beat · R75 frontier league (28 families across every wealth class)',
+      engine: 'saos-giants/1.2 giants-beat · R76 the volume meter (24h deltas measured, never invented)',
       runAt,
-      cadenceMin: 1440,
+      cadenceMin: 60,
       sources,
       method: 'public GET measurement · no keys · no invention · families matched by name prefix, components kept whole · ours measured from the live engine books (world + Domain core ledger + ignition 24h)'
     },
@@ -234,6 +306,9 @@ async function main() {
     'giants-beat: ' + families.length + ' families · top30d: ' +
     (top ? top.name + ' $' + top.fees30d.toLocaleString('en-US') : 'n/a') +
     ' · ours: ' + (ours.lastPriceUsds ? 'SAOS @' + ours.lastPriceUsds : 'unmeasured') +
+    ' · vol24h: ' + (ours.vol24hUsds != null ? '$' + ours.vol24hUsds : 'measuring') +
+    ' · fees24h: ' + (ours.fees24hUsds != null ? '$' + ours.fees24hUsds : 'measuring') +
+    ' · fills24h: ' + (ours.fills24h != null ? ours.fills24h : 'measuring') +
     (errors.length ? ' · ERRORS: ' + errors.join(' | ') : ' · clean')
   );
 }

@@ -6,7 +6,9 @@ name: giants-beat
 on:
   workflow_dispatch:
   schedule:
-    - cron: '9 5 * * *'
+    # [R76 · THE VOLUME METER] daily → hourly: 24h deltas need an hourly base row;
+    # the fee/volume meters in the ours row are measured between consecutive beats.
+    - cron: '9 * * * *'
 permissions:
   contents: write
 
