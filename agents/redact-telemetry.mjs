@@ -10,6 +10,16 @@ import fs from 'node:fs';
 const PREFIXES = ['TG6S', 'TYVw', '0x01Bd']; // personal redemption box, TRON guard, sovereign EOA (prefix-only by design)
 const RE_TRON = /\bT[1-9A-HJ-NP-Za-km-z]{33}\b/g;
 const RE_EVM = /\b0x[a-fA-F0-9]{40}\b/g; // exactly 40 hex — 32-byte digests (64 hex) are tier-A and survive
+// R31 (2026-10-13, trace 1a13797aa1a03d55): relay CONTRACT addresses are public-by-design
+// chain marks (tier-A) — protocol constants already published in Domain's anchor-execute.mjs.
+// They MUST survive redaction: pre-flight gates verify the proof book against them byte-exactly.
+// Measured failure: a rebuild baked the literal "0x56c9…[redacted]" into pipeline.json →
+// anchor-execute honestly refused (fail-closed) → red for hours.
+const RELAY_ALLOWLIST = new Set([
+  '0xa52D85cAa4C04C15cE60d0c582e8C138d16678E6', // ETHEREUM relay (SAOS anchor relay)
+  '0x56c9D54ea866e25916757903E51392BBEdeE2ECe', // OPTIMISM relay (SAOS anchor relay)
+  '0x279818b4c9Eddc02fB3DD036a5E77D8F7Dc1CF87', // BASE relay (SAOS anchor relay)
+]);
 const RE_STMKEY = /\bSTM[7-9A-HJ-NP-Za-km-z]{50,}\b/g;
 const RE_SOL = /\b[1-9A-HJ-NP-Za-km-z]{43,44}\b/g;
 const DEPOSIT_KEY = /deposit|receive|inbox|payee|payto/i; // deposit/receive addresses are public-by-design (tier A)
@@ -95,7 +105,7 @@ function maskStr(key, s) {
   if (SECRET_KEY.test(key || '')) return '[redacted]';
   if (DEPOSIT_KEY.test(key || '')) return s; // tier A: public receive addresses stay
   let out = s.replace(RE_STMKEY, (m) => 'STM\u2026[redacted]');
-  out = out.replace(RE_EVM, (m) => m.slice(0, 6) + '\u2026[redacted]');
+  out = out.replace(RE_EVM, (m) => (RELAY_ALLOWLIST.has(m) ? m : m.slice(0, 6) + '\u2026[redacted]'));
   out = out.replace(RE_TRON, (m) => m.slice(0, 4) + '\u2026[redacted]');
   if (/address|wallet|pubkey/i.test(key || '')) out = out.replace(RE_SOL, (m) => m.slice(0, 4) + '\u2026[redacted]');
   return out;
