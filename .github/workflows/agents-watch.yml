@@ -54,8 +54,8 @@ jobs:
               echo "fleet semantically unchanged and heartbeat fresh (${AGE_H}h < 6h) - no commit, Pages quota spared"
               exit 0
             fi
-            git config user.name "agents-watch"
-            git config user.email "actions@users.noreply.github.com"
+            git config user.name "roshpinacare-sys"
+            git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
             node agents/redact-telemetry.mjs agents/registry.json agents/gh-snapshot.json
             git add agents/registry.json agents/gh-snapshot.json
             git commit -m "agents-watch: $(date -u +%Y-%m-%dT%H:%M:%SZ) · $(node -e 'const r=require("./agents/registry.json");console.log(r.agents.length+" agents · "+r.reposWithAgents.length+" agent-repos (live count)")') · snapshot $(node -e 'const s=require("./agents/gh-snapshot.json");console.log((s.repos||[]).length+" repos")' 2>/dev/null || echo kept)"

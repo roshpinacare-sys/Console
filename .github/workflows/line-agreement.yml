@@ -33,8 +33,8 @@ jobs:
       - name: Publish the agreement book (a red verdict is committed first, then the run fails)
         if: always()
         run: |
-          git config user.name "line-agreement"
-          git config user.email "line-agreement@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           git add weave/agreement.json
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"

@@ -39,8 +39,8 @@ jobs:
             echo "results.json missing - the verifier wrote nothing; nothing to commit"
             exit 0
           fi
-          git config user.name "weave-verify[bot]"
-          git config user.email "weave-verify[bot]@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           for attempt in 1 2 3; do
             git add agent/verify/results.json
             if git diff --cached --quiet -- agent/verify/results.json; then

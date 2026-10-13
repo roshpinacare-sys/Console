@@ -41,8 +41,8 @@ jobs:
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{const d=require("./dex/pnl-desk.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             EDGE="$(node -e 'try{const d=require("./dex/pnl-desk.json");process.stdout.write(String(d.trailing7d&&d.trailing7d.edgePct))}catch{process.stdout.write("?")}')"
-            git config user.name "pnl-desk"
-            git config user.email "pnl-desk@users.noreply.github.com"
+            git config user.name "roshpinacare-sys"
+            git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
             git commit -m "pnl-desk: ${VERDICT} · trailing-7d edge ${EDGE}% · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           else

@@ -26,8 +26,8 @@ jobs:
 
       - name: פרסום ספר-הטריגרים
         run: |
-          git config user.name "trigger-mesh[bot]"
-          git config user.email "trigger-mesh@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           SIG_NOW="$(node -e 'const d=require("./triggers/current.json");console.log([d.ok,d.rulesTotal,(d.fired||[]).map(f=>f.id).join(";"),(d.waited||[]).map(w=>w.id).join(";"),d.broken].join("|"))' 2>/dev/null || echo x)"
           git show HEAD:triggers/current.json > /tmp/prev-trig.json 2>/dev/null \
             && SIG_PREV="$(node -e 'const d=require("/tmp/prev-trig.json");console.log([d.ok,d.rulesTotal,(d.fired||[]).map(f=>f.id).join(";"),(d.waited||[]).map(w=>w.id).join(";"),d.broken].join("|"))' 2>/dev/null || echo y)" \

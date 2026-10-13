@@ -49,8 +49,8 @@ jobs:
         if: always()
         run: |
           set +e
-          git config user.name "truth-gate[bot]"
-          git config user.email "truth-gate[bot]@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           SIG_NOW="$(node -e 'const d=require("./truth/latest.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo x)"
           git show HEAD:truth/latest.json > /tmp/prev-truth.json 2>/dev/null \
             && SIG_PREV="$(node -e 'const d=require("/tmp/prev-truth.json");console.log([d.verdict,d.counts.pass,d.counts.fail,d.counts.skip,...d.results.map(r=>r.gate+":"+r.status)].join("|"))' 2>/dev/null || echo y)" \

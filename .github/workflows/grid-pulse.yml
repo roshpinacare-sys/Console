@@ -40,8 +40,8 @@ jobs:
             echo "grid.json missing - the agent wrote nothing (honest failure or polite step-aside); nothing to commit"
             exit 0
           fi
-          git config user.name "grid-pulse[bot]"
-          git config user.email "grid-pulse[bot]@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           node agents/redact-telemetry.mjs dex/grid.json
           git add dex/grid.json
           if git diff --cached --quiet; then

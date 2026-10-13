@@ -34,8 +34,8 @@ jobs:
 
       - name: Publish the open deposit book
         run: |
-          git config user.name "dex-watch[bot]"
-          git config user.email "dex-watch[bot]@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           node agents/redact-telemetry.mjs dex/deposits.json dex/watch.json
           git add dex/deposits.json dex/watch.json
           if git diff --cached --quiet; then

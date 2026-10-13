@@ -34,8 +34,8 @@ jobs:
 
       - name: Publish the rea evidence book
         run: |
-          git config user.name "rea-desk[bot]"
-          git config user.email "rea-desk[bot]@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           node agents/redact-telemetry.mjs dex/rea.json
           git add dex/rea.json
           if git diff --cached --quiet; then

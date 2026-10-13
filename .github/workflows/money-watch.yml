@@ -43,8 +43,8 @@ jobs:
           if ! git diff --cached --quiet; then
             VERDICT="$(node -e 'try{const d=require("./dex/money.json");process.stdout.write((d.redemption&&d.redemption.verdict)||"none")}catch{process.stdout.write("none")}')"
             LANDING="$(node -e 'try{const d=require("./dex/money.json");process.stdout.write(d.landing?"LANDING":"steady")}catch{process.stdout.write("?")}')"
-            git config user.name "money-watch"
-            git config user.email "money-watch@users.noreply.github.com"
+            git config user.name "roshpinacare-sys"
+            git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
             git commit -m "money-watch: ${LANDING} · redemption ${VERDICT} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             for i in 1 2 3 4 5; do git pull --rebase --autostash origin main && git push && break || sleep 5; done
           else

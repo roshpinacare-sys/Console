@@ -34,8 +34,8 @@ jobs:
 
       - name: Publish the giants book
         run: |
-          git config user.name "giants-beat[bot]"
-          git config user.email "giants-beat[bot]@users.noreply.github.com"
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
           node agents/redact-telemetry.mjs dex/giants.json
           git add dex/giants.json
           if git diff --cached --quiet; then
