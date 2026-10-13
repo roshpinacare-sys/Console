@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "publishedAt": "2026-10-13T16:17:03.287Z",
+  "publishedAt": "2026-10-13T20:41:37.924Z",
   "engine": "Console/agents/grid-pulse · R83 sovereign grid mirror — keyless measurement, signs nothing",
   "account": "acct-00",
   "chain": "STEEM-internal-market",
@@ -19,9 +19,9 @@
     "directiveR24": "powerdown is read-only here: never opened, never replaced, fleet RC is sacred"
   },
   "marks": {
-    "steemUsd": 0.057261,
-    "sbdUsd": 0.557331,
-    "paritySbdPerSteem": 0.10274145884582052,
+    "steemUsd": 0.057616,
+    "sbdUsd": 0.556756,
+    "paritySbdPerSteem": 0.10348518920316979,
     "sources": {
       "steem": "coingecko:steem",
       "sbd": "coingecko:steem-dollars"
@@ -29,9 +29,11 @@
   },
   "triggers": {
     "source": "triggers/current.json",
-    "bookPublishedAt": "2026-10-13T11:03:52.238Z",
-    "consumed": [],
-    "note": "no grid-relevant triggers fired"
+    "bookPublishedAt": "2026-10-13T19:31:09.996Z",
+    "consumed": [
+      "T-PARITY-MOVE"
+    ],
+    "note": "grid-relevant triggers fired — operator-gated executor (money-mover) decides"
   },
   "fuel": {
     "powerdownActive": false,
@@ -40,45 +42,32 @@
     "remainingSp": 0,
     "remainingWeeks": 0,
     "nextPayout": null,
-    "rcFuelSp": 150.3122644539387
+    "rcFuelSp": 150.3141376777267
   },
   "inventory": {
     "steem": 2.739,
     "sbd": 16.517
   },
   "book": {
-    "bestBid": 0.10136928880815985,
-    "bestAsk": 0.1036537779354381,
-    "mid": 0.10251153337179897,
-    "spreadBps": 200
+    "bestBid": 0.10296046800212728,
+    "bestAsk": 0.10399334442595674,
+    "mid": 0.10347690621404201,
+    "spreadBps": 100
   },
   "openOrdersNow": 5,
   "run": {
     "placed": 0,
     "cancelled": 0,
     "observedPlacements": 0,
-    "observedCancellations": 1,
-    "observedFills": 0,
+    "observedCancellations": 0,
+    "observedFills": 1,
     "placedTotal": 151,
     "cancelledTotal": 239,
     "filledTotal": 92,
     "note": "keyless measurement cycle: on-chain placements/cancellations are the R81 mover's (via /api/money, key derived in-run only); this agent observes and counts, signs nothing"
   },
-  "externalFlowUsd": 0.31313,
+  "externalFlowUsd": 0.314594,
   "fills": [
-    {
-      "key": "2026-10-13T14:04:12|0.966 SBD|9.450 STEEM",
-      "at": "2026-10-13T14:04:12",
-      "side": "maker",
-      "direction": "bought-steem",
-      "paid": "0.966 SBD",
-      "received": "9.450 STEEM",
-      "steemUsd": 0.057518011758084256,
-      "sbdUsd": 0.556431,
-      "paidUsd": 0.537512346,
-      "recvUsd": 0.5435452111138962,
-      "edgeBps": 100
-    },
     {
       "key": "2026-10-13T14:04:18|0.966 SBD|9.450 STEEM",
       "at": "2026-10-13T14:04:18",
@@ -221,6 +210,19 @@
       "paidUsd": 0.281514112,
       "recvUsd": 0.282121,
       "edgeBps": 0
+    },
+    {
+      "key": "2026-10-13T14:18:42|0.506 SBD|4.915 STEEM",
+      "at": "2026-10-13T14:18:42",
+      "side": "maker",
+      "direction": "bought-steem",
+      "paid": "0.506 SBD",
+      "received": "4.915 STEEM",
+      "steemUsd": 0.057616,
+      "sbdUsd": 0.556756,
+      "paidUsd": 0.281718536,
+      "recvUsd": 0.28318264,
+      "edgeBps": 100
     }
   ],
   "orders": [
@@ -449,7 +451,7 @@
       "receive": "0.877 SBD",
       "priceSbdPerSteem": 0.10408260147163541,
       "status": "open",
-      "lastSeenAt": "2026-10-13T16:17:03.287Z"
+      "lastSeenAt": "2026-10-13T20:41:37.924Z"
     },
     {
       "id": 2026101314,
@@ -460,7 +462,7 @@
       "receive": "0.884 SBD",
       "priceSbdPerSteem": 0.10491336339900309,
       "status": "open",
-      "lastSeenAt": "2026-10-13T16:17:03.287Z"
+      "lastSeenAt": "2026-10-13T20:41:37.924Z"
     },
     {
       "id": 2026101316,
@@ -471,7 +473,7 @@
       "receive": "295.435 STEEM",
       "priceSbdPerSteem": 0.10136563736123516,
       "status": "open",
-      "lastSeenAt": "2026-10-13T16:17:03.287Z"
+      "lastSeenAt": "2026-10-13T20:41:37.924Z"
     },
     {
       "id": 2026101317,
@@ -482,7 +484,7 @@
       "receive": "300.004 STEEM",
       "priceSbdPerSteem": 0.09982199821360214,
       "status": "open",
-      "lastSeenAt": "2026-10-13T16:17:03.287Z"
+      "lastSeenAt": "2026-10-13T20:41:37.924Z"
     },
     {
       "id": 2026101318,
@@ -493,7 +495,7 @@
       "receive": "304.716 STEEM",
       "priceSbdPerSteem": 0.09827835906596911,
       "status": "open",
-      "lastSeenAt": "2026-10-13T16:17:03.287Z"
+      "lastSeenAt": "2026-10-13T20:41:37.924Z"
     },
     {
       "id": 2100000145,
