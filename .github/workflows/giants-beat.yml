@@ -31,6 +31,13 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Conflict-marker tripwire (measured re-break 14:33 — a local-beat writer committed unresolved stash markers into giants.mjs and the beat died on SyntaxError '<<<'; fail loud, never run a broken engine)
+        run: |
+          if grep -n '<<<<<<<\|>>>>>>>\|^=======$' dex/giants.mjs dex/honest-econ.mjs 2>/dev/null; then
+            echo "##[error]conflict markers in the engine sources — the producing writer must resolve its tree; refusing to run"
+            exit 1
+          fi
+
       - name: Measure the giants (keyless)
         run: node dex/giants.mjs
 
