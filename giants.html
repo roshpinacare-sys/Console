@@ -388,6 +388,11 @@ footer .fr{display:flex;gap:14px;flex-wrap:wrap}
     if (abs >= 1e3) return sign + "$" + (abs/1e3).toFixed(1) + "K";
     return sign + "$" + s(abs);
   }
+  function moneyTiny(v){
+    if (typeof v !== "number" || !isFinite(v)) return "-";
+    if (v > 0 && v < 1) return "$" + v.toFixed(4);
+    return money(v);
+  }
   function ageH(iso){ try { return (Date.now() - new Date(iso).getTime()) / 3600000; } catch(e){ return null; } }
   function ageTxt(h){
     if (h === null || !isFinite(h)) return "?";
@@ -489,8 +494,8 @@ footer .fr{display:flex;gap:14px;flex-wrap:wrap}
     var volTitle = (o.volWindowH != null ? (t("lg.ourvol") + " · " + o.volWindowH + "h") : t("lg.ourmeas"));
     h += "<tr class='usrow'><td class='fam'>SAOS DEX</td>" +
       "<td><span class='tierchip ours'>" + esc(t("tier.ours")) + "</span></td>" +
-      "<td class='num' title='" + esc(volTitle) + "'>" + money(o.fees24hUsds) + "</td>" +
-      "<td class='num' title='" + esc(volTitle) + "'>" + money(o.vol24hUsds) + "</td>" +
+      "<td class='num' title='" + esc(volTitle) + "'>" + moneyTiny(o.fees24hUsds != null ? o.fees24hUsds : o.fees24h) + "</td>" +
+      "<td class='num' title='" + esc(volTitle) + "'>" + moneyTiny(o.vol24hUsds != null ? o.vol24hUsds : o.vol24h) + "</td>" +
       "<td class='num' title='" + esc(t("lg.oursnote")) + "'>" + (o.lastPriceUsds ? "@" + o.lastPriceUsds : "-") + "</td>" +
       "<td class='num' title='" + esc(t("lg.oursnote")) + (o.fills24h != null ? " · fills " + o.fills24h + " / swaps " + (o.swaps24h != null ? o.swaps24h : "-") : "") + "'>" + (o.feesAccruedMu !== undefined ? (o.feesAccruedMu.toLocaleString("en-US")) + " µ" : "-") + "</td></tr>";
     h += "</tbody></table>";
