@@ -1,0 +1,77 @@
+# runtime-pacemaker — קצב-הלב שלא נשען על ה-scheduler של הפלטפורמה.
+# ═════════════════════════════════════════════════════════════════════════════
+# מדידה (מפקד 2026-10-12): ה-scheduler של GitHub יורה נאמן על הריפו הוותיקים
+# (Console 2,500 הרצות schedule · saos-runtime · FleetHQ) ומשתיק 100% מה-crons
+# על ריפו-הריצה החדשים (Autonomy · Pulse · GridWatch: אפס הרצות schedule מעולם,
+# עם crons מוגדרים ו-workflows active). התוצאה: מוח-הריצה פועם רק כשסשן-סוכן
+# ער — בדיוק ה"רשת מכבה את עצמה" שאובחנה.
+#
+# התשובה ההנדסית (בלי אמון בפלטפורמה, בלי סנדבוקס, בלי סוכן ער):
+#   SENSE  — גיל הרצה-אחרונה של כל עורק קריטי, דרך ה-API.
+#   DECIDE — גיל > SLA (2x הקצב הנומינלי) וההרצה האחרונה לא בעיצומה => העורק מאחר.
+#   ACT    — workflow_dispatch דרך CROSS_REVIVE_PAT (הרשות-המואצלת של הרשת,
+#            כבר בשימוש opens-closer). מוגבל ל-8 הצתות למחזור — בלי self-DoS.
+#   RECORD — קבלה כנה אחת למחזור ב-pacemaker/state/beats.jsonl (קומיט בגיט =
+#            הוכחה גלויה). אם הקבלה מפסיקה להתעדכן — הפצמר עצמו מת; גם זה נאזעק.
+#
+# חוקי-כנות: לעולם לא לזייף הצתה; עורק שנכשל נשאר אדום על הלוח שלו — הפצמר
+# מצית, לא משתיק; DRYRUN=1 מודד ומדווח בלי להצית.
+# ═════════════════════════════════════════════════════════════════════════════
+name: runtime-pacemaker
+
+on:
+  schedule:
+    # שלוש שורות staggered — האיחוד יורה כל ~5 דקות; דקות-אי-זוגיות מפחיתות תחרות
+    - cron: "6,26,46 * * * *"
+    - cron: "11,31,51 * * * *"
+    - cron: "17,37,57 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: runtime-pacemaker
+  cancel-in-progress: false
+
+jobs:
+  beat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: SENSE late arteries -> IGNITE (cross-repo dispatch token) -> RECORD receipt
+        env:
+          # Console-hosted instance: the estate's existing dispatch credential
+          # (AGENTS_WATCH_TOKEN already dispatches cross-repo, e.g. money-watch -> saos-dex).
+          # Same env name as the FleetHQ instance so agents/pacemaker.mjs stays identical.
+          CROSS_REVIVE_PAT: ${{ secrets.AGENTS_WATCH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: node agents/pacemaker.mjs
+
+      # קומיט-ממושפע: קבלה בלבד (אף-פעם לא -A) · rebase ×3 · כשל = יציאה 1
+      - name: commit receipt (honest, rebase x3)
+        if: always()
+        run: |
+          git config user.name "runtime-pacemaker"
+          git config user.email "runtime-pacemaker@users.noreply.github.com"
+          git add pacemaker/state/beats.jsonl
+          if git diff --cached --quiet; then
+            echo "receipt unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "pacemaker receipt: $(date -u +%FT%TZ)"
+          OK=0
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push origin main; then OK=1; echo "push ok (attempt $i)"; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          [ "$OK" = "1" ] || { echo "receipt push failed after 3 attempts — honest failure"; exit 1; }
