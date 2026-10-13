@@ -104,7 +104,12 @@ function maskStr(key, s) {
 function walk(node, key, inRoster) {
   if (Array.isArray(node)) {
     if (ROSTER_KEY.test(key || '')) inRoster = true;
-    return node.map((x) => walk(x, key, inRoster));
+    // 3-c fix (measured): string ELEMENTS of arrays used to fall through this
+    // branch unscrubbed — status.json source.accounts survived the estate-scrub
+    // healer because of exactly this hole (run 38323191550). Array strings now
+    // get the estate-name scrub like object fields (names-only law — no
+    // address/id truncation here: array contexts hold public tier-A lists).
+    return node.map((x) => (typeof x === 'string' ? estateScrubStr(x) : walk(x, key, inRoster)));
   }
   if (node && typeof node === 'object') {
     const o = {};
@@ -112,6 +117,7 @@ function walk(node, key, inRoster) {
       if (v !== null && typeof v === 'object') { o[k] = walk(v, k, inRoster || ROSTER_KEY.test(k)); continue; }
       if (typeof v === 'string') {
         const scrubbed = estateScrubStr(v);
+        if (NAMES_ONLY) { o[k] = scrubbed; continue; } // 3-c: identity law only
         if (IS_REF.test(scrubbed)) { o[k] = scrubbed; continue; }
         if (ID_KEY.test(k) && /^[a-z0-9][a-z0-9.-]{2,24}$/i.test(v)) o[k] = v.slice(0, 4) + '\u2026[redacted]';
         else o[k] = maskStr(k, v);
@@ -123,8 +129,16 @@ function walk(node, key, inRoster) {
   return node;
 }
 
+// 3-c names-only mode: `node agents/redact-telemetry.mjs --names-only <file...>`
+// applies ONLY the estate-name scrub (identity law) with no other masking and no
+// numeric banding — for sig-locked/chain-evidence books (e.g. ledger.json) where
+// addresses, digests and parameters are public tier-A evidence that must survive
+// byte-faithfully, and only account names may never land.
+const NAMES_ONLY = process.argv.slice(2).includes('--names-only');
+const FILES = process.argv.slice(2).filter((f) => f !== '--names-only');
+
 let failed = 0;
-for (const f of process.argv.slice(2)) {
+for (const f of FILES) {
   try {
     const raw = fs.readFileSync(f, 'utf8');
     if (f.endsWith('.jsonl')) {

@@ -83,10 +83,15 @@ export const FORBIDDEN_CONTENT = [
 ];
 
 // Sig-locked evidence waiver (25-d): ledger.json is a keccak-chained attestation ledger —
-// entries carry names/paths INSIDE signed claims that are non-recomputable by design;
-// rewriting them falsifies the evidence chain. Documented honest residual since the 19-d
-// sweep (4e0ff451: ledger.json untouched, sig-locked keccak chain, names inside signed
-// claims — flagged). Still fully checked against FORBIDDEN_PATHS; new appends must use refs.
+// entries carry content INSIDE signed claims that are non-recomputable by design; rewriting
+// them falsifies the evidence chain. 3-c UPDATE (2026-10-13): all 1870 estate-name
+// occurrences (headcorner ×1179 → acct-00, cashmachine ×691 → acct-01) and 45 host-path
+// evidences were scrubbed to refs/[host]/ by the 3-c remediation + the estate-scrub
+// --names-only lane (chain-verifiable evidence — txids/roots/hashes/sigs — untouched).
+// The waiver STAYS for the one remaining sig-locked class: a single AUDIT claim's
+// keysZipPass/keysBackupPass length-pointer narrative (no value inside) — removing it is
+// an owner call (one more falsified row vs one narrative pointer). Estate NAMES are now
+// enforced on this book by the estate-scrub survivor check (RAW_FILES) instead.
 export const SIGLOCKED_FILES = [/^ledger\.json$/];
 
 export const ENGINE_RE = /^(agents\/.*\.(cjs|mjs)|scripts\/.*\.mjs)$/;
