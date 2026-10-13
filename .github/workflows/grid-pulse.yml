@@ -52,7 +52,7 @@ jobs:
           OPEN="$(node -p "require('./dex/grid.json').openOrdersNow")"
           for attempt in 1 2 3; do
             git commit -m "grid-pulse: ${VERDICT} · ${OPEN} open orders · sovereign keyless mirror · $(date -u +%Y-%m-%dT%H:%M:%SZ)" || exit 0
-            git pull --rebase origin main
+            git pull --rebase -X theirs --autostash origin main
             if git push; then
               echo "grid state committed on attempt ${attempt}: ${VERDICT} ${OPEN} open"
               exit 0

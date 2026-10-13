@@ -80,7 +80,7 @@ jobs:
           git add -A
           if ! git diff --cached --quiet; then
             git commit -m "estate-scrub: refs applied to published books · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            for i in 1 2 3 4 5; do git pull --rebase --autostash origin main && git push && break || sleep 5; done
+            for i in 1 2 3 4 5; do git pull --rebase -X theirs --autostash --autostash origin main && git push && break || sleep 5; done
           else
             echo "books already clean"
           fi

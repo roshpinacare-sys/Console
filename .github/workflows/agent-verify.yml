@@ -51,7 +51,7 @@ jobs:
             PASSED="$(node -p "require('./agent/verify/results.json').summary.passed")"
             TOTAL="$(node -p "require('./agent/verify/results.json').summary.total")"
             git commit -m "agent-verify: ${VERDICT} · ${PASSED}/${TOTAL} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git pull --rebase origin main
+            git pull --rebase -X theirs --autostash origin main
             if git push; then
               echo "results committed on attempt ${attempt}: ${VERDICT} ${PASSED}/${TOTAL}"
               exit 0

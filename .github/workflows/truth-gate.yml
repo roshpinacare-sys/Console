@@ -72,7 +72,7 @@ jobs:
             fi
             VERDICT=$(node -e "console.log(require('./truth/latest.json').verdict)" 2>/dev/null || echo UNKNOWN)
             git commit -m "truth-gate: $(date -u +%FT%TZ) · ${VERDICT}"
-            git pull --rebase origin main
+            git pull --rebase -X theirs --autostash origin main
             if git push; then
               echo "verdict committed on attempt ${attempt}: ${VERDICT}"
               exit 0

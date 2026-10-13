@@ -54,4 +54,4 @@ jobs:
             exit 0
           fi
           git commit -m "rea-desk: $(date -u +%FT%TZ) · rea $(jq -r '.rea.version // "?"' dex/rea.json) · $(jq -r '[.targets[] | select(.status == 200)] | length' dex/rea.json)/$(jq -r '.targets | length' dex/rea.json) surfaces · $(jq -r '[.targets[].scripts[]?.endpoints[]?] | length' dex/rea.json) public endpoints"
-          for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done
+          for i in 1 2 3; do git pull --rebase -X theirs --autostash --autostash origin main && git push && break || sleep 3; done

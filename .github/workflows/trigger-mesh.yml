@@ -45,7 +45,7 @@ jobs:
           OK=0
           for i in 1 2 3; do
             if git push origin main; then OK=1; break; fi
-            git pull --rebase -q origin main || git rebase --abort || true
+            git pull --rebase -X theirs --autostash -q origin main || git rebase --abort || true
             sleep $((i * 5))
           done
           [ "$OK" = "1" ] || { echo "push failed after retries — honest failure"; exit 1; }

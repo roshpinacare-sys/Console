@@ -55,4 +55,4 @@ jobs:
             exit 0
           fi
           git commit -m "fee-law: $(date -u +%FT%TZ) · verdict: $(jq -r '.verdict' dex/fee-law.json) · $(jq -r '[.pools[] | select(.deltaBps > 0) | .key + " " + (.baseBps|tostring) + "->" + (.feeBps|tostring) + "bps"] | join(", ") | if . == "" then "all pools at base" else . end' dex/fee-law.json)"
-          for i in 1 2 3; do git pull --rebase --autostash origin main && git push && break || sleep 3; done
+          for i in 1 2 3; do git pull --rebase -X theirs --autostash --autostash origin main && git push && break || sleep 3; done

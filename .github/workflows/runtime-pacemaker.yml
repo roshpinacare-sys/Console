@@ -79,7 +79,7 @@ jobs:
           git commit -m "pacemaker receipt: $(date -u +%FT%TZ)"
           OK=0
           for i in 1 2 3; do
-            if git pull --rebase origin main && git push origin main; then OK=1; echo "push ok (attempt $i)"; break; fi
+            if git pull --rebase -X theirs --autostash origin main && git push origin main; then OK=1; echo "push ok (attempt $i)"; break; fi
             git rebase --abort 2>/dev/null || true
             sleep 5
           done
