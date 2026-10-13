@@ -1,139 +1,73 @@
 {
   "ok": true,
-  "publishedAt": "2026-10-12T22:33:27.564Z",
-  "engine": "saos-dex/1.1 grid-beat · R24 external flow + R99 HIVE leg",
+  "publishedAt": "2026-10-13T10:37:26.136Z",
+  "engine": "Console/agents/grid-pulse · R83 sovereign grid mirror — keyless measurement, signs nothing",
   "account": "acct-00",
   "chain": "STEEM-internal-market",
-  "chains": [
-    "STEEM",
-    "HIVE"
-  ],
   "real": true,
   "armed": true,
   "verdict": "ARMED-LIVE",
-  "blocker": [
-    "broadcast failing: 2/14 chain ops rejected this run (\"broadcast answered without id\") — stale key/authority or node fault; verdict cannot be stable until signing succeeds"
-  ],
-  "keyGate": {
-    "ok": true,
-    "authorityOk": true,
-    "liveAuthorityPub": "STM5HhJD5WUXu8vPhDmLaC2fTuuJYkwxF62Rt17HZ5G2PbnBvuHXF"
-  },
-  "zombieOrders": {
-    "count": 2,
-    "ids": [
-      2100003341,
-      2100003342
-    ],
-    "note": "open on-chain but not known-open in the ledger — ledger/chain drift surfaced honestly (lost concurrent push, or another actor trading this account)"
-  },
-  "hive": {
-    "ok": true,
-    "publishedAt": "2026-10-12T22:33:27.563Z",
-    "chain": "HIVE-internal-market",
-    "real": true,
-    "armed": true,
-    "authorityOk": true,
-    "rc": {
-      "ok": true,
-      "mana": 19211068542,
-      "max": 42848564398
-    },
-    "verdict": "ARMED-WAITING",
-    "blocker": [
-      "hive sell-side waiting for price-grade inventory: 0.026 HIVE commitable; ask levels need ≥ 0.2 HBD recv each (HBD mill-tick price fidelity, measured R99)",
-      "hive buy-side waiting for HBD inventory: 0.002 HBD commitable < 0.003 needed"
-    ],
-    "marks": {
-      "hiveUsd": 0.05324248210947827,
-      "hbdUsd": 1.019,
-      "parityHbdPerHive": 0.052249737104492905
-    },
-    "inventory": {
-      "hive": 0.034,
-      "hbd": 0.003,
-      "hp": 21.604500208221772
-    },
-    "book": {
-      "bestBid": 0.05370238940146676,
-      "bestAsk": 0.05388711395101171,
-      "mid": 0.05379475167623923,
-      "spreadBps": 0
-    },
-    "openOrdersNow": 0,
-    "run": {
-      "placed": 0,
-      "cancelled": 0
-    },
-    "fills": [],
-    "powerdown": {
-      "active": false,
-      "weeklyHp": 0,
-      "remainingHp": 0,
-      "remainingWeeks": 0,
-      "nextPayout": null
-    }
-  },
+  "blocker": null,
   "policy": {
     "principle": "never sell STEEM below its external USD value; every buy below parity is measured surplus",
-    "commitPct": 0.75,
+    "commitPct": 1,
     "bidLevels": 3,
     "bidStepBps": 200,
     "askLevels": 3,
     "askStepBps": 100,
     "expiryDays": 30,
-    "hiveCommitPct": 1,
-    "paramsSource": "grids/state/grid-params.json (validated fail-closed by grids/validate-params.mjs before every run)",
     "directiveR24": "powerdown is read-only here: never opened, never replaced, fleet RC is sacred"
   },
   "marks": {
-    "steemUsd": 0.05752926331382975,
-    "sbdUsd": 0.569793,
-    "paritySbdPerSteem": 0.10096519843843246
+    "steemUsd": 0.056532,
+    "sbdUsd": 0.560066,
+    "paritySbdPerSteem": 0.10093810372348974,
+    "sources": {
+      "steem": "coingecko:steem",
+      "sbd": "coingecko:steem-dollars"
+    }
+  },
+  "triggers": {
+    "source": "triggers/current.json",
+    "bookPublishedAt": "2026-10-12T16:04:18.765Z",
+    "consumed": [
+      "T-PARITY-MOVE"
+    ],
+    "note": "grid-relevant triggers fired — operator-gated executor (money-mover) decides"
   },
   "fuel": {
     "powerdownActive": false,
     "weeklySp": 0,
-    "weeklyUsd": null,
+    "weeklyUsd": 0,
     "remainingSp": 0,
     "remainingWeeks": 0,
     "nextPayout": null,
-    "rcFuelSp": 150.30473766808285
+    "rcFuelSp": 150.30986186891965
   },
   "inventory": {
-    "steem": 10.069,
-    "sbd": 15.165
+    "steem": 13.441,
+    "sbd": 16.959
   },
   "book": {
-    "bestBid": 0.10003000900270081,
-    "bestAsk": 0.1008,
-    "mid": 0.10041500450135041,
-    "spreadBps": 100
+    "bestBid": 0.1001001001001001,
+    "bestAsk": 0.1025010250102501,
+    "mid": 0.10130056255517511,
+    "spreadBps": 200
   },
-  "openOrdersNow": 8,
+  "openOrdersNow": 5,
   "run": {
-    "placed": 6,
-    "cancelled": 6,
+    "placed": 0,
+    "cancelled": 0,
+    "observedPlacements": 0,
+    "observedCancellations": 0,
+    "observedFills": 1,
     "placedTotal": 133,
     "cancelledTotal": 222,
-    "filledTotal": 85
+    "filledTotal": 86,
+    "note": "keyless measurement cycle: on-chain placements/cancellations are the R81 mover's (via /api/money, key derived in-run only); this agent observes and counts, signs nothing"
   },
-  "externalFlowUsd": 0.283699,
+  "externalFlowUsd": 0.274414,
   "fills": [
-    {
-      "key": "2026-10-11T21:16:21|0.622 STEEM|0.062 SBD",
-      "at": "2026-10-11T21:16:21",
-      "side": "maker",
-      "direction": "sold-steem",
-      "paid": "0.622 STEEM",
-      "received": "0.062 SBD",
-      "steemUsd": 0.060515176486137565,
-      "sbdUsd": 0.595553,
-      "paidUsd": 0.03764043977437757,
-      "recvUsd": 0.036924286,
-      "edgeBps": -200,
-      "chain": "steem"
-    },
     {
       "key": "2026-10-11T21:16:27|1.000 STEEM|0.100 SBD",
       "at": "2026-10-11T21:16:27",
@@ -287,6 +221,19 @@
       "recvUsd": 0.0574081,
       "edgeBps": -100,
       "chain": "steem"
+    },
+    {
+      "key": "2026-10-13T05:21:36|2.031 SBD|19.957 STEEM",
+      "at": "2026-10-13T05:21:36",
+      "side": "maker",
+      "direction": "bought-steem",
+      "paid": "2.031 SBD",
+      "received": "19.957 STEEM",
+      "steemUsd": 0.056532,
+      "sbdUsd": 0.560066,
+      "paidUsd": 1.137494046,
+      "recvUsd": 1.128209124,
+      "edgeBps": -100
     }
   ],
   "orders": [
@@ -514,8 +461,8 @@
       "sell": "19.957 STEEM",
       "receive": "2.031 SBD",
       "priceSbdPerSteem": 0.10176880292629154,
-      "status": "open",
-      "lastSeenAt": "2026-10-12T22:33:11.833Z"
+      "status": "filled",
+      "lastSeenAt": "2026-10-13T10:37:26.136Z"
     },
     {
       "id": 2026101226,
@@ -526,7 +473,7 @@
       "receive": "2.047 SBD",
       "priceSbdPerSteem": 0.10257052663225937,
       "status": "open",
-      "lastSeenAt": "2026-10-12T22:33:14.804Z"
+      "lastSeenAt": "2026-10-13T10:37:26.136Z"
     },
     {
       "id": 2026101227,
@@ -537,7 +484,7 @@
       "receive": "2.063 SBD",
       "priceSbdPerSteem": 0.1033722503382272,
       "status": "open",
-      "lastSeenAt": "2026-10-12T22:33:17.772Z"
+      "lastSeenAt": "2026-10-13T10:37:26.136Z"
     },
     {
       "id": 2026101228,
@@ -548,7 +495,7 @@
       "receive": "290.704 STEEM",
       "priceSbdPerSteem": 0.09852955886766031,
       "status": "open",
-      "lastSeenAt": "2026-10-12T22:33:20.966Z"
+      "lastSeenAt": "2026-10-13T10:37:26.136Z"
     },
     {
       "id": 2026101229,
@@ -559,7 +506,7 @@
       "receive": "295.200 STEEM",
       "priceSbdPerSteem": 0.09702910873261979,
       "status": "open",
-      "lastSeenAt": "2026-10-12T22:33:23.689Z"
+      "lastSeenAt": "2026-10-13T10:37:26.136Z"
     },
     {
       "id": 2026101230,
@@ -570,15 +517,8 @@
       "receive": "299.836 STEEM",
       "priceSbdPerSteem": 0.09552865859757928,
       "status": "open",
-      "lastSeenAt": "2026-10-12T22:33:26.794Z"
+      "lastSeenAt": "2026-10-13T10:37:26.136Z"
     }
   ],
-  "vault": {
-    "steemActive": true,
-    "steemPosting": false,
-    "hiveActive": true,
-    "hivePosting": false,
-    "blurtActive": false
-  },
-  "honesty": "מדוד מול ספר-STEEM הציבורי ופידי-USD חיים. מילויים מסומנים בזמן-הגילוי (marked-at-detection); המעקה מתעד את הציון שנמדד. ה-SBD הפנימי נסחר בפרימיום מול הציון החיצוני; קו-הזהות מוצג בגלוי כדי שכל אחד יוכל לאמת שאנחנו לא מוכרים מתחת לערך."
+  "honesty": "מדוד מול ספר-STEEM הציבורי ופידי-USD חיים. מילויים מסומנים בזמן-הגילוי (marked-at-detection); המעקה מתעד את הציון שנמדד. ה-SBD הפנימי נסחר בפרימיום מול הציון החיצוני; קו-הזהות מוצג בגלוי כדי שכל אחד יוכל לאמת שאנחנו לא מוכרים מתחת לערך. סוכן זה חסר-מפתחות מהיסוד: אין לו יכולת שידור, ולכן שום נתון כאן אינו תלוי בסוד כלשהו."
 }
