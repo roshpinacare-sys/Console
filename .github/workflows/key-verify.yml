@@ -41,10 +41,14 @@ jobs:
       - name: Publish the receipt (verdict, never the value)
         if: always()
         run: |
-          node agents/redact-telemetry.mjs receipts/key-check.json receipts/key-check-log.jsonl
-          git add receipts/key-check.json receipts/key-check-log.jsonl
+          # self-audit 2026-10-13: the engine migrated to the lawful path
+          # (receipts/key-verify* per 25-d; key-check* is a forbidden-path
+          # class) — this step still added the forbidden names, so `git add`
+          # hit a pathspec error and every dispatch landed red. Aligned.
+          node agents/redact-telemetry.mjs receipts/key-verify.json receipts/key-verify-log.jsonl
+          git add receipts/key-verify.json receipts/key-verify-log.jsonl
           if ! git diff --cached --quiet; then
-            VERDICT="$(node -e 'try{process.stdout.write(require("./receipts/key-check.json").verdict)}catch{process.stdout.write("none")}')"
+            VERDICT="$(node -e 'try{process.stdout.write(require("./receipts/key-verify.json").verdict)}catch{process.stdout.write("none")}')"
             git config user.name "roshpinacare-sys"
             git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
             git commit -m "key-verify: ${VERDICT} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"

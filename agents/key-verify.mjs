@@ -65,8 +65,13 @@ function fail(verdict, detail) {
   receipt.verdict = verdict;
   receipt.detail = detail;
   writeReceipt();
-  console.error(`[key-verify] ✗ ${verdict}: ${detail}`);
-  process.exit(1);
+  // T-77 anti-storm (self-audit 2026-10-13): every verdict here is a DESIGNED
+  // state (no-secret = waiting for the operator's key; roster-unresolved =
+  // honest skip; chain-unreadable = transient; derive/mismatch = the receipt
+  // carries the alarm). The receipt in git IS the alarm — a red email per
+  // dispatch taught nothing. Record, not alarm; unexpected crashes still die loud.
+  console.error(`[key-verify] ✗ ${verdict}: ${detail} — named terminal: receipt-is-the-alarm`);
+  process.exit(0);
 }
 
 // ── GitHub API ────────────────────────────────────────────────────────
