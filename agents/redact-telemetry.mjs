@@ -166,6 +166,21 @@ for (const f of FILES) {
       console.log(`[redact] ${f} ok (jsonl, ${docs.length} docs)`);
       continue;
     }
+    // T-78 (measured: estate-scrub reds, run 38482457461): names-only mode may be
+    // pointed at RAW non-JSON surfaces (saos-live.js, wallet.html) by the workflow.
+    // Those get the TEXT-LEVEL identity scrub only — estate names → refs and host
+    // paths, byte-faithful otherwise (chain evidence law 3-c). Structured .json
+    // stays fail-closed: a broken JSON book still fails the run loudly.
+    if (NAMES_ONLY && !/\.(json|jsonl)$/i.test(f)) {
+      const scrubbed = estateScrubStr(raw);
+      if (scrubbed !== raw) {
+        fs.writeFileSync(f, scrubbed);
+        console.log(`[redact] ${f} ok (names-only text-mode)`);
+      } else {
+        console.log(`[redact] ${f} ok (names-only text-mode, no hits)`);
+      }
+      continue;
+    }
     const obj = JSON.parse(raw);
     fs.writeFileSync(f, JSON.stringify(walk(obj, '', false), null, 2) + '\n');
     console.log(`[redact] ${f} ok`);

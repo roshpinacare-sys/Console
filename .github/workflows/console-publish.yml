@@ -44,5 +44,17 @@ jobs:
             CP=$(jq -r '.witness.checkpoint' status.json)
             AGE=$(jq -r '.freshness.ageHours' status.json)
             git commit -m "weave-console: $(date -u +%FT%TZ) · cp#${CP} · witness age ${AGE}h · keyless read from public chain"
-            git push
+            # T-78 (measured: run 38482453382 rejected fetch-first — dex-beat/estate-scrub
+            # commit to this repo every minute): race-safe publish. The fresh render wins
+            # (-X theirs during rebase = our local replay); a lost push after retries is
+            # an honest skip — the next hourly beat re-renders from the chain anyway.
+            OK=0
+            for i in 1 2 3 4; do
+              if git pull --rebase -X theirs --autostash -q origin main && git push -q origin main; then OK=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              git rebase --quit 2>/dev/null || true
+              git checkout -- . 2>/dev/null || true
+              sleep $((i * 5))
+            done
+            [ "$OK" = "1" ] && echo "beacon pushed" || { echo "push lost the race — next hourly beat re-renders (honest skip)"; }
           fi

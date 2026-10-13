@@ -40,10 +40,19 @@ jobs:
             VERDICT="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(d.verdict||"none")}catch{process.stdout.write("none")}')"
             MIS="$(node -e 'try{const d=require("./weave/agreement.json");process.stdout.write(String(d.mismatches))}catch{process.stdout.write("?")}')"
             git commit -m "line-agreement: ${VERDICT} · ${MIS} mismatches · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            # T-78 (measured: 30/46 runs red — plain `git pull --rebase` deadlocks on a
+            # CONFLICT (rebase stays mid-flight, every retry re-fails) with the
+            # dex-beat/pacemaker writers of this repo). Conflict-safe publish: fresh
+            # verdict wins (-X theirs), abort/reset between attempts, lost push = honest
+            # skip (the next 2h beat re-measures; the verdict lives in the run log).
+            OK=0
             for i in 1 2 3; do
-              if git pull --rebase origin main && git push; then break; fi
-              echo "push race, retry ${i}"; sleep 8
+              if git pull --rebase -X theirs --autostash -q origin main && git push -q origin main; then OK=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              git rebase --quit 2>/dev/null || true
+              sleep $((i * 6))
             done
+            [ "$OK" = "1" ] && echo "agreement book pushed" || echo "push lost the race — verdict in run log, next beat re-measures (honest skip)"
           else
             echo "no agreement change to publish"
           fi
