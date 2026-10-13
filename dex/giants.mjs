@@ -71,6 +71,10 @@ const FAMILIES = [
 ];
 
 const r2 = (v) => (typeof v === 'number' && isFinite(v) ? Math.round(v * 100) / 100 : 0);
+/* FIX(2026-10-13 · sweep-1 lane): r4 is referenced by the CR-0077 return (vol24h/fees24h)
+ * but was never defined — measured live: giants-beat 90dbea6d died 'ours: r4 is not defined'.
+ * 4-decimals for sub-cent honest readings. */
+const r4 = (v) => (typeof v === 'number' && isFinite(v) ? Math.round(v * 10000) / 10000 : 0);
 
 async function jget(url, ms = 25000) {
   const ac = new AbortController();
