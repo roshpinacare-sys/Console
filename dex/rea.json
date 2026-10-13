@@ -1,14 +1,14 @@
 {
   "ok": true,
   "book": "saos-rea/1.0",
-  "publishedAt": "2026-10-07T17:38:07.617Z",
+  "publishedAt": "2026-10-13T12:13:41.006Z",
   "beat": {
     "engine": "saos-rea/1.0 rea-desk · R74 sovereign reverse-engineering desk",
-    "runAt": "2026-10-07T17:38:01.923Z",
+    "runAt": "2026-10-13T12:13:29.510Z",
     "cadenceMin": 10080,
     "tool": {
       "package": "rea-agents",
-      "version": "5.0.0",
+      "version": "6.4.0",
       "upstream": "https://github.com/morluto/rea",
       "license": "MIT",
       "pinnedSha": "96a46ada0a36f0349f2b0fc20b4c932401b4ad84"
@@ -16,7 +16,7 @@
     "method": "passive public-surface capture · zero auth · zero secrets · evidence-first · fail-closed"
   },
   "rea": {
-    "version": "5.0.0",
+    "version": "6.4.0",
     "doctor": {
       "healthy": false,
       "environment_healthy": false,
@@ -30,16 +30,16 @@
       "scope_checks": [
         {
           "name": "node",
-          "ok": true,
-          "classification": "healthy",
-          "detail": "24.21.0"
+          "ok": false,
+          "classification": "missing_dependency",
+          "detail": "20.20.2",
+          "remediation": "Install Node.js 22.x (>=22.19), 24.x (>=24.11), or 26+."
         },
         {
           "name": "host",
-          "ok": false,
-          "classification": "unsupported_host",
-          "detail": "debian 13",
-          "remediation": "REA supports macOS 12+, Ubuntu 24.04+, Fedora 41+, 64-bit Arch Linux, CachyOS, and the experimental Windows x64 Ghidra P0 boundary."
+          "ok": true,
+          "classification": "healthy",
+          "detail": "ubuntu 24.04"
         },
         {
           "name": "hopper",
@@ -109,16 +109,16 @@
       "checks": [
         {
           "name": "node",
-          "ok": true,
-          "classification": "healthy",
-          "detail": "24.21.0"
+          "ok": false,
+          "classification": "missing_dependency",
+          "detail": "20.20.2",
+          "remediation": "Install Node.js 22.x (>=22.19), 24.x (>=24.11), or 26+."
         },
         {
           "name": "host",
-          "ok": false,
-          "classification": "unsupported_host",
-          "detail": "debian 13",
-          "remediation": "REA supports macOS 12+, Ubuntu 24.04+, Fedora 41+, 64-bit Arch Linux, CachyOS, and the experimental Windows x64 Ghidra P0 boundary."
+          "ok": true,
+          "classification": "healthy",
+          "detail": "ubuntu 24.04"
         },
         {
           "name": "hopper",
@@ -149,8 +149,8 @@
         }
       ],
       "identity": {
-        "cli_package_version": "5.0.0",
-        "expected_skill_version": "27",
+        "cli_package_version": "6.4.0",
+        "expected_skill_version": "37",
         "sdk": {
           "server": "2.3.1",
           "client_test": "2.3.1",
@@ -158,14 +158,14 @@
         },
         "catalog": {
           "counts": {
-            "cli_commands": 88,
-            "mcp_tools": 133,
+            "cli_commands": 127,
+            "mcp_tools": 170,
             "mcp_prompts": 6
           },
           "digests": {
-            "tools_sha256": "af7fe81ec689c2a77f04579b6f4beb4abe86aa71d49c4844d8e0f4d7ed7a3a1e",
-            "prompts_sha256": "ef2de8814390b340623c32001610aa2709d90bed51537b6e562ab3abf144ab4d",
-            "combined_sha256": "83b4c3445ed0ec003c0aeefa3188f123d9ae319484f8b1e2b611d2fe278c9c72"
+            "tools_sha256": "25802f6de8c14ba736dc61ff1cbc7c5cd738fd74426aa01338f2dd03e0911166",
+            "prompts_sha256": "5296f0301566cadaf89243e774512011f11045af36d48405f76a3ff9a8947ac2",
+            "combined_sha256": "85d80276ecacf937bf3e803b7a31748ae1a8286f556fa5cf734eef768cc7d72a"
           },
           "tools": [
             {
@@ -409,6 +409,26 @@
               }
             },
             {
+              "name": "capture_adb_screen",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
               "name": "capture_browser_scenario",
               "surface": "browser-provider",
               "effects": {
@@ -526,6 +546,26 @@
                 "destructive": true,
                 "idempotent": false,
                 "open_world": false
+              }
+            },
+            {
+              "name": "collect_adb_bugreport",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
               }
             },
             {
@@ -829,6 +869,26 @@
               }
             },
             {
+              "name": "decode_android_resources",
+              "surface": "apktool-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "decode_interface_builder",
               "surface": "artifact-provider",
               "effects": {
@@ -846,6 +906,26 @@
                 "destructive": false,
                 "idempotent": true,
                 "open_world": false
+              }
+            },
+            {
+              "name": "decompile_jeb_item",
+              "surface": "jeb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
               }
             },
             {
@@ -1209,8 +1289,128 @@
               }
             },
             {
+              "name": "inspect_adb_client",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_adb_device",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_adb_display",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_adb_package",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_adb_window",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "inspect_address_context",
               "surface": "session",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
+              "name": "inspect_analysis_view",
+              "surface": "application",
               "effects": {
                 "mutatesTarget": false,
                 "mutatesSession": true,
@@ -1289,6 +1489,26 @@
               }
             },
             {
+              "name": "inspect_apktool_client",
+              "surface": "apktool-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "inspect_artifact",
               "surface": "artifact-provider",
               "effects": {
@@ -1329,6 +1549,26 @@
               }
             },
             {
+              "name": "inspect_binary_layout",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "inspect_electron_page",
               "surface": "electron-provider",
               "effects": {
@@ -1349,6 +1589,26 @@
               }
             },
             {
+              "name": "inspect_evm_interface",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "inspect_firmware_regions",
               "surface": "firmware-provider",
               "effects": {
@@ -1357,6 +1617,26 @@
                 "writesFilesystem": true,
                 "launchesProcess": true,
                 "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_jeb_client",
+              "surface": "jeb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
                 "changesUiState": false,
                 "mayDiscardData": false,
                 "idempotent": true
@@ -1569,12 +1849,52 @@
               }
             },
             {
+              "name": "inspect_pe_resources",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": false
+              }
+            },
+            {
               "name": "inspect_plist",
               "surface": "native-provider",
               "effects": {
                 "mutatesTarget": false,
                 "mutatesSession": true,
                 "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "inspect_recorded_crash",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
                 "launchesProcess": true,
                 "accessesNetwork": false,
                 "changesUiState": false,
@@ -1629,6 +1949,26 @@
               }
             },
             {
+              "name": "inspect_web_network_capture",
+              "surface": "browser-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "inspect_web_page",
               "surface": "browser-provider",
               "effects": {
@@ -1636,6 +1976,146 @@
                 "mutatesSession": true,
                 "writesFilesystem": false,
                 "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "install_adb_package",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_adb_devices",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_adb_directory",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_adb_features",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_adb_packages",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_adb_processes",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_adb_services",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
                 "accessesNetwork": true,
                 "changesUiState": false,
                 "mayDiscardData": false,
@@ -1751,6 +2231,26 @@
             {
               "name": "list_javascript_runtime_targets",
               "surface": "runtime-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "list_jeb_units",
+              "surface": "jeb-provider",
               "effects": {
                 "mutatesTarget": false,
                 "mutatesSession": true,
@@ -1909,6 +2409,26 @@
               }
             },
             {
+              "name": "observe_native_calls",
+              "surface": "native-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": true,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
               "name": "observe_native_ui",
               "surface": "native-provider",
               "effects": {
@@ -1985,6 +2505,26 @@
                 "read_only": false,
                 "destructive": false,
                 "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "open_jeb_project",
+              "surface": "jeb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
                 "open_world": true
               }
             },
@@ -2209,6 +2749,106 @@
               }
             },
             {
+              "name": "pull_adb_file",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "pull_adb_package",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "push_adb_file",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": true,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "read_adb_logcat",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "read_adb_setting",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
               "name": "read_bytes",
               "surface": "official-proxy",
               "effects": {
@@ -2305,6 +2945,26 @@
                 "read_only": false,
                 "destructive": false,
                 "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "resolve_adb_packages",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
                 "open_world": true
               }
             },
@@ -2489,26 +3149,6 @@
               }
             },
             {
-              "name": "set_current_document",
-              "surface": "official-proxy",
-              "effects": {
-                "mutatesTarget": false,
-                "mutatesSession": true,
-                "writesFilesystem": false,
-                "launchesProcess": false,
-                "accessesNetwork": false,
-                "changesUiState": true,
-                "mayDiscardData": false,
-                "idempotent": true
-              },
-              "annotations": {
-                "read_only": false,
-                "destructive": false,
-                "idempotent": true,
-                "open_world": false
-              }
-            },
-            {
               "name": "set_inline_comment",
               "surface": "official-proxy",
               "effects": {
@@ -2526,6 +3166,66 @@
                 "destructive": false,
                 "idempotent": true,
                 "open_world": false
+              }
+            },
+            {
+              "name": "start_adb_activity",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "start_adb_app",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
+              }
+            },
+            {
+              "name": "stop_adb_app",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
+                "open_world": true
               }
             },
             {
@@ -2585,6 +3285,26 @@
                 "read_only": false,
                 "destructive": false,
                 "idempotent": false,
+                "open_world": false
+              }
+            },
+            {
+              "name": "trace_dylib_resolution",
+              "surface": "artifact-provider",
+              "effects": {
+                "mutatesTarget": false,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": false,
+                "accessesNetwork": false,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": true
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": true,
                 "open_world": false
               }
             },
@@ -2705,6 +3425,26 @@
                 "read_only": false,
                 "destructive": false,
                 "idempotent": true,
+                "open_world": true
+              }
+            },
+            {
+              "name": "uninstall_adb_package",
+              "surface": "adb-provider",
+              "effects": {
+                "mutatesTarget": true,
+                "mutatesSession": true,
+                "writesFilesystem": false,
+                "launchesProcess": true,
+                "accessesNetwork": true,
+                "changesUiState": false,
+                "mayDiscardData": false,
+                "idempotent": false
+              },
+              "annotations": {
+                "read_only": false,
+                "destructive": false,
+                "idempotent": false,
                 "open_world": true
               }
             },
@@ -2843,7 +3583,6 @@
         "skill": {
           "installed_version": null,
           "installed_tool_count": null,
-          "installed_catalog_digest": null,
           "state": "missing",
           "remediation": "Run rea setup to update the installed REA skill."
         },
@@ -2857,7 +3596,7 @@
       "url": "https://app.uniswap.org/",
       "label": "Uniswap app · the v4 front end",
       "status": 200,
-      "ms": 129,
+      "ms": 146,
       "pageBytes": 86921,
       "pageTitle": "Uniswap Interface",
       "scripts": []
@@ -2867,14 +3606,14 @@
       "url": "https://jup.ag/",
       "label": "Jupiter · the Solana aggregator",
       "status": 200,
-      "ms": 174,
-      "pageBytes": 127974,
+      "ms": 743,
+      "pageBytes": 128621,
       "pageTitle": "Jupiter: The Home of Onchain Finance",
       "scripts": [
         {
-          "url": "https://jup.ag/assets/index-Df7gD8LW.js",
+          "url": "https://jup.ag/assets/index-30wbEUJZ.js",
           "bytes": 797,
-          "sha256": "aaa1dbf2de7b5e25",
+          "sha256": "34006e671d32102c",
           "endpoints": []
         }
       ]
@@ -2884,7 +3623,7 @@
       "url": "https://app.hyperliquid.xyz/",
       "label": "Hyperliquid · the perp app",
       "status": 200,
-      "ms": 26,
+      "ms": 71,
       "pageBytes": 6831,
       "pageTitle": "Hyperliquid",
       "scripts": [
@@ -2895,9 +3634,9 @@
           "endpoints": []
         },
         {
-          "url": "https://app.hyperliquid.xyz/assets/index-BQnwZrhY.js",
+          "url": "https://app.hyperliquid.xyz/assets/index-BBe39C6L.js",
           "bytes": 1328691,
-          "sha256": "9a275b716a7605b8",
+          "sha256": "24be6fa7758a3d2b",
           "endpoints": [
             "https://api.etherscan.io/api"
           ]
@@ -2909,8 +3648,8 @@
       "url": "https://metamask.io/",
       "label": "MetaMask · distribution giant",
       "status": 200,
-      "ms": 326,
-      "pageBytes": 472954,
+      "ms": 239,
+      "pageBytes": 473054,
       "pageTitle": "MetaMask Crypto Wallet. Buy and Sell Bitcoin, Ethereum, Solana",
       "scripts": [
         {
