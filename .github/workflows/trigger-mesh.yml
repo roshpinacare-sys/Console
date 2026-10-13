@@ -41,4 +41,11 @@ jobs:
           fi
           git add triggers/current.json triggers/log.jsonl triggers/state.json || true
           git diff --cached --quiet && echo "no trigger changes" || git commit -m "trigger-mesh: publish trigger book $(date -u +%FT%TZ)"
-          git push
+          # 3-a: push-race hardening — many fleet lanes commit concurrently; bare push fails "fetch first"
+          OK=0
+          for i in 1 2 3; do
+            if git push origin main; then OK=1; break; fi
+            git pull --rebase -q origin main || git rebase --abort || true
+            sleep $((i * 5))
+          done
+          [ "$OK" = "1" ] || { echo "push failed after retries — honest failure"; exit 1; }

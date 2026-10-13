@@ -24,6 +24,7 @@
 
 import { R, refOf, scrub } from "./refs.mjs";
 
+const log = (m) => console.log(`[weave-census] ${m}`); // לפני המפקד — TDZ bug 3-a: log נקרא בתוך map-הרוסטר כשרף לא נפתר
 const FLEET_REFS = ["acct-01", "acct-00", "acct-04"]; // אותם שלושה חשבונות, אותו סדר — שכבת-ה-refs
 const FLEET = FLEET_REFS
   .map((r) => {
@@ -42,7 +43,6 @@ const WINDOW_DAYS = 45;     // חלון-המפקד: עוגן ישן מזה עו�
 const ROWS_PUBLISHED = 60;  // כמה שורות עוגן נוסעות בספר
 const FRESH_H = 26;         // דוקטרינת-החיים של הבית (כ-render.mjs)
 const IRREGULAR_GAP_MIN = 360; // פער-עוגן מעל 6ש' = קו לא-סדיר
-const log = (m) => console.log(`[weave-census] ${m}`);
 
 async function rpc(node, method, params) {
   const ctrl = new AbortController();
