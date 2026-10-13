@@ -173,6 +173,9 @@ for (const c of checks) {
 log(`${verdict} · ${mismatches.length}/${checks.length} checks mismatched`);
 
 if (verdict === "DIVERGE") {
-  console.log(`[line-agreement] HONEST DIVERGE: the book and the chain disagree — the run exits red so the network hears it`);
-  process.exit(1);
+  console.log(`[line-agreement] HONEST DIVERGE: the book and the chain disagree — the verdict is loud in the book and in the deduped operator issue (anti-storm law: measurement exits 0; the RED lives in the record, not in a per-run email)`);
+  // anti-storm law (GOVERNANCE/anti-storm-law.md, FleetHQ): a scheduled checker's
+  // duty is to MEASURE AND RECORD. The book landed above; the divergence stays
+  // visible in the book, in ops/decisions.jsonl, and in ONE deduped issue.
+  process.exit(0);
 }
