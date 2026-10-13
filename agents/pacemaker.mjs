@@ -61,6 +61,7 @@ const TARGETS = [
   // meta-voice: this pacemaker watches itself; GridWatch's ACT layer (once alive)
   // will also re-ignite it if it ever goes stale — mutual watch, no single point.
   { repo: 'FleetHQ',   wf: 'runtime-pacemaker.yml', slaMin: 40,  why: 'meta-voice' },
+  { repo: 'Console',   wf: 'runtime-pacemaker.yml', slaMin: 40,  why: 'second-host meta-voice' },
 ];
 
 const H = (tok) => ({
