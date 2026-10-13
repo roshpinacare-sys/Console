@@ -32,12 +32,17 @@ jobs:
       - name: Measure the giants (keyless)
         run: node dex/giants.mjs
 
+      - name: Refresh the honest-econ book (R74 · two ledgers, zero mixing — was unowned since 10-07, CR-0077 wires it to the daily beat)
+        if: always()
+        continue-on-error: true
+        run: node dex/honest-econ.mjs
+
       - name: Publish the giants book
         run: |
           git config user.name "roshpinacare-sys"
           git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
-          node agents/redact-telemetry.mjs dex/giants.json
-          git add dex/giants.json
+          node agents/redact-telemetry.mjs dex/giants.json dex/honest-econ.json
+          git add dex/giants.json dex/honest-econ.json
           if git diff --cached --quiet; then
             echo "the giants book is unchanged"
             exit 0

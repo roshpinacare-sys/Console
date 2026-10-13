@@ -18,6 +18,12 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const OUT = new URL('./giants.json', import.meta.url).pathname;
 const WORLD = new URL('./world.json', import.meta.url).pathname;
+/* CR-0077 (2026-10-13, trace 1a135897157a1d75): the our-row gains the DOMAIN core ledger —
+ * the owner ordered the DEX alive; the core book (Domain/agents/dex-core.json) is where the
+ * two-sided ladder flow settles, so the row now merges BOTH engine books, keyless GET, with
+ * a freshness guard (≤30h) — stale books never masquerade as fresh ones. */
+const CORE_BOOK_URL = 'https://roshpinacare-sys.github.io/Domain/agents/dex-core.json';
+const ACT_BOOK_URL = 'https://roshpinacare-sys.github.io/Domain/agents/dex-activation.json';
 const UA = 'saos-giants-beat/1.0 (keyless public measurement; repo roshpinacare-sys/Console)';
 const FEES_URL = 'https://api.llama.fi/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
 const DEXS_URL = 'https://api.llama.fi/overview/dexs?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
@@ -79,7 +85,20 @@ async function jget(url, ms = 25000) {
 }
 
 /* שורת-הרשת שלנו: נמדדת מספר-המנוע החי · מילי-יחידות (1000 µ = 1 אסימון) */
-function measureOurs(errors) {
+async function fetchJsonKeyless(url, errors, tag) {
+  const ac = new AbortController();
+  const t = setTimeout(() => ac.abort(), 15000);
+  try {
+    const res = await fetch(url, { headers: { 'user-agent': UA, accept: 'application/json' }, signal: ac.signal });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } catch (e) {
+    errors.push((tag || 'keyless') + ': ' + (e && e.message ? e.message : String(e)));
+    return null;
+  } finally { clearTimeout(t); }
+}
+
+function measureOurs(errors, coreBook, actBook) {
   try {
     const w = JSON.parse(readFileSync(WORLD, 'utf8'));
     const m = (w.markets || []).find((x) => x.key === 'SAOS/USDS');
@@ -88,15 +107,34 @@ function measureOurs(errors) {
     const feesAccruedMu = pools.reduce((s, x) => s + (x.feeAccruedTreasury || 0) + (x.lpFeesMu || 0), 0);
     const poolTvlMu = p ? (p.ra || 0) + (p.rb || 0) : 0;
     const feeRateBps = p && typeof p.feeBps === 'number' ? p.feeBps : null;
+    // the CORE ledger merge (CR-0077): all-time fee meters from the live core pools + the
+    // measured rolling-24h volume/fees/fills from the ignition book — freshness-guarded.
+    let coreFeesAllTimeMu = 0, corePools = 0, coreSeq = null, coreAt = null, coreFresh = false;
+    if (coreBook && Array.isArray(coreBook.pools) && coreBook.genesisDone) {
+      const ageH = (Date.now() - Date.parse(coreBook.at || '')) / 3600000;
+      coreFresh = isFinite(ageH) && ageH <= 30;
+      coreSeq = coreBook.seq || null; coreAt = coreBook.at || null;
+      corePools = coreBook.pools.filter((x) => x && !x.planned).length;
+      if (coreFresh) coreFeesAllTimeMu = coreBook.pools.reduce((s, x) => s + (Number(x.feeMeter) || 0), 0);
+    }
+    let m24 = null;
+    if (actBook && actBook.measure24h && typeof actBook.measure24h.fills === 'number') {
+      const ageH = (Date.now() - Date.parse(actBook.at || '')) / 3600000;
+      if (isFinite(ageH) && ageH <= 30) m24 = actBook.measure24h;
+    }
     return {
       name: 'SAOS DEX (ריבוני · keyless)',
       lastPriceUsds: m && m.poolMid ? r2(m.poolMid / 1000) : null,
       poolTvlUsds: poolTvlMu ? r2(poolTvlMu / 1000) : null,
-      feesAccruedMu,
+      feesAccruedMu: feesAccruedMu + coreFeesAllTimeMu,
       feeRateBps,
-      pools: pools.length,
-      source: 'dex/world.json · publishedAt ' + (w.publishedAt || '?'),
-      note: 'מדידה מהספר החי · עמלות-צבירה הן מצטבר-כל-הזמנים במילי-יחידות · לא ממציאים עמלות-24h שהספר לא מפרסם'
+      pools: pools.length + corePools,
+      coreLedger: { merged: corePools > 0, seq: coreSeq, at: coreAt, fresh: coreFresh, feesAllTimeMu: coreFeesAllTimeMu },
+      vol24h: m24 ? r4((Number(m24.volumeInMu) || 0) / 1e6) : null,
+      fees24h: m24 ? r4((Number(m24.fees24hMu) || 0) / 1e6) : null,
+      fills24h: m24 ? m24.fills : null,
+      source: 'dex/world.json (' + (w.publishedAt || '?') + ') + Domain/agents/dex-core.json (core ledger' + (coreFresh ? ', fresh seq ' + coreSeq : ', stale-or-absent') + ') + dex-activation.json (24h measure' + (m24 ? ', fresh' : ', stale-or-absent') + ')',
+      note: 'מדידה מספרי-המנוע החיים (world + core + activation) · עמלות-צבירה במילי-יחידות-פנימיות (SIM) · נפח/עמלות-24ש׳ נמדדים מהפנקס-החי כשהוא טרי (≤30ש׳) · לא ממציאים כלום · אפס-תביעת-ערך-חוץ'
     };
   } catch (e) {
     errors.push('ours: ' + (e && e.message ? e.message : String(e)));
@@ -166,7 +204,14 @@ async function main() {
     errors.push('dexs: ' + (e && e.message ? e.message : String(e)));
   }
   if (feesProtos) families = aggregate(feesProtos, dexProtos || []);
-  const ours = measureOurs(errors);
+  // CR-0077: the our-row merges the Domain core ledger + ignition 24h measure (keyless GET,
+  // fail-SOFT — an unreachable source degrades to null and is RECEIPTED in ours.mergeErrors;
+  // it must NOT flip the book-wide ok flag, the DefiLlama sources own that truth)
+  const oursErrors = [];
+  const coreBook = await fetchJsonKeyless(CORE_BOOK_URL, oursErrors, 'core-book');
+  const actBook = await fetchJsonKeyless(ACT_BOOK_URL, oursErrors, 'activation-book');
+  const ours = measureOurs(errors, coreBook, actBook);
+  if (oursErrors.length) ours.mergeErrors = oursErrors; // honest receipt, never silent
 
   const book = {
     ok: errors.length === 0,
@@ -177,7 +222,7 @@ async function main() {
       runAt,
       cadenceMin: 1440,
       sources,
-      method: 'public GET measurement · no keys · no invention · families matched by name prefix, components kept whole · ours measured from the live engine book'
+      method: 'public GET measurement · no keys · no invention · families matched by name prefix, components kept whole · ours measured from the live engine books (world + Domain core ledger + ignition 24h)'
     },
     families,
     ours: Object.assign({ tier: 'ours' }, ours),
