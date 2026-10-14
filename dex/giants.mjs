@@ -24,6 +24,9 @@ const WORLD = new URL('./world.json', import.meta.url).pathname;
  * a freshness guard (≤30h) — stale books never masquerade as fresh ones. */
 const CORE_BOOK_URL = 'https://roshpinacare-sys.github.io/Domain/agents/dex-core.json';
 const ACT_BOOK_URL = 'https://roshpinacare-sys.github.io/Domain/agents/dex-activation.json';
+// R31 (DEX-VOLUME-MANDATE, chain i=6 · trace 1a135930da12227d): the sweep machine's own
+// 24h tape book — the freshest measured volume/fees rail. Same repo, fail-soft read.
+const SWEEP_FLOW = new URL('./flow.json', import.meta.url).pathname;
 const UA = 'saos-giants-beat/1.0 (keyless public measurement; repo roshpinacare-sys/Console)';
 const FEES_URL = 'https://api.llama.fi/overview/fees?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
 const DEXS_URL = 'https://api.llama.fi/overview/dexs?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true';
@@ -126,6 +129,27 @@ function measureOurs(errors, coreBook, actBook) {
       const ageH = (Date.now() - Date.parse(actBook.at || '')) / 3600000;
       if (isFinite(ageH) && ageH <= 30) m24 = actBook.measure24h;
     }
+    // R31: the sweep rail (saos-dex-sweep/1) — merge fail-soft, freshness-guarded like the
+    // others; displayed AS ITS OWN RAIL + an honestly-labeled combined sum (no double-count
+    // claims: the two books measure different engine tapes; if they overlap the sum is
+    // explicitly marked "sum-of-rails").
+    let sweep24 = null;
+    try {
+      const f = JSON.parse(readFileSync(SWEEP_FLOW, 'utf8'));
+      const ageH = (Date.now() - Date.parse(f.publishedAt || '')) / 3600000;
+      if (isFinite(ageH) && ageH <= 30 && f.window && typeof f.window.trades === 'number') {
+        sweep24 = {
+          volQuoteMu: Number(f.vol24QuoteMu) || 0,
+          feesMu: Number(f.feeMeterTotalMu) || 0,
+          trades: f.window.trades,
+          markets: Object.keys(f.markets || {}).length,
+          coverage: f.window.coverage || null,
+          at: f.publishedAt || null,
+        };
+      }
+    } catch (e) {
+      errors.push('sweep-flow: ' + (e && e.message ? e.message : String(e)));
+    }
     return {
       name: 'SAOS DEX (ריבוני · keyless)',
       lastPriceUsds: m && m.poolMid ? r2(m.poolMid / 1000) : null,
@@ -137,8 +161,12 @@ function measureOurs(errors, coreBook, actBook) {
       vol24h: m24 ? r4((Number(m24.volumeInMu) || 0) / 1e6) : null,
       fees24h: m24 ? r4((Number(m24.fees24hMu) || 0) / 1e6) : null,
       fills24h: m24 ? m24.fills : null,
-      source: 'dex/world.json (' + (w.publishedAt || '?') + ') + Domain/agents/dex-core.json (core ledger' + (coreFresh ? ', fresh seq ' + coreSeq : ', stale-or-absent') + ') + dex-activation.json (24h measure' + (m24 ? ', fresh' : ', stale-or-absent') + ')',
-      note: 'מדידה מספרי-המנוע החיים (world + core + activation) · עמלות-צבירה במילי-יחידות-פנימיות (SIM) · נפח/עמלות-24ש׳ נמדדים מהפנקס-החי כשהוא טרי (≤30ש׳) · לא ממציאים כלום · אפס-תביעת-ערך-חוץ'
+      sweep24h: sweep24 ? { vol24h: r4(sweep24.volQuoteMu / 1e6), fees24h: r4(sweep24.feesMu / 1e6), trades: sweep24.trades, markets: sweep24.markets, coverage: sweep24.coverage, at: sweep24.at } : null,
+      vol24hSumOfRails: r4(((m24 && (Number(m24.volumeInMu) || 0)) || 0) / 1e6 + (sweep24 ? sweep24.volQuoteMu / 1e6 : 0)),
+      fees24hSumOfRails: r4(((m24 && (Number(m24.fees24hMu) || 0)) || 0) / 1e6 + (sweep24 ? sweep24.feesMu / 1e6 : 0)),
+      fills24hSumOfRails: (m24 && m24.fills ? m24.fills : 0) + (sweep24 ? sweep24.trades : 0),
+      source: 'dex/world.json (' + (w.publishedAt || '?') + ') + Domain/agents/dex-core.json (core ledger' + (coreFresh ? ', fresh seq ' + coreSeq : ', stale-or-absent') + ') + dex-activation.json (24h measure' + (m24 ? ', fresh' : ', stale-or-absent') + ') + dex/flow.json (sweep tape' + (sweep24 ? ', fresh' : ', stale-or-absent') + ')',
+      note: 'מדידה מספרי-המנוע החיים (world + core + activation + sweep-tape) · עמלות-צבירה במילי-יחידות-פנימיות (SIM) · נפח/עמלות-24ש׳ נמדדים מהפנקס-החי כשהוא טרי (≤30ש׳) · SumOfRails = חיבור-גלוי של שתי-המסילות (activation + sweep), מסומן-כנה · לא ממציאים כלום · אפס-תביעת-ערך-חוץ'
     };
   } catch (e) {
     errors.push('ours: ' + (e && e.message ? e.message : String(e)));
