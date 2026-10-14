@@ -24,10 +24,10 @@ jobs:
     env:
       FLEET_ROSTER_MAP: ${{ secrets.FLEET_ROSTER_MAP }} # refs layer (19-d): ref→name resolution for books + write-time scrub
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
       - name: Scrub estate names from all published books
