@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-10-13T22:37:33.311Z",
+  "generatedAt": "2026-10-14T04:42:40.940Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -16,7 +16,7 @@
     ],
     "opId": "saos.weave.core.v1",
     "maxPagesPerAccount": 250,
-    "opsScanned": 55410,
+    "opsScanned": 55430,
     "perAccount": [
       {
         "account": "acct-01",
@@ -27,7 +27,7 @@
       {
         "account": "acct-00",
         "pages": 250,
-        "anchorOps": 19,
+        "anchorOps": 16,
         "stoppedBy": "budget"
       },
       {
@@ -55,23 +55,23 @@
     "verdict": "STALLED"
   },
   "freshness": {
-    "latestAgeHours": 39.2,
+    "latestAgeHours": 45.3,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 66,
-    "anchorOpsSeen": 70,
+    "uniqueCheckpoints": 63,
+    "anchorOpsSeen": 67,
     "retriesDeduped": 4,
     "witnesses": {
       "acct-01": 47,
-      "acct-00": 19,
+      "acct-00": 16,
       "acct-04": 0
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 1526,
+      "total": 1529,
       "sample": [
         1597,
         1595,
@@ -128,11 +128,11 @@
     }
   },
   "attestations": {
-    "ranges": 66,
-    "covered": 67,
+    "ranges": 63,
+    "covered": 64,
     "observedSpan": 1644,
-    "coverageRatio": 0.041,
-    "holesTotal": 64,
+    "coverageRatio": 0.039,
+    "holesTotal": 61,
     "holes": [
       {
         "from": 16,
@@ -208,18 +208,6 @@
       },
       {
         "from": 288,
-        "to": 1546
-      },
-      {
-        "from": 1548,
-        "to": 1548
-      },
-      {
-        "from": 1550,
-        "to": 1550
-      },
-      {
-        "from": 1552,
         "to": 1552
       },
       {
@@ -253,18 +241,30 @@
       {
         "from": 1568,
         "to": 1568
+      },
+      {
+        "from": 1570,
+        "to": 1570
+      },
+      {
+        "from": 1572,
+        "to": 1572
+      },
+      {
+        "from": 1574,
+        "to": 1574
       }
     ],
     "holesTruncated": true,
     "overlapsTotal": 0,
     "overlaps": [],
     "wideHoleMin": 30,
-    "widestHole": 1259,
+    "widestHole": 1265,
     "wideHolesTotal": 3,
     "wideHoles": [
       {
         "from": 288,
-        "to": 1546
+        "to": 1552
       },
       {
         "from": 92,
@@ -275,14 +275,14 @@
         "to": 90
       }
     ],
-    "wideUncovered": 1368,
-    "sliversTotal": 61,
-    "sliverUncovered": 209,
+    "wideUncovered": 1374,
+    "sliversTotal": 58,
+    "sliverUncovered": 206,
     "state": "HOLED"
   },
   "cadence": {
-    "medianMinutes": 99.45436666666667,
-    "maxMinutes": 23712
+    "medianMinutes": 108,
+    "maxMinutes": 24044
   },
   "latest": {
     "checkpoint": 1598,
@@ -853,45 +853,6 @@
       "witness": "acct-00"
     },
     {
-      "checkpoint": 1493,
-      "root": "0x2c008b7d590db03c0c62aa1cfa7787a1ca14f47c270020fad3df1bd0eadd8534",
-      "attFrom": 1551,
-      "attTo": 1551,
-      "attestations": 1551,
-      "headHash": "0x2c008b7d590db03c0c62aa1cfa7787a1ca14f47c270020fad3df1bd0eadd8534",
-      "commit": "39be3b7",
-      "at": "2026-10-06T21:46:03.326Z",
-      "txid": "0e7f6b00ffe6d54b0806bf901bd64f6252c191e2",
-      "block": 110214369,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1491,
-      "root": "0xcafb47045cc838421cb366bdcd654652a4bf134c9688b1b885cf7e52a7aec766",
-      "attFrom": 1549,
-      "attTo": 1549,
-      "attestations": 1549,
-      "headHash": "0xcafb47045cc838421cb366bdcd654652a4bf134c9688b1b885cf7e52a7aec766",
-      "commit": "eea5013",
-      "at": "2026-10-06T20:47:53.522Z",
-      "txid": "3905287c41d3faab52658335ffa45dfef4708446",
-      "block": 110213211,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1489,
-      "root": "0x162d11fc7641fb3ce59d4a092348815eabebcf2536045707b7cd6b16fde33e88",
-      "attFrom": 1547,
-      "attTo": 1547,
-      "attestations": 1547,
-      "headHash": "0x162d11fc7641fb3ce59d4a092348815eabebcf2536045707b7cd6b16fde33e88",
-      "commit": "764901d",
-      "at": "2026-10-06T20:20:19.835Z",
-      "txid": "484e31cd5349c67e73dcdf504bf9d430718069e3",
-      "block": 110212662,
-      "witness": "acct-00"
-    },
-    {
       "checkpoint": 280,
       "root": "0x4c9c65203a0fe8c73904106a9f567d9aa0fcdd91ec42434b212740078fc7c9d4",
       "attFrom": 287,
@@ -1071,6 +1032,45 @@
       "at": "2026-09-15T11:20:03.653Z",
       "txid": "3133dbc3aea2384ae971d0b4d4798dba6afaae36",
       "block": 109599580,
+      "witness": "acct-01"
+    },
+    {
+      "checkpoint": 38,
+      "root": "0xab8ad59ba1e55b1f43330e7f00a909ed3c453bea64a7b6a7b58153b3dfcf3066",
+      "attFrom": 45,
+      "attTo": 45,
+      "attestations": 45,
+      "headHash": "0xab8ad59ba1e55b1f43330e7f00a909ed3c453bea64a7b6a7b58153b3dfcf3066",
+      "commit": "b0ca370",
+      "at": "2026-09-15T11:09:23.237Z",
+      "txid": "43499ff38aaec0c07b79254aa05f15eb8c18e9aa",
+      "block": 109599367,
+      "witness": "acct-01"
+    },
+    {
+      "checkpoint": 34,
+      "root": "0x91f1c051b98f1a4df9413fa23b7b811a669dcac3fb8b9114c6c3a8d4f5824f88",
+      "attFrom": 41,
+      "attTo": 41,
+      "attestations": 41,
+      "headHash": "0x91f1c051b98f1a4df9413fa23b7b811a669dcac3fb8b9114c6c3a8d4f5824f88",
+      "commit": "7fa12b2",
+      "at": "2026-09-15T10:34:47.613Z",
+      "txid": "92ce6e0ad698ccd811d8bb19a84801e41ef7c9db",
+      "block": 109598678,
+      "witness": "acct-01"
+    },
+    {
+      "checkpoint": 28,
+      "root": "0xcb73fb88bf77d40a27c7e2e1cca38ea1b64b249ad550ca1e223ace06ea71bc79",
+      "attFrom": 35,
+      "attTo": 35,
+      "attestations": 35,
+      "headHash": "0xcb73fb88bf77d40a27c7e2e1cca38ea1b64b249ad550ca1e223ace06ea71bc79",
+      "commit": "e165e84",
+      "at": "2026-09-15T00:39:40.341Z",
+      "txid": "73bd408f6a52a7dc144129a9d6408a9a39725c54",
+      "block": 109586824,
       "witness": "acct-01"
     }
   ]
