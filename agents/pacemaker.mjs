@@ -59,6 +59,16 @@ const TARGETS = [
   // ~12% fire rate; the board is the estate's ONE red alarm, so it rides here)
   { repo: 'sovereign-lighthouse', wf: 'estate-redboard.yml',  slaMin: 70, why: 'the ONE red board; born post-census; own cron dead' },
   { repo: 'sovereign-lighthouse', wf: 'lighthouse-pulse.yml', slaMin: 70, why: 'lighthouse pulse; schedule starved on new repo' },
+  // income plane (R326 — measured 2026-10-14T06:55Z: 21/21 treasury + 2/2 army
+  // runs are workflow_dispatch, ZERO schedule fires ever; today's 05:41Z and
+  // 03:23Z crons starved. saos-runtime is the R280 public host — new-workflow
+  // schedule registration is the measured new-repo scheduler law, again. The
+  // income arteries ride the pacemaker. SLA is tight BY DESIGN (deviation from
+  // the 2x law, recorded): a starved cron silently halves the 2/day income
+  // cadence; an extra ignition is bounded by the ladders' own canary caps
+  // (≤0.3/leg, ≤0.6 open STEEM, kill-law, maker-only book-law).
+  { repo: 'saos-runtime', wf: 'treasury-ladder.yml', slaMin: 780, why: 'income artery; cron starved on new host; 12h cadence + 1h jitter guard' },
+  { repo: 'saos-runtime', wf: 'army-ladder.yml',     slaMin: 780, why: 'army maker artery; cron starved on new host; 12h cadence + 1h jitter guard' },
   // FleetHQ self-watch (same-repo; the self-healers must not be the single quiet point)
   { repo: 'FleetHQ',   wf: 'opens-closer.yml',      slaMin: 40,  why: 'beacon/office reviver' },
   { repo: 'FleetHQ',   wf: 'silence-watchdog.yml',  slaMin: 40,  why: 'alarm channel' },
