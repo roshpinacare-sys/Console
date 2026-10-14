@@ -31,6 +31,10 @@ jobs:
           bun-version: latest
 
       - name: Render status from the public chain (keyless)
+        env:
+          # exposure law: the renderer speaks refs; the name↔ref map is runtime-only.
+          # The signer set itself is derived from the previous book at HEAD (render.mjs).
+          FLEET_ROSTER_MAP: ${{ secrets.FLEET_ROSTER_MAP }}
         run: bun render.mjs
 
       - name: Commit the beacon
