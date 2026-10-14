@@ -1,12 +1,12 @@
 {
   "format": "agent-verify-results-v1",
-  "generatedAt": "2026-10-14T05:42:04.212Z",
+  "generatedAt": "2026-10-14T14:15:13.473Z",
   "runBy": "github-actions",
-  "durationMs": 6690,
+  "durationMs": 10368,
   "summary": {
     "total": 51,
-    "passed": 48,
-    "failed": 3,
+    "passed": 50,
+    "failed": 1,
     "verdict": "HAS_FAILURES"
   },
   "results": [
@@ -14,7 +14,7 @@
       "id": "A01",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 255
+      "ms": 425
     },
     {
       "id": "A02",
@@ -50,49 +50,49 @@
       "id": "A07",
       "ok": true,
       "details": "11 occurrence(s) of \"saos1\", minimum is 5",
-      "ms": 68
+      "ms": 259
     },
     {
       "id": "A08",
       "ok": true,
-      "details": "agents.length = 111, minimum is 13",
-      "ms": 72
+      "details": "agents.length = 113, minimum is 13",
+      "ms": 251
     },
     {
       "id": "A09",
       "ok": true,
       "details": "stats.attestations = 1676, minimum is 100",
-      "ms": 76
+      "ms": 260
     },
     {
       "id": "A10",
-      "ok": false,
-      "details": "field \"freshness.verdict\" = \"STALE\", expected \"FRESH\"",
-      "ms": 69
+      "ok": true,
+      "details": "field \"freshness.verdict\" = \"FRESH\", expected \"FRESH\"",
+      "ms": 273
     },
     {
       "id": "A11",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 53
+      "ms": 294
     },
     {
       "id": "A12",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 75
+      "ms": 268
     },
     {
       "id": "A13",
       "ok": true,
       "details": "requests.length = 61, minimum is 12",
-      "ms": 59
+      "ms": 268
     },
     {
       "id": "A14",
       "ok": false,
       "details": "pattern matched 3 time(s), first match \"—\"",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A15",
@@ -110,7 +110,7 @@
       "id": "A20",
       "ok": true,
       "details": "pattern not found in body (0 matches)",
-      "ms": 60
+      "ms": 261
     },
     {
       "id": "A21",
@@ -128,7 +128,7 @@
       "id": "A23",
       "ok": true,
       "details": "HTTP 404 (retired, as required)",
-      "ms": 53
+      "ms": 231
     },
     {
       "id": "A24",
@@ -140,7 +140,7 @@
       "id": "A28",
       "ok": true,
       "details": "\"no key, no auth\" found in body",
-      "ms": 57
+      "ms": 258
     },
     {
       "id": "A29",
@@ -152,19 +152,19 @@
       "id": "A30",
       "ok": true,
       "details": "repos.length = 16, minimum is 10",
-      "ms": 74
+      "ms": 339
     },
     {
       "id": "A31",
       "ok": true,
-      "details": "core anchor 46.2h stale on @acct-01 but no non-core op fired after it (honest starvation: RC regen, no inversion)",
-      "ms": 3086
+      "details": "core anchor 2.2h old (fresh, <= 26h) · witness @acct-00 · deep-window read",
+      "ms": 487
     },
     {
       "id": "A32",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 60
+      "ms": 237
     },
     {
       "id": "A33",
@@ -175,32 +175,32 @@
     {
       "id": "A34",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-10-14T04:36:10.939Z\", age 1.10h, maximum 30h",
-      "ms": 1
+      "details": "field \"publishedAt\" = \"2026-10-14T08:55:30.959Z\", age 5.33h, maximum 30h",
+      "ms": 0
     },
     {
       "id": "A35",
       "ok": true,
       "details": "field \"ok\" = true, expected true",
-      "ms": 77
+      "ms": 247
     },
     {
       "id": "A36",
       "ok": true,
-      "details": "field \"publishedAt\" = \"2026-10-14T05:20:23.940Z\", age 0.36h, maximum 30h",
-      "ms": 1
+      "details": "field \"publishedAt\" = \"2026-10-14T13:24:30.915Z\", age 0.84h, maximum 30h",
+      "ms": 0
     },
     {
       "id": "A37",
       "ok": true,
-      "details": "7 assets vs coingecko: WSTEEM +0.40%, PHIVE +0.16%, WSBD +0.00%, WSOL +0.05%, WTRX +0.09%, ETH -0.03%, BTC -0.09% · worst WSTEEM 0.40%, limit 8%",
-      "ms": 170
+      "details": "7 assets vs coingecko: WSTEEM +0.16%, PHIVE +0.78%, WSBD -0.40%, WSOL +0.18%, WTRX -0.01%, ETH +1.06%, BTC +0.40% · worst ETH 1.06%, limit 8%",
+      "ms": 200
     },
     {
       "id": "A38",
       "ok": true,
-      "details": "state.income.treasuryProfitEverMu = 18231983, minimum is 213752",
-      "ms": 1
+      "details": "state.income.treasuryProfitEverMu = 18288329, minimum is 213752",
+      "ms": 0
     },
     {
       "id": "A39",
@@ -212,12 +212,12 @@
       "id": "A40",
       "ok": true,
       "details": "22/22 pages healthy (200 + content floor)",
-      "ms": 1681
+      "ms": 4865
     },
     {
       "id": "A43",
-      "ok": false,
-      "details": "markets.1.bestAsk = 0, minimum is 1",
+      "ok": true,
+      "details": "markets.1.bestAsk = 57, minimum is 1",
       "ms": 1
     },
     {
@@ -230,7 +230,7 @@
       "id": "A53",
       "ok": true,
       "details": "4/4 retired or de-duplicated fronts serve permanent redirect stubs (<= 3500B)",
-      "ms": 231
+      "ms": 528
     },
     {
       "id": "A54",
@@ -254,7 +254,7 @@
       "id": "A57",
       "ok": true,
       "details": "5 occurrence(s) of \"truth.html\", minimum is 2",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "A58",
@@ -266,13 +266,13 @@
       "id": "A59",
       "ok": true,
       "details": "field \"format\" = \"truth-gate-v1\", expected \"truth-gate-v1\"",
-      "ms": 52
+      "ms": 77
     },
     {
       "id": "A60",
       "ok": true,
       "details": "field \"format\" = \"slo-v1\", expected \"slo-v1\"",
-      "ms": 67
+      "ms": 83
     },
     {
       "id": "A61",
@@ -296,7 +296,7 @@
       "id": "A64",
       "ok": true,
       "details": "2/2 artifact paths serve no content (banned, as required)",
-      "ms": 112
+      "ms": 168
     },
     {
       "id": "A65",
@@ -308,13 +308,13 @@
       "id": "A66",
       "ok": true,
       "details": "HTTP 200",
-      "ms": 176
+      "ms": 85
     },
     {
       "id": "A67",
       "ok": true,
       "details": "field \"checks.allFeesAtOrAboveBase\" = true, expected true",
-      "ms": 1
+      "ms": 0
     }
   ]
 }
