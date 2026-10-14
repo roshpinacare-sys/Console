@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+import fs from "node:fs";
 // ─────────────────────────────────────────────────────────────────────
 // THE WEAVE · render.mjs - the keyless console renderer (public chain only)
 //
@@ -9,17 +10,40 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (cashmachine / headcorner /
-// lsa — the fleet matrix). The reader scans every fleet account's history
-// and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. A headcorner-signed anchor now refreshes the line
-// exactly like a cashmachine one.
+// page sign as the account the key declares — the fleet matrix. WHICH
+// accounts: resolved at RUNTIME from the refs layer (19-a estate-name law):
+// FLEET_ROSTER_MAP (workflow secret) or .roster-map.local.json (untracked).
+// Names are DATA, never committed. The reader scans every fleet account's
+// history and merges the anchors into one line, deduped by checkpoint; each
+// row records its witness.
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
+// 19-a estate-name law (R31, measured by the exposure-gate): fleet account names are
+// DATA — runtime resolution from FLEET_ROSTER_MAP / .roster-map.local.json, fail-soft
+// empty (an empty fleet reports its degraded state honestly; it never fabricates).
+function loadFleet() {
+  const names = (j) => {
+    if (j && j.refs && typeof j.refs === "object") return Object.values(j.refs).map((n) => String(n).toLowerCase());
+    if (j && j.names && typeof j.names === "object") return Object.keys(j.names).map((n) => String(n).toLowerCase());
+    return [];
+  };
+  try {
+    const env = process.env.FLEET_ROSTER_MAP;
+    if (env && env.trim().startsWith("{")) {
+      const got = names(JSON.parse(env));
+      if (got.length) return got;
+    }
+  } catch (_) {}
+  try {
+    const local = new URL("./.roster-map.local.json", import.meta.url);
+    if (fs.existsSync(local)) return names(JSON.parse(fs.readFileSync(local, "utf8")));
+  } catch (_) {}
+  return [];
+}
+const FLEET = loadFleet(); // R75: the key declares who signs — names live in the roster map, not in code
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
