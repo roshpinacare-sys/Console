@@ -54,6 +54,11 @@ const TARGETS = [
   // engine plane (native cron proven firing — wide SLA, ignite only if truly stalled)
   { repo: 'saos-runtime', wf: 'sovereign-runtime.yml', slaMin: 150, why: 'engine pulse; native cron alive' },
   { repo: 'saos-runtime', wf: 'grid-watchdog.yml',     slaMin: 180, why: 'watchdog backstop' },
+  // lighthouse plane (born AFTER the 2026-10-12 census — new-repo scheduler law
+  // measured live 2026-10-14: estate-redboard ZERO schedule fires ever, pulse
+  // ~12% fire rate; the board is the estate's ONE red alarm, so it rides here)
+  { repo: 'sovereign-lighthouse', wf: 'estate-redboard.yml',  slaMin: 70, why: 'the ONE red board; born post-census; own cron dead' },
+  { repo: 'sovereign-lighthouse', wf: 'lighthouse-pulse.yml', slaMin: 70, why: 'lighthouse pulse; schedule starved on new repo' },
   // FleetHQ self-watch (same-repo; the self-healers must not be the single quiet point)
   { repo: 'FleetHQ',   wf: 'opens-closer.yml',      slaMin: 40,  why: 'beacon/office reviver' },
   { repo: 'FleetHQ',   wf: 'silence-watchdog.yml',  slaMin: 40,  why: 'alarm channel' },
