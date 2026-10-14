@@ -29,7 +29,7 @@ jobs:
       - name: Node 20
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Conflict-marker tripwire (measured re-break 14:33 — a local-beat writer committed unresolved stash markers into giants.mjs and the beat died on SyntaxError '<<<'; fail loud, never run a broken engine)
         run: |

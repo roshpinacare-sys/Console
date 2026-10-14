@@ -28,7 +28,7 @@ jobs:
       - name: Node 20
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Run the verifier against the live site
         run: node agent/verify/run.mjs

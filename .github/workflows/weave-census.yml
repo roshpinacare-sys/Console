@@ -27,7 +27,7 @@ jobs:
       - name: Node 20
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Chain census (keyless deep read of the anchor protocol)
         run: node agents/weave-census.mjs
