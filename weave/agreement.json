@@ -1,12 +1,12 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-10-14T05:02:35.553Z",
+  "generatedAt": "2026-10-14T12:05:11.694Z",
   "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
   "verdict": "DIVERGE",
   "ledger": {
     "book": "mirror.json",
     "generatedAt": "2026-10-13T21:22:13.643Z",
-    "ageHours": 7.7,
+    "ageHours": 14.7,
     "claims": {
       "headHash": "0xe5a6dc8412d7d7273bd8101a73a5d4f2ba0dff8b216593020d4583c5e17c507e",
       "checkpoints": 1618,
@@ -15,22 +15,22 @@
   },
   "chain": {
     "book": "weave/census.json",
-    "generatedAt": "2026-10-14T04:42:40.940Z",
-    "ageHours": 0.3,
-    "censusVerdict": "STALLED",
+    "generatedAt": "2026-10-14T11:41:52.345Z",
+    "ageHours": 0.4,
+    "censusVerdict": "IRREGULAR",
     "tilingState": "HOLED",
     "latest": {
-      "checkpoint": 1598,
-      "root": "0x1bd530fef00cd1418d81e430783537b9f5728d6d132b96fccfd8a2598f1ac865",
-      "headHash": "0x1bd530fef00cd1418d81e430783537b9f5728d6d132b96fccfd8a2598f1ac865",
-      "at": "2026-10-12T07:27:24.759Z",
-      "witness": "acct-01",
-      "txid": "6f69b95ce7a296a7ca40260a0b58845b8e91537f"
+      "checkpoint": 1623,
+      "root": "0x2e9643f8535e16b7b6da7b2247e232f677b2eff70389eabb18db19d338c3303a",
+      "headHash": "0x2e9643f8535e16b7b6da7b2247e232f677b2eff70389eabb18db19d338c3303a",
+      "at": "2026-10-14T11:12:25.996Z",
+      "witness": "acct-00",
+      "txid": "2fa77ab024ae6af614b43494701841c1e4fafa29"
     },
     "claims": {
-      "headHash": "0x1bd530fef00cd1418d81e430783537b9f5728d6d132b96fccfd8a2598f1ac865",
-      "checkpoints": 1598,
-      "attestations": 1656
+      "headHash": "0x2e9643f8535e16b7b6da7b2247e232f677b2eff70389eabb18db19d338c3303a",
+      "checkpoints": 1623,
+      "attestations": 1681
     }
   },
   "checks": [
@@ -43,19 +43,19 @@
     {
       "name": "checkpoints-monotonic",
       "ledger": 1618,
-      "chain": 1598,
-      "delta": -20,
+      "chain": 1623,
+      "delta": 5,
       "tolerance": "chain ahead up to +60",
-      "match": false
+      "match": true
     },
     {
       "name": "attestations-monotonic",
       "ledger": 1676,
-      "chain": 1656,
-      "delta": -20,
+      "chain": 1681,
+      "delta": 5,
       "tolerance": "chain ahead up to +60",
-      "match": false
+      "match": true
     }
   ],
-  "mismatches": 3
+  "mismatches": 1
 }
