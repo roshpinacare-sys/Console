@@ -1,5 +1,4 @@
 #!/usr/bin/env bun
-import fs from "node:fs";
 // ─────────────────────────────────────────────────────────────────────
 // THE WEAVE · render.mjs - the keyless console renderer (public chain only)
 //
@@ -10,37 +9,17 @@ import fs from "node:fs";
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares. WHICH accounts: never hardcoded
-// here — the signer set is DERIVED from our own previous book (status.json at
-// HEAD, exposure law: zero estate names in the public tree) and resolved
-// through the roster map (FLEET_ROSTER_MAP, runtime-only). Output speaks REFS
-// only: every account field is refOf()'d before the book is written.
-// The chain is the source of truth; the map is the identity layer.
+// page sign as the account the key declares (cashmachine / headcorner /
+// lsa — the fleet matrix). The reader scans every fleet account's history
+// and merges the anchors into one line, deduped by checkpoint; each row
+// records its witness. A headcorner-signed anchor now refreshes the line
+// exactly like a cashmachine one.
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-import { readFileSync } from "node:fs";
-import { R, refOf } from "./agents/refs.mjs";
-
-// Signer set (R75): derived from the previous book at HEAD — never hardcoded.
-// Accepts both shapes: refs (post-scrub book) and, exactly once for the
-// cold-start transition, known estate names (pre-scrub book). Unknown tokens
-// are dropped, honestly.
-function deriveFleet() {
-  try {
-    const prev = JSON.parse(readFileSync(new URL("./status.json", import.meta.url), "utf8"));
-    const accts = Array.isArray(prev?.source?.accounts) ? prev.source.accounts : [];
-    const names = accts
-      .map((a) => R(a) ?? (refOf(a) !== a ? a : null))
-      .filter(Boolean)
-      .map((s) => String(s).toLowerCase());
-    if (names.length) return [...new Set(names)];
-  } catch { /* no previous book — cold start falls through */ }
-  throw new Error("roster unresolved: no previous status.json to derive the signer set from (await-first-book — the chain is the source, an empty derivation is a red run)");
-}
-const FLEET = deriveFleet(); // R75: the key declares who signs
+const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
@@ -147,7 +126,7 @@ const explorer = (txid) => `https://steemscan.com/transaction/${txid}`;
 const status = {
   format: "weave-console-chain-v1",
   generatedAt: new Date().toISOString(),
-  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET.map(refOf), account: refOf(last.witness), opId: OP_ID },
+  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET, account: last.witness, opId: OP_ID },
   freshness: {
     verdict,
     ageHours: Math.round(ageHours * 10) / 10,
@@ -155,7 +134,7 @@ const status = {
     cadence: "1h",
   },
   witness: {
-    account: refOf(last.witness),
+    account: last.witness,
     opId: OP_ID,
     txid: last.txid,
     block: last.block,
@@ -176,7 +155,7 @@ const status = {
     attTo: a.attTo,
     at: a.at,
     txid: a.txid,
-    witness: refOf(a.witness),
+    witness: a.witness,
     explorer: explorer(a.txid),
   })),
 };
@@ -206,8 +185,8 @@ writeFileSync(new URL("./status.json", import.meta.url), text + "\n");
 
 console.log(
   `[render] ${OP_ID} · latest anchor cp#${last.checkpoint} · root ${last.root.slice(0, 18)}… · ` +
-    `txid ${last.txid.slice(0, 12)}… · witness ${refOf(last.witness)} · age ${Math.round(ageHours * 10) / 10}h (${verdict}) · ` +
-    `${anchors.length} anchors read from ${new URL(node).hostname} (${FLEET.length} fleet refs scanned)`
+    `txid ${last.txid.slice(0, 12)}… · witness @${last.witness} · age ${Math.round(ageHours * 10) / 10}h (${verdict}) · ` +
+    `${anchors.length} anchors read from ${new URL(node).hostname} (${FLEET.length} fleet accounts scanned)`
 );
 if (verdict === "STALE") {
   console.log(`[render] HONEST STALE: witness older than ${FRESH_THRESHOLD_H}h; the page will show the takeover window`);
