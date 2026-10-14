@@ -51,6 +51,12 @@ const TARGETS = [
   { repo: 'Autonomy',  wf: 'artery-integrity.yml',  slaMin: 130, why: 'cadence 60' },
   { repo: 'Autonomy',  wf: 'artery-participation.yml', slaMin: 130, why: 'cadence 60' },
   { repo: 'Autonomy',  wf: 'verifier.yml',          slaMin: 130, why: 'truth & quality' },
+  // contract plane (R327 — measured 2026-10-14T11:25Z: contract-check has 7 runs,
+  // ZERO schedule fires ever; the 23/30 cron was born-silent on this host. The
+  // workflow itself is the estate's receipt-law verifier — it went red 07:16Z
+  // and was repaired same-hour by the fleet (9b766a0), but nothing watches the
+  // watcher. slaMin 70 ≈ 2x the nominal 30m cadence.)
+  { repo: 'Autonomy',  wf: 'contract-check.yml',    slaMin: 70,  why: 'receipt-law verifier; own cron born-silent (0 schedule fires in 7 runs); 30m cadence' },
   // engine plane (native cron proven firing — wide SLA, ignite only if truly stalled)
   { repo: 'saos-runtime', wf: 'sovereign-runtime.yml', slaMin: 150, why: 'engine pulse; native cron alive' },
   { repo: 'saos-runtime', wf: 'grid-watchdog.yml',     slaMin: 180, why: 'watchdog backstop' },
