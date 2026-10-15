@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-10-14T21:35:19.333Z",
+  "generatedAt": "2026-10-15T00:27:57.581Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -27,7 +27,7 @@
       {
         "account": "acct-00",
         "pages": 250,
-        "anchorOps": 4,
+        "anchorOps": 6,
         "stoppedBy": "budget"
       },
       {
@@ -41,38 +41,40 @@
   "window": {
     "days": 45,
     "fromCp": 7,
-    "toCp": 1632,
+    "toCp": 1636,
     "fromAt": "2026-09-14T16:57:09.920Z",
-    "toAt": "2026-10-14T20:16:44.311Z",
-    "spanDays": 30.14
+    "toAt": "2026-10-14T21:48:12.572Z",
+    "spanDays": 30.2
   },
   "verdict": "IRREGULAR",
   "recent": {
     "windowHours": 26,
-    "anchorsInWindow": 4,
+    "anchorsInWindow": 6,
     "maxGapMinutes": 315,
-    "openGapMinutes": 79,
-    "verdict": "SPARSE"
+    "openGapMinutes": 160,
+    "verdict": "LIVE"
   },
   "freshness": {
-    "latestAgeHours": 1.3,
+    "latestAgeHours": 2.7,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 51,
-    "anchorOpsSeen": 55,
+    "uniqueCheckpoints": 53,
+    "anchorOpsSeen": 57,
     "retriesDeduped": 4,
     "witnesses": {
-      "acct-00": 4,
+      "acct-00": 6,
       "acct-01": 47,
       "acct-04": 0
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 1575,
+      "total": 1577,
       "sample": [
+        1635,
+        1633,
         1628,
         1629,
         1630,
@@ -120,19 +122,17 @@
         1572,
         1573,
         1574,
-        1569,
-        1567,
-        1565
+        1569
       ],
       "truncated": true
     }
   },
   "attestations": {
-    "ranges": 51,
-    "covered": 52,
-    "observedSpan": 1678,
-    "coverageRatio": 0.031,
-    "holesTotal": 49,
+    "ranges": 53,
+    "covered": 54,
+    "observedSpan": 1682,
+    "coverageRatio": 0.032,
+    "holesTotal": 51,
     "holes": [
       {
         "from": 16,
@@ -276,23 +276,49 @@
       }
     ],
     "wideUncovered": 1413,
-    "sliversTotal": 46,
-    "sliverUncovered": 213,
+    "sliversTotal": 48,
+    "sliverUncovered": 215,
     "state": "HOLED"
   },
   "cadence": {
-    "medianMinutes": 309,
+    "medianMinutes": 248,
     "maxMinutes": 26202
   },
   "latest": {
-    "checkpoint": 1632,
-    "root": "0xea35e7e86a335831dc86f6bee6579e8d08b7958cae5f67ef9b33da952c3cc83e",
-    "headHash": "0xea35e7e86a335831dc86f6bee6579e8d08b7958cae5f67ef9b33da952c3cc83e",
-    "at": "2026-10-14T20:16:44.311Z",
+    "checkpoint": 1636,
+    "root": "0x5d2a7e248f0751f0574a30b4d1de96a5b4d16033d530f12d9fcfe0bf5e9c4a0e",
+    "headHash": "0x5d2a7e248f0751f0574a30b4d1de96a5b4d16033d530f12d9fcfe0bf5e9c4a0e",
+    "at": "2026-10-14T21:48:12.572Z",
     "witness": "acct-00",
-    "txid": "abd74549c875852305e3829e0db4e28ce6c70e11"
+    "txid": "4e3576780015023beac399255acef13086233413"
   },
   "rows": [
+    {
+      "checkpoint": 1636,
+      "root": "0x5d2a7e248f0751f0574a30b4d1de96a5b4d16033d530f12d9fcfe0bf5e9c4a0e",
+      "attFrom": 1694,
+      "attTo": 1694,
+      "attestations": 1694,
+      "headHash": "0x5d2a7e248f0751f0574a30b4d1de96a5b4d16033d530f12d9fcfe0bf5e9c4a0e",
+      "commit": "69b7d39",
+      "at": "2026-10-14T21:48:12.572Z",
+      "txid": "4e3576780015023beac399255acef13086233413",
+      "block": 110443785,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1634,
+      "root": "0x001adb9da871f4bddbf0a0931051fb145623a14352a86899be5300085be0217d",
+      "attFrom": 1692,
+      "attTo": 1692,
+      "attestations": 1692,
+      "headHash": "0x001adb9da871f4bddbf0a0931051fb145623a14352a86899be5300085be0217d",
+      "commit": "ef162d3",
+      "at": "2026-10-14T21:34:55.531Z",
+      "txid": "5d11a11a8aee3434fce1243d3e395a24e5882d49",
+      "block": 110443519,
+      "witness": "acct-00"
+    },
     {
       "checkpoint": 1632,
       "root": "0xea35e7e86a335831dc86f6bee6579e8d08b7958cae5f67ef9b33da952c3cc83e",
