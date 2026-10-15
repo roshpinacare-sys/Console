@@ -1,7 +1,7 @@
 {
   "ok": true,
   "book": "saos-fee-law/1.0",
-  "publishedAt": "2026-10-14T12:22:27.299Z",
+  "publishedAt": "2026-10-15T12:06:57.652Z",
   "engine": "saos-fee-law/1.0 fee-law · R76 the vol-aware dynamic fee law (the Meteora take)",
   "verdict": "LIVE (the measured volatility raised 1 pool fee(s) above base)",
   "law": {
@@ -14,35 +14,35 @@
     "mechanism": "the Meteora take: fees rise with MEASURED volatility so LPs are compensated exactly when their risk rises · our σ is measured from our own official book only"
   },
   "inputs": {
-    "worldAt": "2026-10-14T11:46:33.459Z",
-    "ageHours": 0.6,
+    "worldAt": "2026-10-15T12:03:33.606Z",
+    "ageHours": 0.06,
     "maxAgeH": 30,
     "fresh": true,
     "market": "SAOS/USDS",
     "twapDevBps": 0,
-    "fairGapBps": 9.95,
-    "range24Bps": 100.3,
-    "sigmaBps": 100.3,
+    "fairGapBps": 30.03,
+    "range24Bps": 0,
+    "sigmaBps": 30.03,
     "stats24": {
-      "high24": 1002,
-      "low24": 992,
-      "last": 992
+      "high24": 0,
+      "low24": 0,
+      "last": 0
     }
   },
   "pools": [
     {
       "key": "SAOS/USDS",
       "baseBps": 30,
-      "sigmaBps": 100.3,
+      "sigmaBps": 30.03,
       "feeBps": 60,
       "deltaBps": 30,
-      "basis": "measured (twapDev 0bps · fairGap 9.95bps · range24 100.30bps)"
+      "basis": "measured (twapDev 0bps · fairGap 30.03bps · range24 0.00bps)"
     },
     {
       "key": "USDS/WSTEEM",
-      "baseBps": 80,
+      "baseBps": 91,
       "sigmaBps": null,
-      "feeBps": 80,
+      "feeBps": 91,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
@@ -56,25 +56,25 @@
     },
     {
       "key": "USDS/WSBD",
-      "baseBps": 1181,
+      "baseBps": 1284,
       "sigmaBps": null,
-      "feeBps": 1181,
+      "feeBps": 1284,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
     {
       "key": "ENERGY/USDS",
-      "baseBps": 33,
+      "baseBps": 30,
       "sigmaBps": null,
-      "feeBps": 33,
+      "feeBps": 30,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
     {
       "key": "PHIVE/USDS",
-      "baseBps": 31,
+      "baseBps": 30,
       "sigmaBps": null,
-      "feeBps": 31,
+      "feeBps": 30,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     }
