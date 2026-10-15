@@ -61,6 +61,12 @@ const SYSTEM_PAGES = [
 const SYSTEM_MIN_BYTES = 10000;
 const STUB_MAX_BYTES = 2500;
 const STUB_REDIRECT_TO = "/Console/";
+// R360 (owner order, trace 1a13bce50e782eed): one system · one channel — the
+// sovereign front is the OFFICIAL redirector to GIANT and must stay a thin
+// pointer (padding it would rebuild the duplication R360 banned). So it is
+// measured as a redirector, not by the byte floor: refresh + canonical to
+// GIANT, and GIANT itself must answer 200 (a stronger check than bytes).
+const SOVEREIGN_REDIRECT_TO = "https://roshpinacare-sys.github.io/Pulse/giant/";
 
 // The current-generation pages the link sweep walks (the console SPA, the
 // wallet, the truth gate, the receipt wall, the content hub entry, and the
@@ -224,7 +230,7 @@ function bucketFor(days, date) {
       ok ? "" : "expected agent-bridgehead-state-v1");
   } else record("G6-bridgehead-sane", "FAIL", `agent/state.json unreadable (HTTP ${bridge.status})`);
 
-  // ── G8: the complete map (R61) ─────────────────────────────────────
+  // ── G8: the complete map (R61) + R360 redirector refinement ────────
   const mapFailures = [];
   const pageBytes = {};
   for (const p of SYSTEM_PAGES) {
@@ -232,6 +238,19 @@ function bucketFor(days, date) {
     if (!r.ok || !r.text) { mapFailures.push(`${p}: HTTP ${r.status}`); continue; }
     const bytes = Buffer.byteLength(r.text);
     pageBytes[p] = bytes;
+    if (p === "sovereign.html") {
+      // R360: measured as the official redirector — refresh + canonical to
+      // GIANT, and the GIANT target itself must be live (HTTP 200).
+      const refreshOk = r.text.includes(`url=${SOVEREIGN_REDIRECT_TO}`);
+      const canonOk = r.text.includes(`href="${SOVEREIGN_REDIRECT_TO}"`);
+      if (!refreshOk || !canonOk) {
+        mapFailures.push(`sovereign.html: not a valid R360 redirector (refresh=${refreshOk} canonical=${canonOk})`);
+        continue;
+      }
+      const giant = await fetchUrl(SOVEREIGN_REDIRECT_TO);
+      if (!giant.ok) mapFailures.push(`sovereign.html: GIANT target not live (HTTP ${giant.status})`);
+      continue;
+    }
     if (bytes <= SYSTEM_MIN_BYTES) { mapFailures.push(`${p}: ${bytes}B <= ${SYSTEM_MIN_BYTES}B`); continue; }
     if (r.text.includes(`content="0; url=${STUB_REDIRECT_TO}"`)) { mapFailures.push(`${p}: still serves the redirect stub`); continue; }
     if (!/<title>[^<]*SAOS/.test(r.text)) { mapFailures.push(`${p}: no SAOS title`); continue; }
@@ -253,7 +272,7 @@ function bucketFor(days, date) {
   const g8ok = mapFailures.length === 0 && unlinked.length === 0 && unmapped.length === 0 &&
     truthLinked && roastOk && artifactsGone;
   record("G8-complete-map", g8ok ? "PASS" : "FAIL",
-    `${SYSTEM_PAGES.length} system pages (min ${SYSTEM_MIN_BYTES}B) · index links ${SYSTEM_PAGES.length - unlinked.length}/${SYSTEM_PAGES.length} · sitemap ${sitemapOk ? SYSTEM_PAGES.length - unmapped.length + "/" + SYSTEM_PAGES.length : "?"} · roast stub ${roastOk ? "ok" : "BROKEN"} · hub/docs/reports ${artifactsGone ? "404 (banned, as required)" : "HTTP " + artifacts.status + " (still served)"}`,
+    `${SYSTEM_PAGES.length} fronts: ${SYSTEM_PAGES.length - 1} full pages (min ${SYSTEM_MIN_BYTES}B) + sovereign R360-redirector→GIANT (target measured live) · index links ${SYSTEM_PAGES.length - unlinked.length}/${SYSTEM_PAGES.length} · sitemap ${sitemapOk ? SYSTEM_PAGES.length - unmapped.length + "/" + SYSTEM_PAGES.length : "?"} · roast stub ${roastOk ? "ok" : "BROKEN"} · hub/docs/reports ${artifactsGone ? "404 (banned, as required)" : "HTTP " + artifacts.status + " (still served)"}`,
     [mapFailures.join(" | "), unlinked.length ? "not linked from home: " + unlinked.join(" | ") : "", unmapped.length ? "not in sitemap: " + unmapped.join(" | ") : "", roastOk ? "" : "roast stub broken", artifactsGone ? "" : "hub/docs/reports/ not 404"].filter(Boolean).join(" || "));
 
   // ── sandbox-only gates: recorded honestly as SKIP ─────────────────
