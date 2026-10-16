@@ -9,17 +9,65 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (acct-41 / acct-40 /
-// acct-44 — the fleet matrix). The reader scans every fleet account's history
-// and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. A acct-40-signed anchor now refreshes the line
-// exactly like a acct-41 one.
+// page sign as the account the key declares — the fleet matrix. The reader
+// scans every fleet account's history and merges the anchors into one line,
+// deduped by checkpoint; each row records its witness. Any matrix-signed
+// anchor refreshes the line exactly like another.
+//
+// Exposure law (19-d, one-law-two-enforcers): zero account names AND zero
+// pseudo-refs-as-code in this file (measured CI failure 06:06Z: literal
+// acct-NN candidates never exist on-chain — refs are book-speak, not
+// chain-speak). The candidate signer set is derived at RUNTIME from the
+// FLEET_ROSTER_MAP secret (refs layer). The book speaks refs (acct-NN).
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["acct-41", "acct-40", "acct-44"].map((a) => a.toLowerCase()); // R75: the key declares who signs
+// SHAPE-AGNOSTIC refs layer (19-d): every pair (k,v) is indexed by the
+// acct-NN shape test — the acct-NN-looking side is the REF, the other side
+// is the NAME. Accepts {refs:{ref:name}} / {names:{name:ref}} / flat / nested.
+const REF_SHAPE = /^acct-\d+$/i;
+function rosterFromEnv() {
+  try {
+    const m = JSON.parse(process.env.FLEET_ROSTER_MAP || "null");
+    if (!m || typeof m !== "object") return { byName: null, byRef: null };
+    const byName = {};
+    const byRef = {};
+    const feed = (k, v) => {
+      if (typeof k !== "string" || typeof v !== "string") return;
+      const kIsRef = REF_SHAPE.test(k);
+      const vIsRef = REF_SHAPE.test(v);
+      if (kIsRef && !vIsRef) { byRef[k.toLowerCase()] = v; byName[v.toLowerCase()] = k.toLowerCase(); }
+      else if (vIsRef && !kIsRef) { byRef[v.toLowerCase()] = k; byName[k.toLowerCase()] = v.toLowerCase(); }
+      // both refs or both plain — ambiguous shape, skip (fail-honest, no guessing)
+    };
+    for (const [k, v] of Object.entries(m)) {
+      if (typeof v === "string") feed(k, v);
+      else if (v && typeof v === "object") for (const [k2, v2] of Object.entries(v)) feed(k2, v2);
+    }
+    return { byName, byRef };
+  } catch { return { byName: null, byRef: null }; }
+}
+const { byName, byRef } = rosterFromEnv();
+const refOf = (n) => (byName && byName[String(n).toLowerCase()]) || String(n); // name → ref (unknown passes through)
+
+// Candidate signer set: all resolvable NAMES from the runtime map (superset —
+// the chain is the judge, dedupe by checkpoint keeps the line exact).
+// Fail-honest: no names → red run, never a fake line, never literal refs.
+function candidateAccounts() {
+  if (!byName || !Object.keys(byName).length) {
+    throw new Error("roster-unresolved: FLEET_ROSTER_MAP secret missing/empty — refusing to guess the signer set (fail-honest)");
+  }
+  const pool = [...new Set([...Object.keys(byName), ...Object.values(byName)])]
+    .filter((s) => !REF_SHAPE.test(s))
+    .map((s) => s.toLowerCase());
+  if (!pool.length) {
+    throw new Error("roster-unresolved: roster map carries no resolvable account names — refusing to scan refs (fail-honest)");
+  }
+  return [...new Set(pool)].sort();
+}
+const FLEET = candidateAccounts();
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
@@ -135,7 +183,7 @@ const explorer = (txid) => `https://steemscan.com/transaction/${txid}`;
 const status = {
   format: "weave-console-chain-v1",
   generatedAt: new Date().toISOString(),
-  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET, account: last.witness, opId: OP_ID },
+  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET.map(refOf), account: refOf(last.witness), opId: OP_ID }, // books speak refs (19-d)
   freshness: {
     verdict,
     ageHours: Math.round(ageHours * 10) / 10,
@@ -143,7 +191,7 @@ const status = {
     cadence: "1h",
   },
   witness: {
-    account: last.witness,
+    account: refOf(last.witness), // ref at source — the scrub stays belt-and-braces
     opId: OP_ID,
     txid: last.txid,
     block: last.block,
@@ -164,7 +212,7 @@ const status = {
     attTo: a.attTo,
     at: a.at,
     txid: a.txid,
-    witness: a.witness,
+    witness: refOf(a.witness), // ref at source (19-d)
     explorer: explorer(a.txid),
   })),
 };
