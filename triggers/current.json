@@ -1,19 +1,19 @@
 {
   "ok": true,
-  "publishedAt": "2026-10-15T21:44:41.225Z",
+  "publishedAt": "2026-10-16T04:58:05.483Z",
   "engine": "trigger-mesh v1.0.0 (R130, keyless)",
   "rulesTotal": 9,
   "fired": [
     {
-      "id": "T-PARITY-MOVE",
-      "consumer": "money-mover [שער-מפעיל]",
-      "source": "dex/grid.json",
-      "field": "marks.paritySbdPerSteem",
-      "value": 58.2,
-      "threshold": 50,
-      "at": "2026-10-15T21:44:41.225Z",
+      "id": "T-RELAY-GAS-READY",
+      "consumer": "evm-anchor [שער-מפעיל לחתימה]",
+      "source": "proof/pipeline.json",
+      "field": "best.anchorsAffordable",
+      "value": 2222,
+      "threshold": 730,
+      "at": "2026-10-16T04:58:05.482Z",
       "status": "FIRED",
-      "evidence": "dex/grid.json#marks.paritySbdPerSteem=58.2 vs 50"
+      "evidence": "proof/pipeline.json#best.anchorsAffordable=2222 vs 730"
     }
   ],
   "waited": [
@@ -22,9 +22,9 @@
       "consumer": "keeper",
       "source": "dex/grid.json",
       "field": "publishedAt",
-      "value": 2.441134,
+      "value": 4.168405,
       "threshold": 30,
-      "at": "2026-10-15T21:44:41.169Z",
+      "at": "2026-10-16T04:58:05.478Z",
       "status": "WAIT"
     },
     {
@@ -32,9 +32,9 @@
       "consumer": "keeper",
       "source": "dex/money.json",
       "field": "publishedAt",
-      "value": 0.094197,
+      "value": 4.362564,
       "threshold": 30,
-      "at": "2026-10-15T21:44:41.224Z",
+      "at": "2026-10-16T04:58:05.482Z",
       "status": "WAIT"
     },
     {
@@ -42,9 +42,9 @@
       "consumer": "keeper",
       "source": "status.json",
       "field": "freshness.ageHours",
-      "value": 0.1,
+      "value": 1.9,
       "threshold": 26,
-      "at": "2026-10-15T21:44:41.225Z",
+      "at": "2026-10-16T04:58:05.482Z",
       "status": "WAIT"
     },
     {
@@ -52,9 +52,9 @@
       "consumer": "money-mover [שער-מפעיל]",
       "source": "dex/grid.json",
       "field": "fuel.rcFuelSp",
-      "value": 150.333863,
+      "value": 150.336157,
       "threshold": 50,
-      "at": "2026-10-15T21:44:41.225Z",
+      "at": "2026-10-16T04:58:05.482Z",
       "status": "WAIT"
     },
     {
@@ -64,8 +64,18 @@
       "field": "fuel.remainingWeeks",
       "value": 0,
       "threshold": 1,
-      "at": "2026-10-15T21:44:41.225Z",
+      "at": "2026-10-16T04:58:05.482Z",
       "status": "FIRED_COOLDOWN"
+    },
+    {
+      "id": "T-PARITY-MOVE",
+      "consumer": "money-mover [שער-מפעיל]",
+      "source": "dex/grid.json",
+      "field": "marks.paritySbdPerSteem",
+      "value": 15.3,
+      "threshold": 50,
+      "at": "2026-10-16T04:58:05.482Z",
+      "status": "WAIT"
     },
     {
       "id": "T-DEPOSIT-IN",
@@ -74,27 +84,17 @@
       "field": "deposits",
       "value": 0,
       "threshold": 0,
-      "at": "2026-10-15T21:44:41.225Z",
+      "at": "2026-10-16T04:58:05.482Z",
       "status": "WAIT"
-    },
-    {
-      "id": "T-RELAY-GAS-READY",
-      "consumer": "evm-anchor [שער-מפעיל לחתימה]",
-      "source": "proof/pipeline.json",
-      "field": "best.anchorsAffordable",
-      "value": 2222,
-      "threshold": 730,
-      "at": "2026-10-15T21:44:41.225Z",
-      "status": "FIRED_COOLDOWN"
     },
     {
       "id": "T-PIPELINE-STALE",
       "consumer": "keeper",
       "source": "proof/pipeline.json",
       "field": "publishedAt",
-      "value": 12.348685,
+      "value": 19.57209,
       "threshold": 48,
-      "at": "2026-10-15T21:44:41.225Z",
+      "at": "2026-10-16T04:58:05.483Z",
       "status": "WAIT"
     }
   ],
