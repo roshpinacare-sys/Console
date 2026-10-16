@@ -53,10 +53,16 @@ async function readAnchorLine() {
     try {
       const anchors = [];
       for (const account of FLEET) {
+        // per-account isolation (superset roster): one odd account must never
+        // kill the whole node scan — the chain is the judge, the line survives.
+        try {
         let start = -1;
         let own = 0;
         for (let p = 0; p < MAX_PAGES && own < TARGET_ANCHORS; p++) {
-          const hist = await rpc(node, "condenser_api.get_account_history", [account, start, PAGE]);
+          // steem asserts start >= limit (except the -1 head read) — clamp limit
+          // to start when paging backwards so short histories never explode.
+          const lim = start === -1 ? PAGE : Math.min(PAGE, start);
+          const hist = await rpc(node, "condenser_api.get_account_history", [account, start, lim]);
           if (!Array.isArray(hist) || !hist.length) break;
           let lowest = Infinity;
           for (const [idx, entry] of hist) {
@@ -89,6 +95,9 @@ async function readAnchorLine() {
           }
           if (lowest === Infinity || lowest <= 1) break;
           start = Math.max(1, lowest - 1);
+        }
+        } catch (e) {
+          console.log(`[render] account scan skipped (${e && e.message ? String(e.message).slice(0, 80) : e})`);
         }
       }
       if (anchors.length === 0) {
