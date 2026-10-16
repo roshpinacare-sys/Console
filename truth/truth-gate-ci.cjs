@@ -193,6 +193,16 @@ function bucketFor(days, date) {
       // = undetermined (bot walls, origin hiccups) - not proven broken, not blessed.
       const sameOrigin = url.origin === base.origin;
       if (sameOrigin ? !r.ok : (r.ok ? false : !(r.status === 403 || r.status === 0 || r.status >= 500))) {
+        /* 26-G (2026-10-16, trace 1a144995f076ba45): measured two-pass for same-origin —
+         * Pages rebuilds on every push and briefly 404s mid-deploy (measured 12:18Z:
+         * deck/ + versus.html 404 during deploy, 200 seconds later). A same-origin miss
+         * is re-fetched once after 15s; only a twice-confirmed non-200 goes red.
+         * Fail-honest preserved: real 404s still fail — just not deploy-race ghosts. */
+        if (sameOrigin) {
+          await new Promise((res) => setTimeout(res, 15000));
+          const r2 = await fetchUrl(key, 12000);
+          if (r2.ok) continue; // deploy-race transient — measured green on the second pass
+        }
         broken.push(`${page || "(home)"}: ${h} → HTTP ${r.status}`);
       } else if (!sameOrigin && !r.ok) {
         blocked.push(`${page || "(home)"}: ${h} (${r.status})`);
