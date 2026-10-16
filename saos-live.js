@@ -126,7 +126,7 @@ function makeSaosLive(C) {
   }
 
   /* Genesis spec: initial mint mirrors the verified v0 supply 1:1
-   * (126,682 SAOS, issuer acct-00, genesis 2026-09-05). Hard cap
+   * (126,682 SAOS, issuer acct-40, genesis 2026-09-05). Hard cap
    * 21,000,000 SAOS, fixed in the code every node runs. */
   const SAOS_GENESIS = {
     symbol: "SAOS",
@@ -134,7 +134,7 @@ function makeSaosLive(C) {
     decimals: 3,
     maxSupply: "21000000000", // 21,000,000.000 SAOS
     initialMint: "126682000", // 126,682.000 SAOS, mirrors v0 exactly
-    note: "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-00, genesis 2026-09-05)",
+    note: "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-40, genesis 2026-09-05)",
   };
   const TREASURY_GENESIS_ID = "genesis-saos-treasury";
 

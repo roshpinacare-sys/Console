@@ -38,7 +38,7 @@ jobs:
           # 3-c: sig-locked/chain-evidence books + synced site files — names-only
           # identity scrub (no address/id truncation; chain evidence must survive),
           # and they join the survivor check so a producer re-land goes loud.
-          RAW_FILES="$(ls ledger.json saos-live.json saos-live.js wallet.html 2>/dev/null || true)"
+          RAW_FILES="$(ls ledger.json saos-live.json saos-live.js wallet.html render.mjs 2>/dev/null || true)"
           if [ -n "$RAW_FILES" ]; then node agents/redact-telemetry.mjs --names-only $RAW_FILES || true; fi
           # verify: fail the run loudly if any estate name survived. The survivor
           # pattern is built from the roster secret at RUNTIME — no account name
