@@ -376,7 +376,11 @@ async function connect() {
       if (roles[role] && chainRoles[role] && chainRoles[role].includes(roles[role].pub)) matched.push(role);
     }
     if (!matched.includes("posting")) {
-      setStatus("המפתח לא תואם לחשבון הזה. אימות נכשל, השער נשאר נעול", "err");
+      const pubShort = (roles.posting.pub || "").slice(0, 12);
+      const chainShort = (chainRoles.posting[0] || "").slice(0, 12);
+      setStatus("המפתח לא תואם לחשבון הזה. אימות נכשל, השער נשאר נעול"
+        + "<br><small style=\"color:var(--dim)\">נגזר: " + esc(pubShort) + "… · בשרשרת: " + esc(chainShort) + "…"
+        + " · אם הקלט הוא WIF מכספת KEYS-ACCESS (L/K) — אותר שהדור הזה מעולם לא הותקן בשרשרת (13/13 לא-תואמים, נמדד). השתמש בסיסמת-ה-P המקורית של החשבון</small>", "err");
       $("sec").value = "";
       return;
     }
