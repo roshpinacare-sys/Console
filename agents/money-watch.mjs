@@ -103,14 +103,29 @@ let fuel = null;
 let landing = null;
 try {
   const a = await steemAccount();
+  // גל-94 · יחס-VESTS→SP חי מהשרשרת (לא-סטטי): total_vesting_fund/shares.
+  let vestRatio = null;
+  try {
+    const gr = await fetch("https://api.steemit.com", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", method: "condenser_api.get_dynamic_global_properties", params: [], id: 2 }),
+    });
+    const g = (await gr.json())?.result;
+    if (g && num(g.total_vesting_shares) > 0) vestRatio = num(g.total_vesting_fund_steem) / num(g.total_vesting_shares);
+  } catch { /* fail-honest: ratio null → sp null */ }
   const nextPayout = a.next_vesting_withdrawal || null;
   const rateVests = num(a.vesting_withdraw_rate);
   const rateSp = rateVests > 0 ? rateVests / 1630.5 : null; // יחס VESTS→SP חי (נגזר מהחשבון)
+  // גל-94 · SP-נטו = (vesting + קבלות-האצלה − האצלות-יציאה) × יחס-חי — ההון-הנעול-האמיתי;
+  // נזילות-עתידית-ניתנת-לפירוק (13-שבועות). חסר → null כנה, אף-המצאה.
+  const spNetVests = num(a.vesting_shares) + num(a.received_vesting_shares) - num(a.delegated_vesting_shares);
   fuel = {
     ok: true,
     account: STEEM_ACCOUNT_REF,
     steem: num(a.balance),
     sbd: num(a.sbd_balance),
+    sp: vestRatio ? r2(spNetVests * vestRatio) : null,
+    spVests: spNetVests,
     powerdown: {
       active: !!(a.to_withdraw && num(a.to_withdraw) > 0),
       rateVests,
