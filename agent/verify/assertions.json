@@ -1,679 +1,679 @@
 {
- "format": "agent-verify-assertions-v1",
- "baseUrl": "https://roshpinacare-sys.github.io/Console/",
- "notes": {
-  "en": "The network's machine-checkable contract with the agent. Each assertion is measured against the LIVE site, never against the repo. No claim without measurement. R64: the ledger_integrity kind born in the operator-contract repair - the book that defines what was asked vs delivered now proves itself (evidence per delivery + bridgehead agreement); the Console-era backlog R22-R61 was retroactively ledgered with sources.",
-  "he": "החוזה הנבדק-מכונה של הרשת עם הסוכן. כל טענה נמדדת מול האתר החי, לעולם לא מול הריפו. שום טענה בלי מדידה."
- },
- "assertions": [
-  {
-   "id": "A01",
-   "desc": {
-    "en": "Console home page is reachable (HTTP 200)",
-    "he": "דף הבית של הקונסולה זמין (HTTP 200)"
-   },
-   "kind": "http_ok",
-   "target": ""
+  "format": "agent-verify-assertions-v1",
+  "baseUrl": "https://roshpinacare-sys.github.io/Console/",
+  "notes": {
+    "en": "The network's machine-checkable contract with the agent. Each assertion is measured against the LIVE site, never against the repo. No claim without measurement. R64: the ledger_integrity kind born in the operator-contract repair - the book that defines what was asked vs delivered now proves itself (evidence per delivery + bridgehead agreement); the Console-era backlog R22-R61 was retroactively ledgered with sources.",
+    "he": "החוזה הנבדק-מכונה של הרשת עם הסוכן. כל טענה נמדדת מול האתר החי, לעולם לא מול הריפו. שום טענה בלי מדידה."
   },
-  {
-   "id": "A02",
-   "desc": {
-    "en": "At least 6 console sections marked data-console-section on the home page",
-    "he": "לפחות 6 סקציות קונסולה המסומנות data-console-section בדף הבית"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "data-console-section",
-   "min": 6
-  },
-  {
-   "id": "A03",
-   "desc": {
-    "en": "At least one submenu marked data-submenu on the home page",
-    "he": "לפחות תת-תפריט אחד המסומן data-submenu בדף הבית"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "data-submenu",
-   "min": 1
-  },
-  {
-   "id": "A04",
-   "desc": {
-    "en": "Big-picture hero block (hero-bigpicture) present on the home page",
-    "he": "בלוק התמונה הגדולה (hero-bigpicture) קיים בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "hero-bigpicture"
-  },
-  {
-   "id": "A05",
-   "desc": {
-    "en": "Live fleet section (fleet-live) present on the home page",
-    "he": "סקציית הצי החי (fleet-live) קיימת בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "fleet-live"
-  },
-  {
-   "id": "A06",
-   "desc": {
-    "en": "Admin area (admin-area) present on the home page",
-    "he": "אזור האדמין (admin-area) קיים בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "admin-area"
-  },
-  {
-   "id": "A07",
-   "desc": {
-    "en": "R29 doctrine update: the sovereign wallet page is live and carries its crypto core (saos1 addresses) - the old retirement guard is superseded by A40 page sweep plus this content check",
-    "he": "עדכון דוקטרינה R29: דף הארנק הריבוני חי ונושא את ליבת הקריפטו שלו (כתובות saos1) - משמרת ההוצאה לגמלאות הישנה הוחלפה על ידי סריקת העמודים A40 ובדיקת תוכן זו"
-   },
-   "kind": "contains_min",
-   "target": "wallet.html",
-   "value": "saos1",
-   "min": 5
-  },
-  {
-   "id": "A08",
-   "desc": {
-    "en": "Agents registry holds at least 13 agents",
-    "he": "רישום הסוכנים מכיל לפחות 13 סוכנים"
-   },
-   "kind": "json_min",
-   "target": "agents/registry.json",
-   "field": "agents.length",
-   "min": 13
-  },
-  {
-   "id": "A09",
-   "desc": {
-    "en": "Public mirror holds at least 100 attestations",
-    "he": "המראה הציבורית מכילה לפחות 100 אימותים"
-   },
-   "kind": "json_min",
-   "target": "mirror.json",
-   "field": "stats.attestations",
-   "min": 100
-  },
-  {
-   "id": "A10",
-   "desc": {
-    "en": "Network freshness verdict is FRESH in status.json",
-    "he": "פסק הדין של טריות הרשת הוא FRESH ב-status.json"
-   },
-   "kind": "json_field",
-   "target": "status.json",
-   "field": "freshness.verdict",
-   "value": "FRESH"
-  },
-  {
-   "id": "A11",
-   "desc": {
-    "en": "Agent bridgehead state is reachable (agent/state.json)",
-    "he": "מצב נקודת-הגשר של הסוכן זמין (agent/state.json)"
-   },
-   "kind": "http_ok",
-   "target": "agent/state.json"
-  },
-  {
-   "id": "A12",
-   "desc": {
-    "en": "Agent handoff protocol is reachable (agent/handoff.md)",
-    "he": "פרוטוקול המסירה של הסוכן זמין (agent/handoff.md)"
-   },
-   "kind": "http_ok",
-   "target": "agent/handoff.md"
-  },
-  {
-   "id": "A13",
-   "desc": {
-    "en": "Requests ledger holds at least 12 requests",
-    "he": "ספר הבקשות מכיל לפחות 12 בקשות"
-   },
-   "kind": "json_min",
-   "target": "agent/requests.json",
-   "field": "requests.length",
-   "min": 12
-  },
-  {
-   "id": "A14",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the home page (clean typography only)",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף הבית (טיפוגרפיה נקייה בלבד)"
-   },
-   "kind": "regex_absent",
-   "target": "",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A15",
-   "desc": {
-    "en": "Verification results (verify-results) are visible on the home page",
-    "he": "תוצאות האימות (verify-results) גלויות בדף הבית"
-   },
-   "kind": "contains",
-   "target": "",
-   "value": "verify-results"
-  },
-  {
-   "id": "A16",
-   "desc": {
-    "en": "The achievement loop renders on the home page (container plus five gates)",
-    "he": "לולאת ההישגיות מוצגת בדף הבית (מיכל וחמישה שערים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "loop-gate",
-   "min": 5
-  },
-  {
-   "id": "A20",
-   "desc": {
-    "en": "No emoji, dingbat, arrow or em-dash characters in the knowledge hub home",
-    "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe knowledge hub home"
-   },
-   "kind": "regex_absent",
-   "target": "hub/index.html",
-   "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
-   "flag": "u"
-  },
-  {
-   "id": "A21",
-   "desc": {
-    "en": "Money-layer links route to the in-console exchange view (at least 3 links)",
-    "he": "קישורי שכבת הכסף מובילים לתצוגת הבורסה בקונסולה (לפחות 3 קישורים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "#/exchange/terminal",
-   "min": 3
-  },
-  {
-   "id": "A22",
-   "desc": {
-    "en": "R29 doctrine update: the home page wires the sovereign wallet in both navigation points (pathlink card and footer tools)",
-    "he": "עדכון דוקטרינה R29: דף הבית מחבר את הארנק הריבוני בשתי נקודות הניווט (כרטיס וקישור בכותרת התחתונה)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "wallet.html",
-   "min": 2
-  },
-  {
-   "id": "A23",
-   "desc": {
-    "en": "The retired DEX snapshot stays retired (HTTP 4xx/5xx, content gone)",
-    "he": "צילום הדקס המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
-   },
-   "kind": "http_gone",
-   "target": "saos-dex/"
-  },
-  {
-   "id": "A24",
-   "desc": {
-    "en": "The deposit rails view renders on the home page (rails subview)",
-    "he": "תצוגת עוגני ההפקדה מוצגת בדף הבית (תת-תצוגת rails)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "sub-exchange-rails",
-   "min": 1
-  },
-  {
-   "id": "A28",
-   "desc": {
-    "en": "The public API index exists and documents the endpoints (hub/api/)",
-    "he": "מפתח ה-API הציבורי קיים ומתעד את הנקודות (hub/api/)"
-   },
-   "kind": "contains",
-   "target": "hub/api/",
-   "value": "no key, no auth"
-  },
-  {
-   "id": "A29",
-   "desc": {
-    "en": "Evolution view carries the measured milestones list (at least 4 entries)",
-    "he": "תצוגת האבולוציה נושאת את רשימת אבני-הדרך הנמדדות (לפחות 4)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "kn-miles",
-   "min": 2
-  },
-  {
-   "id": "A30",
-   "desc": {
-    "en": "The GH snapshot fallback is committed and carries the org repos (>= 10)",
-    "he": "תמונת-המצב של גיטהאב מחויבת ונושאת אית ריפואי הארגון (>= 10)"
-   },
-   "kind": "json_min",
-   "target": "agents/gh-snapshot.json",
-   "field": "repos.length",
-   "min": 10
-  },
-  {
-   "id": "A31",
-   "desc": {
-    "en": "No priority inversion on Steem: when the freshest core anchor on the fleet witness line is stale, no non-core op from the account that carries it may have fired after it and consumed its RC budget (R27 detector, keyless chain read). T-A cure 2026-10-05, measured not weakened: the line is multi-signer by R75 doctrine (render.mjs: the key declares who signs). On-chain history: last acct-01-signed saos.weave.core.v1 = 2026-09-20T09:08:45Z; the resumed line signs as @acct-00 (the WIF secret identifies the witness; first op 2026-10-04, Domain coord-bus names acct-00 the fleet head). The old single-account mapping kept failing on a live line; the detector now reads every account of the witness line and judges the freshest core anchor, with every R27 fail branch preserved.",
-    "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה הטרי ביותר על קו העדות של הצי רעב, שום פעולה אחרת של החשבון שנושא אותו לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח). ריפוי T-A 2026-10-05, נמדד ולא נחלש: הקו רב-חותמים לפי דוקטרינת R75 (render.mjs: המפתח מכריז מי חותם). היסטוריית השרשרת: עוגן ה-saos.weave.core.v1 האחרון של acct-01 = 2026-09-20T09:08:45Z; הקו שחזר חותם בשם @acct-00 (סוד ה-WIF מזהה את העד; פעולה ראשונה 2026-10-04, coord-bus של Domain מכנה את acct-00 ראש הצי). המיפוי החד-חשבוני הישן המשיך להיכשל על קו חי; המגלה קורא עכשיו כל חשבון בקו העדות ושופט את עוגן הליבה הטרי ביותר, כל ענפי הכישלון של R27 נשמרו."
-   },
-   "kind": "steem_priority",
-   "accounts": [
-    "acct-01",
-    "acct-00",
-    "acct-04"
-   ],
-   "coreOp": "saos.weave.core.v1",
-   "staleHours": 26
-  },
-  {
-   "id": "A32",
-   "desc": {
-    "en": "The external grid publish is healthy (dex/grid.json ok=true)",
-    "he": "פרסום הגריד החוץ בריא (dex/grid.json ok=true)"
-   },
-   "kind": "json_field",
-   "target": "dex/grid.json",
-   "field": "ok",
-   "value": true
-  },
-  {
-   "id": "A33",
-   "desc": {
-    "en": "The external grid publishes its measured policy verbatim: never sell STEEM below its external USD value",
-    "he": "הגריד החוץ מפרסם את מדיניותו המדודה מילה-במילה: לעולם לא למכור STEEM מתחת לערכו החוץ בדולרים"
-   },
-   "kind": "json_field",
-   "target": "dex/grid.json",
-   "field": "policy.principle",
-   "value": "never sell STEEM below its external USD value; every buy below parity is measured surplus"
-  },
-  {
-   "id": "A34",
-   "desc": {
-    "en": "The external grid runner is alive: dex/grid.json published at most 30h ago (daily cadence)",
-    "he": "רץ-הגריד החוץ חי: dex/grid.json פורסם לפני 30 שעות לכל היותר (קצב יומי)"
-   },
-   "kind": "json_age",
-   "target": "dex/grid.json",
-   "field": "publishedAt",
-   "maxHours": 30
-  },
-  {
-   "id": "A35",
-   "desc": {
-    "en": "The DEX engine publish is healthy (dex/world.json ok=true)",
-    "he": "פרסום מנוע הדקס בריא (dex/world.json ok=true)"
-   },
-   "kind": "json_field",
-   "target": "dex/world.json",
-   "field": "ok",
-   "value": true
-  },
-  {
-   "id": "A36",
-   "desc": {
-    "en": "The DEX engine is alive: dex/world.json published at most 30h ago (R67-C daily dex-beat 19:53Z plus scheduler tolerance)",
-    "he": "מנוע הדקס חי: dex/world.json פורסם לפני 30 שעות לכל היותר (קצב יומי 19:53Z מאז R67-C בתוספת סובלנות-מתזמן)"
-   },
-   "kind": "json_age",
-   "target": "dex/world.json",
-   "field": "publishedAt",
-   "maxHours": 30
-  },
-  {
-   "id": "A37",
-   "desc": {
-    "en": "R28 truth anchor: every active oracle price in world.json stays within 8% of the live CoinGecko market (the oracle proves it tracks reality; 8% because the R67-C daily beat lets intraday market drift accumulate)",
-    "he": "עוגן האמת R28: כל מחיר אורקל פעיל ב-world.json בטווח 8% מהשוק החי ב-CoinGecko (האורקל מוכיח שהוא עוקב אחרי המציאות; 8% כי פעימה יומית מאז R67-C מצבירה סטיית-שוק תוך-יומית)"
-   },
-   "kind": "oracle_drift",
-   "target": "dex/world.json",
-   "maxDriftPct": 8,
-   "assets": {
-    "WSTEEM": "steem",
-    "PHIVE": "hive",
-    "WSBD": "steem-dollars",
-    "WSOL": "solana",
-    "WTRX": "tron",
-    "ETH": "ethereum",
-    "BTC": "bitcoin"
-   }
-  },
-  {
-   "id": "A38",
-   "desc": {
-    "en": "R46 treasury ratchet (monotonic lifetime accrual): treasuryProfitEverMu never drops. The working balance (treasuryProfit) is fuel-consumed by design (economy drains it for ladder/gas), so the ratchet moved to the true monotonic counter (seeded with the git-proven historical high-water 213752mu, commit 4ac9369, 2026-09-17). Floor only ever moves upward.",
-    "he": "ראצ׳ט האוצר R46 (צבירה-מצטברת מונוטונית): treasuryProfitEverMu לעולם לא יורד. היתרה העובדת (treasuryProfit) היא דלק-מתכלה-לפי-תכנון (ה-economy מנקז אותה לסולם/גז), ולכן הראצ׳ט עבר אל המונה-המונוטוני-האמיתי (זרע = השיא-ההיסטורי הגיט-מוכח 213752µ, קומיט 4ac9369, 2026-09-17). הרצפה זזה רק כלפי מעלה."
-   },
-   "kind": "json_min",
-   "target": "dex/world.json",
-   "field": "state.income.treasuryProfitEverMu",
-   "min": 213752
-  },
-  {
-   "id": "A39",
-   "desc": [
+  "assertions": [
     {
-     "en": "R28 rail ratchet (CR-0077 re-anchor): the rail's lifetime WSTEEM inflow never drops. The rail's equity is working fuel consumed by design (peg-keeping through its sealed SETTLE-16/18 floors and caps), so — exactly like A38/R46-b — the ratchet lives on the monotonic counter: lifetime WSTEEM units ever funded into the rail, git-backed (db/rail-lifetime.json, max-loaded, committed only on block-confirmed inflows per Roast-67), price-independent. The old equity floor (17975080mu, measured 2026-09-17) was pinned to the PRE-regenesis chain — git-proven dead (Console world.json h186399@2ba457186 10-10T06:28Z -> h8641@423800931 10-10T14:49Z) and unreachable post-regenesis without minting (forgery, R1). The engine also publishes state.rail.fundedEverMu (lifetime inflow priced at the live anchor) for value-at-anchor reading. Floor only ever moves upward (future CRs raise it as funding accrues).",
-     "he": "ראצ'ט הרכבת R28 (עיגון-מחדש CR-0077): הזרימה-לכל-החיים של WSTEEM אל-המסילה לעולם לא יורדת. ההון-העובד של המסילה נצרך-מעצב (שמירת-עוגן דרך רצפות-ותקרות SETTLE-16/18 החתומות), ולכן — בדיוק כמו A38/R46-b — הראצ'ט חי על המונה-המונוטוני: יחידות-WSTEEM-שמומנו-אי-פעם, גיט-מגובה (db/rail-lifetime.json, max-load, קומיט רק על אישור-בלוק Roast-67), בלתי-תלוי-מחיר. רצפת-ההון הישנה (17975080 מיקרו, נמדדה 2026-09-17) נעוצה-בשרשרת-שלפני-הרג'נזיס — מתה-גיט-מוכח (Console world.json h186399@2ba457186 → h8641@423800931, 10-10-2026) ובלתי-ניתנת-להשגה אחרי-הרג'נזיס בלי-הטבעה (= זיוף, R1). המנוע מפרסם גם state.rail.fundedEverMu (הזרימה-מסומנת-לעוגן-החי). הרצפה רק עולה (CRs עתידיים מגביהים אותה ככל-שהמימון נצבר)."
+      "id": "A01",
+      "desc": {
+        "en": "Console home page is reachable (HTTP 200)",
+        "he": "דף הבית של הקונסולה זמין (HTTP 200)"
+      },
+      "kind": "http_ok",
+      "target": ""
+    },
+    {
+      "id": "A02",
+      "desc": {
+        "en": "At least 6 console sections marked data-console-section on the home page",
+        "he": "לפחות 6 סקציות קונסולה המסומנות data-console-section בדף הבית"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "data-console-section",
+      "min": 6
+    },
+    {
+      "id": "A03",
+      "desc": {
+        "en": "At least one submenu marked data-submenu on the home page",
+        "he": "לפחות תת-תפריט אחד המסומן data-submenu בדף הבית"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "data-submenu",
+      "min": 1
+    },
+    {
+      "id": "A04",
+      "desc": {
+        "en": "Big-picture hero block (hero-bigpicture) present on the home page",
+        "he": "בלוק התמונה הגדולה (hero-bigpicture) קיים בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "hero-bigpicture"
+    },
+    {
+      "id": "A05",
+      "desc": {
+        "en": "Live fleet section (fleet-live) present on the home page",
+        "he": "סקציית הצי החי (fleet-live) קיימת בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "fleet-live"
+    },
+    {
+      "id": "A06",
+      "desc": {
+        "en": "Admin area (admin-area) present on the home page",
+        "he": "אזור האדמין (admin-area) קיים בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "admin-area"
+    },
+    {
+      "id": "A07",
+      "desc": {
+        "en": "R29 doctrine update: the sovereign wallet page is live and carries its crypto core (saos1 addresses) - the old retirement guard is superseded by A40 page sweep plus this content check",
+        "he": "עדכון דוקטרינה R29: דף הארנק הריבוני חי ונושא את ליבת הקריפטו שלו (כתובות saos1) - משמרת ההוצאה לגמלאות הישנה הוחלפה על ידי סריקת העמודים A40 ובדיקת תוכן זו"
+      },
+      "kind": "contains_min",
+      "target": "wallet.html",
+      "value": "saos1",
+      "min": 5
+    },
+    {
+      "id": "A08",
+      "desc": {
+        "en": "Agents registry holds at least 13 agents",
+        "he": "רישום הסוכנים מכיל לפחות 13 סוכנים"
+      },
+      "kind": "json_min",
+      "target": "agents/registry.json",
+      "field": "agents.length",
+      "min": 13
+    },
+    {
+      "id": "A09",
+      "desc": {
+        "en": "Public mirror holds at least 100 attestations",
+        "he": "המראה הציבורית מכילה לפחות 100 אימותים"
+      },
+      "kind": "json_min",
+      "target": "mirror.json",
+      "field": "stats.attestations",
+      "min": 100
+    },
+    {
+      "id": "A10",
+      "desc": {
+        "en": "Network freshness verdict is FRESH in status.json",
+        "he": "פסק הדין של טריות הרשת הוא FRESH ב-status.json"
+      },
+      "kind": "json_field",
+      "target": "status.json",
+      "field": "freshness.verdict",
+      "value": "FRESH"
+    },
+    {
+      "id": "A11",
+      "desc": {
+        "en": "Agent bridgehead state is reachable (agent/state.json)",
+        "he": "מצב נקודת-הגשר של הסוכן זמין (agent/state.json)"
+      },
+      "kind": "http_ok",
+      "target": "agent/state.json"
+    },
+    {
+      "id": "A12",
+      "desc": {
+        "en": "Agent handoff protocol is reachable (agent/handoff.md)",
+        "he": "פרוטוקול המסירה של הסוכן זמין (agent/handoff.md)"
+      },
+      "kind": "http_ok",
+      "target": "agent/handoff.md"
+    },
+    {
+      "id": "A13",
+      "desc": {
+        "en": "Requests ledger holds at least 12 requests",
+        "he": "ספר הבקשות מכיל לפחות 12 בקשות"
+      },
+      "kind": "json_min",
+      "target": "agent/requests.json",
+      "field": "requests.length",
+      "min": 12
+    },
+    {
+      "id": "A14",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the home page (clean typography only)",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בדף הבית (טיפוגרפיה נקייה בלבד)"
+      },
+      "kind": "regex_absent",
+      "target": "",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A15",
+      "desc": {
+        "en": "Verification results (verify-results) are visible on the home page",
+        "he": "תוצאות האימות (verify-results) גלויות בדף הבית"
+      },
+      "kind": "contains",
+      "target": "",
+      "value": "verify-results"
+    },
+    {
+      "id": "A16",
+      "desc": {
+        "en": "The achievement loop renders on the home page (container plus five gates)",
+        "he": "לולאת ההישגיות מוצגת בדף הבית (מיכל וחמישה שערים)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "loop-gate",
+      "min": 5
+    },
+    {
+      "id": "A20",
+      "desc": {
+        "en": "No emoji, dingbat, arrow or em-dash characters in the knowledge hub home",
+        "he": "אין תווי אימוג'י, דינגבט, חץ או מקף-אמה בthe knowledge hub home"
+      },
+      "kind": "regex_absent",
+      "target": "hub/index.html",
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2190}-\\u{21FF}\\u{2B00}-\\u{2BFF}\\u{2014}]",
+      "flag": "u"
+    },
+    {
+      "id": "A21",
+      "desc": {
+        "en": "Money-layer links route to the in-console exchange view (at least 3 links)",
+        "he": "קישורי שכבת הכסף מובילים לתצוגת הבורסה בקונסולה (לפחות 3 קישורים)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "#/exchange/terminal",
+      "min": 3
+    },
+    {
+      "id": "A22",
+      "desc": {
+        "en": "R29 doctrine update: the home page wires the sovereign wallet in both navigation points (pathlink card and footer tools)",
+        "he": "עדכון דוקטרינה R29: דף הבית מחבר את הארנק הריבוני בשתי נקודות הניווט (כרטיס וקישור בכותרת התחתונה)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "wallet.html",
+      "min": 2
+    },
+    {
+      "id": "A23",
+      "desc": {
+        "en": "The retired DEX snapshot stays retired (HTTP 4xx/5xx, content gone)",
+        "he": "צילום הדקס המבוטל נשאר מבוטל (HTTP 4xx/5xx, התוכן הוסר)"
+      },
+      "kind": "http_gone",
+      "target": "saos-dex/"
+    },
+    {
+      "id": "A24",
+      "desc": {
+        "en": "The deposit rails view renders on the home page (rails subview)",
+        "he": "תצוגת עוגני ההפקדה מוצגת בדף הבית (תת-תצוגת rails)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "sub-exchange-rails",
+      "min": 1
+    },
+    {
+      "id": "A28",
+      "desc": {
+        "en": "The public API index exists and documents the endpoints (hub/api/)",
+        "he": "מפתח ה-API הציבורי קיים ומתעד את הנקודות (hub/api/)"
+      },
+      "kind": "contains",
+      "target": "hub/api/",
+      "value": "no key, no auth"
+    },
+    {
+      "id": "A29",
+      "desc": {
+        "en": "Evolution view carries the measured milestones list (at least 4 entries)",
+        "he": "תצוגת האבולוציה נושאת את רשימת אבני-הדרך הנמדדות (לפחות 4)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "kn-miles",
+      "min": 2
+    },
+    {
+      "id": "A30",
+      "desc": {
+        "en": "The GH snapshot fallback is committed and carries the org repos (>= 10)",
+        "he": "תמונת-המצב של גיטהאב מחויבת ונושאת אית ריפואי הארגון (>= 10)"
+      },
+      "kind": "json_min",
+      "target": "agents/gh-snapshot.json",
+      "field": "repos.length",
+      "min": 10
+    },
+    {
+      "id": "A31",
+      "desc": {
+        "en": "No priority inversion on Steem: when the freshest core anchor on the fleet witness line is stale, no non-core op from the account that carries it may have fired after it and consumed its RC budget (R27 detector, keyless chain read). T-A cure 2026-10-05, measured not weakened: the line is multi-signer by R75 doctrine (render.mjs: the key declares who signs). On-chain history: last acct-01-signed saos.weave.core.v1 = 2026-09-20T09:08:45Z; the resumed line signs as @acct-00 (the WIF secret identifies the witness; first op 2026-10-04, Domain coord-bus names acct-00 the fleet head). The old single-account mapping kept failing on a live line; the detector now reads every account of the witness line and judges the freshest core anchor, with every R27 fail branch preserved.",
+        "he": "אין היפוך עדיפויות ב-Steem: כשעוגן הליבה הטרי ביותר על קו העדות של הצי רעב, שום פעולה אחרת של החשבון שנושא אותו לא נורתה אחריו ולא צרכה את תקציב ה-RC שלו (מגלה R27, קריאת שרשרת חסרת-מפתח). ריפוי T-A 2026-10-05, נמדד ולא נחלש: הקו רב-חותמים לפי דוקטרינת R75 (render.mjs: המפתח מכריז מי חותם). היסטוריית השרשרת: עוגן ה-saos.weave.core.v1 האחרון של acct-01 = 2026-09-20T09:08:45Z; הקו שחזר חותם בשם @acct-00 (סוד ה-WIF מזהה את העד; פעולה ראשונה 2026-10-04, coord-bus של Domain מכנה את acct-00 ראש הצי). המיפוי החד-חשבוני הישן המשיך להיכשל על קו חי; המגלה קורא עכשיו כל חשבון בקו העדות ושופט את עוגן הליבה הטרי ביותר, כל ענפי הכישלון של R27 נשמרו."
+      },
+      "kind": "steem_priority",
+      "accounts": [
+        "acct-01",
+        "acct-00",
+        "acct-04"
+      ],
+      "coreOp": "saos.weave.core.v1",
+      "staleHours": 26
+    },
+    {
+      "id": "A32",
+      "desc": {
+        "en": "The external grid publish is healthy (dex/grid.json ok=true)",
+        "he": "פרסום הגריד החוץ בריא (dex/grid.json ok=true)"
+      },
+      "kind": "json_field",
+      "target": "dex/grid.json",
+      "field": "ok",
+      "value": true
+    },
+    {
+      "id": "A33",
+      "desc": {
+        "en": "The external grid publishes its measured policy verbatim: never sell STEEM below its external USD value",
+        "he": "הגריד החוץ מפרסם את מדיניותו המדודה מילה-במילה: לעולם לא למכור STEEM מתחת לערכו החוץ בדולרים"
+      },
+      "kind": "json_field",
+      "target": "dex/grid.json",
+      "field": "policy.principle",
+      "value": "never sell STEEM below its external USD value; every buy below parity is measured surplus"
+    },
+    {
+      "id": "A34",
+      "desc": {
+        "en": "The external grid runner is alive: dex/grid.json published at most 30h ago (daily cadence)",
+        "he": "רץ-הגריד החוץ חי: dex/grid.json פורסם לפני 30 שעות לכל היותר (קצב יומי)"
+      },
+      "kind": "json_age",
+      "target": "dex/grid.json",
+      "field": "publishedAt",
+      "maxHours": 30
+    },
+    {
+      "id": "A35",
+      "desc": {
+        "en": "The DEX engine publish is healthy (dex/world.json ok=true)",
+        "he": "פרסום מנוע הדקס בריא (dex/world.json ok=true)"
+      },
+      "kind": "json_field",
+      "target": "dex/world.json",
+      "field": "ok",
+      "value": true
+    },
+    {
+      "id": "A36",
+      "desc": {
+        "en": "The DEX engine is alive: dex/world.json published at most 30h ago (R67-C daily dex-beat 19:53Z plus scheduler tolerance)",
+        "he": "מנוע הדקס חי: dex/world.json פורסם לפני 30 שעות לכל היותר (קצב יומי 19:53Z מאז R67-C בתוספת סובלנות-מתזמן)"
+      },
+      "kind": "json_age",
+      "target": "dex/world.json",
+      "field": "publishedAt",
+      "maxHours": 30
+    },
+    {
+      "id": "A37",
+      "desc": {
+        "en": "R28 truth anchor: every active oracle price in world.json stays within 8% of the live CoinGecko market (the oracle proves it tracks reality; 8% because the R67-C daily beat lets intraday market drift accumulate)",
+        "he": "עוגן האמת R28: כל מחיר אורקל פעיל ב-world.json בטווח 8% מהשוק החי ב-CoinGecko (האורקל מוכיח שהוא עוקב אחרי המציאות; 8% כי פעימה יומית מאז R67-C מצבירה סטיית-שוק תוך-יומית)"
+      },
+      "kind": "oracle_drift",
+      "target": "dex/world.json",
+      "maxDriftPct": 8,
+      "assets": {
+        "WSTEEM": "steem",
+        "PHIVE": "hive",
+        "WSBD": "steem-dollars",
+        "WSOL": "solana",
+        "WTRX": "tron",
+        "ETH": "ethereum",
+        "BTC": "bitcoin"
+      }
+    },
+    {
+      "id": "A38",
+      "desc": {
+        "en": "R46 treasury ratchet (monotonic lifetime accrual): treasuryProfitEverMu never drops. The working balance (treasuryProfit) is fuel-consumed by design (economy drains it for ladder/gas), so the ratchet moved to the true monotonic counter (seeded with the git-proven historical high-water 213752mu, commit 4ac9369, 2026-09-17). Floor only ever moves upward.",
+        "he": "ראצ׳ט האוצר R46 (צבירה-מצטברת מונוטונית): treasuryProfitEverMu לעולם לא יורד. היתרה העובדת (treasuryProfit) היא דלק-מתכלה-לפי-תכנון (ה-economy מנקז אותה לסולם/גז), ולכן הראצ׳ט עבר אל המונה-המונוטוני-האמיתי (זרע = השיא-ההיסטורי הגיט-מוכח 213752µ, קומיט 4ac9369, 2026-09-17). הרצפה זזה רק כלפי מעלה."
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "state.income.treasuryProfitEverMu",
+      "min": 213752
+    },
+    {
+      "id": "A39",
+      "desc": [
+        {
+          "en": "R28 rail ratchet (CR-0077 re-anchor): the rail's lifetime WSTEEM inflow never drops. The rail's equity is working fuel consumed by design (peg-keeping through its sealed SETTLE-16/18 floors and caps), so — exactly like A38/R46-b — the ratchet lives on the monotonic counter: lifetime WSTEEM units ever funded into the rail, git-backed (db/rail-lifetime.json, max-loaded, committed only on block-confirmed inflows per Roast-67), price-independent. The old equity floor (17975080mu, measured 2026-09-17) was pinned to the PRE-regenesis chain — git-proven dead (Console world.json h186399@2ba457186 10-10T06:28Z -> h8641@423800931 10-10T14:49Z) and unreachable post-regenesis without minting (forgery, R1). The engine also publishes state.rail.fundedEverMu (lifetime inflow priced at the live anchor) for value-at-anchor reading. Floor only ever moves upward (future CRs raise it as funding accrues).",
+          "he": "ראצ'ט הרכבת R28 (עיגון-מחדש CR-0077): הזרימה-לכל-החיים של WSTEEM אל-המסילה לעולם לא יורדת. ההון-העובד של המסילה נצרך-מעצב (שמירת-עוגן דרך רצפות-ותקרות SETTLE-16/18 החתומות), ולכן — בדיוק כמו A38/R46-b — הראצ'ט חי על המונה-המונוטוני: יחידות-WSTEEM-שמומנו-אי-פעם, גיט-מגובה (db/rail-lifetime.json, max-load, קומיט רק על אישור-בלוק Roast-67), בלתי-תלוי-מחיר. רצפת-ההון הישנה (17975080 מיקרו, נמדדה 2026-09-17) נעוצה-בשרשרת-שלפני-הרג'נזיס — מתה-גיט-מוכח (Console world.json h186399@2ba457186 → h8641@423800931, 10-10-2026) ובלתי-ניתנת-להשגה אחרי-הרג'נזיס בלי-הטבעה (= זיוף, R1). המנוע מפרסם גם state.rail.fundedEverMu (הזרימה-מסומנת-לעוגן-החי). הרצפה רק עולה (CRs עתידיים מגביהים אותה ככל-שהמימון נצבר)."
+        }
+      ],
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "state.rail.lifetime.wsteem",
+      "min": 300000
+    },
+    {
+      "id": "A40",
+      "desc": {
+        "en": "R61 inventory sweep: the full current-generation page set answers 200 with real content (nine restored system fronts included; the retired roast front is covered by A53). T-A mapping cure 2026-10-05: deck, onepager and pitch left this list - they were deliberately de-duplicated to Domain on 2026-10-02 (Task 14-a, single-copy doctrine: Domain owns the public face, Console owns ops, AGENTS.md scope rule), each serves a permanent redirect stub to its Domain canonical and is guarded by A53's stub law instead of a content floor. Demanding 4000B from them demanded the duplication disease back. Stub cure 2026-10-16 (wave-60, sovereign hand): sovereign.html left this list — moved to single-copy doctrine, now guarded by A53 (redirect stub to Pulse/giant). Demanding 10000B from it = the duplication disease back.",
+        "he": "סריקת מלאי R61: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (כולל תשע חזיתות המערכת המשוחזרות; חזית הרוסט שיצאה מהמחזור מכוסה על ידי A53). תיקון-מיפוי T-A 2026-10-05: deck, onepager ו-pitch יצאו מהרשימה - הם הועברו בכוונה ל-Domain ב-2026-10-02 (משימה 14-a, דוקטרינת עותק-אחד: Domain הוא הפנים הציבוריות, Console הוא ההפעלה, כלל-ההיקף ב-AGENTS.md), כל אחד מגיש סטאב-הפניה קבוע ל-canonical שלו ב-Domain ומוגן על ידי חוק-הסטאבים של A53 במקום רצפת-תוכן. לדרוש מהם 4000B = לדרוש את מחלת השכפול בחזרה. תיקון-סטאב 2026-10-16 (גל-60, יד-ריבונית): sovereign.html יצא מהרשימה — הוא הועבר לדוקטרינת-עותק-אחד ומוגן עתה על ידי A53 (סטאב-הפניה ל-Pulse/giant). דרישת 10000B ממנו = מחלת-השכפול בחזרה."
+      },
+      "kind": "pages_ok",
+      "pages": [
+        {
+          "path": "",
+          "minBytes": 60000
+        },
+        {
+          "path": "404.html",
+          "minBytes": 2000
+        },
+        {
+          "path": "hub/index.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/faq.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/fact-sheet.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/glossary.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/compare.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/ecosystem.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "hub/explainer/en.html",
+          "minBytes": 15000
+        },
+        {
+          "path": "hub/articles/en/01-what-is-saos.html",
+          "minBytes": 8000
+        },
+        {
+          "path": "receipts/index.html",
+          "minBytes": 4000
+        },
+        {
+          "path": "wallet.html",
+          "minBytes": 100000
+        },
+        {
+          "path": "truth.html",
+          "minBytes": 4000
+        },
+        {
+          "path": "net.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "money.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "deposits.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "defi.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "versus.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "readiness.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "acid.html",
+          "minBytes": 10000
+        },
+        {
+          "path": "gate.html",
+          "minBytes": 10000
+        }
+      ]
+    },
+    {
+      "id": "A43",
+      "desc": {
+        "en": "SETTLE-17 permanence: the WSTEEM/USDS market is two-sided - at least one live ask exists (the one-sided disease never returns silently)",
+        "he": "קביעות SETTLE-17: שוק USDS/WSTEEM דו-צדדי - קיימת לפחות הצעת מכירה חיה אחת (מחלת החד-צדדיות לא חוזרת בשקט)"
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "markets.1.bestAsk",
+      "min": 1
+    },
+    {
+      "id": "A44",
+      "desc": {
+        "en": "SETTLE-18 permanence (lifetime ratchet): WSTEEM ever-paid by the sovereign micro-rail never falls below the measured floor (300,000 mu). The doses field is a per-run window and cannot be asserted; the lifetime counters ride the chain in db/rail-lifetime.json and are published in state.rail.lifetime",
+        "he": "קביעות SETTLE-18 (ראצ'ט-חיים): WSTEEM ששולם אי-פעם על-ידי מסילת-המיקרו לעולם לא יורד מתחת-לרצפה הנמדדת (300,000µ). שדה-doses הוא חלון-פר-ריצה ואין-לתבוע-עליו; מוני-החיים רוכבים-על-השרשרת ב-db/rail-lifetime.json ומפורסמים ב-state.rail.lifetime"
+      },
+      "kind": "json_min",
+      "target": "dex/world.json",
+      "field": "state.rail.lifetime.wsteem",
+      "min": 300000
+    },
+    {
+      "id": "A53",
+      "desc": {
+        "en": "R61 stub law: every front that left the current generation serves its permanent redirect stub (200, tiny, http-equiv refresh to its single canonical, canonical present). Two honest populations: (1) retired fronts (the stale claims-audit snapshot superseded by the living truth gate); (2) de-duplicated marketing twins (deck, onepager, pitch) - moved to Domain on 2026-10-02 by Task 14-a single-copy doctrine, the Console stub refreshes to the Domain canonical. T-A 2026-10-05: the twins gained their real refresh meta (they were explanatory stubs without one) and joined this law.",
+        "he": "חוק-הסטאבים R61: כל חזית שיצאה מהדור הנוכחי מגישה הפניה קבועה (200, קטן, refresh ל-canonical היחיד שלה, canonical קיים). שתי אוכלוסיות-כנות: (1) חזיתות שיצאו מהמחזור (תמונת-מצב מיושנת של ביקורת טענות, שהוחלפה בשער האמת החי); (2) התאומים-השיווקיים שעברו דה-דופליקציה (deck, onepager, pitch) - עברו ל-Domain ב-2026-10-02 לפי דוקטרינת עותק-אחד (משימה 14-a), סטאב הקונסולה עושה refresh ל-canonical של Domain. T-A 2026-10-05: התאומים קיבלו את מטת ה-refresh האמיתית שלהם (היו סטאבים-הסבר בלי אחד) והצטרפו לחוק הזה. T-גל-60 2026-10-16: sovereign.html (ריבונות→GIANT) הצטרף לחוק-הסטאבים."
+      },
+      "kind": "retired_pages",
+      "pages": [
+        "roast.html",
+        {
+          "path": "deck/index.html",
+          "redirectTo": "https://roshpinacare-sys.github.io/Domain/deck/"
+        },
+        {
+          "path": "onepager/index.html",
+          "redirectTo": "https://roshpinacare-sys.github.io/Domain/onepager/"
+        },
+        {
+          "path": "pitch/index.html",
+          "redirectTo": "https://roshpinacare-sys.github.io/Domain/pitch/"
+        },
+        {
+          "path": "sovereign.html",
+          "redirectTo": "https://roshpinacare-sys.github.io/Pulse/giant/"
+        }
+      ],
+      "maxBytes": 3500,
+      "redirectTo": "/Console/"
+    },
+    {
+      "id": "A54",
+      "desc": {
+        "en": "R61 complete map: the home page links every current system surface - the nine system fronts plus the wallet, the truth gate, the content hub and the receipt wall",
+        "he": "המפה המלאה R61: דף הבית מקשר כל פני מערכת נוכחית - תשע חזיתות המערכת וגם הארנק, שער האמת, מרכז התוכן וקיר הקבלות"
+      },
+      "kind": "home_links",
+      "links": [
+        "net.html",
+        "readiness.html",
+        "sovereign.html",
+        "money.html",
+        "deposits.html",
+        "defi.html",
+        "versus.html",
+        "acid.html",
+        "gate.html",
+        "wallet.html",
+        "truth.html",
+        "hub/",
+        "receipts/"
+      ]
+    },
+    {
+      "id": "A55",
+      "desc": {
+        "en": "The truth gate page is live and carries the verdict banner (verdict-banner)",
+        "he": "עמוד שער האמת חי ונושא את באנר פסק-הדין (verdict-banner)"
+      },
+      "kind": "contains",
+      "target": "truth.html",
+      "value": "verdict-banner"
+    },
+    {
+      "id": "A56",
+      "desc": {
+        "en": "The truth gate page carries the run history container (truth-history)",
+        "he": "עמוד שער האמת נושא את מיכל היסטוריית הריצות (truth-history)"
+      },
+      "kind": "contains",
+      "target": "truth.html",
+      "value": "truth-history"
+    },
+    {
+      "id": "A57",
+      "desc": {
+        "en": "R58: the home page wires the truth gate (knowledge card plus footer, at least 2 links)",
+        "he": "R58: דף הבית מחבר את שער האמת (כרטיס ידע ופוטר, לפחות 2 קישורים)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "truth.html",
+      "min": 2
+    },
+    {
+      "id": "A58",
+      "desc": {
+        "en": "R58: the content hub is reachable from the home page (at least 1 link)",
+        "he": "R58: מרכז התוכן נגיש מדף הבית (לפחות קישור אחד)"
+      },
+      "kind": "contains_min",
+      "target": "",
+      "value": "hub/",
+      "min": 1
+    },
+    {
+      "id": "A59",
+      "desc": {
+        "en": "The CI truth machine publishes its verdict (truth/latest.json reachable, format truth-gate-v1)",
+        "he": "מכונת האמת של ה-CI מפרסמת את פסק-דינה (truth/latest.json זמין, פורמט truth-gate-v1)"
+      },
+      "kind": "json_field",
+      "target": "truth/latest.json",
+      "field": "format",
+      "value": "truth-gate-v1"
+    },
+    {
+      "id": "A60",
+      "desc": {
+        "en": "R59 stage 4: the SLO ledger is published (truth/slo.json reachable, format slo-v1)",
+        "he": "שלב 4 של R59: פנקס ה-SLO מפורסם (truth/slo.json זמין, פורמט slo-v1)"
+      },
+      "kind": "json_field",
+      "target": "truth/slo.json",
+      "field": "format",
+      "value": "slo-v1"
+    },
+    {
+      "id": "A61",
+      "desc": {
+        "en": "R59: the truth gate page carries the SLO table container (slo-table)",
+        "he": "R59: עמוד שער האמת נושא את מיכל טבלת ה-SLO (slo-table)"
+      },
+      "kind": "contains",
+      "target": "truth.html",
+      "value": "slo-table"
+    },
+    {
+      "id": "A62",
+      "desc": {
+        "en": "R59: the truth gate page carries the budget burn log container (slo-events)",
+        "he": "R59: עמוד שער האמת נושא את מיכל יומן שריפת התקציב (slo-events)"
+      },
+      "kind": "contains",
+      "target": "truth.html",
+      "value": "slo-events"
+    },
+    {
+      "id": "A63",
+      "desc": {
+        "en": "R59: the truth gate page links the SLO ledger (truth/slo.json, at least 1 link)",
+        "he": "R59: עמוד שער האמת מקשר את פנקס ה-SLO (truth/slo.json, לפחות קישור אחד)"
+      },
+      "kind": "contains_min",
+      "target": "truth.html",
+      "value": "truth/slo.json",
+      "min": 1
+    },
+    {
+      "id": "A64",
+      "desc": {
+        "en": "R61 artifact ban: internal session artifacts (hourly pulse rounds, claims-audit snapshots, token dossiers) are not public content - hub/docs/reports/ serves no content on the live site",
+        "he": "איסור חומרי-שיחות R61: חומרי סשן פנימיים (פעימות שעתיות, תמונות ביקורת טענות, תיקי טוקן) אינם תוכן ציבורי - hub/docs/reports/ לא מגיש תוכן באתר החי"
+      },
+      "kind": "pages_gone",
+      "pages": [
+        "hub/docs/reports/",
+        "hub/docs/reports/index.html"
+      ]
+    },
+    {
+      "id": "A65",
+      "desc": {
+        "en": "R64: the operator contract book is whole - every delivered entry carries real evidence and the bridgehead's requestRef exists in the book as delivered (the anti-run-away instrument, machine-checked)",
+        "he": "R64: ספר חוזה-המפעיל שלם - כל רישום שנמסר נושא ראיות אמיתיות וה-requestRef של ה-bridgehead קיים בספר כמסופק (מכשיר הנגד-בריחה, נבדק מכנית)"
+      },
+      "kind": "ledger_integrity",
+      "bridgehead": "agent/state.json",
+      "book": "agent/requests.json"
+    },
+    {
+      "id": "A66",
+      "desc": {
+        "en": "R76: the dynamic fee law book is served and whole (dex/fee-law.json) - the Meteora take measured from the official book only",
+        "he": "R76: ספר חוק-העמלה הדינמית מוגש ושלם (dex/fee-law.json) - ה-Meteora-take הנמדד מהספר הרשמי בלבד"
+      },
+      "kind": "http_ok",
+      "target": "dex/fee-law.json"
+    },
+    {
+      "id": "A67",
+      "desc": {
+        "en": "R76: the fee law never lowers a fee below the book's base (every pool feeBps >= baseBps in dex/fee-law.json)",
+        "he": "R76: חוק-העמלה לעולם לא מוריד עמלה מתחת לבסיס-הספר (כל feeBps >= baseBps ב-dex/fee-law.json)"
+      },
+      "kind": "json_field",
+      "target": "dex/fee-law.json",
+      "field": "checks.allFeesAtOrAboveBase",
+      "value": true
     }
-   ],
-   "kind": "json_min",
-   "target": "dex/world.json",
-   "field": "state.rail.lifetime.wsteem",
-   "min": 300000
-  },
-  {
-   "id": "A40",
-   "desc": {
-    "en": "R61 inventory sweep: the full current-generation page set answers 200 with real content (nine restored system fronts included; the retired roast front is covered by A53). T-A mapping cure 2026-10-05: deck, onepager and pitch left this list - they were deliberately de-duplicated to Domain on 2026-10-02 (Task 14-a, single-copy doctrine: Domain owns the public face, Console owns ops, AGENTS.md scope rule), each serves a permanent redirect stub to its Domain canonical and is guarded by A53's stub law instead of a content floor. Demanding 4000B from them demanded the duplication disease back. Stub cure 2026-10-16 (wave-60, sovereign hand): sovereign.html left this list — moved to single-copy doctrine, now guarded by A53 (redirect stub to Pulse/giant). Demanding 10000B from it = the duplication disease back.",
-    "he": "סריקת מלאי R61: מלוא מערך העמודים הנוכחי עונה 200 עם תוכן אמיתי (כולל תשע חזיתות המערכת המשוחזרות; חזית הרוסט שיצאה מהמחזור מכוסה על ידי A53). תיקון-מיפוי T-A 2026-10-05: deck, onepager ו-pitch יצאו מהרשימה - הם הועברו בכוונה ל-Domain ב-2026-10-02 (משימה 14-a, דוקטרינת עותק-אחד: Domain הוא הפנים הציבוריות, Console הוא ההפעלה, כלל-ההיקף ב-AGENTS.md), כל אחד מגיש סטאב-הפניה קבוע ל-canonical שלו ב-Domain ומוגן על ידי חוק-הסטאבים של A53 במקום רצפת-תוכן. לדרוש מהם 4000B = לדרוש את מחלת השכפול בחזרה. תיקון-סטאב 2026-10-16 (גל-60, יד-ריבונית): sovereign.html יצא מהרשימה — הוא הועבר לדוקטרינת-עותק-אחד ומוגן עתה על ידי A53 (סטאב-הפניה ל-Pulse/giant). דרישת 10000B ממנו = מחלת-השכפול בחזרה."
-   },
-   "kind": "pages_ok",
-   "pages": [
-    {
-     "path": "",
-     "minBytes": 60000
-    },
-    {
-     "path": "404.html",
-     "minBytes": 2000
-    },
-    {
-     "path": "hub/index.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "hub/faq.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "hub/fact-sheet.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "hub/glossary.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "hub/compare.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "hub/ecosystem.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "hub/explainer/en.html",
-     "minBytes": 15000
-    },
-    {
-     "path": "hub/articles/en/01-what-is-saos.html",
-     "minBytes": 8000
-    },
-    {
-     "path": "receipts/index.html",
-     "minBytes": 4000
-    },
-    {
-     "path": "wallet.html",
-     "minBytes": 100000
-    },
-    {
-     "path": "truth.html",
-     "minBytes": 4000
-    },
-    {
-     "path": "net.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "money.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "deposits.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "defi.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "versus.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "readiness.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "acid.html",
-     "minBytes": 10000
-    },
-    {
-     "path": "gate.html",
-     "minBytes": 10000
-    }
-   ]
-  },
-  {
-   "id": "A43",
-   "desc": {
-    "en": "SETTLE-17 permanence: the WSTEEM/USDS market is two-sided - at least one live ask exists (the one-sided disease never returns silently)",
-    "he": "קביעות SETTLE-17: שוק USDS/WSTEEM דו-צדדי - קיימת לפחות הצעת מכירה חיה אחת (מחלת החד-צדדיות לא חוזרת בשקט)"
-   },
-   "kind": "json_min",
-   "target": "dex/world.json",
-   "field": "markets.1.bestAsk",
-   "min": 1
-  },
-  {
-   "id": "A44",
-   "desc": {
-    "en": "SETTLE-18 permanence (lifetime ratchet): WSTEEM ever-paid by the sovereign micro-rail never falls below the measured floor (300,000 mu). The doses field is a per-run window and cannot be asserted; the lifetime counters ride the chain in db/rail-lifetime.json and are published in state.rail.lifetime",
-    "he": "קביעות SETTLE-18 (ראצ'ט-חיים): WSTEEM ששולם אי-פעם על-ידי מסילת-המיקרו לעולם לא יורד מתחת-לרצפה הנמדדת (300,000µ). שדה-doses הוא חלון-פר-ריצה ואין-לתבוע-עליו; מוני-החיים רוכבים-על-השרשרת ב-db/rail-lifetime.json ומפורסמים ב-state.rail.lifetime"
-   },
-   "kind": "json_min",
-   "target": "dex/world.json",
-   "field": "state.rail.lifetime.wsteem",
-   "min": 300000
-  },
-  {
-   "id": "A53",
-   "desc": {
-    "en": "R61 stub law: every front that left the current generation serves its permanent redirect stub (200, tiny, http-equiv refresh to its single canonical, canonical present). Two honest populations: (1) retired fronts (the stale claims-audit snapshot superseded by the living truth gate); (2) de-duplicated marketing twins (deck, onepager, pitch) - moved to Domain on 2026-10-02 by Task 14-a single-copy doctrine, the Console stub refreshes to the Domain canonical. T-A 2026-10-05: the twins gained their real refresh meta (they were explanatory stubs without one) and joined this law.",
-    "he": "חוק-הסטאבים R61: כל חזית שיצאה מהדור הנוכחי מגישה הפניה קבועה (200, קטן, refresh ל-canonical היחיד שלה, canonical קיים). שתי אוכלוסיות-כנות: (1) חזיתות שיצאו מהמחזור (תמונת-מצב מיושנת של ביקורת טענות, שהוחלפה בשער האמת החי); (2) התאומים-השיווקיים שעברו דה-דופליקציה (deck, onepager, pitch) - עברו ל-Domain ב-2026-10-02 לפי דוקטרינת עותק-אחד (משימה 14-a), סטאב הקונסולה עושה refresh ל-canonical של Domain. T-A 2026-10-05: התאומים קיבלו את מטת ה-refresh האמיתית שלהם (היו סטאבים-הסבר בלי אחד) והצטרפו לחוק הזה. T-גל-60 2026-10-16: sovereign.html (ריבונות→GIANT) הצטרף לחוק-הסטאבים."
-   },
-   "kind": "retired_pages",
-   "pages": [
-    "roast.html",
-    {
-     "path": "deck/index.html",
-     "redirectTo": "https://roshpinacare-sys.github.io/Domain/deck/"
-    },
-    {
-     "path": "onepager/index.html",
-     "redirectTo": "https://roshpinacare-sys.github.io/Domain/onepager/"
-    },
-    {
-     "path": "pitch/index.html",
-     "redirectTo": "https://roshpinacare-sys.github.io/Domain/pitch/"
-    },
-    {
-     "path": "sovereign.html",
-     "redirectTo": "https://roshpinacare-sys.github.io/Pulse/giant/"
-    }
-   ],
-   "maxBytes": 3500,
-   "redirectTo": "/Console/"
-  },
-  {
-   "id": "A54",
-   "desc": {
-    "en": "R61 complete map: the home page links every current system surface - the nine system fronts plus the wallet, the truth gate, the content hub and the receipt wall",
-    "he": "המפה המלאה R61: דף הבית מקשר כל פני מערכת נוכחית - תשע חזיתות המערכת וגם הארנק, שער האמת, מרכז התוכן וקיר הקבלות"
-   },
-   "kind": "home_links",
-   "links": [
-    "net.html",
-    "readiness.html",
-    "sovereign.html",
-    "money.html",
-    "deposits.html",
-    "defi.html",
-    "versus.html",
-    "acid.html",
-    "gate.html",
-    "wallet.html",
-    "truth.html",
-    "hub/",
-    "receipts/"
-   ]
-  },
-  {
-   "id": "A55",
-   "desc": {
-    "en": "The truth gate page is live and carries the verdict banner (verdict-banner)",
-    "he": "עמוד שער האמת חי ונושא את באנר פסק-הדין (verdict-banner)"
-   },
-   "kind": "contains",
-   "target": "truth.html",
-   "value": "verdict-banner"
-  },
-  {
-   "id": "A56",
-   "desc": {
-    "en": "The truth gate page carries the run history container (truth-history)",
-    "he": "עמוד שער האמת נושא את מיכל היסטוריית הריצות (truth-history)"
-   },
-   "kind": "contains",
-   "target": "truth.html",
-   "value": "truth-history"
-  },
-  {
-   "id": "A57",
-   "desc": {
-    "en": "R58: the home page wires the truth gate (knowledge card plus footer, at least 2 links)",
-    "he": "R58: דף הבית מחבר את שער האמת (כרטיס ידע ופוטר, לפחות 2 קישורים)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "truth.html",
-   "min": 2
-  },
-  {
-   "id": "A58",
-   "desc": {
-    "en": "R58: the content hub is reachable from the home page (at least 1 link)",
-    "he": "R58: מרכז התוכן נגיש מדף הבית (לפחות קישור אחד)"
-   },
-   "kind": "contains_min",
-   "target": "",
-   "value": "hub/",
-   "min": 1
-  },
-  {
-   "id": "A59",
-   "desc": {
-    "en": "The CI truth machine publishes its verdict (truth/latest.json reachable, format truth-gate-v1)",
-    "he": "מכונת האמת של ה-CI מפרסמת את פסק-דינה (truth/latest.json זמין, פורמט truth-gate-v1)"
-   },
-   "kind": "json_field",
-   "target": "truth/latest.json",
-   "field": "format",
-   "value": "truth-gate-v1"
-  },
-  {
-   "id": "A60",
-   "desc": {
-    "en": "R59 stage 4: the SLO ledger is published (truth/slo.json reachable, format slo-v1)",
-    "he": "שלב 4 של R59: פנקס ה-SLO מפורסם (truth/slo.json זמין, פורמט slo-v1)"
-   },
-   "kind": "json_field",
-   "target": "truth/slo.json",
-   "field": "format",
-   "value": "slo-v1"
-  },
-  {
-   "id": "A61",
-   "desc": {
-    "en": "R59: the truth gate page carries the SLO table container (slo-table)",
-    "he": "R59: עמוד שער האמת נושא את מיכל טבלת ה-SLO (slo-table)"
-   },
-   "kind": "contains",
-   "target": "truth.html",
-   "value": "slo-table"
-  },
-  {
-   "id": "A62",
-   "desc": {
-    "en": "R59: the truth gate page carries the budget burn log container (slo-events)",
-    "he": "R59: עמוד שער האמת נושא את מיכל יומן שריפת התקציב (slo-events)"
-   },
-   "kind": "contains",
-   "target": "truth.html",
-   "value": "slo-events"
-  },
-  {
-   "id": "A63",
-   "desc": {
-    "en": "R59: the truth gate page links the SLO ledger (truth/slo.json, at least 1 link)",
-    "he": "R59: עמוד שער האמת מקשר את פנקס ה-SLO (truth/slo.json, לפחות קישור אחד)"
-   },
-   "kind": "contains_min",
-   "target": "truth.html",
-   "value": "truth/slo.json",
-   "min": 1
-  },
-  {
-   "id": "A64",
-   "desc": {
-    "en": "R61 artifact ban: internal session artifacts (hourly pulse rounds, claims-audit snapshots, token dossiers) are not public content - hub/docs/reports/ serves no content on the live site",
-    "he": "איסור חומרי-שיחות R61: חומרי סשן פנימיים (פעימות שעתיות, תמונות ביקורת טענות, תיקי טוקן) אינם תוכן ציבורי - hub/docs/reports/ לא מגיש תוכן באתר החי"
-   },
-   "kind": "pages_gone",
-   "pages": [
-    "hub/docs/reports/",
-    "hub/docs/reports/index.html"
-   ]
-  },
-  {
-   "id": "A65",
-   "desc": {
-    "en": "R64: the operator contract book is whole - every delivered entry carries real evidence and the bridgehead's requestRef exists in the book as delivered (the anti-run-away instrument, machine-checked)",
-    "he": "R64: ספר חוזה-המפעיל שלם - כל רישום שנמסר נושא ראיות אמיתיות וה-requestRef של ה-bridgehead קיים בספר כמסופק (מכשיר הנגד-בריחה, נבדק מכנית)"
-   },
-   "kind": "ledger_integrity",
-   "bridgehead": "agent/state.json",
-   "book": "agent/requests.json"
-  },
-  {
-   "id": "A66",
-   "desc": {
-    "en": "R76: the dynamic fee law book is served and whole (dex/fee-law.json) - the Meteora take measured from the official book only",
-    "he": "R76: ספר חוק-העמלה הדינמית מוגש ושלם (dex/fee-law.json) - ה-Meteora-take הנמדד מהספר הרשמי בלבד"
-   },
-   "kind": "http_ok",
-   "target": "dex/fee-law.json"
-  },
-  {
-   "id": "A67",
-   "desc": {
-    "en": "R76: the fee law never lowers a fee below the book's base (every pool feeBps >= baseBps in dex/fee-law.json)",
-    "he": "R76: חוק-העמלה לעולם לא מוריד עמלה מתחת לבסיס-הספר (כל feeBps >= baseBps ב-dex/fee-law.json)"
-   },
-   "kind": "json_field",
-   "target": "dex/fee-law.json",
-   "field": "checks.allFeesAtOrAboveBase",
-   "value": true
-  }
- ]
+  ]
 }
