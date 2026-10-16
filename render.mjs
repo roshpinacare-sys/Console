@@ -9,17 +9,47 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (cashmachine / headcorner /
-// lsa — the fleet matrix). The reader scans every fleet account's history
-// and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. A headcorner-signed anchor now refreshes the line
-// exactly like a cashmachine one.
+// page sign as the account the key declares — the fleet matrix. The reader
+// scans every fleet account's history and merges the anchors into one line,
+// deduped by checkpoint; each row records its witness. Any matrix-signed
+// anchor refreshes the line exactly like another.
+//
+// Exposure law (19-d, one-law-two-enforcers): zero account names are committed
+// in this file. The candidate signer set is derived at RUNTIME from the
+// FLEET_ROSTER_MAP secret (refs layer) — superset scan, deduped by checkpoint,
+// so non-signer members contribute nothing. The book speaks refs (acct-NN).
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
+// refs layer (19-d): name↔ref resolution from the runtime roster map —
+// shapes accepted: {refs:{ref:name}} / {names:{name:ref}} / flat. Zero names here.
+function rosterFromEnv() {
+  try {
+    const m = JSON.parse(process.env.FLEET_ROSTER_MAP || "null");
+    if (!m || typeof m !== "object") return { byName: null, byRef: null };
+    const byName = {};
+    const byRef = {};
+    if (m.refs && typeof m.refs === "object") for (const [r, n] of Object.entries(m.refs)) { if (typeof n === "string") { byRef[r] = n; byName[n] = r; } }
+    if (m.names && typeof m.names === "object") for (const [n, r] of Object.entries(m.names)) { if (typeof r === "string") { byName[n] = r; byRef[r] = n; } }
+    return { byName, byRef };
+  } catch { return { byName: null, byRef: null }; }
+}
+const { byName, byRef } = rosterFromEnv();
+const refOf = (n) => (byName && byName[String(n)]) || String(n);          // name → ref (unknown passes through)
+const nameOf = (r) => (byRef && byRef[String(r)]) || null;                // ref → name (null when unresolved)
+
+// Candidate signer set: the full roster from the runtime map (superset —
+// the chain is the judge, dedupe by checkpoint keeps the line exact).
+// Fail-honest: no map → no candidates → red run, never a fake empty line.
+function candidateAccounts() {
+  if (!byRef || !Object.keys(byRef).length) {
+    throw new Error("roster-unresolved: FLEET_ROSTER_MAP secret missing/empty — refusing to guess the signer set (fail-honest)");
+  }
+  return [...new Set(Object.values(byRef).map((n) => String(n).toLowerCase()))].sort();
+}
+const FLEET = candidateAccounts();
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
@@ -92,7 +122,7 @@ async function readAnchorLine() {
         }
       }
       if (anchors.length === 0) {
-        throw new Error(`no ${OP_ID} checkpoint anchors in fleet history (${FLEET.join(", ")}; ${MAX_PAGES} pages each)`);
+        throw new Error(`no ${OP_ID} checkpoint anchors in fleet history (${FLEET.length} roster accounts; ${MAX_PAGES} pages each)`);
       }
       anchors.sort((a, b) => (a.at < b.at ? 1 : a.at > b.at ? -1 : 0));
       // התאמת-שכפול (Task 26): אותו checkpoint שעוגן מחדש (ניסיון חוזר,
@@ -115,7 +145,7 @@ async function readAnchorLine() {
 
 const { node, anchors } = await readAnchorLine();
 if (anchors.length === 0) {
-  throw new Error(`no ${OP_ID} anchors found in fleet history (${FLEET.join(", ")}): the chain is the source, an empty read is a red run`);
+  throw new Error(`no ${OP_ID} anchors found in fleet history (${FLEET.length} roster accounts): the chain is the source, an empty read is a red run`);
 }
 const last = anchors[0];
 const ageHours = (Date.now() - new Date(last.at).getTime()) / 3600000;
@@ -126,7 +156,7 @@ const explorer = (txid) => `https://steemscan.com/transaction/${txid}`;
 const status = {
   format: "weave-console-chain-v1",
   generatedAt: new Date().toISOString(),
-  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET, account: last.witness, opId: OP_ID },
+  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET.map(refOf), account: refOf(last.witness), opId: OP_ID }, // books speak refs (19-d)
   freshness: {
     verdict,
     ageHours: Math.round(ageHours * 10) / 10,
@@ -134,7 +164,7 @@ const status = {
     cadence: "1h",
   },
   witness: {
-    account: last.witness,
+    account: refOf(last.witness), // ref at source — the scrub stays belt-and-braces
     opId: OP_ID,
     txid: last.txid,
     block: last.block,
@@ -155,7 +185,7 @@ const status = {
     attTo: a.attTo,
     at: a.at,
     txid: a.txid,
-    witness: a.witness,
+    witness: refOf(a.witness), // ref at source (19-d)
     explorer: explorer(a.txid),
   })),
 };
