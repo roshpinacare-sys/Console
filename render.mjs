@@ -9,17 +9,17 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (cashmachine / headcorner /
-// lsa — the fleet matrix). The reader scans every fleet account's history
+// page sign as the account the key declares (acct-41 / acct-40 /
+// acct-44 — the fleet matrix). The reader scans every fleet account's history
 // and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. A headcorner-signed anchor now refreshes the line
-// exactly like a cashmachine one.
+// records its witness. A acct-40-signed anchor now refreshes the line
+// exactly like a acct-41 one.
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
+const FLEET = ["acct-41", "acct-40", "acct-44"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
