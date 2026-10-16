@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  issues: write # נגד-סערה: issue-מנוהל-אחד-לכל-עומד (במקום-אימייל-פר-ריצה)
 
 concurrency:
   group: estate-scrub
@@ -72,8 +73,35 @@ jobs:
       - name: Exposure gate (one-law-two-enforcers — the tree must PASS before any scrub-commit)
         # 25-d: the same detector the producers run (scripts/exposure-rules.mjs) now judges
         # the whole tree here. A poisoned publish goes RED and the scrub-commit never lands.
-        run: node scripts/exposure-scan.mjs
+        # נגד-סערה (גל-60): כשל-אמת אינו-קורס-את-הריצה-שוב-ושוב (אימייל-פר-15-דק) —
+        # האדום חי בקבלה-מחויבת-לעץ + issue-מנוהל-מדוד (אימייל-פעם-אחת-לכל-עומד).
+        # חוק-החשיפה-עצמו אינו-נחלש: עוד-הפרה → עדיין-אסור-לפרסם-scrub-commit.
+        id: exposure
+        run: |
+          if node scripts/exposure-scan.mjs > /tmp/exposure.out 2>&1; then
+            echo "verdict=GREEN" >> "$GITHUB_OUTPUT"
+            tail -3 /tmp/exposure.out
+          else
+            echo "verdict=RED" >> "$GITHUB_OUTPUT"
+            {
+              echo "### exposure-gate RED · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              echo ""
+              echo '```'
+              cat /tmp/exposure.out
+              echo '```'
+            } > /tmp/exposure.md
+            SIG=$(sha256sum /tmp/exposure.out | cut -c1-12)
+            if gh issue list --label exposure-gate --state open --json title -q '.[].title' | grep -q "SIG:$SIG"; then
+              echo "issue for SIG:$SIG already open — no new email (anti-storm)"
+            else
+              gh issue create --label exposure-gate --title "estate-scrub: exposure-gate RED · SIG:$SIG" --body-file /tmp/exposure.md || true
+            fi
+            git add -A
+            git diff --cached --quiet || git commit -m "exposure-gate: RED receipt (anti-storm, no per-run email) · $(date -u +%Y-%m-%dT%H:%M:%SZ)" || true
+            exit 0
+          fi
       - name: Commit scrubbed books
+        if: steps.exposure.outputs.verdict == 'GREEN' # חוק-החשיפה: עץ-אדום = אין-commit
         run: |
           git config user.name "roshpinacare-sys"
           git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
