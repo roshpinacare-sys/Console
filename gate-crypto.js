@@ -217,14 +217,11 @@
 
   /* ── גזירת מפתחות ── */
   const te = new TextEncoder();
-  /** WIF -> מפתח פרטי בתים (מאמת version 0x80; תומך WIF דחוס L/K עם דגל-דחיסה 0x01) */
+  /** WIF -> מפתח פרטי בתים (מאמת version 0x80) */
   async function wifToPriv(wif) {
     const { version, payload } = await b58cDecode(wif);
     if (version !== 0x80) throw new Error("WIF: version 0x" + version.toString(16) + " (צפוי 0x80)");
-    // WIF דחוס (Bitcoin-style, L/K): payload 33 בתים כשהאחרון הוא דגל-הדחיסה 0x01.
-    // אותו מפתח-פרטי, אותו מפתח-ציבורי-דחוס - השרשרת מאמתת מפתחות-דחוסים בלבד.
-    if (payload.length === 33 && payload[32] === 0x01) return payload.slice(0, 32);
-    if (payload.length !== 32) throw new Error("WIF: " + payload.length + " bytes (צפוי 32 או 33 עם דגל 0x01)");
+    if (payload.length !== 32) throw new Error("WIF: " + payload.length + " bytes (צפוי 32)");
     return payload;
   }
   /** סיסמת-אב של Steemit -> WIF לפי תפקיד (sha256(account+role+password)) */
