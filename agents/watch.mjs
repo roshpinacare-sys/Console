@@ -1,18 +1,89 @@
 // AGENTS-WATCH - סוכן רישום-הסוכנים (Task 37)
 //
 // רץ בריפו הציבורי כל שעה: שואל את ה-API של גיטהאב את מצבם האמיתי של
-// כל הסוכנים בכל 14 הריפואים (ריצות, הצלחות, משכים, פעם אחרונה),
+// כל הסוכנים בכל ריפואי החשבון (ריצות, הצלחות, משכים, פעם אחרונה),
 // ממזג עם קטלוג התפקידים הקנוני (קלט->פלט) וכותב את agents/registry.json
 // שתצוגת הסוכנים בקונסולה הציבורית קוראת. אפס-סנדבוקס - הענן מתעדכן
 // לבד, הריפו הוא הבית.
+//
+// מאז netrun-9-c: הרוסטה נשאבת דינמית מה-API (מנוי חשבון-שלם עם עימוד
+// מלא דרך כותרת Link) ולא מרשימה קשיחה שכיסתה 16 מתוך 40. נמדד חי
+// (netrun wave-8, Task 8-b): roshpinacare-sys הוא חשבון-משתמש ולא
+// ארגון — /orgs/ מחזיר 404, לכן המנוי הראשי הוא /users/ ו-/orgs/ רק
+// כעתיד-פתוח. כשל-מנוי אינו מצמק את התוצאה בשקט: נפילה כנה לרוסטה
+// שנמדדה ברישום הקודם (reposWithAgents + reposIdle — נתון נגזר, לא
+// קידוד-יד), עם רישום-מקור גלוי בתוך הרישום עצמו
+// (measurement.enumEndpoint / measurement.fallbackUsed).
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const OWNER = "roshpinacare-sys";
-const REPOS = ["Adsmarket","anchor-baseline","Console","Defi","Domain","Project-files","roshpina","saos-control-center",
-  "saos-dex","saos-jummper","saos-sovereign-foundry","saos-sovereign-platform","Saosmartwallet","Sdk","steem","Zip"];
-const TOKEN = process.env.AGENTS_WATCH_TOKEN;
-if (!TOKEN) { console.error("AGENTS_WATCH_TOKEN missing"); process.exit(1); }
+// טוקן אופציונלי ושקט: AGENTS_WATCH_TOKEN (הריצה השעתית ב-CI) או GITHUB_TOKEN —
+// נשלח כ-Bearer, הערך אף פעם לא נדפס ולא נרשם. בלי טוקן רצה אנונימי
+// (מכסה 60/שעה): מודד רק את הריפואים הפומביים ונושא את המסילות-הפרטיות
+// מהרישום הקודם עם provenance — וזה כולו נרשם בכנות ברישום עצמו (measurement).
+const TOKEN = process.env.AGENTS_WATCH_TOKEN || process.env.GITHUB_TOKEN || "";
+
+class RateLimited extends Error {}
+let ghRemaining = null; // יתרת-המכסה כפי שגיטהאב מדווח — לשקיפות בלוגים
+
+function ghHeaders() {
+  const h = { "User-Agent": "agents-watch", Accept: "application/vnd.github+json" };
+  if (TOKEN) h.Authorization = `Bearer ${TOKEN}`; // שקט: הערך לעולם לא נדפס
+  return h;
+}
+
+// כשל-מכסה הוא תוצאה כנה עם סיבה — לא רגע להמצאה. 404 נושא סטטוס למיון
+// כנה (לא זמין לגישה הזאת), שונה מכשל-רשת/מכסה שמעצרים את הריצה כולה.
+async function api(url) {
+  const r = await fetch(url, { headers: ghHeaders() });
+  const rem = Number(r.headers.get("x-ratelimit-remaining"));
+  ghRemaining = Number.isFinite(rem) ? rem : null;
+  if (r.status === 403 || r.status === 429) {
+    const reset = r.headers.get("x-ratelimit-reset");
+    throw new RateLimited(`github rate-limit (${r.status}) remaining=${r.headers.get("x-ratelimit-remaining")} reset=${reset ? new Date(Number(reset) * 1000).toISOString() : "?"}`);
+  }
+  if (!r.ok) { const e = new Error(`${url.replace("https://api.github.com", "")} -> ${r.status}`); e.status = r.status; throw e; }
+  return r.json();
+}
+
+// ═══ מנוי-דינמי של החשבון — עימוד מלא דרך כותרת Link, לא רשימה-קשיחה ═══
+// נמדד חי (netrun wave-8, Task 8-b): roshpinacare-sys הוא חשבון-משתמש
+// (type=User) ולא ארגון — /orgs/ מחזיר 404. המנוי הראשי הוא /users/ ו-/orgs/
+// נשאר ניסיון-משנה לעתיד-פתוח (אם החשבון יהפוך לארגון). הבסיס שענה נרשם
+// בכנות ב-measurement.enumEndpoint; כשל בשני הבסיסים או מנוי-ריק אינם מצמקים
+// את התוצאה בשקט — הם מזנקים את נפילת-הכנות לרוסטת הרישום הקודם.
+let enumEndpoint = null;
+async function enumerateRepos() {
+  for (const base of [`users/${OWNER}`, `orgs/${OWNER}`]) {
+    const all = [];
+    let url = `https://api.github.com/${base}/repos?per_page=100`;
+    let answered = false;
+    for (let page = 1; url && page <= 10; page++) {
+      const r = await fetch(url, { headers: ghHeaders() });
+      const rem = Number(r.headers.get("x-ratelimit-remaining"));
+      ghRemaining = Number.isFinite(rem) ? rem : null;
+      if (r.status === 403 || r.status === 429) {
+        const reset = r.headers.get("x-ratelimit-reset");
+        throw new RateLimited(`github rate-limit on fleet enumeration (${r.status}) reset=${reset ? new Date(Number(reset) * 1000).toISOString() : "?"}`);
+      }
+      if (r.status === 404) {
+        if (page === 1) break; // הבסיס הזה לא קיים — כנות: ממשיכים לבסיס השני
+        throw new Error(`${base}/repos -> 404 mid-pagination`); // חריג — לא מחזירים תוצאה-חלקית בשקט
+      }
+      if (!r.ok) { const e = new Error(`${base}/repos -> ${r.status}`); e.status = r.status; throw e; }
+      answered = true;
+      const batch = await r.json();
+      if (!Array.isArray(batch)) throw new Error(`${base}/repos -> unexpected response shape`);
+      all.push(...batch);
+      const next = /<([^>]+)>;\s*rel="next"/.exec(r.headers.get("link") || "");
+      url = next ? next[1] : null;
+    }
+    if (answered && all.length) { enumEndpoint = base; return all; }
+    // תשובה-ריקה מחשבון שידוע שיש לו ריפואים אינה רוסטה — ממשיכים לבסיס הבא
+  }
+  throw new Error("fleet enumeration failed: /users/ and /orgs/ both answered non-listable or empty (404)");
+}
 
 // ═══ קטלוג התפקידים הקנוני - מה כל סוכן עושה, מה נכנס ומה יוצא ═══
 const CATALOG = {
@@ -77,8 +148,8 @@ const CATALOG = {
     input:{en:"agent/verify/assertions.json + live site",he:"agent/verify/assertions.json + האתר החי"},
     output:{en:"agent/verify/results.json",he:"agent/verify/results.json"}},
   "Console|agents-watch": { layer:"PUBLISH", schedule:"hourly :37",
-    role:{en:"The fleet census - asks the GitHub Actions API for the real state of every workflow in the 16 agent-repos (runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",he:"מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows ב-16 הריפואים (ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."},
-    input:{en:"GitHub Actions API (16 repos)",he:"API של GitHub Actions (16 ריפואים)"},
+    role:{en:"The fleet census - asks the GitHub Actions API for the real state of every workflow across the whole account (dynamic fleet enumeration, never a hardcoded list; runs, success rates, durations, last run), merges the canonical role catalog and writes agents/registry.json that the public agents view reads.",he:"מפקד-האוכלוסין של הצי - שואל את ה-API של גיטהאב את מצבם האמיתי של כל ה-workflows בכל ריפואי החשבון (מנוי-דינמי, לא רשימה-קשיחה; ריצות, הצלחות, משכים, ריצה אחרונה), ממזג את קטלוג התפקידים וכותב את agents/registry.json שתצוגת הסוכנים הציבורית קוראת."},
+    input:{en:"GitHub Actions API (dynamic account-wide roster)",he:"API של GitHub Actions (רוסטה דינמית של כל החשבון)"},
     output:{en:"agents/registry.json + agents/gh-snapshot.json",he:"agents/registry.json + agents/gh-snapshot.json"}},
   "Console|gitleaks-secret-scan": { layer:"INTEGRITY", schedule:"on push / PR",
     role:{en:"Secret scanner on every push and PR - gitleaks over the full history; a finding stops the push. Part of PHASE-0 key hygiene.",he:"סורק-סודות על כל push ו-PR - gitleaks על כל ההיסטוריה; ממצא עוצר את הדחיפה. חלק מהיגיינת-המפתחות של PHASE-0."},
@@ -127,15 +198,8 @@ const CATALOG = {
 const GENERIC = { layer:"UNCATALOGUED", schedule:"measured-from-runs",
   role:{en:"Not yet catalogued - the run stats here are measured (GitHub Actions API), but the role description has no catalog entry yet.",he:"טרם קוטלג - נתוני-הריצות כאן נמדדו (GitHub Actions API), אך לתיאור-התפקיד אין עדיין רשות-קטלוג."},
   input:{en:"not catalogued",he:"טרם קוטלג"}, output:{en:"not catalogued",he:"טרם קוטלג"} };
-// Measured 2026-09-30 via the authenticated repos API: Console AND Domain
-// are public; the other 14 are private.
-const REPO_VIS = { Console:"public", Domain:"public" };
-
-async function api(url) {
-  const r = await fetch(url, { headers: { Authorization: `token ${TOKEN}`, "User-Agent": "agents-watch", Accept: "application/vnd.github+json" } });
-  if (!r.ok) throw new Error(`${url} -> ${r.status}`);
-  return r.json();
-}
+// ניראות-הריפו נשאבת מהמנוי החי (r.visibility) ובנפילה-כנה — ממדידות
+// הרישום הקודם; אין עוד מפת-ניראות קשיחה ואין עוד api() שדורש טוקן.
 
 function stateOf(name, lastConcl, lastAt) {
   if (name === "pages build and deployment") return "auto";
@@ -145,59 +209,140 @@ function stateOf(name, lastConcl, lastAt) {
   return "dormant";
 }
 
+// === fleet measurement ===
+const out = process.env.REGISTRY_PATH || "agents/registry.json";
+const nowIso = new Date().toISOString().replace(/\.\d+Z$/, "Z");
+let prev = null;
+try { prev = existsSync(out) ? JSON.parse(readFileSync(out, "utf8")) : null; }
+catch (e) { console.error(`previous registry unreadable (honest ignore): ${e.message}`); }
+
+const notes = [];
+
+// roster: live enumeration from the API; on an honest enumeration failure -
+// the roster already measured by the previous registry (reposWithAgents +
+// reposIdle - data-derived, never hand-coded), with provenance recorded in
+// measurement. An enumeration failure never silently shrinks the result.
+let liveRepos = null;
+let fallbackSource = null;
+try {
+  liveRepos = await enumerateRepos();
+} catch (e) {
+  const prevNames = [...new Set([...(prev?.reposWithAgents || []), ...(prev?.reposIdle || [])])].sort();
+  if (!prevNames.length) {
+    console.error(`agents-watch: fleet enumeration failed and no previous registry to fall back on — nothing written (${e.message})`);
+    process.exit(1);
+  }
+  fallbackSource = `previous registry (generatedAt ${prev?.generatedAt ?? "?"})`;
+  notes.push(`fleet enumeration failed (${e.message}) — roster derived from ${fallbackSource}`);
+  liveRepos = prevNames.map((name) => ({ name, visibility: "unknown", archived: false, fromPreviousRegistry: true }));
+  console.error(`agents-watch: fleet enumeration failed — honest fallback to the previous registry's roster (${prevNames.length} repos)`);
+}
+const liveByName = new Map(liveRepos.map((r) => [r.name, r]));
+const liveNames = [...liveByName.keys()].sort();
+// visibility: from the live enumeration; on fallback - from the previous
+// registry's own measurements
+const repoVis = new Map(liveRepos.map((r) => [r.name, r.visibility]));
+for (const a of (prev?.agents || [])) if (!repoVis.has(a.repo) && a.visibility) repoVis.set(a.repo, a.visibility);
+
+// collect every active workflow across the whole roster
 const agents = [];
-for (const repo of REPOS) {
+const plan = [];
+let unmeasured = 0;
+for (const repo of liveNames) {
   let wfs;
   try { wfs = (await api(`https://api.github.com/repos/${OWNER}/${repo}/actions/workflows?per_page=100`)).workflows || []; }
-  catch (e) { console.error(`workflows ${repo}: ${e.message}`); continue; }
-  for (const w of wfs) {
-    if (w.state !== "active") continue;
-    let runs = [];
-    try { runs = (await api(`https://api.github.com/repos/${OWNER}/${repo}/actions/workflows/${w.id}/runs?per_page=100`)).workflow_runs || []; }
-    catch (e) { console.error(`runs ${repo}/${w.name}: ${e.message}`); continue; }
-    if (!runs.length) continue;
-    const succ = runs.filter((r) => r.conclusion === "success").length;
-    const fail = runs.filter((r) => r.conclusion === "failure").length;
-    const durs = runs.slice(0, 40).map((r) => {
-      const s = Date.parse(r.run_started_at || r.created_at), e = Date.parse(r.updated_at);
-      return Number.isFinite(s) && Number.isFinite(e) ? (e - s) / 1000 : null;
-    }).filter((x) => x !== null && x >= 0);
-    // self-measurement honesty: the run currently in progress has no
-    // conclusion yet - measure the last COMPLETED run instead (agents-watch
-    // itself was showing "dormant" while actively running).
-    const last = runs.find((r) => r.conclusion) || runs[0];
-    const cat = CATALOG[`${repo}|${w.name}`] || GENERIC;
-    agents.push({
-      id: `${repo.toLowerCase()}-${w.name.toLowerCase().replace(/ /g, "-")}`,
-      name: w.name, repo, visibility: REPO_VIS[repo] || "private",
-      schedule: cat.schedule, layer: cat.layer, role: cat.role, input: cat.input, output: cat.output,
-      state: stateOf(w.name, last.conclusion, last.run_started_at),
-      stats: { runs_sampled: runs.length, success: succ, failure: fail, other: runs.length - succ - fail,
-        successRate: Math.round((1000 * succ) / runs.length) / 10, avgDurS: durs.length ? Math.round((10 * durs.reduce((a, b) => a + b, 0)) / durs.length) / 10 : null },
-      lastRun: { at: last.run_started_at, conclusion: last.conclusion },
-    });
+  catch (e) {
+    if (e.status === 404) notes.push(`${repo}: workflows 404 (repo gone or Actions disabled) — excluded from this census`); // measured: not visible to this credential - not a measurement failure
+    else { notes.push(`workflows ${repo}: ${e.message}`); unmeasured++; }
+    continue;
   }
+  for (const w of wfs) if (w.state === "active") plan.push({ repo, w });
 }
-const order = { live: 0, degraded: 1, dormant: 2, auto: 3 };
-agents.sort((a, b) => (order[a.state] ?? 9) - (order[b.state] ?? 9) || a.repo.localeCompare(b.repo) || a.name.localeCompare(b.name));
 
-const withAgent = new Set(agents.map((a) => a.repo));
+// real run measurement per workflow - state derived strictly from the data
+const declaredNeverRan = [];
+for (const { repo, w } of plan) {
+  let runs;
+  try { runs = (await api(`https://api.github.com/repos/${OWNER}/${repo}/actions/workflows/${w.id}/runs?per_page=100`)).workflow_runs || []; }
+  catch (e) { notes.push(`runs ${repo}/${w.name}: ${e.message}`); unmeasured++; continue; }
+  if (!runs.length) { declaredNeverRan.push({ repo, name: w.name, path: w.path }); continue; } // declared but never ran - recorded, not hidden
+  const succ = runs.filter((r) => r.conclusion === "success").length;
+  const fail = runs.filter((r) => r.conclusion === "failure").length;
+  const durs = runs.slice(0, 40).map((r) => {
+    const s = Date.parse(r.run_started_at || r.created_at), e = Date.parse(r.updated_at);
+    return Number.isFinite(s) && Number.isFinite(e) ? (e - s) / 1000 : null;
+  }).filter((x) => x !== null && x >= 0);
+  // self-measurement honesty: the run currently in progress has no
+  // conclusion yet - measure the last COMPLETED run instead (agents-watch
+  // itself was showing "dormant" while actively running).
+  const last = runs.find((r) => r.conclusion) || runs[0];
+  const cat = CATALOG[`${repo}|${w.name}`] || GENERIC;
+  agents.push({
+    id: `${repo.toLowerCase()}-${w.name.toLowerCase().replace(/ /g, "-")}`,
+    name: w.name, repo, visibility: repoVis.get(repo) || "unknown",
+    schedule: cat.schedule, layer: cat.layer, role: cat.role, input: cat.input, output: cat.output,
+    state: stateOf(w.name, last.conclusion, last.run_started_at),
+    stats: { runs_sampled: runs.length, success: succ, failure: fail, other: runs.length - succ - fail,
+      successRate: Math.round((1000 * succ) / runs.length) / 10, avgDurS: durs.length ? Math.round((10 * durs.reduce((a, b) => a + b, 0)) / durs.length) / 10 : null },
+    lastRun: { at: last.run_started_at, conclusion: last.conclusion },
+    measuredAt: nowIso,
+  });
+}
+
+// carried: agents whose repo was not visible in this run's live enumeration
+// (anonymous run - the private rails) are carried from the previous registry
+// with provenance (measuredAt + carried) - real earlier measurements, never
+// invented. A repo measured live now whose workflow is gone is truly deleted
+// and honestly drops out of the registry.
+const freshIds = new Set(agents.map((a) => a.id));
+const carried = [];
+for (const a of (prev?.agents || [])) {
+  if (freshIds.has(a.id) || liveNames.includes(a.repo)) continue;
+  carried.push({ ...a, measuredAt: prev?.generatedAt ?? null, carried: true });
+}
+const all = [...agents, ...carried];
+const order = { live: 0, degraded: 1, dormant: 2, auto: 3 };
+all.sort((a, b) => (order[a.state] ?? 9) - (order[b.state] ?? 9) || a.repo.localeCompare(b.repo) || a.name.localeCompare(b.name));
+
+const withAgent = new Set(all.map((a) => a.repo));
+const rosterNames = [...new Set([...liveNames, ...all.map((a) => a.repo)])].sort();
+
+// honesty gate: a partial measurement never overwrites a whole registry -
+// stop honestly and let the next run (the hourly CI run, which holds the
+// token) complete the census. Zero fabrication, zero silent shrinkage.
+if (unmeasured > 0) {
+  console.error(`agents-watch: INCOMPLETE measurement (${unmeasured} unmeasured units) — ${out} NOT overwritten; the next run (CI holds the token) will measure again`);
+  for (const n of notes.slice(0, 8)) console.error(`  · ${n}`);
+  process.exit(1);
+}
+
 const reg = {
   ok: true,
-  generatedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+  generatedAt: nowIso,
   source: "github-actions-api",
-  reposTotal: REPOS.length,
-  reposWithAgents: REPOS.filter((r) => withAgent.has(r)),
-  reposIdle: REPOS.filter((r) => !withAgent.has(r)),
-  agents,
+  measuredBy: "agents/watch.mjs · dynamic account-wide enumeration (users-or-orgs endpoint, Link-paginated), optional AGENTS_WATCH_TOKEN/GITHUB_TOKEN, honest fallback to the previous registry's roster",
+  reposTotal: rosterNames.length,
+  reposWithAgents: rosterNames.filter((r) => withAgent.has(r)),
+  reposIdle: rosterNames.filter((r) => !withAgent.has(r)),
+  agents: all,
+  ...(declaredNeverRan.length ? { declaredNeverRan } : {}),
+  measurement: {
+    anonymous: !TOKEN,
+    complete: unmeasured === 0,
+    scope: TOKEN ? "whole account measured live (token)" : "public repos measured live; private rails carried from the previous token-measured census (provenance: measuredAt + carried)",
+    enumEndpoint,
+    fallbackUsed: !enumEndpoint,
+    ...(fallbackSource ? { fallbackSource } : {}),
+    reposSeen: liveRepos.length,
+    reposMeasured: liveNames.length,
+    carriedCount: carried.length,
+    ...(notes.length ? { notes } : {}),
+  },
 };
 
-const path = new URL(import.meta.url.replace("watch.mjs", "registry.json")).pathname;
-const out = process.env.REGISTRY_PATH || "agents/registry.json";
-const prev = existsSync(out) ? JSON.parse(readFileSync(out, "utf8")) : null;
+const changed = !prev || JSON.stringify(prev.agents) !== JSON.stringify(all);
 writeFileSync(out, JSON.stringify(reg, null, 1) + "\n");
-const changed = !prev || JSON.stringify(prev.agents) !== JSON.stringify(reg.agents);
-console.log(`agents: ${agents.length} | repos with agents: ${withAgent.size}/${REPOS.length} | changed: ${changed}`);
+console.log(`agents: ${all.length} | repos with agents: ${withAgent.size}/${rosterNames.length} | changed: ${changed} | github quota remaining: ${ghRemaining}`);
 process.env.REGISTRY_CHANGED = changed ? "1" : "0";
 
 // ═══ GH-SNAPSHOT (Task 49) - רשת-ביטחון למכסת-הדפדפן ═══
@@ -207,34 +352,40 @@ process.env.REGISTRY_CHANGED = changed ? "1" : "0";
 // גם תמונת-מצב (ריפואים + ריצות אחרונות) שהדפדפן קורא כשה-API נכשל -
 // בכנות מתויגת כתמונת-מצב עם גילה, לא כנתונים חיים.
 try {
-  // אוסף ריפואים: ניסיון אחד ל-org, ואם הטוקן צר-היקף - נפילה כנה
-  // למפה פר-ריפו (אותה רשימת 14 שכבר מזינה את הרישום).
-  let orgRepos = null;
-  try {
-    orgRepos = await api(`https://api.github.com/orgs/${OWNER}/repos?per_page=100`);
-  } catch { orgRepos = null; }
-  if (!orgRepos) {
-    orgRepos = [];
-    for (const r of REPOS) {
-      try { orgRepos.push(await api(`https://api.github.com/repos/${OWNER}/${r}`)); }
-      catch (e) { console.error(`repo ${r}: ${e.message}`); }
+  // הריפואים: מהמנוי-החי שכבר נמדד (אפס קריאות-נוספות); בנפילה לרוסטת
+  // הרישום הקודם — קריאה פר-ריפו על אותה רוסטה נגזרת (404 = לא זמין, מדולג בכנות).
+  let repos = enumEndpoint ? liveRepos : [];
+  if (!enumEndpoint) {
+    for (const name of liveNames) {
+      try { repos.push(await api(`https://api.github.com/repos/${OWNER}/${name}`)); }
+      catch (e) { console.error(`repo ${name}: ${e.message}`); }
     }
   }
   const consoleRuns = await api(`https://api.github.com/repos/${OWNER}/Console/actions/runs?per_page=8`);
+  // carried: repos from the previous snapshot that this run's live enumeration
+  // did not show (private rails on an anonymous run) - openly marked carried.
+  const seen = new Set(repos.map((r) => r.name));
+  let prevSnap = null;
+  try { prevSnap = existsSync("agents/gh-snapshot.json") ? JSON.parse(readFileSync("agents/gh-snapshot.json", "utf8")) : null; }
+  catch { prevSnap = null; }
+  const carriedRepos = (Array.isArray(prevSnap?.repos) ? prevSnap.repos : [])
+    .filter((r) => r && r.name && !seen.has(r.name))
+    .map((r) => ({ ...r, carried: true }));
   const snap = {
     ok: true,
     format: "gh-snapshot-v1",
     generatedAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
-    source: "github-actions-api (token, hourly agents-watch run)",
+    source: "github-actions-api (hourly agents-watch run, dynamic account-wide enumeration)",
     purpose: "browser fallback when api.github.com is rate-limited for anonymous visitors",
-    repos: orgRepos.map((r) => ({
+    repos: [...repos.map((r) => ({
       name: r.name, pushed_at: r.pushed_at, updated_at: r.updated_at,
       html_url: r.html_url, visibility: r.visibility, archived: r.archived,
-    })),
+    })), ...carriedRepos],
     runs: (consoleRuns.workflow_runs || []).map((r) => ({
       name: r.name, status: r.status, conclusion: r.conclusion,
       created_at: r.created_at, updated_at: r.updated_at, html_url: r.html_url,
     })),
+    measurement: { anonymous: !TOKEN, enumEndpoint, carriedRepos: carriedRepos.length },
   };
   writeFileSync("agents/gh-snapshot.json", JSON.stringify(snap, null, 1) + "\n");
   console.log(`gh-snapshot: ${snap.repos.length} repos, ${snap.runs.length} runs`);
