@@ -204,6 +204,20 @@ footer a:hover{color:var(--gold-bright)}
     </div>
 
     <div class="card">
+      <h2><span class="dot g"></span>כתובות-ההפקדה האמיתיות · איפה מפקידים בפועל <span class="en">real deposit addresses, per network</span></h2>
+      <p>אלה הכתובות שהצופה סורק בפועל (מקור: <span class="mono">dex/watch.json</span> · מפתח <span class="mono">depositAddresses</span>). שולחים <b>רק</b> את המטבע שרשום ליד הכתובת, ושומרים את מזהה-העסקה (txid) — הוא ההוכחה שמולה נתבעת ההפקדה.</p>
+      <div id="dep-addrs" style="margin:8px 0 4px"><div style="color:var(--dim);font-size:13px">…</div></div>
+      <p class="src" id="dep-zero"></p>
+      <p class="src">נתיב-התביעה האמיתי: אחרי שההעברה נצפית בספר-ההפקדות הפתוח, חותמים מעטפת <span class="mono">deposit.claim</span> בארנק שבדפדפן (מפתח saos1 לא עוזב את המכשיר) — סורק הענן cloud-beat של saos-dex מתאים את מזהה-העסקה מול הספר (<span class="mono">dex/deposits.json</span>) ומזכה USDS: יציבים 1:1, השאר לפי פיד חי. אפס-הפקדה = אפס-זיכוי, בלי יוצאים מן-הכלל.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot p"></span>ספר-ההפקדות הפתוח · מה שנצפה בפועל <span class="en">the open deposit book · dex/deposits.json</span></h2>
+      <table><thead><tr><th>רשת</th><th>נכס</th><th>סכום</th><th>מתי</th><th>txid</th></tr></thead><tbody id="dep-book"></tbody></table>
+      <p class="src" id="dep-book-src">…</p>
+    </div>
+
+    <div class="card">
       <h2><span class="dot g"></span>א. המחזור המלא: מה קורה ברגע שנכנס כסף <span class="en">the full deposit lifecycle</span></h2>
       <div class="stage"><div class="n">1</div><div class="b">
         <div class="t">המטבעות נוחתים בכתובת הצבא <span class="when">רגע 0</span></div>
@@ -357,12 +371,63 @@ footer a:hover{color:var(--gold-bright)}
     if(WT){
       document.getElementById("k-dep").textContent = String(WT.depositsTotal ?? "?");
       var chains = WT.chains || {};
-      document.getElementById("k-chains").textContent = Object.keys(chains).map(function(k){ return k + ": " + chains[k]; }).join(" · ");
+      var chNames = Object.keys(chains);
+      document.getElementById("k-chains").textContent = chNames.map(function(k){ return k + ": " + chains[k]; }).join(" · ");
+      // כתובות-ההפקדה האמיתיות — מהספר-החי בלבד (depositAddresses; נופל ל-watching), בלי המצאה
+      var A = WT.depositAddresses || WT.watching || {};
+      var labels = [
+        ["depositTron", "tron", "TRON · USDT/USDC (TRC20) + TRX"],
+        ["depositEvm", "evm", "Ethereum · USDT/USDC (ERC20)"],
+        ["depositSol", "sol", "Solana · USDT/USDC (SPL) + SOL"],
+        ["depositBtc", "btc", "Bitcoin · BTC"]
+      ];
+      var rows = "";
+      for (var i = 0; i < labels.length; i++) {
+        var a = A[labels[i][0]] ?? A[labels[i][1]];
+        if (!a) continue;
+        rows += '<div style="display:flex;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--border);flex-wrap:wrap">' +
+          '<span class="tag" style="min-width:52px;text-align:center">' + labels[i][2].split(" ·")[0] + '</span>' +
+          '<span class="mono" style="font-size:12.5px;word-break:break-all;flex:1;min-width:220px">' + a + '</span>' +
+          '<button class="tag" data-copyaddr="' + a + '" style="cursor:pointer">העתק</button>' +
+          '<span style="font-size:11px;color:var(--dim)">' + labels[i][2].split(" · ")[1] + '</span></div>';
+      }
+      document.getElementById("dep-addrs").innerHTML = rows || '<div style="color:var(--dim);font-size:13px">הכתובות לא פורסמו בספר-החי — מוצג בכנות, בלי המצאה.</div>';
+      for (let b of document.querySelectorAll("[data-copyaddr]")) b.addEventListener("click", function(){ try { navigator.clipboard.writeText(b.getAttribute("data-copyaddr")); b.textContent = "הועתק"; setTimeout(function(){ b.textContent = "העתק"; }, 1500); } catch(e) {} });
+      // מצב-אפס כנה: אפס עם סריקה-תקינה הוא אפס-מוכח; אפס עם רשת-down הוא לא-מוכח — כתוב
+      var down = chNames.filter(function(k){ return String(chains[k]).indexOf("down") === 0; });
+      var z = document.getElementById("dep-zero");
+      if (Number(WT.depositsTotal) === 0) {
+        z.innerHTML = down.length
+          ? '<span class="deaddot"></span>אפס הפקדות נצפו — אבל <b>אין לסמוך על האפס</b>: ' + down.join(", ") + ' לא נסרקו בריצה האחרונה. האפס יהיה מוכח כשכולן ירוקות.'
+          : '<span class="livedot"></span>אפס הפקדות — <b>אפס כנה ומוכח</b>: כל ארבע הרשתות נסרקו תקין ולכתובות אין עדיין שום העברה נכנסת על-השרשרת (זה נמדד, לא מוצהר).';
+      } else {
+        z.textContent = "נצפו " + WT.depositsTotal + " הפקדות — הספר הפתוח למטה הוא המקור.";
+      }
     }
   }
   function pull(){
     fetch("dex/world.json?t=" + Date.now(), {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){ W = j; draw(); }).catch(function(){ if(document.getElementById("live-dot")) document.getElementById("live-dot").className = "deaddot"; });
-    fetch("dex/watch.json?t=" + Date.now(), {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){ WT = j; draw(); }).catch(function(){});
+    fetch("dex/watch.json?t=" + Date.now(), {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){ WT = j; draw(); }).catch(function(){ WT = null; document.getElementById("k-dep").textContent = "לא זמין"; document.getElementById("dep-zero").innerHTML = '<span class="deaddot"></span>dex/watch.json לא נטען — הכתובות והספירה אינן מוצגות כלל (כנות), במקום להציג נתונים ישנים כחיים.'; });
+    fetch("dex/deposits.json?t=" + Date.now(), {cache:"no-store"}).then(function(r){return r.json();}).then(function(j){ drawBook(j); }).catch(function(){ document.getElementById("dep-book").innerHTML = '<tr><td colspan="5" style="color:var(--dim)">dex/deposits.json לא נטען — הספר אינו מוצג כלל (כנות).</td></tr>'; });
+  }
+  function drawBook(j){
+    var deps = (j && Array.isArray(j.deposits)) ? j.deposits : [];
+    var tb = document.getElementById("dep-book");
+    var src = document.getElementById("dep-book-src");
+    if (src && j && j.updatedAt) src.textContent = "מקור: dex/deposits.json · עודכן " + j.updatedAt;
+    if (!deps.length) {
+      tb.innerHTML = '<tr><td colspan="5" style="color:var(--dim)">הספר ריק — אפס כנה עד ההפקדה הראשונה. מי שהפקיד ואינו רואה את עצמו כאן: הרשת עשויה להיות בתהליך סריקה (עד 20 דקות) — ואם גם אז לא, זו דרך-השער.</td></tr>';
+      return;
+    }
+    tb.innerHTML = deps.slice(0, 50).map(function(d){
+      var when = d.ts ? new Date(d.ts).toLocaleString("he-IL", {hour12:false}) : "-";
+      return '<tr><td>' + d.chain + '</td><td><b>' + d.asset + '</b></td><td class="num">' + d.amount + '</td><td>' + when + '</td><td class="mono" style="font-size:11px">' + String(d.txid || "").slice(0, 18) + '…</td></tr>';
+    }).join("");
+    if (deps.length > 50) {
+      var more = document.createElement("tr");
+      more.innerHTML = '<td colspan="5" style="color:var(--dim)">…ועוד ' + (deps.length - 50) + ' רשומות בספר עצמו</td>';
+      tb.appendChild(more);
+    }
   }
   pull();
   setInterval(pull, 60*1000);

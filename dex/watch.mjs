@@ -17,13 +17,15 @@
 
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { scrub } from "../agents/refs.mjs";
 
-/* ── כתובות-ההפקדה: ארנקי-הצבא (רשומים-על-שרשרת-הרשת, בעלות-האוצר) ── */
+/* ── כתובות-ההפקדה: ארנקי-הצבא (רשומים-על-שרשרת-הרשת, בעלות-האוצר) ──
+ * (הכתובות פומביות-מטבען; הקישור כתובת←חשבון נשמר במפה-הפרטית בלבד) */
 const ADDR = {
-  tron: "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e", // acct-19 · USDT/USDC-TRC20 + TRX
-  evm: "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4", // acct-10 · USDT/USDC-ERC20
-  sol: "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk", // acct-09 · USDT/USDC-SPL + SOL
-  btc: "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c", // acct-08 · BTC
+  tron: "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e", // estate deposit address · USDT/USDC-TRC20 + TRX
+  evm: "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4", // estate deposit address · USDT/USDC-ERC20
+  sol: "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk", // estate deposit address · USDT/USDC-SPL + SOL
+  btc: "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c", // estate deposit address · BTC
 };
 
 const TRC20 = {
@@ -57,6 +59,7 @@ const MIN_UNITS = {
 };
 const CAP = 400;
 
+let evmLastGood = 0; // R34: סוף-הטווח האחרון שנסרק-במלואו על EVM — נשמר גם-בריצה-שנכשלה, בלי-נקודה-עיוורת
 const DEX_DIR = fileURLToPath(new URL("./", import.meta.url));
 const DEPOSITS_FILE = DEX_DIR + "deposits.json";
 const WATCH_FILE = DEX_DIR + "watch.json";
@@ -115,17 +118,25 @@ function add(chain, asset, txid, amount, from, to, ts, conf, extra = {}) {
 async function scanTron() {
   let n = 0;
   for (const [sym, t] of Object.entries(TRC20)) {
-    const j = await jfetch(`${TRONSCAN}/api/transfer/trc20?limit=50&sort=-timestamp&count=false&address=${ADDR.tron}&trc20Id=${t.id}`).catch(() => null);
+    // R34: אין-בליעת-שגיאות — כשל-רשת/401 חייב לעלות ל-main ולהירשם "down", לא "ok (0)"
+    const j = await jfetch(`${TRONSCAN}/api/transfer/trc20?limit=50&sort=-timestamp&count=false&address=${ADDR.tron}&trc20Id=${t.id}`);
     for (const e of j?.data ?? []) {
-      if (String(e.to ?? "").toUpperCase() !== ADDR.tron.toUpperCase()) continue;
+      // R34: base58 רגיש-לרישיות — השוואה מדויקת (ה-API כבר מסונן-לפי-כתובת; זו דווקא-הבטיחות)
+      if (String(e.to ?? "") !== ADDR.tron) continue;
       add("tron", sym, e.hash, Number(e.amount) / 10 ** t.dec, e.from, e.to, Number(e.block_timestamp) || undefined, "solidified");
       n++;
     }
   }
-  const trx = await jfetch(`${TRONSCAN}/api/transfer?limit=50&sort=-timestamp&count=false&address=${ADDR.tron}`).catch(() => null);
+  /* R34 · תיקון-שדות-שנמדד-חי (2026-10-17 מול-Tronscan+TronGrid): ה-API מחזיר
+   * transactionHash / transferFromAddress / transferToAddress / timestamp — ולא
+   * hash / from_address / to_address / block_timestamp. השדות-הישנים לעולם undefined
+   * ← הפקדות-TRX מקורי היו נעלמות-בשקט לנצח. גם: הנקודה מחזירה את כל-ה-trc10 —
+   * מסננים ל-"_" (TRX מקורי, precision 6) כדי-שלא-ירשמו טוקני-spam כ-TRX. */
+  const trx = await jfetch(`${TRONSCAN}/api/transfer?limit=50&sort=-timestamp&count=false&address=${ADDR.tron}`);
   for (const e of trx?.data ?? []) {
-    if (String(e.to_address ?? "").toUpperCase() !== ADDR.tron.toUpperCase()) continue;
-    add("tron", "TRX", e.hash, Number(e.amount ?? e.value ?? 0) / 1e6, e.from_address, e.to_address, Number(e.block_timestamp) || undefined, "solidified");
+    if (String(e.tokenInfo?.tokenId ?? "") !== "_") continue; // רק TRX מקורי
+    if (String(e.transferToAddress ?? "") !== ADDR.tron) continue;
+    add("tron", "TRX", e.transactionHash, Number(e.amount ?? 0) / 1e6, e.transferFromAddress, e.transferToAddress, Number(e.timestamp) || undefined, "solidified");
     n++;
   }
   return n;
@@ -143,11 +154,14 @@ async function scanEvm() {
     // חלוקה-למנות-של-2,000 בלוקים - מגבלת-getLogs של-הצומת הציבורי
     for (let from = lastBlock; from <= head; from += 2_000) {
       const to = Math.min(head, from + 1_999);
+      // R34: אין-בליעת-כשל-מנה — getLogs שנכשל היה מדלג-על-המנה בשקט ו-lastEvmBlock
+      // היה ממשיך-הלאה ← נקודה-עיוורת-קבועה. עתה: זריקה → status=down, והסריקה
+      // ממשיכה מהמנה-האחרונה-שהצליחה (evmLastGood) בריצה-הבאה.
       const logs = await rpc(EVM_RPC, "eth_getLogs", [{
         fromBlock: "0x" + from.toString(16), toBlock: "0x" + to.toString(16),
         address: t.addr,
         topics: [TRANSFER_TOPIC, null, toTopic],
-      }]).catch(() => []);
+      }]);
       for (const log of logs ?? []) {
         const amount = Number(BigInt(log.data)) / 10 ** t.dec;
         const fromAddr = "0x" + String(log.topics?.[1] ?? "").slice(26);
@@ -155,6 +169,7 @@ async function scanEvm() {
         add("ethereum", sym, log.transactionHash, amount, fromAddr, ADDR.evm, undefined, head - Number(log.blockNumber) >= 12 ? "12+" : "pending");
         n++;
       }
+      evmLastGood = to; // המנה נסרקה-במלואה
     }
   }
   return { n, head };
@@ -163,7 +178,8 @@ async function scanEvm() {
 /* ── Solana: USDT/USDC-SPL + SOL ── */
 async function scanSol() {
   let n = 0;
-  const sigs = await rpc(SOL_RPC, "getSignaturesForAddress", [ADDR.sol, { limit: 30 }]).catch(() => []);
+  // R34: אין-בליעת-שגיאה — כשל-RPC חייב להירשם "down", לא להיראות כאפס-כנה
+  const sigs = await rpc(SOL_RPC, "getSignaturesForAddress", [ADDR.sol, { limit: 30 }]);
   for (const s of sigs ?? []) {
     if (s.err) continue;
     if (s.confirmationStatus && !["confirmed", "finalized"].includes(s.confirmationStatus)) continue;
@@ -188,7 +204,9 @@ async function scanSol() {
     const idx = keys.indexOf(ADDR.sol);
     if (idx >= 0) {
       const lam = (tx.meta.postBalances?.[idx] ?? 0) - (tx.meta.preBalances?.[idx] ?? 0);
-      if (lam > 0) { add("solana", "SOL", s.signature, lam / 1e9, "", ADDR.sol, (s.blockTime ?? 0) * 1000 || undefined, "finalized"); n++; }
+      /* R34: txid נפרד ל-SOL-מקורי — אותה-חתימה יכולה לשאת גם-העברת-SPL וגם-SOL;
+       * המפתח-הזהה היה מוחק-בשקט את-הרשומה-השנייה (כסף-נעלם-מהספר). */
+      if (lam > 0) { add("solana", "SOL", s.signature + ":sol", lam / 1e9, "", ADDR.sol, (s.blockTime ?? 0) * 1000 || undefined, "finalized"); n++; }
     }
   }
   return n;
@@ -197,8 +215,9 @@ async function scanSol() {
 /* ── Bitcoin ── */
 async function scanBtc() {
   let n = 0;
-  const head = Number(await jfetch(`${BTC_API}/q/getblockcount`).catch(() => 0));
-  const j = await jfetch(`${BTC_API}/rawaddr/${ADDR.btc}?limit=30`).catch(() => null);
+  // R34: אין-בליעת-שגיאות — כשל-API חייב להירשם "down" ולא "ok (0)"
+  const head = Number(await jfetch(`${BTC_API}/q/getblockcount`));
+  const j = await jfetch(`${BTC_API}/rawaddr/${ADDR.btc}?limit=30`);
   for (const tx of j?.txs ?? []) {
     if (!tx.block_height) continue; // ממתין-בממפיל - עדיין-לא-מאושר
     let sat = 0;
@@ -215,26 +234,38 @@ const t0 = Date.now();
 const status = { tron: "ok", ethereum: "ok", solana: "ok", bitcoin: "ok" };
 let evmHead = 0;
 try { const n = await scanTron(); status.tron = `ok (${n})`; } catch (e) { status.tron = "down: " + String(e).slice(0, 40); }
-try { const { n, head } = await scanEvm(); status.ethereum = `ok (${n})`; evmHead = head; } catch (e) { status.ethereum = "down: " + String(e).slice(0, 40); }
+try { const { n, head } = await scanEvm(); status.ethereum = `ok (${n})`; evmHead = head; }
+catch (e) { status.ethereum = "down: " + String(e).slice(0, 40); evmHead = evmLastGood; /* R34: המשך-מהמנה-האחרונה-שהצליחה — בלי-נקודה-עיוורת */ }
 try { const n = await scanSol(); status.solana = `ok (${n})`; } catch (e) { status.solana = "down: " + String(e).slice(0, 40); }
 try { const n = await scanBtc(); status.bitcoin = `ok (${n})`; } catch (e) { status.bitcoin = "down: " + String(e).slice(0, 40); }
 
+const depositsTotal = ledger.deposits.length; // R34: הספירה-האמיתית לפני תקרת-הספר (CAP=400)
 ledger.deposits = ledger.deposits
   .sort((a, b) => (b.ts ?? 0) - (a.ts ?? 0))
   .slice(0, CAP);
 ledger.updatedAt = new Date().toISOString();
-fs.writeFileSync(DEPOSITS_FILE, JSON.stringify(ledger, null, 1));
+fs.writeFileSync(DEPOSITS_FILE, scrub(JSON.stringify(ledger, null, 1)));
 
 const watch = {
   publishedAt: new Date().toISOString(),
   watching: ADDR,
+  /* R34: כתובות-ההפקדה פומביות-מטבען (tier-A לפי exposure policy — מפתח "deposit*"
+   * שורד את redact-telemetry בעוד watching נחתך). בלי-זה הספר-המפורסם לא מציג
+   * את-הכתובות ומשתמש אינו יכול להפקיד בפועל. */
+  depositAddresses: {
+    depositTron: ADDR.tron,
+    depositEvm: ADDR.evm,
+    depositSol: ADDR.sol,
+    depositBtc: ADDR.btc,
+  },
   chains: status,
-  depositsTotal: ledger.deposits.length,
+  depositsTotal,
+  bookCap: CAP,
   cadenceMin: 20,
   minDepositUsd: MIN_DEPOSIT_USD,
-  note: "keyless public watcher - reads public RPCs, writes the open deposit book; the dex heart matches signed claims against this book and credits USDS",
+  note: "keyless public watcher - reads public RPCs, writes the open deposit book (latest 400); a depositor signs a deposit.claim envelope and the saos-dex cloud-beat scanner matches it against this book (txid) and credits USDS (stables 1:1, others by live feed)",
   ...(evmHead ? { lastEvmBlock: evmHead } : {}),
 };
-fs.writeFileSync(WATCH_FILE, JSON.stringify(watch, null, 1));
-console.log(`[dex-watch] ${((Date.now() - t0) / 1000).toFixed(1)}s · total ${ledger.deposits.length} · fresh ${fresh.length} · ${JSON.stringify(status)}`);
+fs.writeFileSync(WATCH_FILE, scrub(JSON.stringify(watch, null, 1)));
+console.log(`[dex-watch] ${((Date.now() - t0) / 1000).toFixed(1)}s · total ${depositsTotal} · fresh ${fresh.length} · ${JSON.stringify(status)}`);
 for (const f of fresh.slice(0, 10)) console.log(`  + ${f.asset} ${f.amount} @${f.chain} ${String(f.txid).slice(0, 16)}…`);
