@@ -1,7 +1,7 @@
 {
   "ok": true,
   "book": "saos-fee-law/1.0",
-  "publishedAt": "2026-10-15T12:06:57.652Z",
+  "publishedAt": "2026-10-18T11:40:16.412Z",
   "engine": "saos-fee-law/1.0 fee-law · R76 the vol-aware dynamic fee law (the Meteora take)",
   "verdict": "LIVE (the measured volatility raised 1 pool fee(s) above base)",
   "law": {
@@ -14,51 +14,51 @@
     "mechanism": "the Meteora take: fees rise with MEASURED volatility so LPs are compensated exactly when their risk rises · our σ is measured from our own official book only"
   },
   "inputs": {
-    "worldAt": "2026-10-15T12:03:33.606Z",
-    "ageHours": 0.06,
+    "worldAt": "2026-10-18T05:41:04.092Z",
+    "ageHours": 5.99,
     "maxAgeH": 30,
     "fresh": true,
     "market": "SAOS/USDS",
     "twapDevBps": 0,
-    "fairGapBps": 30.03,
-    "range24Bps": 0,
-    "sigmaBps": 30.03,
+    "fairGapBps": 77.52,
+    "range24Bps": 266.4,
+    "sigmaBps": 266.4,
     "stats24": {
-      "high24": 0,
-      "low24": 0,
-      "last": 0
+      "high24": 1027,
+      "low24": 1000,
+      "last": 1027
     }
   },
   "pools": [
     {
       "key": "SAOS/USDS",
       "baseBps": 30,
-      "sigmaBps": 30.03,
+      "sigmaBps": 266.4,
       "feeBps": 60,
       "deltaBps": 30,
-      "basis": "measured (twapDev 0bps · fairGap 30.03bps · range24 0.00bps)"
+      "basis": "measured (twapDev 0bps · fairGap 77.52bps · range24 266.40bps)"
     },
     {
       "key": "USDS/WSTEEM",
-      "baseBps": 91,
+      "baseBps": 106,
       "sigmaBps": null,
-      "feeBps": 91,
+      "feeBps": 106,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
     {
       "key": "ENERGY/SAOS",
-      "baseBps": 769,
+      "baseBps": 728,
       "sigmaBps": null,
-      "feeBps": 769,
+      "feeBps": 728,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
     {
       "key": "USDS/WSBD",
-      "baseBps": 1284,
+      "baseBps": 1404,
       "sigmaBps": null,
-      "feeBps": 1284,
+      "feeBps": 1404,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
