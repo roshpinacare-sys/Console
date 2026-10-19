@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-19T02:53:41.431Z",
+  "generatedAt": "2026-10-19T02:59:57.068Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "018d9f7d8190f314abf45a6ecf1f16ebc811eed7ca11739f7b0d2c527199d705",
+  "stateRoot": "5d98ff1c966231c8aebc35c1c7548a3b0483f1fb7697891eb2b4f7d2184578c6",
   "genesis": {
     "done": true,
     "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
@@ -32,8 +32,11 @@
       }
     },
     "balances": {
+      "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa": {
+        "SAOS": "1000000"
+      },
       "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
-        "SAOS": "126682000"
+        "SAOS": "125682000"
       }
     },
     "supply": {
@@ -45,7 +48,7 @@
         "cur": "USD",
         "amt": "1",
         "ref": "demo-e2e-ref-0001",
-        "status": "pending"
+        "status": "credited"
       }
     },
     "offers": {},
@@ -142,6 +145,13 @@
       "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
       "at": null,
       "txid": null
+    },
+    {
+      "id": "1792378036380-a31481935fb7",
+      "k": "deposit.credit",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
     }
   ],
   "relay": {
@@ -149,10 +159,16 @@
     "queued": 0,
     "lastFlush": "relay-queue-open"
   },
-  "invalid": [],
+  "invalid": [
+    {
+      "id": "1792378415301-dc2291b16c8f",
+      "k": "deposit.credit",
+      "err": "claim-not-pending"
+    }
+  ],
   "verify": {
-    "replayed": 10,
-    "valid": 10,
+    "replayed": 12,
+    "valid": 11,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
