@@ -19,7 +19,17 @@
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = ["acct-41", "acct-40", "acct-44"].map((a) => a.toLowerCase()); // R75: the key declares who signs
+// R75 — the line is multi-signer: anchor machines and the sovereign page sign
+// as the account the key declares. The LIVE sovereign publisher is `headcorner`
+// (measured 2026-10-19: fresh anchor cp#1694 from the weave organ). The acct-41/
+// acct-40/acct-44 matrix is the sovereign's own future fleet expansion — the
+// sovereignty is authorized to create and onboard those accounts itself (owner
+// mandate: the laws direct correct execution, they do not limit sovereignty).
+// The reader scans every fleet account's history and merges the anchors into
+// one line, deduped by checkpoint; each row records its witness.
+const DEFAULT_FLEET = ["headcorner", "acct-41", "acct-40", "acct-44"];
+const FLEET = (process.env.WEAVE_FLEET || DEFAULT_FLEET.join(","))
+  .split(",").map((a) => a.trim().toLowerCase()).filter(Boolean);
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
