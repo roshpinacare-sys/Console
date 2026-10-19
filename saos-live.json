@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-19T16:52:17.599Z",
+  "generatedAt": "2026-10-19T20:43:33.282Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "820ed6e1af935070569a080b8cc934fd75ae16b032bc53d00df5f8df3af0c545",
+  "stateRoot": "35a3ded2d05f6fe86a751b5efafc9a515ccaa7a53069c5b29ae6c623f3ebefb0",
   "genesis": {
     "done": true,
     "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
@@ -54,7 +54,7 @@
         "CSBD": "9957948"
       },
       "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
-        "SAOS": "96521604",
+        "SAOS": "94111966",
         "CSTEEM": "100043735",
         "CSBD": "266900000"
       }
@@ -62,7 +62,7 @@
     "supply": {
       "SAOS": "126682000",
       "CSTEEM": "52809700000",
-      "CSBD": "776857948"
+      "CSBD": "1276857948"
     },
     "claims": {
       "1792377809524-d0000003": {
@@ -109,11 +109,11 @@
         "quote": "CSBD",
         "feeBps": "30",
         "status": "open",
-        "resA": "2409638",
-        "resB": "500000000",
-        "lpSupply": "34710502",
+        "resA": "4819276",
+        "resB": "1000000000",
+        "lpSupply": "69421004",
         "lpBal": {
-          "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": "34710502"
+          "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": "69421004"
         },
         "swaps": "1",
         "volA": "50000",
@@ -404,17 +404,31 @@
       "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
       "at": null,
       "txid": null
+    },
+    {
+      "id": "1792428732168-6b3031c8a0dd",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792428732168-0b89f0754f9c",
+      "k": "pool.add",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
     }
   ],
   "custody": {
     "custodian": "headcorner",
     "measured": {
-      "STEEM": "6145200000",
-      "SBD": "7862600000"
+      "STEEM": "1091000000",
+      "SBD": "1983400000"
     },
     "outstanding": {
       "CSTEEM": "52809700000",
-      "CSBD": "776857948"
+      "CSBD": "1276857948"
     },
     "verdict": {
       "CSTEEM": "custody-deficit",
@@ -426,23 +440,25 @@
     }
   },
   "net": {
-    "lastScanBlock": 110577955,
-    "lastScanAt": "2026-10-19T16:52:17.599Z",
-    "scanned": 1478,
+    "lastScanBlock": 110582321,
+    "lastScanAt": "2026-10-19T20:43:33.282Z",
+    "scanned": 2416,
     "found": 0,
     "added": 0,
     "folded": 0,
     "rejected": 0,
-    "dupes": 2,
+    "dupes": 6,
     "relayAdded": 2,
     "failedBatches": 0,
-    "archive": 45,
+    "archive": 47,
     "window": {
-      "from": 110577942,
-      "to": 110577955
+      "from": 110582306,
+      "to": 110582321
     },
-    "ms": 2681,
-    "notes": [],
+    "ms": 6534,
+    "notes": [
+      "gap-capped:4374->2400"
+    ],
     "envs": [
       {
         "b": 109843428,
@@ -1163,6 +1179,38 @@
           "quote": "500000000",
           "sig": "1f03f9f0adf3bafee3f301e6ebc4723205e6bbab4da69c1c19de7abacadb042fad3f9cc138d4a8507834e66dc77bb7fbcd6a2c9b499a9c67387abaeaf0e9bf2c41"
         }
+      },
+      {
+        "b": 110577955,
+        "o": 137581,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792428732168-6b3031c8a0dd",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "2008ef0251e65bb194d99ed383e6e48b783f49f4fb4817323ab63637633bdfe4ea460e9bc1026e104c78feedcfdcdb243899939b9925d767d19c2235e913e7a509"
+        }
+      },
+      {
+        "b": 110577955,
+        "o": 137582,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792428732168-0b89f0754f9c",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "1f633123d889dd0a3c1dca75bd00261575ac74d1d8083dd21b8787b9614d57a5d309636edcf0aa5c31a6abe21ffae5c946e9351d9ac3791e57db00df4f0b71dc4b"
+        }
       }
     ]
   },
@@ -1209,8 +1257,8 @@
     }
   ],
   "verify": {
-    "replayed": 45,
-    "valid": 38,
+    "replayed": 47,
+    "valid": 40,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
