@@ -31,7 +31,17 @@ const DEFAULT_FLEET = ["headcorner", "acct-41", "acct-40", "acct-44"];
 const FLEET = (process.env.WEAVE_FLEET || DEFAULT_FLEET.join(","))
   .split(",").map((a) => a.trim().toLowerCase()).filter(Boolean);
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
-const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
+// FIX(2026-10-19 · console-publish red streak): הכשל-החוזר היה רגעי — שני-צמתים
+// בלבד ואפס-ניסיונות-חוזרים = כל-blip-רשת-מה-runner הופך-את-הפרסום-השעתי-לאדום.
+// ארבעת-הצמתים-החיים (נמדדו-חי 2026-10-19) + שני-ניסיונות-פר-צומת עם-הפוגה.
+// הזריקה-הכנה-בסוף-נשארת — אחרי-אכילת-כל-הצמתים-והניסיונות-ההכשל-עדיין-אמת.
+const NODES = [
+  "https://api.steemit.com",
+  "https://api.justyy.com",
+  "https://steemapi.boylikegirl.club",
+  "https://api.steem.fans",
+];
+const NODE_TRIES = 2;
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
 const PAGE = 100; // condenser_api.get_account_history hard upper limit per call
 const MAX_PAGES = 30; // ~3000 ops back per account: days of fleet noise, always enough for the anchor line
@@ -60,6 +70,7 @@ async function rpc(node, method, params) {
 async function readAnchorLine() {
   let lastErr = null;
   for (const node of NODES) {
+    for (let attempt = 1; attempt <= NODE_TRIES; attempt++) {
     try {
       const anchors = [];
       for (const account of FLEET) {
@@ -121,7 +132,9 @@ async function readAnchorLine() {
       return { node, anchors: unique };
     } catch (e) {
       lastErr = e;
-      console.log(`[render] node ${node} failed: ${e && e.message ? e.message : e}`);
+      console.log(`[render] node ${node} (attempt ${attempt}/${NODE_TRIES}) failed: ${e && e.message ? e.message : e}`);
+      if (attempt < NODE_TRIES) await new Promise((r) => setTimeout(r, 3000));
+    }
     }
   }
   throw new Error(`all public RPC nodes failed (last: ${lastErr && lastErr.message})`);
