@@ -1,22 +1,40 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-17T23:54:13.892Z",
+  "generatedAt": "2026-10-19T02:17:09.639Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "7023345ea9c65689a8a3f6249d031d9ec51dceecc2dfe39a971e7fa54e7485b5",
+  "stateRoot": "16ab8e2d630667d68def5c7f7d68a28c220e2a7e93814665fa4ad0ce8594a15e",
   "genesis": {
     "done": true,
-    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
-    "txid": null,
+    "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+    "txid": "16d53c95e9cc1542dab02bef1423beb7842f841d",
     "symbol": "SAOS",
     "initialMint": "126682000",
     "maxSupply": "21000000000",
     "note": "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-40, genesis 2026-09-05)"
   },
   "state": {
-    "wallets": {},
-    "tokens": {},
-    "balances": {},
-    "supply": {},
+    "wallets": {
+      "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
+        "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+        "nick": "network-treasury"
+      }
+    },
+    "tokens": {
+      "SAOS": {
+        "name": "SAOS",
+        "decimals": 3,
+        "maxSupply": "21000000000",
+        "issuer": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
+      }
+    },
+    "balances": {
+      "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
+        "SAOS": "126682000"
+      }
+    },
+    "supply": {
+      "SAOS": "126682000"
+    },
     "claims": {},
     "offers": {},
     "cfg": {
@@ -24,18 +42,40 @@
       "rates": {}
     },
     "rewardsPaid": "0",
-    "treasury": null
+    "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
   },
-  "ops": [],
+  "ops": [
+    {
+      "id": "genesis-saos-treasury",
+      "k": "wallet.create",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "genesis-saos-deploy",
+      "k": "token.deploy",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "genesis-saos-mint",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    }
+  ],
   "relay": {
     "url": null,
     "queued": 0,
-    "lastFlush": "תור-הריליי פנוי"
+    "lastFlush": "relay-queue-open"
   },
   "invalid": [],
   "verify": {
-    "replayed": 0,
-    "valid": 0,
+    "replayed": 3,
+    "valid": 3,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
