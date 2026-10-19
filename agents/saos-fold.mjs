@@ -126,18 +126,24 @@ function creditUnits(amt, price) {
    * means 1 SAOS = $0.001). SAOS units carry 3 decimals → ×1000. */
   return (a * 1000n) / p; // floor — treasury never over-credits
 }
-async function treasuryBeat(state) {
+async function treasuryBeat(state, envelopes = []) {
   const wif = process.env.SAOS_TREASURY_WIF || localVaultWif("treasury");
   if (!wif) return { newOps: [], note: "no-treasury-key (fold-only mode)" };
   const priv = Buffer.from(C.unhex(await privHexFromWif(wif)));
   const pubSTM = await C.pubToSTM(C.privToPubBytes(new Uint8Array(priv)));
   const by = await SL.addressFromPubSTM(pubSTM);
   if (state.treasury && by !== state.treasury) return { newOps: [], note: "treasury-key-mismatch (fail-closed)" };
+  /* double-credit guard (measured 2026-10-19: a beat inside the history-lag
+   * window re-credited an already-credited claim — the chain fold rejected
+   * it fail-closed, but the wasted tx is prevented here): a claim that
+   * already has ANY deposit.credit envelope on chain is never credited again. */
+  const creditedClaims = new Set(envelopes.filter((e) => e?.k === "deposit.credit" && e.claimId).map((e) => String(e.claimId)));
   const newOps = [];
   const skips = [];
   for (const id of Object.keys(state.claims).sort()) {
     const cl = state.claims[id];
     if (cl.status !== "pending") continue;
+    if (creditedClaims.has(id)) { skips.push({ id, why: "already-credited-on-chain" }); continue; }
     const rate = state.cfg.rates?.["SAOS/" + cl.cur]?.price;
     if (!rate) { skips.push({ id, why: "no-rate:" + cl.cur }); continue; }
     const units = creditUnits(cl.amt, rate);
@@ -230,7 +236,7 @@ async function main() {
   const genesisTxid = findGenesisTxid(envelopes);
   let res = await SL.fold(envelopes);
 
-  const beat = await treasuryBeat(res.state);
+  const beat = await treasuryBeat(res.state, envelopes);
   if (beat.newOps.length) {
     const relayWif = process.env.SAOS_RELAY_WIF || localVaultWif2("army-posting");
     const bc = await broadcast(beat.newOps, relayWif);
