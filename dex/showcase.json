@@ -1,1 +1,197 @@
-{"ok":true,"at":1792373110597,"sovereignPair":{"base":"SAOS","quote":"USDS","mid":1024,"poolMid":1039,"bookDepthMu":0,"liveOrders":13,"height":650754,"stateRoot":"5b6288f6cc003c29a54750ec2a78cd8ac3a06b91e9f3e9f210d40c4e9834d0f2"},"A":[{"sizeMu":10000,"bookCostMu":0,"bookAvgPx":0,"bookSlipBps":10000,"covered":false,"poolCostMu":10425,"poolEffPx":null,"poolSlipBps":null,"savingsMu":null,"savingsBps":null},{"sizeMu":50000,"bookCostMu":0,"bookAvgPx":0,"bookSlipBps":10000,"covered":false,"poolCostMu":52147,"poolEffPx":null,"poolSlipBps":null,"savingsMu":null,"savingsBps":null},{"sizeMu":20000,"bookCostMu":0,"bookAvgPx":0,"bookSlipBps":10000,"covered":false,"poolCostMu":20852,"poolEffPx":null,"poolSlipBps":null,"savingsMu":null,"savingsBps":null}],"A2":[{"sizeMu":10000,"bookCostMu":0,"bookAvgPx":0,"bookSlipBps":10000,"covered":false,"poolCostMu":10283,"poolEffPx":null,"poolSlipBps":null,"savingsMu":null,"savingsBps":null},{"sizeMu":50000,"bookCostMu":0,"bookAvgPx":0,"bookSlipBps":10000,"covered":false,"poolCostMu":51678,"poolEffPx":null,"poolSlipBps":null,"savingsMu":null,"savingsBps":null},{"sizeMu":20000,"bookCostMu":0,"bookAvgPx":0,"bookSlipBps":10000,"covered":false,"poolCostMu":20593,"poolEffPx":null,"poolSlipBps":null,"savingsMu":null,"savingsBps":null}],"B":{"replay":{"ops":840,"okCount":624,"roots":["8574cb9dbd1404e0762f7b943ca0b3dc63cd1a6ca5b1da18d7583edd2b1df189","8574cb9dbd1404e0762f7b943ca0b3dc63cd1a6ca5b1da18d7583edd2b1df189","8574cb9dbd1404e0762f7b943ca0b3dc63cd1a6ca5b1da18d7583edd2b1df189"],"identical":true,"matchRate":1},"poolSandwich":{"attackerPnlMu":-313,"victimOutClean":191488,"victimOutSandwiched":190925,"victimHarmMu":563},"bookSandwich":{"attackerPnlMu":0,"victimExtraCostMu":0,"victimAvgClean":0,"victimAvgSandwiched":0,"topLevelMu":0,"bestBidPx":1021,"note":"book empty"}},"C":{"fillsWindow":0,"gridVolumeMu":0,"botVolumeMu":0,"totalVolumeMu":0,"gridSharePct":0,"restingOrdersTotal":24,"restingOrdersGrid":0,"restingLiquidityMu":3538167,"restingLiquidityGridMu":0,"restingGridPct":0,"lifetimeFills":98484,"lifetimeSwaps":64730,"fillsPerMin":134296.4},"sovereignty":{"verified":0,"broadcasts":0,"mismatches":0,"breakerTrips":0,"rails":7,"perChain":{"steem":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"hive":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"blurt":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"tron":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"eth":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"sol":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null},"fleet":{"anchored":0,"verified":0,"status":"disabled","lastTxid":null}},"bridgesRequired":0},"meta":{"gasFill":1,"gasPoolSwap":1,"feeBpsBook":0,"feeBpsPool":30,"notes":["A: book fills at exact maker price (book.ts matchBook) vs pool x*y=k + 30bps (amm.ts poolSwap)","B1: identical op stream on 3 fresh genesis states → identical stateRoot (kernel.ts applyOp determinism)","B2/B3: same sandwich strategy — pool yields positive extraction, book yields negative attacker PnL","C: share of live fill volume matched against grid-soldier quotes — zero external LPs"]}}
+{
+  "ok": true,
+  "at": 1792373110597,
+  "sovereignPair": {
+    "base": "SAOS",
+    "quote": "USDS",
+    "mid": 1024,
+    "poolMid": 1039,
+    "bookDepthMu": 0,
+    "liveOrders": 13,
+    "height": 650754,
+    "stateRoot": "5b6288f6cc003c29a54750ec2a78cd8ac3a06b91e9f3e9f210d40c4e9834d0f2"
+  },
+  "A": [
+    {
+      "sizeMu": 10000,
+      "bookCostMu": 0,
+      "bookAvgPx": 0,
+      "bookSlipBps": 10000,
+      "covered": false,
+      "poolCostMu": 10425,
+      "poolEffPx": null,
+      "poolSlipBps": null,
+      "savingsMu": null,
+      "savingsBps": null
+    },
+    {
+      "sizeMu": 50000,
+      "bookCostMu": 0,
+      "bookAvgPx": 0,
+      "bookSlipBps": 10000,
+      "covered": false,
+      "poolCostMu": 52147,
+      "poolEffPx": null,
+      "poolSlipBps": null,
+      "savingsMu": null,
+      "savingsBps": null
+    },
+    {
+      "sizeMu": 20000,
+      "bookCostMu": 0,
+      "bookAvgPx": 0,
+      "bookSlipBps": 10000,
+      "covered": false,
+      "poolCostMu": 20852,
+      "poolEffPx": null,
+      "poolSlipBps": null,
+      "savingsMu": null,
+      "savingsBps": null
+    }
+  ],
+  "A2": [
+    {
+      "sizeMu": 10000,
+      "bookCostMu": 0,
+      "bookAvgPx": 0,
+      "bookSlipBps": 10000,
+      "covered": false,
+      "poolCostMu": 10283,
+      "poolEffPx": null,
+      "poolSlipBps": null,
+      "savingsMu": null,
+      "savingsBps": null
+    },
+    {
+      "sizeMu": 50000,
+      "bookCostMu": 0,
+      "bookAvgPx": 0,
+      "bookSlipBps": 10000,
+      "covered": false,
+      "poolCostMu": 51678,
+      "poolEffPx": null,
+      "poolSlipBps": null,
+      "savingsMu": null,
+      "savingsBps": null
+    },
+    {
+      "sizeMu": 20000,
+      "bookCostMu": 0,
+      "bookAvgPx": 0,
+      "bookSlipBps": 10000,
+      "covered": false,
+      "poolCostMu": 20593,
+      "poolEffPx": null,
+      "poolSlipBps": null,
+      "savingsMu": null,
+      "savingsBps": null
+    }
+  ],
+  "B": {
+    "replay": {
+      "ops": 840,
+      "okCount": 624,
+      "roots": [
+        "8574cb9dbd1404e0762f7b943ca0b3dc63cd1a6ca5b1da18d7583edd2b1df189",
+        "8574cb9dbd1404e0762f7b943ca0b3dc63cd1a6ca5b1da18d7583edd2b1df189",
+        "8574cb9dbd1404e0762f7b943ca0b3dc63cd1a6ca5b1da18d7583edd2b1df189"
+      ],
+      "identical": true,
+      "matchRate": 1
+    },
+    "poolSandwich": {
+      "attackerPnlMu": -313,
+      "victimOutClean": 191488,
+      "victimOutSandwiched": 190925,
+      "victimHarmMu": 563
+    },
+    "bookSandwich": {
+      "attackerPnlMu": 0,
+      "victimExtraCostMu": 0,
+      "victimAvgClean": 0,
+      "victimAvgSandwiched": 0,
+      "topLevelMu": 0,
+      "bestBidPx": 1021,
+      "note": "book empty"
+    }
+  },
+  "C": {
+    "fillsWindow": 0,
+    "gridVolumeMu": 0,
+    "botVolumeMu": 0,
+    "totalVolumeMu": 0,
+    "gridSharePct": 0,
+    "restingOrdersTotal": 24,
+    "restingOrdersGrid": 0,
+    "restingLiquidityMu": 3538167,
+    "restingLiquidityGridMu": 0,
+    "restingGridPct": 0,
+    "lifetimeFills": 98484,
+    "lifetimeSwaps": 64730,
+    "fillsPerMin": 134296.4
+  },
+  "sovereignty": {
+    "verified": 0,
+    "broadcasts": 0,
+    "mismatches": 0,
+    "breakerTrips": 0,
+    "rails": 7,
+    "perChain": {
+      "steem": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "hive": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "blurt": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "tron": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "eth": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "sol": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      },
+      "fleet": {
+        "anchored": 0,
+        "verified": 0,
+        "status": "disabled",
+        "lastTxid": null
+      }
+    },
+    "bridgesRequired": 0
+  },
+  "meta": {
+    "gasFill": 1,
+    "gasPoolSwap": 1,
+    "feeBpsBook": 0,
+    "feeBpsPool": 30,
+    "notes": [
+      "A: book fills at exact maker price (book.ts matchBook) vs pool x*y=k + 30bps (amm.ts poolSwap)",
+      "B1: identical op stream on 3 fresh genesis states → identical stateRoot (kernel.ts applyOp determinism)",
+      "B2/B3: same sandwich strategy — pool yields positive extraction, book yields negative attacker PnL",
+      "C: share of live fill volume matched against grid-soldier quotes — zero external LPs"
+    ]
+  }
+}
