@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-19T02:31:03.832Z",
+  "generatedAt": "2026-10-19T02:47:20.449Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "012b74fa8e73873d1aa597a162cd94d5c7bebf2ed3da135ed8cd5b14e6d4362b",
+  "stateRoot": "018d9f7d8190f314abf45a6ecf1f16ebc811eed7ca11739f7b0d2c527199d705",
   "genesis": {
     "done": true,
     "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
@@ -14,6 +14,10 @@
   },
   "state": {
     "wallets": {
+      "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa": {
+        "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+        "nick": "saos-demo"
+      },
       "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
         "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
         "nick": "network-treasury"
@@ -35,7 +39,15 @@
     "supply": {
       "SAOS": "126682000"
     },
-    "claims": {},
+    "claims": {
+      "1792377809524-d0000003": {
+        "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+        "cur": "USD",
+        "amt": "1",
+        "ref": "demo-e2e-ref-0001",
+        "status": "pending"
+      }
+    },
     "offers": {},
     "cfg": {
       "addrs": {},
@@ -116,6 +128,20 @@
       "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
       "at": null,
       "txid": null
+    },
+    {
+      "id": "1792377012864-d0000001",
+      "k": "wallet.create",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792377809524-d0000003",
+      "k": "deposit.claim",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
     }
   ],
   "relay": {
@@ -125,8 +151,8 @@
   },
   "invalid": [],
   "verify": {
-    "replayed": 8,
-    "valid": 8,
+    "replayed": 10,
+    "valid": 10,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
