@@ -9,39 +9,19 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (acct-41 / acct-40 /
-// acct-44 — the fleet matrix). The reader scans every fleet account's history
+// page sign as the account the key declares (cashmachine / headcorner /
+// lsa — the fleet matrix). The reader scans every fleet account's history
 // and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. A acct-40-signed anchor now refreshes the line
-// exactly like a acct-41 one.
+// records its witness. A headcorner-signed anchor now refreshes the line
+// exactly like a cashmachine one.
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-// R75 — the line is multi-signer: anchor machines and the sovereign page sign
-// as the account the key declares. The LIVE sovereign publisher is `headcorner`
-// (measured 2026-10-19: fresh anchor cp#1694 from the weave organ). The acct-41/
-// acct-40/acct-44 matrix is the sovereign's own future fleet expansion — the
-// sovereignty is authorized to create and onboard those accounts itself (owner
-// mandate: the laws direct correct execution, they do not limit sovereignty).
-// The reader scans every fleet account's history and merges the anchors into
-// one line, deduped by checkpoint; each row records its witness.
-const DEFAULT_FLEET = ["headcorner", "acct-41", "acct-40", "acct-44"];
-const FLEET = (process.env.WEAVE_FLEET || DEFAULT_FLEET.join(","))
-  .split(",").map((a) => a.trim().toLowerCase()).filter(Boolean);
+const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
-// FIX(2026-10-19 · console-publish red streak): הכשל-החוזר היה רגעי — שני-צמתים
-// בלבד ואפס-ניסיונות-חוזרים = כל-blip-רשת-מה-runner הופך-את-הפרסום-השעתי-לאדום.
-// ארבעת-הצמתים-החיים (נמדדו-חי 2026-10-19) + שני-ניסיונות-פר-צומת עם-הפוגה.
-// הזריקה-הכנה-בסוף-נשארת — אחרי-אכילת-כל-הצמתים-והניסיונות-ההכשל-עדיין-אמת.
-const NODES = [
-  "https://api.steemit.com",
-  "https://api.justyy.com",
-  "https://steemapi.boylikegirl.club",
-  "https://api.steem.fans",
-];
-const NODE_TRIES = 2;
+const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
 const PAGE = 100; // condenser_api.get_account_history hard upper limit per call
 const MAX_PAGES = 30; // ~3000 ops back per account: days of fleet noise, always enough for the anchor line
@@ -70,7 +50,6 @@ async function rpc(node, method, params) {
 async function readAnchorLine() {
   let lastErr = null;
   for (const node of NODES) {
-    for (let attempt = 1; attempt <= NODE_TRIES; attempt++) {
     try {
       const anchors = [];
       for (const account of FLEET) {
@@ -113,11 +92,7 @@ async function readAnchorLine() {
         }
       }
       if (anchors.length === 0) {
-        // MEASURED, not failed: every page answered and the window still holds zero
-        // checkpoint anchors. Returning the empty read honestly (wave-19.33) lets the
-        // top level publish the takeover-window state instead of red-failing hourly
-        // on a documented owner decision — the chain read itself is green.
-        return { node, anchors: [] };
+        throw new Error(`no ${OP_ID} checkpoint anchors in fleet history (${FLEET.join(", ")}; ${MAX_PAGES} pages each)`);
       }
       anchors.sort((a, b) => (a.at < b.at ? 1 : a.at > b.at ? -1 : 0));
       // התאמת-שכפול (Task 26): אותו checkpoint שעוגן מחדש (ניסיון חוזר,
@@ -132,46 +107,33 @@ async function readAnchorLine() {
       return { node, anchors: unique };
     } catch (e) {
       lastErr = e;
-      console.log(`[render] node ${node} (attempt ${attempt}/${NODE_TRIES}) failed: ${e && e.message ? e.message : e}`);
-      if (attempt < NODE_TRIES) await new Promise((r) => setTimeout(r, 3000));
-    }
+      console.log(`[render] node ${node} failed: ${e && e.message ? e.message : e}`);
     }
   }
   throw new Error(`all public RPC nodes failed (last: ${lastErr && lastErr.message})`);
 }
 
 const { node, anchors } = await readAnchorLine();
-// wave-19.33 owner fix-order ('תקן הכל'): zero anchors in the scanned window is a
-// MEASURED chain state with a documented cause — the fleet audit (giant worklog)
-// records the weave chain dark since 2026-10-12T07:27Z, the intended signer out of
-// keys since R280, and the alternative requiring key material = OWNER red-line
-// decision. The designed behavior (already in this file for old anchors) is to
-// PUBLISH the honest STALE/takeover-window state — the page renders it — not to
-// red-fail the hourly cron with an email per hour. The secret gate below still
-// guards every byte we publish.
-const TAKEOVER_NOTE =
-  "no " + OP_ID + " checkpoint anchors in the scanned window (" + FLEET.length + " accounts x " + MAX_PAGES +
-  " pages) - the weave anchor chain has been dark since 2026-10-12T07:27Z per the fleet audit " +
-  "(signer out of keys since R280; the alternative needs key material = owner red-line). " +
-  "The console displays the takeover window honestly; anchor resumption is an owner decision.";
-const last = anchors[0] || null;
-const ageHours = last ? (Date.now() - new Date(last.at).getTime()) / 3600000 : null;
-const verdict = last ? (ageHours < FRESH_THRESHOLD_H ? "FRESH" : "STALE") : "STALE";
+if (anchors.length === 0) {
+  throw new Error(`no ${OP_ID} anchors found in fleet history (${FLEET.join(", ")}): the chain is the source, an empty read is a red run`);
+}
+const last = anchors[0];
+const ageHours = (Date.now() - new Date(last.at).getTime()) / 3600000;
+const verdict = ageHours < FRESH_THRESHOLD_H ? "FRESH" : "STALE";
 
 const explorer = (txid) => `https://steemscan.com/transaction/${txid}`;
 
 const status = {
   format: "weave-console-chain-v1",
   generatedAt: new Date().toISOString(),
-  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET, account: last ? last.witness : null, opId: OP_ID },
+  source: { kind: "steem-public-rpc", node: new URL(node).hostname, accounts: FLEET, account: last.witness, opId: OP_ID },
   freshness: {
     verdict,
-    ageHours: last ? Math.round(ageHours * 10) / 10 : null,
+    ageHours: Math.round(ageHours * 10) / 10,
     thresholdHours: FRESH_THRESHOLD_H,
     cadence: "1h",
-    ...(last ? {} : { note: TAKEOVER_NOTE }),
   },
-  witness: last ? {
+  witness: {
     account: last.witness,
     opId: OP_ID,
     txid: last.txid,
@@ -185,7 +147,7 @@ const status = {
     attestations: last.attestations,
     headHash: last.headHash,
     commit: last.commit,
-  } : null,
+  },
   recent: anchors.slice(0, RECENT_ROWS).map((a) => ({
     checkpoint: a.checkpoint,
     root: a.root,
@@ -221,15 +183,11 @@ if (suspicious.length > 0) throw new Error(`secret gate blocked status.json: unr
 const { writeFileSync } = await import("fs");
 writeFileSync(new URL("./status.json", import.meta.url), text + "\n");
 
-if (last) {
-  console.log(
-    `[render] ${OP_ID} · latest anchor cp#${last.checkpoint} · root ${last.root.slice(0, 18)}… · ` +
-      `txid ${last.txid.slice(0, 12)}… · witness @${last.witness} · age ${Math.round(ageHours * 10) / 10}h (${verdict}) · ` +
-      `${anchors.length} anchors read from ${new URL(node).hostname} (${FLEET.length} fleet accounts scanned)`
-  );
-} else {
-  console.log(`[render] HONEST TAKEOVER-WINDOW: ${TAKEOVER_NOTE}`);
-}
-if (verdict === "STALE" && last) {
+console.log(
+  `[render] ${OP_ID} · latest anchor cp#${last.checkpoint} · root ${last.root.slice(0, 18)}… · ` +
+    `txid ${last.txid.slice(0, 12)}… · witness @${last.witness} · age ${Math.round(ageHours * 10) / 10}h (${verdict}) · ` +
+    `${anchors.length} anchors read from ${new URL(node).hostname} (${FLEET.length} fleet accounts scanned)`
+);
+if (verdict === "STALE") {
   console.log(`[render] HONEST STALE: witness older than ${FRESH_THRESHOLD_H}h; the page will show the takeover window`);
 }
