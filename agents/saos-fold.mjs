@@ -2,7 +2,9 @@
  * (saos.live.v1). One file, three duties, zero custody beyond what env gives:
  *
  *   1. FOLD: read every custom_json op (id `saos.weave.live.v1`) the relayer
- *      account ever published from the public chain, re-verify every inner
+ *      account ever published from the public chain — AND every op with that
+ *      id broadcast by ANY account in the scanned block window (network
+ *      scan, so new wallets fold every run) — re-verify every inner
  *      signature with the SAME code every browser runs (../saos-live.js), and
  *      fold them into the deterministic state. The chain is the judge.
  *   2. TREASURY BEAT: pending deposit.claims are countersigned by the
@@ -35,6 +37,35 @@ const RELAY_ACCOUNT = process.env.SAOS_RELAY_ACCOUNT || "headcorner";
 const BOOK = path.join(ROOT, "saos-live.json");
 const GENESIS_NOTE = "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-40, genesis 2026-09-05)";
 const MAX_HISTORY = 50000;
+/* ── network scan law (pattern proven in cloud-beat.ts:150-215, measured
+ * 2026-10-19): account-history sees ONLY the relay account — new wallets
+ * broadcast their envelopes (wallet.create, dex.*, token.transfer,
+ * deposit.claim) from ANY other STEEM account, so a relay-only fold waits
+ * hours. The scan walks the BLOCK window (condenser_api.get_ops_in_block,
+ * JSON-RPC batches of 10 ≈ 1.1s/batch, concurrency 3, AbortSignal 25s, one
+ * polite retry per batch) and collects every custom_json with our OP_ID
+ * from ANY writer. The inner saos1 signature is the authority — transport
+ * is only a messenger.
+ * Cursor + archive law: lastScanBlock AND the envelope archive (net.envs)
+ * persist in the book's top-level `net` field — OUTSIDE the deterministic
+ * fold state (stateRoot is canon-of-consensus only, saos-live.js fold()).
+ * The archive is the processed-ids ledger: it holds EVERY envelope ever
+ * folded (relay-history AND network-scan, source-tagged), so the replay
+ * survives BOTH sliding windows (the relay account-history window too —
+ * measured 2026-10-19: headcorner's event flood pushed the genesis ops out
+ * of a 6000-event pagination window and a relay-only fold collapsed to
+ * wallets=0; the archive makes that impossible). Same envelope set folds
+ * every run — SL.fold rejects dup-ids; the merge dedupes before it.
+ * Window cap 2400 blocks (~2h); a bigger gap is logged honestly and resumed
+ * from head-cap (older network envelopes: lost law, like cloud-beat). */
+const SCAN_BATCH = 10;
+const SCAN_MAX_BLOCKS = 2400;
+const SCAN_CONCURRENCY = 3;
+const SCAN_OVERLAP = 12;
+const SCAN_FIRST_WINDOW = 20;
+const SCAN_TIMEOUT_MS = 25000;
+const NET_ARCHIVE_MAX = 5000;
+const RELAY_DEEP_PAGES = 800;
 const log = (o) => console.log(JSON.stringify({ t: new Date().toISOString(), ...o }));
 
 const rpc = async (method, params) => {
@@ -89,14 +120,33 @@ async function historyPage(account, from, limit) {
 
 /* ── chain reading: every SAOS custom_json the relayer account published.
  * Deterministic law: the envelope list is ALWAYS in chain order (sorted by
- * the account-history index) — same ops in, same stateRoot out. ── */
-async function readChainEnvelopes(account) {
-  const picked = []; // [idx, envelope]
+ * the account-history index) — same ops in, same stateRoot out. Returns
+ * pairs {b: block, i: history index, e: envelope} so the network scan can
+ * merge into one true chain order.
+ * deepRecovery law (measured 2026-10-19 incident): the newest→backward walk
+ * stops at the first full SAOS-free page — but the relay account's event
+ * flood can bury the OLDER SAOS cluster just below that stop point (that is
+ * how the genesis ops fell out of the window and a relay-only fold collapsed
+ * to wallets=0 within one hour). When the archive does not yet hold the
+ * genesis envelope, the walk skips clean pages (up to RELAY_DEEP_PAGES more)
+ * until it finds the older cluster, collects it, and stops at its clean
+ * boundary — one-time cost, the archive keeps it forever. ── */
+async function readChainPairs(account, opts = {}) {
+  const picked = []; // {b, i, e}
   let from = -1;
   let seenSaos = false;
   let emptyRetries = 0;
-  for (let page = 0; page < 60; page++) {
-    let hist = await historyPage(account, from, 100);
+  let deepLeft = opts.deepRecovery ? RELAY_DEEP_PAGES : 0;
+  let deepUsed = 0;
+  for (let page = 0; page < 60 + RELAY_DEEP_PAGES; page++) {
+    if (page >= 60 && deepLeft <= 0) break;
+    let hist = null;
+    try {
+      hist = await historyPage(account, from, 100);
+    } catch (e) {
+      if (page < 60) throw e; // normal window: keep the fail-closed crash
+      break; // deep walk hit a depth-limited node — end it honestly
+    }
     if (!hist?.length) {
       if (emptyRetries++ < 2) { await new Promise((r) => setTimeout(r, 800)); continue; } // node hiccup — retry once, honestly
       break;
@@ -110,9 +160,9 @@ async function readChainEnvelopes(account) {
         seenSaos = true;
         try {
           const j = JSON.parse(op[1].json);
-          if (Array.isArray(j)) j.forEach((e) => picked.push([idx, e]));
-          else picked.push([idx, j]);
-        } catch { picked.push([idx, { _bad: "unparseable" }]); }
+          if (Array.isArray(j)) j.forEach((e) => picked.push({ b: Number(ev?.block ?? 0), i: idx, e }));
+          else picked.push({ b: Number(ev?.block ?? 0), i: idx, e: j });
+        } catch { picked.push({ b: Number(ev?.block ?? 0), i: idx, e: { _bad: "unparseable" } }); }
       }
     }
     if (oldest <= 0) break;
@@ -120,12 +170,148 @@ async function readChainEnvelopes(account) {
      * that flood ~100 events/minute — a single newest-window scan is never
      * enough). Keep paging until a FULL page holds zero SAOS ops after we
      * have seen at least one — everything older than a clean page predates
-     * the protocol. */
-    if (seenSaos && pageSaos === 0) break;
+     * the protocol — UNLESS deep recovery is hunting a buried older cluster. */
+    if (seenSaos && pageSaos === 0) {
+      if (deepLeft > 0) { deepLeft--; deepUsed++; from = oldest - 1; continue; } // deep recovery: skip the clean page, keep hunting
+      break;
+    }
     from = oldest - 1;
   }
-  picked.sort((a, b) => a[0] - b[0]);
-  return picked.map(([, e]) => e);
+  picked.sort((a, b) => a.i - b.i);
+  return { pairs: picked, deepUsed };
+}
+
+/* ── network scan: every SAOS custom_json op in the block window, from ANY
+ * account. First run (no cursor): head-20..head — an honest small window.
+ * Afterwards: last-12..head (overlap-12 safety, like cloud-beat). A gap
+ * bigger than the cap is logged honestly and resumed from head-cap. ── */
+async function collectNetworkEnvelopes(cursor) {
+  const t0 = Date.now();
+  const base = await pickNode();
+  let head = 0;
+  for (let i = 0; i < 3 && !head; i++) {
+    try {
+      const ac = new AbortController();
+      const to = setTimeout(() => ac.abort(), 10000);
+      const r = await fetch(base + "/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", method: "condenser_api.get_dynamic_global_properties", params: [], id: 1 }), signal: ac.signal });
+      clearTimeout(to);
+      head = Number((await r.json())?.result?.head_block_number ?? 0);
+    } catch { /* probe again, honestly */ }
+    if (!head) await new Promise((r) => setTimeout(r, 2000));
+  }
+  if (!head) throw new Error("scan-head-unknown");
+  const last = Math.max(0, Number(cursor?.block ?? 0));
+  let from = last > 0 ? last - SCAN_OVERLAP : head - SCAN_FIRST_WINDOW;
+  let note = null;
+  if (head - from > SCAN_MAX_BLOCKS) {
+    note = "gap-capped:" + (head - from) + "->" + SCAN_MAX_BLOCKS;
+    from = head - SCAN_MAX_BLOCKS;
+  }
+  const blockNos = [];
+  for (let b = from + 1; b <= head; b++) blockNos.push(b);
+  const pairs = []; // {b: block, o: op index in block, e: envelope}
+  let failed = 0;
+  let ci = 0;
+  const worker = async () => {
+    while (ci < blockNos.length) {
+      const mine = blockNos.slice(ci, ci + SCAN_BATCH);
+      ci += SCAN_BATCH;
+      const reqs = mine.map((b, i) => ({ jsonrpc: "2.0", id: i + 1, method: "condenser_api.get_ops_in_block", params: [b, false] }));
+      let arr = null;
+      for (let attempt = 0; attempt < 2 && !arr; attempt++) { // one polite retry per batch
+        try {
+          const ac = new AbortController();
+          const to = setTimeout(() => ac.abort(), SCAN_TIMEOUT_MS);
+          const r = await fetch(base + "/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(reqs), signal: ac.signal });
+          clearTimeout(to);
+          if (!r.ok) throw new Error("http-" + r.status);
+          arr = await r.json();
+        } catch {
+          arr = null;
+          if (attempt === 0) await new Promise((r2) => setTimeout(r2, 1500));
+        }
+      }
+      if (!Array.isArray(arr)) { failed += mine.length; continue; } // batch lost — counted honestly; cursor advances (dedupe + refold law)
+      const byId = new Map();
+      for (const x of arr) byId.set(Number(x?.id), x?.result);
+      for (let i = 0; i < mine.length; i++) {
+        const ops = byId.get(i + 1);
+        if (!Array.isArray(ops)) { failed++; continue; }
+        for (let o = 0; o < ops.length; o++) {
+          const op = ops[o]?.op;
+          if (!op || op[0] !== "custom_json" || op[1]?.id !== SL.OP_ID) continue;
+          try {
+            const j = JSON.parse(op[1].json);
+            if (Array.isArray(j)) j.forEach((e) => pairs.push({ b: mine[i], o, e }));
+            else pairs.push({ b: mine[i], o, e: j });
+          } catch { pairs.push({ b: mine[i], o, e: { _bad: "unparseable" } }); }
+        }
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: SCAN_CONCURRENCY }, worker));
+  cursor.block = head; // cursor advances to head on every completed scan
+  return { pairs, head, from, scanned: blockNos.length, failedBatches: failed, note, ms: Date.now() - t0 };
+}
+
+/* ── archive laws: the processed-ids ledger that makes BOTH sliding windows
+ * (relay account-history AND network block-scan) replay the SAME envelope
+ * set every run. Entries are {b: block, o: sub-order, src: "r"|"n", e}.
+ * src "r" = relay account-history copy, "n" = network block-scan copy. ── */
+function sanePair(p) {
+  return p && typeof p === "object" && Number.isFinite(p.b) && Number.isInteger(p.o) && p.o >= 0 && (p.src === "r" || p.src === "n") && p.e && typeof p.e === "object";
+}
+const pairKey = (p) => String(p?.e?.id ?? "") || p.src + ":b" + p.b + "o" + p.o;
+const srcRank = (s) => (s === "r" ? 0 : 1); // relay copy folds first within a block
+
+/* one fold input: archive + fresh relay history + fresh network scan,
+ * deduped by envelope id (keep-first in chain order), chain-ordered. */
+function mergeAll(archive, freshRelay, freshNet, notes) {
+  const prevKeys = new Set(archive.map(pairKey));
+  const prevNetKeys = new Set(archive.filter((p) => p.src !== "r").map(pairKey));
+  /* guard: relay history index order IS chain order, so block numbers must
+   * be non-decreasing along it — a node that violates this degrades
+   * gracefully to index-only order (block 0, history-index sub-order). */
+  let blocksOk = true;
+  for (let i = 1; i < freshRelay.length; i++) if (freshRelay[i].b < freshRelay[i - 1].b) { blocksOk = false; break; }
+  const relayPairs = blocksOk
+    ? freshRelay.map((p) => ({ b: p.b, o: p.i, src: "r", e: p.e }))
+    : freshRelay.map((p) => ({ b: 0, o: p.i, src: "r", e: p.e }));
+  if (!blocksOk && notes) notes.push("relay-blocks-nonmonotonic");
+  const all = [...archive, ...relayPairs, ...freshNet];
+  all.sort((x, y) => (x.b - y.b) || (srcRank(x.src) - srcRank(y.src)) || (x.o - y.o) || String(x.e?.id ?? "").localeCompare(String(y.e?.id ?? "")));
+  const seen = new Set();
+  const out = [];
+  let dupes = 0, addedNet = 0, addedRelay = 0;
+  for (const p of all) {
+    const key = pairKey(p);
+    if (seen.has(key)) { dupes++; continue; } // SL.fold rejects dup-id — deduped here, counted honestly
+    seen.add(key);
+    if (p.src === "n") { if (!prevNetKeys.has(key)) addedNet++; }
+    else if (!prevKeys.has(key)) addedRelay++;
+    out.push(p);
+  }
+  let droppedCap = 0;
+  while (out.length > NET_ARCHIVE_MAX) { out.shift(); droppedCap++; } // oldest first, logged honestly
+  const envs = out.map((p) => p.e);
+  const netIds = new Set(out.filter((p) => p.src !== "r").map(pairKey));
+  return { archive: out, envs, netIds, dupes, addedNet, addedRelay, droppedCap };
+}
+
+/* previous scan state from the book (cursor + archive), fail-honest;
+ * legacy entries without src are treated as network-scan copies */
+function loadPrevNet() {
+  try {
+    const prev = JSON.parse(fs.readFileSync(BOOK, "utf8"));
+    const n = prev?.net;
+    if (n && typeof n === "object" && Number.isFinite(Number(n.lastScanBlock))) {
+      const envs = (Array.isArray(n.envs) ? n.envs : [])
+        .map((p) => ({ b: Number(p?.b), o: Number(p?.o), src: p?.src === "r" ? "r" : "n", e: p?.e }))
+        .filter(sanePair);
+      return { ...n, lastScanBlock: Number(n.lastScanBlock), envs };
+    }
+  } catch { /* first run / no book yet */ }
+  return null;
 }
 
 /* ── treasury beat: deterministic credit math, integer BigInt, fail-honest ── */
@@ -313,7 +499,7 @@ async function broadcast(envelopes, relayWif) {
 }
 
 /* ── the published book: exactly the shape wallet.html reads ── */
-function renderBook(res, genesisTxid, relayUrl, custody) {
+function renderBook(res, genesisTxid, relayUrl, custody, net) {
   const st = res.state;
   return {
     format: "saos-live-v1",
@@ -343,6 +529,7 @@ function renderBook(res, genesisTxid, relayUrl, custody) {
     },
     ops: res.order,
     custody,
+    net: net ?? { lastScanBlock: null, lastScanAt: null, scanned: 0, found: 0, folded: 0, rejected: 0, archive: 0, note: "network-scan-off" },
     relay: { url: relayUrl ?? null, queued: 0, lastFlush: relayUrl ? "relay-published" : "relay-queue-open" },
     invalid: res.invalid.slice(-50),
     verify: { replayed: res.valid + res.invalid.length, valid: res.valid, readFrom: (RPC || pinnedNode || "probed").replace(/^https?:\/\//, ""), engine: "console/saos-live.js (same code as every browser)" },
@@ -355,11 +542,48 @@ async function main() {
   const st0 = await SL.selfTest();
   if (st0.passed !== st0.total) { log({ ok: false, verdict: "SELFTEST-FAIL-CLOSED", passed: st0.passed, total: st0.total }); process.exit(1); }
 
-  const envelopes = await readChainEnvelopes(RELAY_ACCOUNT);
-  const genesisTxid = findGenesisTxid(envelopes);
-  let res = await SL.fold(envelopes);
+  const prevNet = loadPrevNet();
+  const scanCursor = { block: Math.max(0, Number(prevNet?.lastScanBlock ?? 0)) };
+  const netRun = { scanned: 0, found: 0, added: 0, relayAdded: 0, dupes: 0, failedBatches: 0, folded: 0, rejected: 0, ms: 0, from: null, head: null, notes: [] };
+  let archive = prevNet?.envs ?? [];
 
-  const beat = await treasuryBeat(res.state, envelopes);
+  /* one gather = relay history (+deep recovery while the archive lacks the
+   * genesis envelope) + network block-scan + the persisted archive, merged
+   * into a single chain-ordered, id-deduped fold input — the EXISTING fold
+   * path (same SL.fold verification, same dedupe law) gets one stream. */
+  async function gather() {
+    const needDeep = !archive.some((p) => p?.e?.id === SL.TREASURY_GENESIS_ID);
+    const relay = await readChainPairs(RELAY_ACCOUNT, { deepRecovery: needDeep });
+    if (relay.deepUsed) netRun.notes.push("deep-recovery-pages:" + relay.deepUsed);
+    let freshNet = [];
+    try {
+      const scan = await collectNetworkEnvelopes(scanCursor);
+      netRun.scanned += scan.scanned;
+      netRun.failedBatches += scan.failedBatches;
+      netRun.ms += scan.ms;
+      netRun.from = scan.from;
+      netRun.head = scan.head;
+      freshNet = scan.pairs.filter(sanePair);
+      if (scan.note) netRun.notes.push(scan.note);
+      log({ verdict: "NET-SCAN", blocks: (scan.from + 1) + ".." + scan.head, scanned: scan.scanned, found: freshNet.length, failedBatches: scan.failedBatches, ms: scan.ms });
+    } catch (e) {
+      netRun.notes.push("scan-error:" + String(e?.message ?? e).slice(0, 90));
+    }
+    const m = mergeAll(archive, relay.pairs, freshNet, netRun.notes);
+    archive = m.archive;
+    netRun.found += freshNet.length;
+    netRun.added += m.addedNet;
+    netRun.relayAdded += m.addedRelay;
+    netRun.dupes += m.dupes;
+    if (m.droppedCap) netRun.notes.push("archive-capped:" + m.droppedCap);
+    return m;
+  }
+
+  let g = await gather();
+  const genesisTxid = findGenesisTxid(g.envs);
+  let res = await SL.fold(g.envs);
+
+  const beat = await treasuryBeat(res.state, g.envs);
   let custody = null;
   if (beat.newOps.length) {
     const relayWif = process.env.SAOS_RELAY_WIF || localVaultWif2("army-posting");
@@ -367,8 +591,8 @@ async function main() {
     if (bc.ok) {
       log({ verdict: "TREASURY-CREDITED", credits: beat.newOps.map((o) => ({ id: o.id, to: o.to, saos: o.saos })), txid: bc.txid });
       await new Promise((r) => setTimeout(r, 2500)); // let the chain settle before refold
-      const envelopes2 = await readChainEnvelopes(RELAY_ACCOUNT);
-      res = await SL.fold(envelopes2);
+      g = await gather(); // fresh relay+network gather covers the new credit blocks
+      res = await SL.fold(g.envs);
     } else {
       log({ verdict: "BROADCAST-SKIPPED", why: bc.why ?? bc.why });
     }
@@ -389,8 +613,8 @@ async function main() {
           if (bc.ok) {
             log({ verdict: "FLYWHEEL-DEEPENED", ops: fly.newOps.map((o) => o.k), txid: bc.txid });
             await new Promise((r) => setTimeout(r, 2500));
-            const envelopes3 = await readChainEnvelopes(RELAY_ACCOUNT);
-            res = await SL.fold(envelopes3);
+            g = await gather(); // fresh relay+network gather covers the new flywheel blocks
+            res = await SL.fold(g.envs);
           } else log({ verdict: "FLYWHEEL-SKIPPED", why: bc.why });
         }
         custody = custodyAudit(res.state, fly.measured ?? (await measureCustody()));
@@ -398,7 +622,34 @@ async function main() {
     }
   }
 
-  const book = renderBook(res, genesisTxid, process.env.RELAY_URL || null, custody);
+  /* network attribution after the FINAL fold: which archive envelopes
+   * folded, which were rejected honestly */
+  {
+    const validIds = new Set(res.order.map((o) => String(o.id)));
+    const invalidIds = new Set(res.invalid.map((x) => String(x.id)));
+    for (const id of g.netIds) {
+      if (validIds.has(id)) netRun.folded++;
+      else if (invalidIds.has(id)) netRun.rejected++;
+    }
+  }
+  const net = {
+    lastScanBlock: scanCursor.block > 0 ? scanCursor.block : null,
+    lastScanAt: netRun.head !== null ? new Date().toISOString() : (prevNet?.lastScanAt ?? null),
+    scanned: netRun.scanned,
+    found: netRun.found,
+    added: netRun.added,
+    folded: netRun.folded,
+    rejected: netRun.rejected,
+    dupes: netRun.dupes,
+    relayAdded: netRun.relayAdded,
+    failedBatches: netRun.failedBatches,
+    archive: archive.length,
+    window: netRun.head !== null ? { from: netRun.from + 1, to: netRun.head } : null,
+    ms: netRun.ms,
+    notes: netRun.notes.slice(0, 5),
+    envs: archive,
+  };
+  const book = renderBook(res, genesisTxid, process.env.RELAY_URL || null, custody, net);
   fs.writeFileSync(BOOK, JSON.stringify(book, null, 2) + "\n");
   /* conservation law: supply == Σ wallets + Σ pools (per symbol) */
   const con = {};
@@ -418,6 +669,7 @@ async function main() {
     pools: Object.fromEntries(Object.keys(res.state.pools).map((p) => [p, { a: String(res.state.pools[p].resA), b: String(res.state.pools[p].resB), swaps: String(res.state.pools[p].swaps) }])),
     custody: custody?.verdict ?? null,
     conservation: con,
+    net: { scanned: netRun.scanned, found: netRun.found, added: netRun.added, folded: netRun.folded, rejected: netRun.rejected, archive: archive.length, lastScanBlock: net.lastScanBlock },
     treasury: res.state.treasury,
     credits: beat.newOps.length,
     skips: beat.skips ?? [],
