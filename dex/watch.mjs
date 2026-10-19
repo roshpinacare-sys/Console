@@ -56,6 +56,10 @@ const MIN_DEPOSIT_USD = 5; // הגנת-אבק: מתחת-לזה לא-נרשם (ע
 const MIN_UNITS = {
   USDT: 5, USDC: 5, USD: 5, TUSD: 5, DAI: 5, FDUSD: 5, // stables: units = dollars
   TRX: 20, ETH: 0.002, SOL: 0.03, BTC: 0.00008,
+  /* Task 23 · 2026-10-20: STEEM/SBD נכנסים-לספר-הפקדות — אותו-חוק-אבק (~$5 ביחידות-הנכס
+   * לפי-הפיד-החי: STEEM ≈ $0.052 → 96 · SBD ≈ $0.44 → 12). מתחת-לרף — לא-נרשם
+   * בספר-הציבורי; דרך-השער (מפעיל) עדיין פתוחה כמו-לכל-נכס. */
+  STEEM: 96, SBD: 12,
 };
 const CAP = 400;
 
@@ -229,6 +233,48 @@ async function scanBtc() {
   return n;
 }
 
+/* ── STEEM/SBD (Task 23 · 2026-10-20): העברות-אמת אל-headcorner ──
+ * הענן (cloud-beat) מזכה deposit.claim רק-מול-הספר-הזה — והוא-מעולם-לא צפה STEEM.
+ * נמדד-חי (2026-10-19): הצמתים-הציבוריים ביטלו-את-צורת-4-הארגומנטים (select_ops)
+ * — "Assert Exception: args.size() == 3" על steemit וגם-justyy → צורת-3 + סינון-מקומי.
+ * מדיניות-ממוא: הכתובת saos1… של-המפקיד נשמרת-מהממוא (הזיהוי-הקנוני של-התביעה הוא-המעטפת
+ * החתומה — הממוא כאן נוחות-ראיה-בלבד, אפס-סמכות). */
+const STEEM_DEPOSIT_ACCOUNT = "headcorner";
+const STEEM_RPCS = ["https://api.justyy.com", "https://api.steemit.com"];
+const SAOS1_RE = /saos1[1-9A-HJ-NP-Za-km-z]{33,35}/;
+async function scanSteem() {
+  let n = 0;
+  let hist = null;
+  let lastErr = null;
+  for (const rpcUrl of STEEM_RPCS) {
+    try {
+      const r = await jfetch(rpcUrl, {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [STEEM_DEPOSIT_ACCOUNT, -1, 100] }),
+      });
+      if (r?.result) { hist = r; break; }
+      throw new Error("bad-shape");
+    } catch (e) { lastErr = e; hist = null; }
+  }
+  if (!hist?.result) throw (lastErr ?? new Error("steem-rpc-unreachable"));
+  for (const [, entry] of hist.result) {
+    const op = entry?.op;
+    if (!Array.isArray(op) || op[0] !== "transfer") continue; // סינון-מקומי (select_ops מת)
+    const body = op[1] ?? {};
+    if (String(body.to ?? "") !== STEEM_DEPOSIT_ACCOUNT) continue;
+    if (String(body.from ?? "") === STEEM_DEPOSIT_ACCOUNT) continue; // העברה-עצמית אינה צמיחת-משמורת
+    const amountStr = String(body.amount ?? "");
+    const amt = Number(amountStr.split(" ")[0] ?? 0);
+    const asset = amountStr.split(" ")[1] ?? "";
+    if (asset !== "STEEM" && asset !== "SBD") continue;
+    const memo = String(body.memo ?? "");
+    const saos1 = SAOS1_RE.exec(memo)?.[0] ?? null;
+    add("steem", asset, String(entry.trx_id ?? ""), amt, String(body.from ?? ""), STEEM_DEPOSIT_ACCOUNT, Date.parse(entry.timestamp ?? "") || undefined, 1, saos1 ? { saos1, memo: memo.slice(0, 64) } : {});
+    n++;
+  }
+  return n;
+}
+
 /* ═════════ main ═════════ */
 const t0 = Date.now();
 const status = { tron: "ok", ethereum: "ok", solana: "ok", bitcoin: "ok" };
@@ -238,6 +284,8 @@ try { const { n, head } = await scanEvm(); status.ethereum = `ok (${n})`; evmHea
 catch (e) { status.ethereum = "down: " + String(e).slice(0, 40); evmHead = evmLastGood; /* R34: המשך-מהמנה-האחרונה-שהצליחה — בלי-נקודה-עיוורת */ }
 try { const n = await scanSol(); status.solana = `ok (${n})`; } catch (e) { status.solana = "down: " + String(e).slice(0, 40); }
 try { const n = await scanBtc(); status.bitcoin = `ok (${n})`; } catch (e) { status.bitcoin = "down: " + String(e).slice(0, 40); }
+const statusExtra = {};
+try { const n = await scanSteem(); statusExtra.steem = `ok (${n})`; } catch (e) { statusExtra.steem = "down: " + String(e).slice(0, 40); }
 
 const depositsTotal = ledger.deposits.length; // R34: הספירה-האמיתית לפני תקרת-הספר (CAP=400)
 ledger.deposits = ledger.deposits
@@ -257,8 +305,11 @@ const watch = {
     depositEvm: ADDR.evm,
     depositSol: ADDR.sol,
     depositBtc: ADDR.btc,
+    /* Task 23: STEEM/SBD — חשבון-הפקדה + מדיניות-ממוא (זהה-ל-Domain/dex/watch.json — ספר-אחד) */
+    depositSteem: { addr: STEEM_DEPOSIT_ACCOUNT, memo: "saos deposit — write your saos1 address in the transfer memo" },
+    depositSbd: { addr: STEEM_DEPOSIT_ACCOUNT, memo: "saos deposit — write your saos1 address in the transfer memo" },
   },
-  chains: status,
+  chains: { ...status, ...statusExtra },
   depositsTotal,
   bookCap: CAP,
   cadenceMin: 20,

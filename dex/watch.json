@@ -1,27 +1,36 @@
 {
-  "publishedAt": "2026-10-18T22:30:01.588Z",
-  "watching": {
-    "tron": "TVES…[redacted]",
-    "evm": "0x9978…[redacted]",
-    "sol": "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk",
-    "btc": "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c"
+ "publishedAt": "2026-10-19T04:02:03.753Z",
+ "watching": {
+  "tron": "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e",
+  "evm": "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4",
+  "sol": "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk",
+  "btc": "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c"
+ },
+ "depositAddresses": {
+  "depositTron": "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e",
+  "depositEvm": "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4",
+  "depositSol": "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk",
+  "depositBtc": "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c",
+  "depositSteem": {
+   "addr": "headcorner",
+   "memo": "saos deposit — write your saos1 address in the transfer memo"
   },
-  "depositAddresses": {
-    "depositTron": "TVESRr1TX1RaKzsN6TKszutJBFDPEGPx1e",
-    "depositEvm": "0x9978ab0f642bbf0b75e92db0e639ee863e053ac4",
-    "depositSol": "8SGkrAjepscF3ttD5UzxyFwX8DgREUBD3cjNe5ZEmnCk",
-    "depositBtc": "bc1qpgfuznfxncqqvs3j20p3p38kesu4ljsqhha58c"
-  },
-  "chains": {
-    "tron": "ok (0)",
-    "ethereum": "ok (0)",
-    "solana": "ok (0)",
-    "bitcoin": "ok (0)"
-  },
-  "depositsTotal": 0,
-  "bookCap": 400,
-  "cadenceMin": 20,
-  "minDepositUsd": 5,
-  "note": "keyless public watcher - reads public RPCs, writes the open deposit book (latest 400); a depositor signs a deposit.claim envelope and the saos-dex cloud-beat scanner matches it against this book (txid) and credits USDS (stables 1:1, others by live feed)",
-  "lastEvmBlock": 26222445
+  "depositSbd": {
+   "addr": "headcorner",
+   "memo": "saos deposit — write your saos1 address in the transfer memo"
+  }
+ },
+ "chains": {
+  "tron": "ok (0)",
+  "ethereum": "ok (0)",
+  "solana": "ok (0)",
+  "bitcoin": "down: Error: 429",
+  "steem": "ok (1)"
+ },
+ "depositsTotal": 1,
+ "bookCap": 400,
+ "cadenceMin": 20,
+ "minDepositUsd": 5,
+ "note": "keyless public watcher - reads public RPCs, writes the open deposit book (latest 400); a depositor signs a deposit.claim envelope and the saos-dex cloud-beat scanner matches it against this book (txid) and credits USDS (stables 1:1, others by live feed)",
+ "lastEvmBlock": 26224101
 }
