@@ -9,6 +9,8 @@
  *   ETH   - USDT/USDC (ERC20)         · eth_getLogs על publicnode
  *   SOL   - USDT/USDC (SPL) + SOL     · getSignaturesForAddress + getParsedTransaction
  *   BTC   - מקורי                     · blockchain.info rawaddr
+ *   STEEM - STEEM/SBD → headcorner    · condenser_api.get_account_history (Task 23)
+ *   HIVE  - HIVE/HBD → headcorner     · condenser_api.get_account_history (Task 24-c)
  *
  * הספר הוא append-only מסונן: רק העברות שהגיעו אלינו, מבלי לחשוף שום-דבר
  * אחר. הלב של הדקס (dex-beat בריפו הפרטי) מתאים תביעות-חתומות מול-ספר-זה
@@ -60,6 +62,10 @@ const MIN_UNITS = {
    * לפי-הפיד-החי: STEEM ≈ $0.052 → 96 · SBD ≈ $0.44 → 12). מתחת-לרף — לא-נרשם
    * בספר-הציבורי; דרך-השער (מפעיל) עדיין פתוחה כמו-לכל-נכס. */
   STEEM: 96, SBD: 12,
+  /* Task 24-c · 2026-10-19: HIVE/HBD — אותו-חוק-אבק (~$5 ביחידות-הנכס לפי-הפיד-החי:
+   * HIVE ≈ $0.0487 → 103 · HBD ≈ $0.44 → 12, זהה-ל-SBD — שניהם מובטחים-דולר).
+   * מתחת-לרף — לא-נרשם בספר-הציבורי; דרך-השער (מפעיל) עדיין פתוחה כמו-לכל-נכס. */
+  HIVE: 103, HBD: 12,
 };
 const CAP = 400;
 
@@ -275,6 +281,49 @@ async function scanSteem() {
   return n;
 }
 
+/* ── HIVE/HBD (Task 24-c · 2026-10-19): אותו-רכבת-הפקדות על שרשרת-HIVE ──
+ * חשבון-headcorner חי גם-על-HIVE (נמדד-חי: condenser_api.get_accounts → created
+ * 2018-03-02T12:20:27 · 0.034 HIVE / 0.003 HBD). צמתי-HIVE מדברים את-אותו
+ * condenser_api — לכן צורת-3 + סינון-מקומי (select_ops מת שם-וגם-שם).
+ * רוטציה על-פי-מדידה-חיה 2026-10-19: deathwing + openhive ענו 3/3 ו-4/4,
+ * hive.blog רעוע (1/3 על-get_dynamic_global_properties, אך-history ענה),
+ * arcange מת-מהסנדבוקס (0/4) → לא-נכלל. FAIL-HONEST: אם-כולם-נופלים —
+ * זריקה → status "down" והספר-מתפרסם בלעדי-HIVE, אף-המצאה. */
+const HIVE_DEPOSIT_ACCOUNT = "headcorner";
+const HIVE_RPCS = ["https://api.deathwing.me", "https://api.openhive.network", "https://api.hive.blog"];
+async function scanHive() {
+  let n = 0;
+  let hist = null;
+  let lastErr = null;
+  for (const rpcUrl of HIVE_RPCS) {
+    try {
+      const r = await jfetch(rpcUrl, {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "condenser_api.get_account_history", params: [HIVE_DEPOSIT_ACCOUNT, -1, 100] }),
+      });
+      if (r?.result) { hist = r; break; }
+      throw new Error("bad-shape");
+    } catch (e) { lastErr = e; hist = null; }
+  }
+  if (!hist?.result) throw (lastErr ?? new Error("hive-rpc-unreachable"));
+  for (const [, entry] of hist.result) {
+    const op = entry?.op;
+    if (!Array.isArray(op) || op[0] !== "transfer") continue; // סינון-מקומי (select_ops מת)
+    const body = op[1] ?? {};
+    if (String(body.to ?? "") !== HIVE_DEPOSIT_ACCOUNT) continue;
+    if (String(body.from ?? "") === HIVE_DEPOSIT_ACCOUNT) continue; // העברה-עצמית אינה צמיחת-משמורת
+    const amountStr = String(body.amount ?? "");
+    const amt = Number(amountStr.split(" ")[0] ?? 0);
+    const asset = amountStr.split(" ")[1] ?? "";
+    if (asset !== "HIVE" && asset !== "HBD") continue;
+    const memo = String(body.memo ?? "");
+    const saos1 = SAOS1_RE.exec(memo)?.[0] ?? null; // חוק-ממוא זהה-ל-STEEM: saos1… בתוך-הממוא
+    add("hive", asset, String(entry.trx_id ?? ""), amt, String(body.from ?? ""), HIVE_DEPOSIT_ACCOUNT, Date.parse(entry.timestamp ?? "") || undefined, 1, saos1 ? { saos1, memo: memo.slice(0, 64) } : {});
+    n++;
+  }
+  return n;
+}
+
 /* ═════════ main ═════════ */
 const t0 = Date.now();
 const status = { tron: "ok", ethereum: "ok", solana: "ok", bitcoin: "ok" };
@@ -286,6 +335,7 @@ try { const n = await scanSol(); status.solana = `ok (${n})`; } catch (e) { stat
 try { const n = await scanBtc(); status.bitcoin = `ok (${n})`; } catch (e) { status.bitcoin = "down: " + String(e).slice(0, 40); }
 const statusExtra = {};
 try { const n = await scanSteem(); statusExtra.steem = `ok (${n})`; } catch (e) { statusExtra.steem = "down: " + String(e).slice(0, 40); }
+try { const n = await scanHive(); statusExtra.hive = `ok (${n})`; } catch (e) { statusExtra.hive = "down: " + String(e).slice(0, 40); }
 
 const depositsTotal = ledger.deposits.length; // R34: הספירה-האמיתית לפני תקרת-הספר (CAP=400)
 ledger.deposits = ledger.deposits
@@ -308,6 +358,10 @@ const watch = {
     /* Task 23: STEEM/SBD — חשבון-הפקדה + מדיניות-ממוא (זהה-ל-Domain/dex/watch.json — ספר-אחד) */
     depositSteem: { addr: STEEM_DEPOSIT_ACCOUNT, memo: "saos deposit — write your saos1 address in the transfer memo" },
     depositSbd: { addr: STEEM_DEPOSIT_ACCOUNT, memo: "saos deposit — write your saos1 address in the transfer memo" },
+    /* Task 24-c: HIVE/HBD — אותו-חשבון headcorner על-שרשרת-HIVE (קיים-שם מ-2018,
+     * נמדד-חי) — צורה-זהה-ל-STEEM: {addr, memo} · הממוא חייב-להתחיל בכתובת-saos1 של-המפקיד */
+    depositHive: { addr: HIVE_DEPOSIT_ACCOUNT, memo: "HIVE chain — memo must start with your saos1 address" },
+    depositHbd: { addr: HIVE_DEPOSIT_ACCOUNT, memo: "HIVE chain — memo must start with your saos1 address" },
   },
   chains: { ...status, ...statusExtra },
   depositsTotal,
