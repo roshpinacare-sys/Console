@@ -29,7 +29,8 @@ import * as SL from "../saos-live.js";
 const C = (typeof Gate.default === "object" && Gate.default) || Gate.default || Gate;
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
-const RPC = process.env.SAOS_RPC || "https://api.steemit.com";
+const RPC = process.env.SAOS_RPC || ""; // empty → probe & pin the freshest node
+const RPC_BASES = (process.env.SAOS_RPC_BASES || "https://api.steemit.com,https://api.justyy.com,https://steemd.privex.io,https://rpc.steemliberator.com").split(",").map(s => s.trim()).filter(Boolean);
 const RELAY_ACCOUNT = process.env.SAOS_RELAY_ACCOUNT || "headcorner";
 const BOOK = path.join(ROOT, "saos-live.json");
 const GENESIS_NOTE = "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-40, genesis 2026-09-05)";
@@ -37,11 +38,35 @@ const MAX_HISTORY = 50000;
 const log = (o) => console.log(JSON.stringify({ t: new Date().toISOString(), ...o }));
 
 const rpc = async (method, params) => {
-  const r = await fetch(RPC, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", method, params, id: 1 }) });
+  const base = RPC || (await pickNode());
+  const r = await fetch(base + "/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", method, params, id: 1 }) });
   const j = await r.json();
   if (j?.error) throw new Error("rpc:" + String(j.error?.message ?? "err").slice(0, 100));
   return j?.result;
 };
+/* load-balancer law (measured 2026-10-19): api.steemit.com fans out across
+ * nodes whose account-history heads differ by hundreds of events — naive
+ * pagination hops between snapshots and loses ops. Probe candidates once,
+ * pin the one with the deepest history head for the WHOLE run. */
+let pinnedNode = null;
+async function pickNode() {
+  if (pinnedNode) return pinnedNode;
+  let best = null, bestHead = -1;
+  for (const base of RPC_BASES) {
+    try {
+      const ctl = new AbortController();
+      const to = setTimeout(() => ctl.abort(), 6000);
+      const r = await fetch(base + "/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", method: "condenser_api.get_dynamic_global_properties", params: [], id: 1 }), signal: ctl.signal });
+      clearTimeout(to);
+      const j = await r.json();
+      const head = j?.result?.head_block_number ?? -1;
+      if (head > bestHead) { bestHead = head; best = base; }
+    } catch { /* candidate down — skip honestly */ }
+  }
+  if (!best) throw new Error("no-rpc-node-reachable");
+  pinnedNode = best;
+  return best;
+}
 
 /* ── chain reading: every SAOS custom_json the relayer account published.
  * Deterministic law: the envelope list is ALWAYS in chain order (sorted by
@@ -50,16 +75,20 @@ async function readChainEnvelopes(account) {
   const picked = []; // [idx, envelope]
   let from = -1;
   let seenSaos = false;
+  let emptyRetries = 0;
   for (let page = 0; page < 60; page++) {
-    const hist = await rpc("condenser_api.get_account_history", [account, from, 100]);
-    if (!hist?.length) break;
+    let hist = await rpc("condenser_api.get_account_history", [account, from, 100]);
+    if (!hist?.length) {
+      if (emptyRetries++ < 2) { await new Promise((r) => setTimeout(r, 800)); continue; } // node hiccup — retry once, honestly
+      break;
+    }
     const oldest = hist[0][0];
-    let pageSaosAtOldestHalf = false;
+    let pageSaos = 0;
     for (const [idx, ev] of hist) {
       const op = ev?.op;
       if (op && op[0] === "custom_json" && op[1]?.id === SL.OP_ID) {
+        pageSaos++;
         seenSaos = true;
-        if (idx <= oldest + 50) pageSaosAtOldestHalf = true;
         try {
           const j = JSON.parse(op[1].json);
           if (Array.isArray(j)) j.forEach((e) => picked.push([idx, e]));
@@ -68,8 +97,12 @@ async function readChainEnvelopes(account) {
       }
     }
     if (oldest <= 0) break;
-    // complete when SAOS ops were seen and nothing SAOS-ish sits at the old edge
-    if (seenSaos && !pageSaosAtOldestHalf) break;
+    /* stop law (measured: the relayer account carries heavy limit-order rails
+     * that flood ~100 events/minute — a single newest-window scan is never
+     * enough). Keep paging until a FULL page holds zero SAOS ops after we
+     * have seen at least one — everything older than a clean page predates
+     * the protocol. */
+    if (seenSaos && pageSaos === 0) break;
     from = oldest - 1;
   }
   picked.sort((a, b) => a[0] - b[0]);
@@ -183,7 +216,7 @@ function renderBook(res, genesisTxid, relayUrl) {
     ops: res.order,
     relay: { url: relayUrl ?? null, queued: 0, lastFlush: relayUrl ? "relay-published" : "relay-queue-open" },
     invalid: res.invalid.slice(-50),
-    verify: { replayed: res.valid + res.invalid.length, valid: res.valid, readFrom: new URL(RPC).host, engine: "console/saos-live.js (same code as every browser)" },
+    verify: { replayed: res.valid + res.invalid.length, valid: res.valid, readFrom: (RPC || pinnedNode || "probed").replace(/^https?:\/\//, ""), engine: "console/saos-live.js (same code as every browser)" },
     truthLabel: "REAL - deterministic fold of public-chain custom_json ops; every signature re-verified; relayer = transport only",
   };
 }

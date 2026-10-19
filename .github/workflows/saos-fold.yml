@@ -1,0 +1,50 @@
+# saos-fold — the live SAOS protocol heartbeat (saos.live.v1).
+# Reads every custom_json op the relayer published on the public chain,
+# re-verifies every inner signature with saos-live.js (the same code every
+# browser runs), folds them deterministically, countersigns pending deposit
+# claims with the genesis treasury key (rates the treasury itself published
+# on chain), and republishes saos-live.json. Fail-closed: any error leaves
+# the previous book untouched and exits red.
+name: saos-fold
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: saos-fold
+  cancel-in-progress: false
+
+jobs:
+  fold:
+    runs-on: ubuntu-latest
+    env:
+      SAOS_TREASURY_WIF: ${{ secrets.SAOS_TREASURY_WIF }}
+      SAOS_RELAY_WIF: ${{ secrets.SAOS_RELAY_WIF }}
+      SAOS_RELAY_ACCOUNT: headcorner
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Fold the chain into the live book
+        run: node agents/saos-fold.mjs
+      - name: Publish the book (only on GREEN)
+        run: |
+          git config user.name "roshpinacare-sys"
+          git config user.email "326012154+roshpinacare-sys@users.noreply.github.com"
+          git add saos-live.json
+          if ! git diff --cached --quiet; then
+            git commit -m "saos-fold: live book republished · stateRoot ${STATE_ROOT:0:12} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "book unchanged — nothing to publish"
+          fi
+        env:
+          STATE_ROOT: unknown
