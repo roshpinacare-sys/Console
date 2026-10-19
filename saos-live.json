@@ -1,6 +1,6 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-19T06:07:11.990Z",
+  "generatedAt": "2026-10-19T06:08:18.222Z",
   "protocol": "saos.live.v1",
   "stateRoot": "dd5a31912c8422e7846ac164273db0832e9148841c7b6e634fee30a8f0dd1d68",
   "genesis": {
@@ -390,11 +390,29 @@
       "txid": null
     }
   ],
-  "custody": null,
+  "custody": {
+    "custodian": "headcorner",
+    "measured": {
+      "STEEM": "51857800000",
+      "SBD": "49900000"
+    },
+    "outstanding": {
+      "CSTEEM": "52809700000",
+      "CSBD": "276857948"
+    },
+    "verdict": {
+      "CSTEEM": "custody-deficit",
+      "CSBD": "custody-deficit"
+    },
+    "float": {
+      "STEEM": "100",
+      "SBD": "1"
+    }
+  },
   "net": {
-    "lastScanBlock": 110565857,
-    "lastScanAt": "2026-10-19T06:07:11.990Z",
-    "scanned": 23,
+    "lastScanBlock": 110565876,
+    "lastScanAt": "2026-10-19T06:08:18.222Z",
+    "scanned": 31,
     "found": 0,
     "added": 0,
     "folded": 0,
@@ -404,10 +422,10 @@
     "failedBatches": 0,
     "archive": 43,
     "window": {
-      "from": 110565835,
-      "to": 110565857
+      "from": 110565846,
+      "to": 110565876
     },
-    "ms": 1114,
+    "ms": 1315,
     "notes": [],
     "envs": [
       {
@@ -1145,7 +1163,7 @@
   "verify": {
     "replayed": 43,
     "valid": 36,
-    "readFrom": "api.steemit.com",
+    "readFrom": "api.justyy.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
   "truthLabel": "REAL - deterministic fold of public-chain custom_json ops; every signature re-verified; relayer = transport only"
