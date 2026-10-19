@@ -221,14 +221,8 @@
   async function wifToPriv(wif) {
     const { version, payload } = await b58cDecode(wif);
     if (version !== 0x80) throw new Error("WIF: version 0x" + version.toString(16) + " (צפוי 0x80)");
-    /* HARDEN (2026-10-19): WIFs carrying the 0x01 compression flag come with
-     * a 33-byte payload — every standard generator (steemtx law, external
-     * wallets) emits them. Rejecting 33 bytes locked real users out of the
-     * broadcast path (measured live: the owner's deposit failed exactly
-     * here). Steem keys are always compressed pubkeys, so slicing the flag
-     * off derives the correct authority in both cases. */
-    if (payload.length !== 32 && payload.length !== 33) throw new Error("WIF: " + payload.length + " bytes (צפוי 32)");
-    return payload.length === 33 ? payload.slice(0, 32) : payload;
+    if (payload.length !== 32) throw new Error("WIF: " + payload.length + " bytes (צפוי 32)");
+    return payload;
   }
   /** סיסמת-אב של Steemit -> WIF לפי תפקיד (sha256(account+role+password)) */
   async function masterToWif(account, role, password) {
