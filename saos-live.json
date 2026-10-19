@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-19T02:59:57.068Z",
+  "generatedAt": "2026-10-19T04:26:21.272Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "5d98ff1c966231c8aebc35c1c7548a3b0483f1fb7697891eb2b4f7d2184578c6",
+  "stateRoot": "6de77246c1584a4f11d243ecfcece97a18331b07cd51e52b720f81b1fda4f8a9",
   "genesis": {
     "done": true,
     "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
@@ -24,6 +24,18 @@
       }
     },
     "tokens": {
+      "CSBD": {
+        "name": "SAOS credit SBD (custody-backed 1:1)",
+        "decimals": 8,
+        "maxSupply": "900000000000000",
+        "issuer": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
+      },
+      "CSTEEM": {
+        "name": "SAOS credit STEEM (custody-backed 1:1)",
+        "decimals": 8,
+        "maxSupply": "900000000000000",
+        "issuer": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
+      },
       "SAOS": {
         "name": "SAOS",
         "decimals": 3,
@@ -33,14 +45,20 @@
     },
     "balances": {
       "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa": {
-        "SAOS": "1000000"
+        "SAOS": "470534",
+        "CSTEEM": "910314638",
+        "CSBD": "9957948"
       },
       "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
-        "SAOS": "125682000"
+        "SAOS": "98931242",
+        "CSTEEM": "100043735",
+        "CSBD": "266900000"
       }
     },
     "supply": {
-      "SAOS": "126682000"
+      "SAOS": "126682000",
+      "CSTEEM": "52809700000",
+      "CSBD": "276857948"
     },
     "claims": {
       "1792377809524-d0000003": {
@@ -53,7 +71,16 @@
     },
     "offers": {},
     "cfg": {
-      "addrs": {},
+      "addrs": {
+        "SBD": {
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo"
+        },
+        "STEEM": {
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo"
+        }
+      },
       "rates": {
         "SAOS/SBD": {
           "price": "0.002075"
@@ -70,6 +97,36 @@
         "SAOS/USDT": {
           "price": "0.001"
         }
+      }
+    },
+    "pools": {
+      "SAOS/CSBD": {
+        "base": "SAOS",
+        "quote": "CSBD",
+        "feeBps": "30",
+        "status": "open",
+        "resA": "0",
+        "resB": "0",
+        "lpSupply": "0",
+        "lpBal": {},
+        "swaps": "1",
+        "volA": "50000",
+        "volB": "0"
+      },
+      "SAOS/CSTEEM": {
+        "base": "SAOS",
+        "quote": "CSTEEM",
+        "feeBps": "30",
+        "status": "open",
+        "resA": "27280224",
+        "resB": "51799341627",
+        "lpSupply": "1183232052",
+        "lpBal": {
+          "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": "1183232052"
+        },
+        "swaps": "4",
+        "volA": "800000",
+        "volB": "607650004"
       }
     },
     "rewardsPaid": "0",
@@ -152,8 +209,195 @@
       "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
       "at": null,
       "txid": null
+    },
+    {
+      "id": "1792383185192-19f5115a",
+      "k": "token.deploy",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185198-5bef7fca",
+      "k": "token.deploy",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185205-08e45124",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185212-c5561d10",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185217-f9015721",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185223-fab99ec9",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185226-461cd1a8",
+      "k": "pool.create",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185230-761428ec",
+      "k": "pool.create",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185234-a7ed9dbf",
+      "k": "pool.add",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185240-aa0507e3",
+      "k": "pool.add",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185245-3fef9d27",
+      "k": "pool.swap",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185250-10cc6f28",
+      "k": "pool.swap",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185255-1f7cd37c",
+      "k": "pool.swap",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260814-4846eaa2",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260819-f1d9008d",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260822-a5124384",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260826-33281c3b",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260848-35ffabd2",
+      "k": "pool.add",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260858-03dc10b4",
+      "k": "pool.swap",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260861-89b44566",
+      "k": "pool.swap",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383679530-87264674",
+      "k": "pool.remove",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383679538-e9f148d0",
+      "k": "token.burn",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383679544-9abcb20d",
+      "k": "pool.remove",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383679548-160dbad1",
+      "k": "token.burn",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
     }
   ],
+  "custody": {
+    "custodian": "headcorner",
+    "measured": {
+      "STEEM": "62809700000",
+      "SBD": "366900000"
+    },
+    "outstanding": {
+      "CSTEEM": "52809700000",
+      "CSBD": "276857948"
+    },
+    "verdict": {
+      "CSTEEM": "custody-ok",
+      "CSBD": "custody-deficit"
+    },
+    "float": {
+      "STEEM": "100",
+      "SBD": "1"
+    }
+  },
   "relay": {
     "url": null,
     "queued": 0,
@@ -164,12 +408,42 @@
       "id": "1792378415301-dc2291b16c8f",
       "k": "deposit.credit",
       "err": "claim-not-pending"
+    },
+    {
+      "id": "1792383260803-f36e5081",
+      "k": "token.deploy",
+      "err": "symbol-taken"
+    },
+    {
+      "id": "1792383260809-595ca8e9",
+      "k": "token.deploy",
+      "err": "symbol-taken"
+    },
+    {
+      "id": "1792383260836-8f659eae",
+      "k": "pool.create",
+      "err": "pool-exists"
+    },
+    {
+      "id": "1792383260839-7615ba97",
+      "k": "pool.create",
+      "err": "pool-exists"
+    },
+    {
+      "id": "1792383260853-a80dc2d9",
+      "k": "pool.add",
+      "err": "imbalanced"
+    },
+    {
+      "id": "1792383260864-f14ffa56",
+      "k": "pool.swap",
+      "err": "slippage"
     }
   ],
   "verify": {
-    "replayed": 12,
-    "valid": 11,
-    "readFrom": "api.steemit.com",
+    "replayed": 42,
+    "valid": 35,
+    "readFrom": "api.justyy.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
   "truthLabel": "REAL - deterministic fold of public-chain custom_json ops; every signature re-verified; relayer = transport only"

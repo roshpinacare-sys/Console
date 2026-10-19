@@ -68,6 +68,25 @@ async function pickNode() {
   return best;
 }
 
+/* history page: condenser first, appbase fallback (some nodes serve the
+ * appbase account_history_api fresher — measured 2026-10-19T04:16Z when the
+ * condenser view lagged 100+ events behind the chain head). Both normalized
+ * to the condenser event shape [idx, {op: [name, body]}]. */
+async function historyPage(account, from, limit) {
+  try {
+    /* appbase first: measured fresher than the condenser view on both
+     * public nodes (2026-10-19T04:16Z — condenser lagged 100+ events) */
+    const r = await rpc("account_history_api.get_account_history", { account, start: from, limit });
+    return (r?.history ?? []).map(([idx, ev]) => {
+      const o = ev?.op ?? {};
+      const name = String(o.type || "").replace(/_operation$/, "");
+      return [idx, { ...ev, op: [name, o.value ?? {}] }];
+    });
+  } catch (e) {
+    return await rpc("condenser_api.get_account_history", [account, from, limit]);
+  }
+}
+
 /* ── chain reading: every SAOS custom_json the relayer account published.
  * Deterministic law: the envelope list is ALWAYS in chain order (sorted by
  * the account-history index) — same ops in, same stateRoot out. ── */
@@ -77,7 +96,7 @@ async function readChainEnvelopes(account) {
   let seenSaos = false;
   let emptyRetries = 0;
   for (let page = 0; page < 60; page++) {
-    let hist = await rpc("condenser_api.get_account_history", [account, from, 100]);
+    let hist = await historyPage(account, from, 100);
     if (!hist?.length) {
       if (emptyRetries++ < 2) { await new Promise((r) => setTimeout(r, 800)); continue; } // node hiccup — retry once, honestly
       break;
@@ -111,6 +130,13 @@ async function readChainEnvelopes(account) {
 
 /* ── treasury beat: deterministic credit math, integer BigInt, fail-honest ── */
 const SCALE = 100000000n; // 1e8 sub-units for external decimal strings
+/* Genesis-2 custody law: C-credit exists only against currency the treasury
+ * custodian (the relay account) actually holds on chain. Floats stay out of
+ * custody for operations. Every fold run measures and publishes the verdict. */
+const CUSTODY_FLOAT = { STEEM: "100", SBD: "1" };
+const FLYWHEEL_MAX = { CSTEEM: "20000000000", CSBD: "500000000" }; // 200 STEEM / 5 SBD per run
+const FLYWHEEL_MIN = { CSTEEM: 10n * SCALE, CSBD: SCALE / 2n }; // 10 STEEM / 0.5 SBD
+const CREDIT_OF = { STEEM: "CSTEEM", SBD: "CSBD" };
 function decToScaled(s) {
   const m = /^(\d+)(?:\.(\d{1,8}))?$/.exec(String(s || ""));
   if (!m) return null;
@@ -161,6 +187,88 @@ function localVaultWif(which) {
     return v?.[which]?.wif || null;
   } catch { return null; }
 }
+
+/* ── Genesis-2: custody audit + liquidity flywheel (real value in, pools deep) ── */
+function creditOutstanding(state, symbol) {
+  let sum = 0n;
+  for (const addr of Object.keys(state.bal)) sum += state.bal[addr]?.[symbol] || 0n;
+  for (const pair of Object.keys(state.pools)) { const p = state.pools[pair]; if (p.quote === symbol) sum += p.resB; }
+  return sum;
+}
+function decToUnits(s) {
+  const v = String(s || "").trim().split(/\s+/)[0]; // "638.108 STEEM" → "638.108"
+  const m = /^(\d+)(?:\.(\d{1,8}))?$/.exec(v);
+  if (!m) return null;
+  return BigInt(m[1] + (m[2] ?? "").padEnd(8, "0"));
+}
+async function measureCustody() {
+  try {
+    const acc = await rpc("condenser_api.get_accounts", [[RELAY_ACCOUNT]]);
+    const a = acc?.[0];
+    if (!a) return null;
+    return { STEEM: decToUnits(a.balance), SBD: decToUnits(a.sbd_balance), at: new Date().toISOString() };
+  } catch { return null; } // fail-honest: no chain access → no custody claims
+}
+function custodyAudit(state, measured) {
+  const out = {};
+  const verdict = {};
+  for (const cur of Object.keys(CREDIT_OF)) {
+    const sym = CREDIT_OF[cur];
+    const o = creditOutstanding(state, sym);
+    const liquid = measured?.[cur] ?? null;
+    const flt = decToUnits(CUSTODY_FLOAT[cur]);
+    out[sym] = String(o);
+    verdict[sym] = liquid === null ? "unmeasured" : (o + flt <= liquid ? "custody-ok" : "custody-deficit");
+  }
+  return { custodian: RELAY_ACCOUNT, measured: measured ? { STEEM: String(measured.STEEM), SBD: String(measured.SBD) } : null, outstanding: out, verdict, float: CUSTODY_FLOAT };
+}
+async function liquidityBeat(state, by, pubSTM, priv) {
+  /* the flywheel: sweep every real currency unit above the ops float into
+   * custody-backed credit and from there into the pools — the network
+   * deepens its own liquidity from its real income, forever, alone. */
+  const measured = await measureCustody();
+  if (!measured) return { newOps: [], note: "custody-unmeasured (fail-honest — no mint)" };
+  const newOps = [];
+  const notes = [];
+  for (const cur of Object.keys(CREDIT_OF)) {
+    const sym = CREDIT_OF[cur];
+    const liquid = measured[cur];
+    if (liquid === null) continue;
+    const flt = decToUnits(CUSTODY_FLOAT[cur]);
+    const outstanding = creditOutstanding(state, sym);
+    const excess = liquid - flt - outstanding;
+    const max = BigInt(FLYWHEEL_MAX[sym]);
+    if (excess < FLYWHEEL_MIN[sym]) { notes.push(sym + ":below-min"); continue; }
+    const mint = excess > max ? max : excess;
+    newOps.push({ v: 1, id: makeOpId(), k: "token.mint", by, pub: pubSTM, symbol: sym, to: state.treasury, amount: mint.toString() });
+    const pool = state.pools["SAOS/" + sym];
+    if (pool && pool.lpSupply > 0n && pool.resB > 0n) {
+      const base = (mint * pool.resA) / pool.resB; // floor — always within ±2% law
+      if (base > 0n && (state.bal[state.treasury]?.SAOS || 0n) >= base) {
+        newOps.push({ v: 1, id: makeOpId(), k: "pool.add", by, pub: pubSTM, pair: "SAOS/" + sym, base: base.toString(), quote: mint.toString() });
+      } else notes.push(sym + ":pool-add-skipped");
+    } else if (pool && excess >= FLYWHEEL_MIN[sym]) {
+      /* pool exists but empty (created ahead of custody) — seed it now at the published reference rate */
+      const ref = state.cfg.rates?.["SAOS/" + cur]?.price;
+      const rp = ref ? parseFloat(ref) : null;
+      const base = rp ? (mint * 1000n) / BigInt(Math.round(rp * 1e8)) : 0n;
+      if (base > 0n && (state.bal[state.treasury]?.SAOS || 0n) >= base) {
+        newOps.push({ v: 1, id: makeOpId(), k: "pool.add", by, pub: pubSTM, pair: "SAOS/" + sym, base: base.toString(), quote: mint.toString() });
+      } else notes.push(sym + ":pool-seed-skipped");
+    } else if (!pool && excess >= FLYWHEEL_MIN[sym]) {
+      /* no pool yet — the treasury opens it itself when real custody arrives */
+      const ref = state.cfg.rates?.["SAOS/" + cur]?.price;
+      const rp = ref ? parseFloat(ref) : null;
+      const base = rp ? (mint * 1000n) / BigInt(Math.round(rp * 1e8)) : 0n;
+      if (base > 0n && (state.bal[state.treasury]?.SAOS || 0n) >= base) {
+        newOps.push({ v: 1, id: makeOpId(), k: "pool.create", by, pub: pubSTM, pair: "SAOS/" + sym, feeBps: "30" });
+        newOps.push({ v: 1, id: makeOpId(), k: "pool.add", by, pub: pubSTM, pair: "SAOS/" + sym, base: base.toString(), quote: mint.toString() });
+      } else notes.push(sym + ":pool-open-skipped");
+    } else notes.push(sym + ":pool-absent (credit held by treasury)");
+  }
+  for (const env of newOps) env.sig = await SL.signEnvelope(env, priv);
+  return { newOps, notes, measured };
+}
 async function privHexFromWif(wif) {
   return C.hex(await privFromWif(wif));
 }
@@ -187,12 +295,25 @@ async function broadcast(envelopes, relayWif) {
   const getProps = () => rpc("condenser_api.get_dynamic_global_properties", []);
   const getBlockHeader = (n) => rpc("condenser_api.get_block_header", [n]);
   const tx = await C.buildSignedTx(ops, priv, getProps, getBlockHeader);
-  const r = await rpc("condenser_api.broadcast_transaction_synchronous", [tx]);
+  let r = null, lastErr = null;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      r = await rpc("condenser_api.broadcast_transaction_synchronous", [tx]);
+      lastErr = null;
+      break;
+    } catch (e) {
+      lastErr = e;
+      if (!/custom json operation/i.test(String(e?.message))) throw e; // real errors fail fast
+      await new Promise((res) => setTimeout(res, 5000)); // quota law — next block clears it
+      Object.assign(tx, await C.buildSignedTx(ops, priv, getProps, getBlockHeader)); // fresh expiration
+    }
+  }
+  if (lastErr) throw lastErr;
   return { ok: true, txid: r?.id ?? null, ops: ops.length };
 }
 
 /* ── the published book: exactly the shape wallet.html reads ── */
-function renderBook(res, genesisTxid, relayUrl) {
+function renderBook(res, genesisTxid, relayUrl, custody) {
   const st = res.state;
   return {
     format: "saos-live-v1",
@@ -216,10 +337,12 @@ function renderBook(res, genesisTxid, relayUrl) {
       claims: res.claimsCanon,
       offers: res.offersCanon,
       cfg: res.cfgCanon,
+      pools: res.poolsCanon,
       rewardsPaid: String(st.rewardsPaid),
       treasury: st.treasury,
     },
     ops: res.order,
+    custody,
     relay: { url: relayUrl ?? null, queued: 0, lastFlush: relayUrl ? "relay-published" : "relay-queue-open" },
     invalid: res.invalid.slice(-50),
     verify: { replayed: res.valid + res.invalid.length, valid: res.valid, readFrom: (RPC || pinnedNode || "probed").replace(/^https?:\/\//, ""), engine: "console/saos-live.js (same code as every browser)" },
@@ -237,6 +360,7 @@ async function main() {
   let res = await SL.fold(envelopes);
 
   const beat = await treasuryBeat(res.state, envelopes);
+  let custody = null;
   if (beat.newOps.length) {
     const relayWif = process.env.SAOS_RELAY_WIF || localVaultWif2("army-posting");
     const bc = await broadcast(beat.newOps, relayWif);
@@ -250,8 +374,40 @@ async function main() {
     }
   }
 
-  const book = renderBook(res, genesisTxid, process.env.RELAY_URL || null);
+  /* Genesis-2 flywheel: real currency above the ops float → custody credit
+   * → into the pools. Treasury-signed, broadcast with the same transport. */
+  {
+    const wif = process.env.SAOS_FLYWHEEL === "off" ? null : (process.env.SAOS_TREASURY_WIF || localVaultWif("treasury"));
+    if (wif && res.state.treasury) {
+      try {
+        const priv = Buffer.from(C.unhex(await privHexFromWif(wif)));
+        const pubSTM = await C.pubToSTM(C.privToPubBytes(new Uint8Array(priv)));
+        const fly = await liquidityBeat(res.state, res.state.treasury, pubSTM, new Uint8Array(priv));
+        if (fly.newOps.length) {
+          const relayWif = process.env.SAOS_RELAY_WIF || localVaultWif2("army-posting");
+          const bc = await broadcast(fly.newOps, relayWif);
+          if (bc.ok) {
+            log({ verdict: "FLYWHEEL-DEEPENED", ops: fly.newOps.map((o) => o.k), txid: bc.txid });
+            await new Promise((r) => setTimeout(r, 2500));
+            const envelopes3 = await readChainEnvelopes(RELAY_ACCOUNT);
+            res = await SL.fold(envelopes3);
+          } else log({ verdict: "FLYWHEEL-SKIPPED", why: bc.why });
+        }
+        custody = custodyAudit(res.state, fly.measured ?? (await measureCustody()));
+      } catch (e) { log({ verdict: "FLYWHEEL-ERROR", err: String(e?.message ?? e).slice(0, 120) }); custody = null; }
+    }
+  }
+
+  const book = renderBook(res, genesisTxid, process.env.RELAY_URL || null, custody);
   fs.writeFileSync(BOOK, JSON.stringify(book, null, 2) + "\n");
+  /* conservation law: supply == Σ wallets + Σ pools (per symbol) */
+  const con = {};
+  for (const sym of Object.keys(res.supplyCanon)) {
+    let sum = 0n;
+    for (const a of Object.keys(res.state.bal)) sum += res.state.bal[a]?.[sym] || 0n;
+    for (const pair of Object.keys(res.state.pools)) { const p = res.state.pools[pair]; if (p.base === sym) sum += BigInt(p.resA); if (p.quote === sym) sum += BigInt(p.resB); }
+    con[sym] = sum === BigInt(res.supplyCanon[sym]) ? "ok" : "BROKEN:" + sum + "/" + res.supplyCanon[sym];
+  }
   log({
     ok: true,
     verdict: "FOLD-PUBLISHED",
@@ -259,6 +415,9 @@ async function main() {
     invalid: res.invalid.length,
     wallets: Object.keys(res.state.wallets).length,
     supplySAOS: res.supplyCanon.SAOS ?? "0",
+    pools: Object.fromEntries(Object.keys(res.state.pools).map((p) => [p, { a: String(res.state.pools[p].resA), b: String(res.state.pools[p].resB), swaps: String(res.state.pools[p].swaps) }])),
+    custody: custody?.verdict ?? null,
+    conservation: con,
     treasury: res.state.treasury,
     credits: beat.newOps.length,
     skips: beat.skips ?? [],

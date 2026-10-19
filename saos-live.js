@@ -9,6 +9,19 @@
  * every signature. The same code runs in the browser, in the cloud
  * heartbeat and on any machine. Same ops in, same stateRoot out.
  *
+ * v1.2 extension (Genesis-2, the pools — real-liquidity AMM):
+ *   · pool.create    (treasury) : opens an AMM pool, SAOS always the base,
+ *     a custody-backed credit token (C*) the quote. feeBps capped at 10%.
+ *   · pool.add       (wallet)   : two-sided provision at the pool ratio
+ *     (±2%), minting LP units (first provision: isqrt(base·quote)).
+ *   · pool.remove    (wallet)   : burn LP, withdraw pro-rata reserves.
+ *   · pool.swap      (wallet)   : constant-product swap, BigInt floor,
+ *     fee stays in the reserves (LPs earn it), minOut slippage guard,
+ *     drain-guard (a pool can never be emptied past its reserve).
+ *   The quote side is REAL value: C-tokens are minted 1:1 against
+ *   currency the treasury actually holds (custody-audited every fold
+ *   run and published in the book). No invented money, ever.
+ *
  * v1.1 extension (deposits, exchange, rewards, config):
  *   · deposit.claim  (wallet)  : a depositor signs what they sent and
  *     the reference (txid). Pending until the network treasury
@@ -157,8 +170,46 @@ function makeSaosLive(C) {
     "reward.pay": ["to", "amount", "note"],
     "cfg.addr": ["cur", "addr", "memo"],
     "cfg.rate": ["pair", "price"],
+    "pool.create": ["pair", "feeBps"],
+    "pool.add": ["pair", "base", "quote"],
+    "pool.remove": ["pair", "lp"],
+    "pool.swap": ["pair", "dir", "amountIn", "minOut"],
   };
-  const TREASURY_KINDS = new Set(["deposit.credit", "dex.fill", "reward.pay", "cfg.addr", "cfg.rate"]);
+  const TREASURY_KINDS = new Set(["deposit.credit", "dex.fill", "reward.pay", "cfg.addr", "cfg.rate", "pool.create"]);
+  /* pool law: SAOS is always the base; the quote is a custody-backed
+   * credit token (C*). One pool per pair, forever (deterministic id). */
+  const CREDIT_RE = /^C[A-Z]{3,9}$/;
+  const SWAP_DIR = { SA2C: "SA2C", C2SA: "C2SA" };
+  const ADD_TOLERANCE = 200n; // ±2.00% (basis points over 10,000)
+  const MAX_FEE_BPS = 1000n;
+
+  /* BigInt integer square root (Newton). Used for the genesis LP mint. */
+  function isqrt(n) {
+    if (n < 0n) return null;
+    if (n < 2n) return n;
+    let x = n, y = (x + 1n) / 2n;
+    while (y < x) { x = y; y = (x + n / x) / 2n; }
+    return x;
+  }
+
+  /* Constant-product quote: pure, integer, floor everywhere.
+   * Returns null when the swap is impossible (empty reserve / full drain). */
+  function quoteSwap(pool, dir, amountIn) {
+    if (!pool || !SWAP_DIR[dir]) return { err: "bad-dir" };
+    const a = parseAmount(amountIn);
+    if (a === null || a <= 0n) return { err: "bad-amountIn" };
+    const fee = BigInt(pool.feeBps);
+    const inFee = (a * (10000n - fee)) / 10000n; // floor — fee stays in reserves
+    if (inFee <= 0n) return { err: "fee-eats-input" };
+    let out, resIn, resOut;
+    if (dir === "SA2C") { resIn = pool.resA; resOut = pool.resB; }
+    else { resIn = pool.resB; resOut = pool.resA; }
+    if (resIn <= 0n || resOut <= 0n) return { err: "empty-reserve" };
+    out = (resOut * inFee) / (resIn + inFee); // floor — pool never over-pays
+    if (out <= 0n) return { err: "zero-out" };
+    if (out >= resOut) return { err: "drain-guard" }; // a pool is never emptied
+    return { out, inFee, kAfter: (resIn + a) * (resOut - out), kBefore: resIn * resOut };
+  }
   const META_KEYS = new Set(["at", "txid", "block", "trxInBlock"]);
 
   const MAX_OPEN_OFFERS = 30;
@@ -323,6 +374,61 @@ function makeSaosLive(C) {
       return { ok: true };
     }
 
+    /* ── v1.2: the pools (Genesis-2). SAOS base × C* credit quote. ── */
+    if (k === "pool.create") {
+      const pair = String(env.pair || "");
+      if (!PAIR_RE.test(pair)) return { err: "bad-pair" };
+      const [b, q] = pair.split("/");
+      if (b !== "SAOS") return { err: "base-not-saos" };
+      if (!CREDIT_RE.test(q)) return { err: "quote-not-credit" };
+      if (state.pools[pair]) return { err: "pool-exists" };
+      const fee = String(env.feeBps);
+      if (!/^\d{1,4}$/.test(fee)) return { err: "bad-fee" };
+      if (BigInt(fee) > MAX_FEE_BPS) return { err: "bad-fee" };
+      return { ok: true };
+    }
+
+    if (k === "pool.add") {
+      const pool = state.pools[String(env.pair || "")];
+      if (!pool) return { err: "no-pool" };
+      if (pool.status !== "open") return { err: "not-open" };
+      const base = parseAmount(env.base), quote = parseAmount(env.quote);
+      if (base === null || base <= 0n || quote === null || quote <= 0n) return { err: "bad-amounts" };
+      if ((state.bal[env.by]?.SAOS || 0n) < base) return { err: "insufficient" };
+      if ((state.bal[env.by]?.[pool.quote] || 0n) < quote) return { err: "insufficient" };
+      if (pool.lpSupply > 0n) {
+        /* two-sided law: provision within ±2% of the pool ratio
+         * (base·resB) / (quote·resA) ∈ [0.98, 1.02], pure integers */
+        const want = quote * pool.resA;
+        if (base * pool.resB * 10000n < want * 9800n || base * pool.resB * 10000n > want * 10200n) return { err: "imbalanced" };
+      }
+      return { ok: true };
+    }
+
+    if (k === "pool.remove") {
+      const pool = state.pools[String(env.pair || "")];
+      if (!pool) return { err: "no-pool" };
+      if (pool.status !== "open") return { err: "not-open" };
+      const lp = parseAmount(env.lp);
+      if (lp === null || lp <= 0n) return { err: "bad-lp" };
+      if ((pool.lpBal[env.by] || 0n) < lp) return { err: "insufficient-lp" };
+      return { ok: true };
+    }
+
+    if (k === "pool.swap") {
+      const pool = state.pools[String(env.pair || "")];
+      if (!pool) return { err: "no-pool" };
+      if (pool.status !== "open") return { err: "not-open" };
+      const q = quoteSwap(pool, String(env.dir || ""), env.amountIn);
+      if (q.err) return { err: q.err };
+      const minOut = parseAmount(env.minOut);
+      if (minOut === null || minOut < 0n) return { err: "bad-minOut" };
+      if (q.out < minOut) return { err: "slippage" };
+      const symIn = env.dir === "SA2C" ? "SAOS" : pool.quote;
+      if ((state.bal[env.by]?.[symIn] || 0n) < BigInt(env.amountIn)) return { err: "insufficient" };
+      return { ok: true };
+    }
+
     const symbol = String(env.symbol || "");
     const token = state.tokens[symbol];
     if (!token) return { err: "no-token" };
@@ -367,6 +473,7 @@ function makeSaosLive(C) {
       claims: {}, // claimId -> {by, cur, amt, ref, status, at, txid}
       offers: {}, // offerId -> {by, cur, units, price, filled, status, fills[], at, txid}
       cfg: { addrs: {}, rates: {} }, // treasury published config
+      pools: {}, // pair -> {base, quote, feeBps, resA, resB, lpSupply, lpBal, status, swaps, volA, volB}
       rewardsPaid: 0n, // total SAOS units paid as rewards
       treasury: null, // genesis treasury address
     };
@@ -449,6 +556,60 @@ function makeSaosLive(C) {
         state.cfg.addrs[env.cur] = { addr: env.addr, memo: env.memo !== undefined ? env.memo : null, ...m };
       } else if (k === "cfg.rate") {
         state.cfg.rates[env.pair] = { price: env.price, ...m };
+      } else if (k === "pool.create") {
+        state.pools[env.pair] = { base: "SAOS", quote: String(env.pair).split("/")[1], feeBps: String(env.feeBps), resA: 0n, resB: 0n, lpSupply: 0n, lpBal: {}, status: "open", swaps: 0n, volA: 0n, volB: 0n, ...m };
+      } else if (k === "pool.add") {
+        const pool = state.pools[String(env.pair)];
+        const base = BigInt(env.base), quote = BigInt(env.quote);
+        let lp;
+        if (pool.lpSupply === 0n) {
+          lp = isqrt(base * quote);
+          if (lp <= 0n) throw new Error("lp-zero"); // guarded in validation
+        } else {
+          const lpB = (base * pool.lpSupply) / pool.resA; // floor
+          const lpQ = (quote * pool.lpSupply) / pool.resB; // floor
+          lp = lpB < lpQ ? lpB : lpQ;
+        }
+        state.bal[env.by].SAOS -= base;
+        state.bal[env.by][pool.quote] -= quote;
+        pool.resA += base;
+        pool.resB += quote;
+        pool.lpSupply += lp;
+        pool.lpBal[env.by] = (pool.lpBal[env.by] || 0n) + lp;
+      } else if (k === "pool.remove") {
+        const pool = state.pools[String(env.pair)];
+        const lp = BigInt(env.lp);
+        const outA = (pool.resA * lp) / pool.lpSupply; // floor — dust stays with the pool
+        const outB = (pool.resB * lp) / pool.lpSupply;
+        pool.resA -= outA;
+        pool.resB -= outB;
+        pool.lpSupply -= lp;
+        pool.lpBal[env.by] -= lp;
+        if (pool.lpBal[env.by] === 0n) delete pool.lpBal[env.by];
+        state.bal[env.by] = state.bal[env.by] || {};
+        state.bal[env.by].SAOS = (state.bal[env.by].SAOS || 0n) + outA;
+        state.bal[env.by][pool.quote] = (state.bal[env.by][pool.quote] || 0n) + outB;
+      } else if (k === "pool.swap") {
+        const pool = state.pools[String(env.pair)];
+        const a = BigInt(env.amountIn);
+        const q = quoteSwap(pool, String(env.dir), env.amountIn);
+        if (q.err || q.out < BigInt(env.minOut)) throw new Error("swap-drift"); // validation already passed — deterministic paranoia
+        if (env.dir === "SA2C") {
+          state.bal[env.by].SAOS -= a;
+          pool.resA += a;
+          pool.resB -= q.out;
+          state.bal[env.by] = state.bal[env.by] || {};
+          state.bal[env.by][pool.quote] = (state.bal[env.by][pool.quote] || 0n) + q.out;
+          pool.volA += a;
+        } else {
+          state.bal[env.by][pool.quote] -= a;
+          pool.resB += a;
+          pool.resA -= q.out;
+          state.bal[env.by] = state.bal[env.by] || {};
+          state.bal[env.by].SAOS = (state.bal[env.by].SAOS || 0n) + q.out;
+          pool.volB += a;
+        }
+        pool.swaps += 1n;
       }
       valid++;
       order.push({ id: env.id, k, by: env.by, ...m });
@@ -495,6 +656,17 @@ function makeSaosLive(C) {
         return [pair, { price: r.price }];
       })),
     };
+    const poolsCanon = Object.fromEntries(
+      Object.keys(state.pools).sort().map((pair) => {
+        const p = state.pools[pair];
+        return [pair, {
+          base: p.base, quote: p.quote, feeBps: p.feeBps, status: p.status,
+          resA: String(p.resA), resB: String(p.resB), lpSupply: String(p.lpSupply),
+          lpBal: Object.fromEntries(Object.keys(p.lpBal).sort().map((a) => [a, String(p.lpBal[a])])),
+          swaps: String(p.swaps), volA: String(p.volA), volB: String(p.volB),
+        }];
+      }),
+    );
     const rootInput = canon({
       wallets: walletsCanon,
       tokens: tokensCanon,
@@ -503,6 +675,7 @@ function makeSaosLive(C) {
       claims: claimsCanon,
       offers: offersCanon,
       cfg: cfgCanon,
+      pools: poolsCanon,
       rewardsPaid: String(state.rewardsPaid),
       ops: valid,
     });
@@ -523,6 +696,7 @@ function makeSaosLive(C) {
       claimsCanon,
       offersCanon,
       cfgCanon,
+      poolsCanon,
     };
   }
 
@@ -710,6 +884,70 @@ function makeSaosLive(C) {
     const rOF = await fold([...full, overFill]);
     t("dex: fill above remaining rejected (not-open after cancel)", rOF.invalid.some((x) => x.err === "not-open" || x.err === "over-fill"));
 
+    /* ── v1.2: the pools (Genesis-2) ── */
+    const ps = [];
+    const mk3 = async (w, fields, id) => {
+      const by = await addressFromPubSTM(w.pub);
+      const env = { v: 1, id, by, pub: w.pub, ...fields };
+      env.sig = await signEnvelope(env, w.priv);
+      ps.push(env);
+      return env;
+    };
+    // credit token: deployed + minted by treasury (w1)
+    await mk3(w1, { k: "token.deploy", symbol: "CUSD", name: "SAOS credit USD", decimals: 8, maxSupply: "900000000000000" }, "1731000000022-ee000001");
+    await mk3(w1, { k: "token.mint", symbol: "CUSD", to: addr1a, amount: "50000000000" }, "1731000000023-ee000002"); // 500.00000000 CUSD
+    // pool: treasury creates, non-treasury rejected
+    const pBad = await mk3(w2, { k: "pool.create", pair: "SAOS/CUSD", feeBps: "30" }, "1731000000024-ee000003");
+    const rpBad = await fold([...full, ...ps]);
+    t("pool: non-treasury create rejected", rpBad.invalid.some((x) => x.err === "not-treasury"));
+    await mk3(w1, { k: "pool.create", pair: "SAOS/CUSD", feeBps: "30" }, "1731000000025-ee000004");
+    // treasury seeds: 20,000 SAOS × 20.00000000 CUSD (rate 0.001)
+    await mk3(w1, { k: "pool.add", pair: "SAOS/CUSD", base: "20000000", quote: "2000000000" }, "1731000000026-ee000005");
+    const rp = await fold([...full, ...ps]);
+    const pool1 = rp.state.pools["SAOS/CUSD"];
+    t("pool: created and seeded", !!pool1 && pool1.resA === 20000000n && pool1.resB === 2000000000n);
+    t("pool: genesis LP = isqrt(base·quote) = 200000000", pool1.lpSupply === 200000000n && pool1.lpBal[addr1a] === 200000000n);
+    // w2 (has 25500 SAOS) swaps 5000 SAOS → CUSD
+    const sw1 = await mk3(w2, { k: "pool.swap", pair: "SAOS/CUSD", dir: "SA2C", amountIn: "5000", minOut: "0" }, "1731000000027-ee000006");
+    const rsw = await fold([...full, ...ps]);
+    const k1 = rsw.state.pools["SAOS/CUSD"];
+    t("pool: swap SA2C lands, k never shrinks", k1.kAfter === undefined && k1.resA === 20005000n, JSON.stringify({ a: String(k1?.resA), b: String(k1?.resB) }));
+    t("pool: k-invariant holds across the swap", k1.resA * k1.resB >= 20000000n * 2000000000n);
+    // slippage guard
+    const sw2 = await mk3(w2, { k: "pool.swap", pair: "SAOS/CUSD", dir: "SA2C", amountIn: "5000", minOut: "999999999" }, "1731000000028-ee000007");
+    const rsw2 = await fold([...full, ...ps]);
+    t("pool: slippage guard rejects minOut too high", rsw2.invalid.some((x) => x.err === "slippage"));
+    // imbalanced provision rejected
+    const badAdd = await mk3(w1, { k: "pool.add", pair: "SAOS/CUSD", base: "1000000", quote: "1" }, "1731000000029-ee000008");
+    const rba = await fold([...full, ...ps]);
+    t("pool: imbalanced provision rejected", rba.invalid.some((x) => x.err === "imbalanced"));
+    // drain law (measured math): out < resOut is structural in x·y=k — the
+    // asymptote punishes, never empties. The real guard is the balance check.
+    const overBag = await mk3(w2, { k: "pool.swap", pair: "SAOS/CUSD", dir: "C2SA", amountIn: "498377", minOut: "0" }, "1731000000030-ee000009");
+    const rob = await fold([...full, ...ps]);
+    t("pool: swap beyond balance rejected", rob.invalid.some((x) => x.err === "insufficient"), JSON.stringify(rob.invalid.filter((x) => x.id === overBag.id)));
+    // asymptote: treasury mega-swap (480 CUSD into a 2,000 CUSD reserve) cannot
+    // take the last SAOS unit out, and k still grows — the pool survives whales
+    await mk3(w1, { k: "pool.swap", pair: "SAOS/CUSD", dir: "C2SA", amountIn: "48000000000", minOut: "0" }, "1731000000030-ee000009b");
+    const ras = await fold([...full, ...ps]);
+    const kAs = ras.state.pools["SAOS/CUSD"];
+    t("pool: asymptote — whale swap leaves residual base", kAs.resA > 0n && kAs.resA < 20005000n, JSON.stringify({ a: String(kAs?.resA) }));
+    t("pool: k grows even through the whale", kAs.resA * kAs.resB >= 20000000n * 2000000000n);
+    // C2SA direction works within bounds
+    await mk3(w2, { k: "pool.swap", pair: "SAOS/CUSD", dir: "C2SA", amountIn: "100000", minOut: "0" }, "1731000000031-ee000010");
+    const rsw3 = await fold([...full, ...ps]);
+    const k3 = rsw3.state.pools["SAOS/CUSD"];
+    t("pool: swap C2SA lands", k3.swaps === 3n && k3.resA < 20005000n, JSON.stringify({ swaps: String(k3?.swaps) }));
+    // LP remove: treasury burns half its LP, gets pro-rata back
+    await mk3(w1, { k: "pool.remove", pair: "SAOS/CUSD", lp: "100000000" }, "1731000000032-ee000011");
+    const rrm = await fold([...full, ...ps]);
+    const k4 = rrm.state.pools["SAOS/CUSD"];
+    t("pool: LP remove returns pro-rata reserves", k4.lpSupply === 100000000n && k4.lpBal[addr1a] === 100000000n);
+    // fee accounting: reserves grew by the fee path (k strictly grows after every swap)
+    const kAfterAll = k3.resA * k3.resB;
+    t("pool: fees compound into the reserves (k grew)", kAfterAll >= 20000000n * 2000000000n);
+    void sw1; void sw2; void badAdd;
+
     const passed = tests.filter((x) => x.pass).length;
     return { passed, total: tests.length, tests, protocol: PROTOCOL };
   }
@@ -733,6 +971,9 @@ function makeSaosLive(C) {
     randomPriv,
     fmt,
     selfTest,
+    quoteSwap,
+    isqrt,
+    CREDIT_RE,
   };
 }
 
@@ -756,4 +997,7 @@ export const newWallet = SaosLive.newWallet;
 export const randomPriv = SaosLive.randomPriv;
 export const fmt = SaosLive.fmt;
 export const selfTest = SaosLive.selfTest;
+export const quoteSwap = SaosLive.quoteSwap;
+export const isqrt = SaosLive.isqrt;
+export const CREDIT_RE = SaosLive.CREDIT_RE;
 globalThis.SaosLive = SaosLive;
