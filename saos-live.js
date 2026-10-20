@@ -157,8 +157,10 @@ function makeSaosLive(C) {
     "reward.pay": ["to", "amount", "note"],
     "cfg.addr": ["cur", "addr", "memo"],
     "cfg.rate": ["pair", "price"],
+    "pool.create": ["pair", "feeBps"],
+    "pool.add": ["pair", "base", "quote"],
   };
-  const TREASURY_KINDS = new Set(["deposit.credit", "dex.fill", "reward.pay", "cfg.addr", "cfg.rate"]);
+  const TREASURY_KINDS = new Set(["deposit.credit", "dex.fill", "reward.pay", "cfg.addr", "cfg.rate", "pool.create", "pool.add"]);
   const META_KEYS = new Set(["at", "txid", "block", "trxInBlock"]);
 
   const MAX_OPEN_OFFERS = 30;
@@ -323,6 +325,26 @@ function makeSaosLive(C) {
       return { ok: true };
     }
 
+    if (k === "pool.create") {
+      if (!PAIR_RE.test(String(env.pair || ""))) return { err: "bad-pair" };
+      if (state.pools[String(env.pair)]) return { err: "pool-exists" };
+      if (env.feeBps !== undefined) {
+        const f = Number(env.feeBps);
+        if (!Number.isInteger(f) || f < 0 || f > 1000) return { err: "bad-fee" };
+      }
+      return { ok: true };
+    }
+
+    if (k === "pool.add") {
+      const p = state.pools[String(env.pair || "")];
+      if (!p) return { err: "no-pool" };
+      const b = parseAmount(env.base);
+      const q = parseAmount(env.quote);
+      if (b === null || b <= 0n || q === null || q <= 0n) return { err: "bad-amount" };
+      if ((state.bal[env.by]?.SAOS || 0n) < b) return { err: "insufficient" };
+      return { ok: true };
+    }
+
     const symbol = String(env.symbol || "");
     const token = state.tokens[symbol];
     if (!token) return { err: "no-token" };
@@ -366,6 +388,7 @@ function makeSaosLive(C) {
       supply: {}, // SYMBOL -> BigInt
       claims: {}, // claimId -> {by, cur, amt, ref, status, at, txid}
       offers: {}, // offerId -> {by, cur, units, price, filled, status, fills[], at, txid}
+      pools: {}, // pair -> {resA, resB, lpSupply, feeBps} — the liquidity flywheel (Genesis-2)
       cfg: { addrs: {}, rates: {} }, // treasury published config
       rewardsPaid: 0n, // total SAOS units paid as rewards
       treasury: null, // genesis treasury address
@@ -449,6 +472,14 @@ function makeSaosLive(C) {
         state.cfg.addrs[env.cur] = { addr: env.addr, memo: env.memo !== undefined ? env.memo : null, ...m };
       } else if (k === "cfg.rate") {
         state.cfg.rates[env.pair] = { price: env.price, ...m };
+      } else if (k === "pool.create") {
+        state.pools[env.pair] = { resA: 0n, resB: 0n, lpSupply: 0n, feeBps: env.feeBps !== undefined ? String(env.feeBps) : "30", ...m };
+      } else if (k === "pool.add") {
+        const p = state.pools[env.pair];
+        state.bal[env.by].SAOS -= BigInt(env.base);
+        p.resA += BigInt(env.base);
+        p.resB += BigInt(env.quote);
+        p.lpSupply += BigInt(env.base) + BigInt(env.quote);
       }
       valid++;
       order.push({ id: env.id, k, by: env.by, ...m });
@@ -495,6 +526,12 @@ function makeSaosLive(C) {
         return [pair, { price: r.price }];
       })),
     };
+    const poolsCanon = Object.fromEntries(
+      Object.keys(state.pools).sort().map((pair) => {
+        const p = state.pools[pair];
+        return [pair, { resA: String(p.resA), resB: String(p.resB), lpSupply: String(p.lpSupply), feeBps: p.feeBps }];
+      }),
+    );
     const rootInput = canon({
       wallets: walletsCanon,
       tokens: tokensCanon,
@@ -502,6 +539,7 @@ function makeSaosLive(C) {
       supply: supplyCanon,
       claims: claimsCanon,
       offers: offersCanon,
+      pools: poolsCanon,
       cfg: cfgCanon,
       rewardsPaid: String(state.rewardsPaid),
       ops: valid,
@@ -523,6 +561,7 @@ function makeSaosLive(C) {
       claimsCanon,
       offersCanon,
       cfgCanon,
+      poolsCanon,
     };
   }
 
