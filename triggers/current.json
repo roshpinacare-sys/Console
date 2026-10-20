@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "publishedAt": "2026-10-20T17:30:58.716Z",
+  "publishedAt": "2026-10-20T21:52:30.422Z",
   "engine": "trigger-mesh v1.0.0 (R130, keyless)",
   "rulesTotal": 9,
   "fired": [
@@ -9,33 +9,22 @@
       "consumer": "keeper",
       "source": "dex/money.json",
       "field": "publishedAt",
-      "value": 92.964224,
+      "value": 97.323031,
       "threshold": 30,
-      "at": "2026-10-20T17:30:58.715Z",
+      "at": "2026-10-20T21:52:30.421Z",
       "status": "FIRED",
-      "evidence": "dex/money.json#publishedAt=92.964224 vs 30"
-    },
-    {
-      "id": "T-ANCHOR-MISS",
-      "consumer": "keeper",
-      "source": "status.json",
-      "field": "freshness.ageHours",
-      "value": 196.8,
-      "threshold": 26,
-      "at": "2026-10-20T17:30:58.715Z",
-      "status": "FIRED",
-      "evidence": "status.json#freshness.ageHours=196.8 vs 26"
+      "evidence": "dex/money.json#publishedAt=97.323031 vs 30"
     },
     {
       "id": "T-PARITY-MOVE",
       "consumer": "money-mover [שער-מפעיל]",
       "source": "dex/grid.json",
       "field": "marks.paritySbdPerSteem",
-      "value": 1113.7,
+      "value": 141.7,
       "threshold": 50,
-      "at": "2026-10-20T17:30:58.715Z",
+      "at": "2026-10-20T21:52:30.422Z",
       "status": "FIRED",
-      "evidence": "dex/grid.json#marks.paritySbdPerSteem=1113.7 vs 50"
+      "evidence": "dex/grid.json#marks.paritySbdPerSteem=141.7 vs 50"
     },
     {
       "id": "T-DEPOSIT-IN",
@@ -44,9 +33,20 @@
       "field": "deposits",
       "value": 1,
       "threshold": 0,
-      "at": "2026-10-20T17:30:58.716Z",
+      "at": "2026-10-20T21:52:30.422Z",
       "status": "FIRED",
       "evidence": "dex/deposits.json#deposits=1 vs 0"
+    },
+    {
+      "id": "T-RELAY-GAS-READY",
+      "consumer": "evm-anchor [שער-מפעיל לחתימה]",
+      "source": "proof/pipeline.json",
+      "field": "best.anchorsAffordable",
+      "value": 2350,
+      "threshold": 730,
+      "at": "2026-10-20T21:52:30.422Z",
+      "status": "FIRED",
+      "evidence": "proof/pipeline.json#best.anchorsAffordable=2350 vs 730"
     }
   ],
   "waited": [
@@ -55,9 +55,19 @@
       "consumer": "keeper",
       "source": "dex/grid.json",
       "field": "publishedAt",
-      "value": 3.105036,
+      "value": 2.48576,
       "threshold": 30,
-      "at": "2026-10-20T17:30:58.710Z",
+      "at": "2026-10-20T21:52:30.368Z",
+      "status": "WAIT"
+    },
+    {
+      "id": "T-ANCHOR-MISS",
+      "consumer": "keeper",
+      "source": "status.json",
+      "field": "freshness.ageHours",
+      "value": 0.8,
+      "threshold": 26,
+      "at": "2026-10-20T21:52:30.421Z",
       "status": "WAIT"
     },
     {
@@ -65,9 +75,9 @@
       "consumer": "money-mover [שער-מפעיל]",
       "source": "dex/grid.json",
       "field": "fuel.rcFuelSp",
-      "value": 150.381224,
+      "value": 150.383328,
       "threshold": 50,
-      "at": "2026-10-20T17:30:58.715Z",
+      "at": "2026-10-20T21:52:30.422Z",
       "status": "WAIT"
     },
     {
@@ -77,27 +87,17 @@
       "field": "fuel.remainingWeeks",
       "value": 3999998,
       "threshold": 1,
-      "at": "2026-10-20T17:30:58.715Z",
+      "at": "2026-10-20T21:52:30.422Z",
       "status": "WAIT"
-    },
-    {
-      "id": "T-RELAY-GAS-READY",
-      "consumer": "evm-anchor [שער-מפעיל לחתימה]",
-      "source": "proof/pipeline.json",
-      "field": "best.anchorsAffordable",
-      "value": 2350,
-      "threshold": 730,
-      "at": "2026-10-20T17:30:58.716Z",
-      "status": "FIRED_COOLDOWN"
     },
     {
       "id": "T-PIPELINE-STALE",
       "consumer": "keeper",
       "source": "proof/pipeline.json",
       "field": "publishedAt",
-      "value": 7.892791,
+      "value": 12.251598,
       "threshold": 48,
-      "at": "2026-10-20T17:30:58.716Z",
+      "at": "2026-10-20T21:52:30.422Z",
       "status": "WAIT"
     }
   ],
@@ -105,7 +105,7 @@
     {
       "id": "T-SOURCE-STALE",
       "source": "dex/money.json",
-      "ageHours": 93
+      "ageHours": 97.3
     }
   ],
   "doctrine": "שום טריגר בלי ראיה · טריגר שלא הופעל נרשם WAIT · אפס מפתחות"
