@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-20T08:54:34.400Z",
+  "generatedAt": "2026-10-20T14:03:43.305Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "4e6009732c474f239bab7bde9f81ea5b020f80a9693f5ab1992e88ab43d519fc",
+  "stateRoot": "aa95f8a1b9c743d783adb7e5725d2b9c32f39ca84e8580c96a3f3e7a0f0c905b",
   "genesis": {
     "done": true,
     "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
@@ -48,15 +48,15 @@
         "SAOS": "1000000"
       },
       "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
-        "SAOS": "64174248",
+        "SAOS": "61764610",
         "CSTEEM": "52809700000",
-        "CSBD": "1776857948"
+        "CSBD": "2276857948"
       }
     },
     "supply": {
       "SAOS": "126682000",
       "CSTEEM": "52809700000",
-      "CSBD": "1776857948"
+      "CSBD": "2276857948"
     },
     "claims": {
       "1792377809524-d0000003": {
@@ -99,9 +99,9 @@
     },
     "pools": {
       "SAOS/CSBD": {
-        "resA": "9801444",
-        "resB": "2033800000",
-        "lpSupply": "2043601444",
+        "resA": "12211082",
+        "resB": "2533800000",
+        "lpSupply": "2546011082",
         "feeBps": "30"
       },
       "SAOS/CSTEEM": {
@@ -359,17 +359,31 @@
       "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
       "at": null,
       "txid": null
+    },
+    {
+      "id": "1792486463294-37c6bbd1237d",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792486463294-8fbaad63b8ae",
+      "k": "pool.add",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
     }
   ],
   "custody": {
     "custodian": "headcorner",
     "measured": {
-      "STEEM": "1035500000",
-      "SBD": "5131700000"
+      "STEEM": "132100000",
+      "SBD": "3801400000"
     },
     "outstanding": {
       "CSTEEM": "52809700000",
-      "CSBD": "1776857948"
+      "CSBD": "2276857948"
     },
     "verdict": {
       "CSTEEM": "custody-deficit",
@@ -381,24 +395,24 @@
     }
   },
   "net": {
-    "lastScanBlock": 110596613,
-    "lastScanAt": "2026-10-20T08:54:34.400Z",
-    "scanned": 2417,
+    "lastScanBlock": 110602736,
+    "lastScanAt": "2026-10-20T14:03:43.304Z",
+    "scanned": 2416,
     "found": 0,
     "added": 0,
     "folded": 0,
     "rejected": 0,
-    "dupes": 0,
-    "relayAdded": 0,
+    "dupes": 2,
+    "relayAdded": 2,
     "failedBatches": 0,
-    "archive": 48,
+    "archive": 50,
     "window": {
-      "from": 110596597,
-      "to": 110596613
+      "from": 110602721,
+      "to": 110602736
     },
-    "ms": 6940,
+    "ms": 4218,
     "notes": [
-      "gap-capped:4692->2400"
+      "gap-capped:6131->2400"
     ],
     "envs": [
       {
@@ -1170,6 +1184,38 @@
           "quote": "500000000",
           "sig": "1f25cb5bbe55c8b8556f941de4017ba2c8959aff331faa0c3db5ce1ef58d8e04b32681d02be1f2b599b85126b5bf542cd4bb63a255e55d065b41b3347e93c45ffd"
         }
+      },
+      {
+        "b": 110596612,
+        "o": 146167,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792486463294-37c6bbd1237d",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "20600d455798fe3ec812d27ce34ad8b47b8f0b25b3e1aba2c2ecad1bf1e457fe4f6c75c32754903ac0395b795966b5bc86c84277ddad00c3dd66e760c9c1fac464"
+        }
+      },
+      {
+        "b": 110596612,
+        "o": 146168,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792486463294-8fbaad63b8ae",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "2070cc5ca13a5c3c4063e86084bd85372a93997a515c6967e9ab33abc8f349d3573e8bc1b9359f163229e929c078cacc8e71029f9d8d170b235ffa7ad5692662e5"
+        }
       }
     ]
   },
@@ -1246,8 +1292,8 @@
     }
   ],
   "verify": {
-    "replayed": 48,
-    "valid": 35,
+    "replayed": 50,
+    "valid": 37,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
