@@ -1,8 +1,8 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-20T14:03:43.305Z",
+  "generatedAt": "2026-10-20T18:27:48.381Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "aa95f8a1b9c743d783adb7e5725d2b9c32f39ca84e8580c96a3f3e7a0f0c905b",
+  "stateRoot": "ae05edaa7c0929443db15b0e9f0922b99ee3954562850aa83a7226b66d930df4",
   "genesis": {
     "done": true,
     "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
@@ -48,15 +48,15 @@
         "SAOS": "1000000"
       },
       "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
-        "SAOS": "61764610",
+        "SAOS": "59354972",
         "CSTEEM": "52809700000",
-        "CSBD": "2276857948"
+        "CSBD": "2776857948"
       }
     },
     "supply": {
       "SAOS": "126682000",
       "CSTEEM": "52809700000",
-      "CSBD": "2276857948"
+      "CSBD": "2776857948"
     },
     "claims": {
       "1792377809524-d0000003": {
@@ -99,9 +99,9 @@
     },
     "pools": {
       "SAOS/CSBD": {
-        "resA": "12211082",
-        "resB": "2533800000",
-        "lpSupply": "2546011082",
+        "resA": "14620720",
+        "resB": "3033800000",
+        "lpSupply": "3048420720",
         "feeBps": "30"
       },
       "SAOS/CSTEEM": {
@@ -373,21 +373,35 @@
       "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
       "at": null,
       "txid": null
+    },
+    {
+      "id": "1792505016172-9e586c9f69e9",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792505016172-a71b7e35db77",
+      "k": "pool.add",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
     }
   ],
   "custody": {
     "custodian": "headcorner",
     "measured": {
-      "STEEM": "132100000",
-      "SBD": "3801400000"
+      "STEEM": "18838000000",
+      "SBD": "2668900000"
     },
     "outstanding": {
       "CSTEEM": "52809700000",
-      "CSBD": "2276857948"
+      "CSBD": "2776857948"
     },
     "verdict": {
       "CSTEEM": "custody-deficit",
-      "CSBD": "custody-ok"
+      "CSBD": "custody-deficit"
     },
     "float": {
       "STEEM": "100",
@@ -395,24 +409,24 @@
     }
   },
   "net": {
-    "lastScanBlock": 110602736,
-    "lastScanAt": "2026-10-20T14:03:43.304Z",
-    "scanned": 2416,
+    "lastScanBlock": 110607977,
+    "lastScanAt": "2026-10-20T18:27:48.381Z",
+    "scanned": 2400,
     "found": 0,
     "added": 0,
     "folded": 0,
     "rejected": 0,
-    "dupes": 2,
+    "dupes": 0,
     "relayAdded": 2,
     "failedBatches": 0,
-    "archive": 50,
+    "archive": 52,
     "window": {
-      "from": 110602721,
-      "to": 110602736
+      "from": 110605578,
+      "to": 110607977
     },
-    "ms": 4218,
+    "ms": 5267,
     "notes": [
-      "gap-capped:6131->2400"
+      "gap-capped:5253->2400"
     ],
     "envs": [
       {
@@ -1216,6 +1230,38 @@
           "quote": "500000000",
           "sig": "2070cc5ca13a5c3c4063e86084bd85372a93997a515c6967e9ab33abc8f349d3573e8bc1b9359f163229e929c078cacc8e71029f9d8d170b235ffa7ad5692662e5"
         }
+      },
+      {
+        "b": 110602735,
+        "o": 149577,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792505016172-9e586c9f69e9",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "2041f23d1e686c813eb929eb4d252d4a98ccf74e63160e61f394e8b9b4d3890e0e668975c4486d3cc914ea597a76188544f44b76ce977b8ad36c4e1138bffaa174"
+        }
+      },
+      {
+        "b": 110602735,
+        "o": 149578,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792505016172-a71b7e35db77",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "1f74d7c6b9d679a6f4101db0841be6158506466b193fe2d8cff8ed4b4a905687de71d720d7cd0b62f5e45d77f2582156631d0726039c50ce0e5186a6d73def8aef"
+        }
       }
     ]
   },
@@ -1292,8 +1338,8 @@
     }
   ],
   "verify": {
-    "replayed": 50,
-    "valid": 37,
+    "replayed": 52,
+    "valid": 39,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
