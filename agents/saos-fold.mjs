@@ -618,7 +618,7 @@ async function main() {
           } else log({ verdict: "FLYWHEEL-SKIPPED", why: bc.why });
         }
         custody = custodyAudit(res.state, fly.measured ?? (await measureCustody()));
-      } catch (e) { log({ verdict: "FLYWHEEL-ERROR", err: String(e?.message ?? e).slice(0, 120), at: String(e?.stack ?? "").split("\n").filter(Boolean)[1]?.trim()?.slice(0, 100) ?? null }); custody = null; }
+      } catch (e) { log({ verdict: "FLYWHEEL-ERROR", err: String(e?.message ?? e).slice(0, 120), at: String(e?.stack ?? "").split("\n").filter(Boolean).slice(1, 5).map(s=>s.trim().slice(0, 120)).join(" <- ") }); custody = null; }
     }
   }
 
