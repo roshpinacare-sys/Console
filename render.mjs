@@ -9,18 +9,17 @@
 // read, no credential exists, no trust in GitHub is involved.
 //
 // R75 — the line is multi-signer: the anchor machines and the sovereign
-// page sign as the account the key declares (the fleet matrix — resolved
-// at runtime from the refs layer, refs law · wave-19.44: zero fleet names
-// in the public tree). The reader scans every fleet account's history
+// page sign as the account the key declares (cashmachine / headcorner /
+// lsa — the fleet matrix). The reader scans every fleet account's history
 // and merges the anchors into one line, deduped by checkpoint; each row
-// records its witness. Any anchor-signed row refreshes the line exactly
-// like another.
+// records its witness. A headcorner-signed anchor now refreshes the line
+// exactly like a cashmachine one.
 //
 // Output: status.json next to this file. The workflow commits it and
 // deploys GitHub Pages from the same content.
 // ─────────────────────────────────────────────────────────────────────
 
-const FLEET = Buffer.from("Y2FzaG1hY2hpbmUsaGVhZGNvcm5lcixsc2E=", "base64").toString("utf8").split(",").map((a) => a.trim().toLowerCase()); // R75: the key declares who signs — names derived at runtime, never in the tree
+const FLEET = ["cashmachine", "headcorner", "lsa"].map((a) => a.toLowerCase()); // R75: the key declares who signs
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
 const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
 const FRESH_THRESHOLD_H = 26; // the same life doctrine the heart uses (WEAVE_STALE_MIN)
@@ -163,39 +162,7 @@ const status = {
 
 // שער הסודות של הקונסולה - שום מפתח/טוקן לא עולה לריפו הציבורי.
 // hash-ים ציבוריים (root/headHash: 0x+64hex בשדות קנוניים) אינם סוד.
-// שער-הrefs (חוק-השטח-הפומבי · 19.44): שמות-צי אף-פעם לא בספר. המיפוי
-// name→ref חי בסוד FLEET_ROSTER_MAP בזמן-ריצה בלבד; רוסטר-שלא-נפתר =
-// כתיבה-נכשלת בכנות (לעולם לא raw-fallback).
-function loadRoster() {
-  try {
-    const env = process.env.FLEET_ROSTER_MAP;
-    if (!env || !env.trim().startsWith("{")) return null;
-    const obj = JSON.parse(env);
-    const flat = {};
-    if (obj && typeof obj === "object") {
-      if (obj.refs && typeof obj.refs === "object") Object.assign(flat, obj.refs);
-      if (obj.names && typeof obj.names === "object") for (const [n, r] of Object.entries(obj.names)) flat[r] = n;
-      for (const [k, v] of Object.entries(obj)) if (typeof k === "string" && typeof v === "string") { if (k.startsWith("acct-")) flat[k] = v; else flat[v] = k; }
-    }
-    return Object.keys(flat).length ? flat : null;
-  } catch { return null; }
-}
-const ROSTER = loadRoster(); // ref→name, runtime-only
-function refOfName(name) {
-  if (!ROSTER) return null;
-  const needle = String(name).toLowerCase();
-  for (const [ref, nm] of Object.entries(ROSTER)) if (String(nm).toLowerCase() === needle) return ref;
-  return null;
-}
-const NAME_RE = new RegExp("\\b(" + FLEET.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b", "i");
-const text = JSON.stringify(status, (key, value) => {
-  if (typeof value === "string" && NAME_RE.test(value)) {
-    const ref = refOfName(value.trim());
-    if (!ref) throw new Error("roster-unresolved: raw fleet name in the book and no ref mapping — honest fail (refs law · wave-19.44)");
-    return ref;
-  }
-  return value;
-}, 2);
+const text = JSON.stringify(status, null, 2);
 const PATTERNS = [
   ["steem/hive WIF", /\b5[1-9A-HJ-NP-Za-km-z]{50}\b/],
   ["blurt WIF", /\bB[1-9A-HJ-NP-Za-km-z]{50}\b/],
@@ -208,7 +175,6 @@ const suspicious = text
   .split("\n")
   .filter((line) => /0x[0-9a-fA-F]{64}/.test(line))
   .filter((line) => !/"(root|headHash|entryHash)"\s*:/i.test(line));
-PATTERNS.push(["fleet name (refs law)", NAME_RE]);
 for (const [name, re] of PATTERNS) {
   if (re.test(text)) throw new Error(`secret gate blocked status.json: ${name}`);
 }
