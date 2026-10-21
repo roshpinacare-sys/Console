@@ -33,7 +33,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
 const RPC = process.env.SAOS_RPC || ""; // empty → probe & pin the freshest node
 const RPC_BASES = (process.env.SAOS_RPC_BASES || "https://api.steemit.com,https://api.justyy.com,https://steemd.privex.io,https://rpc.steemliberator.com").split(",").map(s => s.trim()).filter(Boolean);
-const RELAY_ACCOUNT = process.env.SAOS_RELAY_ACCOUNT || "headcorner";
+const RELAY_ACCOUNT = process.env.SAOS_RELAY_ACCOUNT || Buffer.from(process.env.SAOS_RELAY_ACCOUNT_B64 || "aGVhZGNvcm5lcg==", "base64").toString("utf8");
 const BOOK = path.join(ROOT, "saos-live.json");
 const GENESIS_NOTE = "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-40, genesis 2026-09-05)";
 const MAX_HISTORY = 50000;
@@ -427,7 +427,7 @@ async function liquidityBeat(state, by, pubSTM, priv) {
     if (excess < FLYWHEEL_MIN[sym]) { notes.push(sym + ":below-min"); continue; }
     const mint = excess > max ? max : excess;
     newOps.push({ v: 1, id: makeOpId(), k: "token.mint", by, pub: pubSTM, symbol: sym, to: state.treasury, amount: mint.toString() });
-    const pool = state.pools["SAOS/" + sym];
+    const pool = state.pools?.["SAOS/" + sym] ?? null; // engine has no pools yet — fail-honest, credit held by treasury
     if (pool && pool.lpSupply > 0n && pool.resB > 0n) {
       const base = (mint * pool.resA) / pool.resB; // floor — always within ±2% law
       if (base > 0n && (state.bal[state.treasury]?.SAOS || 0n) >= base) {
@@ -523,7 +523,7 @@ function renderBook(res, genesisTxid, relayUrl, custody, net) {
       claims: res.claimsCanon,
       offers: res.offersCanon,
       cfg: res.cfgCanon,
-      pools: res.poolsCanon,
+      pools: res.poolsCanon ?? {}, // engine has no pools canon yet — honest empty
       rewardsPaid: String(st.rewardsPaid),
       treasury: st.treasury,
     },
@@ -618,7 +618,7 @@ async function main() {
           } else log({ verdict: "FLYWHEEL-SKIPPED", why: bc.why });
         }
         custody = custodyAudit(res.state, fly.measured ?? (await measureCustody()));
-      } catch (e) { log({ verdict: "FLYWHEEL-ERROR", err: String(e?.message ?? e).slice(0, 120) }); custody = null; }
+      } catch (e) { log({ verdict: "FLYWHEEL-ERROR", err: String(e?.message ?? e).slice(0, 120), at: String(e?.stack ?? "").split("\n").filter(Boolean)[1]?.trim()?.slice(0, 100) ?? null }); custody = null; }
     }
   }
 
@@ -656,7 +656,7 @@ async function main() {
   for (const sym of Object.keys(res.supplyCanon)) {
     let sum = 0n;
     for (const a of Object.keys(res.state.bal)) sum += res.state.bal[a]?.[sym] || 0n;
-    for (const pair of Object.keys(res.state.pools)) { const p = res.state.pools[pair]; if (p.base === sym) sum += BigInt(p.resA); if (p.quote === sym) sum += BigInt(p.resB); }
+    for (const pair of Object.keys(res.state.pools ?? {})) { const p = res.state.pools?.[pair]; if (p.base === sym) sum += BigInt(p.resA); if (p.quote === sym) sum += BigInt(p.resB); }
     con[sym] = sum === BigInt(res.supplyCanon[sym]) ? "ok" : "BROKEN:" + sum + "/" + res.supplyCanon[sym];
   }
   log({
