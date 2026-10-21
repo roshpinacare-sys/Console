@@ -33,7 +33,15 @@ jobs:
         env:
           AGENTS_WATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}
           TWIN_DISPATCH_TOKEN: ${{ secrets.AGENTS_WATCH_TOKEN }}   # r68: cross-repo dispatch of the Domain dex-grid twin
-        run: node agents/money-watch.mjs
+        # T-561 (agent-5): roster-unresolved = הצינור מת שקט. חוק fail-honest exit-0 של הסקריפט
+        # הפך ירוק-שקר ל-5 ימים (money.json קפוא מ-10-16 20:33 בזמן שהריצות "מצליחות").
+        # מעתה: הסימן ביומן הופך את הריצה לאדומה בגלוי — ::error:: נושא את הניתוב לבעלים.
+        run: |
+          node agents/money-watch.mjs | tee /tmp/money-watch.out
+          if grep -q "roster-unresolved" /tmp/money-watch.out; then
+            echo "::error::FLEET_ROSTER_MAP unresolved in Console — money-watch fuel path skipped; money.json is aging (owner custody: fix the secret format so acct-NN resolves)"
+            exit 1
+          fi
 
       - name: Publish the money path state
         if: always()
