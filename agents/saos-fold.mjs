@@ -378,7 +378,7 @@ function localVaultWif(which) {
 function creditOutstanding(state, symbol) {
   let sum = 0n;
   for (const addr of Object.keys(state.bal)) sum += state.bal[addr]?.[symbol] || 0n;
-  for (const pair of Object.keys(state.pools)) { const p = state.pools[pair]; if (p.quote === symbol) sum += p.resB; }
+  for (const pair of Object.keys(state.pools ?? {})) { const p = state.pools?.[pair]; if (p?.quote === symbol) sum += p.resB; } // engine has no pools yet — honest empty
   return sum;
 }
 function decToUnits(s) {
@@ -666,7 +666,7 @@ async function main() {
     invalid: res.invalid.length,
     wallets: Object.keys(res.state.wallets).length,
     supplySAOS: res.supplyCanon.SAOS ?? "0",
-    pools: Object.fromEntries(Object.keys(res.state.pools).map((p) => [p, { a: String(res.state.pools[p].resA), b: String(res.state.pools[p].resB), swaps: String(res.state.pools[p].swaps) }])),
+    pools: Object.fromEntries(Object.keys(res.state.pools ?? {}).map((p) => [p, { a: String(res.state.pools?.[p]?.resA ?? 0n), b: String(res.state.pools?.[p]?.resB ?? 0n), swaps: String(res.state.pools?.[p]?.swaps ?? 0n) }])), // engine has no pools yet — honest empty
     custody: custody?.verdict ?? null,
     conservation: con,
     net: { scanned: netRun.scanned, found: netRun.found, added: netRun.added, folded: netRun.folded, rejected: netRun.rejected, archive: archive.length, lastScanBlock: net.lastScanBlock },
