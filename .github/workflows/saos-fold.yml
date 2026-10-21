@@ -42,7 +42,26 @@ jobs:
           git add saos-live.json
           if ! git diff --cached --quiet; then
             git commit -m "saos-fold: live book republished · stateRoot ${STATE_ROOT:0:12} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            # [wave 19.54 · trace 1a15e3e419138aa5] house pull-rebase-retry law at the
+            # writer (precedents 19.52-e agent9-fleet-truth adb3ca7, 19.52-c arming-flip
+            # 703534ca): the fold commits the republished book then a bare push lost to a
+            # sibling beat (giants-beat 10:04:29Z) — run at 10:06:34Z red "[rejected]
+            # main -> main (fetch first)" AFTER a correct green fold. Retry with growing
+            # backoff; the fold itself already succeeded, so a lost race only re-publishes
+            # at the next 15-min slot (fail-soft, honest give-up after 5).
+            for attempt in 1 2 3 4 5; do
+              if git push; then echo "book published (attempt ${attempt})"; exit 0; fi
+              echo "push failed (attempt ${attempt}); pulling siblings and retrying"
+              # saos-live.json has one writer (this fold), so the rebase replays our
+              # fresh book over the sibling's foreign files; if the replay comes out
+              # empty (book already identical upstream) the push is an honest no-op.
+              git pull --rebase -X theirs --autostash origin main || { git rebase --abort 2>/dev/null || true; git reset --hard origin/main; }
+              git add saos-live.json 2>/dev/null || true
+              git diff --cached --quiet || git commit -m "saos-fold: live book republished · stateRoot ${STATE_ROOT:0:12} · $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              sleep $((attempt * 5))
+            done
+            echo "named terminal: publish-deferred — the fold was GREEN, the book re-publishes at the next 15-min slot (anti-storm: record, not alarm)"
+            exit 0
           else
             echo "book unchanged — nothing to publish"
           fi
