@@ -187,7 +187,7 @@ function refOfName(name) {
   for (const [ref, nm] of Object.entries(ROSTER)) if (String(nm).toLowerCase() === needle) return ref;
   return null;
 }
-const NAME_RE = new RegExp("(?i)\\b(" + FLEET.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b");
+const NAME_RE = new RegExp("\\b(" + FLEET.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b", "i");
 const text = JSON.stringify(status, (key, value) => {
   if (typeof value === "string" && NAME_RE.test(value)) {
     const ref = refOfName(value.trim());
