@@ -75,6 +75,17 @@ const TARGETS = [
   // (≤0.3/leg, ≤0.6 open STEEM, kill-law, maker-only book-law).
   { repo: 'saos-runtime', wf: 'treasury-ladder.yml', slaMin: 780, why: 'income artery; cron starved on new host; 12h cadence + 1h jitter guard' },
   { repo: 'saos-runtime', wf: 'army-ladder.yml',     slaMin: 780, why: 'army maker artery; cron starved on new host; 12h cadence + 1h jitter guard' },
+  // truth plane (R328 — measured 2026-10-21T06:40Z, agent-9): the two PUBLIC PAGE
+  // truth machines starve on their hosts while the owner reads their output.
+  // Console/truth-gate: hourly cron diluted to 4-8h gaps (measured runs
+  // 39545387035 04:41Z · 39517630966 23:50Z · 39481478122 19:12Z) — the live
+  // truth.html showed data aged 10.7h (pages-quality auditor caught it, WARN).
+  // Domain/agent9-fleet-truth: hourly :09 cron fired ZERO schedule runs ever
+  // (1 workflow_dispatch run total — the measured new-repo scheduler law, same
+  // class as R326/R327). A stale public truth page is a lie by omission; slaMin
+  // 130 ≈ 2x the nominal hourly cadence.
+  { repo: 'Console', wf: 'truth-gate.yml',         slaMin: 130, why: 'site truth machine; hourly cadence diluted (measured 4-8h gaps, R328)' },
+  { repo: 'Domain',  wf: 'agent9-fleet-truth.yml', slaMin: 130, why: 'pages fleet-truth baker; hourly cron fired zero schedule runs ever (new-repo scheduler law, R328)' },
   // FleetHQ self-watch (same-repo; the self-healers must not be the single quiet point)
   { repo: 'FleetHQ',   wf: 'opens-closer.yml',      slaMin: 40,  why: 'beacon/office reviver' },
   { repo: 'FleetHQ',   wf: 'silence-watchdog.yml',  slaMin: 40,  why: 'alarm channel' },
