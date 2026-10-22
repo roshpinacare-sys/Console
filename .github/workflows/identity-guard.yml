@@ -78,8 +78,8 @@ jobs:
             RANGE="$BEFORE..$AFTER"
           fi
           echo "identity-guard: scanning $RANGE (law v3 deny-by-default)"
-          VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%s' "$RANGE" 2>/dev/null | awk -F'|' -v ALLOWED="$ALLOWED" '
-            $2 !~ ALLOWED || $3 !~ ALLOWED
+          VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%s' "$RANGE" 2>/dev/null | ALLOWED="$ALLOWED" awk -F'|' '
+            $2 !~ ENVIRON["ALLOWED"] || $3 !~ ENVIRON["ALLOWED"]
           ' || true)"
           if [ -n "$VIOLATIONS" ]; then
             echo "::error::DECISIONS #10 VIOLATION — unlawful identities in pushed commits (identity law v3 deny-by-default: only <lane>@fleet.local, <lane>@agents.roshpinacare-sys, the owner org identities, github-actions[bot], actions@github.com and roshpinacare@gmail.com are lawful; anything else is an unidentified sandbox writer)"
@@ -108,8 +108,8 @@ jobs:
           # org-gitleaks T-w class) — the wound stays registered and counted; only a
           # scan error fails.
           ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com)$'
-          VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%ad|%s' --date=iso origin/main 2>/dev/null | awk -F'|' -v ALLOWED="$ALLOWED" '
-            $2 !~ ALLOWED || $3 !~ ALLOWED
+          VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%ad|%s' --date=iso origin/main 2>/dev/null | ALLOWED="$ALLOWED" awk -F'|' '
+            $2 !~ ENVIRON["ALLOWED"] || $3 !~ ENVIRON["ALLOWED"]
           ' || true)"
           COUNT="$(printf '%s' "$VIOLATIONS" | grep -c . || true)"
           echo "identity-guard deep-sweep: FULL-HISTORY census — ${COUNT} unlawful-identity commits on record"
@@ -185,8 +185,8 @@ jobs:
           # Window is recent-only: old wounds belong to the weekly report-only
           # deep sweep and to owner-side history rewrite (DECISIONS #29).
           ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com)$'
-          VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%ad|%s' --date=iso --since='26 hours ago' origin/main 2>/dev/null | awk -F'|' -v ALLOWED="$ALLOWED" '
-            $2 !~ ALLOWED || $3 !~ ALLOWED
+          VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%ad|%s' --date=iso --since='26 hours ago' origin/main 2>/dev/null | ALLOWED="$ALLOWED" awk -F'|' '
+            $2 !~ ENVIRON["ALLOWED"] || $3 !~ ENVIRON["ALLOWED"]
           ' || true)"
           if [ -n "$VIOLATIONS" ]; then
             echo "::error::IDENTITY LAW VIOLATION LANDED SILENTLY — the skip-CI marker silenced the push guard, but this scheduled sweep is unsilenceable; unlawful identities on main in the last 26h (identity law v3 deny-by-default: only <lane>@fleet.local, <lane>@agents.roshpinacare-sys, the owner org identities, github-actions[bot], actions@github.com and roshpinacare@gmail.com are lawful)"
