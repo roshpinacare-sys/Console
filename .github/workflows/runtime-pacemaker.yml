@@ -61,12 +61,17 @@ jobs:
         with:
           node-version: 22
 
-      # G64 anchor dedup — מול הארטיפקט, לא מול רשימת-הריצות: אם הקבלה-המפורסמת
-      # (beats.jsonl ב-HEAD) טרייה מ-25 דק' — הפצמר דופק והמחזור יוצא בכנות.
-      # Fail-open: קובץ-לא-קריאה/שעון-לא-ניתן-לחישוב => דופק (פעימה-נוספת היא
-      # מדידה כנה; השתקה עלולה להיות שקר).
-      - name: Anchor dedup — skip if the receipt itself is fresh (<25min)
+      # G64 anchor dedup — שתי-שכבות:
+      # (א) ראשית — מול הארטיפקט (שיעור-גל-64): גיל beats.jsonl ב-HEAD < 25 דק' => יציאה כנה.
+      # (ב) נגד-דריכה — ריצת-פצמר אחרת (לא-אני) הושלמה < 5 דק' => יציאה. ה-עצמי-מוחרג
+      #     לפי-run-id (מדוד: הרשימה כוללת את-הריצה-עצמה בגיל-0); הכיוון כאן הפוך
+      #     משיעור-truth-gate — כאן הרשימה מגינה מסערת-עוגנים מקבילים (מדוד 13:39-13:42:
+      #     8 ריצות-עוגן חופפות — קבוצת-ה-concurrency לא אכפה מול-workflow_run).
+      # Fail-open בשתי-השכבות: שתיקת-API => דופקים (פעימה-נוספת היא מדידה כנה).
+      - name: Anchor dedup — receipt-fresh + no-recent-sibling (anti-hammer)
         if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set +e
           LAST="$(node -e '
@@ -77,14 +82,34 @@ jobs:
               console.log(b.at||"");
             }catch(e){console.log("")}
           ')"
-          if [ -z "$LAST" ]; then echo "receipt unreadable — fail-open: beat"; exit 0; fi
-          LAST_S="$(date -u -d "$LAST" +%s 2>/dev/null || echo 0)"
-          AGE_MIN=$(( ($(date -u +%s) - LAST_S) / 60 ))
-          if [ "$AGE_MIN" -lt 25 ]; then
-            echo "receipt is fresh (${AGE_MIN}min < 25min) — anchor dedup exits, no hammering"
-            exit 0
+          if [ -n "$LAST" ]; then
+            LAST_S="$(date -u -d "$LAST" +%s 2>/dev/null || echo 0)"
+            AGE_MIN=$(( ($(date -u +%s) - LAST_S) / 60 ))
+            if [ "$AGE_MIN" -lt 25 ]; then
+              echo "receipt is fresh (${AGE_MIN}min < 25min) — anchor dedup exits, no hammering"
+              exit 0
+            fi
+            echo "receipt is stale (${AGE_MIN}min >= 25min) — proceeding to sibling check"
+          else
+            echo "receipt unreadable — fail-open: beat"
           fi
-          echo "receipt is stale (${AGE_MIN}min >= 25min) — anchored beat proceeds"
+          RESP="$(curl -s --max-time 15 -H "Authorization: Bearer ${GH_TOKEN}" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/runtime-pacemaker.yml/runs?per_page=6")"
+          SIBLING="$(node -e '
+            let d={}; try{d=JSON.parse(process.argv[1])}catch(e){}
+            const me=String(process.argv[2]);
+            const runs=(d.workflow_runs||[]).filter(r=>r.name==="runtime-pacemaker"&&String(r.id)!==me);
+            console.log(runs.length?runs[0].created_at:"");
+          ' "$RESP" "${GITHUB_RUN_ID}")"
+          if [ -n "$SIBLING" ]; then
+            S_S="$(date -u -d "$SIBLING" +%s 2>/dev/null || echo 0)"
+            S_MIN=$(( ($(date -u +%s) - S_S) / 60 ))
+            if [ "$S_MIN" -lt 6 ]; then
+              echo "sibling beat created ${S_MIN}min ago (< 6min, any status) — anti-hammer exits"
+              exit 0
+            fi
+          fi
+          echo "no recent sibling — anchored beat proceeds"
 
       - name: SENSE late arteries -> IGNITE (cross-repo dispatch token) -> RECORD receipt
         env:
