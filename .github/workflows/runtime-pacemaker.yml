@@ -30,8 +30,15 @@ on:
     types: [pacemaker-tick]
   # עוגן-אירוע (חוק-הענקים: לעולם לא מקור-קצב יחיד) — טריגר-workflow_run לא תלוי
   # רישום-scheduler; כל סיום של lanes ותיקים-מוכחים-שהם-יורים מזניק מחזור-פצמר.
+  # G64 (2026-10-22 13:40Z, מדוד): העוגן-המקורי נבנה על lanes שהם עצמם crons —
+  # וה-scheduler שתק את כולם יחד (אף ריצת Console חוץ מ-truth-gate/identity-guard/
+  # pages-deploy מ-12:54; הפצמר עצמו שקט 40+ דק' מול קצב-5 דק'). עוגן-על-עוגן-שותק
+  # = שתיקה. לכן הוספו pages-deploy / identity-guard / truth-gate — העורקים-המוכחים
+  # שאינם-scheduler: יורים על כל דחיפת-צי (PAT — אירוע חי), כל דקות-ספורות.
+  # והדה-כפל (שיעור-גל-64 מ-truth-gate): מול הארטיפקט-עצמו — גיל beats.jsonl —
+  # כי ריצות-דילוג הן ריצות והרשימה משקרת; הארטיפקט הוא השעון הכן היחיד.
   workflow_run:
-    workflows: [trigger-mesh, dex-watch, chain-vitals, estate-scrub, money-watch, grid-pulse]
+    workflows: [trigger-mesh, dex-watch, chain-vitals, estate-scrub, money-watch, grid-pulse, pages-deploy, identity-guard, truth-gate]
     types: [completed]
 
 permissions:
@@ -53,6 +60,31 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
+
+      # G64 anchor dedup — מול הארטיפקט, לא מול רשימת-הריצות: אם הקבלה-המפורסמת
+      # (beats.jsonl ב-HEAD) טרייה מ-25 דק' — הפצמר דופק והמחזור יוצא בכנות.
+      # Fail-open: קובץ-לא-קריאה/שעון-לא-ניתן-לחישוב => דופק (פעימה-נוספת היא
+      # מדידה כנה; השתקה עלולה להיות שקר).
+      - name: Anchor dedup — skip if the receipt itself is fresh (<25min)
+        if: github.event_name == 'workflow_run'
+        run: |
+          set +e
+          LAST="$(node -e '
+            const fs=require("fs");
+            try{
+              const lines=fs.readFileSync("pacemaker/state/beats.jsonl","utf8").trim().split("\n");
+              const b=JSON.parse(lines[lines.length-1]);
+              console.log(b.at||"");
+            }catch(e){console.log("")}
+          ')"
+          if [ -z "$LAST" ]; then echo "receipt unreadable — fail-open: beat"; exit 0; fi
+          LAST_S="$(date -u -d "$LAST" +%s 2>/dev/null || echo 0)"
+          AGE_MIN=$(( ($(date -u +%s) - LAST_S) / 60 ))
+          if [ "$AGE_MIN" -lt 25 ]; then
+            echo "receipt is fresh (${AGE_MIN}min < 25min) — anchor dedup exits, no hammering"
+            exit 0
+          fi
+          echo "receipt is stale (${AGE_MIN}min >= 25min) — anchored beat proceeds"
 
       - name: SENSE late arteries -> IGNITE (cross-repo dispatch token) -> RECORD receipt
         env:
