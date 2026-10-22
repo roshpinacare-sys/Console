@@ -12,6 +12,16 @@
 # run timestamps, so a raw diff would commit (and rebuild Pages) on every run.
 # Commit only when the verdict, counts, or per-gate statuses truly change, or
 # when the last committed heartbeat is older than 6h (liveness proof, sparse).
+#
+# G63 (2026-10-22, measured): the hourly cron '11 * * * *' is DILUTED by the
+# platform scheduler — measured gaps 2.5h-4h (04:49→07:17→08:28), and the
+# owner-facing truth page froze for hours while the fleet ran fine around it.
+# Fix — never a single cadence source (the giants law):
+#   1. the hourly cron stays (best effort),
+#   2. workflow_run ANCHOR: every successful deploy/identity/pnl run re-ignites
+#      the gate (event-driven, not scheduler-dependent),
+#   3. a 45min dedup step keeps the anchor honest (no hammering),
+#   4. the runtime-pacemaker stays the last-resort backstop (SLA 90min).
 
 name: truth-gate
 
@@ -19,6 +29,9 @@ on:
   schedule:
     - cron: '11 * * * *'
   workflow_dispatch:
+  workflow_run:
+    workflows: ["pages build and deployment", "identity-guard", "pnl-desk"]
+    types: [completed]
 
 permissions:
   contents: write
@@ -39,6 +52,33 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '22'
+
+      # G63 anchor dedup: an anchored run is only useful if the verdict is
+      # actually stale. If a run exists newer than 45min (any status — including
+      # one in progress right now), this anchored run exits honestly.
+      # Fail-open: if the API itself does not answer, we measure anyway —
+      # an extra 4-second measurement is never a lie, a skipped refresh could be.
+      - name: Anchor dedup — skip if a fresh run already exists (<45min)
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          RESP="$(curl -s --max-time 20 -H "Authorization: Bearer ${GH_TOKEN}" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/truth-gate/runs?per_page=3")"
+          LAST="$(node -e '
+            let d={}; try{d=JSON.parse(process.argv[1])}catch(e){}
+            const runs=(d.workflow_runs||[]).filter(r=>r.name==="truth-gate");
+            console.log(runs.length?runs[0].created_at:"");
+          ' "$RESP")"
+          if [ -z "$LAST" ]; then echo "no measurable prior run (or API silent) — proceed"; exit 0; fi
+          LAST_S="$(date -u -d "$LAST" +%s 2>/dev/null || echo 0)"
+          AGE_MIN=$(( ($(date -u +%s) - LAST_S) / 60 ))
+          if [ "$AGE_MIN" -lt 45 ]; then
+            echo "fresh verdict exists (${AGE_MIN}min old < 45min) — anchor dedup exits, hammering prevented"
+            exit 0
+          fi
+          echo "last run ${AGE_MIN}min ago — proceeding with anchored measurement"
 
       - name: Run the truth gate against the live site
         id: gate

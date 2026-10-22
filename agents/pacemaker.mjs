@@ -84,8 +84,14 @@ const TARGETS = [
   // (1 workflow_dispatch run total — the measured new-repo scheduler law, same
   // class as R326/R327). A stale public truth page is a lie by omission; slaMin
   // 130 ≈ 2x the nominal hourly cadence.
-  { repo: 'Console', wf: 'truth-gate.yml',         slaMin: 130, why: 'site truth machine; hourly cadence diluted (measured 4-8h gaps, R328)' },
-  { repo: 'Domain',  wf: 'agent9-fleet-truth.yml', slaMin: 130, why: 'pages fleet-truth baker; hourly cron fired zero schedule runs ever (new-repo scheduler law, R328)' },
+  // G63 (2026-10-22): re-measured — Console hourly cron STILL diluted (04:49→
+  // 07:17→08:28, 2.5-4h gaps) and the owner found the frozen page while the
+  // fleet ran fine around it. truth-gate now carries a workflow_run anchor +
+  // 45min dedup (first layer); the pacemaker SLA tightens 130→90min as the
+  // honest backstop — a 2.2h freeze on an hourly owner-facing page is a defect,
+  // not a cadence.
+  { repo: 'Console', wf: 'truth-gate.yml',         slaMin: 90,  why: 'site truth machine; cron diluted + workflow_run anchor added (G63); backstop 90min' },
+  { repo: 'Domain',  wf: 'agent9-fleet-truth.yml', slaMin: 90,  why: 'pages fleet-truth baker; alive via dispatch, backstop tightened 130→90 (G63)' },
   // FleetHQ self-watch (same-repo; the self-healers must not be the single quiet point)
   { repo: 'FleetHQ',   wf: 'opens-closer.yml',      slaMin: 40,  why: 'beacon/office reviver' },
   { repo: 'FleetHQ',   wf: 'silence-watchdog.yml',  slaMin: 40,  why: 'alarm channel' },
