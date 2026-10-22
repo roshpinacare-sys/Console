@@ -285,9 +285,24 @@ function bucketFor(days, date) {
     `${SYSTEM_PAGES.length} fronts: ${SYSTEM_PAGES.length - 1} full pages (min ${SYSTEM_MIN_BYTES}B) + sovereign R360-redirector→GIANT (target measured live) · index links ${SYSTEM_PAGES.length - unlinked.length}/${SYSTEM_PAGES.length} · sitemap ${sitemapOk ? SYSTEM_PAGES.length - unmapped.length + "/" + SYSTEM_PAGES.length : "?"} · roast stub ${roastOk ? "ok" : "BROKEN"} · hub/docs/reports ${artifactsGone ? "404 (banned, as required)" : "HTTP " + artifacts.status + " (still served)"}`,
     [mapFailures.join(" | "), unlinked.length ? "not linked from home: " + unlinked.join(" | ") : "", unmapped.length ? "not in sitemap: " + unmapped.join(" | ") : "", roastOk ? "" : "roast stub broken", artifactsGone ? "" : "hub/docs/reports/ not 404"].filter(Boolean).join(" || "));
 
-  // ── sandbox-only gates: recorded honestly as SKIP ─────────────────
-  record("G4-no-forged-twins", "SKIP", "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)");
-  record("G7-dev-server", "SKIP", "sandbox-only (the work server is not public infrastructure)");
+  // ── sandbox-only gates: folded in from the sovereign machine's live receipt ──
+  // גל-57: scripts/benchmark-truth.cjs רץ-על-המכונה-הריבונית (שם-שרת-העבודה-חי) ואופה
+  // truth/local-gates.json — קבלה-טרייה (<26ש') מגיעה-לכאן-ונמדדת-כשורה; קבלה-חסרה/
+  // ישנה = SKIP-כנה כמקודם (fail-open להתנהגות-ההיסטורית — אפס-המצאה).
+  const localGates = (() => {
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(HERE, "local-gates.json"), "utf8"));
+      return (j && j.schema === "local-gates/1" && Array.isArray(j.gates) && Date.now() - Date.parse(j.at) < 26 * 3600e3) ? j : null;
+    } catch { return null; }
+  })();
+  for (const [gateId, skipWhy] of [
+    ["G4-no-forged-twins", "sandbox-only (sovereign machine: scripts/benchmark-truth.cjs)"],
+    ["G7-dev-server", "sandbox-only (the work server is not public infrastructure)"],
+  ]) {
+    const lg = localGates ? localGates.gates.find((x) => x.gate === gateId) : null;
+    if (lg && (lg.status === "PASS" || lg.status === "FAIL")) record(gateId, lg.status, `${lg.measured} · source=sovereign-machine@${lg.at}`, lg.note || "");
+    else record(gateId, "SKIP", `${skipWhy} · local receipt ${localGates ? "stale" : "absent"}`);
+  }
 
   // ── verdict of the measured gates (the SLO block below adds G9) ───
   const fail0 = results.filter(r => r.status === "FAIL").length;
