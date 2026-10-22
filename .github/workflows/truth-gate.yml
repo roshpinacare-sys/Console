@@ -71,6 +71,12 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -166,35 +172,57 @@ jobs:
           echo "truth-gate is RED - the verdict is committed above; this run fails with it"
           exit 1
 
-  # G64b: the gate publishes itself — GITHUB_TOKEN pushes cannot trigger
-  # pages-deploy (GitHub recursion guard, measured), so self-publish closes
-  # the last external cadence dependency. The proven pages-deploy pattern;
-  # red verdicts deploy too (always()) — the truth is always recorded AND
-  # always deployed.
-  publish:
-    needs: gate
-    if: always() && needs.gate.outputs.committed == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    concurrency:
-      group: pages
-      cancel-in-progress: true
-    environment:
-      name: github-pages
-      url: ${{ steps.dep.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          persist-credentials: false
+      # G64c: ATOMIC self-publish — the deploy lives INSIDE the gate job, the
+      # job that already won the concurrency slot. Measured 14:01-14:07Z: the
+      # separate publish job never started when the run was concurrency-
+      # cancelled between the commit and the job boundary (beacon 41d2ca5 sat
+      # on main undeployed, page frozen at 13:07:43). Same-job = zero window.
+      # Second layer — backlog heal: if HEAD's committed verdict is newer than
+      # the PUBLISHED one by >12min (CDN tolerance), a later gate run deploys
+      # it even though nothing new was committed — a committed-but-undeployed
+      # verdict can never linger. Fail-closed on unreadable CDN (skip deploy;
+      # colleague-push deploys still exist; next run retries).
+      - name: Deploy the verdict to Pages (atomic, in-job)
+        id: deploy
+        if: always()
+        env:
+          COMMITTED: ${{ steps.commit.outputs.committed }}
+        run: |
+          set +e
+          DEPLOY=false
+          if [ "$COMMITTED" = "true" ]; then
+            DEPLOY=true; REASON="fresh commit"
+          else
+            HEAD_AT="$(node -e 'try{console.log(require("./truth/latest.json").at||"")}catch(e){console.log("")}' 2>/dev/null)"
+            RESP="$(curl -s --max-time 20 "https://roshpinacare-sys.github.io/Console/truth/latest.json")"
+            PUB_AT="$(node -e 'let d={};try{d=JSON.parse(process.argv[1])}catch(e){}console.log(d.at||"")' "$RESP")"
+            if [ -n "$HEAD_AT" ] && [ -n "$PUB_AT" ]; then
+              H_S="$(date -u -d "$HEAD_AT" +%s 2>/dev/null || echo 0)"
+              P_S="$(date -u -d "$PUB_AT" +%s 2>/dev/null || echo 0)"
+              GAP_MIN=$(( (H_S - P_S) / 60 ))
+              if [ "$GAP_MIN" -gt 12 ]; then
+                DEPLOY=true; REASON="backlog heal (HEAD newer than published by ${GAP_MIN}min)"
+              fi
+            fi
+          fi
+          if [ "$DEPLOY" != "true" ]; then
+            echo "no deploy needed (committed=${COMMITTED:-unset}, published verdict fresh)"
+            exit 0
+          fi
+          echo "deploying: ${REASON}"
+          echo "deploy=true" >> "$GITHUB_OUTPUT"
       - uses: actions/configure-pages@v5
+        if: steps.deploy.outputs.deploy == 'true'
+      # hygiene: the gate job's checkout persists push credentials — strip .git
+      # before the artifact upload so no credential/history ever reaches Pages.
+      - name: Strip .git from the artifact (credentials never reach Pages)
+        if: steps.deploy.outputs.deploy == 'true'
+        run: rm -rf .git
       - uses: actions/upload-pages-artifact@v3
+        if: steps.deploy.outputs.deploy == 'true'
         with:
           path: .
           include-hidden-files: true
       - id: dep
+        if: steps.deploy.outputs.deploy == 'true'
         uses: actions/deploy-pages@v4
