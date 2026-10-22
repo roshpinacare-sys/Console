@@ -22,6 +22,21 @@
 #      the gate (event-driven, not scheduler-dependent),
 #   3. a 45min dedup step keeps the anchor honest (no hammering),
 #   4. the runtime-pacemaker stays the last-resort backstop (SLA 90min).
+#
+# G64 (2026-10-22 13:05Z, measured — the anchor was alive and measuring NOTHING):
+#   the G63 dedup asked the runs-list "is there a fresh run?" — but every skip
+#   run IS a run, and anchors fire after every pages build (fleet commits every
+#   few minutes), so runs[0] was always the run itself (age 0min < 45min):
+#   every anchored run dedup-skipped itself forever. Measured: all runs since
+#   11:41Z are 14-95s empty skips, published latest.json frozen at 10:45:55Z
+#   (2h17m) while 15 green runs accumulated. The pacemaker was blinded the
+#   same way — it saw fresh (empty) runs and never ignited.
+#   Lesson: a run existing is not a measurement happening. The only honest
+#   clock is the PUBLISHED ARTIFACT itself — the very thing the owner reads.
+#   Fix: dedup now curls the published truth/latest.json and measures ITS age
+#   (fail-open: unreadable page => we measure). A skip-run can no longer
+#   masquerade as a verdict. Beacon 3h -> 50min so the page visibly refreshes
+#   every anchor cycle (~45-55min, the promised rhythm) even when all-green.
 
 name: truth-gate
 
@@ -53,32 +68,30 @@ jobs:
         with:
           node-version: '22'
 
-      # G63 anchor dedup: an anchored run is only useful if the verdict is
-      # actually stale. If a run exists newer than 45min (any status — including
-      # one in progress right now), this anchored run exits honestly.
-      # Fail-open: if the API itself does not answer, we measure anyway —
-      # an extra 4-second measurement is never a lie, a skipped refresh could be.
-      - name: Anchor dedup — skip if a fresh run already exists (<45min)
+      # G64 anchor dedup: an anchored run is only useful if the PUBLISHED verdict
+      # is actually stale. G63 asked the runs-list — but skip-runs are runs too,
+      # so the list was always "fresh" and the gate measured nothing for 2h17m
+      # (measured). Now we ask the artifact itself, the exact bytes the owner
+      # reads at roshpinacare-sys.github.io/Console/truth/latest.json.
+      # Fail-open: if the page does not answer or does not parse, we measure —
+      # an extra measurement is never a lie, a skipped refresh could be.
+      - name: Anchor dedup — skip if the published verdict itself is fresh (<45min)
         if: github.event_name == 'workflow_run'
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set +e
-          RESP="$(curl -s --max-time 20 -H "Authorization: Bearer ${GH_TOKEN}" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/truth-gate/runs?per_page=3")"
+          RESP="$(curl -s --max-time 20 "https://roshpinacare-sys.github.io/Console/truth/latest.json")"
           LAST="$(node -e '
             let d={}; try{d=JSON.parse(process.argv[1])}catch(e){}
-            const runs=(d.workflow_runs||[]).filter(r=>r.name==="truth-gate");
-            console.log(runs.length?runs[0].created_at:"");
+            console.log(d.at||"");
           ' "$RESP")"
-          if [ -z "$LAST" ]; then echo "no measurable prior run (or API silent) — proceed"; exit 0; fi
+          if [ -z "$LAST" ]; then echo "published verdict unreadable (or CDN silent) — fail-open: measure"; exit 0; fi
           LAST_S="$(date -u -d "$LAST" +%s 2>/dev/null || echo 0)"
           AGE_MIN=$(( ($(date -u +%s) - LAST_S) / 60 ))
           if [ "$AGE_MIN" -lt 45 ]; then
-            echo "fresh verdict exists (${AGE_MIN}min old < 45min) — anchor dedup exits, hammering prevented"
+            echo "published verdict is fresh (${AGE_MIN}min old < 45min) — anchor dedup exits, hammering prevented"
             exit 0
           fi
-          echo "last run ${AGE_MIN}min ago — proceeding with anchored measurement"
+          echo "published verdict is stale (${AGE_MIN}min >= 45min) — anchored measurement proceeds"
 
       - name: Run the truth gate against the live site
         id: gate
@@ -99,12 +112,13 @@ jobs:
           # resolve the grafted tip, so the >6h freshness beacon could never fire.
           LAST_TS="$(node -e 'try{console.log(require("/tmp/prev-truth.json").at||"")}catch(e){console.log("")}' 2>/dev/null)"
           LAST_S="$(date -u -d "$LAST_TS" +%s 2>/dev/null || echo 0)"
-          AGE_H=$(( ($(date -u +%s) - LAST_S) / 3600 ))
-          # גל-57: beacon 6→3 — נמדד-חי: עם-קצב-3ש' ופסק-יציב הקומיט-הדליל-מדי השאיר את
-          # truth/latest.json בגיל ~6.2ש' ודף-האמת נצבע WARN (סף-איכות 6ש'). מעתה כל-ריצה-יציבה
-          # עם-גיל-≥3ש' נקומטת — טריות ≤~3.2ש' · אפס-WARN · בניית-Pages-אחת-ל-3ש' (זול).
-          if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_H" -lt 3 ]; then
-            echo "verdict semantically unchanged and heartbeat fresh (${AGE_H}h < 6h) - no commit, Pages quota spared"
+          AGE_MIN=$(( ($(date -u +%s) - LAST_S) / 60 ))
+          # גל-57: beacon 6→3ש'. גל-64: 3ש'→50דק' — נמדד-חי: עם-עוגן-חי (G63) מדידה-ירוקה
+          # כל-~45-55דק' לא נקומטה (SIG זהה, גיל <3ש') ודף-האמת קפא 2h17m מול-15 ריצות-ירוקות.
+          # הבעלים קורא את ה-`at` — הדף-חייב לנשום בקצב-המדידה. מעתה: כל-מדידה-עם-גיל-≥50דק'
+          # נקומטת — טריות ≤~55דק' · בניית-Pages-אחת-ל-~50דק' (זול) · אפס-WARN.
+          if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_MIN" -lt 50 ]; then
+            echo "verdict semantically unchanged and published heartbeat fresh (${AGE_MIN}min < 50min) - no commit, Pages quota spared"
             exit 0
           fi
           for attempt in 1 2 3; do
