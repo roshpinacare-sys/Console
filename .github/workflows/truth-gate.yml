@@ -37,6 +37,18 @@
 #   (fail-open: unreadable page => we measure). A skip-run can no longer
 #   masquerade as a verdict. Beacon 3h -> 50min so the page visibly refreshes
 #   every anchor cycle (~45-55min, the promised rhythm) even when all-green.
+#
+# G64b (2026-10-22 13:20Z, measured — the second clog in the same artery):
+#   the gate's commits are pushed with GITHUB_TOKEN, and GitHub's recursion
+#   guard never lets GITHUB_TOKEN pushes trigger other workflows — measured:
+#   gate commits 8b207b8/705fed7 at 13:07Z produced ZERO pages-deploy runs.
+#   The page only refreshes when a COLLEAGUE pushes. A single external cadence
+#   source — the exact giants-law violation this file exists to prevent.
+#   Fix: the gate now publishes itself. After a successful commit+push, a
+#   publish job deploys the site with the proven pages-deploy pattern
+#   (configure-pages -> upload-pages-artifact -> deploy-pages, concurrency
+#   group 'pages', environment github-pages). Red verdicts publish too —
+#   the truth is always recorded AND always deployed.
 
 name: truth-gate
 
@@ -59,6 +71,8 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      committed: ${{ steps.commit.outputs.committed }}
     steps:
       - name: Checkout the public console
         uses: actions/checkout@v5
@@ -99,6 +113,7 @@ jobs:
         run: node truth/truth-gate-ci.cjs
 
       - name: Commit the verdict (always - red or green)
+        id: commit
         if: always()
         run: |
           set +e
@@ -119,12 +134,14 @@ jobs:
           # נקומטת — טריות ≤~55דק' · בניית-Pages-אחת-ל-~50דק' (זול) · אפס-WARN.
           if [ "$SIG_NOW" = "$SIG_PREV" ] && [ "$AGE_MIN" -lt 50 ]; then
             echo "verdict semantically unchanged and published heartbeat fresh (${AGE_MIN}min < 50min) - no commit, Pages quota spared"
+            echo "committed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           for attempt in 1 2 3; do
             git add truth/latest.json truth/history.json truth/slo.json
             if git diff --cached --quiet; then
               echo "no verdict change to commit (attempt ${attempt})"
+              echo "committed=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             VERDICT=$(node -e "console.log(require('./truth/latest.json').verdict)" 2>/dev/null || echo UNKNOWN)
@@ -132,6 +149,7 @@ jobs:
             git pull --rebase -X theirs --autostash origin main
             if git push; then
               echo "verdict committed on attempt ${attempt}: ${VERDICT}"
+              echo "committed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             echo "push failed (attempt ${attempt}); resetting to origin and re-running the gate"
@@ -147,3 +165,36 @@ jobs:
         run: |
           echo "truth-gate is RED - the verdict is committed above; this run fails with it"
           exit 1
+
+  # G64b: the gate publishes itself — GITHUB_TOKEN pushes cannot trigger
+  # pages-deploy (GitHub recursion guard, measured), so self-publish closes
+  # the last external cadence dependency. The proven pages-deploy pattern;
+  # red verdicts deploy too (always()) — the truth is always recorded AND
+  # always deployed.
+  publish:
+    needs: gate
+    if: always() && needs.gate.outputs.committed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.dep.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+          include-hidden-files: true
+      - id: dep
+        uses: actions/deploy-pages@v4
