@@ -1,0 +1,58 @@
+# SWALLOW-WATCH — the census re-activator (wave 19.72, trace 1a16395f9ea0a731)
+#
+# Measured 2026-10-22: GitHub's scheduler never fired the identity-guard
+# schedule — not on day one (19.69), not after the 19.71 hedge crons had
+# ~90 minutes of registration (zero event=schedule runs across five repos
+# while sibling workflows' schedules fired on the same repos in the same
+# hours; runner-kit's counter-proof: its queue was EMPTY at the 09:31Z slot).
+# The census must not depend on a scheduler that sheds it: this watcher runs
+# hourly, reads the newest schedule-or-dispatch identity-guard run, and if
+# the census has been silent >26h it ACTIVATES it via the proven dispatch
+# endpoint — keyless (GITHUB_TOKEN, actions:write). Activation, never
+# suppression. The watcher's own runs are the honesty receipt: if IT gets
+# shed too, the measurement shows it and the next escalation lands inside
+# an already-firing lane.
+
+name: swallow-watch
+
+on:
+  schedule:
+    - cron: '{cron}'   # hourly, per-repo offset
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: swallow-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Re-activate the identity-guard census if swallowed >26h
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.default_branch }}
+        run: |
+          set -euo pipefail
+          LAST_SCHED="$(gh api "repos/$REPO/actions/workflows/identity-guard.yml/runs?event=schedule&per_page=1" --jq '.workflow_runs[0].created_at // empty')"
+          LAST_DISP="$(gh api "repos/$REPO/actions/workflows/identity-guard.yml/runs?event=workflow_dispatch&per_page=1" --jq '.workflow_runs[0].created_at // empty')"
+          LAST="$(printf '%s\n%s\n' "$LAST_SCHED" "$LAST_DISP" | sort -r | head -1)"
+          NOW=$(date -u +%s)
+          if [ -z "$LAST" ]; then
+            AGE=999999; LAST="(none — never fired)"
+          else
+            AGE=$(( NOW - $(date -u -d "$LAST" +%s) ))
+          fi
+          echo "swallow-watch: newest schedule/dispatch identity-guard run = $LAST (age ${AGE}s)"
+          if [ "$AGE" -gt 93600 ]; then
+            gh api -X POST "repos/$REPO/actions/workflows/identity-guard.yml/dispatches" -f ref="$BRANCH"
+            echo "::notice::SWALLOW-WATCH ACTIVATED: identity-guard census silent ${AGE}s (>26h) — dispatched on $BRANCH"
+          else
+            echo "swallow-watch: census alive (age ${AGE}s <= 26h) — no activation needed"
+          fi
