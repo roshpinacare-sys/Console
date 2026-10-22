@@ -52,6 +52,7 @@ concurrency:
 
 jobs:
   guard:
+    if: github.event_name == 'push'   # the guard scans the PUSHED range only — on schedule/dispatch the census pair (silence-sweep + deep-sweep) speaks instead (wave 19.71: the dispatch fallback HEAD~40..HEAD tore on historical debt with false pushed-commits semantics)
     runs-on: ubuntu-latest
     timeout-minutes: 7
     steps:
