@@ -40,6 +40,11 @@ jobs:
           BRANCH: ${{ github.default_branch }}
         run: |
           set -euo pipefail
+          # 19.73 measured on Console: github.default_branch resolved EMPTY at
+          # runtime (env dump 'BRANCH:' empty, dispatch 422 'No ref found for:')
+          # while the API reports main — fall back to the API, then to the literal.
+          BRANCH="${BRANCH:-$(gh api "repos/$REPO" --jq .default_branch)}"
+          BRANCH="${BRANCH:-main}"
           LAST_SCHED="$(gh api "repos/$REPO/actions/workflows/identity-guard.yml/runs?event=schedule&per_page=1" --jq '.workflow_runs[0].created_at // empty')"
           LAST_DISP="$(gh api "repos/$REPO/actions/workflows/identity-guard.yml/runs?event=workflow_dispatch&per_page=1" --jq '.workflow_runs[0].created_at // empty')"
           LAST="$(printf '%s\n%s\n' "$LAST_SCHED" "$LAST_DISP" | sort -r | head -1)"
