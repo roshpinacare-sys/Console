@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-10-24T18:44:24.799Z",
+  "generatedAt": "2026-10-24T22:25:12.618Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -19,7 +19,7 @@
       {
         "account": "acct-00",
         "pages": 250,
-        "anchorOps": 47,
+        "anchorOps": 50,
         "stoppedBy": "budget"
       }
     ]
@@ -27,36 +27,38 @@
   "window": {
     "days": 45,
     "fromCp": 1729,
-    "toCp": 1834,
+    "toCp": 1838,
     "fromAt": "2026-10-21T07:48:21.465Z",
-    "toAt": "2026-10-24T16:45:01.625Z",
-    "spanDays": 3.37
+    "toAt": "2026-10-24T20:42:32.971Z",
+    "spanDays": 3.54
   },
   "verdict": "LIVE",
   "recent": {
     "windowHours": 26,
-    "anchorsInWindow": 15,
+    "anchorsInWindow": 14,
     "maxGapMinutes": 211,
-    "openGapMinutes": 119,
+    "openGapMinutes": 103,
     "verdict": "LIVE"
   },
   "freshness": {
-    "latestAgeHours": 2,
+    "latestAgeHours": 1.7,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 47,
-    "anchorOpsSeen": 47,
-    "retriesDeduped": 0,
+    "uniqueCheckpoints": 49,
+    "anchorOpsSeen": 50,
+    "retriesDeduped": 1,
     "witnesses": {
-      "acct-00": 47
+      "acct-00": 49
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 59,
+      "total": 61,
       "sample": [
+        1837,
+        1835,
         1833,
         1831,
         1825,
@@ -104,19 +106,17 @@
         1755,
         1753,
         1751,
-        1749,
-        1747,
-        1745
+        1749
       ],
       "truncated": true
     }
   },
   "attestations": {
-    "ranges": 47,
-    "covered": 47,
-    "observedSpan": 106,
-    "coverageRatio": 0.443,
-    "holesTotal": 46,
+    "ranges": 49,
+    "covered": 49,
+    "observedSpan": 110,
+    "coverageRatio": 0.445,
+    "holesTotal": 48,
     "holes": [
       {
         "from": 1788,
@@ -247,23 +247,49 @@
     "wideHolesTotal": 0,
     "wideHoles": [],
     "wideUncovered": 0,
-    "sliversTotal": 46,
-    "sliverUncovered": 59,
+    "sliversTotal": 48,
+    "sliverUncovered": 61,
     "state": "HOLED"
   },
   "cadence": {
-    "medianMinutes": 95,
+    "medianMinutes": 98,
     "maxMinutes": 241
   },
   "latest": {
-    "checkpoint": 1834,
-    "root": "0xfcccdd139360c4e98e01e8c569e5d6f67c6e83ddd562b4431d1d071a3bb5821e",
-    "headHash": "0xfcccdd139360c4e98e01e8c569e5d6f67c6e83ddd562b4431d1d071a3bb5821e",
-    "at": "2026-10-24T16:45:01.625Z",
+    "checkpoint": 1838,
+    "root": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
+    "headHash": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
+    "at": "2026-10-24T20:42:32.971Z",
     "witness": "acct-00",
-    "txid": "b4d9a89c19667006eae1d5a1e8bfb003be316a71"
+    "txid": "524112d385fd7ec885a7c029b2f9dad87d320cd8"
   },
   "rows": [
+    {
+      "checkpoint": 1838,
+      "root": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
+      "attFrom": 1896,
+      "attTo": 1896,
+      "attestations": 1896,
+      "headHash": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
+      "commit": "921601d",
+      "at": "2026-10-24T20:42:32.971Z",
+      "txid": "524112d385fd7ec885a7c029b2f9dad87d320cd8",
+      "block": 110725173,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1836,
+      "root": "0x5057571e156d889e0db33b8dc7332080bcb2770942d222346bd9f361c95a7ede",
+      "attFrom": 1894,
+      "attTo": 1894,
+      "attestations": 1894,
+      "headHash": "0x5057571e156d889e0db33b8dc7332080bcb2770942d222346bd9f361c95a7ede",
+      "commit": "47c9eb7",
+      "at": "2026-10-24T18:54:28.012Z",
+      "txid": "900d2874cb7a16be136b842894b02200601f7f05",
+      "block": 110723023,
+      "witness": "acct-00"
+    },
     {
       "checkpoint": 1834,
       "root": "0xfcccdd139360c4e98e01e8c569e5d6f67c6e83ddd562b4431d1d071a3bb5821e",
