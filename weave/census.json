@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-10-24T10:46:53.400Z",
+  "generatedAt": "2026-10-24T15:49:09.298Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -19,7 +19,7 @@
       {
         "account": "acct-00",
         "pages": 250,
-        "anchorOps": 49,
+        "anchorOps": 51,
         "stoppedBy": "budget"
       }
     ]
@@ -27,36 +27,42 @@
   "window": {
     "days": 45,
     "fromCp": 1713,
-    "toCp": 1822,
+    "toCp": 1830,
     "fromAt": "2026-10-20T13:39:42.187Z",
-    "toAt": "2026-10-24T09:15:31.515Z",
-    "spanDays": 3.82
+    "toAt": "2026-10-24T13:34:19.016Z",
+    "spanDays": 4
   },
   "verdict": "IRREGULAR",
   "recent": {
     "windowHours": 26,
-    "anchorsInWindow": 15,
-    "maxGapMinutes": 229,
-    "openGapMinutes": 91,
+    "anchorsInWindow": 14,
+    "maxGapMinutes": 211,
+    "openGapMinutes": 135,
     "verdict": "LIVE"
   },
   "freshness": {
-    "latestAgeHours": 1.5,
+    "latestAgeHours": 2.2,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 49,
-    "anchorOpsSeen": 49,
+    "uniqueCheckpoints": 51,
+    "anchorOpsSeen": 51,
     "retriesDeduped": 0,
     "witnesses": {
-      "acct-00": 49
+      "acct-00": 51
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 61,
+      "total": 67,
       "sample": [
+        1825,
+        1826,
+        1827,
+        1828,
+        1829,
+        1823,
         1821,
         1819,
         1817,
@@ -100,23 +106,17 @@
         1747,
         1745,
         1743,
-        1741,
-        1739,
-        1734,
-        1735,
-        1736,
-        1737,
-        1732
+        1741
       ],
       "truncated": true
     }
   },
   "attestations": {
-    "ranges": 49,
-    "covered": 49,
-    "observedSpan": 110,
-    "coverageRatio": 0.445,
-    "holesTotal": 48,
+    "ranges": 51,
+    "covered": 51,
+    "observedSpan": 118,
+    "coverageRatio": 0.432,
+    "holesTotal": 50,
     "holes": [
       {
         "from": 1772,
@@ -247,8 +247,8 @@
     "wideHolesTotal": 0,
     "wideHoles": [],
     "wideUncovered": 0,
-    "sliversTotal": 48,
-    "sliverUncovered": 61,
+    "sliversTotal": 50,
+    "sliverUncovered": 67,
     "state": "HOLED"
   },
   "cadence": {
@@ -256,14 +256,40 @@
     "maxMinutes": 367
   },
   "latest": {
-    "checkpoint": 1822,
-    "root": "0x738447fe981c82df035b8c3dba1d40ac8404a87c23f108a97533a849edd9db54",
-    "headHash": "0x738447fe981c82df035b8c3dba1d40ac8404a87c23f108a97533a849edd9db54",
-    "at": "2026-10-24T09:15:31.515Z",
+    "checkpoint": 1830,
+    "root": "0x78db758b991d94d49d30c17a73f6b6d28e4e48dc3e355fcc9f2816f765c21f85",
+    "headHash": "0x78db758b991d94d49d30c17a73f6b6d28e4e48dc3e355fcc9f2816f765c21f85",
+    "at": "2026-10-24T13:34:19.016Z",
     "witness": "acct-00",
-    "txid": "1029375ad71ff3b73161ef30da14936e89d0aa46"
+    "txid": "34b57d98e72be4c7833377c9e4e4928b673aa494"
   },
   "rows": [
+    {
+      "checkpoint": 1830,
+      "root": "0x78db758b991d94d49d30c17a73f6b6d28e4e48dc3e355fcc9f2816f765c21f85",
+      "attFrom": 1888,
+      "attTo": 1888,
+      "attestations": 1888,
+      "headHash": "0x78db758b991d94d49d30c17a73f6b6d28e4e48dc3e355fcc9f2816f765c21f85",
+      "commit": "61edb27",
+      "at": "2026-10-24T13:34:19.016Z",
+      "txid": "34b57d98e72be4c7833377c9e4e4928b673aa494",
+      "block": 110716652,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1824,
+      "root": "0x11b41cdc6d132bc86c1b42facf2ae3d6de3e84e928ffa1e497e5c46e8802cd29",
+      "attFrom": 1882,
+      "attTo": 1882,
+      "attestations": 1882,
+      "headHash": "0x11b41cdc6d132bc86c1b42facf2ae3d6de3e84e928ffa1e497e5c46e8802cd29",
+      "commit": "2bccd14",
+      "at": "2026-10-24T12:46:49.758Z",
+      "txid": "4ef2186187fd0c98eb7e916051844457c1bc5dfc",
+      "block": 110715707,
+      "witness": "acct-00"
+    },
     {
       "checkpoint": 1822,
       "root": "0x738447fe981c82df035b8c3dba1d40ac8404a87c23f108a97533a849edd9db54",
