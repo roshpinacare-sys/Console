@@ -1,29 +1,41 @@
 {
   "ok": true,
   "format": "money-watch-v1",
-  "publishedAt": "2026-10-24T22:40:27.395Z",
+  "publishedAt": "2026-10-25T05:05:42.432Z",
   "engine": "Console/agents/money-watch · R39 money path sentinel",
   "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
   "fuel": {
     "ok": true,
     "account": "acct-00",
-    "steem": 5.569,
-    "sbd": 1.31,
-    "sp": 2410.51,
-    "spVests": 3883252.7913740003,
+    "steem": 3.344,
+    "sbd": 0.027,
+    "sp": 2410.56,
+    "spVests": 3883252.3884489997,
     "powerdown": {
       "active": true,
       "rateVests": 0.402925,
       "rateSp": 0,
-      "nextPayout": "2026-10-25T01:40:51",
-      "remainingVests": 1611699
+      "nextPayout": "2026-11-01T01:40:51",
+      "remainingVests": 1208774
     }
   },
-  "landing": null,
+  "landing": {
+    "at": "2026-10-25T05:05:39.732Z",
+    "paymentDue": "2026-10-25T01:40:51",
+    "landedSteem": -2.22,
+    "balanceAfter": 3.344,
+    "note": "payout advanced but inventory did not jump - fuel may already be committed to orders; grid refresh happens at the daily run",
+    "dispatched": true
+  },
   "dispatch": {
-    "attempted": false,
+    "attempted": true,
     "ok": true,
-    "note": "no landing detected — nothing to dispatch"
+    "forPayout": "2026-10-25T01:40:51",
+    "note": "dex-grid dispatched immediately - fuel enters the market within minutes of landing",
+    "twin": {
+      "ok": true,
+      "note": "domain twin dispatched (public minutes - carries the fuel while the private original is quota-dead)"
+    }
   },
   "redemption": {
     "ok": true,
@@ -32,9 +44,9 @@
   },
   "invariant": null,
   "marks": {
-    "steemUsd": 0.04981453,
-    "sbdUsd": 0.488861,
-    "trxUsd": 0.328938
+    "steemUsd": 0.053027,
+    "sbdUsd": 0.488646,
+    "trxUsd": 0.32864
   },
   "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
