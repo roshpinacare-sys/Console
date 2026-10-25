@@ -1,16 +1,16 @@
 {
   "ok": true,
   "format": "money-watch-v1",
-  "publishedAt": "2026-10-25T05:05:42.432Z",
+  "publishedAt": "2026-10-25T11:54:08.473Z",
   "engine": "Console/agents/money-watch · R39 money path sentinel",
   "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
   "fuel": {
     "ok": true,
     "account": "acct-00",
-    "steem": 3.344,
-    "sbd": 0.027,
-    "sp": 2410.56,
-    "spVests": 3883252.3884489997,
+    "steem": 1.127,
+    "sbd": 0.479,
+    "sp": 2410.75,
+    "spVests": 3883490.87853,
     "powerdown": {
       "active": true,
       "rateVests": 0.402925,
@@ -19,23 +19,11 @@
       "remainingVests": 1208774
     }
   },
-  "landing": {
-    "at": "2026-10-25T05:05:39.732Z",
-    "paymentDue": "2026-10-25T01:40:51",
-    "landedSteem": -2.22,
-    "balanceAfter": 3.344,
-    "note": "payout advanced but inventory did not jump - fuel may already be committed to orders; grid refresh happens at the daily run",
-    "dispatched": true
-  },
+  "landing": null,
   "dispatch": {
-    "attempted": true,
+    "attempted": false,
     "ok": true,
-    "forPayout": "2026-10-25T01:40:51",
-    "note": "dex-grid dispatched immediately - fuel enters the market within minutes of landing",
-    "twin": {
-      "ok": true,
-      "note": "domain twin dispatched (public minutes - carries the fuel while the private original is quota-dead)"
-    }
+    "note": "no landing detected — nothing to dispatch"
   },
   "redemption": {
     "ok": true,
@@ -44,9 +32,9 @@
   },
   "invariant": null,
   "marks": {
-    "steemUsd": 0.053027,
-    "sbdUsd": 0.488646,
-    "trxUsd": 0.32864
+    "steemUsd": 0.04975072,
+    "sbdUsd": 0.486264,
+    "trxUsd": 0.328992
   },
   "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
