@@ -1,31 +1,31 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-10-24T22:34:39.138Z",
+  "generatedAt": "2026-10-25T04:53:20.058Z",
   "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
-  "verdict": "AGREE",
+  "verdict": "DIVERGE",
   "ledger": {
     "book": "mirror.json",
-    "generatedAt": "2026-10-24T18:53:49.413Z",
-    "ageHours": 3.7,
+    "generatedAt": "2026-10-25T03:09:19.227Z",
+    "ageHours": 1.7,
     "claims": {
-      "headHash": "0x5057571e156d889e0db33b8dc7332080bcb2770942d222346bd9f361c95a7ede",
-      "checkpoints": 1836,
-      "attestations": 1894
+      "headHash": "0x0b7382501f01fe08132da47e07bfde1bd554e7efe641b4ee2815ab34d3bd71a7",
+      "checkpoints": 1839,
+      "attestations": 1897
     }
   },
   "chain": {
     "book": "weave/census.json",
-    "generatedAt": "2026-10-24T22:25:12.618Z",
-    "ageHours": 0.2,
-    "censusVerdict": "LIVE",
+    "generatedAt": "2026-10-25T04:27:38.552Z",
+    "ageHours": 0.4,
+    "censusVerdict": "IRREGULAR",
     "tilingState": "HOLED",
     "latest": {
       "checkpoint": 1838,
       "root": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
       "headHash": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
-      "at": "2026-10-24T20:42:32.971Z",
+      "at": "2026-10-25T03:10:48.936Z",
       "witness": "acct-00",
-      "txid": "524112d385fd7ec885a7c029b2f9dad87d320cd8"
+      "txid": "5106d0ef177e84299c0fbbd4a2d5a35af3979b1f"
     },
     "claims": {
       "headHash": "0xec2a7bb4125be5c6ffba5fdc24bc1f75146d532b7e29d86a57b5504be678e5ca",
@@ -36,26 +36,26 @@
   "checks": [
     {
       "name": "headHash-witnessed-on-chain",
-      "ledger": "0x5057571e156d889e0db33b8dc7332080bcb2770942d222346bd9f361c95a7ede",
-      "chain": "cp#1836 @2026-10-24T18:54:28.012Z (acct-00)",
-      "match": true
+      "ledger": "0x0b7382501f01fe08132da47e07bfde1bd554e7efe641b4ee2815ab34d3bd71a7",
+      "chain": "not found in census rows",
+      "match": false
     },
     {
       "name": "checkpoints-monotonic",
-      "ledger": 1836,
+      "ledger": 1839,
       "chain": 1838,
-      "delta": 2,
+      "delta": -1,
       "tolerance": "chain ahead up to +60",
-      "match": true
+      "match": false
     },
     {
       "name": "attestations-monotonic",
-      "ledger": 1894,
+      "ledger": 1897,
       "chain": 1896,
-      "delta": 2,
+      "delta": -1,
       "tolerance": "chain ahead up to +60",
-      "match": true
+      "match": false
     }
   ],
-  "mismatches": 0
+  "mismatches": 3
 }
