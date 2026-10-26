@@ -1,41 +1,1310 @@
 {
   "format": "saos-live-v1",
-  "generatedAt": "2026-10-26T21:08:07.154Z",
+  "generatedAt": "2026-10-26T21:45:38.580Z",
   "protocol": "saos.live.v1",
-  "stateRoot": "7023345ea9c65689a8a3f6249d031d9ec51dceecc2dfe39a971e7fa54e7485b5",
+  "stateRoot": "deaaea724f0746f7277ff6de797b3b4979a148069efad3b8b8b235ec7c822e0a",
   "genesis": {
     "done": true,
-    "treasury": "saos1CKtmFmsKpVuGFvqpZew9kPp24MfvFhj5k",
+    "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
     "txid": null,
     "symbol": "SAOS",
     "initialMint": "126682000",
     "maxSupply": "21000000000",
-    "note": "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer headcorner, genesis 2026-09-05)"
+    "note": "initial mint mirrors SAOS-NET v0 verified supply 1:1 (126,682 SAOS, issuer acct-40, genesis 2026-09-05)"
   },
   "state": {
-    "wallets": {},
-    "tokens": {},
-    "balances": {},
-    "supply": {},
-    "claims": {},
+    "wallets": {
+      "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa": {
+        "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+        "nick": "saos-demo"
+      },
+      "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
+        "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+        "nick": "network-treasury"
+      }
+    },
+    "tokens": {
+      "CSBD": {
+        "name": "SAOS credit SBD (custody-backed 1:1)",
+        "decimals": 8,
+        "maxSupply": "900000000000000",
+        "issuer": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
+      },
+      "CSTEEM": {
+        "name": "SAOS credit STEEM (custody-backed 1:1)",
+        "decimals": 8,
+        "maxSupply": "900000000000000",
+        "issuer": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
+      },
+      "SAOS": {
+        "name": "SAOS",
+        "decimals": 3,
+        "maxSupply": "21000000000",
+        "issuer": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
+      }
+    },
+    "balances": {
+      "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa": {
+        "SAOS": "1000000"
+      },
+      "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj": {
+        "SAOS": "125682000",
+        "CSTEEM": "52809700000",
+        "CSBD": "2776857948"
+      }
+    },
+    "supply": {
+      "SAOS": "126682000",
+      "CSTEEM": "52809700000",
+      "CSBD": "2776857948"
+    },
+    "claims": {
+      "1792377809524-d0000003": {
+        "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+        "cur": "USD",
+        "amt": "1",
+        "ref": "demo-e2e-ref-0001",
+        "status": "credited"
+      }
+    },
     "offers": {},
     "cfg": {
-      "addrs": {},
-      "rates": {}
+      "addrs": {
+        "SBD": {
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo"
+        },
+        "STEEM": {
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo"
+        }
+      },
+      "rates": {
+        "SAOS/SBD": {
+          "price": "0.002075"
+        },
+        "SAOS/STEEM": {
+          "price": "0.01934"
+        },
+        "SAOS/USD": {
+          "price": "0.001"
+        },
+        "SAOS/USDC": {
+          "price": "0.001"
+        },
+        "SAOS/USDT": {
+          "price": "0.001"
+        }
+      }
     },
+    "pools": {},
     "rewardsPaid": "0",
-    "treasury": null
+    "treasury": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj"
   },
-  "ops": [],
+  "ops": [
+    {
+      "id": "genesis-saos-treasury",
+      "k": "wallet.create",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "genesis-saos-deploy",
+      "k": "token.deploy",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "genesis-saos-mint",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792376213688-eb3b28a9e4",
+      "k": "cfg.rate",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792376213698-7766470f27",
+      "k": "cfg.rate",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792376213703-38a18ae401",
+      "k": "cfg.rate",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792376213711-256f1f4937",
+      "k": "cfg.rate",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792376213719-6a0c870758",
+      "k": "cfg.rate",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792377012864-d0000001",
+      "k": "wallet.create",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792377809524-d0000003",
+      "k": "deposit.claim",
+      "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792378036380-a31481935fb7",
+      "k": "deposit.credit",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185192-19f5115a",
+      "k": "token.deploy",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185198-5bef7fca",
+      "k": "token.deploy",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185205-08e45124",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185212-c5561d10",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185217-f9015721",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383185223-fab99ec9",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260814-4846eaa2",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260819-f1d9008d",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260822-a5124384",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383260826-33281c3b",
+      "k": "cfg.addr",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383679538-e9f148d0",
+      "k": "token.burn",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792383679548-160dbad1",
+      "k": "token.burn",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792424105805-8b9171e7d300",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792428732168-6b3031c8a0dd",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792442607311-e1f4b8831bc8",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792486463294-37c6bbd1237d",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    },
+    {
+      "id": "1792505016172-9e586c9f69e9",
+      "k": "token.mint",
+      "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+      "at": null,
+      "txid": null
+    }
+  ],
+  "custody": {
+    "custodian": "headcorner",
+    "measured": {
+      "STEEM": "32700000",
+      "SBD": "3800000"
+    },
+    "outstanding": {
+      "CSTEEM": "52809700000",
+      "CSBD": "2776857948"
+    },
+    "verdict": {
+      "CSTEEM": "custody-deficit",
+      "CSBD": "custody-deficit"
+    },
+    "float": {
+      "STEEM": "100",
+      "SBD": "1"
+    }
+  },
+  "net": {
+    "lastScanBlock": 110783731,
+    "lastScanAt": "2026-10-26T21:45:38.580Z",
+    "scanned": 20,
+    "found": 0,
+    "added": 0,
+    "folded": 0,
+    "rejected": 0,
+    "dupes": 0,
+    "relayAdded": 52,
+    "failedBatches": 0,
+    "archive": 52,
+    "window": {
+      "from": 110783712,
+      "to": 110783731
+    },
+    "ms": 43,
+    "notes": [
+      "deep-recovery-pages:548"
+    ],
+    "envs": [
+      {
+        "b": 110561667,
+        "o": 128425,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "genesis-saos-treasury",
+          "k": "wallet.create",
+          "nick": "network-treasury",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "sig": "206931db51e65d3d29221e4d709a2eb62a3d124a1d6fc7e3821bd4bc38d5b50d123c2b1c496a4ae081a7cd6f91f884b2cfcd7aed8a181aad82ce9f4c8d39f20623"
+        }
+      },
+      {
+        "b": 110561667,
+        "o": 128426,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "genesis-saos-deploy",
+          "k": "token.deploy",
+          "symbol": "SAOS",
+          "name": "SAOS",
+          "decimals": 3,
+          "maxSupply": "21000000000",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "sig": "1f0e214eb35a0d2c43d6b98db1f24d5dc79f08b58449b48e5140cdc54de72fd1fc10e3dbb15197f77b08502a99623c01e67f7c3a70eefc7c2c539b254040cdfa8e"
+        }
+      },
+      {
+        "b": 110561667,
+        "o": 128427,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "genesis-saos-mint",
+          "k": "token.mint",
+          "symbol": "SAOS",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "126682000",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "sig": "203ae958ae77a4372221e84b9b63dd197503e48154056a4dd807fc61cd01a0dc3b26441ec5529ffc1b75d9a8d98428e42ec110ac7f231cb286db95a1eb45605cbd"
+        }
+      },
+      {
+        "b": 110561759,
+        "o": 128429,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792376213688-eb3b28a9e4",
+          "k": "cfg.rate",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/USD",
+          "price": "0.001",
+          "sig": "206d7e5ae0926d1090a98f276e6aeee24f0b17f41d2d834b91b1a977e1704dad9a5bdfa74194101130da36fc2489ef1792985b932597454e1218160097ab9423e9"
+        }
+      },
+      {
+        "b": 110561759,
+        "o": 128430,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792376213698-7766470f27",
+          "k": "cfg.rate",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/USDT",
+          "price": "0.001",
+          "sig": "1f5297cd247dbc8a23c7cde3f031de84954ee9d1e0561ce991b3e36a513394e1985c05445a021ed7341421820e62dd26445cb9ca746e754988e3263a3bddd2cf09"
+        }
+      },
+      {
+        "b": 110561759,
+        "o": 128431,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792376213703-38a18ae401",
+          "k": "cfg.rate",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/USDC",
+          "price": "0.001",
+          "sig": "2032f60f66a5680aace922db5646300a61cb8fadb83dc2ec7487fa03ac3a9a985d1e2fbf08c1199f29817c1e026059a7f24b9f4ea77086185ad59f83d0ac9501fb"
+        }
+      },
+      {
+        "b": 110561759,
+        "o": 128432,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792376213711-256f1f4937",
+          "k": "cfg.rate",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/STEEM",
+          "price": "0.01934",
+          "sig": "2056012ff5d8e912fc62b7144fefef364720a97f1850518c394e176a91f2d918bc75cec2f4bcd59fc37ac174d09badd5cb08b00fd69a490ddd7783239deab4689e"
+        }
+      },
+      {
+        "b": 110561759,
+        "o": 128433,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792376213719-6a0c870758",
+          "k": "cfg.rate",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/SBD",
+          "price": "0.002075",
+          "sig": "1f34ef516611ec9f1d682ba31523427400fc6794bf888bc79ef99cd535d4e52c2074e860dcde833458f6b053bfce90717b78b96bac9178448e05ce881293f8384d"
+        }
+      },
+      {
+        "b": 110561997,
+        "o": 128436,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792377012864-d0000001",
+          "k": "wallet.create",
+          "nick": "saos-demo",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "sig": "207e636afa7971e81bbd84541857c91f528febdb4c308d56c8f5900196002dd9f5350617a8e6a7fff2c79fc8468dfea5e019d0c5f5dc4aa35c53c86a33b9352b62"
+        }
+      },
+      {
+        "b": 110562234,
+        "o": 128488,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792377809524-d0000003",
+          "k": "deposit.claim",
+          "cur": "USD",
+          "amt": "1",
+          "ref": "demo-e2e-ref-0001",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "sig": "1f1345386d7c8ad23122c2718a13dcf55f0335f2a6542c85ee3a8b13973b4a1dab412d01a917b989f06f651aa6afa264d4a7c9c26da8ae63d5bef15e2e132a32eb"
+        }
+      },
+      {
+        "b": 110562299,
+        "o": 128494,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792378036380-a31481935fb7",
+          "k": "deposit.credit",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "claimId": "1792377809524-d0000003",
+          "to": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "saos": "1000000",
+          "cur": "USD",
+          "amt": "1",
+          "ref": "demo-e2e-ref-0001",
+          "note": "auto-countersign at published rate",
+          "sig": "1f34c55f900bdeadee31bb327e451e8143aaec085568a196e58e494b293a8630766752b2dc167a5fc9bc54cca93f5ad31642209147424945d419712d90e912f493"
+        }
+      },
+      {
+        "b": 110562409,
+        "o": 128495,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792378415301-dc2291b16c8f",
+          "k": "deposit.credit",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "claimId": "1792377809524-d0000003",
+          "to": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "saos": "1000000",
+          "cur": "USD",
+          "amt": "1",
+          "ref": "demo-e2e-ref-0001",
+          "note": "auto-countersign at published rate",
+          "sig": "1f43795308b6ad2c25e12c0eac7b419115734e61af4bcc5de62fa57aad8db040de01d0623cb7aa3c4d0aa82f04973c0a2fa232ee2eee7265c2e177cc761fd4fa7e"
+        }
+      },
+      {
+        "b": 110563831,
+        "o": 128659,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185192-19f5115a",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.deploy",
+          "symbol": "CSTEEM",
+          "name": "SAOS credit STEEM (custody-backed 1:1)",
+          "decimals": 8,
+          "maxSupply": "900000000000000",
+          "sig": "20472dd6d8ac06347ac5795d07426765243c3de7a64f5bf534e7524d4ea1fd665145dadaefc6a831d4e0689f8b5b9dedadb6f71394a155784a47f76ec41f20f8f6"
+        }
+      },
+      {
+        "b": 110563831,
+        "o": 128660,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185198-5bef7fca",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.deploy",
+          "symbol": "CSBD",
+          "name": "SAOS credit SBD (custody-backed 1:1)",
+          "decimals": 8,
+          "maxSupply": "900000000000000",
+          "sig": "20472eedbf0dd8c38da92489f0542ecee885850fe485dc3a57a150a24b8fd896cf2313b9c34378dc93409b38b814f728465dcb542d1699354eaa5ed369fb9d3fd7"
+        }
+      },
+      {
+        "b": 110563831,
+        "o": 128661,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185205-08e45124",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.mint",
+          "symbol": "CSTEEM",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "50000000000",
+          "sig": "204365df6073f6cfae9c0069b84dca945a20e295b7662393007e6cab833c9a78796620dcaaa896116d416e31ce36862cddcff189f9d6e9b4118289671a338ebd5b"
+        }
+      },
+      {
+        "b": 110563831,
+        "o": 128662,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185212-c5561d10",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.mint",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "266900000",
+          "sig": "20585a0025e144a11dace2b86278124bbd26b6d529a6d9da5b0c5d0e28eaf55bd51af2a8f4ef980e38a9ad7f68bf418b8d686e219b214901b9df5f828438306901"
+        }
+      },
+      {
+        "b": 110563833,
+        "o": 128663,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185217-f9015721",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "cfg.addr",
+          "cur": "STEEM",
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo",
+          "sig": "1f1161cf743a398720959379603f74ae14aec61313c97ec5df4dd8332b9d966e9767850a2a4d3b4caca5706ae24f6c0850f63eed13057c39766101cb4324e18277"
+        }
+      },
+      {
+        "b": 110563833,
+        "o": 128664,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185223-fab99ec9",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "cfg.addr",
+          "cur": "SBD",
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo",
+          "sig": "1f390126b6d92f2a7645ec6f924cadd858e4f1f56b5b5796b9a254c3f0ea56ff0518afe340a93d2989e9a420950a2d86046c1d5578c3dc4268aa44316cc70913f0"
+        }
+      },
+      {
+        "b": 110563833,
+        "o": 128665,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185226-461cd1a8",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.create",
+          "pair": "SAOS/CSTEEM",
+          "feeBps": "30",
+          "sig": "1f7f1e27ac4d7c704362df287c4daf918e404ee12a2bd09eeea210845354e4935338229ee77477545a74ea7577eb30befc6de1804ed3a7b2a4cc9b021dce841ed5"
+        }
+      },
+      {
+        "b": 110563833,
+        "o": 128666,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185230-761428ec",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.create",
+          "pair": "SAOS/CSBD",
+          "feeBps": "30",
+          "sig": "1f08b555dcd255ea2e4f242211266dac7969f33470a6dab302894cb7d082f746470e55743fed0a3d0830d19600708db76b768f809882bef909fec4f8ea527297f9"
+        }
+      },
+      {
+        "b": 110563836,
+        "o": 128667,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185234-a7ed9dbf",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.add",
+          "pair": "SAOS/CSTEEM",
+          "base": "25853154",
+          "quote": "50000000000",
+          "sig": "1f79e70c27a2d34eee2cb0a28e34cd078f2ac2ce36500fa292bbfe379e6a82a41d4240a52accc7794d3a6c5418adc484254bfb275d7d516fbd0bb3f06003e2a057"
+        }
+      },
+      {
+        "b": 110563836,
+        "o": 128668,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185240-aa0507e3",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.add",
+          "pair": "SAOS/CSBD",
+          "base": "1286265",
+          "quote": "266900000",
+          "sig": "1f3d9224a65435309cfd7bae5369c9c7869b6c78273f9c66ad201b196d92c4ed500121522c581a61f3def06009b879a2de80ce034900cf46b6a5fb6990c6d04247"
+        }
+      },
+      {
+        "b": 110563836,
+        "o": 128669,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185245-3fef9d27",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "k": "pool.swap",
+          "pair": "SAOS/CSTEEM",
+          "dir": "SA2C",
+          "amountIn": "400000",
+          "minOut": "721584381",
+          "sig": "1f5d73edb687b43c252840ee1b17a703b5ea842b6318401575954f27c55ef3c0854c72c0e9fc9a2097c8957eed7e630be5eff0a293aeb7a1a46b04a439d10a29dc"
+        }
+      },
+      {
+        "b": 110563836,
+        "o": 128670,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185250-10cc6f28",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "k": "pool.swap",
+          "pair": "SAOS/CSTEEM",
+          "dir": "C2SA",
+          "amountIn": "303825002",
+          "minOut": "152488",
+          "sig": "1f5fc0ffd3e8055e1d3b2ff1c339eb77ee6010ac3faf3fcf5b5775bb456bde04af0608521b3492fa42f4a91ccde4fc9e1e94bf0ddfd88a1305c5d2cb22f891805a"
+        }
+      },
+      {
+        "b": 110563839,
+        "o": 128671,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383185255-1f7cd37c",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "k": "pool.swap",
+          "pair": "SAOS/CSBD",
+          "dir": "SA2C",
+          "amountIn": "50000",
+          "minOut": "9460050",
+          "sig": "203bd2f4c4580af86b05a9ef234b587303cdc2f2b82ca3ee5164d28a85844db3850642105a534a6c70cb63ec1d80bc4bd6dcc65bc7f8da92e1f82bd8e77153865d"
+        }
+      },
+      {
+        "b": 110563854,
+        "o": 128672,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260803-f36e5081",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.deploy",
+          "symbol": "CSTEEM",
+          "name": "SAOS credit STEEM (custody-backed 1:1)",
+          "decimals": 8,
+          "maxSupply": "900000000000000",
+          "sig": "1f2c4dadc86bfac5fdec14206a787efc31381397a70568dc868197e2e192af8f8c4394af0ebd7c548773b809845f7638c5d5c0cdfadf67fde066f5a766bf9578c6"
+        }
+      },
+      {
+        "b": 110563854,
+        "o": 128673,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260809-595ca8e9",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.deploy",
+          "symbol": "CSBD",
+          "name": "SAOS credit SBD (custody-backed 1:1)",
+          "decimals": 8,
+          "maxSupply": "900000000000000",
+          "sig": "1f3f66d54fc480d467a4bda05551bcfb2282a834af0774a8e7fba41a3b06383fc33887ec35345c94e4e06212917e8d848fdaa938e9dc791bc7b03ba8c12d60b735"
+        }
+      },
+      {
+        "b": 110563854,
+        "o": 128674,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260814-4846eaa2",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.mint",
+          "symbol": "CSTEEM",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "50000000000",
+          "sig": "2005ead2a183a641aace26cbaaace29af843f2b8e2b42fe77da25a643c3f1632454bf9130c590ad84441cff4ddaf28c2c91a38428c669608e0e23bf45ac76a89bc"
+        }
+      },
+      {
+        "b": 110563854,
+        "o": 128675,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260819-f1d9008d",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.mint",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "266900000",
+          "sig": "1f122580bdfc0b583c1db3eb562d46d21395da10d5af7fea64074876ad02afd08533fac50dd9b8f91b446deb232383e9874ffbcd0f0236b886520ec0ec723dcf73"
+        }
+      },
+      {
+        "b": 110563857,
+        "o": 128676,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260822-a5124384",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "cfg.addr",
+          "cur": "STEEM",
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo",
+          "sig": "1f145dd605c5e0d70d67852417fee6a99c88513158ccc364e3216d303e2f0883c73e2a949475107668ce28d103e35c4c238eb233cfaeedb86e3168a15a0496033c"
+        }
+      },
+      {
+        "b": 110563857,
+        "o": 128677,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260826-33281c3b",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "cfg.addr",
+          "cur": "SBD",
+          "addr": "headcorner",
+          "memo": "saos:<claimId> — put your claim id in the memo",
+          "sig": "1f642c087968256dfd8a27fbecc2c19aa307a92652e425123b9335ac51d601f8707a16f43ae687fcfd94142a3233392c4433c6a06034cadb7b6fb139d4875df399"
+        }
+      },
+      {
+        "b": 110563857,
+        "o": 128678,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260836-8f659eae",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.create",
+          "pair": "SAOS/CSTEEM",
+          "feeBps": "30",
+          "sig": "1f5746824dd156e388acd9c452db834c13aec3e008f8fea5cae05d49bb768d0f214aa22a5e86398a30e330c76825fe94d3ddafca6b70f44275207e30519e1121b8"
+        }
+      },
+      {
+        "b": 110563857,
+        "o": 128679,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260839-7615ba97",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.create",
+          "pair": "SAOS/CSBD",
+          "feeBps": "30",
+          "sig": "1f20e04e9fc19a2055b674936a21be068a54862ebffb2b114d404f00ef4cf065074a1bad336ca21de2da7de891b1d7a27f74db32ba3cb0a4b960a6d829a42ae372"
+        }
+      },
+      {
+        "b": 110563860,
+        "o": 128680,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260848-35ffabd2",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.add",
+          "pair": "SAOS/CSTEEM",
+          "base": "25853154",
+          "quote": "50000000000",
+          "sig": "1f51095d7f9d5eb21a2047b1c66170a43017978c5be905184e5d5c9ea8863406ef4fb459eb8b985d04a62769dc8a4557f23d27119c901f742c7bf80f9f4ab40a62"
+        }
+      },
+      {
+        "b": 110563860,
+        "o": 128681,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260853-a80dc2d9",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.add",
+          "pair": "SAOS/CSBD",
+          "base": "1286265",
+          "quote": "266900000",
+          "sig": "205e3fa46048373b80afcfd542ae85827090a891b6bf47af620ac256973664bca47d520b792a39eb8ba508b19f48f92f165b1fcee4b75ddbf0a95fc7e3afd81a92"
+        }
+      },
+      {
+        "b": 110563860,
+        "o": 128682,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260858-03dc10b4",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "k": "pool.swap",
+          "pair": "SAOS/CSTEEM",
+          "dir": "SA2C",
+          "amountIn": "400000",
+          "minOut": "721584381",
+          "sig": "1f460a0eb898b91cb500eda1099a1bd3e9574fe65e0bdb88ed9c98f3b96b67e6b015018dda678aad7f070c808c3bdb7bd1b85ffbcbc98c8d9be0135cff35813f36"
+        }
+      },
+      {
+        "b": 110563860,
+        "o": 128683,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260861-89b44566",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "k": "pool.swap",
+          "pair": "SAOS/CSTEEM",
+          "dir": "C2SA",
+          "amountIn": "303825002",
+          "minOut": "152488",
+          "sig": "1f2b0050aa9f20ce4d1cf52a331fcdcf0581a3b2e816b78776f60ff170ba18e92757396d56f1bdd873fc513add836581bba98844d9b6f0b67987f4937830349835"
+        }
+      },
+      {
+        "b": 110563862,
+        "o": 128684,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383260864-f14ffa56",
+          "by": "saos17XCRiMgxCrqo4juZuVGhVbvh8pWpZrZaa",
+          "pub": "STM6oQGJZFaTcU1WSyWZbzMNCTsbfLrtByQuG98jMuetNNhVoxkVt",
+          "k": "pool.swap",
+          "pair": "SAOS/CSBD",
+          "dir": "SA2C",
+          "amountIn": "50000",
+          "minOut": "9460050",
+          "sig": "1f56611ff2b941cad0013c125a202d44f01a2ed4a4689ccc371d61685c1b7321022ac18aa5e40dcb5afd752424e88c4372bbeb7fdd30e00f635db71d2a7f4a0b8e"
+        }
+      },
+      {
+        "b": 110563975,
+        "o": 128685,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383679530-87264674",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.remove",
+          "pair": "SAOS/CSTEEM",
+          "lp": "1080234781",
+          "sig": "20598baf8961d3174c790007fbb6e7b3be3d706349e1590e379c85b4db3ba4630843e40f6fb7266a2e43fe47bf31bd6dfc44b4a3333f58cd7227c3f582accf089a"
+        }
+      },
+      {
+        "b": 110563975,
+        "o": 128686,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383679538-e9f148d0",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.burn",
+          "symbol": "CSTEEM",
+          "amount": "47190300000",
+          "sig": "201c31d3057f1dd4a0728b0aef724caebe4eb8f7bdcd45f7cec6a0442c4c0b9ca66ddcff96b13229a6229ef0d19f6af5feeccc6faa60a8e0655474120f288c7cb2"
+        }
+      },
+      {
+        "b": 110563975,
+        "o": 128687,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383679544-9abcb20d",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "pool.remove",
+          "pair": "SAOS/CSBD",
+          "lp": "18528468",
+          "sig": "1f3353c0b49250b114134b81eea852c58868a28ab2a4c5861446dd05b0aa56c084640b758f64ce1c15a9c26b69668904173f19b537655f3a1aabf5686c0da941a6"
+        }
+      },
+      {
+        "b": 110563975,
+        "o": 128688,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792383679548-160dbad1",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "k": "token.burn",
+          "symbol": "CSBD",
+          "amount": "256942052",
+          "sig": "2064f135925833c751c0983fdf0b1e8f49b9b2af070ff863e688818d411942cdc46291f1b7c93d01d119d0ac901cbf642ec15e00d8e9f4d868e36336c98d66e4ce"
+        }
+      },
+      {
+        "b": 110576501,
+        "o": 137538,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792424105805-8b9171e7d300",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "204958995f1095ab4347a4e6786a9ef16508bf16e7bb3b6ca8579ffa42223c22522aed58581ab889f8391894968c19b5ce49f84ebf12ed9fe39fd4ad08c8b0973b"
+        }
+      },
+      {
+        "b": 110576501,
+        "o": 137539,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792424105805-8e634137da48",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "1f03f9f0adf3bafee3f301e6ebc4723205e6bbab4da69c1c19de7abacadb042fad3f9cc138d4a8507834e66dc77bb7fbcd6a2c9b499a9c67387abaeaf0e9bf2c41"
+        }
+      },
+      {
+        "b": 110577955,
+        "o": 137581,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792428732168-6b3031c8a0dd",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "2008ef0251e65bb194d99ed383e6e48b783f49f4fb4817323ab63637633bdfe4ea460e9bc1026e104c78feedcfdcdb243899939b9925d767d19c2235e913e7a509"
+        }
+      },
+      {
+        "b": 110577955,
+        "o": 137582,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792428732168-0b89f0754f9c",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "1f633123d889dd0a3c1dca75bd00261575ac74d1d8083dd21b8787b9614d57a5d309636edcf0aa5c31a6abe21ffae5c946e9351d9ac3791e57db00df4f0b71dc4b"
+        }
+      },
+      {
+        "b": 110582321,
+        "o": 138125,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792442607311-e1f4b8831bc8",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "20343625e50f275c8401aa48f0ab3ffe47327ad61c2395af4d70d939ba854cf692749705fcb162ce811e6503a77029d8b9cf995f29d3414acc3837869ac8fe2c7a"
+        }
+      },
+      {
+        "b": 110582321,
+        "o": 138126,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792442607311-246835a27d30",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "1f25cb5bbe55c8b8556f941de4017ba2c8959aff331faa0c3db5ce1ef58d8e04b32681d02be1f2b599b85126b5bf542cd4bb63a255e55d065b41b3347e93c45ffd"
+        }
+      },
+      {
+        "b": 110596612,
+        "o": 146167,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792486463294-37c6bbd1237d",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "20600d455798fe3ec812d27ce34ad8b47b8f0b25b3e1aba2c2ecad1bf1e457fe4f6c75c32754903ac0395b795966b5bc86c84277ddad00c3dd66e760c9c1fac464"
+        }
+      },
+      {
+        "b": 110596612,
+        "o": 146168,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792486463294-8fbaad63b8ae",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "2070cc5ca13a5c3c4063e86084bd85372a93997a515c6967e9ab33abc8f349d3573e8bc1b9359f163229e929c078cacc8e71029f9d8d170b235ffa7ad5692662e5"
+        }
+      },
+      {
+        "b": 110602735,
+        "o": 149577,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792505016172-9e586c9f69e9",
+          "k": "token.mint",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "symbol": "CSBD",
+          "to": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "amount": "500000000",
+          "sig": "2041f23d1e686c813eb929eb4d252d4a98ccf74e63160e61f394e8b9b4d3890e0e668975c4486d3cc914ea597a76188544f44b76ce977b8ad36c4e1138bffaa174"
+        }
+      },
+      {
+        "b": 110602735,
+        "o": 149578,
+        "src": "r",
+        "e": {
+          "v": 1,
+          "id": "1792505016172-a71b7e35db77",
+          "k": "pool.add",
+          "by": "saos1BahoyBxUi4fvFcJHo7f953aFrUkVugDsj",
+          "pub": "STM8UT9BypjZbyibeh1ZQQrqZLA5eBYC14qg7L7VpqbxFA9QjhCXP",
+          "pair": "SAOS/CSBD",
+          "base": "2409638",
+          "quote": "500000000",
+          "sig": "1f74d7c6b9d679a6f4101db0841be6158506466b193fe2d8cff8ed4b4a905687de71d720d7cd0b62f5e45d77f2582156631d0726039c50ce0e5186a6d73def8aef"
+        }
+      }
+    ]
+  },
   "relay": {
     "url": null,
     "queued": 0,
-    "lastFlush": "תור-הריליי פנוי"
+    "lastFlush": "relay-queue-open"
   },
-  "invalid": [],
+  "invalid": [
+    {
+      "id": "1792378415301-dc2291b16c8f",
+      "k": "deposit.credit",
+      "err": "claim-not-pending"
+    },
+    {
+      "id": "1792383185226-461cd1a8",
+      "k": "pool.create",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383185230-761428ec",
+      "k": "pool.create",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383185234-a7ed9dbf",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383185240-aa0507e3",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383185245-3fef9d27",
+      "k": "pool.swap",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383185250-10cc6f28",
+      "k": "pool.swap",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383185255-1f7cd37c",
+      "k": "pool.swap",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260803-f36e5081",
+      "k": "token.deploy",
+      "err": "symbol-taken"
+    },
+    {
+      "id": "1792383260809-595ca8e9",
+      "k": "token.deploy",
+      "err": "symbol-taken"
+    },
+    {
+      "id": "1792383260836-8f659eae",
+      "k": "pool.create",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260839-7615ba97",
+      "k": "pool.create",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260848-35ffabd2",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260853-a80dc2d9",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260858-03dc10b4",
+      "k": "pool.swap",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260861-89b44566",
+      "k": "pool.swap",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383260864-f14ffa56",
+      "k": "pool.swap",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383679530-87264674",
+      "k": "pool.remove",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792383679544-9abcb20d",
+      "k": "pool.remove",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792424105805-8e634137da48",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792428732168-0b89f0754f9c",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792442607311-246835a27d30",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792486463294-8fbaad63b8ae",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    },
+    {
+      "id": "1792505016172-a71b7e35db77",
+      "k": "pool.add",
+      "err": "unknown-kind"
+    }
+  ],
   "verify": {
-    "replayed": 0,
-    "valid": 0,
+    "replayed": 52,
+    "valid": 28,
     "readFrom": "api.steemit.com",
     "engine": "console/saos-live.js (same code as every browser)"
   },
