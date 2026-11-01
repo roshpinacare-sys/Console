@@ -1,61 +1,61 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-10-31T23:27:33.604Z",
+  "generatedAt": "2026-11-01T06:21:48.362Z",
   "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
-  "verdict": "AGREE",
+  "verdict": "DIVERGE",
   "ledger": {
     "book": "mirror.json",
-    "generatedAt": "2026-10-31T20:08:35.248Z",
-    "ageHours": 3.3,
+    "generatedAt": "2026-11-01T04:13:15.020Z",
+    "ageHours": 2.1,
     "claims": {
-      "headHash": "0x88ac67a793adb714deca19cf206ef7a675334f799180ccb96568b9ece09e3a55",
-      "checkpoints": 1904,
-      "attestations": 1962
+      "headHash": "0x5d6a767e719625390160e7bfec5f9ee84982327d001fdc804024fce2d6fc45ac",
+      "checkpoints": 1915,
+      "attestations": 1973
     }
   },
   "chain": {
     "book": "weave/census.json",
-    "generatedAt": "2026-10-31T23:17:29.014Z",
-    "ageHours": 0.2,
+    "generatedAt": "2026-11-01T05:48:18.017Z",
+    "ageHours": 0.6,
     "censusVerdict": "IRREGULAR",
     "tilingState": "HOLED",
     "latest": {
-      "checkpoint": 1908,
-      "root": "0x3c2cd4f27664ed52d156e5fddb54f6b7608b96bd12b74b7a7f1ba3d8c66e8add",
-      "headHash": "0x3c2cd4f27664ed52d156e5fddb54f6b7608b96bd12b74b7a7f1ba3d8c66e8add",
-      "at": "2026-10-31T22:35:07.364Z",
+      "checkpoint": 1914,
+      "root": "0x2ca00fa2c18e494789e4d5ada5996909868e378f1b9f6c4055cea0e59b37a6f9",
+      "headHash": "0x2ca00fa2c18e494789e4d5ada5996909868e378f1b9f6c4055cea0e59b37a6f9",
+      "at": "2026-11-01T04:13:47.884Z",
       "witness": "acct-00",
-      "txid": "dbb64d29b44d2d7e668afc92b43f6c5e7442da84"
+      "txid": "6a5129dedf2ad9b62a759db51d3c5be6fcab3227"
     },
     "claims": {
-      "headHash": "0x3c2cd4f27664ed52d156e5fddb54f6b7608b96bd12b74b7a7f1ba3d8c66e8add",
-      "checkpoints": 1908,
-      "attestations": 1966
+      "headHash": "0x2ca00fa2c18e494789e4d5ada5996909868e378f1b9f6c4055cea0e59b37a6f9",
+      "checkpoints": 1914,
+      "attestations": 1972
     }
   },
   "checks": [
     {
       "name": "headHash-witnessed-on-chain",
-      "ledger": "0x88ac67a793adb714deca19cf206ef7a675334f799180ccb96568b9ece09e3a55",
-      "chain": "cp#1904 @2026-10-31T20:09:08.640Z (acct-00)",
-      "match": true
+      "ledger": "0x5d6a767e719625390160e7bfec5f9ee84982327d001fdc804024fce2d6fc45ac",
+      "chain": "not found in census rows",
+      "match": false
     },
     {
       "name": "checkpoints-monotonic",
-      "ledger": 1904,
-      "chain": 1908,
-      "delta": 4,
+      "ledger": 1915,
+      "chain": 1914,
+      "delta": -1,
       "tolerance": "chain ahead up to +60",
-      "match": true
+      "match": false
     },
     {
       "name": "attestations-monotonic",
-      "ledger": 1962,
-      "chain": 1966,
-      "delta": 4,
+      "ledger": 1973,
+      "chain": 1972,
+      "delta": -1,
       "tolerance": "chain ahead up to +60",
-      "match": true
+      "match": false
     }
   ],
-  "mismatches": 0
+  "mismatches": 3
 }
