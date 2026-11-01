@@ -92,13 +92,21 @@ const TARGETS = [
   // not a cadence.
   { repo: 'Console', wf: 'truth-gate.yml',         slaMin: 90,  why: 'site truth machine; cron diluted + workflow_run anchor added (G63); backstop 90min' },
   { repo: 'Domain',  wf: 'agent9-fleet-truth.yml', slaMin: 90,  why: 'pages fleet-truth baker; alive via dispatch, backstop tightened 130→90 (G63)' },
-  // FleetHQ self-watch (same-repo; the self-healers must not be the single quiet point)
-  { repo: 'FleetHQ',   wf: 'opens-closer.yml',      slaMin: 40,  why: 'beacon/office reviver' },
-  { repo: 'FleetHQ',   wf: 'silence-watchdog.yml',  slaMin: 40,  why: 'alarm channel' },
-  { repo: 'FleetHQ',   wf: 'office-heartbeat.yml',  slaMin: 260, why: 'cadence 120' },
+  // money plane (2026-11-01, beat agent): money.json is the money-path sentinel page
+  // the silence-watchdog measures (240min limit). Measured reality 10-30..11-01:
+  // the 2h (:33) cron dilutes to 5-7h gaps on this host (runs 13:17→19:34→23:56→
+  // 06:05→12:55→18:40→23:31→06:34) — the alarm then fires while the artery itself
+  // is healthy. It rides the pacemaker: ignite when age > 260min (2x nominal +
+  // jitter guard), same law as the income plane.
+  { repo: 'Console', wf: 'money-watch.yml', slaMin: 260, why: 'money-path sentinel; 2h cron diluted to 5-7h (measured 10-30..11-01); watchdog limit 240min' },
+  // FleetHQ self-watch — RETIRED 2026-11-01: the 10-28 consolidation (2ba3c5f,
+  // 21→4 workflows) deleted silence-watchdog / office-heartbeat / opens-closer /
+  // the FleetHQ pacemaker instance. The dead targets burned ignition budget every
+  // cycle on 404s (measured: beats.jsonl ignited=[] while budget bled). Their
+  // functions live on: alarms → Autonomy/artery-watch; revivals → the arteries
+  // themselves; meta-voice → the Console instance below.
   // meta-voice: this pacemaker watches itself; GridWatch's ACT layer (once alive)
   // will also re-ignite it if it ever goes stale — mutual watch, no single point.
-  { repo: 'FleetHQ',   wf: 'runtime-pacemaker.yml', slaMin: 40,  why: 'meta-voice' },
   { repo: 'Console',   wf: 'runtime-pacemaker.yml', slaMin: 40,  why: 'second-host meta-voice' },
 ];
 
