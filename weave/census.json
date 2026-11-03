@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-11-02T23:25:30.027Z",
+  "generatedAt": "2026-11-03T06:28:57.484Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -19,7 +19,7 @@
       {
         "account": "acct-00",
         "pages": 250,
-        "anchorOps": 160,
+        "anchorOps": 165,
         "stoppedBy": "budget"
       }
     ]
@@ -27,36 +27,41 @@
   "window": {
     "days": 45,
     "fromCp": 1752,
-    "toCp": 1962,
+    "toCp": 1972,
     "fromAt": "2026-10-22T01:37:45.452Z",
-    "toAt": "2026-11-02T22:21:10.815Z",
-    "spanDays": 11.86
+    "toAt": "2026-11-03T02:35:20.312Z",
+    "spanDays": 12.04
   },
   "verdict": "IRREGULAR",
   "recent": {
     "windowHours": 26,
-    "anchorsInWindow": 12,
-    "maxGapMinutes": 267,
-    "openGapMinutes": 64,
+    "anchorsInWindow": 14,
+    "maxGapMinutes": 234,
+    "openGapMinutes": 234,
     "verdict": "LIVE"
   },
   "freshness": {
-    "latestAgeHours": 1.1,
+    "latestAgeHours": 3.9,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 93,
-    "anchorOpsSeen": 160,
+    "uniqueCheckpoints": 98,
+    "anchorOpsSeen": 165,
     "retriesDeduped": 67,
     "witnesses": {
-      "acct-00": 93
+      "acct-00": 98
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 118,
+      "total": 123,
       "sample": [
+        1971,
+        1969,
+        1967,
+        1965,
+        1963,
         1961,
         1959,
         1957,
@@ -101,22 +106,17 @@
         1888,
         1886,
         1884,
-        1882,
-        1880,
-        1878,
-        1876,
-        1874,
-        1872
+        1882
       ],
       "truncated": true
     }
   },
   "attestations": {
-    "ranges": 93,
-    "covered": 93,
-    "observedSpan": 211,
-    "coverageRatio": 0.441,
-    "holesTotal": 92,
+    "ranges": 98,
+    "covered": 98,
+    "observedSpan": 221,
+    "coverageRatio": 0.443,
+    "holesTotal": 97,
     "holes": [
       {
         "from": 1811,
@@ -247,23 +247,88 @@
     "wideHolesTotal": 0,
     "wideHoles": [],
     "wideUncovered": 0,
-    "sliversTotal": 92,
-    "sliverUncovered": 118,
+    "sliversTotal": 97,
+    "sliverUncovered": 123,
     "state": "HOLED"
   },
   "cadence": {
-    "medianMinutes": 100,
+    "medianMinutes": 96.90986666666667,
     "maxMinutes": 6866
   },
   "latest": {
-    "checkpoint": 1962,
-    "root": "0x0fcae255292f73abcdb47c7fe4b52d2efe0ca886bd3ac62c6acf2673f59e46f6",
-    "headHash": "0x0fcae255292f73abcdb47c7fe4b52d2efe0ca886bd3ac62c6acf2673f59e46f6",
-    "at": "2026-11-02T22:21:10.815Z",
+    "checkpoint": 1972,
+    "root": "0x3aecb529ec347893546196d855135f27436e274d67752618d933259f5195dbe8",
+    "headHash": "0x3aecb529ec347893546196d855135f27436e274d67752618d933259f5195dbe8",
+    "at": "2026-11-03T02:35:20.312Z",
     "witness": "acct-00",
-    "txid": "6b3a5847237b0a122f6216c3cc3423495472e378"
+    "txid": "cdc271fa9e41bd2bad78c03fa67628d091c4f038"
   },
   "rows": [
+    {
+      "checkpoint": 1972,
+      "root": "0x3aecb529ec347893546196d855135f27436e274d67752618d933259f5195dbe8",
+      "attFrom": 2030,
+      "attTo": 2030,
+      "attestations": 2030,
+      "headHash": "0x3aecb529ec347893546196d855135f27436e274d67752618d933259f5195dbe8",
+      "commit": "a6bbdab",
+      "at": "2026-11-03T02:35:20.312Z",
+      "txid": "cdc271fa9e41bd2bad78c03fa67628d091c4f038",
+      "block": 110990108,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1970,
+      "root": "0xa26ff4f7e022fb020acbe2f91dbccbdc3221b78cf9541847cdf75ad1f04e10f7",
+      "attFrom": 2028,
+      "attTo": 2028,
+      "attestations": 2028,
+      "headHash": "0xa26ff4f7e022fb020acbe2f91dbccbdc3221b78cf9541847cdf75ad1f04e10f7",
+      "commit": "66705de",
+      "at": "2026-11-03T01:40:19.999Z",
+      "txid": "681f608dfe55235224be89b7a4c70fb7fb6a3e07",
+      "block": 110989012,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1968,
+      "root": "0x70a0483136695f33bed09e1bfa653eaf5c5e17121f7c689f0ea08e92a676abe4",
+      "attFrom": 2026,
+      "attTo": 2026,
+      "attestations": 2026,
+      "headHash": "0x70a0483136695f33bed09e1bfa653eaf5c5e17121f7c689f0ea08e92a676abe4",
+      "commit": "3f2919f",
+      "at": "2026-11-03T00:54:37.132Z",
+      "txid": "fe7507779a53c09c602a4b551f9478853a047fff",
+      "block": 110988101,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1966,
+      "root": "0x0ed7f5d50756e71af522f43c79f159a43b0ce16a6b9a4674952f2a166443396f",
+      "attFrom": 2024,
+      "attTo": 2024,
+      "attestations": 2024,
+      "headHash": "0x0ed7f5d50756e71af522f43c79f159a43b0ce16a6b9a4674952f2a166443396f",
+      "commit": "155c366",
+      "at": "2026-11-03T00:02:37.976Z",
+      "txid": "79ab3d23107846b9518656c4b4673f592cf27a67",
+      "block": 110987067,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 1964,
+      "root": "0x0b8212e7938322d1ad1eb0722903b01fcdfad9b8a84370c5506b41dbdc790eee",
+      "attFrom": 2022,
+      "attTo": 2022,
+      "attestations": 2022,
+      "headHash": "0x0b8212e7938322d1ad1eb0722903b01fcdfad9b8a84370c5506b41dbdc790eee",
+      "commit": "a702fda",
+      "at": "2026-11-02T23:25:52.526Z",
+      "txid": "76be81a78e63836422f5d5ef80d880b774850a1b",
+      "block": 110986338,
+      "witness": "acct-00"
+    },
     {
       "checkpoint": 1962,
       "root": "0x0fcae255292f73abcdb47c7fe4b52d2efe0ca886bd3ac62c6acf2673f59e46f6",
@@ -977,71 +1042,6 @@
       "at": "2026-10-29T13:20:07.075Z",
       "txid": "d931e54d5058c47f2ca0a05c5e56f0a8f7f98efd",
       "block": 110859651,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1836,
-      "root": "0x5057571e156d889e0db33b8dc7332080bcb2770942d222346bd9f361c95a7ede",
-      "attFrom": 1894,
-      "attTo": 1894,
-      "attestations": 1894,
-      "headHash": "0x5057571e156d889e0db33b8dc7332080bcb2770942d222346bd9f361c95a7ede",
-      "commit": "47c9eb7",
-      "at": "2026-10-24T18:54:28.012Z",
-      "txid": "900d2874cb7a16be136b842894b02200601f7f05",
-      "block": 110723023,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1834,
-      "root": "0xfcccdd139360c4e98e01e8c569e5d6f67c6e83ddd562b4431d1d071a3bb5821e",
-      "attFrom": 1892,
-      "attTo": 1892,
-      "attestations": 1892,
-      "headHash": "0xfcccdd139360c4e98e01e8c569e5d6f67c6e83ddd562b4431d1d071a3bb5821e",
-      "commit": "8610a67",
-      "at": "2026-10-24T16:45:01.625Z",
-      "txid": "b4d9a89c19667006eae1d5a1e8bfb003be316a71",
-      "block": 110720442,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1832,
-      "root": "0x47fe68f93dd8d1163447306abf026fd733cea87eadbabe79b5dbd35edddf9b67",
-      "attFrom": 1890,
-      "attTo": 1890,
-      "attestations": 1890,
-      "headHash": "0x47fe68f93dd8d1163447306abf026fd733cea87eadbabe79b5dbd35edddf9b67",
-      "commit": "5202159",
-      "at": "2026-10-24T16:43:08.844Z",
-      "txid": "ff085b6b64f3bfdf201daccc64bee4c3cc54745a",
-      "block": 110720405,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1830,
-      "root": "0x78db758b991d94d49d30c17a73f6b6d28e4e48dc3e355fcc9f2816f765c21f85",
-      "attFrom": 1888,
-      "attTo": 1888,
-      "attestations": 1888,
-      "headHash": "0x78db758b991d94d49d30c17a73f6b6d28e4e48dc3e355fcc9f2816f765c21f85",
-      "commit": "61edb27",
-      "at": "2026-10-24T13:34:19.016Z",
-      "txid": "34b57d98e72be4c7833377c9e4e4928b673aa494",
-      "block": 110716652,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 1824,
-      "root": "0x11b41cdc6d132bc86c1b42facf2ae3d6de3e84e928ffa1e497e5c46e8802cd29",
-      "attFrom": 1882,
-      "attTo": 1882,
-      "attestations": 1882,
-      "headHash": "0x11b41cdc6d132bc86c1b42facf2ae3d6de3e84e928ffa1e497e5c46e8802cd29",
-      "commit": "2bccd14",
-      "at": "2026-10-24T12:46:49.758Z",
-      "txid": "4ef2186187fd0c98eb7e916051844457c1bc5dfc",
-      "block": 110715707,
       "witness": "acct-00"
     }
   ]
