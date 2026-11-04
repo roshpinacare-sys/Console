@@ -377,14 +377,14 @@
     },
     {
       "date": "2026-11-04",
-      "runs": 23,
-      "allGreen": 23,
-      "g1Pass": 23,
-      "g1Runs": 23,
-      "g2Pass": 23,
-      "g2Runs": 23,
-      "g3Pass": 23,
-      "g3Runs": 23
+      "runs": 24,
+      "allGreen": 24,
+      "g1Pass": 24,
+      "g1Runs": 24,
+      "g2Pass": 24,
+      "g2Runs": 24,
+      "g3Pass": 24,
+      "g3Runs": 24
     }
   ],
   "events": [
@@ -399,10 +399,16 @@
       "slo": "heartbeat",
       "type": "BUDGET-BREACH",
       "detail": "consumed 276.44% · 149 bad of 539 attributed runs"
+    },
+    {
+      "at": "2026-11-04T20:59:44.984Z",
+      "slo": "link-integrity",
+      "type": "BUDGET-RECOVERED",
+      "detail": "consumed 100% · 4 bad of 400 attributed runs"
     }
   ],
   "dataSince": "2026-09-19T11:01:02.561Z",
-  "generatedAt": "2026-11-04T20:07:26.504Z",
+  "generatedAt": "2026-11-04T20:59:44.984Z",
   "generator": "truth-gate-ci",
   "windowDays": 30,
   "targets": [
@@ -429,8 +435,8 @@
   ],
   "window": {
     "daysCounted": 30,
-    "runs": 400,
-    "allGreen": 390,
+    "runs": 401,
+    "allGreen": 391,
     "expectedRuns": 717,
     "fillPct": 100
   },
@@ -440,10 +446,10 @@
       "gate": "G1-site-up",
       "target": "99%",
       "measured": 99.75,
-      "good": 399,
-      "total": 400,
-      "budgetAllowed": 4,
-      "budgetConsumedPct": 25,
+      "good": 400,
+      "total": 401,
+      "budgetAllowed": 4.01,
+      "budgetConsumedPct": 24.94,
       "state": "OK"
     },
     {
@@ -451,20 +457,20 @@
       "gate": "G2-zero-broken-links",
       "target": "99%",
       "measured": 99,
-      "good": 395,
-      "total": 399,
-      "budgetAllowed": 3.99,
-      "budgetConsumedPct": 100.25,
-      "state": "BREACHED"
+      "good": 396,
+      "total": 400,
+      "budgetAllowed": 4,
+      "budgetConsumedPct": 100,
+      "state": "OK"
     },
     {
       "id": "freshness",
       "gate": "G3-witness-freshness",
       "target": "99%",
       "measured": 100,
-      "good": 400,
-      "total": 400,
-      "budgetAllowed": 4,
+      "good": 401,
+      "total": 401,
+      "budgetAllowed": 4.01,
       "budgetConsumedPct": 0,
       "state": "OK"
     },
