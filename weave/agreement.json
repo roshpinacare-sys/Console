@@ -1,13 +1,61 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-11-05T16:32:32.271Z",
-  "verdict": "CENSUS-STALE",
-  "note": "census book is 7.2h old (> 3h) — agreement refuses to judge on a dead measurement",
+  "generatedAt": "2026-11-05T23:41:36.873Z",
+  "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
+  "verdict": "AGREE",
   "ledger": {
-    "ageHours": 4
+    "book": "mirror.json",
+    "generatedAt": "2026-11-05T22:08:37.076Z",
+    "ageHours": 1.5,
+    "claims": {
+      "headHash": "0x6dd0ebf18a9f3f6e1b5a6e5aeec745b92e23c8bf7f99516e5371859f79f82f7d",
+      "checkpoints": 2028,
+      "attestations": 2086
+    }
   },
-  "census": {
-    "ageHours": 7.2
+  "chain": {
+    "book": "weave/census.json",
+    "generatedAt": "2026-11-05T23:32:49.530Z",
+    "ageHours": 0.1,
+    "censusVerdict": "IRREGULAR",
+    "tilingState": "HOLED",
+    "latest": {
+      "checkpoint": 2028,
+      "root": "0x6dd0ebf18a9f3f6e1b5a6e5aeec745b92e23c8bf7f99516e5371859f79f82f7d",
+      "headHash": "0x6dd0ebf18a9f3f6e1b5a6e5aeec745b92e23c8bf7f99516e5371859f79f82f7d",
+      "at": "2026-11-05T22:09:16.905Z",
+      "witness": "acct-00",
+      "txid": "c763120a1d090e790d970ba35bc07cd43c3df70e"
+    },
+    "claims": {
+      "headHash": "0x6dd0ebf18a9f3f6e1b5a6e5aeec745b92e23c8bf7f99516e5371859f79f82f7d",
+      "checkpoints": 2028,
+      "attestations": 2086
+    }
   },
-  "checks": []
+  "checks": [
+    {
+      "name": "headHash-witnessed-on-chain",
+      "ledger": "0x6dd0ebf18a9f3f6e1b5a6e5aeec745b92e23c8bf7f99516e5371859f79f82f7d",
+      "chain": "cp#2028 @2026-11-05T22:09:16.905Z (acct-00)",
+      "match": true
+    },
+    {
+      "name": "checkpoints-monotonic",
+      "ledger": 2028,
+      "chain": 2028,
+      "delta": 0,
+      "tolerance": "chain ahead up to +60",
+      "match": true
+    },
+    {
+      "name": "attestations-monotonic",
+      "ledger": 2086,
+      "chain": 2086,
+      "delta": 0,
+      "tolerance": "chain ahead up to +60",
+      "match": true
+    }
+  ],
+  "mismatches": 0
 }
