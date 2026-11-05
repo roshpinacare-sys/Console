@@ -1,7 +1,7 @@
 {
   "ok": true,
   "book": "saos-fee-law/1.0",
-  "publishedAt": "2026-11-04T14:51:38.337Z",
+  "publishedAt": "2026-11-05T14:56:23.471Z",
   "engine": "saos-fee-law/1.0 fee-law · R76 the vol-aware dynamic fee law (the Meteora take)",
   "verdict": "LIVE (the measured volatility raised 1 pool fee(s) above base)",
   "law": {
@@ -14,35 +14,35 @@
     "mechanism": "the Meteora take: fees rise with MEASURED volatility so LPs are compensated exactly when their risk rises · our σ is measured from our own official book only"
   },
   "inputs": {
-    "worldAt": "2026-11-04T05:22:43.348Z",
-    "ageHours": 9.48,
+    "worldAt": "2026-11-05T14:47:34.924Z",
+    "ageHours": 0.15,
     "maxAgeH": 30,
     "fresh": true,
     "market": "SAOS/USDS",
     "twapDevBps": 0,
-    "fairGapBps": 19.65,
-    "range24Bps": 0,
-    "sigmaBps": 19.65,
+    "fairGapBps": 29.47,
+    "range24Bps": 29.54,
+    "sigmaBps": 29.54,
     "stats24": {
-      "high24": 0,
-      "low24": 0,
-      "last": 0
+      "high24": 1017,
+      "low24": 1014,
+      "last": 1014
     }
   },
   "pools": [
     {
       "key": "SAOS/USDS",
       "baseBps": 30,
-      "sigmaBps": 19.65,
-      "feeBps": 49.65,
-      "deltaBps": 19.65,
-      "basis": "measured (twapDev 0bps · fairGap 19.65bps · range24 0.00bps)"
+      "sigmaBps": 29.54,
+      "feeBps": 59.54,
+      "deltaBps": 29.54,
+      "basis": "measured (twapDev 0bps · fairGap 29.47bps · range24 29.54bps)"
     },
     {
       "key": "USDS/WSTEEM",
-      "baseBps": 74,
+      "baseBps": 96,
       "sigmaBps": null,
-      "feeBps": 74,
+      "feeBps": 96,
       "deltaBps": 0,
       "basis": "no measured sigma for this pool - the fee stays the base (no invention)"
     },
