@@ -2,17 +2,6 @@
   "format": "slo-v1",
   "days": [
     {
-      "date": "2026-09-28",
-      "runs": 24,
-      "allGreen": 23,
-      "g1Pass": 24,
-      "g1Runs": 24,
-      "g2Pass": 23,
-      "g2Runs": 24,
-      "g3Pass": 24,
-      "g3Runs": 24
-    },
-    {
       "date": "2026-09-29",
       "runs": 24,
       "allGreen": 24,
@@ -385,6 +374,17 @@
       "g2Runs": 27,
       "g3Pass": 27,
       "g3Runs": 27
+    },
+    {
+      "date": "2026-11-05",
+      "runs": 1,
+      "allGreen": 1,
+      "g1Pass": 1,
+      "g1Runs": 1,
+      "g2Pass": 1,
+      "g2Runs": 1,
+      "g3Pass": 1,
+      "g3Runs": 1
     }
   ],
   "events": [
@@ -405,10 +405,16 @@
       "slo": "link-integrity",
       "type": "BUDGET-RECOVERED",
       "detail": "consumed 100% · 4 bad of 400 attributed runs"
+    },
+    {
+      "at": "2026-11-05T00:32:48.643Z",
+      "slo": "link-integrity",
+      "type": "BUDGET-BREACH",
+      "detail": "consumed 104.44% · 4 bad of 383 attributed runs"
     }
   ],
   "dataSince": "2026-09-19T11:01:02.561Z",
-  "generatedAt": "2026-11-04T23:36:35.677Z",
+  "generatedAt": "2026-11-05T00:32:48.643Z",
   "generator": "truth-gate-ci",
   "windowDays": 30,
   "targets": [
@@ -435,9 +441,9 @@
   ],
   "window": {
     "daysCounted": 30,
-    "runs": 404,
-    "allGreen": 394,
-    "expectedRuns": 720,
+    "runs": 384,
+    "allGreen": 375,
+    "expectedRuns": 697,
     "fillPct": 100
   },
   "slos": [
@@ -445,32 +451,32 @@
       "id": "availability",
       "gate": "G1-site-up",
       "target": "99%",
-      "measured": 99.75,
-      "good": 403,
-      "total": 404,
-      "budgetAllowed": 4.04,
-      "budgetConsumedPct": 24.75,
+      "measured": 99.74,
+      "good": 383,
+      "total": 384,
+      "budgetAllowed": 3.84,
+      "budgetConsumedPct": 26.04,
       "state": "OK"
     },
     {
       "id": "link-integrity",
       "gate": "G2-zero-broken-links",
       "target": "99%",
-      "measured": 99.01,
-      "good": 399,
-      "total": 403,
-      "budgetAllowed": 4.03,
-      "budgetConsumedPct": 99.26,
-      "state": "OK"
+      "measured": 98.96,
+      "good": 379,
+      "total": 383,
+      "budgetAllowed": 3.83,
+      "budgetConsumedPct": 104.44,
+      "state": "BREACHED"
     },
     {
       "id": "freshness",
       "gate": "G3-witness-freshness",
       "target": "99%",
       "measured": 100,
-      "good": 404,
-      "total": 404,
-      "budgetAllowed": 4.04,
+      "good": 384,
+      "total": 384,
+      "budgetAllowed": 3.84,
       "budgetConsumedPct": 0,
       "state": "OK"
     },
@@ -478,11 +484,11 @@
       "id": "heartbeat",
       "gate": "cadence",
       "target": "90%",
-      "measured": 52.92,
-      "good": 381,
-      "total": 720,
-      "budgetAllowed": 72,
-      "budgetConsumedPct": 470.83,
+      "measured": 51.79,
+      "good": 361,
+      "total": 697,
+      "budgetAllowed": 69.7,
+      "budgetConsumedPct": 482.07,
       "state": "BREACHED"
     }
   ]
