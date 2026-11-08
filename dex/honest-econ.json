@@ -1,7 +1,7 @@
 {
   "ok": true,
   "book": "saos-honest-econ/1.0",
-  "publishedAt": "2026-11-07T23:37:17.223Z",
+  "publishedAt": "2026-11-08T00:30:58.779Z",
   "engine": "saos-honest-econ/1.0 · R74 the real-money reset (owner: \"הרווח הזה לא אמיתי · אנחנו בהפסד · המטבע לא נזיל\")",
   "doctrine": {
     "he": "שתי-קופות, אפס-ערבוב: כסף-אמיתי = יתרות-שרשרת שנמדדו מ-RPC ציבורי ומסומנות במחירי-שוק חוץ · הכל-עוד = ספר-פנימי (SIM) ללא תביעת-ערך-חוץ · ל-SAOS אין ביד-חוץ ואין נזילות-חוץ · כל \"רווח\" שנמדד בתוך-הספר אינו רווח-אמיתי",
@@ -16,32 +16,32 @@
   "realChain": {
     "sources": {
       "money": "dex/money.json (R39 money-watch · public RPCs + CoinGecko marks)",
-      "marksAt": "2026-11-07T23:22:38.465Z"
+      "marksAt": "2026-11-07T23:46:59.469Z"
     },
     "lines": [
       {
         "asset": "TRX · custody-meshmarat",
         "amount": null,
-        "markUsd": 0.32001,
+        "markUsd": 0.319852,
         "usd": null,
         "source": "money.json redemption.custody (trongrid)"
       },
       {
         "asset": "STEEM · acct-00-liquid",
         "amount": 4.117,
-        "markUsd": 0.04743888,
-        "usd": 0.1953,
+        "markUsd": 0.04745943,
+        "usd": 0.1954,
         "source": "money.json fuel (steemit RPC)"
       },
       {
         "asset": "SBD · acct-00-liquid",
         "amount": 0.19,
-        "markUsd": 0.457312,
-        "usd": 0.0869,
+        "markUsd": 0.457982,
+        "usd": 0.087,
         "source": "money.json fuel (steemit RPC)"
       }
     ],
-    "markedUsd": 0.2822,
+    "markedUsd": 0.2824,
     "unmarkedCount": 1,
     "noteHe": "זה הכסף-האמיתי · סכום-השורות-המסומנות בלבד · מה שאין-לו מחיר-שוק חוץ נרשם ללא-סימון",
     "noteEn": "this is the real money · sum of marked lines only · anything without an external market price is listed unmarked"
@@ -59,15 +59,15 @@
     "verdict": "UNKNOWN"
   },
   "simBook": {
-    "totalUsdsMu": 1912510966,
-    "totalUsds": 1912510.97,
+    "totalUsdsMu": 1912510936,
+    "totalUsds": 1912510.94,
     "label": "SIM",
     "source": "dex/portfolio.json (closed simulation book)",
     "noteHe": "יחידות-חשבון פנימיות בספר-סימולציה-סגור · אפס-תביעת-ערך-חוץ · אין להמיר לדולר",
     "noteEn": "internal accounting units on a closed simulation book · zero external value claim · not convertible to dollars"
   },
   "internalFees": {
-    "feeAccruedTreasuryMu": 24086323,
+    "feeAccruedTreasuryMu": 24086809,
     "label": "internal-only",
     "pools": 6,
     "noteHe": "עמלות-צבירה פנימיות · נמדדות מהספר-החי · אינן כסף-אמיתי",
@@ -75,23 +75,23 @@
   },
   "giantsGap": {
     "source": "dex/giants.json (DefiLlama public GET)",
-    "measuredAt": "2026-11-07T23:37:17.158Z",
+    "measuredAt": "2026-11-08T00:30:58.684Z",
     "top": [
       {
         "name": "Hyperliquid",
-        "fees24hUsd": 3066158
+        "fees24hUsd": 3066086
       },
       {
         "name": "Lido",
-        "fees24hUsd": 1481202
+        "fees24hUsd": 1484632
       },
       {
         "name": "Aave",
-        "fees24hUsd": 1180181
+        "fees24hUsd": 1180971
       }
     ],
     "oursRealFeesUsd": 0,
-    "oursInternalFeesMu": 24086323,
+    "oursInternalFeesMu": 24086809,
     "oursInternalFeesNote": "העמלות-הצבורות שלנו הן יחידות-פנימיות בספר-סגור · אינן ניתנות להמרה לכסף-אמיתי"
   },
   "verdict": {
