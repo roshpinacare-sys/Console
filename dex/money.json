@@ -1,16 +1,16 @@
 {
   "ok": true,
   "format": "money-watch-v1",
-  "publishedAt": "2026-11-08T18:58:44.919Z",
+  "publishedAt": "2026-11-08T23:22:50.720Z",
   "engine": "Console/agents/money-watch · R39 money path sentinel",
   "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
   "fuel": {
     "ok": true,
     "account": "acct-00",
-    "steem": 110.682,
-    "sbd": 0.309,
-    "sp": 2541.78,
-    "spVests": 4090617.07414,
+    "steem": 60,
+    "sbd": 1.222,
+    "sp": 2561.28,
+    "spVests": 4121944.595221,
     "powerdown": {
       "active": true,
       "rateVests": 64404.576214,
@@ -19,23 +19,11 @@
       "remainingVests": 193213728640
     }
   },
-  "landing": {
-    "at": "2026-11-08T18:58:42.109Z",
-    "paymentDue": "2026-11-08T18:25:30",
-    "landedSteem": 40.02,
-    "balanceAfter": 110.682,
-    "note": "payout advanced but inventory did not jump - fuel may already be committed to orders; grid refresh happens at the daily run",
-    "dispatched": true
-  },
+  "landing": null,
   "dispatch": {
-    "attempted": true,
+    "attempted": false,
     "ok": true,
-    "forPayout": "2026-11-08T18:25:30",
-    "note": "dex-grid dispatched immediately - fuel enters the market within minutes of landing",
-    "twin": {
-      "ok": true,
-      "note": "domain twin dispatched (public minutes - carries the fuel while the private original is quota-dead)"
-    }
+    "note": "no landing detected — nothing to dispatch"
   },
   "redemption": {
     "ok": true,
@@ -44,9 +32,9 @@
   },
   "invariant": null,
   "marks": {
-    "steemUsd": 0.04696655,
-    "sbdUsd": 0.458139,
-    "trxUsd": 0.320023
+    "steemUsd": 0.0460774,
+    "sbdUsd": 0.458264,
+    "trxUsd": 0.319305
   },
   "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
