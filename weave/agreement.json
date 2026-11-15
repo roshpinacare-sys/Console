@@ -1,61 +1,13 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-11-15T01:58:47.062Z",
-  "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
-  "verdict": "DIVERGE",
+  "generatedAt": "2026-11-15T09:35:14.595Z",
+  "verdict": "CENSUS-STALE",
+  "note": "census book is 3.4h old (> 3h) — agreement refuses to judge on a dead measurement",
   "ledger": {
-    "book": "mirror.json",
-    "generatedAt": "2026-11-15T00:00:10.999Z",
-    "ageHours": 2,
-    "claims": {
-      "headHash": "0x979803e0dd6c1d8fe9ed8e8ba127c6a7dab2e726a17c2aa5ac51693042030ae6",
-      "checkpoints": 2285,
-      "attestations": 2343
-    }
+    "ageHours": 2.7
   },
-  "chain": {
-    "book": "weave/census.json",
-    "generatedAt": "2026-11-14T23:49:37.327Z",
-    "ageHours": 2.2,
-    "censusVerdict": "IRREGULAR",
-    "tilingState": "HOLED",
-    "latest": {
-      "checkpoint": 2282,
-      "root": "0xba0660cfe787e6fe2e1ba517d39c604b1a5ec40fff5c9c16ac871d7ebfb03ac5",
-      "headHash": "0xba0660cfe787e6fe2e1ba517d39c604b1a5ec40fff5c9c16ac871d7ebfb03ac5",
-      "at": "2026-11-14T23:04:23.150Z",
-      "witness": "acct-00",
-      "txid": "b21a74bb65c6fb95f0c6a08a83fb77ad70a0c8fe"
-    },
-    "claims": {
-      "headHash": "0xba0660cfe787e6fe2e1ba517d39c604b1a5ec40fff5c9c16ac871d7ebfb03ac5",
-      "checkpoints": 2282,
-      "attestations": 2340
-    }
+  "census": {
+    "ageHours": 3.4
   },
-  "checks": [
-    {
-      "name": "headHash-witnessed-on-chain",
-      "ledger": "0x979803e0dd6c1d8fe9ed8e8ba127c6a7dab2e726a17c2aa5ac51693042030ae6",
-      "chain": "not found in census rows",
-      "match": false
-    },
-    {
-      "name": "checkpoints-monotonic",
-      "ledger": 2285,
-      "chain": 2282,
-      "delta": -3,
-      "tolerance": "chain ahead up to +60",
-      "match": false
-    },
-    {
-      "name": "attestations-monotonic",
-      "ledger": 2343,
-      "chain": 2340,
-      "delta": -3,
-      "tolerance": "chain ahead up to +60",
-      "match": false
-    }
-  ],
-  "mismatches": 3
+  "checks": []
 }
