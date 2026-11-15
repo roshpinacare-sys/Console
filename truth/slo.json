@@ -2,17 +2,6 @@
   "format": "slo-v1",
   "days": [
     {
-      "date": "2026-10-11",
-      "runs": 2,
-      "allGreen": 1,
-      "g1Pass": 2,
-      "g1Runs": 2,
-      "g2Pass": 1,
-      "g2Runs": 2,
-      "g3Pass": 2,
-      "g3Runs": 2
-    },
-    {
       "date": "2026-10-12",
       "runs": 2,
       "allGreen": 2,
@@ -385,6 +374,17 @@
       "g2Runs": 25,
       "g3Pass": 25,
       "g3Runs": 25
+    },
+    {
+      "date": "2026-11-15",
+      "runs": 1,
+      "allGreen": 1,
+      "g1Pass": 1,
+      "g1Runs": 1,
+      "g2Pass": 1,
+      "g2Runs": 1,
+      "g3Pass": 1,
+      "g3Runs": 1
     }
   ],
   "events": [
@@ -420,7 +420,7 @@
     }
   ],
   "dataSince": "2026-09-19T11:01:02.561Z",
-  "generatedAt": "2026-11-14T23:11:11.313Z",
+  "generatedAt": "2026-11-15T00:07:19.669Z",
   "generator": "truth-gate-ci",
   "windowDays": 30,
   "targets": [
@@ -447,9 +447,9 @@
   ],
   "window": {
     "daysCounted": 30,
-    "runs": 628,
-    "allGreen": 619,
-    "expectedRuns": 720,
+    "runs": 625,
+    "allGreen": 617,
+    "expectedRuns": 697,
     "fillPct": 100
   },
   "slos": [
@@ -458,21 +458,21 @@
       "gate": "G1-site-up",
       "target": "99%",
       "measured": 99.84,
-      "good": 627,
-      "total": 628,
-      "budgetAllowed": 6.28,
-      "budgetConsumedPct": 15.92,
+      "good": 624,
+      "total": 625,
+      "budgetAllowed": 6.25,
+      "budgetConsumedPct": 16,
       "state": "OK"
     },
     {
       "id": "link-integrity",
       "gate": "G2-zero-broken-links",
       "target": "99%",
-      "measured": 99.52,
-      "good": 624,
-      "total": 627,
-      "budgetAllowed": 6.27,
-      "budgetConsumedPct": 47.85,
+      "measured": 99.68,
+      "good": 622,
+      "total": 624,
+      "budgetAllowed": 6.24,
+      "budgetConsumedPct": 32.05,
       "state": "OK"
     },
     {
@@ -480,9 +480,9 @@
       "gate": "G3-witness-freshness",
       "target": "99%",
       "measured": 100,
-      "good": 628,
-      "total": 628,
-      "budgetAllowed": 6.28,
+      "good": 625,
+      "total": 625,
+      "budgetAllowed": 6.25,
       "budgetConsumedPct": 0,
       "state": "OK"
     },
@@ -490,11 +490,11 @@
       "id": "heartbeat",
       "gate": "cadence",
       "target": "90%",
-      "measured": 81.11,
-      "good": 584,
-      "total": 720,
-      "budgetAllowed": 72,
-      "budgetConsumedPct": 188.89,
+      "measured": 83.36,
+      "good": 581,
+      "total": 697,
+      "budgetAllowed": 69.7,
+      "budgetConsumedPct": 166.43,
       "state": "BREACHED"
     }
   ]
