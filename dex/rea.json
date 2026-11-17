@@ -1,14 +1,14 @@
 {
   "ok": true,
   "book": "saos-rea/1.0",
-  "publishedAt": "2026-11-10T13:04:06.334Z",
+  "publishedAt": "2026-11-17T13:55:15.494Z",
   "beat": {
     "engine": "saos-rea/1.0 rea-desk · R74 sovereign reverse-engineering desk",
-    "runAt": "2026-11-10T13:03:53.284Z",
+    "runAt": "2026-11-17T13:55:03.147Z",
     "cadenceMin": 10080,
     "tool": {
       "package": "rea-agents",
-      "version": "6.8.0",
+      "version": "6.9.0",
       "upstream": "https://github.com/morluto/rea",
       "license": "MIT",
       "pinnedSha": "96a46ada0a36f0349f2b0fc20b4c932401b4ad84"
@@ -16,7 +16,7 @@
     "method": "passive public-surface capture · zero auth · zero secrets · evidence-first · fail-closed"
   },
   "rea": {
-    "version": "6.8.0",
+    "version": "6.9.0",
     "doctor": {
       "healthy": false,
       "environment_healthy": false,
@@ -55,14 +55,14 @@
           "ok": false,
           "classification": "missing_analysis_engine",
           "detail": "GHIDRA_INSTALL_DIR is not set",
-          "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory."
+          "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.x (>=12.1) release directory."
         },
         {
           "name": "ida-registration",
           "ok": false,
           "classification": "missing_analysis_engine",
           "detail": "IDA MCP registration is not configured.",
-          "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md."
+          "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/providers/ida-provider.md."
         },
         {
           "name": "jadx",
@@ -75,8 +75,8 @@
           "name": "kuna-installation",
           "ok": false,
           "classification": "missing_analysis_engine",
-          "detail": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
-          "remediation": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+          "detail": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.990). REA does not download, install or update Kuna.",
+          "remediation": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.990). REA does not download, install or update Kuna.",
           "details": {
             "configured": false
           }
@@ -103,7 +103,7 @@
               "ok": false,
               "code": "not_configured",
               "detail": "GHIDRA_INSTALL_DIR is not set",
-              "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory.",
+              "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.x (>=12.1) release directory.",
               "classification": "missing_analysis_engine"
             }
           ]
@@ -120,7 +120,7 @@
               "ok": false,
               "code": "not_configured",
               "detail": "IDA MCP registration is not configured.",
-              "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md.",
+              "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/providers/ida-provider.md.",
               "classification": "missing_analysis_engine"
             }
           ]
@@ -153,8 +153,8 @@
               "name": "installation",
               "ok": false,
               "code": "not_configured",
-              "detail": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
-              "remediation": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "detail": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.990). REA does not download, install or update Kuna.",
+              "remediation": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.990). REA does not download, install or update Kuna.",
               "classification": "missing_analysis_engine",
               "details": {
                 "configured": false
@@ -191,14 +191,14 @@
           "ok": false,
           "classification": "missing_analysis_engine",
           "detail": "GHIDRA_INSTALL_DIR is not set",
-          "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory."
+          "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.x (>=12.1) release directory."
         },
         {
           "name": "ida-registration",
           "ok": false,
           "classification": "missing_analysis_engine",
           "detail": "IDA MCP registration is not configured.",
-          "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md."
+          "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/providers/ida-provider.md."
         },
         {
           "name": "jadx",
@@ -211,8 +211,8 @@
           "name": "kuna-installation",
           "ok": false,
           "classification": "missing_analysis_engine",
-          "detail": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
-          "remediation": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+          "detail": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.990). REA does not download, install or update Kuna.",
+          "remediation": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.990). REA does not download, install or update Kuna.",
           "details": {
             "configured": false
           }
@@ -226,8 +226,8 @@
         }
       ],
       "identity": {
-        "cli_package_version": "6.8.0",
-        "expected_skill_version": "49",
+        "cli_package_version": "6.9.0",
+        "expected_skill_version": "62",
         "sdk": {
           "server": "2.3.1",
           "client_test": "2.3.1",
@@ -235,19 +235,19 @@
         },
         "catalog": {
           "counts": {
-            "cli_commands": 175,
-            "mcp_tools": 229,
+            "cli_commands": 196,
+            "mcp_tools": 255,
             "mcp_prompts": 6
           },
           "digests": {
-            "tools_sha256": "a98940ba69acd9c1781d180cee362d4ddab18f77eefdd3e3216f10e1bf98e5e9",
-            "prompts_sha256": "9609379442110570cd52fdea61a777242350873bc28958f54827ca3590e680b7",
-            "combined_sha256": "fe938a7c6eba3763b22ae2022de76dc4a7812d35d86f1d4efd36b9962b04da0b"
+            "tools_sha256": "b3054fab57a222a4690d93cdba88805d7cbd2e6c0279dd596eecf213030c3797",
+            "prompts_sha256": "60078bd8ef8bd152b51440e7579fba2059beec18fec5148dd0ec10ef013213fe",
+            "combined_sha256": "2c725b48818ac5266198069330907c657f0fa2b6b8236065e5a191e20d95c2d7"
           }
         },
         "live_server": {
           "state": "unknown",
-          "remediation": "Call binary_session in the active client to inspect the running server identity."
+          "remediation": "Call binary_session in the active client to inspect the running server identity; a registration whose saved scope omits the session family cannot report it, so include session through rea setup --tool-families and restart first."
         },
         "installations": {
           "paths": [
@@ -271,8 +271,8 @@
       "url": "https://app.uniswap.org/",
       "label": "Uniswap app · the v4 front end",
       "status": 200,
-      "ms": 133,
-      "pageBytes": 88206,
+      "ms": 93,
+      "pageBytes": 89713,
       "pageTitle": "Uniswap Interface",
       "scripts": []
     },
@@ -281,14 +281,14 @@
       "url": "https://jup.ag/",
       "label": "Jupiter · the Solana aggregator",
       "status": 200,
-      "ms": 188,
-      "pageBytes": 139595,
+      "ms": 167,
+      "pageBytes": 139386,
       "pageTitle": "Jupiter: The Home of Onchain Finance",
       "scripts": [
         {
-          "url": "https://jup.ag/assets/index-CpNNYHGH.js",
-          "bytes": 797,
-          "sha256": "175024ea8bd24fb2",
+          "url": "https://jup.ag/assets/index-B90mZqO3.js",
+          "bytes": 801,
+          "sha256": "734ef462c5cae84f",
           "endpoints": []
         }
       ]
@@ -298,7 +298,7 @@
       "url": "https://app.hyperliquid.xyz/",
       "label": "Hyperliquid · the perp app",
       "status": 200,
-      "ms": 66,
+      "ms": 39,
       "pageBytes": 6753,
       "pageTitle": "Hyperliquid",
       "scripts": [
@@ -309,9 +309,9 @@
           "endpoints": []
         },
         {
-          "url": "https://app.hyperliquid.xyz/assets/index-Lf0GvNSQ.js",
-          "bytes": 1288887,
-          "sha256": "5d5bbbab342db9e6",
+          "url": "https://app.hyperliquid.xyz/assets/index-_r9icOH2.js",
+          "bytes": 1288665,
+          "sha256": "9bb0e196d38f94dd",
           "endpoints": [
             "https://api.etherscan.io/api"
           ]
@@ -323,8 +323,8 @@
       "url": "https://metamask.io/",
       "label": "MetaMask · distribution giant",
       "status": 200,
-      "ms": 677,
-      "pageBytes": 416519,
+      "ms": 329,
+      "pageBytes": 416642,
       "pageTitle": "MetaMask Crypto Wallet. Buy and Sell Bitcoin, Ethereum, Solana",
       "scripts": [
         {
@@ -340,9 +340,9 @@
           "endpoints": []
         },
         {
-          "url": "https://metamask.io/_next/static/chunks/main-app-32764c3038bb5f8e.js",
+          "url": "https://metamask.io/_next/static/chunks/main-app-7aa67c4272ba945f.js",
           "bytes": 978,
-          "sha256": "d3223d96a3267d56",
+          "sha256": "ab433c48016c7360",
           "endpoints": []
         },
         {
