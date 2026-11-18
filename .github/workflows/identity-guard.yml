@@ -69,7 +69,7 @@ jobs:
           # lane law. Enumerated classes (noreply, container) were approximations;
           # every sandbox default now falls to the same single rule:
           # no allowlist match = violation.
-          ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com)$'
+          ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com|noreply@github\.com)$'
           BEFORE="${{ github.event.before }}"
           AFTER="${{ github.sha }}"
           if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then
@@ -107,7 +107,7 @@ jobs:
           # unlawful-identity commit. This job NEVER fails on findings (report-only,
           # org-gitleaks T-w class) — the wound stays registered and counted; only a
           # scan error fails.
-          ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com)$'
+          ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com|noreply@github\.com)$'
           VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%ad|%s' --date=iso origin/main 2>/dev/null | ALLOWED="$ALLOWED" awk -F'|' '
             $2 !~ ENVIRON["ALLOWED"] || $3 !~ ENVIRON["ALLOWED"]
           ' || true)"
@@ -184,7 +184,7 @@ jobs:
           # Same law text as the push guard (v3 deny-by-default), same allowlist.
           # Window is recent-only: old wounds belong to the weekly report-only
           # deep sweep and to owner-side history rewrite (DECISIONS #29).
-          ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com)$'
+          ALLOWED='^([0-9]+\+roshpinacare-sys@users\.noreply\.github\.com|roshpinacare-sys@users\.noreply\.github\.com|([0-9]+\+)?github-actions\[bot\]@users\.noreply\.github\.com|[^@]+@fleet\.local|[^@]+@agents\.roshpinacare-sys|roshpinacare@gmail\.com|actions@github\.com|noreply@github\.com)$'
           VIOLATIONS="$(git log --pretty='%H|%ae|%ce|%ad|%s' --date=iso --since='26 hours ago' origin/main 2>/dev/null | ALLOWED="$ALLOWED" awk -F'|' '
             $2 !~ ENVIRON["ALLOWED"] || $3 !~ ENVIRON["ALLOWED"]
           ' || true)"
