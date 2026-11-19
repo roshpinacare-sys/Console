@@ -1,23 +1,12 @@
 {
   "ok": true,
   "format": "money-watch-v1",
-  "publishedAt": "2026-11-19T08:07:33.175Z",
+  "publishedAt": "2026-11-19T12:39:05.023Z",
   "engine": "Console/agents/money-watch · R39 money path sentinel",
   "role": "watches the two money-path chokepoints: fuel-in (powerdown landing -> immediate grid dispatch) and redemption-out (peg-outbox vs TRON broadcast cost)",
   "fuel": {
-    "ok": true,
-    "account": "acct-00",
-    "steem": 8.855,
-    "sbd": 1.045,
-    "sp": 2491.94,
-    "spVests": 4007553.5371339996,
-    "powerdown": {
-      "active": true,
-      "rateVests": 64404.576214,
-      "rateSp": 39.5,
-      "nextPayout": "2026-11-22T18:25:30",
-      "remainingVests": 128809152426
-    }
+    "ok": false,
+    "error": "steemit rpc -> 403"
   },
   "landing": null,
   "dispatch": {
@@ -32,9 +21,9 @@
   },
   "invariant": null,
   "marks": {
-    "steemUsd": 0.04238972,
-    "sbdUsd": 0.446902,
-    "trxUsd": 0.31294
+    "steemUsd": 0.04216647,
+    "sbdUsd": 0.44652,
+    "trxUsd": 0.312105
   },
   "honesty": "כל נתון נמדד חי מ-RPC ציבורי (Steem/trongrid/CoinGecko) או מ-world.json המפורסם. נפילת מקור מסומנת בכנות. עלות השידור ב-TRON (0.35 TRX) נמדדה משריפת-גז היסטורית של חשבון המשמרת; סף השליחה = פי 3 מהעלות. המפתח: אפס - לא סוכן חותם."
 }
