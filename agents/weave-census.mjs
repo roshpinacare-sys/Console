@@ -35,7 +35,14 @@ const FLEET = FLEET_REFS
   .filter(Boolean)
   .map((a) => a.toLowerCase());
 const OP_ID = process.env.WEAVE_OP_ID || "saos.weave.core.v1";
-const NODES = ["https://api.steemit.com", "https://api.justyy.com"];
+/* §73 (2026-11-19 · owner command «תמשיך ודחוף»): the 2-node fleet died as a
+ * fleet — measured red run 44502981160: get_account_history paging hit
+ * "Internal Error" on steemit and the single fallback wasn't enough (a whole
+ * census read died on a transient chain-plugin hiccup). Law = §71's curate
+ * heal: an independent measured-alive fleet (all 4 probed 200 + fresh block
+ * today), the rpcAny failover loop already rotates — now it has somewhere to
+ * rotate TO. */
+const NODES = ["https://api.steemit.com", "https://api.justyy.com", "https://steemapi.boylikegirl.club", "https://api.steemitdev.com"];
 const PAGE = 100;           // תקרת condenser_api.get_account_history לקריאה (נמדד: 100)
 const MAX_PAGES = 250;      // עד ~25,000 ops לכל חשבון
 const TARGET_UNIQUE = 400;  // די למפקד חלון; חיסכון-זמן מעבר לזה
