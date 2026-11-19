@@ -1,13 +1,61 @@
 {
   "format": "weave-agreement-v1",
-  "generatedAt": "2026-11-19T10:28:43.209Z",
-  "verdict": "CENSUS-STALE",
-  "note": "census book is 54h old (> 3h) — agreement refuses to judge on a dead measurement",
+  "generatedAt": "2026-11-19T20:46:00.897Z",
+  "doctrine": "the ledger book is judged against the independent chain census - divergence is the heaviest finding a truth network can raise",
+  "verdict": "DIVERGE",
   "ledger": {
-    "ageHours": 0.9
+    "book": "mirror.json",
+    "generatedAt": "2026-11-19T17:54:12.313Z",
+    "ageHours": 2.9,
+    "claims": {
+      "headHash": "0xcdfeb272d2b08a2b0f0d07972cd5fab3d2fa68f472aae7b0a3f8dd21c982bda0",
+      "checkpoints": 2395,
+      "attestations": 2453
+    }
   },
-  "census": {
-    "ageHours": 54
+  "chain": {
+    "book": "weave/census.json",
+    "generatedAt": "2026-11-19T20:29:49.106Z",
+    "ageHours": 0.3,
+    "censusVerdict": "IRREGULAR",
+    "tilingState": "HOLED",
+    "latest": {
+      "checkpoint": 2397,
+      "root": "0x0b9f24621fc418775293fec744f4d022420c36ae9bb7126fdc5f9ecd6628572c",
+      "headHash": "0x0b9f24621fc418775293fec744f4d022420c36ae9bb7126fdc5f9ecd6628572c",
+      "at": "2026-11-19T17:55:25.882Z",
+      "witness": "acct-00",
+      "txid": "7e27b043121c72ec3e769221f0d3c41385f8585c"
+    },
+    "claims": {
+      "headHash": "0x0b9f24621fc418775293fec744f4d022420c36ae9bb7126fdc5f9ecd6628572c",
+      "checkpoints": 2397,
+      "attestations": 2455
+    }
   },
-  "checks": []
+  "checks": [
+    {
+      "name": "headHash-witnessed-on-chain",
+      "ledger": "0xcdfeb272d2b08a2b0f0d07972cd5fab3d2fa68f472aae7b0a3f8dd21c982bda0",
+      "chain": "not found in census rows",
+      "match": false
+    },
+    {
+      "name": "checkpoints-monotonic",
+      "ledger": 2395,
+      "chain": 2397,
+      "delta": 2,
+      "tolerance": "chain ahead up to +60",
+      "match": true
+    },
+    {
+      "name": "attestations-monotonic",
+      "ledger": 2453,
+      "chain": 2455,
+      "delta": 2,
+      "tolerance": "chain ahead up to +60",
+      "match": true
+    }
+  ],
+  "mismatches": 1
 }
