@@ -1,129 +1,134 @@
 {
   "format": "weave-vitals-v1",
-  "generatedAt": "2026-11-21T03:33:04.096Z",
+  "generatedAt": "2026-11-21T13:09:12.776Z",
   "doctrine": "keyless parallel pulse of every chain line the weave runs on - public endpoints only, honest red rows, no derived books",
-  "verdict": "DEGRADED",
+  "verdict": "ALL-LINES-UP",
   "summary": {
     "lines": 9,
-    "up": 8,
-    "down": 1,
-    "worstLatencyMs": 696
+    "up": 9,
+    "down": 0,
+    "worstLatencyMs": 2278
   },
   "lines": [
     {
       "line": "steem",
       "role": "anchor-line-1",
-      "ok": false,
-      "latencyMs": 154,
-      "detail": null,
-      "error": "HTTP 403",
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "ok": true,
+      "latencyMs": 175,
+      "detail": {
+        "headBlock": 111519007,
+        "headAgeSec": 2,
+        "participation": 1.28,
+        "witness": "moecki"
+      },
+      "error": null,
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "hive",
       "role": "anchor-line-2",
       "ok": true,
-      "latencyMs": 147,
+      "latencyMs": 111,
       "detail": {
-        "headBlock": 111845805,
-        "headAgeSec": 4,
+        "headBlock": 111857281,
+        "headAgeSec": 2,
         "participation": 1.28,
-        "witness": "smooth.witness"
+        "witness": "abit"
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "blurt",
       "role": "anchor-line-3",
       "ok": true,
-      "latencyMs": 233,
+      "latencyMs": 121,
       "detail": {
-        "headBlock": 65519204,
+        "headBlock": 65530573,
         "node": "rpc.blurt.blog"
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "ethereum",
       "role": "sovereign-relay",
       "ok": true,
-      "latencyMs": 295,
+      "latencyMs": 151,
       "detail": {
-        "headBlock": 26460810,
+        "headBlock": 26463681,
         "chainId": 1,
         "relay": "0xa52D85cAa4C04C15cE60d0c582e8C138d16678E6",
         "relayCodeBytes": 803,
         "relayBalanceEth": 0
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "optimism",
       "role": "sovereign-relay",
       "ok": true,
-      "latencyMs": 337,
+      "latencyMs": 136,
       "detail": {
-        "headBlock": 159816603,
+        "headBlock": 159833886,
         "chainId": 10,
         "relay": "0x56c9D54ea866e25916757903E51392BBEdeE2ECe",
         "relayCodeBytes": 803,
         "relayBalanceEth": 0
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "base",
       "role": "sovereign-relay",
       "ok": true,
-      "latencyMs": 343,
+      "latencyMs": 154,
       "detail": {
-        "headBlock": 60208040,
+        "headBlock": 60380875,
         "chainId": 8453,
         "relay": "0x279818b4c9Eddc02fB3DD036a5E77D8F7Dc1CF87",
         "relayCodeBytes": 803,
         "relayBalanceEth": 0
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "tron",
       "role": "deposit-chain",
       "ok": true,
-      "latencyMs": 696,
+      "latencyMs": 469,
       "detail": {
-        "headBlock": 88185957,
-        "headAgeSec": 4
+        "headBlock": 88197476,
+        "headAgeSec": 2
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "bitcoin",
       "role": "deposit-chain",
       "ok": true,
-      "latencyMs": 522,
+      "latencyMs": 2278,
       "detail": {
-        "headBlock": 976835,
-        "node": "mempool.space"
+        "headBlock": 976909,
+        "node": "blockstream.info"
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     },
     {
       "line": "solana",
       "role": "deposit-chain",
       "ok": true,
-      "latencyMs": 278,
+      "latencyMs": 93,
       "detail": {
-        "headBlock": 450003603
+        "headBlock": 450164374
       },
       "error": null,
-      "measuredAt": "2026-11-21T03:33:04.096Z"
+      "measuredAt": "2026-11-21T13:09:12.777Z"
     }
   ]
 }
