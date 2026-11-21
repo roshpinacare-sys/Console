@@ -1,6 +1,6 @@
 {
   "format": "weave-census-v1",
-  "generatedAt": "2026-11-21T03:09:24.524Z",
+  "generatedAt": "2026-11-21T12:31:08.930Z",
   "doctrine": "independent chain-level census of the weave anchor protocol - read straight from the public Steem RPC, zero keys, zero derived books",
   "source": {
     "kind": "steem-public-rpc",
@@ -21,44 +21,47 @@
       {
         "account": "acct-00",
         "pages": 250,
-        "anchorOps": 327,
+        "anchorOps": 329,
         "stoppedBy": "budget"
       }
     ]
   },
   "window": {
     "days": 45,
-    "fromCp": 1834,
-    "toCp": 2436,
-    "fromAt": "2026-10-24T16:45:01.625Z",
-    "toAt": "2026-11-21T02:30:04.978Z",
-    "spanDays": 27.41
+    "fromCp": 1836,
+    "toCp": 2442,
+    "fromAt": "2026-10-24T18:54:28.012Z",
+    "toAt": "2026-11-21T11:23:31.501Z",
+    "spanDays": 27.69
   },
   "verdict": "IRREGULAR",
   "recent": {
     "windowHours": 26,
-    "anchorsInWindow": 14,
-    "maxGapMinutes": 255,
-    "openGapMinutes": 39,
+    "anchorsInWindow": 13,
+    "maxGapMinutes": 231,
+    "openGapMinutes": 68,
     "verdict": "LIVE"
   },
   "freshness": {
-    "latestAgeHours": 0.7,
+    "latestAgeHours": 1.1,
     "thresholdHours": 26,
     "irregularGapMinutes": 360
   },
   "totals": {
-    "uniqueCheckpoints": 260,
-    "anchorOpsSeen": 327,
+    "uniqueCheckpoints": 262,
+    "anchorOpsSeen": 329,
     "retriesDeduped": 67,
     "witnesses": {
-      "acct-00": 260
+      "acct-00": 262
     }
   },
   "anchoring": {
     "skippedCheckpoints": {
-      "total": 343,
+      "total": 345,
       "sample": [
+        2441,
+        2439,
+        2437,
         2435,
         2433,
         2431,
@@ -105,25 +108,18 @@
         2349,
         2350,
         2351,
-        2352,
-        2353,
-        2354,
-        2355
+        2352
       ],
       "truncated": true
     }
   },
   "attestations": {
-    "ranges": 260,
-    "covered": 260,
-    "observedSpan": 603,
-    "coverageRatio": 0.431,
-    "holesTotal": 259,
+    "ranges": 262,
+    "covered": 262,
+    "observedSpan": 607,
+    "coverageRatio": 0.432,
+    "holesTotal": 261,
     "holes": [
-      {
-        "from": 1893,
-        "to": 1893
-      },
       {
         "from": 1895,
         "to": 1895
@@ -239,6 +235,10 @@
       {
         "from": 1961,
         "to": 1961
+      },
+      {
+        "from": 1963,
+        "to": 1963
       }
     ],
     "holesTruncated": true,
@@ -249,8 +249,8 @@
     "wideHolesTotal": 0,
     "wideHoles": [],
     "wideUncovered": 0,
-    "sliversTotal": 259,
-    "sliverUncovered": 343,
+    "sliversTotal": 261,
+    "sliverUncovered": 345,
     "state": "HOLED"
   },
   "cadence": {
@@ -258,14 +258,53 @@
     "maxMinutes": 6866
   },
   "latest": {
-    "checkpoint": 2436,
-    "root": "0x3e04230280ec01bf94b8053f75bb66f3680802a7c098ce00d419a5f1cd55b00d",
-    "headHash": "0x3e04230280ec01bf94b8053f75bb66f3680802a7c098ce00d419a5f1cd55b00d",
-    "at": "2026-11-21T02:30:04.978Z",
+    "checkpoint": 2442,
+    "root": "0xb8cd3072b8f89151c2ce7493d3fc75cd4524e434a22bc79fb158d3ac3c80b398",
+    "headHash": "0xb8cd3072b8f89151c2ce7493d3fc75cd4524e434a22bc79fb158d3ac3c80b398",
+    "at": "2026-11-21T11:23:31.501Z",
     "witness": "acct-00",
-    "txid": "d7927bf793aeb73d190d76f3e81965df61819c7e"
+    "txid": "711bbea324f517a4dde8902cb3ed4e1d7492d719"
   },
   "rows": [
+    {
+      "checkpoint": 2442,
+      "root": "0xb8cd3072b8f89151c2ce7493d3fc75cd4524e434a22bc79fb158d3ac3c80b398",
+      "attFrom": 2500,
+      "attTo": 2500,
+      "attestations": 2500,
+      "headHash": "0xb8cd3072b8f89151c2ce7493d3fc75cd4524e434a22bc79fb158d3ac3c80b398",
+      "commit": "5955472",
+      "at": "2026-11-21T11:23:31.501Z",
+      "txid": "711bbea324f517a4dde8902cb3ed4e1d7492d719",
+      "block": 111516905,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 2440,
+      "root": "0x8f1e116ac0645befc0943c6b03e4f5c24800efdcfa60b4fbe720a0bd95ac2088",
+      "attFrom": 2498,
+      "attTo": 2498,
+      "attestations": 2498,
+      "headHash": "0x8f1e116ac0645befc0943c6b03e4f5c24800efdcfa60b4fbe720a0bd95ac2088",
+      "commit": "b5b2a85",
+      "at": "2026-11-21T09:56:40.797Z",
+      "txid": "6de8457eca939eebf834138f84745193be33bce9",
+      "block": 111515177,
+      "witness": "acct-00"
+    },
+    {
+      "checkpoint": 2438,
+      "root": "0xeb9901aacf4137337478e203550ee1900aa7979329d1546677be91e95ba7bb99",
+      "attFrom": 2496,
+      "attTo": 2496,
+      "attestations": 2496,
+      "headHash": "0xeb9901aacf4137337478e203550ee1900aa7979329d1546677be91e95ba7bb99",
+      "commit": "24858a3",
+      "at": "2026-11-21T06:12:05.421Z",
+      "txid": "6a635d7e1be4eb071d7cc48de13b85dc1d46d52b",
+      "block": 111510707,
+      "witness": "acct-00"
+    },
     {
       "checkpoint": 2436,
       "root": "0x3e04230280ec01bf94b8053f75bb66f3680802a7c098ce00d419a5f1cd55b00d",
@@ -1005,45 +1044,6 @@
       "at": "2026-11-15T10:40:34.689Z",
       "txid": "484e1a957e69295e5dcc312fa418a454593e2d9d",
       "block": 111343915,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 2290,
-      "root": "0x2152fe35c185ea64901c6f6f3a53cf4c3e9fdc7a9887c320d9993d3b540b3fba",
-      "attFrom": 2348,
-      "attTo": 2348,
-      "attestations": 2348,
-      "headHash": "0x2152fe35c185ea64901c6f6f3a53cf4c3e9fdc7a9887c320d9993d3b540b3fba",
-      "commit": "7e0081f",
-      "at": "2026-11-15T06:53:48.686Z",
-      "txid": "8690e6c27c6ebe0d0ab4bc7bcc02647c9003f48a",
-      "block": 111339400,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 2288,
-      "root": "0xc7242b2ef146702c2e0917c3ed36291126e0c51be23b579e1f288d3e6f012c98",
-      "attFrom": 2346,
-      "attTo": 2346,
-      "attestations": 2346,
-      "headHash": "0xc7242b2ef146702c2e0917c3ed36291126e0c51be23b579e1f288d3e6f012c98",
-      "commit": "46a018d",
-      "at": "2026-11-15T04:24:24.276Z",
-      "txid": "3c42122521e0ed51af2ba37805eccaf4978c3266",
-      "block": 111336422,
-      "witness": "acct-00"
-    },
-    {
-      "checkpoint": 2286,
-      "root": "0x1c6433b87fe5b049a38ce41e6a8b323b4327bb7f47999280f889a09e08708569",
-      "attFrom": 2344,
-      "attTo": 2344,
-      "attestations": 2344,
-      "headHash": "0x1c6433b87fe5b049a38ce41e6a8b323b4327bb7f47999280f889a09e08708569",
-      "commit": "e5c6c5f",
-      "at": "2026-11-15T02:48:59.959Z",
-      "txid": "7aa354429eb27c91f81ecbc0fe72ece1cc7704c7",
-      "block": 111334520,
       "witness": "acct-00"
     }
   ]
